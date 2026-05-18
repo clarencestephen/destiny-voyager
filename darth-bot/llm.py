@@ -20,6 +20,7 @@ from typing import AsyncIterator, Iterable
 import httpx
 
 from .config import MODEL, OLLAMA_HOST
+from .meta_state import format_for_prompt as _meta_state_for_prompt
 
 
 SYSTEM_PROMPT_PATH = Path(__file__).parent / "prompts" / "system.md"
@@ -30,15 +31,17 @@ def _system_prompt() -> str:
 
 
 def _format_context(*, inventory: str = "", knowledge: str = "", search: str = "") -> str:
-    """Compose the retrieval context block."""
-    parts = []
+    """Compose the retrieval context block. meta_state always leads —
+    it's authoritative current-state data the model must trust over KB
+    chunks (which can be months-stale Reddit guides)."""
+    parts = [f"<current_state>\n{_meta_state_for_prompt()}\n</current_state>"]
     if inventory:
         parts.append(f"<inventory>\n{inventory}\n</inventory>")
     if knowledge:
         parts.append(f"<knowledge>\n{knowledge}\n</knowledge>")
     if search:
         parts.append(f"<search>\n{search}\n</search>")
-    return "\n\n".join(parts) if parts else ""
+    return "\n\n".join(parts)
 
 
 async def chat(
@@ -51,9 +54,7 @@ async def chat(
 ) -> str:
     """Single-shot chat. Returns the full assistant message."""
     context = _format_context(inventory=inventory, knowledge=knowledge, search=search)
-    user_block = (
-        f"{context}\n\nUser question:\n{user_message}" if context else user_message
-    )
+    user_block = f"{context}\n\nUser question:\n{user_message}"
     payload = {
         "model": MODEL,
         "messages": [
@@ -80,9 +81,7 @@ async def chat_stream(
 ) -> AsyncIterator[str]:
     """Streaming chat. Yields chunks as they arrive — useful for live edits."""
     context = _format_context(inventory=inventory, knowledge=knowledge, search=search)
-    user_block = (
-        f"{context}\n\nUser question:\n{user_message}" if context else user_message
-    )
+    user_block = f"{context}\n\nUser question:\n{user_message}"
     payload = {
         "model": MODEL,
         "messages": [
