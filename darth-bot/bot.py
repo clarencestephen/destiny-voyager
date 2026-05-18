@@ -107,13 +107,12 @@ async def _reply_long(interaction: discord.Interaction, text: str):
 @bot.tree.command(name="ask", description="Ask Darth Bot a Destiny 2 question")
 @app_commands.describe(question="What do you want to know?")
 async def cmd_ask(interaction: discord.Interaction, question: str):
-    if not _is_allowed_channel(interaction.channel):
-        await interaction.response.send_message(
-            "I only work in toolkit / cantina / LFG channels.", ephemeral=True)
-        return
+    ch = getattr(interaction.channel, "name", "DM")
+    log.info(f"/ask in #{ch}: {question[:80]}")
     await interaction.response.defer(thinking=True)
     try:
         text = await answer(question)
+        log.info(f"/ask reply ({len(text)} chars): {text[:100]}")
     except Exception as e:
         log.exception("ask failed")
         text = f"⚠️  Something broke: `{e}`"
@@ -159,6 +158,104 @@ async def cmd_catalyst(interaction: discord.Interaction, weapon: str):
     await _reply_long(interaction, text)
 
 
+@bot.tree.command(
+    name="inventory",
+    description="Show a summary of your Destiny 2 inventory (vault + equipped)",
+)
+@app_commands.describe(focus="Filter: all, weapons, armor, hunter, titan, warlock")
+async def cmd_inventory(interaction: discord.Interaction, focus: str = "all"):
+    await interaction.response.defer(thinking=True)
+    try:
+        from .inventory import build_context, has_inventory
+        if not has_inventory():
+            await interaction.followup.send(
+                "No inventory found. Link your Bungie account in Destiny Voyager first "
+                "(`/link-bungie` to start) or run `python3 fetch_inventory.py`."
+            )
+            return
+        text = build_context(focus=focus, max_items=40)
+        if not text:
+            await interaction.followup.send("Inventory is empty or unreadable.")
+            return
+        await _reply_long(interaction, f"```\n{text[:1800]}\n```")
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ {e}")
+
+
+@bot.tree.command(
+    name="loadout-check",
+    description="Analyze your current loadout vs the current meta",
+)
+@app_commands.describe(activity="pvp | pve | raid | gm (default: pve)")
+async def cmd_loadout_check(interaction: discord.Interaction, activity: str = "pve"):
+    await interaction.response.defer(thinking=True)
+    q = (f"Analyze my current loadout against the current {activity} meta. "
+         f"What am I doing right, what should I swap, what's missing?")
+    try:
+        text = await answer(q)
+    except Exception as e:
+        text = f"⚠️ {e}"
+    await _reply_long(interaction, text)
+
+
+@bot.tree.command(
+    name="upgrade",
+    description="What should you chase next, given your inventory?",
+)
+@app_commands.describe(activity="pvp | pve | raid | gm | trials (default: pve)")
+async def cmd_upgrade(interaction: discord.Interaction, activity: str = "pve"):
+    await interaction.response.defer(thinking=True)
+    q = (f"Based on my current inventory, what specific items should I chase next "
+         f"to improve my {activity} setup? Prioritize 3-5 specific items.")
+    try:
+        text = await answer(q)
+    except Exception as e:
+        text = f"⚠️ {e}"
+    await _reply_long(interaction, text)
+
+
+@bot.tree.command(
+    name="link-bungie",
+    description="Link your Discord account to your Bungie account via Destiny Voyager",
+)
+async def cmd_link_bungie(interaction: discord.Interaction):
+    """Calls the backend /link/start endpoint, DMs the user the one-time URL."""
+    import os
+    import httpx
+
+    backend = os.environ.get("BACKEND_BASE_URL", "http://localhost:8080")
+    await interaction.response.defer(ephemeral=True, thinking=True)
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            r = await client.post(
+                f"{backend}/link/start",
+                json={"discord_id": str(interaction.user.id)},
+            )
+            r.raise_for_status()
+            data = r.json()
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Couldn't reach backend: `{e}`", ephemeral=True)
+        return
+
+    url = data.get("url", "")
+    msg = (
+        f"🔗  **Link your Bungie account**\n\n"
+        f"Click here to sign in with Bungie (good for {data.get('expires_in', 600)//60} min):\n"
+        f"<{url}>\n\n"
+        f"After signing in, Destiny Voyager will see your inventory and Darth Bot can "
+        f"answer personalized questions like `/loadout-check` and `/upgrade`."
+    )
+    # Try to DM, fall back to ephemeral channel reply
+    try:
+        dm = await interaction.user.create_dm()
+        await dm.send(msg)
+        await interaction.followup.send(
+            "Check your DMs — I sent you a sign-in link.", ephemeral=True,
+        )
+    except discord.errors.Forbidden:
+        await interaction.followup.send(msg, ephemeral=True)
+
+
 @bot.tree.command(name="sanity",
                   description="Verify Darth Bot's backend services")
 async def cmd_sanity(interaction: discord.Interaction):
@@ -177,6 +274,16 @@ async def cmd_sanity(interaction: discord.Interaction):
         bits.append(f"Inventory cache: {'✅' if has_inventory() else '⚠️ not populated'}")
     except Exception as e:
         bits.append(f"Inventory cache: ❌ {e}")
+    # Backend reachability
+    import os
+    backend = os.environ.get("BACKEND_BASE_URL", "http://localhost:8080")
+    try:
+        import httpx
+        async with httpx.AsyncClient(timeout=3) as client:
+            r = await client.get(f"{backend}/health")
+        bits.append(f"Backend ({backend}): {'✅' if r.status_code == 200 else f'❌ HTTP {r.status_code}'}")
+    except Exception as e:
+        bits.append(f"Backend ({backend}): ❌ {type(e).__name__}")
     await interaction.followup.send("\n".join(bits))
 
 
