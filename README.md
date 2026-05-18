@@ -72,6 +72,7 @@ If you don't want to install Python, grab the latest `.exe` from the [Releases p
 | `python add_loadout.py` | Append a new DIM share URL to your config without editing JSON. Then auto-runs the decoder. |
 | `python init_workbook.py` | Rebuild the workbook template from scratch. **Asks before overwriting** — but if you've manually edited sheets, back up first. |
 | `python setup.py` | Re-run the install wizard. Safe — asks before overwriting anything. |
+| `python demo_examples.py` | Try the toolkit with 25 community-shared loadouts before configuring your own. Builds an `example_workbook.xlsx` next to your real one. See [examples/README.md](examples/README.md). |
 
 ---
 
@@ -117,6 +118,12 @@ destiny2-loadout-toolkit/
 ├── mod_recommender.py       ← curated mod recommendations by goal + archetype
 │
 ├── config.example.json      ← schema reference (no real keys)
+│
+├── demo_examples.py         ← run 25 community loadouts as a demo
+├── examples/
+│   ├── README.md
+│   ├── example_loadouts.json     (25 community-shared DIM URLs)
+│   └── reclassify.py             (re-fetch classType for all examples)
 │
 ├── docs/
 │   ├── getting-bungie-api-key.md

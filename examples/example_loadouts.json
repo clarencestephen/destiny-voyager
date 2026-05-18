@@ -1,0 +1,181 @@
+{
+  "_comment": "Community example DIM loadouts collected from Discord. Copy into user_config.json as the 'dim_loadouts' list (with your own api_key) and run decode_dim.py to see them populated.",
+  "_source": "Community Discord \u2014 Stubby456#6394, StrawHat Kano#6659, and others, May-Oct 2025/2026",
+  "dim_loadouts": [
+    {
+      "class": "Warlock",
+      "name": "Prismatic Solipsism",
+      "activity": "PvE",
+      "url": "https://dim.gg/4fgwola/Prismatic:-(Solipsism)-D2ArmorPicker-Loadout",
+      "notes": "Keep placing rifts as you get them"
+    },
+    {
+      "class": "Warlock",
+      "name": "Sniper Burst Damage",
+      "activity": "DPS",
+      "url": "https://dim.gg/uw2waky/Sniper-Burst-Damage",
+      "notes": "Run with teammate using D.A.R.C.I. Dynamic Heat Limiter special reload."
+    },
+    {
+      "class": "Warlock",
+      "name": "Arc Turret",
+      "activity": "PvE",
+      "url": "https://dim.gg/5dv32ti/Arc-Turret",
+      "notes": "Ad clear + DPS. Stick two anarchy grenades, use super."
+    },
+    {
+      "class": "Warlock",
+      "name": "Ergo Sum Ignitions",
+      "activity": "PvE",
+      "url": "https://dim.gg/mugv6si/Ergo-Sum-Ignitions",
+      "notes": "Star Eater + Apotheosis class item. Transcendence \u2192 1 heavy + 2 light, throw transcendence grenade."
+    },
+    {
+      "class": "Warlock",
+      "name": "Support Warlock",
+      "activity": "PvE",
+      "url": "https://dim.gg/pchut3q/Support-Warlock",
+      "notes": "Double rocket pulse for DPS, or Finality's for super regen."
+    },
+    {
+      "class": "Warlock",
+      "name": "Getaway Artist",
+      "activity": "PvE",
+      "url": "https://dim.gg/a5qqxyq/Getaway-Artist",
+      "notes": "Survival + DPS. Turrets for kills, rocket pulse sparingly."
+    },
+    {
+      "class": "Titan",
+      "name": "PK Titan",
+      "activity": "PvE",
+      "url": "https://dim.gg/yiijbpq/PK-Titan",
+      "notes": "Finality's turret + bait and switch + super + pulse + SMG."
+    },
+    {
+      "class": "Hunter",
+      "name": "Hunter Crossbow",
+      "activity": "PvE",
+      "url": "https://dim.gg/h3wj3ji/Hunter-Crossbow",
+      "notes": "Weapon stat is the only important stat. Energy \u2194 heavy swap speed."
+    },
+    {
+      "class": "Hunter",
+      "name": "Non-crit Hunter DPS",
+      "activity": "DPS",
+      "url": "https://dim.gg/gpi6i4a/Non-crit-Hunter-DPS",
+      "notes": "Star Eater + Galanor. Mint or Psi Aeterna. Bait and switch + super + light attack + transcendence."
+    },
+    {
+      "class": "Hunter",
+      "name": "Crit-heavy Lucky Pants",
+      "activity": "PvE",
+      "url": "https://dim.gg/s5bjdaq/Crit-heavy-Lucky-Pants",
+      "notes": "Shoot Crimson twice \u2192 switch to Uncivil Discourse. Spam A499 while Out of Luck."
+    },
+    {
+      "class": "Hunter",
+      "name": "Lucky Pants Nighthawk Swap",
+      "activity": "PvE",
+      "url": "https://dim.gg/nkln2wi/Luck-Pants-Nighthawk-Swap",
+      "notes": "Quick-swap to Celestial Nighthawk without losing super/abilities."
+    },
+    {
+      "class": "Hunter",
+      "name": "Finality + Mint Lucky Pants",
+      "activity": "PvE",
+      "url": "https://dim.gg/2g4xcsq/Finality-+-Mint-Lucky-Pants",
+      "notes": "Alt Lucky Pants build \u2014 more damage during Out of Luck."
+    },
+    {
+      "class": "Warlock",
+      "name": "Off-meta ECI",
+      "activity": "PvE",
+      "url": "https://dim.gg/cmritvy/Off-meta-ECI(Exotic-Class-Item)",
+      "notes": "Off-meta exotic class item build."
+    },
+    {
+      "class": "Warlock",
+      "name": "Dark Age Hunt Warlock",
+      "activity": "PvE",
+      "url": "https://dim.gg/yu5qwya/DarkAgeHunt-Warlock",
+      "notes": "Warlock build."
+    },
+    {
+      "class": "Hunter",
+      "name": "Indra \u2014 God of the Tempest",
+      "activity": "PvE",
+      "url": "https://dim.gg/jq7aw2i/Indra-God-of-the-Tempest",
+      "notes": "Arc themed."
+    },
+    {
+      "class": "Hunter",
+      "name": "Rain-bow Mastery",
+      "activity": "PvE",
+      "url": "https://dim.gg/oaf6efa/Rain-bow-Mastery",
+      "notes": "Bow build."
+    },
+    {
+      "class": "Hunter",
+      "name": "PuppetMaster",
+      "activity": "PvE",
+      "url": "https://dim.gg/ggodaay/PuppetMaster",
+      "notes": "Puppet master build."
+    },
+    {
+      "class": "Hunter",
+      "name": "Sixth Coyote Strand Hunter",
+      "activity": "PvE",
+      "url": "https://dim.gg/gccmppy/PvE",
+      "notes": "Sixth Coyote for double dodge / ensnaring slam."
+    },
+    {
+      "class": "Titan",
+      "name": "Raid (short stack 13)",
+      "activity": "Raid",
+      "url": "https://dim.gg/zwnalwq/Raid",
+      "notes": "Raid loadout."
+    },
+    {
+      "class": "Titan",
+      "name": "Mahoraga (Fashion Only)",
+      "activity": "PvE",
+      "url": "https://dim.gg/vt4spai/Mahoraga-Fash-Only",
+      "notes": "Fashion-only loadout."
+    },
+    {
+      "class": "Warlock",
+      "name": "Getaway Artist Ergo Sum",
+      "activity": "PvE",
+      "url": "https://dim.gg/ijktmba/Prismatic",
+      "notes": "Prismatic Getaway + Ergo Sum combo."
+    },
+    {
+      "class": "Warlock",
+      "name": "Contraverse Hold",
+      "activity": "PvE",
+      "url": "https://dim.gg/r5p5fai/PvE",
+      "notes": "Contraverse Hold PvE build."
+    },
+    {
+      "class": "Warlock",
+      "name": "Swarmers Threadling Army",
+      "activity": "PvE",
+      "url": "https://dim.gg/q3cbopq/PvE",
+      "notes": "Swarmers threadling spam."
+    },
+    {
+      "class": "Warlock",
+      "name": "Vespers Radius + Centrifuse",
+      "activity": "PvE",
+      "url": "https://dim.gg/b6atm5y/Arc",
+      "notes": "Arc build with Vespers Radius and Centrifuse."
+    },
+    {
+      "class": "Warlock",
+      "name": "Loki (Fashion Only)",
+      "activity": "Fashion",
+      "url": "https://dim.gg/uly7vfa/Loki-Fashion-Only",
+      "notes": "Fashion-only loadout \u2014 Loki themed."
+    }
+  ]
+}
