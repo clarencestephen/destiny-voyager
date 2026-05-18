@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrandMark } from "@/components/BrandMark";
@@ -45,7 +46,7 @@ export default function Landing() {
         <div className="grid lg:grid-cols-[1.5fr_1fr] gap-12 items-center">
           <div>
             <p className="font-mono text-xs tracking-[0.4em] text-sith uppercase mb-6">
-              ▸ For The Way of the Sith Clan
+              ▸ For The Order 66 Clan
             </p>
             <h1 className="font-display font-black text-6xl md:text-7xl leading-[1.05] tracking-tight">
               <span className="text-signature">DESTINY VOYAGER</span>
@@ -63,7 +64,12 @@ export default function Landing() {
                 {loading ? "Routing to Bungie…" : "Sign in with Bungie →"}
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <a href="https://github.com/clarencestephen/order-66" target="_blank" rel="noopener noreferrer">
+                <Link to="/chat">
+                  Try the Chatbot ▶
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <a href="https://github.com/clarencestephen/destiny-voyager" target="_blank" rel="noopener noreferrer">
                   ★ Star on GitHub
                 </a>
               </Button>
@@ -130,6 +136,46 @@ export default function Landing() {
         </ol>
       </section>
 
+      {/* ============== TWO PATHS ============== */}
+      <section className="mt-24">
+        <p className="font-mono text-xs tracking-[0.4em] text-sith uppercase mb-3">
+          ▸ Two ways in
+        </p>
+        <h2 className="font-display text-3xl md:text-4xl font-bold tracking-wide text-star">
+          Discord. Browser. Same Brain.
+        </h2>
+
+        <div className="mt-10 grid md:grid-cols-2 gap-6">
+          <Card className="border-border bg-deepspace/80">
+            <CardHeader>
+              <CardTitle className="text-saber">▶  Discord — Darth Bot</CardTitle>
+              <CardDescription className="font-ui text-sm leading-relaxed">
+                Already in the Order 66 server. Run <code className="text-sith">/help</code>
+                {" "}to see every command. Includes <code className="text-sith">/ask</code>,
+                {" "}<code className="text-sith">/loadout-check</code>,
+                {" "}<code className="text-sith">/upgrade</code> (uses your real vault),
+                {" "}<code className="text-sith">/raid</code>, <code className="text-sith">/catalyst</code>.
+                Run <code className="text-sith">/link-bungie</code> once to enable
+                personalized answers — stays linked for 30 days.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="border-border bg-deepspace/80">
+            <CardHeader>
+              <CardTitle className="text-sith">▶  Browser — this site</CardTitle>
+              <CardDescription className="font-ui text-sm leading-relaxed">
+                No install, no Discord required. Sign in with Bungie once, then use
+                the <Link to="/chat" className="text-saber hover:underline">chatbot at /chat</Link>
+                {" "}or the <Link to="/app" className="text-saber hover:underline">dashboard at /app</Link>.
+                Same answers as Discord — same anti-hallucination checks, same
+                current-meta grounding, same Bungie-manifest verification.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+
       {/* ============== CTA ============== */}
       <section className="mt-24 mb-12 relative border border-border bg-nebula/60 p-12 text-center">
         <div className="absolute inset-x-0 top-0 h-px bg-signature-gradient" />
@@ -140,9 +186,14 @@ export default function Landing() {
         <p className="mt-4 text-muted font-ui uppercase tracking-[0.18em] text-sm">
           Free. Open source. The dark side awaits.
         </p>
-        <Button variant="primary" size="lg" onClick={signIn} disabled={loading} className="mt-8">
-          {loading ? "Routing to Bungie…" : "Begin"}
-        </Button>
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <Button variant="primary" size="lg" onClick={signIn} disabled={loading}>
+            {loading ? "Routing to Bungie…" : "Begin"}
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <Link to="/chat">Ask Darth Bot →</Link>
+          </Button>
+        </div>
       </section>
     </div>
   );

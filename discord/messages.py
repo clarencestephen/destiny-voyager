@@ -28,9 +28,8 @@ WELCOME_TITLE = "▲ IMPERIAL TRANSMISSION RECEIVED"
 WELCOME_BODY = (
     "Everything that has transpired has done so according to my design.\n\n"
     "You have entered the **Order 66** clan server — the dark side of "
-    "Destiny 2 build optimization. Home of **Destiny Voyager**, the "
-    "workbook that turns your DIM URLs, inventory, and exotic queue into "
-    "one ruthless plan.\n\n"
+    "Destiny 2 build optimization. Home of **Destiny Voyager** (the "
+    "workbook + web app) and **Darth Bot** (the Discord assistant).\n\n"
     "**Start here, Padawan:**\n\n"
     "➊  Read 📋 **#imperial-law** — react to accept the code. This "
     "unlocks the rest of the server.\n"
@@ -39,14 +38,19 @@ WELCOME_BODY = (
     "status.\n"
     "➌  Introduce yourself in 📋 **#in-a-galaxy-far-far-away** — name, "
     "class, timezone, what you're chasing this season.\n"
-    "➍  Grab Destiny Voyager from 🚀 **#destiny-voyager** if you want "
-    "the workbook.\n\n"
+    "➍  Run `/help` anywhere — **Darth Bot** lists everything it can "
+    "answer (catalyst quests, raid encounter rundowns, current meta, "
+    "personalized loadout checks). It's anti-hallucination grounded.\n"
+    "➎  Run `/link-bungie` if you want personalized answers about *your* "
+    "vault. One-time Bungie sign-in, good for 30 days.\n"
+    "➏  Grab the desktop workbook from 🚀 **#destiny-voyager**, or just "
+    "use the browser chatbot at destiny-voyager.clarencestephen.com.\n\n"
     "We don't tag `@everyone` or `@here`. Pick roles if you want pings "
     "for raid nights, GMs, or dungeon teaches. Otherwise your phone "
     "stays quiet.\n\n"
-    "If you're not signed up with **Charlemagne** (the Destiny 2 Discord "
-    "bot), you'll need to be — `/profile link` in any channel after "
-    "he's invited. See the pinned message in #imperial-law for the link.\n\n"
+    "Also signed up with **Charlemagne** (the Destiny 2 Discord bot)? "
+    "Run `/profile link` to attach your Bungie account for clan event "
+    "signups and stat lookups.\n\n"
     "There is no luck. Only probability — and execution.\n\n"
     "*The negotiation loudly inhales. And now... the server begins.*"
 )
@@ -94,6 +98,47 @@ RULES_BODY = (
 )
 
 VERIFY_REACTION = "✅"
+
+
+# ────────────────────────────────────────────────────────────────────
+# #destiny-voyager — pinned "DARTH BOT — COMMAND DOSSIER" embed
+# ────────────────────────────────────────────────────────────────────
+
+DARTH_BOT_GUIDE_MARKER = "Darth Bot · command dossier · v1"
+
+DARTH_BOT_GUIDE_TITLE = "▲ DARTH BOT — COMMAND DOSSIER"
+
+DARTH_BOT_GUIDE_BODY = (
+    "The Empire's Destiny 2 assistant. Anti-hallucination, "
+    "manifest-grounded, current-meta aware. Same brain as the "
+    "chatbot at destiny-voyager.clarencestephen.com/chat — different "
+    "UI shell.\n\n"
+    "**ASK ANYTHING**\n"
+    "`/ask <question>` — catalyst quests, raid mechanics, mod "
+    "descriptions, current meta. Reply lands in the same channel.\n"
+    "`@Darth Bot <question>` — same, mention-style.\n\n"
+    "**PERSONALIZED — needs `/link-bungie` once**\n"
+    "`/inventory [focus]` — your vault + equipped gear filtered by "
+    "type / class.\n"
+    "`/loadout-check [activity]` — analyze your loadout vs current "
+    "PvP/PvE meta.\n"
+    "`/upgrade [activity]` — top 3-5 items to chase based on your "
+    "inventory gaps.\n"
+    "`/build [activity]` — full build recommendation using your gear.\n\n"
+    "**LOOKUPS**\n"
+    "`/raid <name>` — encounter rundown for any raid.\n"
+    "`/catalyst <weapon>` — how to get a weapon's catalyst.\n\n"
+    "**ACCOUNT**\n"
+    "`/link-bungie` — one-time DM with a sign-in URL. Stays linked "
+    "for 30 days. Required for the personalized commands above.\n"
+    "`/sanity` — health check on the bot's backend services.\n\n"
+    "**WEB ALTERNATIVE**\n"
+    "https://destiny-voyager.clarencestephen.com/chat — chatbot in "
+    "your browser, no install required.\n\n"
+    "_Item names in responses are verified against the Bungie manifest. "
+    "If you see a `_⚠ Possibly invented names_` caveat, double-check on "
+    "light.gg/db before acting on it._"
+)
 
 
 # ────────────────────────────────────────────────────────────────────

@@ -282,6 +282,32 @@ async def _find_existing(channel, marker):
     return None
 
 
+async def post_darth_bot_guide(guild):
+    """Post the pinned 'DARTH BOT — COMMAND DOSSIER' embed in
+    #destiny-voyager so members see it on entry. Idempotent."""
+    print("\n[Posts] Darth Bot command dossier in #destiny-voyager...")
+    ch = discord.utils.get(guild.text_channels, name="destiny-voyager")
+    if not ch:
+        print("  ? #destiny-voyager not found")
+        return
+    existing = await _find_existing(ch, msg_content.DARTH_BOT_GUIDE_MARKER)
+    if existing:
+        print(f"  ✓ already posted (msg id {existing.id})")
+        return
+    embed = discord.Embed(
+        title=msg_content.DARTH_BOT_GUIDE_TITLE,
+        description=msg_content.DARTH_BOT_GUIDE_BODY,
+        color=msg_content.SITH_PURPLE,
+    )
+    embed.set_footer(text=msg_content.DARTH_BOT_GUIDE_MARKER)
+    m = await ch.send(embed=embed)
+    try:
+        await m.pin(reason="setup_server.py — Darth Bot dossier")
+    except Exception:
+        pass
+    print(f"  + posted (msg id {m.id})")
+
+
 async def post_welcome_and_rules(guild):
     """Post the #welcome and #imperial-law embeds, idempotently. Adds the
     ✅ verification reaction to the imperial-law message so reaction-role
@@ -411,6 +437,7 @@ class SetupClient(discord.Client):
         if not self.skip_posts:
             await post_welcome_and_rules(guild)
             await post_recruitment_messages(guild)
+            await post_darth_bot_guide(guild)
         else:
             print("\n[Posts] Skipped (--skip-posts).")
 

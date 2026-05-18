@@ -16,16 +16,65 @@ export interface UserProfile {
   };
 }
 
-export interface Item {
+/** Lean shape returned by /api/inventory — Worker no longer decorates */
+export interface LeanItem {
   instance_id: string;
+  hash: number;
+  power: number;
+  location: string;
+  tag?: "favorite" | "keep" | "infuse" | "junk" | "archive";
+}
+
+/** Decorated shape — Worker hash → manifest lookup → fully populated client-side */
+export interface Item extends LeanItem {
   name: string;
   tier: string;
   type: string;
   slot: string;
   element: string;
-  power: number;
-  location: string;
-  tag?: "favorite" | "keep" | "infuse" | "junk" | "archive";
+  isExotic: boolean;
+}
+
+/** Slim manifest entry — keys mirror bake-slim-manifest.mjs */
+export interface ManifestEntry {
+  n: string;  // name
+  t: string;  // type
+  r: string;  // tier (rarity)
+  s: string;  // slot
+  e: string;  // element
+  c: string;  // class
+  x: boolean; // is exotic
+}
+export type SlimManifest = Record<string, ManifestEntry>;
+
+let _manifestCache: SlimManifest | null = null;
+let _manifestPromise: Promise<SlimManifest> | null = null;
+export async function loadManifest(): Promise<SlimManifest> {
+  if (_manifestCache) return _manifestCache;
+  if (_manifestPromise) return _manifestPromise;
+  _manifestPromise = fetch("/manifest.json", { credentials: "omit" })
+    .then((r) => {
+      if (!r.ok) throw new Error(`manifest.json HTTP ${r.status}`);
+      return r.json() as Promise<SlimManifest>;
+    })
+    .then((m) => {
+      _manifestCache = m;
+      return m;
+    });
+  return _manifestPromise;
+}
+
+export function decorate(lean: LeanItem, manifest: SlimManifest): Item {
+  const m = manifest[String(lean.hash)];
+  return {
+    ...lean,
+    name:     m?.n ?? `#${lean.hash}`,
+    type:     m?.t ?? "",
+    tier:     m?.r ?? "",
+    slot:     m?.s ?? "",
+    element:  m?.e ?? "",
+    isExotic: m?.x ?? false,
+  };
 }
 
 export interface ChatMessage {
@@ -72,7 +121,17 @@ export const api = {
 
   me: () => jsonFetch<UserProfile>("/api/me"),
 
-  inventory: () => jsonFetch<{ items: Item[] }>("/api/inventory"),
+  /** Raw lean items from the Worker — decorate via loadManifest() + decorate() */
+  inventory: () => jsonFetch<{ items: LeanItem[]; count: number }>("/api/inventory"),
+
+  /** Convenience: fetch + decorate in one call. Manifest is browser-cached forever. */
+  async inventoryDecorated(): Promise<Item[]> {
+    const [{ items }, manifest] = await Promise.all([
+      this.inventory(),
+      loadManifest(),
+    ]);
+    return items.map((i) => decorate(i, manifest));
+  },
 
   setTag: (instance_id: string, tag: Item["tag"] | null) =>
     jsonFetch<{ ok: true }>("/api/tags", {

@@ -159,6 +159,43 @@ async def cmd_catalyst(interaction: discord.Interaction, weapon: str):
 
 
 @bot.tree.command(
+    name="help",
+    description="Show what Darth Bot can do (all commands grouped by purpose)",
+)
+async def cmd_help(interaction: discord.Interaction):
+    text = (
+        "**▲ DARTH BOT — COMMAND DOSSIER**\n"
+        "_The Empire's Destiny 2 assistant. Anti-hallucination, manifest-grounded, "
+        "current-meta aware._\n\n"
+        "**ASK ANYTHING**\n"
+        "`/ask <question>` — any Destiny 2 question. Catalyst quests, raid mechanics, "
+        "mod descriptions, current meta. Replies in the same channel.\n"
+        "`@Darth Bot <question>` — same as `/ask`, but mention-style.\n\n"
+        "**INVENTORY-AWARE** (link your account first with `/link-bungie`)\n"
+        "`/inventory [focus]` — your vault + equipped gear, filtered by all / weapons / "
+        "armor / hunter / titan / warlock.\n"
+        "`/loadout-check [activity]` — analyze your current loadout vs the current "
+        "PvP/PvE meta. Defaults to PvE.\n"
+        "`/upgrade [activity]` — your next 3-5 chase items based on gaps in your "
+        "inventory vs meta lists.\n"
+        "`/build [activity]` — recommend a full build using your inventory.\n\n"
+        "**LOOKUPS**\n"
+        "`/raid <name>` — encounter rundown for any raid.\n"
+        "`/catalyst <weapon>` — how to get a weapon's catalyst.\n\n"
+        "**ACCOUNT**\n"
+        "`/link-bungie` — DM yourself a one-time URL. Sign in with Bungie once on "
+        "the Destiny Voyager web. Stays signed in for 30 days. Required for the "
+        "inventory-aware commands above.\n\n"
+        "**TROUBLESHOOTING**\n"
+        "`/sanity` — verify ollama + KB + inventory cache + backend are all healthy.\n\n"
+        "**WEB (same brain, browser UI)**\n"
+        "https://destiny-voyager.clarencestephen.com/chat — chatbot in your browser, "
+        "same answers as Discord, no install required."
+    )
+    await interaction.response.send_message(text, ephemeral=True)
+
+
+@bot.tree.command(
     name="inventory",
     description="Show a summary of your Destiny 2 inventory (vault + equipped)",
 )

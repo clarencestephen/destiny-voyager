@@ -190,22 +190,111 @@ async function requireSession(c: any, next: any) {
 // ============================================================
 app.get("/api/me", async (c) => {
   const u = c.get("user");
-  return c.json({
-    bungie_name: u.display_name,
-    membership_id: u.membership_id,
-    primary_class: "warlock", // TODO: derive from /Profile components
-    power: 0, // TODO: derive from highest-power character
-    build_focus: undefined,
-  });
+  try {
+    // component 200 = Characters
+    const profile = await bungieGet(
+      c.env,
+      `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=200`,
+      u.access_token,
+    );
+    const chars = profile?.characters?.data ?? {};
+    const charList = Object.values(chars) as any[];
+    if (charList.length === 0) {
+      return c.json({
+        bungie_name: u.display_name,
+        membership_id: u.membership_id,
+        primary_class: "warlock",
+        power: 0,
+        build_focus: undefined,
+      });
+    }
+    // Pick the highest-light character — that's "primary"
+    charList.sort((a, b) => (b.light ?? 0) - (a.light ?? 0));
+    const top = charList[0];
+    const classMap: Record<number, "titan" | "hunter" | "warlock"> = {
+      0: "titan", 1: "hunter", 2: "warlock",
+    };
+    return c.json({
+      bungie_name: u.display_name,
+      membership_id: u.membership_id,
+      primary_class: classMap[top.classType] ?? "warlock",
+      power: top.light ?? 0,
+      build_focus: u.build_focus,
+    });
+  } catch (e: any) {
+    return c.json({ error: "profile_fetch_failed", detail: e.message }, 502);
+  }
 });
 
 // ============================================================
-// /inventory  — stub returning [] until full Bungie /Profile call wired
+// /inventory  — full Bungie /Profile fetch + flatten.
+// Returns a lean shape; the frontend decorates names/types/tiers from
+// public/manifest.json (baked offline by scripts/bake-slim-manifest.mjs).
 // ============================================================
 app.get("/api/inventory", async (c) => {
-  // Real impl: bungieGet(`/Destiny2/{type}/Profile/{id}/?components=102,201,205,300`)
-  // then flatten + decorate with manifest. Returning [] for v0.1 scaffold.
-  return c.json({ items: [] });
+  const u = c.get("user");
+  try {
+    // 102 = ProfileInventory (vault)
+    // 200 = Characters (for class lookup per character)
+    // 201 = CharacterInventories (per-char items)
+    // 205 = CharacterEquipment (currently equipped)
+    // 300 = ItemInstances (power, primaryStat)
+    const profile = await bungieGet(
+      c.env,
+      `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,200,201,205,300`,
+      u.access_token,
+    );
+
+    const instances = profile?.itemComponents?.instances?.data ?? {};
+    const chars = profile?.characters?.data ?? {};
+    const charInv = profile?.characterInventories?.data ?? {};
+    const equipped = profile?.characterEquipment?.data ?? {};
+    const vault = profile?.profileInventory?.data?.items ?? [];
+
+    const classNames: Record<number, string> = {
+      0: "Titan", 1: "Hunter", 2: "Warlock",
+    };
+
+    type LeanItem = {
+      instance_id: string;
+      hash: number;
+      power: number;
+      location: string;
+      tag?: string;
+    };
+    const out: LeanItem[] = [];
+    const tags = u.item_tags || {};
+
+    const push = (rawItem: any, location: string) => {
+      const instId = rawItem.itemInstanceId ?? "";
+      const inst = instances[instId];
+      out.push({
+        instance_id: String(instId),
+        hash: rawItem.itemHash,
+        power: inst?.primaryStat?.value ?? 0,
+        location,
+        tag: tags[String(instId)],
+      });
+    };
+
+    // Vault
+    for (const it of vault) push(it, "VAULT");
+
+    // Per-character inventory + equipped
+    for (const [charId, char] of Object.entries(chars) as Array<[string, any]>) {
+      const cls = classNames[char.classType] ?? "?";
+      const light = char.light ?? "?";
+      const tag = `${cls.toUpperCase()} ${light}`;
+      const inv = charInv[charId]?.items ?? [];
+      for (const it of inv) push(it, tag);
+      const eq = equipped[charId]?.items ?? [];
+      for (const it of eq) push(it, `${cls.toUpperCase()} EQUIPPED`);
+    }
+
+    return c.json({ items: out, count: out.length });
+  } catch (e: any) {
+    return c.json({ error: "inventory_fetch_failed", detail: e.message }, 502);
+  }
 });
 
 // ============================================================
@@ -241,8 +330,9 @@ async function proxyToBackend(
     "X-Forwarded-By": "destiny-voyager-worker",
   };
   // Forward session id if the user is logged in — backend can resolve
-  // it to a bungie_id via KV lookup we'll wire later.
-  const sid = getCookie(c, "dv_session");
+  // it to a bungie_id via KV lookup we'll wire later. (Cookie name
+  // matches the auth flow above.)
+  const sid = getCookie(c, "dv_sid");
   if (sid) headers["X-Session-Id"] = sid;
   const body = init.method && init.method !== "GET" ? await c.req.text() : undefined;
   try {
