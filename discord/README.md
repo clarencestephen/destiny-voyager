@@ -1,4 +1,4 @@
-# Discord server setup — Order 66 / "The Way of the Sith"
+# Discord server setup — Order 66 (the Destiny Voyager clan)
 
 Files in this folder:
 

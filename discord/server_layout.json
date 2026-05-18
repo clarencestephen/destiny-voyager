@@ -1,7 +1,8 @@
 {
   "_comment": "Star Wars themed Discord layout for Order 66 clan server. Target server ID: 1471072707524296767. Consumed by discord/setup_server.py or imported into Xenon. Discord channel types: 0=text, 2=voice, 4=category.",
   "_target_server_id": "1471072707524296767",
-  "_app_name": "Order 66",
+  "_clan_name": "Order 66",
+  "_app_name": "Destiny Voyager",
   "_tagline": "Destiny voyager optimizer · wishlist organizer · API stat tracking",
   "_naming_convention": "Star Wars themed names. Channel topics describe the actual purpose so members don't get lost.",
 
@@ -88,13 +89,13 @@
     },
     {
       "name": "🚀 The Imperial Armory",
-      "_purpose": "Order 66 app + toolkit support",
+      "_purpose": "Destiny Voyager app + toolkit support (the Order 66 clan's app)",
       "_setup_note": "Restrict view to verified roles (Imperial Trooper / Rebel Ally / Padawan).",
       "channels": [
-        {"type": "text",  "name": "order-66",               "topic": "📌 Order 66 — the app. Latest .exe pinned at top. Download, setup steps, and FAQ here."},
+        {"type": "text",  "name": "destiny-voyager",              "topic": "📌 Destiny Voyager — the Order 66 clan app. Latest .exe pinned at top. Download, setup steps, and FAQ here."},
         {"type": "text",  "name": "smugglers-cache",               "topic": "Older releases, DIM CSV templates, manifest backups."},
-        {"type": "text",  "name": "engineering-bay",               "topic": "Order 66 support — bug reports, install help, questions."},
-        {"type": "text",  "name": "imperial-briefings",            "topic": "Release notes + version pings for Order 66."},
+        {"type": "text",  "name": "engineering-bay",               "topic": "Destiny Voyager support — bug reports, install help, questions."},
+        {"type": "text",  "name": "imperial-briefings",            "topic": "Release notes + version pings for Destiny Voyager."},
         {"type": "text",  "name": "senate-polls",                  "topic": "Quick 2-day polls on builds, features, meta. (formerly: 2-day-polls)"}
       ]
     },
