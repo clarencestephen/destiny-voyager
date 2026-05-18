@@ -35,7 +35,7 @@ import urllib.request
 from pathlib import Path
 
 BASE = "https://www.bungie.net/Platform"
-USER_AGENT = "order-66/0.2"
+USER_AGENT = "destiny-voyager/0.2"
 
 # Membership type → readable name
 PLATFORM_NAMES = {

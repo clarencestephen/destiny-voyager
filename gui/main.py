@@ -1,7 +1,7 @@
 """
 gui/main.py
 ===========
-Entry point for the Order 66 PyQt6 GUI.
+Entry point for the Destiny Voyager PyQt6 GUI.
 
 Usage (from repo root):
     pip install PyQt6

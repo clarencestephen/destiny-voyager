@@ -1,6 +1,6 @@
-# Order 66
+# Destiny Voyager
 
-> **Destiny voyager optimizer · wishlist organizer · API stat tracking**
+> **Loadout optimizer · wishlist organizer · API stat tracker** — the companion app for the **Order 66** clan.
 
 A personal Destiny 2 planner — DIM share URL decoder, wishlist tracker, exotic mission queue, and build/mod recommender — all in one Excel workbook driven by a Python install wizard.
 
@@ -30,8 +30,8 @@ After running the install wizard you'll have:
 ### 1. GUI installer  (recommended, Windows-friendly)
 
 ```bash
-git clone https://github.com/clarencestephen/order-66
-cd order-66
+git clone https://github.com/clarencestephen/destiny-voyager
+cd destiny-voyager
 pip install -r requirements.txt
 python setup_gui.py
 ```
@@ -54,7 +54,7 @@ Same flow, terminal-based. Both write the same `user_config.json` and `my_loadou
 
 ### 3. Pre-built Windows .exe  (no Python required)
 
-If you don't want to install Python, grab the latest `.exe` from the [Releases page](https://github.com/clarencestephen/order-66/releases). Double-click and follow the wizard. The .exe is built by GitHub Actions on every tagged release — see `.github/workflows/build-windows-exe.yml`.
+If you don't want to install Python, grab the latest `.exe` from the [Releases page](https://github.com/clarencestephen/destiny-voyager/releases). Double-click and follow the wizard. The .exe is built by GitHub Actions on every tagged release — see `.github/workflows/build-windows-exe.yml`.
 
 ---
 
@@ -106,7 +106,7 @@ In DIM: **Settings → Spreadsheets → click `Weapons`, `Armor`, or `Ghost`** t
 ## Repo layout
 
 ```
-order-66/
+destiny-voyager/
 ├── README.md
 ├── LICENSE                  (MIT)
 ├── .gitignore               (excludes user_config.json, my_loadouts.xlsx, manifest_cache/)

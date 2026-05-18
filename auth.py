@@ -132,7 +132,7 @@ class _CallbackHandler(http.server.BaseHTTPRequestHandler):
                 "<html><body style='font-family:sans-serif;text-align:center;"
                 "padding:60px;color:#1F2937;'>"
                 "<h1>✅ Signed in</h1>"
-                "<p>You can close this tab and return to the Order 66 installer.</p>"
+                "<p>You can close this tab and return to the Destiny Voyager installer.</p>"
                 "</body></html>"
             )
         else:

@@ -1,7 +1,7 @@
 """
 gui/main_window.py
 ==================
-Top-level Order 66 PyQt6 window — Imperial Dossier aesthetic.
+Top-level Destiny Voyager PyQt6 window — Imperial Dossier aesthetic (Order 66 clan flavor).
 
 Renders the three-pane layout (filters | inventory | detail) over a header
 and footer. All custom widgets are below MainWindow.
@@ -69,7 +69,7 @@ def refresh_style(widget: QWidget):
 
 
 # ============================================================
-# Brand mark — diamond/hex Order 66 emblem
+# Brand mark — diamond/hex Destiny Voyager emblem
 # ============================================================
 
 
@@ -127,8 +127,8 @@ class HeaderBar(QWidget):
         brand_text = QVBoxLayout()
         brand_text.setSpacing(2)
         brand_text.setContentsMargins(0, 2, 0, 0)
-        brand_text.addWidget(make_label("ORDER 66", obj_name="brandName"))
-        brand_text.addWidget(make_label("DESTINY VOYAGER · OPTIMIZER · WISHLIST",
+        brand_text.addWidget(make_label("DESTINY VOYAGER", obj_name="brandName"))
+        brand_text.addWidget(make_label("OPTIMIZER · WISHLIST · API STATS",
                                         obj_name="brandTagline"))
         brand.addLayout(brand_text)
         lay.addLayout(brand)
@@ -695,7 +695,7 @@ class FooterBar(QWidget):
         self.setFixedHeight(34)
         lay = QHBoxLayout(self)
         lay.setContentsMargins(20, 0, 20, 0)
-        lay.addWidget(make_label("ORDER 66 · v0.3.0 · IMPERIAL EDITION",
+        lay.addWidget(make_label("DESTINY VOYAGER · v0.3.0 · ORDER 66 EDITION",
                                   role="footerText"))
         lay.addStretch(1)
         for text in [
@@ -717,7 +717,7 @@ class FooterBar(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Order 66 — Imperial Dossier")
+        self.setWindowTitle("Destiny Voyager — Imperial Dossier")
         self.resize(1480, 900)
         # Center on screen
         screen = QGuiApplication.primaryScreen().geometry()

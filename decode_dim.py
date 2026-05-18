@@ -61,7 +61,7 @@ def bungie_get(url, api_key):
     req = urllib.request.Request(
         url,
         headers={"X-API-Key": api_key,
-                 "User-Agent": "order-66/1.0"}
+                 "User-Agent": "destiny-voyager/1.0"}
     )
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.loads(r.read().decode("utf-8"))

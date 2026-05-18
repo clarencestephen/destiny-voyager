@@ -62,7 +62,7 @@ LIGHT = "#F3F4F6"
 class Wizard(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Order 66 — Install")
+        self.title("Destiny Voyager — Install")
         self.geometry(f"{WINDOW_W}x{WINDOW_H}")
         self.minsize(WINDOW_W, WINDOW_H)
         self.configure(bg=LIGHT)
@@ -80,7 +80,7 @@ class Wizard(tk.Tk):
         header = tk.Frame(self, bg=HEADER_BG, height=64)
         header.pack(fill="x")
         header.pack_propagate(False)
-        tk.Label(header, text="  ORDER 66",
+        tk.Label(header, text="  DESTINY VOYAGER",
                  bg=HEADER_BG, fg="white",
                  font=("Segoe UI", 16, "bold")).pack(side="left", padx=8)
         self.step_label = tk.Label(header, text="", bg=HEADER_BG, fg="#9CA3AF",
@@ -167,7 +167,7 @@ class Wizard(tk.Tk):
         tk.Label(self.body, text="Welcome", bg=LIGHT,
                  font=("Segoe UI", 22, "bold")).pack(anchor="w", pady=(8, 4))
         tk.Label(self.body,
-                 text="This wizard will set up your personal Order 66 workbook.\n"
+                 text="This wizard will set up your personal Destiny Voyager workbook.\n"
                       "Takes about 2 minutes. You'll need:",
                  bg=LIGHT, fg="#374151",
                  font=("Segoe UI", 11), justify="left").pack(anchor="w", pady=(0, 12))
