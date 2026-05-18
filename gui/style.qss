@@ -1,0 +1,398 @@
+/* ============================================================
+   ORDER 66 — PyQt6 Stylesheet (Imperial Dossier theme)
+   Mirror of frontend/order-66-preview.html
+   ============================================================ */
+
+* {
+    color: #C5CAD3;
+    font-family: "Sora";
+    font-size: 12px;
+    selection-background-color: #DC0000;
+    selection-color: #F8FAFC;
+    outline: 0;
+}
+
+QMainWindow, QWidget#central {
+    background: #050609;
+}
+
+/* ---------- panels ---------- */
+QWidget[role="panel"] {
+    background: #0B0D12;
+    border: 0;
+}
+
+QWidget[role="header"] {
+    background: #0B0D12;
+    border-bottom: 1px solid #1E222C;
+}
+
+QWidget[role="footer"] {
+    background: #0B0D12;
+    border-top: 1px solid #1E222C;
+}
+
+QWidget[role="divider"] {
+    background: #1E222C;
+}
+
+/* ---------- brand ---------- */
+QLabel#brandName {
+    font-family: "Saira Stencil One";
+    font-size: 22pt;
+    color: #F8FAFC;
+    letter-spacing: 1px;
+}
+QLabel#brandTagline {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 3px;
+}
+QLabel#brandMark {
+    background: #DC0000;
+    color: #050609;
+    font-family: "Saira Stencil One";
+    font-size: 14pt;
+    min-width: 38px;
+    max-width: 38px;
+    min-height: 38px;
+    max-height: 38px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* ---------- search ---------- */
+QLineEdit#searchInput {
+    background: #14171F;
+    border: 1px solid #1E222C;
+    color: #C5CAD3;
+    padding: 8px 14px;
+    font-family: "JetBrains Mono";
+    font-size: 11pt;
+    letter-spacing: 1px;
+}
+QLineEdit#searchInput:focus {
+    border: 1px solid #DC0000;
+}
+
+/* ---------- agent badge ---------- */
+QWidget#agentBadge {
+    background: #14171F;
+    border-left: 3px solid #DC0000;
+}
+QLabel#agentId {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 2px;
+}
+QLabel#agentName {
+    font-family: "Big Shoulders Stencil Text";
+    font-size: 14pt;
+    color: #F8FAFC;
+    letter-spacing: 1px;
+}
+
+/* ---------- status pill ---------- */
+QLabel#statusText {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+    letter-spacing: 2px;
+}
+
+/* ---------- filter rail ---------- */
+QLabel[role="sectionLabel"] {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 4px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #1E222C;
+}
+
+QPushButton[role="filterPill"] {
+    background: transparent;
+    border: 0;
+    border-left: 2px solid transparent;
+    color: #C5CAD3;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11pt;
+}
+QPushButton[role="filterPill"]:hover {
+    background: #14171F;
+    border-left: 2px solid #1E222C;
+    color: #F8FAFC;
+}
+QPushButton[role="filterPill"]:checked {
+    background: #14171F;
+    border-left: 2px solid #DC0000;
+    color: #F8FAFC;
+}
+
+QPushButton[role="tagChip"] {
+    background: transparent;
+    border: 1px solid #1E222C;
+    color: #5C6470;
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    letter-spacing: 2px;
+    padding: 8px 0;
+    min-height: 28px;
+}
+QPushButton[role="tagChip"]:hover { color: #F8FAFC; border-color: #2A2E3A; }
+QPushButton[role="tagChip"][tag="favorite"] { color: #C9A227; border-color: #C9A227; }
+QPushButton[role="tagChip"][tag="keep"]     { color: #7ED321; border-color: #7ED321; }
+QPushButton[role="tagChip"][tag="infuse"]   { color: #F5A623; border-color: #F5A623; }
+QPushButton[role="tagChip"][tag="junk"]     { color: #FF3B30; border-color: #FF3B30; }
+QPushButton[role="tagChip"][tag="archive"]  { color: #8E8E93; border-color: #8E8E93; }
+
+/* ---------- character cards ---------- */
+QFrame[role="charCard"] {
+    background: #0B0D12;
+    border: 0;
+    border-bottom: 3px solid transparent;
+}
+QFrame[role="charCard"]:hover {
+    background: #14171F;
+}
+QFrame[role="charCard"][active="true"] {
+    background: #14171F;
+    border-bottom: 3px solid #DC0000;
+}
+QLabel#charLabel {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 3px;
+}
+QLabel#charName {
+    font-family: "Big Shoulders Stencil Text";
+    font-size: 28pt;
+    font-weight: 900;
+    color: #F8FAFC;
+}
+QLabel#charName[charClass="hunter"]  { color: #4A8EFF; }
+QLabel#charName[charClass="titan"]   { color: #FF4242; }
+QLabel#charName[charClass="warlock"] { color: #A66BFF; }
+QLabel#charPower {
+    font-family: "Saira Stencil One";
+    font-size: 22pt;
+    color: #C9A227;
+}
+QLabel#charStats {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+}
+
+/* ---------- inventory toolbar ---------- */
+QWidget#invToolbar {
+    background: #0B0D12;
+    border-bottom: 1px solid #1E222C;
+}
+QLabel#invMeta {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+    letter-spacing: 2px;
+}
+QLabel#invMetaCount {
+    color: #DC0000;
+    font-weight: 700;
+}
+QPushButton[role="sortPill"] {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #5C6470;
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+}
+QPushButton[role="sortPill"]:hover { color: #C5CAD3; border: 1px solid #1E222C; }
+QPushButton[role="sortPill"]:checked {
+    color: #F8FAFC;
+    border: 1px solid #DC0000;
+}
+
+/* ---------- item rows ---------- */
+QFrame[role="itemRow"] {
+    background: #0B0D12;
+    border: 1px solid transparent;
+}
+QFrame[role="itemRow"]:hover {
+    background: #0E1118;
+    border: 1px solid #DC0000;
+}
+QFrame[role="itemRow"][selected="true"] {
+    background: #14171F;
+    border: 1px solid #DC0000;
+}
+
+QLabel#itemName {
+    font-family: "Sora";
+    font-size: 13pt;
+    font-weight: 600;
+    color: #C5CAD3;
+}
+QLabel#itemName[tier="exotic"] { color: #C9A227; }
+QLabel#itemMeta {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+}
+QLabel#itemLocation {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+    letter-spacing: 1px;
+}
+QLabel#itemPower {
+    font-family: "Saira Stencil One";
+    font-size: 16pt;
+    color: #C9A227;
+}
+
+/* rarity bar uses a QFrame painted by color */
+QFrame[role="rarityBar"] {
+    min-width: 3px;
+    max-width: 3px;
+}
+QFrame[role="rarityBar"][tier="exotic"]    { background: #C9A227; }
+QFrame[role="rarityBar"][tier="legendary"] { background: #A66BFF; }
+QFrame[role="rarityBar"][tier="rare"]      { background: #4A8EFF; }
+QFrame[role="rarityBar"][tier="common"]    { background: #5C6470; }
+
+/* tag badges */
+QLabel[role="tagBadge"] {
+    min-width: 24px; max-width: 24px;
+    min-height: 24px; max-height: 24px;
+    font-family: "JetBrains Mono";
+    font-size: 11pt;
+    font-weight: 600;
+    color: #050609;
+    qproperty-alignment: AlignCenter;
+}
+QLabel[role="tagBadge"][tag="favorite"] { background: #C9A227; }
+QLabel[role="tagBadge"][tag="keep"]     { background: #7ED321; }
+QLabel[role="tagBadge"][tag="infuse"]   { background: #F5A623; }
+QLabel[role="tagBadge"][tag="junk"]     { background: #FF3B30; }
+QLabel[role="tagBadge"][tag="archive"]  { background: #8E8E93; }
+QLabel[role="tagBadge"][tag="none"]     {
+    background: transparent;
+    color: #1E222C;
+    border: 1px dashed #1E222C;
+}
+
+/* ---------- detail panel ---------- */
+QLabel#detailLabel {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #DC0000;
+    letter-spacing: 4px;
+}
+QLabel#detailName {
+    font-family: "Saira Stencil One";
+    font-size: 26pt;
+    color: #C9A227;
+    letter-spacing: 1px;
+}
+QLabel#detailSubname {
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    color: #5C6470;
+    letter-spacing: 2px;
+}
+
+QFrame[role="statCell"] {
+    background: #0B0D12;
+}
+QLabel#statKey {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 3px;
+}
+QLabel#statVal {
+    font-family: "Big Shoulders Stencil Text";
+    font-size: 22pt;
+    font-weight: 900;
+    color: #F8FAFC;
+}
+QLabel#statVal[accent="gold"] { color: #C9A227; }
+QLabel#statVal[accent="red"]  { color: #DC0000; }
+
+QLabel[role="perkRow"] {
+    font-family: "Sora";
+    font-size: 11pt;
+    color: #C5CAD3;
+    padding: 6px 0;
+}
+QLabel[role="perkRow"][god="true"] { color: #C9A227; }
+
+QPushButton[role="action"] {
+    background: #14171F;
+    border: 0;
+    border-bottom: 2px solid #1E222C;
+    color: #C5CAD3;
+    font-family: "JetBrains Mono";
+    font-size: 9pt;
+    letter-spacing: 3px;
+    padding: 12px;
+}
+QPushButton[role="action"]:hover {
+    border-bottom: 2px solid #DC0000;
+    color: #F8FAFC;
+    background: #1E222C;
+}
+QPushButton[role="action"][primary="true"] {
+    background: #5C0000;
+    border-bottom: 2px solid #DC0000;
+    color: #F8FAFC;
+}
+QPushButton[role="action"][primary="true"]:hover {
+    background: #DC0000;
+}
+
+/* ---------- footer ---------- */
+QLabel[role="footerText"] {
+    font-family: "JetBrains Mono";
+    font-size: 8pt;
+    color: #5C6470;
+    letter-spacing: 3px;
+}
+
+/* ---------- scrollbars ---------- */
+QScrollBar:vertical {
+    background: #0B0D12;
+    width: 8px;
+    margin: 0;
+}
+QScrollBar::handle:vertical {
+    background: #1E222C;
+    min-height: 24px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #5C0000;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }
+
+QScrollBar:horizontal {
+    background: #0B0D12;
+    height: 8px;
+}
+QScrollBar::handle:horizontal { background: #1E222C; min-width: 24px; }
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0; }
+
+/* ---------- tooltips ---------- */
+QToolTip {
+    background: #0B0D12;
+    color: #C5CAD3;
+    border: 1px solid #DC0000;
+    padding: 6px 10px;
+    font-family: "JetBrains Mono";
+    font-size: 10pt;
+}

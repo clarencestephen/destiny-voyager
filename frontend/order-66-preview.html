@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORDER 66 — Imperial Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@500;700;900&family=Saira+Stencil+One&family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ORDER 66 — Classified Imperial Dossier
+   Color tokens, base reset, typography
+   ============================================================ */
+:root {
+  --imperial-red:     #DC0000;
+  --imperial-red-hot: #FF1744;
+  --imperial-red-dim: #5C0000;
+  --imperial-red-mist:rgba(220, 0, 0, 0.08);
+  --black:            #050609;
+  --carbon:           #0B0D12;
+  --steel:            #14171F;
+  --graphite:         #1E222C;
+  --concrete:         #2A2E3A;
+  --ash:              #5C6470;
+  --bone:             #C5CAD3;
+  --ivory:            #F8FAFC;
+  --imperial-gold:    #C9A227;
+  --imperial-gold-hot:#FFD700;
+  --keep-green:       #7ED321;
+  --infuse-yellow:    #F5A623;
+  --junk-red:         #FF3B30;
+  --archive-grey:     #8E8E93;
+
+  /* class accents */
+  --hunter:  #4A8EFF;
+  --titan:   #FF4242;
+  --warlock: #A66BFF;
+
+  --shadow-deep:  0 24px 60px -12px rgba(0,0,0,0.8);
+  --shadow-red:   0 0 40px -8px rgba(220, 0, 0, 0.45);
+  --grid-step:    32px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--black);
+  color: var(--bone);
+  font-family: 'Sora', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   BACKDROP — atmospheric layers
+   1. Subtle scan lines
+   2. Imperial cog watermark
+   3. Diagonal CLASSIFIED stamp
+   ============================================================ */
+body::before {
+  /* scanline overlay */
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 2px,
+    rgba(255, 255, 255, 0.012) 2px,
+    rgba(255, 255, 255, 0.012) 3px
+  );
+  z-index: 1;
+  animation: scan 8s linear infinite;
+}
+
+body::after {
+  /* corner grain */
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at top left, rgba(220, 0, 0, 0.06), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(220, 0, 0, 0.04), transparent 60%);
+  z-index: 0;
+}
+
+@keyframes scan {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+.watermark {
+  position: fixed;
+  top: 18%;
+  left: 12%;
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 22vw;
+  color: rgba(220, 0, 0, 0.025);
+  letter-spacing: -0.03em;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(-12deg);
+  line-height: 0.9;
+}
+
+.classified-stamp {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  font-family: 'Big Shoulders Stencil Text', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--imperial-red);
+  border: 2px solid var(--imperial-red);
+  padding: 4px 12px 3px;
+  transform: rotate(8deg);
+  opacity: 0.85;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ============================================================
+   APP LAYOUT
+   ============================================================ */
+.app {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 64px 1fr 32px;
+  min-height: 100vh;
+}
+
+/* ---------- HEADER ---------- */
+header {
+  display: grid;
+  grid-template-columns: 280px 1fr auto auto;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  background: linear-gradient(180deg, var(--carbon) 0%, transparent 100%);
+  border-bottom: 1px solid var(--graphite);
+  position: relative;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--imperial-red) 0%, transparent 8%, transparent 92%, var(--imperial-red) 100%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--imperial-red);
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.brand-mark::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  background: var(--black);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.brand-mark::before {
+  content: '66';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 14px;
+  color: var(--imperial-red);
+  z-index: 1;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.brand-text .name {
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ivory);
+}
+.brand-text .tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--ash);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.search {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+}
+.search input {
+  width: 100%;
+  background: var(--steel);
+  border: 1px solid var(--graphite);
+  color: var(--bone);
+  padding: 10px 16px 10px 40px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+.search input:focus {
+  border-color: var(--imperial-red);
+  box-shadow: 0 0 0 1px var(--imperial-red), inset 0 0 30px rgba(220, 0, 0, 0.06);
+}
+.search input::placeholder {
+  color: var(--ash);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 11px;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--ash);
+  border-radius: 50%;
+}
+.search-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; right: -4px;
+  width: 7px; height: 1.5px;
+  background: var(--ash);
+  transform: rotate(45deg);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.status-dot {
+  width: 8px; height: 8px;
+  background: var(--keep-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--keep-green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.agent-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--steel);
+  border-left: 3px solid var(--imperial-red);
+}
+.agent-badge .id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--ash);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.agent-badge .name {
+  font-family: 'Big Shoulders Stencil Text', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  color: var(--ivory);
+  margin-top: 4px;
+  line-height: 1;
+}
+
+/* ---------- MAIN GRID ---------- */
+.main {
+  display: grid;
+  grid-template-columns: 280px 1fr 360px;
+  gap: 1px;
+  background: var(--graphite);
+  overflow: hidden;
+}
+
+.panel {
+  background: var(--carbon);
+  overflow-y: auto;
+}
+
+/* ---------- FILTER RAIL ---------- */
+.filters {
+  padding: 24px 20px;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--ash);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--graphite);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--imperial-red);
+}
+
+.filter-group { margin-bottom: 28px; }
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  color: var(--bone);
+  border-left: 2px solid transparent;
+  transition: all 120ms;
+}
+.filter-pill:hover {
+  background: var(--steel);
+  border-left-color: var(--graphite);
+  color: var(--ivory);
+}
+.filter-pill.active {
+  background: var(--steel);
+  border-left-color: var(--imperial-red);
+  color: var(--ivory);
+}
+.filter-pill.active::after {
+  content: '◆';
+  color: var(--imperial-red);
+}
+.filter-pill .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ash);
+}
+
+.tag-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.tag-chip {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  height: 36px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+  background: transparent;
+  border: 1px solid var(--graphite);
+  cursor: pointer;
+  transition: all 120ms;
+}
+.tag-chip:hover { color: var(--ivory); border-color: var(--concrete); }
+.tag-chip.fav { color: var(--imperial-gold); border-color: var(--imperial-gold); }
+.tag-chip.keep { color: var(--keep-green); border-color: var(--keep-green); }
+.tag-chip.inf { color: var(--infuse-yellow); border-color: var(--infuse-yellow); }
+.tag-chip.junk { color: var(--junk-red); border-color: var(--junk-red); }
+.tag-chip.arch { color: var(--archive-grey); border-color: var(--archive-grey); }
+
+.power-meter {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--steel);
+  border-left: 2px solid var(--imperial-red);
+}
+.power-meter .label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ash);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.power-meter .label .value {
+  color: var(--imperial-red);
+  font-weight: 600;
+}
+.power-meter .track {
+  height: 4px;
+  background: var(--graphite);
+  position: relative;
+}
+.power-meter .fill {
+  position: absolute;
+  inset: 0 25% 0 0;
+  background: linear-gradient(90deg, var(--imperial-red-dim), var(--imperial-red));
+}
+
+/* ---------- CENTER: INVENTORY ---------- */
+.inventory-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--graphite);
+  border-bottom: 1px solid var(--graphite);
+}
+.char-card {
+  padding: 16px 20px;
+  background: var(--carbon);
+  cursor: pointer;
+  position: relative;
+  transition: background 200ms;
+}
+.char-card:hover { background: var(--steel); }
+.char-card.active {
+  background: var(--steel);
+  box-shadow: inset 0 -3px 0 var(--imperial-red);
+}
+.char-card .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--ash);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.char-card .name {
+  font-family: 'Big Shoulders Stencil Text', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+  color: var(--ivory);
+  line-height: 1;
+}
+.char-card[data-class="hunter"] .name { color: var(--hunter); }
+.char-card[data-class="titan"] .name { color: var(--titan); }
+.char-card[data-class="warlock"] .name { color: var(--warlock); }
+.char-card .stats {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ash);
+  letter-spacing: 0.05em;
+}
+.char-card .stats span { color: var(--bone); margin-left: 4px; }
+.char-card .power {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 22px;
+  color: var(--imperial-gold);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- INVENTORY TABLE ---------- */
+.inv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--graphite);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.inv-toolbar .meta { color: var(--bone); }
+.inv-toolbar .meta strong { color: var(--imperial-red); font-weight: 700; }
+
+.sort-pills { display: flex; gap: 4px; }
+.sort-pill {
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ash);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.sort-pill:hover { color: var(--bone); border-color: var(--graphite); }
+.sort-pill.active { color: var(--ivory); border-color: var(--imperial-red); }
+
+.items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 12px 32px;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 4px 1fr 80px 60px 80px 36px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  margin-bottom: 2px;
+  background: var(--carbon);
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 180ms ease, border-color 180ms, box-shadow 180ms;
+  overflow: hidden;
+  animation: row-in 600ms ease backwards;
+}
+.item-row:nth-child(1)  { animation-delay: 0ms; }
+.item-row:nth-child(2)  { animation-delay: 30ms; }
+.item-row:nth-child(3)  { animation-delay: 60ms; }
+.item-row:nth-child(4)  { animation-delay: 90ms; }
+.item-row:nth-child(5)  { animation-delay: 120ms; }
+.item-row:nth-child(6)  { animation-delay: 150ms; }
+.item-row:nth-child(7)  { animation-delay: 180ms; }
+.item-row:nth-child(8)  { animation-delay: 210ms; }
+.item-row:nth-child(9)  { animation-delay: 240ms; }
+.item-row:nth-child(10) { animation-delay: 270ms; }
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+.item-row::before {
+  /* sweep effect on hover */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--imperial-red-mist), transparent);
+  transform: translateX(-100%);
+  transition: transform 600ms;
+  pointer-events: none;
+}
+.item-row:hover::before { transform: translateX(100%); }
+.item-row:hover {
+  border-color: var(--imperial-red);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-red);
+}
+.item-row.selected {
+  border-color: var(--imperial-red);
+  background: var(--steel);
+}
+.item-row.selected::after {
+  content: '';
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  border-top: 2px solid var(--imperial-red);
+  border-right: 2px solid var(--imperial-red);
+}
+.item-row.selected .name { color: var(--ivory); }
+
+.rarity-bar {
+  align-self: stretch;
+  background: var(--ash);
+  border-radius: 1px;
+}
+.item-row[data-tier="exotic"] .rarity-bar { background: var(--imperial-gold); box-shadow: 0 0 12px var(--imperial-gold-hot); }
+.item-row[data-tier="legendary"] .rarity-bar { background: var(--warlock); }
+.item-row[data-tier="rare"] .rarity-bar { background: var(--hunter); }
+
+.item-main { min-width: 0; }
+.item-main .name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--bone);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-row[data-tier="exotic"] .item-main .name { color: var(--imperial-gold); }
+
+.item-main .meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+}
+.item-main .meta .element {
+  position: relative;
+  padding-left: 12px;
+}
+.item-main .meta .element::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ash);
+}
+.item-main .meta .element[data-el="solar"]::before  { background: #F58F3D; box-shadow: 0 0 4px #F58F3D; }
+.item-main .meta .element[data-el="arc"]::before    { background: #79B6FF; box-shadow: 0 0 4px #79B6FF; }
+.item-main .meta .element[data-el="void"]::before   { background: #B58CFF; box-shadow: 0 0 4px #B58CFF; }
+.item-main .meta .element[data-el="stasis"]::before { background: #4DBFFF; box-shadow: 0 0 4px #4DBFFF; }
+.item-main .meta .element[data-el="strand"]::before { background: #4DD9A5; box-shadow: 0 0 4px #4DD9A5; }
+.item-main .meta .element[data-el="kinetic"]::before { background: #DEDEDE; }
+
+.location {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ash);
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.power-cell {
+  text-align: right;
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 18px;
+  color: var(--imperial-gold);
+  letter-spacing: 0.02em;
+}
+
+.perks-preview {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.perk-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--concrete);
+}
+.perk-dot.god { background: var(--imperial-gold); box-shadow: 0 0 4px var(--imperial-gold); }
+
+.tag-cell {
+  display: grid;
+  place-items: center;
+}
+.tag-cell .badge {
+  width: 24px; height: 24px;
+  display: grid;
+  place-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: 0;
+}
+.tag-cell .badge.fav  { background: var(--imperial-gold); }
+.tag-cell .badge.keep { background: var(--keep-green); }
+.tag-cell .badge.inf  { background: var(--infuse-yellow); }
+.tag-cell .badge.junk { background: var(--junk-red); }
+.tag-cell .badge.arch { background: var(--archive-grey); }
+.tag-cell .badge.none {
+  background: transparent;
+  border: 1px dashed var(--graphite);
+  color: var(--graphite);
+}
+
+/* ---------- RIGHT: DETAIL PANEL ---------- */
+.detail {
+  padding: 24px;
+  position: relative;
+}
+
+.detail-corner {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-color: var(--imperial-red);
+  pointer-events: none;
+}
+.detail-corner.tl { top: 16px; left: 16px; border-top: 2px solid; border-left: 2px solid; }
+.detail-corner.tr { top: 16px; right: 16px; border-top: 2px solid; border-right: 2px solid; }
+.detail-corner.bl { bottom: 16px; left: 16px; border-bottom: 2px solid; border-left: 2px solid; }
+.detail-corner.br { bottom: 16px; right: 16px; border-bottom: 2px solid; border-right: 2px solid; }
+
+.detail-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--imperial-red);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.detail-name {
+  font-family: 'Saira Stencil One', sans-serif;
+  font-size: 28px;
+  line-height: 1.1;
+  color: var(--imperial-gold);
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.detail-subname {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ash);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--graphite);
+  margin-bottom: 24px;
+}
+.stat-cell {
+  background: var(--carbon);
+  padding: 14px 16px;
+}
+.stat-cell .key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--ash);
+  text-transform: uppercase;
+}
+.stat-cell .val {
+  font-family: 'Big Shoulders Stencil Text', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  color: var(--ivory);
+  margin-top: 4px;
+  line-height: 1;
+}
+.stat-cell .val.red { color: var(--imperial-red); }
+.stat-cell .val.gold { color: var(--imperial-gold); }
+
+.perks-list {
+  margin-bottom: 24px;
+}
+.perks-list .head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--ash);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--graphite);
+}
+.perk-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  color: var(--bone);
+}
+.perk-row::before {
+  content: '◆';
+  color: var(--imperial-red);
+  font-size: 8px;
+}
+.perk-row.god {
+  color: var(--imperial-gold);
+}
+.perk-row.god::before {
+  color: var(--imperial-gold);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 24px;
+}
+.action-btn {
+  padding: 12px 16px;
+  background: var(--steel);
+  border: none;
+  border-bottom: 2px solid var(--graphite);
+  color: var(--bone);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 120ms;
+}
+.action-btn:hover {
+  border-bottom-color: var(--imperial-red);
+  color: var(--ivory);
+  background: var(--graphite);
+}
+.action-btn.primary {
+  background: var(--imperial-red-dim);
+  border-bottom-color: var(--imperial-red);
+  color: var(--ivory);
+}
+.action-btn.primary:hover {
+  background: var(--imperial-red);
+  box-shadow: var(--shadow-red);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: var(--carbon);
+  border-top: 1px solid var(--graphite);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--ash);
+  text-transform: uppercase;
+}
+footer .right { display: flex; gap: 24px; }
+footer .blink { animation: blink 1.5s infinite; }
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--carbon); }
+::-webkit-scrollbar-thumb { background: var(--graphite); }
+::-webkit-scrollbar-thumb:hover { background: var(--imperial-red-dim); }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1280px) {
+  .main { grid-template-columns: 240px 1fr 320px; }
+}
+@media (max-width: 1024px) {
+  .main { grid-template-columns: 1fr; }
+  .filters, .detail { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="watermark">66</div>
+<div class="classified-stamp">★ CLASSIFIED · IMPERIAL EYES ONLY ★</div>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-text">
+        <span class="name">ORDER 66</span>
+        <span class="tagline">DESTINY VOYAGER · OPTIMIZER · WISHLIST</span>
+      </div>
+    </div>
+
+    <div class="search">
+      <div class="search-icon"></div>
+      <input type="text" placeholder="QUERY INVENTORY · &quot;crimson&quot; · &quot;void grenade&quot; · #favorite">
+    </div>
+
+    <div class="status">
+      <div class="status-dot"></div>
+      <span>SYNCED · 2 MIN AGO</span>
+    </div>
+
+    <div class="agent-badge">
+      <div>
+        <div class="id">AGENT // BUNGIE.NET</div>
+        <div class="name">DARTH_BANKAI</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- LEFT: FILTERS -->
+    <aside class="panel filters">
+      <div class="filter-group">
+        <div class="section-label">Tag Filter</div>
+        <div class="tag-row">
+          <div class="tag-chip fav" title="favorite">FAV</div>
+          <div class="tag-chip keep" title="keep">KEP</div>
+          <div class="tag-chip inf" title="infuse">INF</div>
+          <div class="tag-chip junk" title="junk">JNK</div>
+          <div class="tag-chip arch" title="archive">ARC</div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="section-label">Class</div>
+        <div class="filter-pill"><span>Any</span><span class="count">847</span></div>
+        <div class="filter-pill active"><span>Warlock</span><span class="count">312</span></div>
+        <div class="filter-pill"><span>Hunter</span><span class="count">298</span></div>
+        <div class="filter-pill"><span>Titan</span><span class="count">237</span></div>
+      </div>
+
+      <div class="filter-group">
+        <div class="section-label">Slot</div>
+        <div class="filter-pill"><span>Kinetic</span><span class="count">42</span></div>
+        <div class="filter-pill"><span>Energy</span><span class="count">68</span></div>
+        <div class="filter-pill"><span>Heavy</span><span class="count">31</span></div>
+        <div class="filter-pill"><span>Helmet</span><span class="count">28</span></div>
+        <div class="filter-pill"><span>Gauntlets</span><span class="count">26</span></div>
+        <div class="filter-pill"><span>Chest</span><span class="count">29</span></div>
+        <div class="filter-pill"><span>Legs</span><span class="count">31</span></div>
+        <div class="filter-pill"><span>Class Item</span><span class="count">57</span></div>
+      </div>
+
+      <div class="filter-group">
+        <div class="section-label">Element</div>
+        <div class="filter-pill"><span>Solar</span><span class="count">88</span></div>
+        <div class="filter-pill"><span>Arc</span><span class="count">73</span></div>
+        <div class="filter-pill"><span>Void</span><span class="count">91</span></div>
+        <div class="filter-pill"><span>Stasis</span><span class="count">42</span></div>
+        <div class="filter-pill"><span>Strand</span><span class="count">38</span></div>
+      </div>
+
+      <div class="filter-group">
+        <div class="section-label">Power Range</div>
+        <div class="power-meter">
+          <div class="label">
+            <span>POWER</span>
+            <span class="value">1800 – 1830</span>
+          </div>
+          <div class="track">
+            <div class="fill"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER: INVENTORY -->
+    <section class="panel inventory-panel">
+      <!-- character cards -->
+      <div class="character-rail">
+        <div class="char-card active" data-class="warlock">
+          <div class="label">PRIMARY</div>
+          <div class="name">WARLOCK</div>
+          <div class="stats">
+            G<span>136</span>  C<span>91</span>  S<span>89</span>
+          </div>
+          <div class="power">1825</div>
+        </div>
+        <div class="char-card" data-class="hunter">
+          <div class="label">SECONDARY</div>
+          <div class="name">HUNTER</div>
+          <div class="stats">
+            G<span>74</span>  C<span>82</span>  S<span>96</span>
+          </div>
+          <div class="power">1820</div>
+        </div>
+        <div class="char-card" data-class="titan">
+          <div class="label">TERTIARY</div>
+          <div class="name">TITAN</div>
+          <div class="stats">
+            G<span>62</span>  C<span>88</span>  S<span>104</span>
+          </div>
+          <div class="power">1818</div>
+        </div>
+      </div>
+
+      <!-- toolbar -->
+      <div class="inv-toolbar">
+        <div class="meta">DISPLAYING <strong>312</strong> RECORDS · WARLOCK · ALL SLOTS</div>
+        <div class="sort-pills">
+          <div class="sort-pill active">POWER ▼</div>
+          <div class="sort-pill">NAME</div>
+          <div class="sort-pill">TAG</div>
+          <div class="sort-pill">TIER</div>
+        </div>
+      </div>
+
+      <!-- item rows -->
+      <div class="items">
+
+        <div class="item-row selected" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Still Hunt</div>
+            <div class="meta">
+              <span>Sniper Rifle</span>
+              <span class="element" data-el="solar">Solar</span>
+              <span>Energy</span>
+            </div>
+          </div>
+          <div class="location">WARLOCK<br><span style="color:var(--imperial-gold)">EQUIPPED</span></div>
+          <div class="power-cell">1827</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Crimson</div>
+            <div class="meta">
+              <span>Hand Cannon</span>
+              <span class="element" data-el="solar">Solar</span>
+              <span>Kinetic</span>
+            </div>
+          </div>
+          <div class="location">WARLOCK<br>EQUIPPED</div>
+          <div class="power-cell">1820</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Conditional Finality</div>
+            <div class="meta">
+              <span>Shotgun</span>
+              <span class="element" data-el="stasis">Stasis+Solar</span>
+              <span>Energy</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1815</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge keep">K</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Imminence</div>
+            <div class="meta">
+              <span>SMG</span>
+              <span class="element" data-el="arc">Arc</span>
+              <span>Kinetic</span>
+            </div>
+          </div>
+          <div class="location">WARLOCK<br>SLOT 2</div>
+          <div class="power-cell">1820</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Mataiodoxia</div>
+            <div class="meta">
+              <span>Chest Armor</span>
+              <span class="element" data-el="strand">Strand</span>
+              <span>Chest</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1810</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge keep">K</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Refurbished A499</div>
+            <div class="meta">
+              <span>Rocket Launcher</span>
+              <span class="element" data-el="solar">Solar</span>
+              <span>Heavy</span>
+            </div>
+          </div>
+          <div class="location">WARLOCK<br>SLOT 3</div>
+          <div class="power-cell">1820</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge keep">K</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Praxic Blade</div>
+            <div class="meta">
+              <span>Sword</span>
+              <span class="element" data-el="arc">Arc</span>
+              <span>Heavy</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1810</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Celestial Nighthawk</div>
+            <div class="meta">
+              <span>Helmet</span>
+              <span class="element" data-el="kinetic">Hunter</span>
+              <span>Helmet</span>
+            </div>
+          </div>
+          <div class="location">HUNTER<br>EQUIPPED</div>
+          <div class="power-cell">1820</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Sage Protector Grips</div>
+            <div class="meta">
+              <span>Gauntlets</span>
+              <span class="element" data-el="kinetic">Hunter</span>
+              <span>Gauntlets</span>
+            </div>
+          </div>
+          <div class="location">HUNTER<br>EQUIPPED</div>
+          <div class="power-cell">1820</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge keep">K</div></div>
+        </div>
+
+        <div class="item-row" data-tier="rare">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Smite of Merain</div>
+            <div class="meta">
+              <span>Pulse Rifle</span>
+              <span class="element" data-el="arc">Arc</span>
+              <span>Energy</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1750</div>
+          <div class="perks-preview">
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge junk">J</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Wolfsbane</div>
+            <div class="meta">
+              <span>Combat Bow</span>
+              <span class="element" data-el="strand">Strand</span>
+              <span>Energy</span>
+            </div>
+          </div>
+          <div class="location">TITAN<br>EQUIPPED</div>
+          <div class="power-cell">1818</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge fav">F</div></div>
+        </div>
+
+        <div class="item-row" data-tier="exotic">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Sullen Claw</div>
+            <div class="meta">
+              <span>Sword</span>
+              <span class="element" data-el="void">Void</span>
+              <span>Heavy</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1810</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+          </div>
+          <div class="tag-cell"><div class="badge none">·</div></div>
+        </div>
+
+        <div class="item-row" data-tier="legendary">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Uncivil Discourse</div>
+            <div class="meta">
+              <span>SMG</span>
+              <span class="element" data-el="strand">Strand</span>
+              <span>Energy</span>
+            </div>
+          </div>
+          <div class="location">HUNTER<br>SLOT 2</div>
+          <div class="power-cell">1815</div>
+          <div class="perks-preview">
+            <div class="perk-dot god"></div>
+            <div class="perk-dot god"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge keep">K</div></div>
+        </div>
+
+        <div class="item-row" data-tier="rare">
+          <div class="rarity-bar"></div>
+          <div class="item-main">
+            <div class="name">Boots of the Cosmonaut</div>
+            <div class="meta">
+              <span>Leg Armor</span>
+              <span class="element" data-el="kinetic">Warlock</span>
+              <span>Legs</span>
+            </div>
+          </div>
+          <div class="location">VAULT</div>
+          <div class="power-cell">1700</div>
+          <div class="perks-preview">
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+            <div class="perk-dot"></div>
+          </div>
+          <div class="tag-cell"><div class="badge inf">I</div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT: DETAIL -->
+    <aside class="panel detail">
+      <div class="detail-corner tl"></div>
+      <div class="detail-corner tr"></div>
+      <div class="detail-corner bl"></div>
+      <div class="detail-corner br"></div>
+
+      <div class="detail-label">▸ ITEM DOSSIER · #1257</div>
+      <h1 class="detail-name">STILL HUNT</h1>
+      <div class="detail-subname">EXOTIC · SNIPER RIFLE · SOLAR</div>
+
+      <div class="detail-stats">
+        <div class="stat-cell">
+          <div class="key">POWER</div>
+          <div class="val gold">1827</div>
+        </div>
+        <div class="stat-cell">
+          <div class="key">IMPACT</div>
+          <div class="val">90</div>
+        </div>
+        <div class="stat-cell">
+          <div class="key">RANGE</div>
+          <div class="val">62</div>
+        </div>
+        <div class="stat-cell">
+          <div class="key">STABILITY</div>
+          <div class="val">38</div>
+        </div>
+        <div class="stat-cell">
+          <div class="key">HANDLING</div>
+          <div class="val">62</div>
+        </div>
+        <div class="stat-cell">
+          <div class="key">RELOAD</div>
+          <div class="val">52</div>
+        </div>
+      </div>
+
+      <div class="perks-list">
+        <div class="head">▸ INTRINSIC // PERKS</div>
+        <div class="perk-row god">Hunter's Trace — Aim down sights summons a Golden Gun shot</div>
+        <div class="perk-row">Arrowhead Brake</div>
+        <div class="perk-row">Extended Mag</div>
+        <div class="perk-row god">Triple Tap</div>
+        <div class="perk-row god">Firing Line</div>
+        <div class="perk-row">Adept Big Ones</div>
+      </div>
+
+      <div class="perks-list" style="margin-bottom: 0;">
+        <div class="head">▸ DEPLOYMENT</div>
+        <div class="perk-row">Equipped — Warlock primary</div>
+        <div class="perk-row">Featured in 4 saved loadouts</div>
+        <div class="perk-row">Tagged FAVORITE · 14 Jan 2026</div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn">SHARE</button>
+        <button class="action-btn primary">EXECUTE LOADOUT</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>ORDER 66 · v0.3.0 · IMPERIAL EDITION</div>
+    <div class="right">
+      <span>RECORDS // <strong style="color:var(--bone)">847</strong></span>
+      <span>TAGGED // <strong style="color:var(--imperial-gold)">62</strong></span>
+      <span>LIGHT // <strong style="color:var(--imperial-red)">1825</strong></span>
+      <span class="blink">▸ TRANSMITTING</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// Small interaction polish — character switch, row select, tag toggle.
+document.querySelectorAll('.char-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  });
+});
+document.querySelectorAll('.item-row').forEach(row => {
+  row.addEventListener('click', () => {
+    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+    row.classList.add('selected');
+  });
+});
+document.querySelectorAll('.filter-pill').forEach(pill => {
+  pill.addEventListener('click', () => pill.classList.toggle('active'));
+});
+
+// Konami: type "66" anywhere → flash red
+let keybuf = '';
+document.addEventListener('keydown', e => {
+  keybuf = (keybuf + e.key).slice(-2);
+  if (keybuf === '66') {
+    document.body.style.transition = 'filter 200ms';
+    document.body.style.filter = 'hue-rotate(15deg) brightness(1.1) contrast(1.1)';
+    setTimeout(() => { document.body.style.filter = ''; }, 700);
+  }
+});
+</script>
+
+</body>
+</html>
