@@ -29,7 +29,7 @@ jobs:
 
       - name: Build setup_gui.exe
         run: |
-          pyinstaller --onefile --windowed --name order-66-setup `
+          pyinstaller --onefile --windowed --name destiny-voyager-setup `
             --add-data "init_workbook.py;." `
             --add-data "decode_dim.py;." `
             --add-data "add_loadout.py;." `
@@ -39,22 +39,22 @@ jobs:
       - name: Smoke-test built exe exists
         shell: pwsh
         run: |
-          if (-not (Test-Path "dist/order-66-setup.exe")) {
+          if (-not (Test-Path "dist/destiny-voyager-setup.exe")) {
             Write-Error "Build artifact not produced"
             exit 1
           }
-          Get-Item dist/order-66-setup.exe | Format-List Name, Length, LastWriteTime
+          Get-Item dist/destiny-voyager-setup.exe | Format-List Name, Length, LastWriteTime
 
       - name: Upload artifact (always)
         uses: actions/upload-artifact@v4
         with:
-          name: order-66-setup-windows
-          path: dist/order-66-setup.exe
+          name: destiny-voyager-setup-windows
+          path: dist/destiny-voyager-setup.exe
           if-no-files-found: error
 
       - name: Attach to release (only on tags)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/order-66-setup.exe
+          files: dist/destiny-voyager-setup.exe
           generate_release_notes: true
