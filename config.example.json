@@ -11,6 +11,22 @@
     "goals": ["PvE", "DPS"]
   },
 
+  "oauth_client_id": "52250",
+  "oauth": {
+    "_note": "Populated by auth.py after Bungie sign-in. access_token expires in 1h, refresh_token in 90d.",
+    "access_token": "",
+    "refresh_token": "",
+    "expires_at": 0,
+    "membership_id": ""
+  },
+
+  "item_tags": {
+    "_note": "Maps Destiny item instance IDs → tag (favorite | keep | infuse | junk | archive).",
+    "EXAMPLE_INSTANCE_ID": "favorite"
+  },
+
+  "saved_loadouts": [],
+
   "workbook_path": "./my_loadouts.xlsx",
   "manifest_cache_dir": "./manifest_cache",
 
