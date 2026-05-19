@@ -21,7 +21,7 @@ SITH_PURPLE = 0xB432FF
 # #welcome — Imperial Transmission embed
 # ────────────────────────────────────────────────────────────────────
 
-WELCOME_MARKER = "Order 66 · home of Destiny Voyager · v1"
+WELCOME_MARKER = "Order 66 · home of Destiny Voyager · v2"
 
 WELCOME_TITLE = "▲ IMPERIAL TRANSMISSION RECEIVED"
 
