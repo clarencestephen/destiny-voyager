@@ -66,8 +66,14 @@ EOF
 else
     echo "  ✓ ${ENV_FILE} already present (not touching)"
 fi
-chmod 600 "${ENV_FILE}"
+# .env must be readable by the service user; 640 + correct owner.
+chown "${SERVICE_USER}:${SERVICE_USER}" "${ENV_FILE}"
+chmod 640 "${ENV_FILE}"
+# Service user also needs to read the repo (clone defaults to root-owned) +
+# write to data/ for the link store SQLite file.
 chown -R "${SERVICE_USER}:${SERVICE_USER}" "${INSTALL_DIR}/.venv" "${INSTALL_DIR}/backend/data"
+# Make the repo itself readable + executable (traverse) by the service user.
+chmod -R a+rX "${INSTALL_DIR}/backend" "${INSTALL_DIR}/darth-bot"
 
 # ── 5. systemd unit ────────────────────────────────────────────
 echo "[5/6] systemd"
