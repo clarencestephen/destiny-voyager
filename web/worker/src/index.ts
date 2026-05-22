@@ -191,35 +191,40 @@ async function requireSession(c: any, next: any) {
 app.get("/api/me", async (c) => {
   const u = c.get("user");
   try {
-    // component 200 = Characters
+    // component 200 = Characters (gives us .light = equipped power)
     const profile = await bungieGet(
       c.env,
       `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=200`,
       u.access_token,
     );
     const chars = profile?.characters?.data ?? {};
-    const charList = Object.values(chars) as any[];
-    if (charList.length === 0) {
-      return c.json({
-        bungie_name: u.display_name,
-        membership_id: u.membership_id,
-        primary_class: "warlock",
-        power: 0,
-        build_focus: undefined,
-      });
-    }
-    // Pick the highest-light character — that's "primary"
-    charList.sort((a, b) => (b.light ?? 0) - (a.light ?? 0));
-    const top = charList[0];
     const classMap: Record<number, "titan" | "hunter" | "warlock"> = {
       0: "titan", 1: "hunter", 2: "warlock",
     };
+    const characters = (Object.entries(chars) as Array<[string, any]>).map(
+      ([id, char]) => ({
+        id,
+        class: classMap[char.classType] ?? "warlock",
+        equipped_power: char.light ?? 0,
+        emblem_path: char.emblemPath
+          ? `https://www.bungie.net${char.emblemPath}`
+          : null,
+        emblem_background_path: char.emblemBackgroundPath
+          ? `https://www.bungie.net${char.emblemBackgroundPath}`
+          : null,
+        date_last_played: char.dateLastPlayed,
+      }),
+    );
+    characters.sort((a, b) => (b.equipped_power || 0) - (a.equipped_power || 0));
+    const top = characters[0];
     return c.json({
       bungie_name: u.display_name,
       membership_id: u.membership_id,
-      primary_class: classMap[top.classType] ?? "warlock",
-      power: top.light ?? 0,
+      // primary_class still returned for backward compat — first character
+      primary_class: top?.class ?? "warlock",
+      power: top?.equipped_power ?? 0,
       build_focus: u.build_focus,
+      characters,  // [{id, class, equipped_power, emblem_*, date_last_played}]
     });
   } catch (e: any) {
     return c.json({ error: "profile_fetch_failed", detail: e.message }, 502);

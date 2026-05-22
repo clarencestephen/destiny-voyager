@@ -24,9 +24,9 @@ compatibility_flags = ["nodejs_compat"]
 
 # KV — sessions + per-user tokens + manifest cache
 [[kv_namespaces]]
-binding = "DV_KV"
-id      = "REPLACE_AFTER_wrangler_kv_namespace_create"
-preview_id = "REPLACE_FOR_LOCAL_DEV"
+binding    = "DV_KV"
+id         = "552fde0a090841b99162f224961cc4ce"
+preview_id = "6362fcd1596242a9b73c8695600813ee"
 
 # Environment variables (NON-secret only — use `wrangler secret put` for secrets)
 [vars]

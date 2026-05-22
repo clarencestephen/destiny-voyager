@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrandMark } from "@/components/BrandMark";
+import { DiscordWidget } from "@/components/DiscordWidget";
 import { api } from "@/lib/api";
 
 const FEATURES = [
@@ -173,6 +174,67 @@ export default function Landing() {
               </CardDescription>
             </CardHeader>
           </Card>
+        </div>
+      </section>
+
+      {/* ============== CLAN — DISCORD WIDGET ============== */}
+      <section className="mt-24">
+        <p className="font-mono text-xs tracking-[0.4em] text-sith uppercase mb-3">
+          ▸ The Clan
+        </p>
+        <h2 className="font-display text-3xl md:text-4xl font-bold tracking-wide text-star">
+          Join <span className="text-signature">The Way of the Sith</span>
+        </h2>
+        <p className="mt-4 text-muted font-ui max-w-2xl">
+          Voyager users hang out, share builds, run raids, and trash-talk in
+          our Discord. Drop in — even if you're solo. We sherpa first-clears.
+        </p>
+
+        <div className="mt-10 grid lg:grid-cols-[1.4fr_1fr] gap-10 items-start">
+          {/* left: what's inside */}
+          <div className="space-y-4 font-ui">
+            <div className="border-l-2 border-darksith pl-4">
+              <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-sith">
+                💬  The Cantina
+              </div>
+              <p className="text-star mt-1">
+                General chat. Drop a meme, drop a god-roll. No politics, no drama.
+              </p>
+            </div>
+            <div className="border-l-2 border-darksith pl-4">
+              <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-sith">
+                🤖  Darth Bot
+              </div>
+              <p className="text-star mt-1">
+                AI assistant that knows Destiny + has read access to your vault.
+                "Good PvP build with my current weapons?" — actual answers.
+              </p>
+            </div>
+            <div className="border-l-2 border-darksith pl-4">
+              <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-sith">
+                🛡️  Imperial Troopers
+              </div>
+              <p className="text-star mt-1">
+                Clan-only channel. Bungie clan members get the role automatically
+                once you sign in here.
+              </p>
+            </div>
+            <div className="border-l-2 border-darksith pl-4">
+              <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-sith">
+                ⚔️  LFG channels
+              </div>
+              <p className="text-star mt-1">
+                Raids · dungeons · GMs · Trials · solo ops · day-one runs. Find
+                a fireteam in your time zone.
+              </p>
+            </div>
+          </div>
+
+          {/* right: live widget */}
+          <div className="relative">
+            <div className="absolute -inset-4 -z-10 bg-signature-gradient opacity-20 blur-2xl" />
+            <DiscordWidget />
+          </div>
         </div>
       </section>
 

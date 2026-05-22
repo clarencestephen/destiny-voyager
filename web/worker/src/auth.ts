@@ -81,25 +81,22 @@ export async function exchangeCode(
   code: string,
   codeVerifier: string,
 ): Promise<TokenResponse> {
-  const body = new URLSearchParams({
+  const params: Record<string, string> = {
     grant_type: "authorization_code",
     code,
     client_id: env.BUNGIE_CLIENT_ID,
     redirect_uri: `${env.PUBLIC_BASE_URL}${env.OAUTH_REDIRECT_PATH}`,
     code_verifier: codeVerifier,
-  });
-  const headers: Record<string, string> = {
-    "Content-Type": "application/x-www-form-urlencoded",
   };
-  // Confidential clients send client_secret too
+  // Bungie Confidential clients: client_secret goes in the BODY.
+  // (Basic Auth header form is documented but inconsistently accepted.)
   if (env.BUNGIE_CLIENT_SECRET) {
-    const basic = btoa(`${env.BUNGIE_CLIENT_ID}:${env.BUNGIE_CLIENT_SECRET}`);
-    headers["Authorization"] = `Basic ${basic}`;
+    params.client_secret = env.BUNGIE_CLIENT_SECRET;
   }
   const r = await fetch(env.BUNGIE_OAUTH_TOKEN_URL, {
     method: "POST",
-    headers,
-    body,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(params),
   });
   const json = await r.json<any>();
   if (!r.ok || !json.access_token) {

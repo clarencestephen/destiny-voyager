@@ -4,6 +4,15 @@
  * and served by the same domain in prod (Cloudflare Pages + Workers route).
  */
 
+export interface CharacterSummary {
+  id: string;
+  class: "hunter" | "titan" | "warlock";
+  equipped_power: number;
+  emblem_path: string | null;
+  emblem_background_path: string | null;
+  date_last_played?: string;
+}
+
 export interface UserProfile {
   bungie_name: string;
   membership_id: string;
@@ -14,6 +23,7 @@ export interface UserProfile {
     goals: string[];
     target_stats: string[];
   };
+  characters?: CharacterSummary[];
 }
 
 /** Lean shape returned by /api/inventory — Worker no longer decorates */
@@ -32,7 +42,11 @@ export interface Item extends LeanItem {
   type: string;
   slot: string;
   element: string;
+  /** "Titan" | "Hunter" | "Warlock" | "Any" — which class can equip this item */
+  class: string;
   isExotic: boolean;
+  /** Full https URL to the item thumbnail on Bungie's CDN. Empty if missing. */
+  iconUrl: string;
 }
 
 /** Slim manifest entry — keys mirror bake-slim-manifest.mjs */
@@ -44,7 +58,10 @@ export interface ManifestEntry {
   e: string;  // element
   c: string;  // class
   x: boolean; // is exotic
+  i?: string; // icon path (relative — prepend bungie.net)
 }
+
+export const BUNGIE_CDN = "https://www.bungie.net";
 export type SlimManifest = Record<string, ManifestEntry>;
 
 let _manifestCache: SlimManifest | null = null;
@@ -73,7 +90,9 @@ export function decorate(lean: LeanItem, manifest: SlimManifest): Item {
     tier:     m?.r ?? "",
     slot:     m?.s ?? "",
     element:  m?.e ?? "",
+    class:    m?.c ?? "Any",
     isExotic: m?.x ?? false,
+    iconUrl:  m?.i ? BUNGIE_CDN + m.i : "",
   };
 }
 
