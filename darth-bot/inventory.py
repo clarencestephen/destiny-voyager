@@ -19,7 +19,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
-from .config import DESTINY_VOYAGER_CONFIG, DESTINY_VOYAGER_WORKBOOK
+from config import DESTINY_VOYAGER_CONFIG, DESTINY_VOYAGER_WORKBOOK
 
 
 def _read_config() -> dict:

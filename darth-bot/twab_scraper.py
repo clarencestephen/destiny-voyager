@@ -98,7 +98,7 @@ def update_meta_state(items: list[dict[str, Any]]) -> Path:
     if STATE_FILE.exists():
         state = json.loads(STATE_FILE.read_text(encoding="utf-8"))
     else:
-        from .meta_state import BASELINE
+        from meta_state import BASELINE
         state = dict(BASELINE)
     state["recent_patches"] = items
     state["generated_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())

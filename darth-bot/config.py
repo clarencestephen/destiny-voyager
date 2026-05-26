@@ -49,6 +49,7 @@ ALLOWED_CHANNEL_NAMES = {
 
 # LLM
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_TOKEN = os.environ.get("OLLAMA_TOKEN", "")
 MODEL = os.environ.get("DARTH_BOT_MODEL", "qwen3:8b")
 EMBED_MODEL = os.environ.get("DARTH_BOT_EMBED", "BAAI/bge-small-en-v1.5")
 

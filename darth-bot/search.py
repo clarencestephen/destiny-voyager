@@ -22,7 +22,7 @@ from typing import Iterable
 
 import httpx
 
-from .config import BRAVE_SEARCH_API_KEY, BRAVE_SEARCH_URL
+from config import BRAVE_SEARCH_API_KEY, BRAVE_SEARCH_URL
 
 
 TRUSTED_DESTINY_DOMAINS = (

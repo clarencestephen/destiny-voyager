@@ -21,7 +21,7 @@ import json
 import re
 from pathlib import Path
 
-from ..config import ORDER_66_MANIFEST, SCRAPE_DIR
+from config import ORDER_66_MANIFEST, SCRAPE_DIR
 
 
 _TABLE = "DestinyInventoryItemDefinition"

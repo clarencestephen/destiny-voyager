@@ -38,7 +38,7 @@ import httpx
 import trafilatura
 from bs4 import BeautifulSoup
 
-from ..config import SCRAPE_DIR
+from config import SCRAPE_DIR
 
 USER_AGENT = "darth-bot/0.1 (+https://github.com/clarencestephen/destiny-voyager)"
 HEADERS = {"User-Agent": USER_AGENT, "Accept-Language": "en-US,en;q=0.9"}
