@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 from typing import Iterable
 
-from ..config import CHROMA_DIR, CHUNK_SIZE, CHUNK_OVERLAP, EMBED_MODEL, SCRAPE_DIR
+from config import CHROMA_DIR, CHUNK_SIZE, CHUNK_OVERLAP, EMBED_MODEL, SCRAPE_DIR
 
 
 def chunk_text(text: str, *, size: int = CHUNK_SIZE,
@@ -44,8 +44,11 @@ def chunk_text(text: str, *, size: int = CHUNK_SIZE,
     return [c for c in chunks if len(c.split()) >= 30]
 
 
-def stable_id(source: str, title: str, idx: int) -> str:
-    h = hashlib.sha1(f"{source}|{title}|{idx}".encode()).hexdigest()[:16]
+def stable_id(source: str, title: str, path_key: str, idx: int) -> str:
+    # path_key disambiguates entries that share source+title (the
+    # manifest scraper produces many same-titled .md files for distinct
+    # item hashes — relying on title alone collided in-batch).
+    h = hashlib.sha1(f"{source}|{title}|{path_key}|{idx}".encode()).hexdigest()[:16]
     return f"{source}-{h}-{idx:03d}"
 
 
@@ -64,6 +67,33 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
             k, v = line.split(":", 1)
             meta[k.strip()] = v.strip().strip('"')
     return meta, body
+
+
+# Patterns that produce noise in retrieved chunks. destinypedia's
+# extracted markdown has lots of empty pipe-table cells like
+# "| Game: | | | Player(s): | 1-6 |" which dominate the first chunk
+# and starve the model of useful content. Reddit chunks have HTML
+# entities. MediaWiki has [edit] markers. Strip all of it.
+_NOISE_RES = [
+    (re.compile(r"\|\s*[A-Z][^|\n]{0,40}:\s*\|(?:\s*\|)+"), " "),   # "| Field: | | |"
+    (re.compile(r"\|(?:\s*\|){2,}"),                          " "),  # "| | | |" runs
+    (re.compile(r"\|---+\|(?:---+\|)*"),                       " "),  # table separator rows
+    (re.compile(r"\[edit\]"),                                  ""),
+    (re.compile(r"\[\d+\]"),                                   ""),   # citation markers
+    (re.compile(r"&gt;"),                                      ">"),
+    (re.compile(r"&lt;"),                                      "<"),
+    (re.compile(r"&amp;"),                                     "&"),
+    (re.compile(r"&#x200B;"),                                  ""),
+    (re.compile(r"&nbsp;"),                                    " "),
+    (re.compile(r"[ \t]+"),                                    " "),
+    (re.compile(r"\n{3,}"),                                    "\n\n"),
+]
+
+
+def clean_body(body: str) -> str:
+    for pat, repl in _NOISE_RES:
+        body = pat.sub(repl, body)
+    return body.strip()
 
 
 def main():
@@ -88,18 +118,27 @@ def main():
         pass
 
     new_ids, new_docs, new_meta = [], [], []
+    batch_seen: set[str] = set()
     md_files = list(SCRAPE_DIR.rglob("*.md"))
     print(f"Found {len(md_files)} markdown files under {SCRAPE_DIR}")
     for f in md_files:
         text = f.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(text)
+        body = clean_body(body)
         source = meta.get("source", f.parent.name)
         title = meta.get("title", f.stem)
         url = meta.get("url", "")
+        # Use the file's relative path as the disambiguator — guaranteed
+        # unique under SCRAPE_DIR.
+        try:
+            path_key = str(f.relative_to(SCRAPE_DIR))
+        except ValueError:
+            path_key = f.as_posix()
         for i, chunk in enumerate(chunk_text(body)):
-            cid = stable_id(source, title, i)
-            if cid in existing_ids:
+            cid = stable_id(source, title, path_key, i)
+            if cid in existing_ids or cid in batch_seen:
                 continue
+            batch_seen.add(cid)
             new_ids.append(cid)
             new_docs.append(chunk)
             new_meta.append({"source": source, "title": title, "url": url})
@@ -107,7 +146,9 @@ def main():
         if len(new_ids) >= 200:
             coll.add(ids=new_ids, documents=new_docs, metadatas=new_meta)
             print(f"  ↳ inserted {len(new_ids)} chunks")
+            existing_ids.update(new_ids)
             new_ids, new_docs, new_meta = [], [], []
+            batch_seen.clear()
 
     if new_ids:
         coll.add(ids=new_ids, documents=new_docs, metadatas=new_meta)
