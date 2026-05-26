@@ -1026,3 +1026,50 @@ overall_notes:
   - "Master: Champions (Barrier Knights, Overload Hobgoblins, Unstoppable Ogres/Phalanxes)."
   - "Challenges (master mode): The Grass is Always Greener (Basilica), Devious Thievery (Warpriest), Gaze Amaze (Golgoroth), Under Construction (Daughters), Hands Off (Oryx)."
   - "Soloing: Daughters + Oryx require Brand mechanics that aren't bypassable. Solo flawless = endgame-tier achievement."
+
+# ========================================================================
+# Video walkthrough — community sherpa series. Per-encounter timestamps
+# below; the full 9-video playlist URL was not captured at the time this
+# block was added — drop it in here when known.
+# ========================================================================
+walkthrough_videos:
+  source: "Community sherpa video series, 9-part King's Fall walkthrough"
+  collected: "2026-05-26"
+  playlist: ""  # TODO: full playlist URL (not provided in source paste)
+  per_encounter:
+    - order: 1
+      slug: hall-of-souls
+      url: "https://youtu.be/iyXgTvLHtak"
+      label: "Hall of Souls"
+    - order: 2
+      slug: portico-jumping
+      url: "https://youtu.be/E9Srd7-t9w8"
+      label: "Crux & Portico platforming + 1st secret chest"
+    - order: 3
+      slug: basilica
+      url: "https://youtu.be/bXOt3-ISuGs"
+      label: "Basilica — Annihilator Totems"
+    - order: 4
+      slug: warpriest
+      url: "https://youtu.be/LiHp4Th1las"
+      label: "Basilica — Warpriest"
+    - order: 4.5  # transitional section, not an encounter of its own
+      sub_section: "golgoroths-cellar-maze"
+      url: "https://youtu.be/46aqC7XzIDE"
+      label: "Golgoroth's Cellar — Catacombs Maze + 2nd secret chest"
+    - order: 5
+      slug: golgoroth
+      url: "https://youtu.be/SGDgT2sgeEU"
+      label: "Golgoroth's Cellar — Golgoroth"
+    - order: 6
+      slug: transept
+      url: "https://youtu.be/41dTnljNLLA"
+      label: "Transept platforming + 3rd secret chest"
+    - order: 7
+      slug: daughters-of-oryx
+      url: "https://youtu.be/dm3pHn2RGX0"
+      label: "Threshold — Daughters of Oryx"
+    - order: 8
+      slug: oryx
+      url: "https://youtu.be/531jRskmN8s"
+      label: "Threshold — Oryx, the Taken King"

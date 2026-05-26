@@ -292,6 +292,17 @@ KNOWN_PROPER_NOUNS: frozenset[str] = frozenset(n.lower() for n in [
     "Shield Singer", "Shield Singer Wizard", "Shield Singer Wizards",
     "Shrieker", "Shriekers", "Hive Barrier", "Hive Barriers",
     "Dark Procession", "Dark Precession",
+    # King's Fall encounter mechanics + named adds
+    "Annihilator Totem", "Annihilator Totems", "Brand of the Weaver",
+    "Brand of the Unraveler", "Brand of the Initiate", "Brand Claimer",
+    "Deathsinger's Power", "Hallowed Knight", "Hallowed Knights",
+    "Pool of Reclaimed Light", "Reclaimed Light", "Captures Gaze",
+    "Pool of Light", "Unstable Light", "Torn Between Dimensions",
+    "Aura of Immortality", "Corrupted Light", "Light-Eater",
+    "Light-Eater Ogre", "Light-Eater Ogres", "Light-Eater Knight",
+    "Light-Eater Knights", "Vessel of Oryx", "Blightguard",
+    "Blightguard Knight", "Twin Wizard", "Ir Anûk", "Ir Halak",
+    "Daughters of Oryx", "Golgoroth's Cellar",
 ])
 
 

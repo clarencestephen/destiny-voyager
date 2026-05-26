@@ -54,9 +54,11 @@ _KW = {
     "meta": re.compile(
         r"\b(current|this week|right now|right-now|weekly|nightfall this week|featured|rotation|easiest)\b",
         re.I),
+    # Note: apostrophes are normalized in classify() before matching, so
+    # `'?` here only needs to handle straight-apostrophe variants.
     "raid_name": re.compile(
         r"\b(salvation'?s edge|root of nightmares|vow of the disciple|deep stone crypt|"
-        r"garden of salvation|last wish|kings? fall|vault of glass|crota'?s end|"
+        r"garden of salvation|last wish|king'?s? fall|vault of glass|crota'?s end|"
         r"desert perpetual)\b", re.I),
     "encounter": re.compile(
         r"\b(encounter|boss|mechanic|callout|wipe|first encounter|final boss)\b", re.I),
@@ -76,7 +78,9 @@ _KW = {
 
 def classify(question: str) -> Plan:
     """Decide which layers to pull. Cheap heuristic, no LLM call."""
-    q = question.strip()
+    # Normalize typographic apostrophes so "King's Fall" matches the
+    # raid_name regex regardless of which apostrophe glyph the user typed.
+    q = question.strip().replace("’", "'").replace("‘", "'")
     is_personal = bool(_KW["personal"].search(q))
 
     # Diagnostic — ask follow-up rather than guess
@@ -190,6 +194,10 @@ def classify(question: str) -> Plan:
 
 async def answer(question: str) -> str:
     """End-to-end: classify, gather context, call LLM, return response."""
+    # Normalize typographic apostrophes so substring matches against
+    # meta_state raid names work regardless of which apostrophe the
+    # user typed. classify() does the same normalization internally.
+    question = question.replace("’", "'").replace("‘", "'")
     plan = classify(question)
 
     # Short-circuit on clarifying-needed plans
@@ -224,12 +232,22 @@ async def answer(question: str) -> str:
                         break
                 if matched and matched.get("encounters"):
                     sections: list[str] = []
-                    overview = format_for_context(
-                        f"{matched['name']} raid overview", top_k=2,
-                    )
-                    if overview:
-                        sections.append(f"## OVERVIEW — {matched['name']}\n{overview}")
                     curated_map = matched.get("encounter_mechanics") or {}
+                    # Count encounters with curated content (ignoring _-prefixed keys)
+                    curated_count = sum(
+                        1 for enc in matched["encounters"]
+                        if curated_map.get(enc) and not curated_map[enc].startswith("_")
+                    )
+                    # Only include the OVERVIEW chunk pull when NOT all
+                    # encounters are curated — otherwise the overview can
+                    # surface a competing encounter list from a different
+                    # walkthrough source and confuse the model.
+                    if curated_count < len(matched["encounters"]):
+                        overview = format_for_context(
+                            f"{matched['name']} raid overview", top_k=2,
+                        )
+                        if overview:
+                            sections.append(f"## OVERVIEW — {matched['name']}\n{overview}")
                     for enc in matched["encounters"]:
                         # Hand-curated mechanics (when present) override
                         # KB retrieval — used for encounters where the
