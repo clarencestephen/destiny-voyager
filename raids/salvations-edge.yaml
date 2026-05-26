@@ -144,8 +144,8 @@ overview:
       - "**Burst-DPS heavy** for Witness damage phases — Two-Tailed Fox, Sleeper, Apex Predator, sword swap."
       - "Add-clear primary: Witherhoard, Riskrunner, Outbreak Perfected, wave-frame GLs."
     armor_stats:
-      - "Resilience + Recovery for everyone — Witness hand attacks kill low-Resilience builds."
-      - "Discipline / Strength for Verity Inside-team grenade/melee Knight kills."
+      - "Health + Class for everyone — Witness hand attacks kill low-Health builds."
+      - "Grenade / Melee for Verity Inside-team grenade/melee Knight kills."
     common_exotics:
       - "Hunter: Star-Eaters / Liar's Handshake / Aeon Swift (Verity)."
       - "Warlock: Phoenix Protocol / Heat Rises / Star-Eaters."
@@ -184,7 +184,7 @@ encounters:
         plates and a Resonant Conductor (obelisk with glowing core).
       - Above the central area: a fluxing **WITNESS HAND** (orange-
         triangular). It casts Resonant Outburst — a triangular AoE
-        on the floor that will kill low-Resilience players.
+        on the floor that will kill low-Health players.
       - Top of screen: **Final Shape Looming** wipe timer.
 
       PLATFORM MECHANICS
@@ -267,7 +267,7 @@ encounters:
       - "Final Shape Looming timer hits 0 → wipe."
       - "Holding 4+ resonance stacks → instant death."
       - "Resonance stack timer expires on you → death."
-      - "Standing in Resonant Outburst (triangular floor AoE) at low Resilience."
+      - "Standing in Resonant Outburst (triangular floor AoE) at low Health."
       - "Caught in a closing side door when the Threshold Sentinel spawns."
 
     damage_phase_triggers:
@@ -1095,7 +1095,7 @@ encounters:
     wipe_triggers:
       - "Holding resonance too long → death."
       - "Spike test failed → ground-energy wave kills anyone not airborne."
-      - "Wrathful Disarray (horizontal beam) hits low-Resilience players."
+      - "Wrathful Disarray (horizontal beam) hits low-Health players."
       - "Witness Final Shape wipe — Final Stand timer expires."
 
     damage_phase_triggers:

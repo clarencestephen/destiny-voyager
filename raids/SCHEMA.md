@@ -97,7 +97,7 @@ overview:
 
   loadout_general:
     weapons: ["Anti-Barrier mandatory.", "Burst-DPS preferred."]
-    armor_stats: ["Runners: Mobility + Recovery."]
+    armor_stats: ["Runners: Class + Health (movement comes from Stompees/Lift/Heat Rises exotics, not stats)."]
     common_exotics: ["Hunter: Stompees."]
 
   common_mistakes:

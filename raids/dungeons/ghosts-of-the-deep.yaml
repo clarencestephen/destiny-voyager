@@ -84,8 +84,8 @@ overview:
       - "Underwater: sustained DPS struggles — bring builds with auto-loading or large mags."
       - "Burst DPS for Ecthar + Šimmumah windows (Whisper, Sleeper, Linear)."
     armor_stats:
-      - "Resilience priority — Hive Knight damage is brutal."
-      - "Recovery for sustain between Vestige runs."
+      - "Health priority — Hive Knight damage is brutal."
+      - "Class for sustain between Vestige runs (class-ability uptime is the healing/shield source)."
     common_exotics:
       - "Hunter: Aeon Swift (super spam), Gyrfalcon's Hauberk."
       - "Titan: Heart of Inmost Light, Cuirass of the Falling Star."

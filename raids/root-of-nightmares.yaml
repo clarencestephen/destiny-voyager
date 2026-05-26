@@ -131,9 +131,9 @@ overview:
       - "**Add-clear primary** — Witherhoard, wave-frame GLs, or trace rifles clear Aspirant Psions before they split."
       - "**Burst-DPS heavy** — short damage windows on Zo'aurc and Nezarec reward Two-Tailed Fox, Sleeper, linear fusions, sword swap."
     armor_stats:
-      - "Runners: Mobility + Recovery."
-      - "Hunted (Nezarec): Resilience + Recovery. Restoration / Devour / Woven Mail all viable."
-      - "Refuge-makers: Discipline if your build leans grenade for emergency add-clear."
+      - "Runners: Class + Health. Movement is exotic-driven post-Armor-3.0 (Stompees/Lift/Heat Rises), not stat-driven."
+      - "Hunted (Nezarec): Health + Class. Restoration / Devour / Woven Mail all viable."
+      - "Refuge-makers: Grenade if your build leans grenade for emergency add-clear."
     common_exotics:
       - "Hunter: Stompees / Star-Eaters / Celestial Nighthawk / Athrys's Embrace."
       - "Warlock: Heat Rises + Icarus Dash / Phoenix Protocol / Star-Eaters."

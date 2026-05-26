@@ -96,8 +96,8 @@ overview:
       - "Burst DPS for Warpriest, Golgoroth, Oryx (Whisper, Sleeper, Linear)."
       - "Touch of Malice itself for Oryx DPS (synergistic with its perk)."
     armor_stats:
-      - "Resilience for Hive AoE damage."
-      - "Mobility for Transept jumping puzzle."
+      - "Health for Hive AoE damage."
+      - "Stompees / Lift / Heat Rises for Transept jumping puzzle."
     common_exotics:
       - "Hunter: Celestial Nighthawk (Oryx chest), Star-Eater (DPS)."
       - "Titan: Cuirass of the Falling Star, Heart of Inmost Light."
