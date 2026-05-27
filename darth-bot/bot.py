@@ -193,6 +193,15 @@ async def cmd_help(interaction: discord.Interaction):
         "**LOOKUPS**\n"
         "`/raid <name>` — encounter rundown for any raid.\n"
         "`/catalyst <weapon>` — how to get a weapon's catalyst.\n\n"
+        "**STRUCTURED BUILDS** (no LLM — fast, deterministic)\n"
+        "`/builds [class]` — list curated builds (46 entries). Filter: hunter / titan / warlock / all.\n"
+        "`/build-show <id>` — full detail for one build (exotic, weapons, target stats, playstyle).\n"
+        "`/recipes <encounter> [role]` — weapon loadout for a raid/dungeon encounter "
+        "(e.g. `/recipes crota` or `/recipes oryx role:DPS`).\n"
+        "`/fireteam <names>` — public equipped gear for 1-6 Bungie names "
+        "(format: `Name#1234, Other#5678`).\n"
+        "`/equip <build_id> [character]` — equip a build's items in-game on your guardian "
+        "(needs `/link-bungie` first).\n\n"
         "**ACCOUNT**\n"
         "`/link-bungie` — DM yourself a one-time URL. Sign in with Bungie once on "
         "the Destiny Voyager web. Stays signed in for 30 days. Required for the "
@@ -415,6 +424,439 @@ async def cmd_sanity(interaction: discord.Interaction):
     except Exception as e:
         bits.append(f"Backend ({backend}): ❌ {type(e).__name__}")
     await interaction.followup.send("\n".join(bits))
+
+
+# ============================================================
+# Web-app parity commands — read shared JSON sources
+# ============================================================
+#
+# These commands surface the structured data that powers the
+# destiny-voyager.clarencestephen.com web app — /builds, /optimizer,
+# /play, /fireteam — so Discord users get parity without leaving the
+# server. They DO NOT call the LLM — they're fast deterministic lookups
+# against builds.json + weapon-recipes.json on the public site.
+#
+# Net new commands:
+#   /builds [class]        — list curated builds (46 currently)
+#   /build-show <id>       — full detail for one build
+#   /recipes <encounter>   — weapon loadout for a raid/dungeon encounter
+#   /fireteam <names>      — equipped gear summary for 1-6 Bungie names
+# ============================================================
+
+_WEB_BASE = "https://destiny-voyager.clarencestephen.com"
+
+
+async def _resolve_bungie_id(discord_id: str) -> dict | None:
+    """Call the FastAPI backend's link DB to get this Discord user's Bungie pairing.
+    Returns the link record dict or None if not linked / backend down.
+    """
+    import os, httpx
+    backend = os.environ.get("BACKEND_BASE_URL", "http://localhost:8090")
+    try:
+        async with httpx.AsyncClient(timeout=8) as client:
+            r = await client.get(f"{backend}/link/discord/{discord_id}")
+            if r.status_code == 404:
+                return None
+            r.raise_for_status()
+            return r.json()
+    except Exception:
+        return None
+
+
+async def _bot_internal_post(path: str, body: dict) -> dict:
+    """POST to the Worker's /api/internal/* routes with the shared bot secret.
+    Raises on non-2xx; returns parsed JSON.
+    """
+    import os, httpx
+    secret = os.environ.get("DV_BOT_SECRET", "")
+    if not secret:
+        raise RuntimeError("DV_BOT_SECRET not set in environment")
+    async with httpx.AsyncClient(timeout=30) as client:
+        r = await client.post(
+            f"{_WEB_BASE}{path}",
+            json=body,
+            headers={"X-Internal-Bot-Secret": secret, "Content-Type": "application/json"},
+        )
+        r.raise_for_status()
+        return r.json()
+
+
+async def _fetch_json(path: str) -> dict:
+    """Cache-friendly fetch of a public JSON asset on the web app."""
+    import httpx
+    async with httpx.AsyncClient(timeout=10) as client:
+        r = await client.get(f"{_WEB_BASE}{path}")
+        r.raise_for_status()
+        return r.json()
+
+
+def _class_emoji(cls: str) -> str:
+    return {"Hunter": "🏹", "Titan": "🛡", "Warlock": "✨"}.get(cls, "•")
+
+
+@bot.tree.command(
+    name="builds",
+    description="List curated builds (filtered by class)",
+)
+@app_commands.describe(klass="Class filter: hunter | titan | warlock | all (default: all)")
+async def cmd_builds(interaction: discord.Interaction, klass: str = "all"):
+    await interaction.response.defer(thinking=True)
+    try:
+        data = await _fetch_json("/builds.json")
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Couldn't load builds.json: {e}")
+        return
+    builds = data.get("builds", [])
+    klass_norm = klass.strip().lower()
+    if klass_norm not in ("all", "hunter", "titan", "warlock"):
+        klass_norm = "all"
+    target_cls = klass_norm.capitalize() if klass_norm != "all" else None
+    filtered = [b for b in builds if target_cls is None or b.get("class") == target_cls or b.get("class") == "Any"]
+    if not filtered:
+        await interaction.followup.send(f"No builds for `{klass_norm}`.")
+        return
+
+    # Group by source-prefix so the user sees Personal, darth_bankai,
+    # Community, Starter cleanly.
+    def src(b: dict) -> str:
+        bid = b.get("id", "")
+        if bid.startswith("personal-"):     return "Personal"
+        if bid.startswith("darth-bankai-"): return "darth_bankai"
+        if bid.startswith("community-"):    return "Community"
+        return "Starter"
+
+    groups: dict[str, list[dict]] = {}
+    for b in filtered:
+        groups.setdefault(src(b), []).append(b)
+
+    embed = discord.Embed(
+        title=f"▲ BUILDS — {target_cls or 'all classes'}",
+        description=f"{len(filtered)} curated builds. Use `/build-show <id>` for the full detail.",
+        color=0xB432FF,
+    )
+    for src_name in ["darth_bankai", "Personal", "Community", "Starter"]:
+        group = groups.get(src_name)
+        if not group:
+            continue
+        lines = []
+        for b in group[:12]:  # cap to keep embed under 6000 chars
+            ex_opts = b.get("exotic_armor", {}).get("options", [])
+            ex = ex_opts[0] if ex_opts else "—"
+            lines.append(f"`{b['id']}`  {_class_emoji(b['class'])} **{b['name'][:55]}** · {ex[:35]}")
+        if len(group) > 12:
+            lines.append(f"_…and {len(group) - 12} more in this source_")
+        embed.add_field(name=f"{src_name} ({len(group)})", value="\n".join(lines), inline=False)
+    embed.set_footer(text=f"Full list + Equip button at {_WEB_BASE}/builds")
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(
+    name="build-show",
+    description="Show the full detail of one build by id",
+)
+@app_commands.describe(build_id="Build id (run /builds to see ids)")
+async def cmd_build_show(interaction: discord.Interaction, build_id: str):
+    await interaction.response.defer(thinking=True)
+    try:
+        data = await _fetch_json("/builds.json")
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ {e}")
+        return
+    b = next((x for x in data.get("builds", []) if x.get("id") == build_id.strip()), None)
+    if not b:
+        await interaction.followup.send(f"No build with id `{build_id}`. Run `/builds` to see ids.")
+        return
+
+    ex_opts = b.get("exotic_armor", {}).get("options", []) or ["(none)"]
+    weps = b.get("weapons", {})
+    target_stats = b.get("target_stats", {})
+
+    embed = discord.Embed(
+        title=f"{_class_emoji(b['class'])}  {b['name']}",
+        description=b.get("playstyle", "")[:1900],
+        color=0xB432FF,
+        url=f"{_WEB_BASE}/builds",
+    )
+    embed.add_field(
+        name="Class · Subclass · Focus",
+        value=f"{b['class']} · {b.get('subclass','')} · {b.get('focus','')}",
+        inline=False,
+    )
+    embed.add_field(
+        name="Exotic Armor",
+        value=" / ".join(ex_opts),
+        inline=False,
+    )
+    embed.add_field(name="Kinetic", value=" / ".join(weps.get("kinetic", [])) or "—", inline=True)
+    embed.add_field(name="Energy",  value=" / ".join(weps.get("energy",  [])) or "—", inline=True)
+    embed.add_field(name="Heavy",   value=" / ".join(weps.get("heavy",   [])) or "—", inline=True)
+    if b.get("aspects"):
+        embed.add_field(name="Aspects",   value=" · ".join(b["aspects"])[:1024], inline=False)
+    if b.get("fragments"):
+        embed.add_field(name="Fragments", value=" · ".join(b["fragments"])[:1024], inline=False)
+    if target_stats:
+        ts = " · ".join(f"{k.capitalize()} {v}+" for k, v in target_stats.items() if v)
+        embed.add_field(name="Target stats", value=ts or "—", inline=False)
+    if b.get("source"):
+        embed.set_footer(text=b["source"][:200])
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(
+    name="recipes",
+    description="Weapon loadout for a specific raid/dungeon encounter",
+)
+@app_commands.describe(
+    encounter="Encounter name (e.g. 'crota', 'oryx', 'atheon'). Substring match.",
+    role="Optional role filter: DPS | Add-clear | Support",
+)
+async def cmd_recipes(interaction: discord.Interaction, encounter: str, role: str = ""):
+    await interaction.response.defer(thinking=True)
+    try:
+        data = await _fetch_json("/weapon-recipes.json")
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ {e}")
+        return
+    recipes = data.get("recipes", [])
+    q = encounter.strip().lower()
+    role_q = role.strip().lower() if role else ""
+    matches = [
+        r for r in recipes
+        if q in r.get("encounter", "").lower() or q in r.get("raid", "").lower()
+    ]
+    if role_q:
+        matches = [r for r in matches if r.get("role", "").lower() == role_q]
+    if not matches:
+        await interaction.followup.send(
+            f"No recipes matching `{encounter}`"
+            + (f" with role `{role}`" if role else "")
+            + f". See {_WEB_BASE}/play for the full list."
+        )
+        return
+
+    embed = discord.Embed(
+        title=f"▲ WEAPONS — {encounter}",
+        description=f"{len(matches)} loadout(s). Full per-slot ownership + Equip at {_WEB_BASE}/play",
+        color=0xB432FF,
+    )
+    for r in matches[:6]:
+        weps = r.get("weapons", {})
+        v = (
+            f"**K:** {' / '.join(weps.get('kinetic', [])) or '—'}\n"
+            f"**E:** {' / '.join(weps.get('energy',  [])) or '—'}\n"
+            f"**H:** {' / '.join(weps.get('heavy',   [])) or '—'}\n"
+            f"_{r.get('rationale','')[:300]}_"
+        )
+        embed.add_field(
+            name=f"{r.get('role','?')} · {r.get('raid','?')} → {r.get('encounter','?')}",
+            value=v[:1024],
+            inline=False,
+        )
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(
+    name="fireteam",
+    description="Look up the public equipped gear for 1-6 Bungie names (Name#1234)",
+)
+@app_commands.describe(names="Comma- or space-separated Bungie names (e.g., 'Foo#1234, Bar#5678')")
+async def cmd_fireteam(interaction: discord.Interaction, names: str):
+    await interaction.response.defer(thinking=True)
+    import re, httpx, os
+    # Split on commas, spaces, or newlines
+    name_list = [n.strip() for n in re.split(r"[,\n]+", names) if n.strip()]
+    if not name_list:
+        await interaction.followup.send("No names parsed. Use `Name#1234` format.")
+        return
+    if len(name_list) > 6:
+        name_list = name_list[:6]
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.post(
+                f"{_WEB_BASE}/api/fireteam",
+                json={"bungie_names": name_list},
+            )
+            r.raise_for_status()
+            resp = r.json()
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Fireteam lookup failed: {e}")
+        return
+
+    members = resp.get("members", [])
+    if not members:
+        await interaction.followup.send("No results.")
+        return
+
+    embed = discord.Embed(
+        title="▲ FIRETEAM",
+        description=f"Public equipment for {len(members)} guardian(s). Click-to-expand at {_WEB_BASE}/fireteam",
+        color=0xB432FF,
+    )
+    for m in members:
+        if "error" in m:
+            embed.add_field(
+                name=m.get("bungie_name", "?"),
+                value=f"⚠️ {m['error']}",
+                inline=False,
+            )
+            continue
+        chars = m.get("characters", [])
+        if not chars:
+            continue
+        top = chars[0]  # highest light
+        eq = {it.get("slot", ""): it for it in top.get("equipped", [])}
+        # We don't have item names without the manifest, so just show
+        # slot occupancy + power. Web app does the decoration.
+        slots = ["Kinetic", "Energy", "Heavy", "Helmet", "Gauntlets", "Chest", "Legs", "Class"]
+        lines = []
+        for s in slots:
+            it = eq.get(s)
+            if it:
+                lines.append(f"**{s[:4]}** pw {it.get('power', '?')}")
+            else:
+                lines.append(f"_{s[:4]} —_")
+        embed.add_field(
+            name=f"{_class_emoji(top['class'].capitalize())}  {m.get('display_name','?')}  ·  {top['class']}  ·  pw {top.get('light', '?')}",
+            value=" · ".join(lines),
+            inline=False,
+        )
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(
+    name="equip",
+    description="Equip a build onto your Bungie account (needs /link-bungie first)",
+)
+@app_commands.describe(
+    build_id="Build id (run /builds to see ids)",
+    character="Optional: hunter | titan | warlock (defaults to your highest-light)",
+)
+async def cmd_equip(interaction: discord.Interaction, build_id: str, character: str = ""):
+    await interaction.response.defer(ephemeral=True, thinking=True)
+    discord_id = str(interaction.user.id)
+
+    # 1. Resolve linked Bungie account
+    link = await _resolve_bungie_id(discord_id)
+    if not link:
+        await interaction.followup.send(
+            "⚠️ You haven't linked a Bungie account yet. Run `/link-bungie` first.",
+            ephemeral=True,
+        )
+        return
+    bungie_id = link.get("bungie_id")
+
+    # 2. Load build + user's inventory in parallel
+    try:
+        import asyncio
+        builds_data, inv = await asyncio.gather(
+            _fetch_json("/builds.json"),
+            _bot_internal_post("/api/internal/inventory", {"bungie_id": bungie_id}),
+        )
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Couldn't fetch inventory or builds: `{e}`", ephemeral=True)
+        return
+    build = next((b for b in builds_data.get("builds", []) if b.get("id") == build_id.strip()), None)
+    if not build:
+        await interaction.followup.send(f"No build `{build_id}`. Run `/builds`.", ephemeral=True)
+        return
+
+    # 3. Pick target character
+    chars = inv.get("characters", [])
+    if not chars:
+        await interaction.followup.send("⚠️ Your linked profile has no characters.", ephemeral=True)
+        return
+    target_char = None
+    if character:
+        cls_match = character.strip().capitalize()
+        target_char = next((c for c in chars if c["class"] == cls_match), None)
+    if not target_char:
+        # Default: highest-light. Worker already sorts chars desc.
+        target_char = chars[0]
+
+    # 4. Build needs the slim manifest to match item names → instance IDs
+    try:
+        manifest = await _fetch_json("/manifest.json")
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Couldn't load manifest: `{e}`", ephemeral=True)
+        return
+
+    # 5. Match build items → owned instance IDs (best-effort, name-based)
+    def name_of(hash_: int) -> str:
+        return (manifest.get(str(hash_)) or {}).get("n") or ""
+
+    items_by_hash: dict[int, list[dict]] = {}
+    for it in inv.get("items", []):
+        items_by_hash.setdefault(it["hash"], []).append(it)
+
+    def find_first_owned(option_names: list[str]) -> dict | None:
+        wanted = {n.lower().strip() for n in option_names if n}
+        if not wanted:
+            return None
+        for hash_, instances in items_by_hash.items():
+            n = name_of(hash_).lower().strip()
+            if n and n in wanted:
+                return instances[0]  # take the first instance (any works for equip)
+        return None
+
+    weapons = build.get("weapons", {})
+    matched: list[tuple[str, dict | None]] = [
+        ("Kinetic",  find_first_owned(weapons.get("kinetic", []))),
+        ("Energy",   find_first_owned(weapons.get("energy",  []))),
+        ("Heavy",    find_first_owned(weapons.get("heavy",   []))),
+    ]
+    # Exotic armor
+    ex_opts = build.get("exotic_armor", {}).get("options", [])
+    if ex_opts:
+        matched.append(("Exotic Armor", find_first_owned(ex_opts)))
+
+    instance_ids = [m[1]["instance_id"] for m in matched if m[1]]
+    if not instance_ids:
+        slots_missing = ", ".join(label for label, _ in matched)
+        await interaction.followup.send(
+            f"⚠️ Couldn't find any owned items for build **{build['name']}** "
+            f"(missing: {slots_missing}). Browse `/build-show {build_id}` for the requirements.",
+            ephemeral=True,
+        )
+        return
+
+    # 6. Equip via Worker internal route
+    try:
+        result = await _bot_internal_post("/api/internal/equip", {
+            "bungie_id": bungie_id,
+            "character_id": target_char["id"],
+            "item_instance_ids": instance_ids,
+        })
+    except Exception as e:
+        await interaction.followup.send(f"⚠️ Equip failed: `{e}`", ephemeral=True)
+        return
+
+    # 7. Report
+    owned_lines = "\n".join(
+        f"  ✓ **{label}** → {(item and name_of(item['hash'])) or '(skipped)'}"
+        for label, item in matched if item
+    )
+    missing_lines = "\n".join(
+        f"  ✗ **{label}** — none of: {', '.join(opts) or '—'}"
+        for (label, item), opts in zip(
+            matched,
+            [weapons.get("kinetic", []), weapons.get("energy", []),
+             weapons.get("heavy", []), ex_opts],
+        ) if not item
+    )
+    skipped_txt = ""
+    if result.get("skipped"):
+        skipped_txt = "\n_Skipped:_ " + " · ".join(s["reason"] for s in result["skipped"][:4])
+
+    embed = discord.Embed(
+        title=f"▲ Equipped — {build['name']}",
+        description=(
+            f"On **{target_char['class']}** (pw {target_char['light']}). "
+            f"Equipped **{result['equipped_count']}/{len(instance_ids)}**.\n\n"
+            f"{owned_lines}\n{missing_lines}{skipped_txt}"
+        )[:4000],
+        color=0xB432FF,
+    )
+    await interaction.followup.send(embed=embed, ephemeral=True)
 
 
 # ============================================================
