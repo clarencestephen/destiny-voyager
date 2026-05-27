@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "last_curated": "2026-05-27",
+  "_notes": "Hand-curated foundry highlights. Unlike vendor data (Xur, Ada-1, etc.), Bungie has NO API for 'current featured foundry weapons' — these channels in Kyber track community-curated weapon spotlights + god-roll callouts. Refresh this file each Episode when the meta shifts. The /hakke /suros /tex-mechanica bot commands read this.",
+  "foundries": {
+    "hakke": {
+      "display_name": "Häkke",
+      "tagline": "Aggressive militarism — reliable, no-frills weapons designed for the front line.",
+      "weapon_style": "Bullpup pulse rifles, double-shot fusion frames, kinetic SMGs. Häkke weapons lean into reliability over flash; the foundry-style perk pool emphasizes Threat Detector + Surrounded + Outlaw.",
+      "featured_weapons": [
+        { "name": "BxR-55 Battler",      "type": "Pulse Rifle",  "element": "Kinetic",   "context": "Returning Adept weapon from Crucible playlists; god roll: Killing Wind + Headstone." },
+        { "name": "Sojourner's Tale",    "type": "Shotgun",       "element": "Strand",     "context": "Vanguard playlist; lightweight frame for ad-clear; pair with Threat Detector + One-Two Punch." },
+        { "name": "Fioritura-59",        "type": "Sidearm",       "element": "Solar",      "context": "Adept Crucible weapon; god roll: Encore + Kill Clip for sustained PvP duels." },
+        { "name": "Krait",               "type": "SMG",           "element": "Kinetic",    "context": "Vanguard weapon (returning); Threat Detector + Frenzy is the close-quarters god roll." }
+      ],
+      "external_link": "https://www.light.gg/db/all-items/?weapon_foundry=hakke"
+    },
+    "suros": {
+      "display_name": "Suros",
+      "tagline": "Precision engineering with futuristic styling — low recoil, smooth-shooting weapons that reward marksmanship.",
+      "weapon_style": "Pulse rifles, scout rifles, and auto rifles with the iconic red-and-white aesthetic. SUROS weapons traditionally favor the precision archetype with low-recoil patterns and high handling.",
+      "featured_weapons": [
+        { "name": "SUROS Regime",        "type": "Auto Rifle",    "element": "Kinetic",    "context": "Exotic. Spinning Up + Dual Speed Receiver intrinsic — the OG SUROS exotic, still strong in PvE." },
+        { "name": "DARCI",               "type": "Sniper Rifle",  "element": "Kinetic",    "context": "Exotic. Targeting damage buff against marked enemies — niche but great vs single high-HP bosses." },
+        { "name": "Halfdan-D",           "type": "Auto Rifle",    "element": "Kinetic",    "context": "Vanguard playlist auto rifle (SUROS-styled); Subsistence + Adrenaline Junkie chains well in PvE." },
+        { "name": "BxR-55 Battler",      "type": "Pulse Rifle",   "element": "Kinetic",    "context": "Also listed under Häkke — the Battler frame is co-branded. Crucible Adept god roll: Killing Wind + Headstone." }
+      ],
+      "external_link": "https://www.light.gg/db/all-items/?weapon_foundry=suros"
+    },
+    "tex-mechanica": {
+      "display_name": "Tex Mechanica",
+      "tagline": "Wild-west kinetic — hand cannons, lever-action rifles, and gambling-themed exotics that hit hard and look mean.",
+      "weapon_style": "Hand cannons (the foundry's signature), lever-action scouts, and Stasis-themed lever pulses. Tex Mechanica weapons reward precise hits over volume of fire; perk pools favor Triple Tap + Vorpal + Explosive Payload on HCs.",
+      "featured_weapons": [
+        { "name": "The Last Word",       "type": "Hand Cannon",   "element": "Kinetic",    "context": "Exotic. Hip-fire-only kinetic HC; the original D1-era Tex Mechanica exotic. Still strong in PvP for top-tier players." },
+        { "name": "Eyasluna",            "type": "Hand Cannon",   "element": "Stasis",     "context": "Grasp of Avarice raid drop; god roll: Killing Wind + Headstone or Frenzy. PvP S-tier when Stasis is meta." },
+        { "name": "Lever-Action (Tex Mechanica)", "type": "Lever-Action Scout", "element": "Stasis", "context": "Seasonal Tex Mechanica lever-action scout. High aim-assist + craftable with Headstone + Frenzy is endgame ad-clear." },
+        { "name": "Last Hope",           "type": "Sidearm",       "element": "Kinetic",    "context": "Crucible Adept Tex sidearm; OG craftable with Snapshot Sights + Kill Clip for PvP dueling." }
+      ],
+      "external_link": "https://www.light.gg/db/all-items/?weapon_foundry=tex-mechanica"
+    }
+  }
+}

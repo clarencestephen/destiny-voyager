@@ -1409,6 +1409,96 @@ async def cmd_vex_incursion(interaction: discord.Interaction):
 
 
 # ============================================================
+# Foundry shortcuts — /hakke, /suros, /tex-mechanica
+#
+# Unlike vendors / activities, foundries have NO Bungie API. Kyber's
+# #foundry-X channels track community-curated weapon spotlights +
+# god-roll callouts that shift per Episode. The bot reads a hand-
+# curated JSON (web/public/foundries.json) and renders the same
+# featured-weapon list. Refresh that JSON each Episode.
+# ============================================================
+
+_FOUNDRY_ALIASES = {
+    "hakke":             "hakke",
+    "häkke":             "hakke",
+    "suros":             "suros",
+    "tex-mechanica":     "tex-mechanica",
+    "tex":               "tex-mechanica",
+    "texmechanica":      "tex-mechanica",
+}
+
+_FOUNDRY_EMOJI = {
+    "hakke":         "⚙️",
+    "suros":         "🔴",
+    "tex-mechanica": "🤠",
+}
+
+
+async def _send_foundry_card(interaction: discord.Interaction, foundry_key: str):
+    """Render the hand-curated foundry-highlights card."""
+    try:
+        data = await _fetch_json("/foundries.json")
+    except Exception as e:
+        await interaction.followup.send(
+            f"⚠️ Couldn't load foundries.json: `{e}`", ephemeral=True,
+        )
+        return
+    f = (data.get("foundries", {}) or {}).get(foundry_key)
+    emoji = _FOUNDRY_EMOJI.get(foundry_key, "🔫")
+    if not f:
+        await interaction.followup.send(
+            f"{emoji} **{foundry_key}** — not in foundries.json.",
+        )
+        return
+    emb = discord.Embed(
+        title=f"{emoji} {f.get('display_name', foundry_key)}",
+        description=f.get("tagline", ""),
+        color=0x6a3aa6,
+        url=f.get("external_link"),
+    )
+    if f.get("weapon_style"):
+        emb.add_field(name="Weapon Style", value=f["weapon_style"], inline=False)
+    weapons = f.get("featured_weapons", []) or []
+    if weapons:
+        lines = []
+        for w in weapons[:6]:
+            head = f"**{w.get('name', '?')}** — _{w.get('type', '')}_"
+            elem = w.get("element")
+            if elem:
+                head += f" · {elem}"
+            ctx = w.get("context")
+            if ctx:
+                head += f"\n   {ctx}"
+            lines.append(head)
+        emb.add_field(
+            name=f"Featured Weapons (curated {data.get('last_curated', '?')})",
+            value="\n\n".join(lines),
+            inline=False,
+        )
+    if f.get("external_link"):
+        emb.set_footer(text="See more god rolls at light.gg (link in title).")
+    await interaction.followup.send(embed=emb)
+
+
+@bot.tree.command(name="hakke", description="Häkke foundry — featured weapons + god rolls")
+async def cmd_hakke(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_foundry_card(interaction, "hakke")
+
+
+@bot.tree.command(name="suros", description="Suros foundry — featured weapons + god rolls")
+async def cmd_suros(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_foundry_card(interaction, "suros")
+
+
+@bot.tree.command(name="tex-mechanica", description="Tex Mechanica foundry — featured weapons + god rolls")
+async def cmd_tex_mechanica(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_foundry_card(interaction, "tex-mechanica")
+
+
+# ============================================================
 # Bootstrap
 # ============================================================
 
