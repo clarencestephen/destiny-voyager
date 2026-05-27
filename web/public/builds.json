@@ -270,7 +270,7 @@
         "melee": 100
       },
       "playstyle": "Tap-melee to bait an enemy's melee, then Liar's Handshake counter-punch hits for massive damage + heals you. Flow State on melee final blow grants Amplified for chained dodging. Best on melee-heavy maps; less effective against ranged-only encounters.",
-      "source": "Arc 3.0 — Brawler archetype (melee primary + health secondary).",
+      "source": "Arc 3.0 \u2014 Brawler archetype (melee primary + health secondary).",
       "_confidence": "high"
     },
     {
@@ -624,6 +624,1278 @@
       "source": "Personal DIM loadout: https://dim.gg/jhdlx4a/Prismatic",
       "_confidence": "high",
       "dim_url": "https://dim.gg/jhdlx4a/Prismatic"
+    },
+    {
+      "id": "community-warlock-prismatic-solipsism",
+      "name": "Prismatic Solipsism (community)",
+      "class": "Warlock",
+      "subclass": "Sullen Claw",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Solipsism"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Sage Protector Cover"
+        ],
+        "energy": [
+          "Ferropotent Gloves"
+        ],
+        "heavy": [
+          "Techsec Vestment"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Keep placing rifts as you get them\n\nGeneral mods: Minor Weapons Mod, Weapons Mod, Weapons Mod, Class Mod, Class Mod",
+      "source": "Community DIM loadout: https://dim.gg/4fgwola/Prismatic:-(Solipsism)-D2ArmorPicker-Loadout",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/4fgwola/Prismatic:-(Solipsism)-D2ArmorPicker-Loadout"
+    },
+    {
+      "id": "community-warlock-sniper-burst-damage",
+      "name": "Sniper Burst Damage (community)",
+      "class": "Warlock",
+      "subclass": "Final Shell",
+      "focus": "PvE",
+      "tags": [
+        "dps",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Mataiodox\u00eda"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Conspiracy Honed"
+        ],
+        "energy": [
+          "Antedate"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Run with teammate using D.A.R.C.I. Dynamic Heat Limiter special reload.\n\nGeneral mods: Weapons Mod, Special Ammo Scout, Super Font, Super Font, +Melee / -Health, Weapons Mod, Bolstering Detonation, Arc Dexterity, Solar Dexterity, Balanced Tuning, Weapons Mod, Void Resistance, Arc Ammo Generation, Arc Resistance, Minor Weapons Mod, Stasis Weapon Surge, Stasis Weapon Surge, Stasis Weapon Surge, +Class / -Health, Weapons Mod, Time Dilation, Time Dilation, Powerful Attraction, +Grenade / -Health\nHelmet mods: Shadegleam, Default Ornament\nGauntlet mods: Shadegleam, Taken Knife Boots\nChest mods: Shadegleam, Taken Knife Bond\nLeg mods: Shadegleam, Taken Knife Hood\nClass item mods: Shadegleam, Taken Knife Gloves",
+      "source": "Community DIM loadout: https://dim.gg/uw2waky/Sniper-Burst-Damage",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/uw2waky/Sniper-Burst-Damage"
+    },
+    {
+      "id": "community-warlock-arc-turret",
+      "name": "Arc Turret (community)",
+      "class": "Warlock",
+      "subclass": "Final Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Stormdancer's Brace"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Horror's Least"
+        ],
+        "heavy": [
+          "Anarchy"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Ad clear + DPS. Stick two anarchy grenades, use super.\n\nGeneral mods: Minor Grenade Mod, Ashes to Assets, Super Font, Super Font, +Melee / -Health, Minor Grenade Mod, Firepower, Grenade Font, Grenade Font, +Super / -Health, Super Mod, Concussive Dampener, Arc Resistance, Solar Resistance, Super Mod, Recuperation, Stacks on Stacks, Harmonic Scavenger, +Super / -Health, Class Mod, Powerful Attraction, Time Dilation, Class Font, +Class / -Health\nHelmet mods: Envoy's Togs, Conflux Control\nGauntlet mods: Envoy's Togs, Taken Knife Boots\nChest mods: Envoy's Togs, Streetscholar Bond\nLeg mods: Envoy's Togs, Taken Knife Hood\nClass item mods: Envoy's Togs, Taken Knife Gloves",
+      "source": "Community DIM loadout: https://dim.gg/5dv32ti/Arc-Turret",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/5dv32ti/Arc-Turret"
+    },
+    {
+      "id": "community-warlock-ergo-sum-ignitions",
+      "name": "Ergo Sum Ignitions (community)",
+      "class": "Warlock",
+      "subclass": "Final Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Class",
+        "options": [
+          "Solipsism"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Peculiar Charm"
+        ],
+        "energy": [
+          "Ergo Sum"
+        ],
+        "heavy": [
+          "Hezen Vengeance"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Star Eater + Apotheosis class item. Transcendence \u2192 1 heavy + 2 light, throw transcendence grenade.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Melee / -Health, Weapons Mod, Bolstering Detonation, Grenade Font, Firepower, Balanced Tuning, Weapons Mod, Lucent Blades, Lucent Blades, Lucent Blades, Balanced Tuning, Minor Super Mod, Solar Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, +Class / -Health, Super Mod, Time Dilation, Bomber, Powerful Attraction\nHelmet mods: Envoy's Togs, Taken Knife Robes\nGauntlet mods: Envoy's Togs, Taken Knife Boots\nChest mods: Envoy's Togs, Default Ornament\nLeg mods: Envoy's Togs, Taken Knife Hood\nClass item mods: Envoy's Togs, Taken Knife Gloves",
+      "source": "Community DIM loadout: https://dim.gg/mugv6si/Ergo-Sum-Ignitions",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/mugv6si/Ergo-Sum-Ignitions"
+    },
+    {
+      "id": "community-warlock-support-warlock",
+      "name": "Support Warlock (community)",
+      "class": "Warlock",
+      "subclass": "Final Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Boots of the Assembler"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Psi Aeterna IV"
+        ],
+        "heavy": [
+          "Tractor Cannon"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Double rocket pulse for DPS, or Finality's for super regen.\n\nGeneral mods: Weapons Mod, Super Font, Super Font, Radiant Light, Balanced Tuning, Weapons Mod, Bolstering Detonation, Strand Loader, Arc Loader, Balanced Tuning, Weapons Mod, Arc Resistance, Concussive Dampener, Melee Damage Resistance, Balanced Tuning, Minor Weapons Mod, Strand Weapon Surge, Strand Weapon Surge, Arc Weapon Surge, Weapons Mod, Time Dilation, Time Dilation, Powerful Attraction, +Grenade / -Health\nHelmet mods: Primer, Chromacloak Robes\nGauntlet mods: Wicked Web, Default Ornament\nChest mods: Primer, Chromacloak Bond\nLeg mods: Wicked Web, Chromacloak Hood\nClass item mods: Wicked Web, Vigilant Seraph Gloves",
+      "source": "Community DIM loadout: https://dim.gg/pchut3q/Support-Warlock",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/pchut3q/Support-Warlock"
+    },
+    {
+      "id": "community-warlock-getaway-artist",
+      "name": "Getaway Artist (community)",
+      "class": "Warlock",
+      "subclass": "Final Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Getaway Artist"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Psi Aeterna IV"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Survival + DPS. Turrets for kills, rocket pulse sparingly.\n\nGeneral mods: Weapons Mod, Harmonic Siphon, Super Font, Super Font, +Melee / -Health, Grenade Mod, Bolstering Detonation, Momentum Transfer, Firepower, Weapons Mod, Solar Resistance, Void Resistance, Concussive Dampener, Balanced Tuning, Minor Super Mod, Strand Weapon Surge, Arc Weapon Surge, Solar Weapon Surge, +Class / -Health, Weapons Mod, Time Dilation, Time Dilation, Powerful Attraction, +Grenade / -Health\nHelmet mods: Envoy's Togs, Taken Knife Robes\nGauntlet mods: Envoy's Togs, Taken Knife Boots\nChest mods: Envoy's Togs, Taken Knife Bond\nLeg mods: Envoy's Togs, Taken Knife Hood\nClass item mods: Envoy's Togs, Eyes of Mercury",
+      "source": "Community DIM loadout: https://dim.gg/a5qqxyq/Getaway-Artist",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/a5qqxyq/Getaway-Artist"
+    },
+    {
+      "id": "community-titan-pk-titan",
+      "name": "PK Titan (community)",
+      "class": "Titan",
+      "subclass": "Tyrant Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Peacekeepers"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "M-17 \"Fast Talker\""
+        ],
+        "energy": [
+          "Motif-41"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Finality's turret + bait and switch + super + pulse + SMG.\n\nGeneral mods: Minor Super Mod, Super Font, Super Font, Super Font, +Class / -Health, Super Mod, Grenade Font, Grenade Font, Fastball, +Grenade / -Health, Super Mod, Void Resistance, Solar Resistance, Concussive Dampener, +Grenade / -Health, Minor Weapons Mod, Solar Weapon Surge, Stasis Weapon Surge, Stasis Weapon Surge, Weapons Mod, Time Dilation, Time Dilation, Powerful Attraction, +Weapons / -Health\nHelmet mods: Cryptic Legacy, Taken Knife Plate\nGauntlet mods: Cryptic Legacy, Huskcrushers\nChest mods: Cryptic Legacy, Taken Knife Mark\nLeg mods: Cryptic Legacy, Taken Knife Helm\nClass item mods: Cryptic Legacy, Taken Knife Gauntlets",
+      "source": "Community DIM loadout: https://dim.gg/yiijbpq/PK-Titan",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/yiijbpq/PK-Titan"
+    },
+    {
+      "id": "community-hunter-hunter-crossbow",
+      "name": "Hunter Crossbow (community)",
+      "class": "Hunter",
+      "subclass": "Pelagic Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Fortune's Favor"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Witherhoard"
+        ],
+        "energy": [
+          "Chronophage"
+        ],
+        "heavy": [
+          "A Good Shout"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Weapon stat is the only important stat. Energy \u2194 heavy swap speed.\n\nGeneral mods: Weapons Mod, Super Font, Super Font, Special Ammo Scout, Balanced Tuning, Weapons Mod, Harmonic Dexterity, Harmonic Dexterity, Harmonic Dexterity, +Class / -Health, Weapons Mod, Concussive Dampener, Solar Resistance, Void Resistance, +Super / -Melee, Minor Weapons Mod, Void Weapon Surge, Void Weapon Surge, Void Weapon Surge, Weapons Mod, Powerful Attraction, Time Dilation, Time Dilation, +Weapons / -Health\nHelmet mods: Envoy's Togs, Resonant Fury Vest\nGauntlet mods: Envoy's Togs, Default Ornament\nChest mods: Envoy's Togs, Multicell Cloak\nLeg mods: Envoy's Togs, Default Ornament\nClass item mods: Envoy's Togs, Default Ornament",
+      "source": "Community DIM loadout: https://dim.gg/h3wj3ji/Hunter-Crossbow",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/h3wj3ji/Hunter-Crossbow"
+    },
+    {
+      "id": "community-hunter-non-crit-hunter-dps",
+      "name": "Non-crit Hunter DPS (community)",
+      "class": "Hunter",
+      "subclass": "Pelagic Shell",
+      "focus": "PvE",
+      "tags": [
+        "dps",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Class",
+        "options": [
+          "Relativism"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Corundum Hammer"
+        ],
+        "energy": [
+          "Psi Aeterna IV"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Star Eater + Galanor. Mint or Psi Aeterna. Bait and switch + super + light attack + transcendence.\n\nGeneral mods: Weapons Mod, Harmonic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Arc Loader, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Void Resistance, Arc Resistance, +Super / -Health, Minor Weapons Mod, Arc Weapon Surge, Arc Weapon Surge, Solar Weapon Surge, +Super / -Health, Weapons Mod, Powerful Attraction, Powerful Attraction, Time Dilation\nHelmet mods: Long Since Lost, Taken Knife Vest\nGauntlet mods: Long Since Lost, Taken Knife Strides\nChest mods: Long Since Lost, Philosophic Filigree\nLeg mods: Long Since Lost, Taken Knife Mask\nClass item mods: Long Since Lost, Taken Knife Sleeves",
+      "source": "Community DIM loadout: https://dim.gg/gpi6i4a/Non-crit-Hunter-DPS",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/gpi6i4a/Non-crit-Hunter-DPS"
+    },
+    {
+      "id": "community-hunter-crit-heavy-lucky-pants",
+      "name": "Crit-heavy Lucky Pants (community)",
+      "class": "Hunter",
+      "subclass": "Pelagic Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Lucky Pants"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Crimson"
+        ],
+        "energy": [
+          "Uncivil Discourse"
+        ],
+        "heavy": [
+          "Refurbished A499"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Shoot Crimson twice \u2192 switch to Uncivil Discourse. Spam A499 while Out of Luck.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Arc Dexterity, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Arc Weapon Surge, Arc Weapon Surge, Arc Weapon Surge, Weapons Forged, Weapons Mod, Class Font, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
+      "source": "Community DIM loadout: https://dim.gg/s5bjdaq/Crit-heavy-Lucky-Pants",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/s5bjdaq/Crit-heavy-Lucky-Pants"
+    },
+    {
+      "id": "community-hunter-lucky-pants-nighthawk-swap",
+      "name": "Lucky Pants Nighthawk Swap (community)",
+      "class": "Hunter",
+      "subclass": "Pelagic Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "Celestial Nighthawk"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Crimson"
+        ],
+        "energy": [
+          "Uncivil Discourse"
+        ],
+        "heavy": [
+          "Refurbished A499"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Quick-swap to Celestial Nighthawk without losing super/abilities.\n\nGeneral mods: Minor Super Mod, Super Font, Super Font, Super Font, Super Mod, Arc Dexterity, Grenade Font, Bolstering Detonation, +Grenade / -Health, Super Mod, Concussive Dampener, Solar Resistance, Void Resistance, +Weapons / -Health, Minor Super Mod, Solar Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, +Class / -Health, Super Mod, Class Font, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Superblack, Polar Wolf Vest\nGauntlet mods: Superblack, Polar Wolf Strides\nChest mods: Superblack, Polar Wolf Cloak\nLeg mods: Superblack, Frosted Retinue\nClass item mods: Ablaze, Grasps of the Taken King",
+      "source": "Community DIM loadout: https://dim.gg/nkln2wi/Luck-Pants-Nighthawk-Swap",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/nkln2wi/Luck-Pants-Nighthawk-Swap"
+    },
+    {
+      "id": "community-hunter-finality-mint-lucky-pants",
+      "name": "Finality + Mint Lucky Pants (community)",
+      "class": "Hunter",
+      "subclass": "Pelagic Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Lucky Pants"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Agape"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Alt Lucky Pants build \u2014 more damage during Out of Luck.\n\nGeneral mods: Weapons Mod, Harmonic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Melee Font, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Strand Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, Weapons Forged, Weapons Mod, Time Dilation, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
+      "source": "Community DIM loadout: https://dim.gg/2g4xcsq/Finality-+-Mint-Lucky-Pants",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/2g4xcsq/Finality-+-Mint-Lucky-Pants"
+    },
+    {
+      "id": "community-warlock-off-meta-eci",
+      "name": "Off-meta ECI (community)",
+      "class": "Warlock",
+      "subclass": "Solipsism",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Class",
+        "options": [],
+        "drops_from": "No exotic armor in this loadout."
+      },
+      "weapons": {
+        "kinetic": [
+          "Prismatic Warlock"
+        ],
+        "energy": [
+          "Praxic Blade"
+        ],
+        "heavy": [
+          "Fimbulwinter Stitch"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Off-meta exotic class item build.\n\nGeneral mods: Kinetic Siphon, Dynamo, Dynamo, Bolstering Detonation, Firepower, Grenade Font, Innervation, Kinetic Weapon Surge, Kinetic Weapon Surge, Powerful Attraction, Reaper, Time Dilation, Weapons Mod, Weapons Mod, Weapons Mod, Weapons Mod, Minor Weapons Mod, +Super / -Melee, +Class / -Melee, +Weapons / -Melee, +Grenade / -Melee",
+      "source": "Community DIM loadout: https://dim.gg/cmritvy/Off-meta-ECI(Exotic-Class-Item)",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/cmritvy/Off-meta-ECI(Exotic-Class-Item)"
+    },
+    {
+      "id": "community-warlock-dark-age-hunt-warlock",
+      "name": "Dark Age Hunt Warlock (community)",
+      "class": "Warlock",
+      "subclass": "Smoke Jumper Bond",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Getaway Artist"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mercury-A"
+        ],
+        "energy": [
+          "Pre Astyanax IV"
+        ],
+        "heavy": [
+          "Black Talon"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Warlock build.\n\nGeneral mods: Ashes to Assets, Dynamo, Heavy Ammo Finder, Bolstering Detonation, Firepower, Firepower, Harmonic Resistance, Arc Resistance, Concussive Dampener, Harmonic Scavenger, Absolution, Void Weapon Surge, Powerful Attraction, Distribution, Time Dilation, Minor Grenade Mod, Super Mod, Super Mod, Minor Super Mod, Weapons Mod, +Weapons / -Melee, +Grenade / -Melee, Balanced Tuning, +Grenade / -Melee",
+      "source": "Community DIM loadout: https://dim.gg/yu5qwya/DarkAgeHunt-Warlock",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/yu5qwya/DarkAgeHunt-Warlock"
+    },
+    {
+      "id": "community-hunter-indra-god-of-the-tempest",
+      "name": "Indra \u2014 God of the Tempest (community)",
+      "class": "Hunter",
+      "subclass": "Arcstrider",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Gifted Conviction"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Trinity Ghoul"
+        ],
+        "heavy": [
+          "Synanceia"
+        ]
+      },
+      "aspects": [
+        "Tempest Strike",
+        "Ascension"
+      ],
+      "fragments": [
+        "Spark of Resistance",
+        "Spark of Frequency",
+        "Spark of Shock",
+        "Spark of Amplitude",
+        "Spark of Feedback"
+      ],
+      "playstyle": "Arc themed.\n\nGeneral mods: Melee Mod, Hands-On, Special Ammo Finder, Harmonic Siphon, Weapons Mod, Heavy Handed, Solar Loader, Focusing Strike, Balanced Tuning, Melee Mod, Concussive Dampener, Void Resistance, Void Resistance, Melee Mod, Strand Scavenger, Stacks on Stacks, Recuperation, Balanced Tuning, Melee Mod, Reaper, Powerful Attraction, Special Finisher\nHelmet mods: Carbon Blood, Sincerity\nGauntlet mods: Primer, Kairos Function Boots\nChest mods: Primer, Aspiring Challenger Cloak\nLeg mods: Default Shader, Default Ornament\nClass item mods: Primer, Vigilant Seraph Grips",
+      "source": "Community DIM loadout: https://dim.gg/jq7aw2i/Indra-God-of-the-Tempest",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/jq7aw2i/Indra-God-of-the-Tempest"
+    },
+    {
+      "id": "community-hunter-rain-bow-mastery",
+      "name": "Rain-bow Mastery (community)",
+      "class": "Hunter",
+      "subclass": "Twin-Hull Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Oathkeeper"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mercury-A"
+        ],
+        "energy": [
+          "Unfall"
+        ],
+        "heavy": [
+          "Microcosm"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Bow build.\n\nGeneral mods: Weapons Mod, Heavy Ammo Finder, Dynamo, Kinetic Siphon, Balanced Tuning, Super Mod, Firepower, Bolstering Detonation, Focusing Strike, Super Mod, Concussive Dampener, Charged Up, Solar Resistance, +Super / -Weapons, Super Mod, Stacks on Stacks, Kinetic Weapon Surge, Recuperation, Weapons Mod, Reaper, Powerful Attraction, Special Finisher\nHelmet mods: Erebos Glance, Legatus Cuirass\nGauntlet mods: Primer, Kairos Function Boots\nChest mods: Primer, Aspiring Challenger Cloak\nLeg mods: Default Ornament\nClass item mods: Primer, Unyielding",
+      "source": "Community DIM loadout: https://dim.gg/oaf6efa/Rain-bow-Mastery",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/oaf6efa/Rain-bow-Mastery"
+    },
+    {
+      "id": "community-hunter-puppetmaster",
+      "name": "PuppetMaster (community)",
+      "class": "Hunter",
+      "subclass": "The X\u00fbrfboard",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "New Malpais"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Masquerader's Cowl"
+        ],
+        "energy": [
+          "Disaster Corps Grasps"
+        ],
+        "heavy": [
+          "Last Discipline Vest"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Puppet master build.\n\nGeneral mods: Class Mod, Heavy Ammo Finder, Dynamo, Kinetic Siphon, Balanced Tuning, Class Mod, Heavy Handed, Bolstering Detonation, Focusing Strike, Balanced Tuning, Grenade Mod, Concussive Dampener, Melee Damage Resistance, Solar Resistance, Balanced Tuning, Super Mod, Reaper, Powerful Attraction, Special Finisher, Balanced Tuning, Grenade Mod\nHelmet mods: Erebos Glance, Legatus Cuirass\nGauntlet mods: Default Shader\nChest mods: Primer, Aspiring Challenger Cloak\nLeg mods: Default Ornament\nClass item mods: Primer, Vigilant Seraph Grips",
+      "source": "Community DIM loadout: https://dim.gg/ggodaay/PuppetMaster",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/ggodaay/PuppetMaster"
+    },
+    {
+      "id": "community-hunter-sixth-coyote-strand-hunter",
+      "name": "Sixth Coyote Strand Hunter (community)",
+      "class": "Hunter",
+      "subclass": "Threadrunner",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "The Sixth Coyote"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Burden of Guilt"
+        ],
+        "energy": [
+          "Centrifuse"
+        ],
+        "heavy": [
+          "Unwavering Duty"
+        ]
+      },
+      "aspects": [
+        "Whirling Maelstrom",
+        "Widow's Silk"
+      ],
+      "fragments": [
+        "Thread of Isolation",
+        "Thread of Warding",
+        "Thread of Generation",
+        "Thread of Transmutation"
+      ],
+      "playstyle": "Sixth Coyote for double dodge / ensnaring slam.\n\nGeneral mods: Super Mod, Arc Siphon, Dynamo, Super Mod, Grenade Kickstart, Grenade Font, Impact Induction, Weapons Mod, Arc Resistance, Solar Resistance, Void Resistance, Weapons Mod, Insulation, Absolution, Better Already, Grenade Mod, Reaper, Bomber, Distribution\nHelmet mods: Iron to Steel, Vallhund\nGauntlet mods: Iron to Steel, Righteous Strides\nChest mods: Iron to Steel, Solstice Cloak (Rekindled)\nLeg mods: Gambit Chrome, Ketchkiller's Mask\nClass item mods: Iron to Steel, Luxe Sleeves",
+      "source": "Community DIM loadout: https://dim.gg/gccmppy/PvE",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/gccmppy/PvE"
+    },
+    {
+      "id": "community-titan-raid-short-stack-13",
+      "name": "Raid (short stack 13) (community)",
+      "class": "Titan",
+      "subclass": "Striker",
+      "focus": "PvE",
+      "tags": [
+        "raid",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Crest of Alpha Lupi"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Outbreak Perfected"
+        ],
+        "energy": [
+          "Lotus-Eater (Adept)"
+        ],
+        "heavy": [
+          "Watchful Eye"
+        ]
+      },
+      "aspects": [
+        "Touch of Thunder",
+        "Storm's Keep"
+      ],
+      "fragments": [
+        "Spark of Resistance",
+        "Spark of Shock",
+        "Spark of Frequency",
+        "Spark of Ions"
+      ],
+      "playstyle": "Raid loadout.\n\nGeneral mods: Class Mod, Powerful Friends, Kinetic Siphon, Heavy Ammo Finder, Class Mod, Bolstering Detonation, Kinetic Loader, Fastball, Class Mod, Arc Resistance, Void Resistance, Concussive Dampener, Class Mod, Recuperation, Insulation, Absolution, Class Mod, Powerful Attraction, Distribution, Bomber\nHelmet mods: Long Journeys, Default Ornament\nGauntlet mods: Long Journeys, Knightly Noire Greaves\nChest mods: Long Journeys, Prodigal Mark\nLeg mods: Long Journeys, Knightly Noire Helm\nClass item mods: Long Journeys, Shadestalker Gauntlets",
+      "source": "Community DIM loadout: https://dim.gg/zwnalwq/Raid",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/zwnalwq/Raid"
+    },
+    {
+      "id": "community-titan-mahoraga-fashion-only",
+      "name": "Mahoraga (Fashion Only) (community)",
+      "class": "Titan",
+      "subclass": "",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Class",
+        "options": [],
+        "drops_from": "No exotic armor in this loadout."
+      },
+      "weapons": {
+        "kinetic": [
+          "Stronghold"
+        ],
+        "energy": [],
+        "heavy": []
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Fashion-only loadout.\n\nHelmet mods: Honors of the Nine, Pfhorian Plate\nGauntlet mods: Cryptic Insignia, Fused Aurum Greaves\nChest mods: Erebos Glance, Mark of Optimacy\nLeg mods: Honors of the Nine, Tangled Web Helm\nClass item mods: Honors of the Nine, Default Ornament",
+      "source": "Community DIM loadout: https://dim.gg/vt4spai/Mahoraga-Fash-Only",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/vt4spai/Mahoraga-Fash-Only"
+    },
+    {
+      "id": "community-warlock-getaway-artist-ergo-sum",
+      "name": "Getaway Artist Ergo Sum (community)",
+      "class": "Warlock",
+      "subclass": "Prismatic Warlock",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Getaway Artist"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Ergo Sum"
+        ],
+        "heavy": [
+          "Unwavering Duty"
+        ]
+      },
+      "aspects": [
+        "Feed the Void",
+        "Bleak Watcher"
+      ],
+      "fragments": [
+        "Facet of Dominance",
+        "Facet of Purpose",
+        "Facet of Courage",
+        "Facet of Sacrifice"
+      ],
+      "playstyle": "Prismatic Getaway + Ergo Sum combo.\n\nGeneral mods: Minor Super Mod, Arc Siphon, Ashes to Assets, Special Ammo Finder, Minor Grenade Mod, Firepower, Firepower, Firepower, Grenade Mod, Charged Up, Void Resistance, Arc Resistance, Grenade Mod, Arc Scavenger, Stacks on Stacks, Grenade Mod, Powerful Attraction, Reaper, Special Finisher\nHelmet mods: Mercury Vex Chrome, Starfarer's Robes\nGauntlet mods: Mercury Vex Chrome, Wrath Trail Boots\nChest mods: Mercury Vex Chrome, Bond of Refuge\nLeg mods: Mercury Vex Chrome, TM-Moss Custom Hat\nClass item mods: Mercury Vex Chrome, Don't Look Back",
+      "source": "Community DIM loadout: https://dim.gg/ijktmba/Prismatic",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/ijktmba/Prismatic"
+    },
+    {
+      "id": "community-warlock-contraverse-hold",
+      "name": "Contraverse Hold (community)",
+      "class": "Warlock",
+      "subclass": "Voidwalker",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Contraverse Hold"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "New Malpais"
+        ],
+        "energy": [
+          "Ancient Gospel"
+        ],
+        "heavy": [
+          "Corrective Measure (Timelost)"
+        ]
+      },
+      "aspects": [
+        "Feed the Void",
+        "Chaos Accelerant"
+      ],
+      "fragments": [
+        "Echo of Reprisal",
+        "Echo of Harvest",
+        "Echo of Expulsion",
+        "Echo of Remnants"
+      ],
+      "playstyle": "Contraverse Hold PvE build.\n\nGeneral mods: Grenade Mod, Harmonic Siphon, Ashes to Assets, Special Ammo Finder, Grenade Mod, Fastball, Bolstering Detonation, Firepower, Grenade Mod, Void Ammo Generation, Charged Up, Concussive Dampener, Grenade Mod, Harmonic Scavenger, Innervation, Strand Scavenger, Grenade Mod, Bomber, Special Finisher, Reaper\nHelmet mods: Smashing Success, Liminal Voyager Robes\nGauntlet mods: Smashing Success, Boots of the Fulminator\nChest mods: Smashing Success, Elect of the Empty Bond\nLeg mods: Smashing Success, Arclight Hood\nClass item mods: Smashing Success, Default Ornament",
+      "source": "Community DIM loadout: https://dim.gg/r5p5fai/PvE",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/r5p5fai/PvE"
+    },
+    {
+      "id": "community-warlock-swarmers-threadling-army",
+      "name": "Swarmers Threadling Army (community)",
+      "class": "Warlock",
+      "subclass": "Broodweaver",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Legs",
+        "options": [
+          "Swarmers"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mirror Imago"
+        ],
+        "energy": [
+          "Aberrant Action"
+        ],
+        "heavy": [
+          "Microcosm"
+        ]
+      },
+      "aspects": [
+        "Weavewalk",
+        "Weaver's Call"
+      ],
+      "fragments": [
+        "Thread of Generation",
+        "Thread of Fury",
+        "Thread of Isolation",
+        "Thread of Warding",
+        "Thread of Evolution"
+      ],
+      "playstyle": "Swarmers threadling spam.\n\nGeneral mods: Class Mod, Harmonic Siphon, Dynamo, Heavy Ammo Finder, Class Mod, Bolstering Detonation, Momentum Transfer, Firepower, Class Mod, Void Resistance, Concussive Dampener, Solar Resistance, Class Mod, Innervation, Invigoration, Absolution, Class Mod, Outreach, Distribution, Reaper\nHelmet mods: Jacarina, Liminal Voyager Robes\nGauntlet mods: Jacarina, Efficient Pursuit\nChest mods: Jacarina, Bond of Refuge\nLeg mods: Jacarina, TM-Moss Custom Hat\nClass item mods: Jacarina, Pathfinder's Wraps",
+      "source": "Community DIM loadout: https://dim.gg/q3cbopq/PvE",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/q3cbopq/PvE"
+    },
+    {
+      "id": "community-warlock-vespers-radius-centrifuse",
+      "name": "Vespers Radius + Centrifuse (community)",
+      "class": "Warlock",
+      "subclass": "Stormcaller",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Vesper of Radius"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Mint Retrograde"
+        ],
+        "energy": [
+          "Centrifuse"
+        ],
+        "heavy": [
+          "Terminus Horizon"
+        ]
+      },
+      "aspects": [
+        "Ionic Sentry",
+        "Arc Soul"
+      ],
+      "fragments": [
+        "Spark of Resistance",
+        "Spark of Shock",
+        "Spark of Discharge",
+        "Spark of Ions"
+      ],
+      "playstyle": "Arc build with Vespers Radius and Centrifuse.\n\nGeneral mods: Super Mod, Solar/Strand Dual Siphon, Harmonic Siphon, Dynamo, Super Mod, Bolstering Detonation, Fastball, Grenade Font, Super Mod, Charged Up, Arc Resistance, Void Resistance, Class Mod, Innervation, Insulation, Absolution, Class Mod, Proximity Ward, Utility Kickstart, Powerful Attraction\nHelmet mods: Ceramic Alloy, Default Ornament\nGauntlet mods: Ceramic Alloy, Legacy's Oath Boots\nChest mods: Ceramic Alloy, Bond of Refuge\nLeg mods: Ceramic Alloy, Thunderhead Cover\nClass item mods: Ceramic Alloy, Royal Protector Gloves",
+      "source": "Community DIM loadout: https://dim.gg/b6atm5y/Arc",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/b6atm5y/Arc"
+    },
+    {
+      "id": "community-warlock-loki-fashion-only",
+      "name": "Loki (Fashion Only) (community)",
+      "class": "Warlock",
+      "subclass": "",
+      "focus": "Both",
+      "tags": [
+        "fashion",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Class",
+        "options": [],
+        "drops_from": "No exotic armor in this loadout."
+      },
+      "weapons": {
+        "kinetic": [],
+        "energy": [],
+        "heavy": []
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Fashion-only loadout \u2014 Loki themed.\n\nHelmet mods: Wrath Trail Robes, Atmospheric Glow\nGauntlet mods: Yuga Sundown Boots, Golden Trace\nChest mods: Northlight Bond, Calus's Shadow\nLeg mods: Northlight Crown, Goldleaf\nClass item mods: Iron Will Gloves, Goldleaf",
+      "source": "Community DIM loadout: https://dim.gg/uly7vfa/Loki-Fashion-Only",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/uly7vfa/Loki-Fashion-Only"
+    },
+    {
+      "id": "community-hunter-mardy-s-equipped-prismatic",
+      "name": "MardY's Equipped (Prismatic) (community)",
+      "class": "Hunter",
+      "subclass": "Slasher Shell",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Renewal Grasps"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Festival Flight"
+        ],
+        "energy": [
+          "Ahab Char"
+        ],
+        "heavy": [
+          "Finality's Auger"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "playstyle": "Prismatic build (note: '#Prasmatic' tag from author \u2014 typo for Prismatic). Shared by MardY1786 31 Oct 2025.\n\nGeneral mods: Melee Mod, Solar/Strand Dual Siphon, Special Ammo Finder, Harmonic Siphon, +Super / -Health, Super Mod, Heavy Handed, Grenade Font, Fastball, Super Mod, Solar Resistance, Solar Resistance, Concussive Dampener, Balanced Tuning, Super Mod, Solar Weapon Surge, Strand Weapon Surge, Better Already, Balanced Tuning, Super Mod, Time Dilation, Class Font, Proximity Ward, Balanced Tuning\nHelmet mods: Chatterwhite, Vigilant Seraph Vest\nGauntlet mods: Chatterwhite, Vigilant Seraph Strides\nChest mods: Chatterwhite, Vigilant Seraph Cloak\nLeg mods: Chatterwhite, Spacewalk Cowl\nClass item mods: Chatterwhite, Default Ornament",
+      "source": "Community DIM loadout: https://dim.gg/w7gknva/Equipped-31102025-19:57:01",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/w7gknva/Equipped-31102025-19:57:01"
+    },
+    {
+      "id": "community-hunter-void-arc-staff-swap",
+      "name": "Void / Arc Staff Swap (community)",
+      "class": "Hunter",
+      "subclass": "Arcstrider",
+      "focus": "PvE",
+      "tags": [
+        "pve",
+        "community"
+      ],
+      "exotic_armor": {
+        "slot": "Chest",
+        "options": [
+          "Gifted Conviction"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Festival Flight"
+        ],
+        "energy": [
+          "Centrifuse"
+        ],
+        "heavy": [
+          "Submersion"
+        ]
+      },
+      "aspects": [
+        "Ascension",
+        "Tempest Strike"
+      ],
+      "fragments": [
+        "Spark of Shock",
+        "Spark of Volts",
+        "Spark of Ions",
+        "Spark of Resistance",
+        "Spark of Focus"
+      ],
+      "playstyle": "Tagged #Arc Chest. Build note from author: 'Change the super to arc staff also.' Shared by MardY1786.\n\nGeneral mods: Class Mod, Arc Siphon, Harmonic Siphon, Special Ammo Finder, Set Bonus: \nSmoke Jumper, Class Mod, Heavy Handed, Heavy Handed, Balanced Tuning, Melee Mod, Void Resistance, Solar Resistance, Concussive Dampener, Class Mod, Arc Weapon Surge, Arc Weapon Surge, Better Already, Balanced Tuning, Class Mod, Class Font, Time Dilation, Powerful Attraction, Balanced Tuning\nHelmet mods: Wicked Web, Default Ornament\nGauntlet mods: Wicked Web, Veiled Haunting Strides\nChest mods: Wicked Web, Veiled Haunting Cloak\nLeg mods: Mara Sov Mask\nClass item mods: Wicked Web, Veiled Haunting Sleeves",
+      "source": "Community DIM loadout: https://dim.gg/7cji2nq/Void",
+      "_confidence": "medium",
+      "dim_url": "https://dim.gg/7cji2nq/Void"
+    },
+    {
+      "id": "darth-bankai-phantom-blink",
+      "name": "PHANTOM BLINK (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Void",
+      "focus": "PvP",
+      "tags": [
+        "darth_bankai",
+        "void",
+        "phantom-blink"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "Astrocyte Verse"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Fatebringer"
+        ],
+        "energy": [
+          "Ecliptic Distaff"
+        ],
+        "heavy": [
+          "Chivalric Fire"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 65,
+        "health": 73,
+        "class": 71,
+        "grenade": 119,
+        "super": 95,
+        "melee": 25
+      },
+      "theme_locks": [
+        {
+          "set": "Swordmaster",
+          "count": 2
+        },
+        {
+          "set": "Sage Protector",
+          "count": 2
+        }
+      ],
+      "playstyle": "Role: Blink brawler, glaive + caster sword\n\nUse for: Trials CQC, Comp small maps, IB rush\n\nSet bonuses: Swordmaster 2pc \u2014 Balestra: glaive/sword/melee hits exhaust targets (reduce their outgoing dmg) \u00b7 Sage Protector 2pc \u2014 Combat Meditation: sword hits return grenade + class ability energy\n\nArmor:\n  Helmet: Astrocyte Verse [Specialist] \u2014 W23 H3 G30 S11 C3 M3\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
+    },
+    {
+      "id": "darth-bankai-thread-phantom",
+      "name": "THREAD PHANTOM (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Strand",
+      "focus": "PvP",
+      "tags": [
+        "darth_bankai",
+        "strand",
+        "thread-phantom"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "Ophidian Aspect"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Praxic Blade OR Fatebringer"
+        ],
+        "energy": [
+          "Quicksilver Storm"
+        ],
+        "heavy": [
+          "Falling Guillotine"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 81,
+        "health": 82,
+        "class": 73,
+        "grenade": 108,
+        "super": 89,
+        "melee": 27
+      },
+      "theme_locks": [
+        {
+          "set": "Swordmaster",
+          "count": 2
+        },
+        {
+          "set": "Sage Protector",
+          "count": 2
+        }
+      ],
+      "playstyle": "Role: Mirror of Phantom Blink, weapon-swap only\n\nUse for: Trials medium, Comp flex, PVE strand activities\n\nSet bonuses: Swordmaster 2pc \u2014 Balestra \u00b7 Sage Protector 2pc \u2014 Combat Meditation\n\nArmor:\n  Helmet: Ophidian Aspect [Gunner] \u2014 W39 H12 G19 S5 C5 M5\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
+    },
+    {
+      "id": "darth-bankai-cryo-lord",
+      "name": "CRYO LORD (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Stasis",
+      "focus": "PvP",
+      "tags": [
+        "darth_bankai",
+        "stasis",
+        "cryo-lord"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Osmiomancy Gloves"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Cryosthesia 77K"
+        ],
+        "energy": [
+          "Riptide"
+        ],
+        "heavy": [
+          "Chain of Command"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 74,
+        "health": 52,
+        "class": 89,
+        "grenade": 61,
+        "super": 104,
+        "melee": 44
+      },
+      "theme_locks": [
+        {
+          "set": "Sage Protector",
+          "count": 3
+        }
+      ],
+      "playstyle": "Role: Freeze / control / area denial\n\nUse for: Trials long-sight, Comp range, IB zone hold\n\nSet bonuses: Sage Protector 2pc \u2014 Combat Meditation \u00b7 Swordmaster 2pc \u2014 Balestra\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector \u00b7 Specialist] \u2014 W25 H12 G2 S16 C30 M2\n  Gauntlets: Osmiomancy Gloves [Specialist] \u2014 W11 H0 G0 S29 C0 M19\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
+    },
+    {
+      "id": "darth-bankai-aerial-barrage",
+      "name": "AERIAL BARRAGE (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Arc/Solar",
+      "focus": "PvE",
+      "tags": [
+        "darth_bankai",
+        "arc/solar",
+        "aerial-barrage"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "Lunafaction Boots"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Izanagi's Burden"
+        ],
+        "energy": [
+          "Coldheart / Solar primary"
+        ],
+        "heavy": [
+          "Apex Predator"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 63,
+        "health": 62,
+        "class": 89,
+        "grenade": 51,
+        "super": 75,
+        "melee": 25
+      },
+      "theme_locks": [
+        {
+          "set": "Sage Protector",
+          "count": 3
+        }
+      ],
+      "playstyle": "Role: Aerial boss, snipers + rockets, rift auto-reload\n\nUse for: Raid bosses (aerial/range), GMs\n\nSet bonuses: Sage Protector 2pc \u00b7 Swordmaster 2pc (or Wild Anthem 2pc flex)\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector \u00b7 Specialist] \u2014 W25 H12 G2 S16 C30 M2\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
+    },
+    {
+      "id": "darth-bankai-cenotaph-relay",
+      "name": "CENOTAPH RELAY (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Solar",
+      "focus": "PvE",
+      "tags": [
+        "darth_bankai",
+        "solar",
+        "cenotaph-relay"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "Cenotaph Mask"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Wish-Ender or Izanagi"
+        ],
+        "energy": [
+          "Coldheart"
+        ],
+        "heavy": [
+          "Apex Predator / Sleeper / Whisper"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 55,
+        "health": 70,
+        "class": 68,
+        "grenade": 89,
+        "super": 114,
+        "melee": 42
+      },
+      "theme_locks": [
+        {
+          "set": "Swordmaster",
+          "count": 2
+        },
+        {
+          "set": "Sage Protector",
+          "count": 2
+        }
+      ],
+      "playstyle": "Role: Heavy ammo battery via trace rifle marks\n\nUse for: Raid support \u2014 Koregos, Witness, any team-heavy boss\n\nSet bonuses: Sage Protector 2pc \u00b7 Swordmaster 2pc\n\nArmor:\n  Helmet: Cenotaph Mask [Paragon] \u2014 W13 H0 G0 S30 C0 M20\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
+    },
+    {
+      "id": "darth-bankai-techsec-wrecker",
+      "name": "TECHSEC WRECKER (darth_bankai)",
+      "class": "Warlock",
+      "subclass": "Void",
+      "focus": "PvE",
+      "tags": [
+        "darth_bankai",
+        "void",
+        "techsec-wrecker"
+      ],
+      "exotic_armor": {
+        "slot": "Helmet",
+        "options": [
+          "None (4pc legendary)"
+        ]
+      },
+      "weapons": {
+        "kinetic": [
+          "Witherhoard"
+        ],
+        "energy": [
+          "Maahes HC4"
+        ],
+        "heavy": [
+          "Tractor Cannon"
+        ]
+      },
+      "aspects": [],
+      "fragments": [],
+      "target_stats": {
+        "weapons": 62,
+        "health": 56,
+        "class": 54,
+        "grenade": 56,
+        "super": 56,
+        "melee": 20
+      },
+      "theme_locks": [
+        {
+          "set": "Techsec",
+          "count": 4
+        }
+      ],
+      "playstyle": "Role: Kinetic shield break + AOE stagger (PVE ONLY)\n\nUse for: GM Nightfall, Pantheon shield wall, NOT PVP\n\nSet bonuses: Techsec 2pc \u2014 Wrecker: +Kinetic dmg vs shields/overshields/constructs \u00b7 Techsec 4pc \u2014 Concussive Rounds: shield break / powerful kill = disorienting AOE\n\nArmor:\n  Helmet: Techsec Hood [Techsec \u00b7 Gunner] \u2014 W28 H8 G16 S0 C0 M0\n  Gauntlets: Techsec Gloves [Techsec \u00b7 Bulwark] \u2014 W0 H28 G0 S8 C16 M0\n  Chest: Techsec Vestment [Techsec \u00b7 Paragon] \u2014 W0 H0 G8 S28 C0 M16\n  Legs: Techsec Boots [Techsec \u00b7 Grenadier] \u2014 W0 H0 G28 S16 C8 M0\n  Class: Sage Protector Bond [Sage Protector (no 2pc) \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
+      "_confidence": "high"
     }
   ]
 }

@@ -1,0 +1,269 @@
+{
+  "version": "1.0",
+  "generated": "2026-05-27",
+  "_notes": "Per-encounter weapon recommendations, tagged by role. Match is by (raid, encounter, role) in the /play wizard. Each slot's `options` list is in priority order; the fitter picks the first one the user owns. Missing items show as 'NEED' hints. Edit freely.",
+  "recipes": [
+    {
+      "id": "crotas-end-crota-dps",
+      "raid": "Crota's End",
+      "encounter": "Crota, Son of Oryx",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Tractor Cannon", "Divinity"],
+        "heavy": ["The Lament", "Wolfsbane", "Falling Guillotine"]
+      },
+      "rationale": "Sword DPS into Crota's chest after the sword carrier breaks his shield. Tractor Cannon debuff stacks the sword damage. Witherhoard for chip + Oversoul-orb pressure between phases.",
+      "tags": ["dps", "sword", "boss", "burst"],
+      "_confidence": "high"
+    },
+    {
+      "id": "crotas-end-crota-support",
+      "raid": "Crota's End",
+      "encounter": "Crota, Son of Oryx",
+      "role": "Support",
+      "weapons": {
+        "kinetic": ["Wish-Ender", "Outbreak Perfected"],
+        "energy": ["Divinity", "Tractor Cannon"],
+        "heavy": ["Sleeper Simulant", "Anarchy"]
+      },
+      "rationale": "Divinity stacks Weaken on Crota so sword carriers crit-amplify. Wish-Ender lets you see Knights/Boomers through cover during the sword runner phase.",
+      "tags": ["support", "debuff"],
+      "_confidence": "high"
+    },
+    {
+      "id": "crotas-end-abyss-add-clear",
+      "raid": "Crota's End",
+      "encounter": "Abyss",
+      "role": "Add-clear",
+      "weapons": {
+        "kinetic": ["Outbreak Perfected", "Quicksilver Storm"],
+        "energy": ["Trinity Ghoul", "Riskrunner"],
+        "heavy": ["Apex Predator", "Thunderlord"]
+      },
+      "rationale": "Long corridors with relentless Thrall + Knight spawns. Outbreak chains nanites, Trinity Ghoul AOE for thrall waves, Riskrunner if you're getting shocked. Save heavy for the Ogre at the end.",
+      "tags": ["add-clear", "AOE", "thrall"],
+      "_confidence": "high"
+    },
+    {
+      "id": "crotas-end-bridge-dps",
+      "raid": "Crota's End",
+      "encounter": "Bridge",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Trinity Ghoul", "Riskrunner"],
+        "heavy": ["Tractor Cannon", "Xenophage"]
+      },
+      "rationale": "Gatekeeper kills with the sword + ad-clear in the same encounter. Tractor (energy) debuffs Gatekeeper to one-shot via sword. Trinity Ghoul handles the Wizards + Ogres.",
+      "tags": ["mixed", "gatekeeper", "adds"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "kings-fall-oryx-dps",
+      "raid": "King's Fall",
+      "encounter": "Oryx, the Taken King",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Touch of Malice", "Outbreak Perfected"],
+        "energy": ["Coldheart", "Divinity"],
+        "heavy": ["Sleeper Simulant", "Whisper of the Worm", "Apex Predator"]
+      },
+      "rationale": "Long-range chest weak-spot DPS during stun windows. Touch of Malice synergizes with Oryx-themed loot. Whisper/Sleeper preserve ammo across stagger cycles.",
+      "tags": ["dps", "long-range", "burst"],
+      "_confidence": "high"
+    },
+    {
+      "id": "kings-fall-warpriest-dps",
+      "raid": "King's Fall",
+      "encounter": "Warpriest",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Izanagi's Burden", "Outbreak Perfected"],
+        "energy": ["Coldheart", "Divinity"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant"]
+      },
+      "rationale": "Brand of the Initiate is a short DPS window — burst-DPS weapons. Izanagi Honed Edge into Whisper for the opening salvo, then Sleeper for sustained.",
+      "tags": ["dps", "burst", "brand"],
+      "_confidence": "high"
+    },
+    {
+      "id": "kings-fall-golgoroth-dps",
+      "raid": "King's Fall",
+      "encounter": "Golgoroth",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Sleeper Simulant", "Whisper of the Worm", "Anarchy"]
+      },
+      "rationale": "Pool of Reclaimed Light → Unstable Light detonation on Golgoroth's chest. Divinity guarantees the crit cage. Anarchy chip damage stacks while you're cycling Gaze.",
+      "tags": ["dps", "pool", "crit"],
+      "_confidence": "high"
+    },
+    {
+      "id": "kings-fall-basilica-add-clear",
+      "raid": "King's Fall",
+      "encounter": "Basilica (Annihilator Totems)",
+      "role": "Add-clear",
+      "weapons": {
+        "kinetic": ["Quicksilver Storm", "Outbreak Perfected"],
+        "energy": ["Trinity Ghoul", "Riskrunner"],
+        "heavy": ["Apex Predator", "Thunderlord"]
+      },
+      "rationale": "Constant Knight + Wizard spawns under both totems. Trinity Ghoul chains for the cluster spawns; Riskrunner pops if Hive shock-grenades land.",
+      "tags": ["add-clear", "AOE"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "vault-of-glass-atheon-dps",
+      "raid": "Vault of Glass",
+      "encounter": "Atheon, Time's Conflux",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Izanagi's Burden", "Outbreak Perfected"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant", "Cataclysmic"]
+      },
+      "rationale": "Atheon eats long-range precision. Whisper white-damage cap. Divinity supports the team if your DPS team is mixed-loadout.",
+      "tags": ["dps", "long-range", "precision"],
+      "_confidence": "high"
+    },
+    {
+      "id": "vault-of-glass-templar-dps",
+      "raid": "Vault of Glass",
+      "encounter": "Templar",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Outbreak Perfected", "Witherhoard"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Sleeper Simulant", "Whisper of the Worm"]
+      },
+      "rationale": "Templar shield-breaking phase + short stun DPS window. Burst weapons (linears/snipers) inside the bubble. Divinity for shield cage if you can spare the slot.",
+      "tags": ["dps", "stun", "burst"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "last-wish-riven-dps",
+      "raid": "Last Wish",
+      "encounter": "Riven of a Thousand Voices",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Izanagi's Burden", "Outbreak Perfected"],
+        "energy": ["Divinity", "Le Monarque"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant", "Anarchy"]
+      },
+      "rationale": "Riven's mouth crit is the cheese DPS target. Izanagi Honed Edge → Whisper/Sleeper for the burst. Anarchy if running the legitimate mechanics version.",
+      "tags": ["dps", "cheese", "burst"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "vow-of-the-disciple-rhulk-dps",
+      "raid": "Vow of the Disciple",
+      "encounter": "Rhulk, Disciple of the Witness",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Touch of Malice"],
+        "energy": ["Lumina", "Divinity"],
+        "heavy": ["The Lament", "Sleeper Simulant", "Cataclysmic"]
+      },
+      "rationale": "Rhulk's standing DPS window is long enough for sword damage between his kicks. Lament heals you while damaging him. Witherhoard pool for between phases.",
+      "tags": ["dps", "sword", "sustain"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "deep-stone-crypt-taniks-dps",
+      "raid": "Deep Stone Crypt",
+      "encounter": "Taniks, the Abomination",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant"]
+      },
+      "rationale": "Long-range chest crit. Whisper precision uptime. Divinity caged for sniper-team synergy. Witherhoard ground-target on Taniks' fly-zone before he lands.",
+      "tags": ["dps", "long-range", "precision"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "garden-of-salvation-sanctified-mind-dps",
+      "raid": "Garden of Salvation",
+      "encounter": "Sanctified Mind",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Outbreak Perfected", "Izanagi's Burden"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant", "Anarchy"]
+      },
+      "rationale": "Multi-floor weak-spot rotation. Outbreak nanites chain across Vex; Divinity cage supports snipers. Anarchy traps the path Sanctified Mind teleports along.",
+      "tags": ["dps", "multi-floor"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "root-of-nightmares-nezarec-dps",
+      "raid": "Root of Nightmares",
+      "encounter": "Nezarec",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Divinity", "Le Monarque"],
+        "heavy": ["Whisper of the Worm", "Sleeper Simulant", "Apex Predator"]
+      },
+      "rationale": "Light/Dark plate cycle drives short DPS windows. Whisper/Sleeper for the burst, Witherhoard on his stationary hover phase.",
+      "tags": ["dps", "burst", "phase"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "salvations-edge-witness-dps",
+      "raid": "Salvation's Edge",
+      "encounter": "The Witness",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Outbreak Perfected", "Touch of Malice"],
+        "energy": ["Divinity", "Coldheart"],
+        "heavy": ["Sleeper Simulant", "Whisper of the Worm"]
+      },
+      "rationale": "Witness DPS is precision + sustained. Long stun windows reward Whisper/Sleeper. Cenotaph + Coldheart trace for heavy-ammo cycling on Resonant Splinters add-clear in earlier encounters.",
+      "tags": ["dps", "long-range", "precision"],
+      "_confidence": "high"
+    },
+
+    {
+      "id": "warlords-ruin-locus-dps",
+      "raid": "Warlord's Ruin",
+      "encounter": "Locus of Wailing Grief",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Wish-Ender"],
+        "energy": ["Le Monarque", "Riskrunner"],
+        "heavy": ["The Lament", "Sleeper Simulant", "Cataclysmic"]
+      },
+      "rationale": "Final boss of Warlord's Ruin dungeon. Sword DPS or burst linear; Le Monarque poison + Witherhoard chip during torch-rotation phases.",
+      "tags": ["dps", "dungeon", "sword"],
+      "_confidence": "medium"
+    },
+
+    {
+      "id": "ghosts-of-the-deep-simmumah-dps",
+      "raid": "Ghosts of the Deep",
+      "encounter": "Šimmumah ur-Nokru",
+      "role": "DPS",
+      "weapons": {
+        "kinetic": ["Witherhoard", "Outbreak Perfected"],
+        "energy": ["Divinity", "Wavesplitter"],
+        "heavy": ["Whisper of the Worm", "Anarchy", "Apex Predator"]
+      },
+      "rationale": "Wizard sub-boss with short add-cleared DPS windows. Anarchy pre-stick during add phase; Whisper for crit headshots during stun.",
+      "tags": ["dps", "dungeon", "wizard"],
+      "_confidence": "medium"
+    }
+  ]
+}
