@@ -1131,6 +1131,284 @@ async def cmd_this_week(
 
 
 # ============================================================
+# Direct vendor / activity shortcuts — /xur, /ada1, /banshee, etc.
+#
+# These bypass the /this-week summary and jump straight to the
+# vendor's full inventory embed (same shape as the deep-dive view
+# from `/this-week vendor:xur`). Quicker UX for the "I just want to
+# know what Xur has this week" path.
+# ============================================================
+
+_VENDOR_ALIASES = {
+    "xur":       "xur",
+    "xûr":       "xur",
+    "ada":       "ada1",
+    "ada1":      "ada1",
+    "ada-1":     "ada1",
+    "banshee":   "banshee",
+    "banshee44": "banshee",
+    "banshee-44": "banshee",
+    "rahool":    "rahool",
+    "eververse": "eververse",
+    "tess":      "eververse",
+}
+
+_ACTIVITY_ALIASES = {
+    "trials":          "trials",
+    "trials-of-osiris":"trials",
+    "iron-banner":     "iron-banner",
+    "ironbanner":      "iron-banner",
+    "ib":              "iron-banner",
+    "lost-sector":     "lost-sector",
+    "lostsector":      "lost-sector",
+    "weekly-reset":    "weekly-reset",
+    "weeklyreset":     "weekly-reset",
+    "reset":           "weekly-reset",
+    "vex-incursion":   "vex-incursion",
+    "vex":             "vex-incursion",
+    "raid-challenge":  "raid-challenge",
+    "dungeon-rotator": "dungeon-rotator",
+    "featured-dungeon":"dungeon-rotator",
+}
+
+_ACTIVITY_EMOJI = {
+    "weekly-reset":    "🔄",
+    "raid-challenge":  "⚔️",
+    "dungeon-rotator": "🏰",
+    "iron-banner":     "🛡️",
+    "trials":          "🏆",
+    "vex-incursion":   "🌀",
+    "lost-sector":     "🗝️",
+}
+
+
+async def _fetch_this_week_bundle(interaction: discord.Interaction):
+    """Common front-half of every shortcut command. Returns
+    (data, manifest) on success or sends an error followup + None
+    on failure. Caller should `return` if None.
+    """
+    discord_id = str(interaction.user.id)
+    link = await _resolve_bungie_id(discord_id)
+    if not link:
+        await interaction.followup.send(
+            "⚠️ You haven't linked a Bungie account yet. Run `/link-bungie` first.",
+            ephemeral=True,
+        )
+        return None
+    bungie_id = link.get("bungie_id")
+    try:
+        import asyncio
+        data, manifest = await asyncio.gather(
+            _bot_internal_post("/api/internal/this-week", {"bungie_id": bungie_id}),
+            _fetch_json("/manifest.json"),
+        )
+    except Exception as e:
+        await interaction.followup.send(
+            f"⚠️ This-week fetch failed: `{e}`", ephemeral=True,
+        )
+        return None
+    return data, manifest
+
+
+def _build_vendor_embed(vendor_key: str, v: dict | None, manifest: dict) -> discord.Embed:
+    """Render a vendor's deep-dive embed. Identical output shape to
+    `/this-week vendor:<key>`. v=None handles the "no data" case."""
+    emoji = _VENDOR_EMOJI.get(vendor_key, "🛍️")
+    if not v:
+        return discord.Embed(
+            title=f"{emoji} {vendor_key}",
+            description="No data this week.",
+            color=0x6a3aa6,
+        )
+    emb = discord.Embed(
+        title=f"{emoji} {v.get('display_name', vendor_key)}",
+        color=0x6a3aa6,
+    )
+    if v.get("location"):
+        loc = v["location"]
+        emb.add_field(
+            name="📍 Location",
+            value=f"{loc.get('name', '?')} · {loc.get('planet', '?')}",
+            inline=False,
+        )
+    if not v.get("available", True):
+        emb.description = (
+            v.get("notes")
+            or f"Returns in {_format_refresh(v.get('refresh_in_seconds', 0))}."
+        )
+    else:
+        emb.description = v.get("notes", "")
+        items_raw = v.get("items", []) or []
+
+        def name_of(h):
+            return (manifest.get(str(h)) or {}).get("n") or f"#{h}"
+
+        def cost_text(cost):
+            if not cost:
+                return ""
+            return " + ".join(
+                f"{c.get('quantity', 0):,} {name_of(c.get('currency_hash'))}"
+                for c in cost
+            )
+
+        def tier_prefix(tier):
+            return {"Exotic": "🟡 ", "Legendary": "🟣 ", "Rare": "🔵 "}.get(tier, "• ")
+
+        lines = []
+        for it in items_raw[:12]:
+            m = manifest.get(str(it.get("hash"))) or {}
+            name = m.get("n") or f"#{it.get('hash', '?')}"
+            itype = m.get("t") or ""
+            tier = m.get("r") or ""
+            head = f"{tier_prefix(tier)}**{name}**"
+            if itype:
+                head += f" — _{itype}_"
+            cl = cost_text(it.get("cost") or [])
+            if cl:
+                head += f"\n   {cl}"
+            lines.append(head)
+        if lines:
+            emb.add_field(
+                name=f"Inventory ({len(items_raw)} items, showing first 12)",
+                value="\n".join(lines) or "—",
+                inline=False,
+            )
+        if len(items_raw) > 12:
+            emb.set_footer(
+                text=f"+{len(items_raw) - 12} more items. Full list at "
+                f"clarencestephen.com/this-week.",
+            )
+    emb.add_field(
+        name="Refresh",
+        value=_format_refresh(v.get("refresh_in_seconds", 0)),
+        inline=True,
+    )
+    return emb
+
+
+def _build_activity_embed(activity_key: str, milestones: list) -> discord.Embed:
+    """Render one milestone's detail card."""
+    emoji = _ACTIVITY_EMOJI.get(activity_key, "📅")
+    match = next((m for m in milestones if m.get("activity") == activity_key), None)
+    if not match:
+        return discord.Embed(
+            title=f"{emoji} {activity_key}",
+            description="No data this week.",
+            color=0x6a3aa6,
+        )
+    emb = discord.Embed(
+        title=f"{emoji} {match.get('display_name', activity_key)}",
+        description=match.get("description", ""),
+        color=0x6a3aa6,
+    )
+    emb.add_field(
+        name="Category",
+        value=match.get("category", "?"),
+        inline=True,
+    )
+    emb.add_field(
+        name="Active",
+        value="✅ active" if match.get("available") else "❌ off-rotation",
+        inline=True,
+    )
+    rewards = match.get("rewards") or []
+    if rewards:
+        emb.add_field(
+            name="Rewards",
+            value="\n".join(f"• {r}" for r in rewards),
+            inline=False,
+        )
+    if match.get("notes"):
+        emb.add_field(name="Notes", value=match["notes"], inline=False)
+    if match.get("end_time"):
+        emb.set_footer(text=f"Ends {match['end_time']}")
+    return emb
+
+
+async def _send_vendor_card(interaction: discord.Interaction, vendor_key: str):
+    bundle = await _fetch_this_week_bundle(interaction)
+    if not bundle:
+        return
+    data, manifest = bundle
+    vendors = data.get("vendors", {}) or {}
+    emb = _build_vendor_embed(vendor_key, vendors.get(vendor_key), manifest)
+    await interaction.followup.send(embed=emb)
+
+
+async def _send_activity_card(interaction: discord.Interaction, activity_key: str):
+    bundle = await _fetch_this_week_bundle(interaction)
+    if not bundle:
+        return
+    data, _manifest = bundle
+    emb = _build_activity_embed(activity_key, data.get("milestones", []) or [])
+    await interaction.followup.send(embed=emb)
+
+
+# ── Vendor shortcuts ─────────────────────────────────────────
+
+@bot.tree.command(name="xur", description="This week's Xûr — location + exotic inventory")
+async def cmd_xur(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_vendor_card(interaction, "xur")
+
+
+@bot.tree.command(name="ada1", description="Ada-1's armor mod rotation this week")
+async def cmd_ada1(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_vendor_card(interaction, "ada1")
+
+
+@bot.tree.command(name="banshee", description="Banshee-44's weekly weapon stock + focusing")
+async def cmd_banshee(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_vendor_card(interaction, "banshee")
+
+
+@bot.tree.command(name="rahool", description="Master Rahool's engram focusing rotation")
+async def cmd_rahool(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_vendor_card(interaction, "rahool")
+
+
+@bot.tree.command(name="eververse", description="Eververse / Tess Everis weekly Bright Dust + Silver")
+async def cmd_eververse(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_vendor_card(interaction, "eververse")
+
+
+# ── Activity shortcuts ───────────────────────────────────────
+
+@bot.tree.command(name="trials", description="Trials of Osiris — current map + rewards")
+async def cmd_trials(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_activity_card(interaction, "trials")
+
+
+@bot.tree.command(name="iron-banner", description="Iron Banner — current week mode + rewards")
+async def cmd_iron_banner(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_activity_card(interaction, "iron-banner")
+
+
+@bot.tree.command(name="lost-sector", description="Daily Lost Sector — current exotic armor slot rotator")
+async def cmd_lost_sector(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_activity_card(interaction, "lost-sector")
+
+
+@bot.tree.command(name="weekly-reset", description="Weekly reset milestones — featured raid / dungeon / pinnacles")
+async def cmd_weekly_reset(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_activity_card(interaction, "weekly-reset")
+
+
+@bot.tree.command(name="vex-incursion", description="Vex Incursion (Neomuna) — strand-themed activity")
+async def cmd_vex_incursion(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=False, thinking=True)
+    await _send_activity_card(interaction, "vex-incursion")
+
+
+# ============================================================
 # Bootstrap
 # ============================================================
 
