@@ -14,7 +14,7 @@ All 20 activities authored at Pass-1 quality. Pending: multi-source synthesis (P
 | Activity | File | Pass 1 | Pass 2 | Images |
 |---|---|---|---|---|
 | Root of Nightmares | `root-of-nightmares.yaml` | ✅ | ✅ | ⬜ |
-| Salvation's Edge | `salvations-edge.yaml` | ✅ | ⬜ | ⬜ |
+| Salvation's Edge | `salvations-edge.yaml` | ✅ | ✅ | ⬜ |
 | Desert Perpetual | `desert-perpetual.yaml` | ✅ | ⬜ | ⬜ |
 | Vow of the Disciple | `vow-of-the-disciple.yaml` | ✅ | ⬜ | ⬜ |
 | Deep Stone Crypt | `deep-stone-crypt.yaml` | ✅ | ⬜ | ⬜ |

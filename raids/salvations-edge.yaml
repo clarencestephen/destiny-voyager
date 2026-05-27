@@ -13,6 +13,14 @@
 #     color (e.g., spherical-circle hand never glows yellow itself).
 #   • Witness Glyphbreaker: "The Witness tests you..." text → dark nodes
 #     arranged to match shape of LAST destroyed hand.
+#
+# PASS 2 RE-PASS (2026-05-27, blueberries authoritative for loot+challenges):
+#   • Loot tables: ALL 5 encounters had incorrect potential_drops in
+#     Pass-1. Substratum was listing E3/E5 weapons; Witness was over-
+#     inclusive. Fixed against blueberries.gg/weapons/salvations-edge-loot-table.
+#   • Master Challenges added (new master_challenge: block per encounter):
+#     Scenic Route / At Capacity / Balanced Diet / Varied Geometry /
+#     Coordinated Efforts. Per blueberries.gg/leveling/salvations-edge-challenges.
 #   • Final Stand at ~10% HP, chest glows yellow.
 #   • 3-stack Resonance cap (4th = instant death) confirmed across sources.
 # Added: image slots per encounter (reserved for Discord upload).
@@ -367,9 +375,20 @@ encounters:
         rewards:
           - "First of 3 hidden conductors for the Deepsight puzzle."
       potential_drops:
-        - "Critical Anomaly (sniper)"
-        - "Forthcoming Deviance (glaive)"
-        - "Imminence (SMG)"
+        - "Nullify (pulse rifle, Solar)"
+        - "Non-Denouement (combat bow, Arc)"
+        - "Imminence (SMG, Strand)"
+
+    master_challenge:
+      name: "Scenic Route"
+      requirement: |
+        Only kill the Overload Minotaur on the LONGER of the two paths
+        (the one with the Overload spawn in the 4th room, not the 3rd).
+        Read which path is yours by checking the majors in the first
+        rooms: Hobgoblins = your path will kill, Attendants = ignore.
+        Master adds no Champion spawns beyond the existing path
+        Minotaurs.
+      enforced_on: "Master only"
 
     images:
       overview:     ""
@@ -571,9 +590,21 @@ encounters:
         rewards:
           - "Second of 3 hidden conductors for the Deepsight puzzle."
       potential_drops:
-        - "Nullify (pulse rifle)"
-        - "Summum Bonum (sword)"
-        - "Non-Denouement (combat bow)"
+        - "Summum Bonum (sword, Arc)"
+        - "Non-Denouement (combat bow, Arc)"
+        - "Forthcoming Deviance (glaive, Void)"
+        - "Imminence (SMG, Strand)"
+
+    master_challenge:
+      name: "At Capacity"
+      requirement: |
+        Only deposit Resonance in the conductor chest when holding
+        exactly 3 stacks. Forces a 4-person 3-stack rotation per
+        damage phase: starting-plate players pick up 3, conductor-
+        closers pick up 1 (matching the conductor's shape) — except
+        right side, where both pick up 3 and one ferries an extra
+        from the middle ground stack.
+      enforced_on: "Master only"
 
     images:
       overview:     ""
@@ -736,8 +767,19 @@ encounters:
         - "1× raid armor or weapon."
       hidden_chest: null
       potential_drops:
-        - "Forthcoming Deviance (glaive)"
-        - "Imminence (SMG)"
+        - "Nullify (pulse rifle, Solar)"
+        - "Critical Anomaly (sniper rifle, Stasis)"
+        - "Forthcoming Deviance (glaive, Void)"
+
+    master_challenge:
+      name: "Balanced Diet"
+      requirement: |
+        Individual Guardians cannot pick up the same Resonance type
+        twice in a row. If you grab a triangle, the next buff must
+        be a circle or square before another triangle. Doesn't reset
+        between rooms — your final pickup in room 1 carries forward
+        as a constraint into room 2.
+      enforced_on: "Master only"
 
     images:
       overview:     ""
@@ -954,8 +996,22 @@ encounters:
         rewards:
           - "Third of 3 hidden conductors for the Deepsight puzzle."
       potential_drops:
-        - "Critical Anomaly (sniper)"
-        - "Nullify (pulse rifle)"
+        - "Summum Bonum (sword, Arc)"
+        - "Non-Denouement (combat bow, Arc)"
+        - "Imminence (SMG, Strand)"
+
+    master_challenge:
+      name: "Varied Geometry"
+      requirement: |
+        Cannot use the same 3D shape to escape the solo realm until
+        all six 3D shapes (sphere, cube, pyramid + prism, cone,
+        cylinder) have been used across phases. Phase 1: dissect
+        composite shapes (prism/cone/cylinder). Phase 2: dissect
+        pure shapes (sphere/cube/pyramid) — coordinate with solo
+        players since the lock-and-key rule still applies. Phase 3:
+        revert to composites. Master adds Unstoppable Ogres in solo
+        rooms.
+      enforced_on: "Master only"
 
     images:
       overview:     ""
@@ -1198,8 +1254,22 @@ encounters:
         - "Final-encounter chest (separate from per-encounter drops)."
       hidden_chest: null
       potential_drops:
-        - "**Euphony** (exotic linear fusion rifle) — most-chased loot. RNG drop from final chest."
-        - "Critical Anomaly, Nullify, Summum Bonum, Imminence, Non-Denouement, Forthcoming Deviance."
+        - "**Euphony** (exotic linear fusion rifle, Strand) — most-chased loot. RNG drop from final chest."
+        - "Summum Bonum (sword, Arc)"
+        - "Nullify (pulse rifle, Solar)"
+        - "Critical Anomaly (sniper rifle, Stasis)"
+
+    master_challenge:
+      name: "Coordinated Efforts"
+      requirement: |
+        All 6 Witness glyphs must be broken within a few seconds of
+        each other. All 6 fireteam members need to obtain the
+        Glyphbreaker buff first (shoot an appendage with a buff that
+        matches its armband), then fire on glyphs simultaneously.
+        Side effect: makes Master easier — only 1 pair of Subjugators
+        per phase. Tradeoff: no opportunity to cleanse incorrect
+        Resonance before DPS opens.
+      enforced_on: "Master only"
 
     images:
       overview:     ""
