@@ -1020,15 +1020,17 @@ async def cmd_this_week(
         await interaction.followup.send(embed=emb)
         return
 
-    # ── All-vendor summary ───────────────────────────────────
+    # ── All-vendor + activity summary ────────────────────────
     emb = discord.Embed(
         title="🗓️ This Week",
         description=(
-            "Kyber-parity vendor rotation feed.\n"
+            "Kyber-parity vendor + activity rotation feed.\n"
             "Use `/this-week vendor:<name>` for one vendor's full inventory."
         ),
         color=0x6a3aa6,
     )
+
+    # Vendors
     for key in _VENDOR_KEYS:
         v = vendors.get(key)
         emoji = _VENDOR_EMOJI[key]
@@ -1052,7 +1054,37 @@ async def cmd_this_week(
             value=f"{line1}\n{line2}",
             inline=False,
         )
-    emb.set_footer(text="Data cached 60min · Phase 1+2 (vendors). Milestones + TWID coming soon.")
+
+    # Activities (Phase 3 — milestones)
+    milestones = data.get("milestones", []) or []
+    if milestones:
+        active = [m for m in milestones if m.get("available")]
+        off    = [m for m in milestones if not m.get("available")]
+        active_lines = [
+            f"• **{m.get('display_name', '?')}** ({m.get('category', '?')})"
+            for m in active
+        ]
+        off_lines = [
+            f"• ~~{m.get('display_name', '?')}~~ ({m.get('category', '?')})"
+            for m in off
+        ]
+        body = "\n".join(active_lines)
+        if off_lines:
+            body += "\n\n*Off-rotation:* " + ", ".join(
+                m.get("display_name", "?") for m in off
+            )
+        emb.add_field(
+            name="📅 Activities",
+            value=body or "*(no milestone data)*",
+            inline=False,
+        )
+
+    emb.set_footer(
+        text=(
+            "Vendors cached 60min · activities cached 15min · "
+            "Phase 1+2+3 (vendors + milestones). TWID lands in Phase 4."
+        )
+    )
     await interaction.followup.send(embed=emb)
 
 

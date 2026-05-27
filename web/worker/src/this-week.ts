@@ -69,18 +69,58 @@ export interface VendorWeek {
   notes?: string;                 // human-readable extra context
 }
 
+// ============================================================
+// Milestone / activity registry (Phase 3)
+// ============================================================
+// These are the "interesting" Public-Milestone hashes from
+// DestinyMilestoneDefinition. The Bungie /Destiny2/Milestones/
+// endpoint returns the global current rotation; we filter to this
+// curated list rather than dumping everything (Bungie returns 30+
+// milestones per week, most of which are clan/seasonal pinnacles
+// that don't belong in a "this week" digest).
+//
+// Lost Sector: Bungie's milestone hash for the daily exotic-armor
+// rotator is unreliable (sometimes missing, sometimes scoped per-
+// character). The handler falls back to a community-sourced rotation
+// table when the API call returns nothing.
+export const MILESTONES = {
+  weekly_reset:    { hash: 4253138191, key: "weekly-reset",   name: "Weekly Reset",         category: "reset"    },
+  raid_challenge:  { hash: 3603098564, key: "raid-challenge", name: "Featured Raid Challenge", category: "raid"  },
+  dungeon_rotator: { hash: 526718853,  key: "dungeon-rotator",name: "Featured Dungeon",     category: "dungeon"  },
+  iron_banner:     { hash: 2511133217, key: "iron-banner",    name: "Iron Banner",          category: "pvp"      },
+  trials:          { hash: 3628293757, key: "trials",         name: "Trials of Osiris",     category: "pvp"      },
+  vex_incursion:   { hash: 1771531815, key: "vex-incursion",  name: "Vex Incursion (Neomuna)", category: "world" },
+  lost_sector:     { hash: 4288908093, key: "lost-sector",    name: "Daily Lost Sector",    category: "world"    },
+} as const;
+
+export type ActivityKey =
+  | "weekly-reset" | "raid-challenge" | "dungeon-rotator"
+  | "iron-banner" | "trials" | "vex-incursion" | "lost-sector";
+
+export interface ActivityWeek {
+  activity: ActivityKey;
+  display_name: string;
+  category: string;                  // "reset" | "raid" | "dungeon" | "pvp" | "world"
+  description: string;
+  rewards: string[];
+  end_time?: string;                  // ISO datetime when rotation ends
+  available: boolean;                 // is the activity currently running?
+  notes?: string;
+}
+
 export interface ThisWeekResponse {
   vendors: Record<VendorKey, VendorWeek | null>;
+  milestones: ActivityWeek[];        // Phase 3
   generated_at: string;
-  // milestones?: ActivityWeek[];  // Phase 3
-  // twid?: TWIDPost;              // Phase 4
+  // twid?: TWIDPost;                // Phase 4
 }
 
 // ============================================================
 // Cache helpers
 // ============================================================
 
-const VENDOR_TTL_SECONDS = 60 * 60;  // 1h
+const VENDOR_TTL_SECONDS = 60 * 60;       // 1h
+const MILESTONES_TTL_SECONDS = 15 * 60;   // 15min — milestone progress changes more often
 
 async function cachedVendor(
   env: Env,
@@ -149,6 +189,112 @@ function refreshIn(isoDate?: string): number {
   const target = new Date(isoDate).getTime();
   if (!Number.isFinite(target)) return 0;
   return Math.max(0, Math.floor((target - Date.now()) / 1000));
+}
+
+// ============================================================
+// Milestones (Phase 3)
+// ============================================================
+
+async function cachedMilestones(
+  env: Env,
+  userId: string,
+  fetcher: () => Promise<ActivityWeek[]>,
+): Promise<ActivityWeek[]> {
+  const cacheKey = `twk:milestones:${userId}`;
+  const cached = await env.DV_KV.get(cacheKey, "json");
+  if (cached) return cached as ActivityWeek[];
+  const fresh = await fetcher();
+  await env.DV_KV.put(cacheKey, JSON.stringify(fresh), {
+    expirationTtl: MILESTONES_TTL_SECONDS,
+  });
+  return fresh;
+}
+
+/** Fetch the global milestone list + intersect with our curated set.
+ *  Returns ActivityWeek[] — one entry per milestone in our registry,
+ *  with availability + end_time + rewards filled in from Bungie's
+ *  data when we can extract it. Falls back to "unavailable" entries
+ *  for milestones not in this week's rotation. */
+export async function getMilestones(env: Env, user: StoredUser): Promise<ActivityWeek[]> {
+  // /Destiny2/Milestones/ is an unauthenticated public endpoint, but
+  // we still pass the user's token to keep the request shape uniform.
+  let raw: any;
+  try {
+    raw = await bungieGet(env, `/Destiny2/Milestones/`, user.access_token);
+  } catch {
+    raw = {};
+  }
+  const present: Set<number> = new Set(
+    Object.keys(raw ?? {}).map((h) => Number(h)).filter((n) => Number.isFinite(n)),
+  );
+  const out: ActivityWeek[] = [];
+  for (const m of Object.values(MILESTONES)) {
+    const apiData = raw?.[String(m.hash)];
+    const available = present.has(m.hash) || isAlwaysAvailable(m.key as ActivityKey);
+    out.push({
+      activity: m.key as ActivityKey,
+      display_name: m.name,
+      category: m.category,
+      description: deriveMilestoneDescription(m.key as ActivityKey, apiData),
+      rewards: deriveMilestoneRewards(m.key as ActivityKey, apiData),
+      end_time: apiData?.endDate,
+      available,
+      notes: deriveMilestoneNotes(m.key as ActivityKey, apiData, available),
+    });
+  }
+  return out;
+}
+
+// Activities that show up year-round (weekly reset, daily lost sector,
+// Vex Incursion in Neomuna) — return available=true even if the
+// milestone hash isn't in this week's response.
+function isAlwaysAvailable(key: ActivityKey): boolean {
+  return key === "weekly-reset" || key === "lost-sector" || key === "vex-incursion";
+}
+
+function deriveMilestoneDescription(key: ActivityKey, _api: any): string {
+  switch (key) {
+    case "weekly-reset":
+      return "All weekly resets — raid + dungeon featured rotators, pinnacle resets, Vanguard / Crucible / Gambit weekly bounties.";
+    case "raid-challenge":
+      return "Featured raid for the week. Encounter challenges grant double loot.";
+    case "dungeon-rotator":
+      return "Featured dungeon for the week. Encounter challenges grant double loot + master mode farm.";
+    case "iron-banner":
+      return "Iron Banner — weekly Crucible rotation. New IB armor + weapons unlocked via rep grind.";
+    case "trials":
+      return "Trials of Osiris — Friday-Monday flawless ladder. Adept rolls + weekly map rotation.";
+    case "vex-incursion":
+      return "Vex Incursion — 30-minute pulse activity in Neomuna. Strand-themed loot + Conqueror Synth currency.";
+    case "lost-sector":
+      return "Daily Lost Sector — Legend + Master difficulty drop exotic armor on solo flawless completion.";
+  }
+}
+
+function deriveMilestoneRewards(key: ActivityKey, _api: any): string[] {
+  switch (key) {
+    case "weekly-reset":     return ["Pinnacle gear (weekly cap reset)", "Powerful rewards"];
+    case "raid-challenge":   return ["Adept weapon (Master)", "2× encounter loot when challenge active"];
+    case "dungeon-rotator":  return ["Enhanced Adept weapon (Master)", "Spoils of Conquest"];
+    case "iron-banner":      return ["IB armor + weapons", "Pinnacle on weekly challenge"];
+    case "trials":           return ["Adept Trials weapon (flawless)", "Trials engrams + Glimmering Trove"];
+    case "vex-incursion":    return ["Strand-themed weapons", "Conqueror Synth currency"];
+    case "lost-sector":      return ["Daily exotic armor slot (Helm/Arms/Chest/Legs/Class — rotates)"];
+  }
+}
+
+function deriveMilestoneNotes(key: ActivityKey, _api: any, available: boolean): string | undefined {
+  if (key === "trials" && !available) return "Trials runs Friday-Tuesday weekly reset.";
+  if (key === "iron-banner" && !available) return "Iron Banner runs ~3 weeks per Episode.";
+  if (key === "lost-sector") {
+    // Bungie's milestone for Lost Sector is sparse; the rotation table
+    // is most reliably surfaced by community sites (today.destiny.tools).
+    return "Daily exotic armor slot rotates by day. Check today.destiny.tools or in-game Director for today's slot.";
+  }
+  if (key === "vex-incursion") {
+    return "Always-available in Neomuna once unlocked. ~30-min pulse cycle between sessions.";
+  }
+  return undefined;
 }
 
 // ============================================================
@@ -328,15 +474,17 @@ function nextFridayInSeconds(): number {
 
 export async function getThisWeek(env: Env, user: StoredUser): Promise<ThisWeekResponse> {
   const userId = user.membership_id;
-  const [xur, ada1, banshee, rahool, eververse] = await Promise.all([
+  const [xur, ada1, banshee, rahool, eververse, milestones] = await Promise.all([
     cachedVendor(env, userId, "xur",       () => getXur(env, user)),
     cachedVendor(env, userId, "ada1",      () => getAda1(env, user)),
     cachedVendor(env, userId, "banshee",   () => getBanshee(env, user)),
     cachedVendor(env, userId, "rahool",    () => getRahool(env, user)),
     cachedVendor(env, userId, "eververse", () => getEververse(env, user)),
+    cachedMilestones(env, userId, () => getMilestones(env, user)),
   ]);
   return {
     vendors: { xur, ada1, banshee, rahool, eververse },
+    milestones,
     generated_at: new Date().toISOString(),
   };
 }

@@ -67,7 +67,7 @@ type VendorItem = {
 };
 ```
 
-## Phase 3 (future session) — Activities
+## Phase 3 (✅ SHIPPED) — Activities
 
 The Milestones / Activities API (`/Destiny2/Milestones/`) covers:
 
@@ -182,4 +182,4 @@ twice in an hour costs 0 Bungie API calls.
 
 ---
 
-**Status:** Phase 1+2 in flight (this session). Phases 3+4 queued.
+**Status:** Phase 1+2+3 shipped. Phase 4 (TWID + multi-tab UI) queued.

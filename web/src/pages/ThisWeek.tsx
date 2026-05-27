@@ -35,8 +35,20 @@ interface VendorWeekRaw {
   items: VendorItemRaw[];
   notes?: string;
 }
+interface ActivityWeekRaw {
+  activity: string;
+  display_name: string;
+  category: string;
+  description: string;
+  rewards: string[];
+  end_time?: string;
+  available: boolean;
+  notes?: string;
+}
+
 interface ThisWeekResponseRaw {
   vendors: Record<string, VendorWeekRaw | null>;
+  milestones: ActivityWeekRaw[];
   generated_at: string;
 }
 
@@ -216,9 +228,48 @@ export default function ThisWeek() {
         ))}
       </div>
 
+      <section className="mt-10">
+        <h2 className="text-2xl font-display tracking-wider text-star mb-4">
+          Activities
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {(data.milestones || []).map((a) => (
+            <Card key={a.activity} className="p-4">
+              <div className="flex items-baseline justify-between mb-1">
+                <h3 className="text-base font-display text-saber">{a.display_name}</h3>
+                <span
+                  className={`text-[10px] uppercase tracking-wider ${
+                    a.available ? "text-star" : "text-muted"
+                  }`}
+                >
+                  {a.available ? "active" : "off-rotation"}
+                </span>
+              </div>
+              <p className="text-[11px] uppercase tracking-widest text-muted mb-2">
+                {a.category}
+              </p>
+              <p className="text-sm text-fg mb-2">{a.description}</p>
+              {a.rewards.length > 0 && (
+                <ul className="text-xs text-muted mb-2 space-y-0.5">
+                  {a.rewards.map((r, i) => (
+                    <li key={i}>· {r}</li>
+                  ))}
+                </ul>
+              )}
+              {a.notes && <p className="text-[11px] italic text-muted">{a.notes}</p>}
+              {a.end_time && (
+                <p className="text-[10px] text-muted mt-1">
+                  ends {new Date(a.end_time).toLocaleString()}
+                </p>
+              )}
+            </Card>
+          ))}
+        </div>
+      </section>
+
       <footer className="mt-8 text-[11px] text-muted">
-        Phase 1+2 surface (vendors only). Milestones, Trials, Lost Sector,
-        and TWID land in future updates — see THIS_WEEK_PLAN.md.
+        Phase 1+2+3 surface (vendors + activities). TWID + multi-tab UI
+        land in Phase 4 — see THIS_WEEK_PLAN.md.
       </footer>
     </div>
   );
