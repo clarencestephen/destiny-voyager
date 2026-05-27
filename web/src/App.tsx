@@ -22,6 +22,7 @@ export default function App() {
             <Link to="/" className="hover:text-star transition-colors">Home</Link>
             <Link to="/app" className="hover:text-star transition-colors">Dashboard</Link>
             <Link to="/play" className="hover:text-saber transition-colors">Play</Link>
+            <Link to="/this-week" className="hover:text-saber transition-colors">This Week</Link>
             <Link to="/fireteam" className="hover:text-saber transition-colors">Fireteam</Link>
             <Link to="/builds" className="hover:text-star transition-colors">Builds</Link>
             <Link to="/optimizer" className="hover:text-saber transition-colors">Optimizer</Link>

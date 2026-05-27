@@ -11,6 +11,7 @@ import Optimizer from "./pages/Optimizer";
 import Play from "./pages/Play";
 import Fireteam from "./pages/Fireteam";
 import Diagnostic from "./pages/Diagnostic";
+import ThisWeek from "./pages/ThisWeek";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="play" element={<Play />} />
           <Route path="fireteam" element={<Fireteam />} />
           <Route path="diagnostic" element={<Diagnostic />} />
+          <Route path="this-week" element={<ThisWeek />} />
         </Route>
       </Routes>
     </BrowserRouter>
