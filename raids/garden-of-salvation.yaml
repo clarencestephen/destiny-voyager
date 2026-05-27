@@ -1,4 +1,9 @@
 # raids/garden-of-salvation.yaml — Pass 1 (destinypedia baseline)
+#
+# PASS 2 (2026-05-27): loot tables verified against
+# blueberries.gg/weapons/garden-of-salvation-loot-table.
+# Per-encounter master_challenge blocks deferred — blueberries doesn't
+# publish a GoS challenges page; will revisit in a Pass-2.5 sweep.
 
 slug: garden-of-salvation
 name: Garden of Salvation
@@ -199,9 +204,9 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Accrued Redemption (bow)"
-        - "Reckless Oracle (auto)"
-        - "Garden armor"
+        - "Zealot's Reward (rapid-fire fusion rifle, Void)"
+        - "Accrued Redemption (precision combat bow, Kinetic)"
+        - "Greaves of Ascendancy (Legs)"
 
     images:
       overview: ""
@@ -314,9 +319,9 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Sacred Provenance (pulse)"
-        - "Zealot's Reward (fusion)"
-        - "Garden armor"
+        - "Prophet of Doom (precision shotgun, Arc)"
+        - "Reckless Oracle (rapid-fire auto rifle, Void)"
+        - "Gauntlets of Exaltation (Arms)"
 
     images:
       overview: ""
@@ -439,9 +444,9 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Prophet of Doom (shotgun)"
-        - "Omniscient Eye (sniper)"
-        - "Garden armor"
+        - "Ancient Gospel (adaptive hand cannon, Void)"
+        - "Sacred Provenance (aggressive pulse rifle, Kinetic)"
+        - "Plate of Transcendence (Chest)"
 
     images:
       overview: ""
@@ -586,11 +591,10 @@ encounters:
         - "Final boss chest"
       hidden_chest: null
       potential_drops:
-        - "Divinity (exotic trace rifle — quest, not random)"
-        - "Reckless Oracle (auto)"
-        - "Accrued Redemption (bow)"
-        - "Sacred Provenance (pulse)"
-        - "Prophet of Doom (shotgun)"
+        - "Omniscient Eye (rapid-fire sniper rifle, Solar)"
+        - "Helm of Righteousness (Helm)"
+        - "Temptation's Mark (Class Item)"
+        - "Note: **Divinity** (exotic trace rifle) comes from the quest 'What's This, What's This?' (intra-raid puzzle), NOT the final-chest RNG pool."
         - "Omniscient Eye (sniper)"
         - "Zealot's Reward (fusion)"
         - "Garden armor (full set)"
