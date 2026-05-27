@@ -1,4 +1,11 @@
 # raids/vow-of-the-disciple.yaml — Pass 1 (destinypedia baseline)
+#
+# PASS 2 (2026-05-27): loot tables verified against
+# blueberries.gg/weapons/vow-of-the-disciple-loot-table.
+# Master Challenge REQUIREMENTS sourced from grindout/kboosting; official
+# challenge NAMES could not be confirmed against a Tier-1 source (blueberries
+# challenges page doesn't exist for Vow; reddit/Polygon blocked by scraper).
+# Names marked `# TODO: confirm` in each master_challenge block.
 
 slug: vow-of-the-disciple
 name: Vow of the Disciple
@@ -293,10 +300,21 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Submission (SMG)"
-        - "Insidious (pulse)"
-        - "Deliverance (fusion)"
-        - "Vow armor"
+        - "Submission (SMG, Kinetic)"
+        - "Deliverance (fusion rifle, Stasis)"
+        - "Cataclysmic (linear fusion rifle, Solar)"
+        - "Resonant Fury armor — Helmet + Chest + Legs (encounter-specific slots)"
+
+    master_challenge:
+      name: ""  # TODO: confirm — commonly cited as "Swift Destruction"
+      requirement: |
+        Kill the three Unstoppable Champions that spawn in the arena
+        very quickly — all three down within 5 seconds of the first
+        kill. Failure flashes "Challenge Failed." Strategy: defenders
+        stun-lock the Unstoppables while symbol-finders complete the
+        obelisk reads, then everyone collapses to kill the champions
+        in a single window.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -439,9 +457,21 @@ encounters:
         rewards:
           - "Random raid loot already-obtained + raid mod"
       potential_drops:
-        - "Cataclysmic (LFR)"
-        - "Forbearance (GL)"
-        - "Vow armor"
+        - "Submission (SMG, Kinetic)"
+        - "Insidious (pulse rifle, Arc)"
+        - "Cataclysmic (linear fusion rifle, Solar)"
+        - "Forbearance (grenade launcher, Arc)"
+        - "Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)"
+
+    master_challenge:
+      name: ""  # TODO: confirm — commonly cited as "Base Information"
+      requirement: |
+        Each runner entering the Dark Room collects only a SINGLE
+        symbol per trip (not all 3). Forces a 2-team split: 3 stun
+        the boss, 3 take one glyph each. Wait for the obelisk to
+        request its offering (player-name message appears in the
+        feed) before depositing.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -583,9 +613,20 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Submission (SMG)"
-        - "Lubrae's Ruin (glaive)"
-        - "Vow armor"
+        - "Submission (SMG, Kinetic)"
+        - "Deliverance (fusion rifle, Stasis)"
+        - "Resonant Fury armor — Chest + Legs (encounter-specific slots)"
+
+    master_challenge:
+      name: ""  # TODO: confirm — commonly cited as "Looped Catalyst"
+      requirement: |
+        No single player may kill more than one shielded Disciple's
+        Hourglass Knight (the Taken Knight that extends the relic
+        timer). 7 knights in total — one starting room + 2 per
+        chamber — but skip the second knight in room 2. Rotation: 6
+        unique players each take exactly one knight kill using the
+        right relic. Requires deliberate relic-hand-off choreography.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -748,14 +789,20 @@ encounters:
         - "Deepsight chest (if all secret puzzle symbols correct — see Notes)"
       hidden_chest: null
       potential_drops:
-        - "Collective Obligation (exotic pulse — random chance)"
-        - "Submission (SMG)"
-        - "Cataclysmic (LFR)"
-        - "Insidious (pulse)"
-        - "Forbearance (GL)"
-        - "Deliverance (fusion)"
-        - "Lubrae's Ruin (glaive)"
-        - "Vow armor (full set)"
+        - "**Collective Obligation** (exotic pulse rifle, Void) — RNG drop from final chest."
+        - "Insidious (pulse rifle, Arc)"
+        - "Lubrae's Ruin (glaive, Solar)"
+        - "Forbearance (grenade launcher, Arc)"
+        - "Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)."
+
+    master_challenge:
+      name: ""  # TODO: confirm — commonly cited as "Defenses Down"
+      requirement: |
+        The fireteam must NEVER lose the Leeching Force buff for the
+        full duration of the encounter. Split: one team focused on
+        add-clear, the other on duplicating/maintaining the buff
+        chain until the barrier is fully covered.
+      enforced_on: "Master only"
 
     images:
       overview: ""
