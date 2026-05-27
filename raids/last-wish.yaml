@@ -1,6 +1,12 @@
 # raids/last-wish.yaml — Pass 1 (destinypedia baseline)
 
 slug: last-wish
+# PASS 2 (2026-05-27): loot tables + master challenges verified against
+# blueberries.gg/weapons/destiny-2-last-wish-loot-table and
+# blueberries.gg/leveling/last-wish-challenges.
+# Master Challenge names: Summoning Ritual / Which Witch / Forever Fight /
+# Keep Out / Strength of Memory (canonical per blueberries).
+# Loot model: encounters 1-4 share a SINGLE 8-weapon pool ("Any Encounter").
 name: Last Wish
 activity_type: raid
 released:
@@ -207,9 +213,17 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Tyranny of Heaven (bow)"
-        - "Age-Old Bond (auto)"
-        - "Last Wish armor"
+        - "Note: Last Wish encounters 1-4 share a SINGLE drop pool (per blueberries 'Any Encounter' column). Each encounter rolls from the same 8 weapons + Great Hunt armor."
+        - "Pool: Chattering Bone (lightweight pulse, Kinetic), The Supremacy (rapid-fire sniper, Kinetic), Transfiguration (high-impact scout, Kinetic), Apex Predator (adaptive RL, Solar), Age-Old Bond (high-impact auto, Void), Nation of Beasts (adaptive HC, Arc), Techeun Force (adaptive fusion, Arc), Tyranny of Heaven (lightweight bow, Solar)."
+        - "Armor: Helm + Gauntlets + Plate + Greaves + Mark of the Great Hunt (drops randomly from any of E1-E4)."
+
+    master_challenge:
+      name: "Summoning Ritual"
+      requirement: |
+        Activate AND cleanse all 9 plates around the arena, then kill
+        all 9 Knights AND all 9 Ogres before damaging Kalli at all.
+        DPS only starts after every cleanse + kill is done.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -328,9 +342,16 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Transfiguration (scout)"
-        - "Apex Predator (rocket — Spike Grenades)"
-        - "Last Wish armor"
+        - "Shared pool with E1/E3/E4 — see kalli encounter for full weapon + armor list."
+
+    master_challenge:
+      name: "Which Witch"
+      requirement: |
+        No one in the fireteam may get hit by Shuro Chi's Arc Blast
+        (her long-range AoE attack). Hard to dodge over a full
+        encounter; teams stack at long range and disperse the moment
+        wind-up animation begins.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -460,9 +481,16 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Transfiguration (scout)"
-        - "Chattering Bone (pulse)"
-        - "Last Wish armor"
+        - "Shared pool with E1/E2/E4 — see kalli encounter for full weapon + armor list."
+
+    master_challenge:
+      name: "Forever Fight"
+      requirement: |
+        Do not kill the smaller Ogres that spawn during the
+        encounter. Only Morgeth's Strength orbs may be picked up
+        and absorbed; let the Ogres live for the duration. Forces
+        runners to focus on positioning instead of add-clear.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -592,10 +620,16 @@ encounters:
         - "1× raid weapon or armor"
       hidden_chest: null
       potential_drops:
-        - "Tyranny of Heaven (bow)"
-        - "Chattering Bone (pulse)"
-        - "Apex Predator (rocket)"
-        - "Last Wish armor"
+        - "Shared pool with E1/E2/E3 — see kalli encounter for full weapon + armor list."
+
+    master_challenge:
+      name: "Keep Out"
+      requirement: |
+        No Might of Riven knights may reach the center chamber during
+        the Vault fight. Outside teams must kill every Might of Riven
+        before it gets through the door — failure (even one knight
+        entering) fails the challenge.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -772,11 +806,18 @@ encounters:
         - "Final boss chest (Heart of Riven escape)"
       hidden_chest: null
       potential_drops:
-        - "1000 Voices (exotic fusion rifle) — random chance, can re-roll w/ Spoils"
-        - "Tyranny of Heaven (bow)"
-        - "Chattering Bone (pulse)"
-        - "Apex Predator (rocket)"
-        - "Transfiguration (scout)"
+        - "**One Thousand Voices** (exotic fusion rifle, Solar) — RNG drop from Riven chest. Can re-roll with Spoils of Conquest."
+        - "Any Legendary weapon from the Last Wish pool (Chattering Bone, The Supremacy, Transfiguration, Apex Predator, Age-Old Bond, Nation of Beasts, Techeun Force, Tyranny of Heaven)."
+        - "Any Great Hunt armor piece."
+
+    master_challenge:
+      name: "Strength of Memory"
+      requirement: |
+        Each fireteam must NEVER shoot the same Riven eye twice. With
+        6 eyes per phase and 6 players, this works out to one eye per
+        player per phase — call-outs lock who has which eye before
+        DPS opens. Repeated eye = fail.
+      enforced_on: "Master only"
         - "Age-Old Bond (auto)"
         - "Last Wish armor"
 
