@@ -2,10 +2,10 @@
 #
 # PASS 2 (2026-05-27): loot tables verified against
 # blueberries.gg/weapons/vow-of-the-disciple-loot-table.
-# Master Challenge REQUIREMENTS sourced from grindout/kboosting; official
-# challenge NAMES could not be confirmed against a Tier-1 source (blueberries
-# challenges page doesn't exist for Vow; reddit/Polygon blocked by scraper).
-# Names marked `# TODO: confirm` in each master_challenge block.
+# Master Challenge names confirmed from
+# blueberries.gg/leveling/destiny-2-vow-challenges:
+#   Acquisition: Swift Destruction / Caretaker: Base Information /
+#   Exhibition: Defenses Down / Rhulk: Looping Catalyst.
 
 slug: vow-of-the-disciple
 name: Vow of the Disciple
@@ -306,7 +306,7 @@ encounters:
         - "Resonant Fury armor — Helmet + Chest + Legs (encounter-specific slots)"
 
     master_challenge:
-      name: ""  # TODO: confirm — commonly cited as "Swift Destruction"
+      name: "Swift Destruction"  # confirmed against blueberries
       requirement: |
         Kill the three Unstoppable Champions that spawn in the arena
         very quickly — all three down within 5 seconds of the first
@@ -464,7 +464,7 @@ encounters:
         - "Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)"
 
     master_challenge:
-      name: ""  # TODO: confirm — commonly cited as "Base Information"
+      name: "Base Information"  # confirmed against blueberries
       requirement: |
         Each runner entering the Dark Room collects only a SINGLE
         symbol per trip (not all 3). Forces a 2-team split: 3 stun
@@ -618,14 +618,13 @@ encounters:
         - "Resonant Fury armor — Chest + Legs (encounter-specific slots)"
 
     master_challenge:
-      name: ""  # TODO: confirm — commonly cited as "Looped Catalyst"
+      name: "Defenses Down"
       requirement: |
-        No single player may kill more than one shielded Disciple's
-        Hourglass Knight (the Taken Knight that extends the relic
-        timer). 7 knights in total — one starting room + 2 per
-        chamber — but skip the second knight in room 2. Rotation: 6
-        unique players each take exactly one knight kill using the
-        right relic. Requires deliberate relic-hand-off choreography.
+        Each player can kill no more than one Taken Knight throughout
+        the encounter. 7 knights total (one starting room + 2 per
+        chamber); skip the second knight in room 2 to land 6 unique
+        kills across 6 players. Requires deliberate relic-hand-off
+        choreography.
       enforced_on: "Master only"
 
     images:
@@ -796,12 +795,12 @@ encounters:
         - "Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)."
 
     master_challenge:
-      name: ""  # TODO: confirm — commonly cited as "Defenses Down"
+      name: "Looping Catalyst"
       requirement: |
-        The fireteam must NEVER lose the Leeching Force buff for the
-        full duration of the encounter. Split: one team focused on
-        add-clear, the other on duplicating/maintaining the buff
-        chain until the barrier is fully covered.
+        Do not lose Leeching Force before the damage phase. Split:
+        one team focused on add-clear, the other on duplicating/
+        maintaining the buff chain until the barrier is fully covered
+        and the DPS window opens.
       enforced_on: "Master only"
 
     images:

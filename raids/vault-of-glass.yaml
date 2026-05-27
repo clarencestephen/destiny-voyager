@@ -7,12 +7,13 @@
 # restructuring, that block now lists the merged Conflux+Oracle drop
 # pool. If/when the YAML splits them, this combined entry should split
 # accordingly.
-# master_challenge: blueberries page returned 404 for VoG challenges —
-# blueberries appears to have a different URL pattern for VoG challenges
-# (referenced as 'destiny-2-vog-challenges' in the LW page). Deferred to
-# Pass-2.5; the canonical VoG challenges (e.g. Wait for It on Templar,
-# Out of Its Way on Gatekeeper, Ensemble's Refrain on Atheon) are
-# documented elsewhere but not pulled into a Tier-1 source here.
+#
+# PASS 2.5 (2026-05-27): Master Challenge names landed from
+# blueberries.gg/leveling/destiny-2-vog-challenges (the alternate URL
+# pattern hinted at in the LW page):
+#   Confluxes: Wait for It…  / Oracles: The Only Oracle for You /
+#   Templar: Out of Its Way  / Gatekeeper: Strangers in Time /
+#   Atheon: Ensemble's Refrain.
 
 slug: vault-of-glass
 name: Vault of Glass
@@ -317,6 +318,21 @@ encounters:
         - "Corrective Measure (machine gun, Void)"
         - "Vault of Glass armor (random slot)"
 
+    # NOTE: VoG runs Confluxes (E1) + Oracles (E2) as two separate
+    # Master Challenges per blueberries. This combined block uses
+    # Confluxes' challenge; the Oracle challenge (The Only Oracle for
+    # You — no destroying the same oracle twice) applies in the same
+    # arena right after.
+    master_challenge:
+      name: "Wait for It…"
+      requirement: |
+        Sacrificial Wyverns cannot die before they begin to sacrifice
+        themselves at the confluxes. Forces add-clear to LET the
+        Wyverns reach the plates before pile-on damage. Pairs with
+        Oracles' "The Only Oracle for You" (each Oracle destroyed
+        only once across the encounter).
+      enforced_on: "Master only"
+
     images:
       overview: ""
       setup: ""
@@ -459,6 +475,17 @@ encounters:
         - "Vision of Confluence (scout rifle, Solar)"
         - "Corrective Measure (machine gun, Void)"
         - "Vault of Glass armor (random slot)"
+
+    master_challenge:
+      name: "Out of Its Way"
+      requirement: |
+        Defeat the Templar without letting him teleport. He teleports
+        each time his Ritual of Negation channel (the shield-down DPS
+        window) completes, OR when the Aegis-holder ejects the
+        relic's blast. Counter: keep the Oracle waves clean so the
+        Aegis-holder doesn't need to detonate, and push damage hard
+        enough to break shield + finish phase in a single Ritual.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -740,6 +767,15 @@ encounters:
         - "Found Verdict (shotgun, Arc)"
         - "Vault of Glass armor (random slot)"
 
+    master_challenge:
+      name: "Strangers in Time"
+      requirement: |
+        The Wyvern and Minotaurs that spawn simultaneously must die
+        within 5 seconds of each other. Forces coordinated cross-
+        portal damage timing — the Mars and Venus teams have to
+        sync their kills against the wave timer.
+      enforced_on: "Master only"
+
     images:
       overview: ""
       setup: ""
@@ -896,9 +932,17 @@ encounters:
         - "Corrective Measure (machine gun, Void)"
         - "Hezen Vengeance (rocket launcher, Solar)"
         - "Vault of Glass armor (random slot)."
-        - "Corrective Measure (LMG)"
-        - "VoG armor (full set)"
-        - "Time-Worn Spire shader"
+        - "Time-Worn Spire shader (raid completion reward)"
+
+    master_challenge:
+      name: "Ensemble's Refrain"
+      requirement: |
+        Each player may only destroy one Oracle per wave (3 Oracles
+        appear per damage cycle while inside Atheon's time portals).
+        Forces every fireteam member to engage in oracle clear — no
+        one player solo-cleaning a wave. Master adds a second pair
+        of Supplicants per wave.
+      enforced_on: "Master only"
 
     images:
       overview: ""

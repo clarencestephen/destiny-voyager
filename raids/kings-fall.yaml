@@ -8,8 +8,12 @@
 # Replaced with the actual D2 KF weapon set (Doom of Chelchis, Smite of
 # Merain, Qullim's Terminus, Defiance of Yasmin, Midha's Reckoning,
 # Zaouli's Bane + Touch of Malice exotic).
-# Per-encounter master_challenge blocks deferred — blueberries doesn't
-# publish a KF challenges page; will revisit in Pass-2.5.
+#
+# PASS 2.5 (2026-05-27): Master Challenge names landed from
+# blueberries.gg/leveling/destiny-2-kings-fall-challenges (alternate URL):
+#   Basilica (Totems): The Grass is Always Greener /
+#   Warpriest: Devious Thievery / Golgoroth: Gaze Amaze /
+#   Daughters of Oryx: Under Construction / Oryx: Hands Off.
 
 slug: kings-fall
 name: King's Fall
@@ -377,6 +381,14 @@ encounters:
         - "King's Fall armor (random slot)"
       # Deepsight Rune #3 in this area — see Overall Notes
 
+    master_challenge:
+      name: "The Grass is Always Greener"
+      requirement: |
+        Players cannot take the same Brand type twice in a row.
+        Forces deliberate Brand rotation between Annihilator Totems
+        — no one player chain-cleansing the same totem repeatedly.
+      enforced_on: "Master only"
+
     images:
       overview: ""
       setup: ""
@@ -524,6 +536,15 @@ encounters:
         - "King's Fall armor (random slot)"
       # Deepsight Rune #4 in this area
 
+    master_challenge:
+      name: "Devious Thievery"
+      requirement: |
+        Players must steal the Brand of the Initiate within a couple
+        of seconds of taking the Brand Claimer buff. Tight rotation
+        between the killer and the stealer; you cannot sit on the
+        Brand Claimer waiting for a safe steal.
+      enforced_on: "Master only"
+
     images:
       overview: ""
       setup: ""
@@ -648,6 +669,14 @@ encounters:
         - "Zaouli's Bane (hand cannon, Solar)"
         - "King's Fall armor (random slot)"
       # Deepsight Rune #5 in Golgoroth's Cellar exit
+
+    master_challenge:
+      name: "Gaze Amaze"
+      requirement: |
+        The gaze holder must stand IN the Pool of Unclaimed Light
+        when swapping the gaze to the next player. No mid-room
+        handoffs — every swap happens at the central pool.
+      enforced_on: "Master only"
 
     images:
       overview: ""
@@ -840,6 +869,16 @@ encounters:
         - "Zaouli's Bane (hand cannon, Solar)"
         - "King's Fall armor (random slot)"
 
+    master_challenge:
+      name: "Under Construction"
+      requirement: |
+        Players cannot stand on the same plate twice in a single
+        phase. With 4 plates and 6 players across multiple Daughter
+        kills, plate-rotation has to be deliberate — typically:
+        plate-holders for the first pair of Daughters swap to the
+        opposite pair of plates for the second.
+      enforced_on: "Master only"
+
     images:
       overview: ""
       setup: ""
@@ -1002,11 +1041,16 @@ encounters:
         - "**Touch of Malice** (exotic scout rifle, Kinetic) — RNG drop from Oryx chest."
         - "Any Legendary weapon from previous encounters: Doom of Chelchis, Smite of Merain, Qullim's Terminus, Defiance of Yasmin, Midha's Reckoning, Zaouli's Bane."
         - "King's Fall armor (random slot)."
-        - "Midha's Reckoning (fusion)"
-        - "Qullim's Terminus (LMG)"
-        - "Smite of Merain (HC)"
-        - "Zaouli's Bane (HC)"
-        - "King's Fall armor (full set)"
+
+    master_challenge:
+      name: "Hands Off"
+      requirement: |
+        Players must not kill the same Ogre or Light-Eater Knight
+        throughout the encounter. With 4 Ogres + 6 Light-Eater
+        Knights across 3 stand phases, the 6 players need to track
+        their own kills so no one duplicates. Add-clear assignments
+        rotate phase-to-phase.
+      enforced_on: "Master only"
 
     images:
       overview: ""
