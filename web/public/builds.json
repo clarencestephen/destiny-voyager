@@ -1896,6 +1896,68 @@
       "playstyle": "Role: Kinetic shield break + AOE stagger (PVE ONLY)\n\nUse for: GM Nightfall, Pantheon shield wall, NOT PVP\n\nSet bonuses: Techsec 2pc \u2014 Wrecker: +Kinetic dmg vs shields/overshields/constructs \u00b7 Techsec 4pc \u2014 Concussive Rounds: shield break / powerful kill = disorienting AOE\n\nArmor:\n  Helmet: Techsec Hood [Techsec \u00b7 Gunner] \u2014 W28 H8 G16 S0 C0 M0\n  Gauntlets: Techsec Gloves [Techsec \u00b7 Bulwark] \u2014 W0 H28 G0 S8 C16 M0\n  Chest: Techsec Vestment [Techsec \u00b7 Paragon] \u2014 W0 H0 G8 S28 C0 M16\n  Legs: Techsec Boots [Techsec \u00b7 Grenadier] \u2014 W0 H0 G28 S16 C8 M0\n  Class: Sage Protector Bond [Sage Protector (no 2pc) \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
+    },
+    {
+      "id": "titan-prismatic-techsec-winterbite",
+      "name": "TechSec + Synthoceps + Winterbite \u2014 Prismatic Titan glaive/melee (EoF)",
+      "class": "Titan",
+      "subclass": "Prismatic",
+      "super": "Twilight Arsenal",
+      "focus": "PvE",
+      "tags": [
+        "mythic",
+        "ad-clear",
+        "glaive",
+        "kinetic-melee",
+        "edge-of-fate",
+        "armor-3.0",
+        "endgame"
+      ],
+      "armor_set": {
+        "name": "Tech-Sec",
+        "pieces_required": 4,
+        "bonuses": {
+          "2pc": "Significantly increased kinetic damage to combatant shields, overshields, vehicles, and constructs.",
+          "4pc": "Defeating a powerful combatant or breaking a combatant shield with kinetic damage releases a disorienting blast."
+        }
+      },
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Synthoceps"
+        ],
+        "perk": "Mighty Symphysisps \u2014 bonus melee + super damage when surrounded by 3+ enemies.",
+        "drops_from": "World pool / Lost Sector rotator (Arms day) / Xur on Friday-Tuesday."
+      },
+      "weapons": {
+        "kinetic": [],
+        "energy": [
+          "Winterbite (exotic glaive, Stasis) \u2014 Weighted Edge + Frigid Glaive + Tilting at Windmills perks. Use guard-and-poke playstyle; don't deploy the turret."
+        ],
+        "heavy": []
+      },
+      "aspects": [
+        "Knockout",
+        "Diamond Lance"
+      ],
+      "fragments": [
+        "Facet of Protection \u2014 reduced damage when surrounded.",
+        "Facet of Ruin \u2014 improved Shatter from frozen targets.",
+        "Facet of Purpose \u2014 orb pickup grants Woven Mail (procs Shield Crush).",
+        "Facet of Defiance \u2014 finishers create Sever (swap if not on Strand-leaning prismatic).",
+        "Facet of Blessing \u2014 melee final blows trigger health regen (the must-have)."
+      ],
+      "target_stats": {
+        "melee": 149,
+        "super": 111,
+        "health": 100,
+        "class": 60,
+        "grenade": 60,
+        "weapons": 60
+      },
+      "playstyle": "Get surrounded. Symphysisps + Knockout + TechSec 4pc + Facet of Blessing all stack. Block-and-poke with Winterbite for sustain (Facet of Blessing \u2192 health regen on melee/glaive kills). Glacier grenades for area control + extra Shatter. Drop Diamond Lances from any ability/Winterbite kill \u2014 infinite slows for crowd control. TechSec 4pc turns every shielded-enemy kinetic kill into a disorienting blast (effectively blinding). Strong in Mythic ad-clear and shielded-heavy content; weak vs. single bosses (no DPS option). Diamond Lance pro on, ideally Strand-leaning prismatic so Facet of Defiance procs Sever on finishers.",
+      "source": "https://youtu.be/vcoiCg2sn3w \u2014 Duddits II (featured Bungie creator), 2025-09-08. DIM link: https://dim.gg/26dxsli/TECHSEC-SYNTHO-GLAIVE",
+      "_confidence": "high"
     }
   ]
 }
