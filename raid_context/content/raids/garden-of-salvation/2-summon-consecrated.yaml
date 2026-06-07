@@ -1,7 +1,6 @@
 # raid_context/content/raids/garden-of-salvation/2-summon-consecrated.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: garden-of-salvation
   name: Garden of Salvation

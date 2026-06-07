@@ -1,7 +1,6 @@
 # raid_context/content/raids/garden-of-salvation/4-sanctified-mind.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: garden-of-salvation
   name: Garden of Salvation
@@ -238,6 +237,13 @@ encounter:
     - Heavy burst options such as Linear Fusion Rifles, Rocket Launchers, or precision Snipers into the
       locked core
     - A Super-amp support like Well of Radiance placed on the Divinity-debuffed boss
+    - Cold Comfort
+    - Gjallarhorn
+    - Apex Predator
+    - The Hothead
+    - Celestial Nighthawk Golden Gun
+    - Izanagi's Burden
+    - Wendigo
   role_loadouts:
   - role_id: portal_team
     subclass: ''
@@ -266,3 +272,18 @@ encounter:
       not be verified; confirm best burst options in-game. Divinity comes from a separate quest, not the
       final-chest pool.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: How To ONE PHASE The Garden Of Salvation Bosses For DUMMIES
+    url: https://www.youtube.com/watch?v=SYxgeoOViKE
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Cold Comfort
+  - Gjallarhorn
+  - Apex Predator
+  - The Hothead
+  - Well of Radiance
+  - Celestial Nighthawk
+  - Izanagi's Burden
+  - Wendigo
+  - Risk Runner

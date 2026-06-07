@@ -1,7 +1,6 @@
 # raid_context/content/raids/garden-of-salvation/3-consecrated-mind.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: garden-of-salvation
   name: Garden of Salvation
@@ -177,6 +176,7 @@ encounter:
     surges:
     - No single fixed DPS element is dictated; bring your highest-burst element. Pair Divinity (this raid's
       exotic trace rifle) to debuff and create a precision crit on the Mind, then burst that crit
+    - Solar Surge
     burst_windows: After 30+ motes are banked and all six eyes are shot, you get roughly a 25-30 second
       burn on the Consecrated Mind's exposed core.
     recommended_dps:
@@ -184,6 +184,9 @@ encounter:
     - Heavy burst options such as Linear Fusion Rifles, Rocket Launchers, or precision Snipers (e.g. Whisper/Sleeper-style)
       into the crit
     - A Super-amp support like Well of Radiance under the Divinity-debuffed boss
+    - Whisper of the Worm
+    - Celestial Nighthawk Golden Gun
+    - Izanagi's Burden
   role_loadouts:
   - role_id: boss_team
     subclass: ''
@@ -211,3 +214,15 @@ encounter:
     note: Subclass and exact heavy/exotic picks left general where the current Edge of Fate meta could
       not be verified; confirm best burst options in-game.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: How To ONE PHASE The Garden Of Salvation Bosses For DUMMIES
+    url: https://www.youtube.com/watch?v=SYxgeoOViKE
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Whisper of the Worm
+  - Well of Radiance
+  - Vortex Nova Bomb
+  - Cuirass Thundercrash
+  - Celestial Nighthawk
+  - Izanagi's Burden
