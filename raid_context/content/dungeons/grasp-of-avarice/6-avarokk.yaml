@@ -1,13 +1,12 @@
-# raid_context/content/dungeons/grasp-of-avarice/5-avarokk.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# content/dungeons/grasp-of-avarice/6-avarokk.yaml — schema v3.
+
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
   activity_type: dungeon
   fireteam_size: 3
 encounter:
-  order: 5
+  order: 6
   slug: avarokk
   name: Wilhelm's Hoard (Captain Avarokk, the Covetous)
   difficulty: hard

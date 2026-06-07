@@ -1,0 +1,88 @@
+# content/dungeons/grasp-of-avarice/4-sparrow-mine-race.yaml — schema v3.
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: sparrow-mine-race
+  name: Shroud Sparrow Mine Race
+  kind: traversal
+  difficulty: medium
+  estimated_time: 4-8 min
+  abstract: Sparrow race to disarm 4 splinter mines before they detonate. Boost pads extend the timer;
+    Fallen gunfire and Web mines harass — race, don't fight.
+  setup: 'SPARROW SECTION:
+
+    - 4 splinter mines on a sparrow track. Each has a despawn timer.
+
+    - Boost pads extend time. Web mines + Fallen gunfire harass.
+
+    - Failure (mine detonates) = full encounter reset.
+
+    '
+  callouts:
+  - when: Sparrow mine count
+    from: front-runner
+    to: team
+    say: '"2 down, 2 to go — left fork."'
+    why: Slow players follow path.
+  wipe_triggers:
+  - A splinter mine detonates = full section reset.
+  permutations: []
+  cheese: []
+  common_mistakes:
+  - Trying to fight the Fallen instead of racing — they respawn, the mines don't wait.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: follow the front-runner''s called route.'
+  plain_language_steps:
+  - 1. There are 4 splinter mines on a sparrow track, each with a despawn timer.
+  - 2. Race to each mine and disarm it before it detonates; ride boost pads to extend your time.
+  - 3. Ignore the Web mines and Fallen gunfire — don't stop to fight.
+  - 4. The front-runner calls the mine count and path (e.g. 'left fork'); if any mine detonates the section
+    resets, so prioritize speed.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Fallen gunfire)
+      - Web mines (movement-slow hazard)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase — sparrow disarm race.
+    burst_windows: No damage window; gated by disarming all 4 mines in time.
+    recommended_dps:
+    - No DPS weapon needed; bring a sparrow + movement mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: rusted-gangplank)'
+    note: Primary source for the spike-trap/pressure-plate puzzle, falling panels, 4-door lever sequence,
+      rolling barrel, sparrow mine race, and Catalyst chest 2.
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Traversal section; confirm any sparrow/movement-exotic preferences against the current meta.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: MASTER GRASP OF AVARICE GUIDE - TITAN LOADOUT WEAPONS + MODS - Destiny 2
+    url: https://www.youtube.com/watch?v=qoIECNzdNBM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Sparrow: Equip Always on Time if you have it (faster, quicker to summon, shorter re-summon cooldown);
+    Gjallarwing or the Swift sparrow are alternatives with a similarly short summon cooldown.'
+  - No specific weapon loadout for this section - it is the sparrow mine-disarming phase; hit the timer-extend
+    buttons and diffuse each mine on the way down.

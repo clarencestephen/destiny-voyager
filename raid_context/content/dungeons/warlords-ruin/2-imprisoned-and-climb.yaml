@@ -123,3 +123,4 @@ encounter:
     note: Puzzle and traversal mechanics are stable, but secret-chest placement and quest gating can change
       with patches; verify against the live dungeon if seeking Buried Bloodline fragments.
     date_checked: '2026-06-07'
+  kind: jumping-puzzle

@@ -1,13 +1,12 @@
-# raid_context/content/dungeons/grasp-of-avarice/4-shield-shutdown.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# content/dungeons/grasp-of-avarice/5-shield-shutdown.yaml — schema v3.
+
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
   activity_type: dungeon
   fireteam_size: 3
 encounter:
-  order: 4
+  order: 5
   slug: shield-shutdown
   name: Shield Shutdown (Fallen Shield / Servitor cannon)
   difficulty: medium

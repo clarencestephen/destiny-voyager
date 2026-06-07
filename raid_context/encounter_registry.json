@@ -557,7 +557,7 @@
     "activity_type": "dungeon",
     "fireteam_size": 3,
     "yaml": "raids/dungeons/grasp-of-avarice.yaml",
-    "encounter_count": 5,
+    "encounter_count": 6,
     "encounters": [
       {
         "order": 1,
@@ -574,19 +574,25 @@
       {
         "order": 3,
         "slug": "rusted-gangplank",
-        "name": "Rusted Gangplank \u2192 Sparrow Mines (jumping puzzle + race)",
+        "name": "Rusted Gangplank (spike-trap jumping puzzle)",
         "ingame_name": ""
       },
       {
         "order": 4,
+        "slug": "sparrow-mine-race",
+        "name": "Shroud Sparrow Mine Race",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
         "slug": "shield-shutdown",
         "name": "Shield Shutdown (Fallen Shield / Servitor cannon)",
         "ingame_name": ""
       },
       {
-        "order": 5,
+        "order": 6,
         "slug": "avarokk",
-        "name": "Wilhelm's Hoard (Captain Avarokk, the Covetous)",
+        "name": "Captain Avarokk, the Covetous",
         "ingame_name": ""
       }
     ],
