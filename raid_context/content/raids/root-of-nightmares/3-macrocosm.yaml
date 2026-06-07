@@ -325,6 +325,8 @@ encounter:
       elemental:
       - Solar resist helps against the opening Solar-shielded Centurions and the Terrestrial Lieutenant
         slug rifles
+      - Run resist mods matched to incoming damage; rally with a 3x reserves chest matching heavy element,
+        then swap back to resist chest for the fight.
       concussive:
       - Concussive Dampener can soften clustered Cabal and Lieutenant AoE on the triangular platforms
         where space is tight
@@ -334,11 +336,26 @@ encounter:
       Light or Dark aura, not by a weapon element
     - 'There IS a DPS phase: Zo''aurc becomes damageable after both alignments complete and he drops with
       an aura'
+    - 'Master: Surge and Overcharge give 25% to the matching element/archetype (they do not stack with
+      each other); seasonal artifact gives 25% anti-champion regardless.'
+    - Swap on boots with three matching surge mods (to your heavy or Izanagi's kinetic) right before the
+      Zo'Aurc damage phase.
     burst_windows: Short windows (roughly 10-15 seconds per plate before the aura flips); burst Zo'aurc,
       reposition for the flip to the opposite plate, then burst again.
     recommended_dps:
     - 'Burst heavy: linear fusion rifles, Sleeper Simulant, Two-Tailed Fox with heavy ammo'
     - Sword-swap or rocket burst for the short matched-plate windows
+    - 'Izanagi''s Burden + Auto-Loading Holster Legendary Rocket (aggressive/adaptive frame) is the best
+      burst combo: shoot Honed Edge, stow, pull rocket.'
+    - 'Legendary Rockets for the team: Hothead, Season''s Vengeance, Bump in the Night with Explosive
+      Light / Lasting Impression / Frenzy.'
+    - Gjallarhorn on at least one Guardian to buff all the team's rockets (no exceptions per Mactics).
+    - Linear Fusion option (Cataclysmic with Bait and Switch / Four Times the Charm, or Storm Chaser,
+      Taipan) for the boss.
+    - Divinity on one player to guarantee crits on the moving/awkward-crit boss; Wither Hord for endurance/multi-phase
+      damage and to charge Starfire grenades in the background.
+    - Hunter Blade Barrage (Star Eater) and Warlock Needlestorm out-damage Titan Thundercrash for the
+      super DPS.
   role_loadouts:
   - role_id: corner-caller
     subclass: Any subclass with reliable add-clear and survivability on a platform
@@ -395,3 +412,19 @@ encounter:
     note: Burst-DPS meta shifts each Episode; verify top heavy options (linear fusions, Sleeper, Two-Tailed
       Fox) before a run. Edge of Fate stat names applied.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Combined: Mactics "The BEST Root Of Nightmares Loadouts", Gsxrclyde "Day 1 Raid (Root Of Nightmares)
+      Loadouts and Weapons For All Classes", Overgear "Root of Nightmares Raid Guide"'
+    url: https://www.youtube.com/watch?v=kQfIeym8X90
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock: Solar Starfire Protocol Dawnblade with Well of Radiance for the damage phase; Fusion grenade
+    + Touch of Flame, ashes fragment for boss encounters. Bring two Warlocks so Wells last the whole DPS
+    phase.'
+  - 'Hunter: Solar Star Eater Scales with Blade Barrage super (Knock ''Em Down + On Your Mark) is a top
+    DPS super; Void Nightstalker tether (Gyrfalcon) for debuff/orbs if not needed for damage.'
+  - 'Titan: Arc Striker with Thundercrash; Heart of Inmost Light until DPS, then swap to Cuirass of the
+    Falling Star to pop super, then swap back. Touch of Thunder + Knockout, pulse grenades.'
+  - 'Overgear subclass shortlist: Hunter Nightstalker/Threadrunner, Titan Sunbreaker/Berserker, Warlock
+    Dawnblade/Shadebinder. Bosses have small health pools so any weapon works, even on Master.'

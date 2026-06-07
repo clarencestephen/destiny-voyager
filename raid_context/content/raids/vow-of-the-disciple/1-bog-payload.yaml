@@ -1,7 +1,6 @@
 # raid_context/content/raids/vow-of-the-disciple/1-bog-payload.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vow-of-the-disciple
   name: Vow of the Disciple
@@ -113,6 +112,11 @@ encounter:
       elemental:
       - No mandatory resist on Normal; the only real threat is the Pervading Darkness debuff, which is
         mitigated by staying in payload range rather than by resist mods
+      - Guides recommend a raid-wide defensive split of one Thermoshock Plating plus one Void Resist Plating
+        to cover all incoming elemental types (Scorn/Taken), rather than doubling a single resist.
+      - Well of Tenacity (paired with Elemental Time Dilation to extend its duration) gives ~50% damage
+        resist on picking up a Void elemental well — the recommended replacement for the nerfed Protective
+        Light.
       concussive: []
   damage:
     surges:
@@ -122,6 +126,9 @@ encounter:
     recommended_dps:
     - Add-clear primary or special (auto rifle, SMG, pulse rifle, or wave-frame/area grenade launcher)
       to quickly drop Abominations at each stop
+    - 'No boss/DPS phase here — Ehroar runs this section with an add-clear primary loadout: Funnel Web
+      (Void SMG) for volatile add-clear plus a blinding grenade launcher (Truthteller / Deafening Whisper);
+      Osteo Striga also cited for melting Abomination-type targets.'
   role_loadouts:
   - role_id: standard-escort
     subclass: Any subclass with strong add-clear and self-sustain (a healing or survivability subclass
@@ -144,3 +151,20 @@ encounter:
       stat names are used above. Verify exotic/weapon availability against the live sandbox, as the meta
       shifts each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross — Vow of the Disciple Prep Guide (Weapons, Mods, & Loadouts); supplemented by Ehroar
+      — The Best Raid Loadout You Should Be Using! (Vow of the Disciple)
+    url: https://www.youtube.com/watch?v=Z-wywCDuX7Y
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Guides give raid-wide (not per-encounter) Void 3.0 prep builds that apply from the opening section
+    onward; Ehroar specifically opens the raid running an add-clear loadout for the early non-boss encounters
+    like the bog.
+  - Warlock — Void (Nova Warp early), Healing Rift + Vortex grenade, Child of the Old Gods aspect; exotic
+    Osteo Striga + Necrotic Grips for relentless add-clear, or Nezarec's Sin. Used to spread poison/volatile
+    and keep ability uptime while escorting.
+  - Titan — Void with Heart of Inmost Light, Bastion aspect (barricade grants overshields to you and allies),
+    Suppression grenades; survivability-leaning escort build.
+  - 'Hunter — Void Nightstalker invisibility build: Gambler''s Dodge, Stylish Executioner + Vanishing
+    Step, Vortex grenades to weaken; stay invis to survive and revive teammates while clearing Bearers.'

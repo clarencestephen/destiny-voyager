@@ -193,6 +193,10 @@ encounter:
       elemental:
       - No fixed resist requirement; the Aegis cleanse and Essence blight-cleanse handle the Darkness/blight
         threats. On Master, general resist coverage helps survive the Knight-heavy rooms under timer pressure.
+      - One Thermoshock Plating + one Void Resist Plating to cover mixed Taken/Scorn/Darkness damage during
+        the relay.
+      - Well of Tenacity + Elemental Time Dilation + Reaping Wellmaker for ~50% resist uptime; Better
+        Already / Recuperation for orb-pickup healing.
       concussive:
       - Optional on Master — a Concussive Dampener can reduce heavy Taken/Scorn burst while a relic holder
         is locked out of fighting
@@ -204,6 +208,8 @@ encounter:
     recommended_dps:
     - Fast single-target for shield-broken Hourglass Knights and Glyphkeepers (SMG, hand cannon, pulse
       rifle); prioritize speed and mobility over raw burst
+    - No dedicated boss-DPS phase the guides target here; they recommend fast add-clear (Funnel Web SMG,
+      blinding GL) plus a heavy/linear kept ready for any burst window.
   role_loadouts:
   - role_id: shard_holder
     subclass: Mobile subclass with good single-target to laser and finish Hourglass Knights fast
@@ -241,3 +247,18 @@ encounter:
     note: Stat names follow the Edge of Fate rename. No DPS phase here, so weapon picks emphasize speed;
       verify current exotics against the live sandbox before a Master attempt.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross — Vow of the Disciple Prep Guide (Weapons, Mods, & Loadouts); supplemented by Ehroar
+      — The Best Raid Loadout You Should Be Using! (Vow of the Disciple)
+    url: https://www.youtube.com/watch?v=Z-wywCDuX7Y
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Raid-wide prep builds apply; Exhibition is a mechanics/survival gauntlet rather than a fixed DPS race,
+    so the guides' survivability builds are the relevant ones.
+  - Warlock — Void with Child of the Old Gods + Healing Rift + Feed the Void (Devour) for self-sustain;
+    Nezarec's Sin or Osteo Striga + Necrotic Grips for add-clear during the swap/dunk cycles.
+  - Titan — Heart of Inmost Light, Bastion overshields + Suppression grenades to survive the relay pressure;
+    banner shield (Ursa Furiosa) available if the team needs to tank/protect a carrier.
+  - Hunter — Void Nightstalker invis build (Stylish Executioner, Vanishing Step, Vortex grenades) to stay
+    alive and pick up/back up swaps and dunks.

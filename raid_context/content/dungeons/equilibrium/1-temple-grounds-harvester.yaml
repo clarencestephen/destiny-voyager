@@ -192,19 +192,33 @@ encounter:
       elemental:
       - No boss attack element to resist here; general damage reduction (Resist mods / class DR) helps
         against dense Renegade Cabal and Behemoth Walker fire
+      - 'Chest: Solar Resistance + Void Resistance (per Boosting-Ground''s first-encounter chest setup)
+        against Renegade Cabal small-arms and Goliath/Behemoth Walker fire'
+      - Arc surge optional only as flavor for the Arc-array/fuse theme; not required for defense
       concussive:
       - Concussive Dampener is reasonable to soften Behemoth Walker explosions and grouped Cabal AoE,
         though no source-confirmed concussive threat is called out for this encounter
+      - Concussive Dampener on chest to soften Goliath/Behemoth Walker missile barrage and point-blank
+        death explosion, plus grouped Cabal drop-pod/AoE
   damage:
     surges:
     - No dedicated boss DPS phase. Damage is spent bursting Behemoth Walkers; any surge works. Their associated
       Arc array/fuse theme means Arc weapons are convenient but not required.
+    - No dedicated boss DPS phase; any surge works. Warlock boots run Double Kinetic Weapon Surge (~17%)
+      for Praxic Blade; Hunter runs Double Kinetic Weapon Surge + Kinetic Scavenger this encounter.
     burst_windows: Short add-burst windows on each Behemoth Walker as barriers open — no extended damage
       gate.
     recommended_dps:
     - High-uptime primary or special for add-clear
     - Burst special weapon (shotgun / fusion) for fast Behemoth Walker kills
     - Any reliable kinetic/energy primary for Nameless Apprentice baiting and trash
+    - High-uptime primary plus a burst special for fast Goliath/Behemoth Walker kills
+    - Microcosm (Exotic Trace Rifle) with Kinetic Synthesis artifact perk for safe infinite-ammo ranged
+      damage on Walkers (Hunter)
+    - Titan Super (Hammer of Sol / Throwing Hammer at high Wormgod stacks one-shots Walkers); Warlock
+      Song of Flame for near-invincible chip; Hunter Shadowshot Deadfall weaken + Threaded Spike sever
+      on Walkers
+    - Mida Retrograde or any solid primary for Nameless Apprentice baiting
   role_loadouts:
   - role_id: baiter
     subclass: ''
@@ -240,3 +254,25 @@ encounter:
     note: Equilibrium is newly released; exact champion lists, drop pools, and Master modifiers are still
       settling. Verify champions and surges against current in-game state and patch notes before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Equilibrium enrichment (combined): Llama "Best Equilibrium Dungeon Builds For EVERY Class"
+      + Grindout Equilibrium Walkthrough + Boosting-Ground Equilibrium Dungeon Guide (Builds & Solo Tips)'
+    url: https://boosting-ground.com/Destiny2/guides/dungeon-guides/destiny-2-equilibrium-dungeon-guide-builds-loot-solo-tips
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock (Prismatic, Getaway Artist): Song of Flame super; Storm grenade (consumed by Getaway Artist
+    for an Arc Soul); aspects Hellion + Feed the Void (Devour sustain); Arcane Needle melee; Phoenix Dive
+    class ability; fragments Dominance/Hope/Protection/Courage. Exotic: Getaway Artist. Llama''s race
+    variant runs Needlestorm super with Helion/Feed the Void and fragment Dominance (arc-soul Jolt + grenade
+    Weaken).'
+  - 'Titan (Solar, Wormgod Caress ''bonk hammer''): Throwing Hammer melee; Hammer of Sol super (panic);
+    Healing grenade; aspects Sol Invictus + Roaring Flames; Sunspots for Restoration. Exotic: Wormgod
+    Caress. Race alternative: Prismatic with Cuirass of the Falling Star + Thundercrash, Consecration/Knockout
+    aspects.'
+  - 'Hunter (Prismatic, Fortune''s Favor): Shadowshot Deadfall super (weaken); Grapple grenade; aspects
+    Ascension + Stylish Executioner (invisibility for safe mechanics); Threaded Spike melee (severs, -40%
+    enemy damage); fragments Purpose/Blessing/Protection/Dawn. Exotic: Fortune''s Favor (overshield ->
+    +15% weapon damage). Microcosm for safe ranged add/Walker damage.'
+  - 'All classes: Praxic Blade exotic sword block makes you near-immune to damage here; keep a Healing
+    grenade ready. No DPS gate, so favor survivability/ad-clear.'

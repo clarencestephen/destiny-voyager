@@ -219,14 +219,24 @@ encounter:
       elemental:
       - Arc resistance is most relevant against Sere's lightning hands; the post-DPS center Arc fill is
         a positional hazard, not survivable by resist — sprint to the edges instead
+      - 'Chest: Double Arc Resistance (all three class chest setups in Boosting-Ground) against Sere''s
+        Lightning Hands and the post-DPS Arc-fill lightning field'
+      - 'Note: the center Arc fill after DPS is a positional hazard — sprint to the arena edges; it is
+        not survivable by resist mods'
       concussive:
       - No source-confirmed concussive-blast threat is called out for this encounter; Concussive Dampener
         is optional
+      - Concussive Dampener on chest (paired with Double Arc Resistance) per Boosting-Ground's final-boss
+        setup; also softens Incendior/Axe-Knight boops and grouped fire during the post-DPS lightning
+        phase
   damage:
     surges:
     - Sere has a clear DPS phase after orbs and Compels are done. Element is not source-confirmed; given
       his Arc lightning theme, Arc surge is a reasonable default, but use whatever maximizes your burst
       in the short window.
+    - 'Clear DPS phase after Compelling/destroying the 5 Taken orbs in both dimensions; element not source-confirmed
+      but Arc surge is a reasonable default given Sere''s Arc lightning theme. Boots: Double Solar Weapon
+      Surge + Solar Scavenger (Warlock/Hunter Wolfsbane builds).'
     burst_windows: Short DPS window after Compelling 5 Blistered Shadows and destroying 5 Taken orbs;
       shoot his hands on the lightning attack to extend safe damage, then sprint out before the Arc fill.
     recommended_dps:
@@ -234,6 +244,13 @@ encounter:
       per the v2 speed note
     - This dungeon's Exotic Combat Bow ('Heirloom') for consistent stagger on Sere, if obtained
     - Synchronized Supers on hand-stun (Thundercrash, Golden Gun, Needlestorm) for one-to-two-phase potential
+    - Heirloom (this dungeon's exotic, Strand crossbow) for consistent stagger on Sere if obtained
+    - Whisper of the Worm as a sustained heavy option; Linear Fusion Rifles / Rocket Launchers for burst
+    - Parasite (works fantastic per Grindout) and any high-burst weapon
+    - Wolfsbane (Attrition Orbs) Light-Light-Heavy combos; Mida Retrograde / Unrivaled Discourse / machine
+      gun to break Lightning Hands quickly
+    - 'Synchronized Supers on hand-stun: Thundercrash, Golden Gun, Needlestorm'
+    - At least one Well of Radiance Warlock recommended for the damage phase
   role_loadouts:
   - role_id: compeller
     subclass: ''
@@ -273,3 +290,26 @@ encounter:
       still being confirmed; verify against current in-game state and patch notes before committing a
       loadout.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Equilibrium enrichment (combined): Llama "Best Equilibrium Dungeon Builds For EVERY Class"
+      + Grindout Equilibrium Walkthrough + Boosting-Ground Equilibrium Dungeon Guide (Builds & Solo Tips)'
+    url: https://boosting-ground.com/Destiny2/guides/dungeon-guides/destiny-2-equilibrium-dungeon-guide-builds-loot-solo-tips
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock (Prismatic, Getaway Artist): have Arc Soul active before breaking final orb; pop Transcendence,
+    melee + Void grenade for Weaken, pop Song of Flame (damage resistance), then Wolfsbane Nano-Assault
+    Light-Light-Heavy; swap to Mida Retrograde to break Lightning Hands. A Well of Radiance Warlock (Boots
+    of the Assembler) is recommended for the team''s Sere damage phase. Exotic: Getaway Artist / Boots
+    of the Assembler (well role).'
+  - 'Hunter (Prismatic, Fortune''s Favor): break final orb, pop Transcendence, drop Shadowshot Deadfall
+    (aim at ground), melee for Radiant, pop Ascension, Wolfsbane Nano-Assault Light-Light-Heavy; break
+    Lightning Hands with machine gun / Mida Retrograde. Race alt: Prismatic Golden Gun + Celestial Nighthawk
+    with Still Hunt only if a long-range crit boss, or Void Orpheus Rig + Moebius Quiver.'
+  - 'Titan (Solar, Wormgod Caress): prime Wormgod stacks + Roaring Flames x3, kill an Apprentice for a
+    Sunspot, Tractor Cannon boop, Rally Barricade, Unrivaled Discourse for Bait and Switch, Mida Retrograde
+    spam + Throwing Hammers for Radiant; reapply Tractor when numbers go white. AVOID Hammer of Sol in
+    DPS (its hammers can''t break Lightning Hands). Ranged alt: Pyrogale Gauntlets + Burning Maul. Race
+    alt: Prismatic Cuirass + Thundercrash.'
+  - Compel mechanic requires Shadow Master (tier 3); deactivate the four front lightning pylons (needs
+    Shadow Apprentice) before every DPS phase.

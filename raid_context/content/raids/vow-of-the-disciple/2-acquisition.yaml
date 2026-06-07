@@ -161,6 +161,10 @@ encounter:
       elemental:
       - No fixed resist requirement on Normal; on Master, bring resist coverage for sustained Taken/Scorn
         fire while defending the obelisk
+      - One Thermoshock Plating + one Void Resist Plating recommended to cover the mixed Taken/Scorn elemental
+        fire while a defender holds an obelisk.
+      - Well of Tenacity + Elemental Time Dilation (extended duration) and Reaping Wellmaker for the ~50%
+        damage-resist uptime that replaces the nerfed Protective Light.
       concussive:
       - Optional on Master — a Concussive Dampener can blunt heavy Taken/Scorn burst while a defender
         holds an obelisk alone
@@ -172,6 +176,9 @@ encounter:
     recommended_dps:
     - 'Reliable add-clear and single-target for Glyphkeepers/Compass: hand cannon, pulse rifle, or SMG;
       on Master pair anti-Champion primaries with a quick-kill heavy'
+    - 'No DPS phase — completion is mechanical (correct symbols). Guides'' relevant pick is reliable add-clear/single-target
+      for Compass Knights and Glyphkeepers: Funnel Web SMG, a hand cannon/pulse, or a blinding GL (Truthteller);
+      add anti-Champion options on Master.'
   role_loadouts:
   - role_id: defender
     subclass: Survivability-leaning subclass for holding an obelisk under constant pressure
@@ -198,3 +205,20 @@ encounter:
     note: Stat names follow the Edge of Fate rename (Weapons/Health/Class/Grenade/Super/Melee). Confirm
       Champion counters and live exotics against the current sandbox before a Master run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross — Vow of the Disciple Prep Guide (Weapons, Mods, & Loadouts); supplemented by Ehroar
+      — The Best Raid Loadout You Should Be Using! (Vow of the Disciple)
+    url: https://www.youtube.com/watch?v=Z-wywCDuX7Y
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Guides are raid-wide Day-One prep, not per-encounter; the Void 3.0 well-maker builds below apply throughout
+    the defend/runner work in this encounter.
+  - Warlock — Void with Child of the Old Gods (Void Soul drains/weakens), Healing Rift, Feed the Void
+    for Devour; exotic Nezarec's Sin or Osteo Striga + Necrotic Grips for sustained add-clear while holding
+    obelisks. Phoenix Protocol / Lunafaction + Well of Radiance is the alternative team-support pick.
+  - Titan — Heart of Inmost Light, Bastion (overshield on barricade) + Suppression grenades for a survivability/hold
+    build; Ursa Furiosa + banner shield (Ward of Dawn) noted as a team-protection option (40% buff).
+  - Hunter — Void Nightstalker invis build (Stylish Executioner, Vanishing Step, Vortex grenades) for
+    staying alive while running rooms; Renewal Grasp Stasis lockdown build cited as an alternative for
+    keeping the team alive.

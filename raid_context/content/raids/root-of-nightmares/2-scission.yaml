@@ -295,6 +295,8 @@ encounter:
     recommended_defensive_mods:
       elemental:
       - Solar resist helps against the Cabal infantry and the Barrier Colossus slug rifle
+      - Keep resist mods matched to the encounter; reserve-chest swap on rally then return to resistances.
+      - Invis (Gyrfalcon/Omnioculus) helps the buff-carrier survive the platform jumps and Barrier Champions.
       concussive:
       - Concussive Dampener can reduce damage from clustered Cabal explosive/AoE fire if add-clear holds
         a tight mid-floor position
@@ -304,11 +306,18 @@ encounter:
       surge applies
     - The only damage priority is killing aura-shielded Redolence enemies with the matching paracausal
       buff, not an elemental surge
+    - 'Master only: Surges/Overcharge grant 25% to matching element or archetype, not stacking with each
+      other. Set surge boots to your heavy/kinetic element.'
     burst_windows: No boss damage phase; clear shielded Redolence majors promptly with matching buffs
       so they do not run the Imminent Expulsion clock.
     recommended_dps:
     - Add-clear primary or special that clears Cabal waves quickly
     - Anti-Barrier weapon staged for the end-of-chain Colossus
+    - Disorienting/blinding Grenade Launcher (Auto-Loading Holster) for the mini-bosses and shielded enemies;
+      Strand suspend can substitute.
+    - Void SMG (Funnel Web / Unforgiven / Doom of Chelchis) as the bread-and-butter ad-clear weapon to
+      keep Volatile rounds active.
+    - Scout rifle for ranged shielded enemies when buffed.
   role_loadouts:
   - role_id: light-runner-side
     subclass: Any movement-focused subclass with a strong traversal exotic
@@ -360,3 +369,19 @@ encounter:
     note: Verify current Anti-Barrier sources and meta loadouts each Episode; cheese options (e.g. Colony)
       may be patched. Edge of Fate stat names applied.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Combined: Mactics "The BEST Root Of Nightmares Loadouts", Gsxrclyde "Day 1 Raid (Root Of Nightmares)
+      Loadouts and Weapons For All Classes", Overgear "Root of Nightmares Raid Guide"'
+    url: https://www.youtube.com/watch?v=kQfIeym8X90
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock: Solar Starfire Protocol Dawnblade (Well of Radiance) for sustained ad clear and Well uptime
+    while splitting the arena; Fusion grenade + Touch of Flame, Firepower mod.'
+  - 'Hunter: Void Nightstalker Gyrfalcon''s Hauberk (or Omnioculus) for invis revives and Volatile ad
+    clear across the two split sides; Strand Threadrunner with Sixth Coyote (Shackle grenade + Snaring
+    Slam, Widow''s Silk) is excellent for locking down every non-boss enemy.'
+  - 'Titan: Solar Sunbreaker (Bonk) with Loreley/Synthoceps for survivable ad clear, or Strand Berserker
+    Abeyant Leap for suspend lockdown of the shielded adds and Barrier Champions.'
+  - 'All classes: Tier 10 Health; reserve a 3x reserves chest piece matching heavy element to rally with,
+    then swap back to resist chest.'

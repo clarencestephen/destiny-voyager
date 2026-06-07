@@ -205,19 +205,33 @@ encounter:
       - No fixed elemental resist requirement; survivability comes from blocking the stomp and limiting
         dark-room time rather than resist mods. On Master, general resist coverage helps the kill/stun
         teams stay up.
+      - One Thermoshock Plating + one Void Resist Plating for general coverage; survivability here comes
+        mainly from baiting/blocking the Caretaker's stomp rather than resist.
+      - Well of Tenacity + Elemental Time Dilation and Reaping Wellmaker for ~50% resist uptime; Better
+        Already / Recuperation to heal on orb pickup.
       concussive:
       - Optional — a Concussive Dampener can soften the Caretaker's stomp shockwave and drone explosions
         for players forced to hold close to the boss
+      - Guides don't name a specific Concussive Dampener for this encounter; the only defensive emphasis
+        is the resist/well-maker package above.
   damage:
     surges:
     - No element is forced by the encounter; the Caretaker has no elemental shield, so any-element DPS
       works. Cataclysmic (this raid's Solar linear fusion) is a standout — if running it, a Solar surge
       is reasonable, but match surges to your fireteam's chosen DPS weapons.
+    - No element is forced by the Caretaker; match the surge to your chosen DPS weapon for the plate phase
+      (the guides list Cataclysmic linear fusion, rockets, and Whisper/Sleeper among top picks).
     burst_windows: Burst on each lit plate while holding the Resonant Breakthrough buff (~10s per plate,
       3 plates per floor, longest window on Plate 3).
     recommended_dps:
     - Linear fusion rifles (Cataclysmic with Disciple's Bane melts this boss), heavy/special burst options,
       and a Well/healing super to sustain on plates
+    - Cataclysmic (this raid's Solar linear fusion) as a top boss-DPS pick
+    - Threaded Needle / Reed's Regret linear fusion rifles
+    - Gjallarhorn (and a teammate's Wolfpack Rounds), plus legendary Void rockets (Royal Entry / Tomorrow's
+      Answer / Red Herring) paired with Volatile
+    - Deathbringer with Volatile (called the best damage in the game at the time)
+    - Parasite for high-health single targets, and Whisper/Sleeper for extended damage windows
   role_loadouts:
   - role_id: symbol_team
     subclass: Survivability-leaning subclass to tank Pervading Darkness on dark-room runs
@@ -251,3 +265,20 @@ encounter:
       as a boss-melt; confirm it and any current heavy DPS picks against the live sandbox, as DPS meta
       shifts per season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross — Vow of the Disciple Prep Guide (Weapons, Mods, & Loadouts); supplemented by Ehroar
+      — The Best Raid Loadout You Should Be Using! (Vow of the Disciple)
+    url: https://www.youtube.com/watch?v=Z-wywCDuX7Y
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Raid-wide prep builds apply; this is the first real boss-damage encounter, so swap toward the heavier
+    secondary loadouts the guides describe.
+  - Warlock — Void (Nova Bomb/Cataclysm for tracking boss damage, or Well of Radiance for team DPS support
+    via Phoenix Protocol/Lunafaction), Child of the Old Gods to weaken; exotic Nezarec's Sin or Osteo
+    Striga + Necrotic Grips.
+  - Titan — Heart of Inmost Light Void build; banner shield via Ward of Dawn / Ursa Furiosa for the 40%
+    damage buff during plate-DPS windows, plus Bastion overshields for survivability.
+  - Hunter — Void Nightstalker with Orpheus Rig + Moebius Quiver for burst boss damage and the team-wide
+    ~30% Weaken debuff during the plate phase; invis build (Stylish Executioner/Vanishing Step) to stay
+    alive between damage.

@@ -242,6 +242,10 @@ encounter:
       elemental:
       - Solar resist helps against Legionaries, Phalanxes and the Barrier Colossus slug rifle
       - Void resist helps against Aspirant Psion fire and the Cavum's slam
+      - Match resistance mods to incoming damage; reserve a chest piece with resist mods to swap back
+        to after rallying.
+      - Hunter Omnioculus / Gyrfalcon invis (Vanishing Step) is the top survivability tool against the
+        Tormentors and Champions here.
       concussive:
       - Concussive Dampener can soften the Cavum of Nezarec's grab/slam and grouped Cabal explosive fire
         if add-clear gets overwhelmed on the centre
@@ -251,11 +255,21 @@ encounter:
       applies
     - For the Cavum of Nezarec priority kill, no surge requirement - any Anti-Barrier-free burst weapon
       works
+    - 'Master only: Surge + Overcharge modifiers give 25% more damage to matching element/archetype (do
+      not stack with each other). Match your boots'' 3 weapon-surge mods to your heavy or kinetic element.'
+    - Run a pair of boots with three surge mods (10/17/22% for 1/2/3 copies) matching your heavy or Izanagi
+      kinetic, swapped in before damage.
     burst_windows: No boss damage phase; the only burst priority is dropping the Cavum of Nezarec fast
       to reset the Sweeping Terror timer.
     recommended_dps:
     - Burst heavy or special for the Cavum (sniper, linear fusion, or rocket)
     - Add-clear primary that prevents Aspirant splits (close-range shotgun, SMG, or melee)
+    - 'Mechanic/ad-clear encounter (Barrier Champions + Tormentors): blinding/disorienting Grenade Launcher
+      (Forbearance with Chain Reaction, or any with Auto-Loading Holster) to shut down Tormentors.'
+    - Void SMG for primary ad clear (Funnel Web, Unforgiven, Doom of Chelchis, Vouchsafe) to feed Volatile
+      Flow.
+    - Osteo Striga for hands-off ad clear (pairs with Strand necrotic Warlock).
+    - Scout rifle (e.g. Doom of Chelchis) for the long-range psion sniper points during the jump puzzle.
   role_loadouts:
   - role_id: runner
     subclass: Any movement-focused subclass (Hunter/Warlock/Titan with a strong traversal exotic)
@@ -294,3 +308,24 @@ encounter:
     note: Exotic/weapon and artifact specifics shift each Episode; verify current Anti-Barrier sources
       and meta exotics before a run. Edge of Fate stat names applied (Class/Health).
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Combined: Mactics "The BEST Root Of Nightmares Loadouts", Gsxrclyde "Day 1 Raid (Root Of Nightmares)
+      Loadouts and Weapons For All Classes", Overgear "Root of Nightmares Raid Guide"'
+    url: https://www.youtube.com/watch?v=kQfIeym8X90
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock: Solar Dawnblade with Well of Radiance, Starfire Protocol exotic, Fusion grenade + Touch
+    of Flame; ad-clear fragments (resolve/searing/torches). The premier all-around RoN build per Mactics,
+    also endorsed by Gsxrclyde and Overgear.'
+  - 'Hunter: Void Nightstalker with the tether super (Deadfall), Gyrfalcon''s Hauberk exotic (Stylish
+    Executioner + Vanishing Step, Echoes of starvation/persistence/undermining/cessation) for invis ad-clear
+    and easy debuffs; Omnioculus is the alternative top survivability pick (Trapper''s Ambush + Vanishing
+    Step).'
+  - 'Hunter (alt): Arc Assassin''s Cowl with Gathering Storm super, Lethal Current + Flow State, heavy-handed
+    mod, for melee-spam ad clear.'
+  - 'Titan: Solar Sunbreaker (Bonk/Throwing Hammer) with Loreley Splendor or Synthoceps, Sol Invictus
+    + Roaring Flames, heavy-handed gloves; Gsxrclyde''s primary ''Bonk'' build he runs the whole raid.
+    Strand Berserker (Abeyant Leap, Into the Fray + Drengr''s Lash) is a strong lockdown alternative.'
+  - 'All classes: Tier 10 (max) Health. Aeon Sect arms with Sective Insight optional for heavy-ammo finishers.
+    Hunters prioritize Weapons + Grenade stats; Warlocks Class + Grenade; Titans Grenade + Super/Melee.'

@@ -370,6 +370,10 @@ encounter:
       - Solar resist helps against Legionaries and the Colossi slug rifles
       - There is no single resist that blocks Overwhelming Light/Darkness - the refuge bubble is the only
         protection from the wipe pulse
+      - Light's Refuge / Darkness's Refuge auras (created by carrying the opposite buff into a node) are
+        the only way to survive Nezarec's Overwhelming/wipe attack — match the Refuge to his broken-shoulder
+        color (dark shoulder = Darkness's Refuge, light shoulder = Light's Refuge).
+      - Resist mods matched to incoming damage; well of Radiance provides the bulk of phase survivability.
       concussive:
       - Concussive Dampener can soften Nezarec's Hatred psionic blast and clustered add fire while runners
         and refuge-makers work
@@ -379,11 +383,26 @@ encounter:
       chains complete, not by weapon element
     - 'There IS a DPS phase: Nezarec is vulnerable for roughly 15 seconds after both Light and Dark chains
       finish'
+    - 'Master: Surge + Overcharge each grant 25% to matching element/archetype, not stacking with one
+      another; artifact anti-champion adds 25% regardless.'
+    - Swap to three matching surge-mod boots (heavy or Izanagi kinetic element) immediately before cracking
+      his chest for the damage phase.
     burst_windows: Roughly 15 seconds of vulnerability per cycle after both chains complete; stack on
       the last-completed side's final seed spot and burst hard before he re-immunes.
     recommended_dps:
     - 'Burst heavy: linear fusion rifles, Sleeper Simulant, rockets, or a sword swap'
     - Exotic heavy with high single-target burst for the short window
+    - Izanagi's Burden + Auto-Loading Holster Legendary Rocket as the premier burst combo for the chest-stun
+      damage windows.
+    - Gjallarhorn on at least one player to buff the whole team's legendary rockets.
+    - Legendary aggressive/adaptive rockets (Hothead, Bump in the Night, Season's Vengeance) with Explosive
+      Light / Lasting Impression for the other five.
+    - Cataclysmic / linear fusions (Bait and Switch, Four Times the Charm) and Sleeper Simulant for precision
+      boss DPS.
+    - Divinity on one Guardian to lock crits on the moving Nezarec; Lumina to over-buff a teammate's damage
+      (35% vs Well's 25%) if struggling on DPS.
+    - Hunter Star Eater Blade Barrage / Warlock Needlestorm supers for extra damage; keep heavy in reserve
+      for Final Stand.
   role_loadouts:
   - role_id: hunted
     subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail all viable)
@@ -446,3 +465,16 @@ encounter:
       Sleeper, swords) and current Anti-Barrier sources before a run. Edge of Fate stat names applied
       (Health/Class/Grenade).
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Combined: Mactics "The BEST Root Of Nightmares Loadouts", Gsxrclyde "Day 1 Raid (Root Of Nightmares)
+      Loadouts and Weapons For All Classes", Overgear "Root of Nightmares Raid Guide"'
+    url: https://www.youtube.com/watch?v=kQfIeym8X90
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: Solar Star Eater Scales + Blade Barrage for the highest Hunter DPS super on the final boss;
+    Void Nightstalker tether/Tractor Cannon for debuff if running Divinity instead.'
+  - 'Titan: Arc Striker Thundercrash with Cuirass of the Falling Star (swap from Heart of Inmost Light
+    to pop super, swap back after). Not all bosses can be Thundercrashed but Nezarec works.'
+  - 'All: Save heavy ammo / a super for Nezarec''s Final Stand or he will wipe you. Tier 10 Health, reserve-chest
+    swap on rally.'

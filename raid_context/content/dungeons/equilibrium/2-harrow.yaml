@@ -211,19 +211,35 @@ encounter:
       elemental:
       - Arc resistance is the most relevant given Harrow's center field, Arc fuses, and the Arc generator;
         the insta-kill center is not survivable by resist, so positioning matters more than any mod
+      - 'Chest: Double Void Resistance for this encounter (per all three class chest setups in Boosting-Ground),
+        against Harrow''s blades and Renegade Cabal'
+      - Arc Resistance is also relevant given the central Arc-fuse/hole mechanic and Arc generator area;
+        the insta-kill center is positional, not resistable
       concussive:
       - Concussive Dampener helps against Harrow's charge explosion and grouped Centurion/turret fire
         during Final Stand
+      - Melee Damage Resistance on chest (Harrow is a dual-blade melee Gladiator; his swings and Centurion
+        melees can one-shot)
+      - Concussive Dampener helps against Harrow's charge/teleport explosion and grouped Scorpius-turret/Centurion
+        fire during Final Stand
   damage:
     surges:
     - Harrow has a real DPS phase once his shield is fully stripped. Element is not source-confirmed,
       so use your highest-uptime burst; Arc surge is a sensible default given the encounter's Arc theme.
+    - Harrow has a real ~30s DPS window after his shield is fully stripped; element not source-confirmed,
+      so use highest-uptime burst (Arc surge is a sensible default given the Arc-fuse theme). Warlock/Hunter
+      run Double Solar Weapon Surge + Solar Scavenger on boots for encounters 2-3.
     burst_windows: Short, repeated DPS window after each full shield-strip (3 hole-baits, or 2 holes plus
       the Arc generator), then a Final Stand finish through the gate.
     recommended_dps:
     - Burst-DPS special/heavy for the short window (Linear Fusion Rifles, Rocket Launchers)
     - Roaming or burst Supers to dump on shield-down (e.g., Thundercrash, Golden Gun, Needlestorm)
     - Sword or shotgun for safe close-range damage when positioned with cover
+    - Praxic Blade (Exotic Sword) combos in Song of Flame (Warlock)
+    - Wolfsbane (Exotic Axe) with Attrition Orbs catalyst, Nano-Assault Light-Light-Heavy combo (Hunter)
+    - Tractor Cannon debuff + Throwing Hammer spam, or Thundercrash (Titan)
+    - Parasite, Legend of Acrius, or any high-burst special/heavy (Linear Fusion / Rocket) per Grindout
+    - Roaming/burst Supers dumped on shield-down (Thundercrash, Golden Gun, Needlestorm)
   role_loadouts:
   - role_id: baiter
     subclass: ''
@@ -259,3 +275,24 @@ encounter:
     note: Harrow's exact DPS-phase element, champion presence on Master, and drop pool are not fully locked
       in; confirm against current in-game state and patch notes.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Equilibrium enrichment (combined): Llama "Best Equilibrium Dungeon Builds For EVERY Class"
+      + Grindout Equilibrium Walkthrough + Boosting-Ground Equilibrium Dungeon Guide (Builds & Solo Tips)'
+    url: https://boosting-ground.com/Destiny2/guides/dungeon-guides/destiny-2-equilibrium-dungeon-guide-builds-loot-solo-tips
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock (Prismatic, Getaway Artist): Song of Flame for the DPS window (heavy damage resistance makes
+    Harrow nearly harmless); eat Storm grenade for Arc Soul before Harrow exits the floor trap, then swap
+    to regular grenade (Z); pop Transcendence, Arcane Needle + Void grenade for Weaken, then Praxic Blade
+    Light-Light-Light-Heavy combo. Exotic: Getaway Artist (Wolfsbane swap viable here).'
+  - 'Hunter (Prismatic, Fortune''s Favor): Shadowshot Deadfall; on DPS pull Wolfsbane (Attrition Orbs
+    catalyst), hold-reload for Nano-Assault, Light-Light-Heavy combo (with Swordstorm Combo artifact perk);
+    orbs refresh overshield via Facet of Purpose for the Fortune''s Favor +15% loop. Stylish Executioner
+    invis for safe mechanics.'
+  - 'Titan (Solar, Wormgod Caress): prime Wormgod to 4-5 stacks + Roaring Flames x3 before DPS; Tractor
+    Cannon boop, then rapid Throwing Hammers from a corner to limit knockback; Healing grenade if low.
+    Race alt: Prismatic Cuirass + Thundercrash on shield-down.'
+  - 'All classes: defeat Harrow''s Decree teleport explosion with Praxic Blade block (most reliable),
+    line-of-sight cover, or Shadow Force Pulse interrupt; switches/floor-trap mechanics require Shadow
+    Apprentice (tier 2).'
