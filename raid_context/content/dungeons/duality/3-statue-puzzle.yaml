@@ -1,13 +1,12 @@
-# raid_context/content/dungeons/duality/2-statue-puzzle.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/dungeons/duality/3-statue-puzzle.yaml — schema v3.
+
 activity:
   slug: duality
   name: Duality
   activity_type: dungeon
   fireteam_size: 3
 encounter:
-  order: 2
+  order: 3
   slug: statue-puzzle
   name: Statue Puzzle (4 gladiator statues)
   difficulty: easy
@@ -123,3 +122,4 @@ encounter:
     note: No combat meta dependency here, but exact rotation counts vary per attempt — always verify alignment
       in the Waking realm.
     date_checked: '2026-06-07'
+  kind: jumping-puzzle

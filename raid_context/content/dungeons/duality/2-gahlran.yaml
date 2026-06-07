@@ -1,13 +1,12 @@
-# raid_context/content/dungeons/duality/1-gahlran.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/dungeons/duality/2-gahlran.yaml — schema v3.
+
 activity:
   slug: duality
   name: Duality
   activity_type: dungeon
   fireteam_size: 3
 encounter:
-  order: 1
+  order: 2
   slug: gahlran
   name: Nightmare of Gahlran, Sorrow Bearer
   difficulty: medium

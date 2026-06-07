@@ -1,0 +1,40 @@
+# raid_context/content/dungeons/duality/1-opening-descent.yaml — schema v3.
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: opening-descent
+  name: Opening Descent (to Gahlran)
+  kind: traversal
+  difficulty: easy
+  estimated_time: 3-6 min
+  abstract: Fall through the statue into the Cabal mausoleum and traverse the halls to the Gahlran arena,
+    swapping between the Waking and Nightmare realms by shooting bells.
+  setup: 'WHAT YOU SEE:
+
+    - A long series of hallways, platforms and ledges after the opening drop.
+
+    - Bells: shooting a bell flips you between the Waking world and the Nightmare realm.
+
+
+    TRAVERSAL MECHANICS:
+
+    - Some gaps/paths only exist in ONE realm — ring a bell to swap and cross.
+
+    - A short timer returns you to the Waking world; ring again as needed. No combat checkpoint here.
+
+    '
+  plain_language_steps:
+  - 1. After you drop through the statue, follow the hallways forward.
+  - 2. When a path is blocked, shoot a bell to swap between the Waking world and the Nightmare realm —
+    the missing platforms appear in the other realm.
+  - 3. Keep swapping realms to cross the gaps until you reach the Gahlran arena (first encounter).
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: encounter audit (2026-06-07)'
+    note: Traversal section that was missing from the encounter division.
+    date_checked: '2026-06-07'

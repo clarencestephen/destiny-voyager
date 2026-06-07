@@ -449,28 +449,40 @@
     "activity_type": "dungeon",
     "fireteam_size": 3,
     "yaml": "raids/dungeons/duality.yaml",
-    "encounter_count": 4,
+    "encounter_count": 6,
     "encounters": [
       {
         "order": 1,
+        "slug": "opening-descent",
+        "name": "Opening Descent (to Gahlran)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
         "slug": "gahlran",
         "name": "Nightmare of Gahlran, Sorrow Bearer",
         "ingame_name": ""
       },
       {
-        "order": 2,
+        "order": 3,
         "slug": "statue-puzzle",
-        "name": "Statue Puzzle (4 gladiator statues)",
+        "name": "Four Gladiator Statue Puzzle",
         "ingame_name": ""
       },
       {
-        "order": 3,
+        "order": 4,
         "slug": "unlock-the-vault",
         "name": "Unlock the Vault (3 Nightmares)",
         "ingame_name": ""
       },
       {
-        "order": 4,
+        "order": 5,
+        "slug": "vault-descent",
+        "name": "Vault Descent (to Caiatl)",
+        "ingame_name": ""
+      },
+      {
+        "order": 6,
         "slug": "caiatl",
         "name": "Nightmare of Caiatl (final boss)",
         "ingame_name": ""

@@ -1,0 +1,37 @@
+# raid_context/content/dungeons/duality/5-vault-descent.yaml — schema v3.
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 5
+  slug: vault-descent
+  name: Vault Descent (to Caiatl)
+  kind: traversal
+  difficulty: easy
+  estimated_time: 3-6 min
+  abstract: After unlocking the Vault, drop down into the long room with the shrouded central cube to
+    reach the Caiatl arena. Hidden Chest 2 sits in the cramped passage below the cube.
+  setup: 'WHAT YOU SEE:
+
+    - A long descent room dominated by a large shrouded central object (the cube).
+
+    - A cramped passage below the cube holding Hidden Chest 2.
+
+
+    TRAVERSAL MECHANICS:
+
+    - Simple drop-down/navigation; no combat. Grab the hidden chest on the way if wanted.
+
+    '
+  plain_language_steps:
+  - 1. Once the Vault is unlocked, drop into the long room with the big shrouded cube in the middle.
+  - 2. (Optional) Duck into the cramped passage below the cube for Hidden Chest 2.
+  - 3. Continue down into the Caiatl arena (final boss).
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: encounter audit (2026-06-07)'
+    note: Traversal section that was missing from the encounter division.
+    date_checked: '2026-06-07'

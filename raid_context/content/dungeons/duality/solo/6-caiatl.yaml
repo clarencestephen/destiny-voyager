@@ -1,6 +1,5 @@
-# raid_context/content/dungeons/duality/4-caiatl.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/dungeons/duality/6-caiatl.yaml — schema v3.
+
 activity:
   slug: duality
   name: Duality
@@ -8,7 +7,7 @@ activity:
   fireteam_size: 3
   category: solo
 encounter:
-  order: 4
+  order: 6
   slug: caiatl
   name: Nightmare of Caiatl (final boss)
   abstract: 'Final boss. Standard mechanic + new bell-stun + Waking Resonance
