@@ -258,6 +258,26 @@ encounter:
     - Whisper / Sleeper for sustained damage when a long window or lots of ammo is needed
     - Parasite (scales to a big multiplier) for burst, and Izanagi's Burden + a lasting-impression rocket
       as a hard-hitting alternative; Moebius Quiver (Hunter) for super burst
+    - Linear fusion rifles — Cataclysmic (raid Solar LFR; pairs with the Disciple's Bane origin/perk)
+      is a top boss-DPS pick; Threaded Needle and Reed's Regret are the named alternatives. Match a Solar
+      surge if running Cataclysmic. [yaml recommended_dps + Aztecross 'threaded needle... reed's regret']
+    - Gjallarhorn + legendary Void rockets — one Guardian runs Gjallarhorn to grant Wolfpack Rounds to
+      the team's legendary Void rockets (Royal Entry / Tomorrow's Answer / Red Herring), boosted further
+      with Volatile Rounds (Volatile Flow). [yaml recommended_dps + Aztecross + Ehroar all name Gjallarhorn
+      + Wolfpack + legendary rocket]
+    - Whisper of the Worm / Sleeper Simulant — sustained-damage heavy for long windows or when lots of
+      ammo is available (Whisper for the longest chase windows). [yaml recommended_dps + Aztecross 'whisper...
+      still the best for extended damage' + Ehroar 'whisper worm or maybe even sleeper']
+    - Deathbringer with Volatile — high single-target damage; Aztecross notes 'the best damage in the
+      game right now is Deathbringer with Volatile,' with the caveat it needs the right height and a large
+      enough boss. [yaml + Aztecross]
+    - 'Parasite — scales to a large multiplier (Aztecross: x20 ≈ ~2.5–3 Gjallarhorn shots) for short/burst
+      windows once you''ve built up kills. [yaml + Aztecross + Ehroar both run Parasite]'
+    - Izanagi's Burden + a lasting-impression rocket — hard-hitting kinetic-plus-rocket burst alternative.
+      [yaml + Aztecross 'pairing Izanagi with a lasting impression rocket... still a very good play']
+    - Burst Supers saved for Final Stand — Void Nova Bomb (Warlock), Moebius Quiver (Hunter, also team
+      Weaken), plus a Well of Radiance or Ward of Dawn / Banner Shield (Titan ~40% team buff) to enable
+      the burst windows. [yaml meta_loadout + Destinypedia/yaml 'save Supers for Final Stand']
   role_loadouts:
   - role_id: swapper
     subclass: Survivability subclass to hold the plate and tank Pervading Darkness while transferring
@@ -304,6 +324,11 @@ encounter:
     url: https://www.youtube.com/watch?v=Z-wywCDuX7Y
     note: current loadout/build guide (Pass 2/3, firecrawl)
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Boss-strategy cross-reference: In-repo authored mechanics: content/raids/vow-of-the-discipl
+      | Destinypedia: Vow of the Disciple full walkthrough, ''Dominio'
+    note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
   meta_loadout:
   - Final boss — apply the guides' heavy DPS loadouts. Builds are raid-wide but this is the primary damage
     encounter.
@@ -315,3 +340,142 @@ encounter:
   - 'Hunter — Void Nightstalker with Orpheus Rig + Moebius Quiver: the third volley plus the team-wide
     ~30% Weaken debuff make it one of the best DPS supers; pair with Echo of Reprisal for super energy
     and an invis build to survive the final stand.'
+  boss_strategies:
+  - name: Standard 2-Swap / 1-Reader / 2-Dunk / 1-Float (learner-friendly)
+    summary: Pre-assign every player a fixed job and run a clean single-dunk cadence. Phase 1 pushes the
+      force field back with 6 Emanating dunks; Phase 2 stuns Rhulk and breaks 4 weak points to open the
+      DPS chase. Safest way to learn the encounter.
+    steps:
+    - Place a rally banner at the back edge. Assign 2 Swappers, 2 Dunkers, 1 Reader, 1 Floater. Approach
+      Rhulk's sarcophagus to wake him; the force field pushes everyone back. Do NOT jump while pushed
+      or you accelerate off the edge into the abyss.
+    - Step up onto the first short stairs and approach the field. Rhulk summons his glaive overhead and
+      applies Pervading Darkness to all. Shoot the glaive (long-range weapon) to break it; the killing
+      blow grants LEECHING FORCE to that Guardian.
+    - A Swapper holding Leeching stands on the middle-ground plate to spawn 2 Darkness Cruxes at the back.
+      Two teammates break the Cruxes to transfer Leeching to themselves (removing it from the original
+      Swapper). ALWAYS keep at least one Leeching alive across the team — if it drops to zero, the glaive
+      re-summons; 3 re-summons makes the glaive invincible and Pervading Darkness wipes you.
+    - Glyphkeepers spawn each wave (Taken Phalanx on the left, Scorn Chieftain on the right). Kill both
+      to reveal two symbol columns. Anyone holding Leeching/Emanating reads the LEFT column; anyone without
+      a buff reads the RIGHT column. Call the symbols so the Reader can find the one symbol common to
+      both columns.
+    - Reader stands atop the left pillar at the top of the first stairs (sees almost all pillars) and
+      tracks the 6 pillars as L1/L2/L3/R1/R2/R3 (1s nearest the rally flag, 3s flanking the back stairs).
+      Reader calls the safe pillar(s) matching the shared symbol.
+    - A Dunker with Leeching deliberately steps into Rhulk's wide Darkness BEAM (he teleports left/middle/right
+      and fires across one third of the arena) to convert Leeching into EMANATING FORCE. Emanating ignores
+      the barrier push and cannot be swapped.
+    - Dunker carries Emanating to the Reader-called pillar and dunks it. Call 'EMANATING — going [pillar]'
+      first so the second Dunker doesn't pick the same one, and never dunk at an unconfirmed pillar (wrong
+      pillar kills the Dunker). Every 2 dunks the barrier retreats toward Rhulk.
+    - Repeat the swap/convert/dunk loop until 6 Emanating Forces are deposited. Rhulk twirls his glaive
+      and teleports; the barrier vanishes. Collect ammo, swap mods/armor, then advance up the back stairs
+      to the upper arena.
+    - 'Phase 2: getting close makes Rhulk slam down and stalk a target, then telegraph and lunge a forward
+      glaive charge — only the END POINT of the charge deals damage, so run THROUGH/at him to dodge. He
+      drops the floating glaive; break it for Leeching (it also leaves a symbol).'
+    - His next attack is an X+ shaped beam (four shapes form around him) that converts Leeching to Emanating
+      and spikes Pervading Darkness — dodge the beam if you aren't the converter. The Leeching holder
+      converts, then dunks at the pillar matching the symbol the broken glaive left behind.
+    - 'A correct dunk STUNS Rhulk and exposes a weak point — shoulders first, then hips with each successive
+      dunk. Do 4 dunks total to break all 4 weak points (he repeats glaive-charge then beam between dunks).
+      Don''t dawdle: ~90s–2min in this phase and he re-charges the barrier, throwing everyone back to
+      the start and wasting a rotation.'
+    - All 4 weak points broken = Enraged DPS phase. Rhulk is mobile but damageable and chases at increased
+      speed combining teleport+beam; his head AND the 4 broken weak points are crit spots. Burst him during
+      this chase.
+    - When he slams the glaive and charges, sprint back to the Phase-1 start area before the new force
+      field is summoned (stick to the arena center to avoid splatting on objects). Repeat Phase 1 then
+      Phase 2. You have 3 damage phases to reach Final Stand; failing that starts Final Stand early and
+      needs more damage.
+    - 'Final Stand: Rhulk applies constant Pervading Darkness on a limited timer while still chasing and
+      beaming. Enter it with zero prior Pervading Darkness stacks and dump saved Supers to finish him.'
+    best_for: First clears, teaching teams, and anyone learning the Reader role — fixed roles and a one-dunk-at-a-time
+      pace minimize wrong-pillar deaths and lost-Leeching wipes.
+    source_support: Cross-confirmed. Role split, pillar naming (L1-L3/R1-R3), Reader vantage spot, 6 dunks
+      / 4 weak-point breaks / 3 damage phases, and Final Stand are stated identically in the in-repo 5-rhulk.yaml
+      AND Destinypedia's Dominion walkthrough. Loadout/mod guidance backed by Ehroar and Aztecross.
+  - name: Double-Dunk Speed (2 Dunkers + 2 Swappers in parallel)
+    summary: 'Run two dunk lanes at once: two pillars are always valid, so two Dunkers convert and dunk
+      simultaneously while two Swappers keep Leeching cycling. Roughly halves the number of beam cycles
+      needed in Phase 1 and speeds weak-point breaks in Phase 2.'
+    steps:
+    - 'Same opening as Standard: rally banner, break the glaive for Leeching, do NOT jump into the force-field
+      push.'
+    - Run 2 Swappers permanently on/near the plate so Leeching is constantly being refreshed onto both
+      Dunkers between dunks (never let total Leeching hit zero — that re-summons the glaive).
+    - Reader identifies that there are always TWO valid pillars for the shared symbol and calls both (e.g.
+      'L2 and R3'). Each Dunker takes one and explicitly calls 'going [pillar]' so they don't overlap.
+    - 'Both Dunkers convert in the same beam and dunk their separate pillars. CRITICAL timing rule: the
+      pillars scramble to new symbols a few seconds after a dunk — Dunkers must dunk close together so
+      an early dunk doesn''t rearrange the safe pillars and kill the other Dunker. Stagger only enough
+      to read, not enough to scramble.'
+    - Two dunks per cycle pushes the barrier each pair, reaching 6 dunks in roughly half the cycles. Then
+      proceed to Phase 2.
+    - 'In Phase 2 the same idea accelerates weak-point breaks: convert and dunk against the glaive-left
+      symbol quickly between Rhulk''s charge/beam to chain the 4 stuns, then burst during the chase DPS
+      phase. Still aim to finish inside 3 damage phases.'
+    - Reserve the Floater (or a Swapper between swaps) for add management — Taken Psions, Lacerated Abominations,
+      Taken Hobgoblins, and the Glyphkeepers — so reads stay clean.
+    best_for: Experienced fireteams that want fewer cycles and a faster kill, or teams trying to comfortably
+      hit Final Stand within the 3-damage-phase window.
+    source_support: 'Cross-confirmed. The in-repo yaml lists this as the ''Speed: double dunks per cycle''
+      permutation; Destinypedia describes the identical method (''two Dunkers, two Swappers, a Reader
+      and a free Guardian... two available pillars... time deposits so you don''t kill the other'') and
+      calls it ''the most common strategy'' that ''speeds up the Rhulk fight a substantial amount.'''
+  - name: Damage-Forward Heavy-DPS variant (kill in fewer damage phases)
+    summary: 'A loadout/execution emphasis layered on either role split: everyone runs a true heavy-DPS
+      package so each Enraged chase phase removes a large chunk of health, aiming to reach Final Stand
+      fast and burst it down before constant Pervading Darkness wipes the team.'
+    steps:
+    - Use the Standard or Double-Dunk mechanics to reach each Enraged DPS phase — mechanics are unchanged;
+      the difference is weapon focus and discipline saving Supers.
+    - 'Bring a coordinated heavy-DPS package: a linear-fusion line (Cataclysmic with Disciple''s Bane
+      / Threaded Needle / Reed''s Regret) or the Whisper/Sleeper sustained line, plus a rocket plan (Gjallarhorn
+      carrier giving Wolfpack Rounds to legendary Void rockets like Royal Entry / Tomorrow''s Answer /
+      Red Herring).'
+    - 'Pre-proc damage buffs before each chase: apply Weaken (Void grenades / Child of the Old Gods /
+      Tractor-style debuff if available) and have a Well of Radiance or Ward of Dawn/Banner Shield ready
+      for the ~stationary burst windows during the chase.'
+    - During each Enraged chase, target his head plus the 4 broken weak points (all crit) and unload the
+      heavy. Aim to drop a full health segment per phase so you reach Final Stand within (ideally under)
+      the 3-damage-phase budget.
+    - Hold burst Supers (Nova Bomb / Blade Barrage / Moebius Quiver / etc.) and full heavy for Final Stand,
+      and enter it with zero Pervading Darkness stacks so the limited timer is enough.
+    best_for: Teams whose limiter is total damage / running out of damage phases rather than mechanics
+      — squeezing the kill into the 3-phase window so Final Stand stays short.
+    source_support: Mechanics cross-confirmed by yaml + Destinypedia (head + broken weak points crit;
+      3 damage phases; save Supers for Final Stand). DPS weapon list cross-confirmed across the yaml's
+      recommended_dps and Aztecross's prep guide (Gjallarhorn + Wolfpack on Void rockets, Whisper, Threaded
+      Needle/Reed's Regret, Deathbringer, Parasite, Izanagi + lasting-impression rocket) and Ehroar (Gjallarhorn
+      Wolfpack rounds, legendary rocket, Whisper/Sleeper fallback).
+  boss_roles:
+  - role: Swapper
+    count: 2
+    does: Hold the plate in the lowest arena and keep LEECHING FORCE alive across the team at all times.
+      Stand on the middle plate while holding Leeching to spawn 2 Darkness Cruxes, which teammates break
+      to transfer the buff. Never let total Leeching reach zero (re-summons glaive; 3 re-summons = invincible
+      glaive = wipe), and avoid Rhulk's beam unless intentionally feeding a Dunker (the beam converts
+      Leeching to non-swappable Emanating). Watch the Leeching timer — it kills you at 0. Survivability
+      subclass; tank Pervading Darkness.
+  - role: Dunker
+    count: 2
+    does: Take Leeching, step into Rhulk's Darkness beam to convert it to EMANATING FORCE (ignores barrier
+      push), then carry it to the Reader-called pillar and dunk. Call 'EMANATING — going [pillar]' so
+      dunkers don't overlap; never dunk an unconfirmed pillar (wrong = death). 6 dunks push the barrier
+      back in Phase 1; in Phase 2, dunk the pillar matching the glaive-left symbol to stun Rhulk and expose
+      shoulders/hips (4 total). Mobile subclass to reach pillars fast.
+  - role: Reader
+    count: 1
+    does: The critical caller. Stand atop the left pillar at the top of the first stairs to see nearly
+      all 6 pillars; track them as L1/L2/L3/R1/R2/R3. Take the symbols called from the two Glyphkeeper
+      columns (left = buff-holders, right = no-buff), determine the symbol common to both, and call the
+      matching safe pillar(s) for the Dunkers. In Phase 2, call the pillar matching the symbol the broken
+      glaive leaves. Survivability subclass — must stay alive through Pervading Darkness.
+  - role: Floater
+    count: 1
+    does: Add-clear and safety net. Clear Taken Psions, Lacerated Abominations, Taken Hobgoblins, and
+      help down the Glyphkeepers so symbol columns appear fast and reads stay clean. Call out Rhulk's
+      teleport/beam direction for the team. Back up a Swapper or Dunker if someone dies or loses their
+      buff. In the double-dunk variant this player manages adds while the two Swappers/two Dunkers cycle.

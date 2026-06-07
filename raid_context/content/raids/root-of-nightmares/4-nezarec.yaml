@@ -403,6 +403,28 @@ encounter:
       (35% vs Well's 25%) if struggling on DPS.
     - Hunter Star Eater Blade Barrage / Warlock Needlestorm supers for extra damage; keep heavy in reserve
       for Final Stand.
+    - 'Izanagi''s Burden + auto-loading Legendary Rocket swap: the premier burst combo for the short chest-stun
+      window - shoot Izanagi''s empowered Honed Edge, hold-reload, stow to finish the reload while the
+      rocket fires and auto-reloads, then swap back. CROSS-CONFIRMED by Mactics, Gsxrclyde, and the authored
+      YAML.'
+    - Gjallarhorn on at least one player to buff the whole team's Legendary rockets, with the other five
+      running aggressive/adaptive-frame Legendary rockets (Hothead, Bump in the Night, Season's Vengeance)
+      rolled with Explosive Light or Lasting Impression. CROSS-CONFIRMED by Mactics, Gsxrclyde, and YAML.
+    - Linear fusion rifles for precision boss DPS - Cataclysmic, Four Times the Charm, Bait and Switch
+      - or Sleeper Simulant as an exotic heavy. Good for the stacked/back-wall DPS variant. CROSS-CONFIRMED
+      by Mactics and Gsxrclyde, listed in YAML recommended_dps.
+    - Divinity on one Guardian to lock crits on a moving Nezarec (helps the precision Izanagi/linear shots
+      land); Lumina as an over-buff option (35% vs Well's 25%) if the team is short on damage. CROSS-CONFIRMED
+      by Mactics, Gsxrclyde, and YAML.
+    - 'Damage supers saved for Final Stand: Hunter Solar Star Eater Scales + Blade Barrage (highest Hunter
+      boss super), Warlock Needlestorm, and Titan Arc Thundercrash with Cuirass of the Falling Star (Nezarec
+      is confirmed Thundercrash-able). Sources stress banking heavy/super specifically for Final Stand.
+      CROSS-CONFIRMED by Mactics and YAML meta_loadout.'
+    - 'Add-clear / utility staples backing the whole fight: SMGs as the primary clear weapon, a Scout
+      for range, void weapons to drive Volatile Flow / Bricks from Beyond for heavy economy, and a disorienting
+      Grenade Launcher to shut down Tormentor-class minibosses. Well of Radiance provides the bulk of
+      phase survivability. From Mactics + Gsxrclyde; YAML notes Anti-Barrier is the one mandatory anti-champion
+      requirement.'
   role_loadouts:
   - role_id: hunted
     subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail all viable)
@@ -471,6 +493,11 @@ encounter:
     url: https://www.youtube.com/watch?v=kQfIeym8X90
     note: current loadout/build guide (Pass 2/3, firecrawl)
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Boss-strategy cross-reference: /home/cs/workspace/Destiny 2/destiny2-loadout-toolkit/raid_c
+      | /home/cs/workspace/Destiny 2/destiny2-loadout-toolkit/raid_c'
+    note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
   meta_loadout:
   - 'Hunter: Solar Star Eater Scales + Blade Barrage for the highest Hunter DPS super on the final boss;
     Void Nightstalker tether/Tractor Cannon for debuff if running Divinity instead.'
@@ -478,3 +505,117 @@ encounter:
     to pop super, swap back after). Not all bosses can be Thundercrashed but Nezarec works.'
   - 'All: Save heavy ammo / a super for Nezarec''s Final Stand or he will wipe you. Tier 10 Health, reserve-chest
     swap on rally.'
+  boss_strategies:
+  - name: 'Standard 6-stack: 1 Chest/Hunted, 2 Runners, 2 Refuge, 1 Floater'
+    summary: The default normal-mode split. One player breaks Nezarec's chest to hold aggro, two players
+      build the two seed chains in parallel (Field of Light on one side, Flux of Darkness on the other),
+      two players make the survival Refuge each cycle, and one player clears adds. Build both chains,
+      survive the Overwhelming wipe in a Refuge, then collapse for the orange-beam DPS window. Loop until
+      Final Stand.
+    steps:
+    - 'Before pulling, lock roles AND side conventions out loud: e.g. LEFT = Light (Nodes of Splendor
+      / white), RIGHT = Dark (Nodes of Decay / dark). Side mixing is a wipe. Encounter only starts when
+      someone approaches Nezarec''s sarcophagus.'
+    - Hunted walks into Nezarec's view and breaks his chest weak point to pull aggro, calling 'Aggroed
+      - chest broken'. Re-break whenever aggro slips to someone else (Nezarec's Hatred psionic blast spawns
+      under a player's feet).
+    - 'Light runner builds the Field of Light chain on their side: stand in a node''s aura to get the
+      buff, follow the beam to the next node, shoot the dark figure/orb to advance. Dark runner does the
+      same with Flux of Darkness on the other side.'
+    - Floater clears adds continuously (Cabal Legionaries, War Beasts, Barrier Colossi). Anti-Barrier
+      is mandatory for the Colossi.
+    - When Nezarec begins his Overwhelming Energy windup (his back glows), refuge-makers pre-position
+      at an INACTIVE/completed node on their side; runners pause at a refresh so their active buff can
+      convert to a Refuge.
+    - AFTER the windup begins, the Hunted (or a designated breaker) breaks BOTH of Nezarec's shoulders.
+      A colored tattoo/shoulder glow appears - breaking too early hides it.
+    - 'Read the shoulder/tattoo color and build the matching Refuge by carrying the OPPOSITE buff into
+      an inactive node: dark shoulder = Darkness''s Refuge (carry Field of Light into a Dark node); light
+      shoulder = Light''s Refuge (carry Flux of Darkness into a Light node). A bubble spawns at your feet.'
+    - Everyone stands in a Refuge bubble to survive the Overwhelming Light/Darkness wipe pulse. Re-tap
+      the bubble if the buff expires before the pulse fires.
+    - When BOTH chains complete, an orange beam fires from the sarcophagus and Nezarec becomes vulnerable
+      for roughly 15 seconds. Collapse onto the final seed spot of the last-completed side and burst him.
+      Do NOT stand on the central raised platform - he teleport-slams there.
+    - After the window he re-immunes with a suppression slam; return to start positions and repeat. Save
+      heavy ammo and a super for Final Stand (he turns black with Resonant energy and you race his timer).
+    best_for: First-time and regular clears; the configuration both sources describe as the baseline.
+      Clear role ownership makes it the easiest to teach.
+    source_support: CROSS-CONFIRMED. Authored YAML 'Standard 1 Hunted / 2 Runners / 2 Refuge / 1 Floater'
+      permutation and plain_language_steps; Overgear final-encounter section independently lists '1 Light
+      runner, 1 Dark runner, 2 clearers, 2 on Nezarec's chest/weak points' and the same Refuge/shoulder-color
+      rule. Chest-stun-or-wipe and orange-beam DPS window agree in both.
+  - name: 2-Hunted tag-team (shared chest duty)
+    summary: Same chain/refuge/floater structure as Standard, but TWO players share the chest-break job
+      and alternate so aggro never fully drops. This trims one floater down to a backup and spreads the
+      hardest single-player mechanic (holding aggro through Nezarec's Hatred) across two people.
+    steps:
+    - Assign a Primary Hunted and a Secondary Hunted plus the same 2 runners and 2 refuge-makers; one
+      of the hunted doubles as the add-clear backup between breaks.
+    - Primary Hunted opens by breaking the chest and holding aggro. When Nezarec's Hatred retargets someone
+      or the Primary needs to disengage/refuge, the Secondary immediately re-breaks the chest to snap
+      aggro back.
+    - Runners build the Field of Light and Flux of Darkness chains exactly as in Standard.
+    - On the Overwhelming Energy windup, whichever Hunted is currently aggroed breaks both shoulders AFTER
+      the windup; both refuge-makers read the shoulder color and build the matching Refuge (opposite buff
+      into inactive node).
+    - All survive in Refuge bubbles, both chains complete, collapse to the last-completed final seed spot
+      for the ~15s orange-beam DPS, avoid the central platform, then reset.
+    - Hold heavy and a super for Final Stand.
+    best_for: Teams where one person struggles to hold aggro the whole cycle, or runs with extra deaths
+      on chest duty; lighter individual mechanic load. (Sources tag the heavier punishment of Nezarec's
+      Hatred as a harder-mode concern, but the tag-team itself works in normal as a comfort option.)
+    source_support: Authored YAML '2 Hunted Tag-Team' permutation. Overgear does not name this variant
+      but explicitly assigns 'the last two players' to Nezarec's chest/weak points, which is consistent
+      with two people sharing chest duty - so the two-on-chest framing is cross-supported even though
+      the formal tag-team name is YAML-only.
+  - name: Collapse / back-wall stack DPS
+    summary: 'A positioning variant layered on either split above: during the vulnerability window all
+      six players collapse onto the final seed spot of the last-completed side (optionally tucked against
+      the far back wall off Nezarec''s platform). This denies Nezarec his teleport-behind angle and limits
+      him to dodgeable projectiles, trading a little uptime for far lower death risk.'
+    steps:
+    - Run Standard or 2-Hunted mechanics to build both chains and survive each Overwhelming wipe in a
+      Refuge.
+    - The instant the orange beam fires, all six stack on the final seed spot of the LAST-completed chain
+      side rather than spreading - never on the central raised platform.
+    - For the safest version, hide against the far wall off the platform Nezarec stands on; at that range
+      he is limited to projectile attacks that the wall/terrain mostly block. Spam burst DPS from cover.
+    - When he re-immunes, return to start positions and loop. Bank heavy/super for Final Stand.
+    best_for: Faster, lower-risk damage phases and teams that keep losing people to the teleport-slam;
+      works in normal mode and pairs with the back-wall cheese for near-zero death risk.
+    source_support: Authored YAML 'Stack-DPS Variant' permutation plus the 'Back-wall corner DPS' cheese
+      entry. Overgear independently says to 'group up on one of the platforms on the left or right of
+      your choice and shoot at Nezarec's chest' for the damage phase - cross-confirming the collapse-and-stack
+      idea; the back-wall corner refinement is YAML-only.
+  boss_roles:
+  - role: Hunted (chest-breaker / aggro holder)
+    count: 1
+    does: Walks into Nezarec's view and breaks his chest weak point to pull aggro onto themselves; re-breaks
+      whenever Nezarec's Hatred retargets a teammate. After the Overwhelming Energy windup begins, breaks
+      both shoulders so refuge-makers can read the shoulder color. Runs a survivability subclass (Restoration
+      / Devour / Woven Mail) with a self-sustain primary and a burst heavy for DPS; carries Anti-Barrier
+      for Colossi.
+  - role: Light runner
+    count: 1
+    does: Owns one side and builds the Field of Light chain - stands in a node's aura for the buff, follows
+      the beam, advances node to node. Pauses at a refresh on the windup so their buff can convert into
+      a Light's Refuge if needed. Movement-leaning subclass for fast traversal; carries a seed weapon,
+      a burst heavy for the DPS window, and Anti-Barrier.
+  - role: Dark runner
+    count: 1
+    does: Mirror of the Light runner on the opposite side, building the Flux of Darkness chain. Same buff/beam/advance
+      loop and the same windup-pause discipline. Movement-leaning subclass; seed weapon, burst heavy,
+      Anti-Barrier carried.
+  - role: Refuge-maker (one per side)
+    count: 2
+    does: One stationed on each side near an INACTIVE/completed node. On the shoulder break, reads the
+      color and builds the matching Refuge by carrying the OPPOSITE buff into an inactive node (dark shoulder
+      = Darkness's Refuge from a Field-of-Light buff; light shoulder = Light's Refuge from a Flux-of-Darkness
+      buff), then calls which side has the bubble. Survivability/grenade-leaning build for emergency add-clear;
+      burst heavy + Anti-Barrier for later phases.
+  - role: Floater (add-clear / refuge backup)
+    count: 1
+    does: Continuous add-clear on Cabal Legionaries, War Beasts and Barrier Colossi so runners and refuge-makers
+      are never overwhelmed; backs up a refuge-maker if one dies before the wipe. Anti-Barrier is mandatory;
+      add-clear primary plus a burst heavy for the collapse DPS.

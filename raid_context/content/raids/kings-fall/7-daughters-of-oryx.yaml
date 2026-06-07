@@ -223,6 +223,27 @@ encounter:
     - Gjallarhorn (Wolfpack Rounds for legendary rockets)
     - Taipan-4FR linear fusion; Cataclysmic solar fusion
     - Warlock Fusion Grenades / Hunter Blade Barrage thrown during the DPS phase
+    - 'Burst-heavy into the chest weak point: Linear Fusion Rifle (e.g. Taipan-4FR), Whisper of the Worm,
+      or Sleeper Simulant fired into Oryx''s exposed chest during the ~20s stun window. Source: in-repo
+      8-oryx.yaml recommended_dps (Tier 1). Match your surge mods to the weapon''s element; the YAML notes
+      the boss forces no element.'
+    - 'Touch of Malice (exotic Kinetic scout, the raid''s own exotic) into the chest for synergy/sustained
+      chest DPS. Source: in-repo 8-oryx.yaml (Touch of Malice highlighted for Oryx chest DPS) + Mactics
+      .md notes Touch of Malice as the King''s Fall exotic. Kinetic, so no surge conflict.'
+    - Celestial Nighthawk Hunter Golden Gun (optionally stacked with Star-Eater Scales) fired into the
+      chest for a precision-Super burst — the YAML's 'Speed' permutation. Mactics independently endorses
+      Celestial Nighthawk on Hunter for Oryx/Golgoroth (swap from Sixth Coyote -> Celestial only for the
+      DPS window) and Star-Eater Scales for Super damage. Cross-confirmed (YAML + Mactics). Note Mactics
+      cautions Oryx's crit/chest hitbox sits oddly in the center of the model, so confirm aim.
+    - 'Rocket launchers + a Gjallarhorn carrier: at least one player on Gjallarhorn so the fireteam''s
+      Legendary rockets (e.g. an auto-loading rocket like Palmyra-B) get Wolfpack Rounds for the chest
+      burst; Izanagi''s Burden paired with an auto-loading rocket is Mactics'' named burst combo. Source:
+      Mactics .md (web). Web-only DPS package, not in the YAML.'
+    - 'Team buff/debuff support: Well of Radiance (Warlock) under the DPS stack, plus a debuff carrier
+      — Divinity (weaken bubble) or Tractor Cannon (weaken without sacrificing a slot). YAML names Well
+      of Radiance for the DPS stack; Mactics recommends a Divinity holder (ideally a Titan) and Tractor
+      Cannon, while cautioning Divinity''s bubble can behave oddly on a very large enemy like Oryx, so
+      it may underperform vs Warpriest. Cross-referenced (YAML + Mactics).'
   role_loadouts:
   - role_id: torn_runner
     subclass: Any mobile subclass; the role is randomly assigned, so everyone should be ready to run the
@@ -263,6 +284,11 @@ encounter:
     url: https://www.youtube.com/watch?v=s0wKQ-wbS0g
     note: current loadout/build guide (Pass 2/3, firecrawl)
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Boss-strategy cross-reference: In-repo authored mechanics: /home/cs/workspace/Destiny 2/des
+      | Web bundle .md: /home/cs/workspace/Destiny 2/destiny2-loadou'
+    note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
   meta_loadout:
   - 'Hunter: author plans Six Coyote through the encounter, then SWAP to Celestial Nighthawk for the DPS
     phase, since Oryx is a boss where Nighthawk ''might be better''.'
@@ -274,3 +300,113 @@ encounter:
     Titans drop a bubble and run Divinity.'
   - 'Heavy/burst DPS from the general kit: Izanagi''s Burden + auto-loading rocket (Palmyra-B), Gjallarhorn
     for a rocket team, Taipan-4FR linear fusion, Cataclysmic fusion.'
+  boss_strategies:
+  - name: Standard 4-plate / 2-flex rotation (learner-friendly)
+    summary: 'The baseline regular-mode method all three usable sources describe: one dedicated player
+      guards each of the four corner plates, two ''flex/floater'' players (one front, one back) handle
+      the middle, the symbol callout, and cover any plate whose owner gets Torn. Run the platform-build
+      sequence three times, then steal the Aura of Immortality, detonate Corrupted Light blights inside
+      the Aura to stun Oryx, and burst his exposed chest. Repeat per damage phase until final stand.'
+    steps:
+    - Place the rally banner. Assign one player to each of the 4 corner plates and label them controller-style
+      (e.g. L1/L2/R1/R2, where '1' is nearer Oryx's entrance and '2' is nearer where Oryx ends up); the
+      remaining 2 players flex through the middle (one front, one back).
+    - Walk to the black orb / clear the opening adds to start. Oryx moves to the left or right and SLAMS
+      his fist on one plate; that plate glows GREEN — the assigned plate player hops on it (if you jump
+      on too early it turns RED, so wait ~1 second for green).
+    - When Oryx slams, one of the six players is randomly 'Torn between dimensions' (they look like a
+      ghost). The Torn player goes to the plate Oryx already slammed.
+    - The player on the slammed plate looks for a SYMBOL floating above one of the other four plates,
+      calls it out, and that plate's player hops on too. This builds the dimensional platforms the Torn
+      player climbs to grab the orb/buff at the top.
+    - Simultaneously, Light-Eater Ogres spawn from the ground on the plates — kill them fast; each drops
+      a Taken blight (Corrupted Light) you need later. A Light-Eater Knight also spawns and will EAT a
+      dropped blight — kill it before it does (plate players' job, flex players assist on beefy ones).
+    - Repeat the platform-build sequence a total of THREE times. On the 3rd climb the Torn player grabs
+      the brand/relic at the top, drops down, and uses it to steal the Aura of Immortality from the Vessel-of-Oryx
+      Knight (spawns from a Hive tombship) — kill that Knight, producing the invisibility-ring Aura around
+      the holder, who stays in the center.
+    - Wait for Oryx to ready his wipe ('Oryx summons the darkness' in the lower-left). Each plate player
+      now stands in/near their blight until it shows their name and 'detonated.' If a plate owner is the
+      one holding the brand/Aura, a flex player detonates that plate's blight instead.
+    - 'CRITICAL: failing to detonate even ONE blight wipes the team. The number of blights you successfully
+      detonate = how long the DPS window lasts. After detonating, immediately sprint back into the center
+      Aura or the blights will kill you.'
+    - Detonations stun Oryx and expose his CHEST weak point — the whole team pours DPS into the chest.
+    - After the damage phase Oryx does one of two random 'revenge' tactics (see step in other strategy).
+      Survive it, then repeat the whole cycle. You have a limited number of damage phases before he enrages
+      — push enough DPS each phase.
+    - At final stand Oryx walks to the front of the room; two Ogres spawn on the far left and right —
+      kill them. Everyone DPSes the chest except one player, who detonates a blight to apply/extend the
+      stun; stagger a second blight detonation when Oryx readies his wipe again to extend the window and
+      finish him.
+    best_for: Teams learning the encounter and standard regular-mode clears; the clean, role-stable structure
+      minimizes confusion.
+    source_support: 'Cross-confirmed by all three usable sources: the in-repo 8-oryx.yaml ''Standard 4-platform
+      / 2-clear'' permutation, gmeiners (MXoELtALCSA), and Part Time Guardian (6_AGI6JQjB8). The plate-labeling
+      convention (L1/L2/R1/R2), the ''jumped-too-early turns red, wait for green'' detail, and the 3x
+      platform repeat come specifically from the two video transcripts; the Ogre/Knight/Aura/detonation/chest
+      spine is shared across YAML + both videos.'
+  - name: Stagger-detonation extended DPS (low-damage / safety variant)
+    summary: Same role layout as Standard, but the team deliberately uses the detonation count as a DPS-window
+      dial — and at final stand splits the blight detonations in time rather than all at once — to squeeze
+      out extra damage time when the fireteam lacks raw burst. Useful for groups that cannot one-cycle
+      the chest.
+    steps:
+    - Run the identical setup and rotation as the Standard strategy (4 plate players, 2 flex, slam->green
+      plate, Torn player, symbol callout, 3x platform build, Aura steal).
+    - Because the number of detonated blights equals the length of the DPS window, prioritize detonating
+      ALL available blights every phase (don't let the Light-Eater Knight eat one — that is a lost detonation
+      and a shorter window).
+    - If you survive a damage phase but Oryx still has a 'last stand' bar coming and you have phases to
+      spare, chip him only with primary ammo to intentionally NOT trigger final stand yet — then take
+      another full phase to refill heavy, regenerate Supers, and set up.
+    - At final stand, kill the two far-left/far-right Ogres, then have ONE player detonate a single blight
+      to stun and start DPS — do NOT blow all blights at once.
+    - When Oryx prepares his darkness/wipe again mid-final-stand, have that player (or a second) detonate
+      the SECOND blight to re-stun and extend the DPS window, buying time to finish the kill without needing
+      maxed burst.
+    - Keep everyone else cycling chest damage continuously through both stun windows until Oryx dies.
+    best_for: Fireteams short on burst DPS, missing Supers/heavy, or that need an extra phase of ammo
+      economy; safer than betting on a single max-stun burst.
+    source_support: Primarily Part Time Guardian (6_AGI6JQjB8), which explicitly describes 'detonate one
+      bomb first, do DPS, then shock him again with another bomb to extend your DPS,' chipping with primary
+      to gain an extra phase, and the ~4-damage-phase ceiling. The in-repo YAML supports the underlying
+      mechanic ('4 detonations max = max stun') and the final-stand stun; gmeiners corroborates the final-stand
+      'one person detonates to stun, then a second blight when Oryx preps his wipe again.' Cross-confirmed
+      mechanic, web-led tactic.
+  boss_roles:
+  - role: Plate player (corner 1)
+    count: 1
+    does: Guards one assigned corner plate (e.g. L1). When Oryx slams that plate green, hops on; when
+      another plate is slammed, looks for/calls the symbol or hops the called plate. Kills the Light-Eater
+      Ogre and the orb-eating Light-Eater Knight on their plate. At the wipe cue, stands in their blight
+      to detonate Corrupted Light inside the Aura, then sprints back to center and DPSes the chest. If
+      Torn, hands plate coverage to a flex player.
+  - role: Plate player (corner 2)
+    count: 1
+    does: 'Identical duties for the second corner (e.g. L2): hold plate, hop on slam/symbol, kill own
+      Ogre + Light-Eater Knight, detonate own blight in the Aura, return to center, DPS chest. Rotate
+      plates between phases if running the no-repeat-kill challenge discipline.'
+  - role: Plate player (corner 3)
+    count: 1
+    does: 'Identical duties for the third corner (e.g. R1): plate coverage, slam/symbol response, Ogre
+      + Knight kills, blight detonation in Aura, DPS chest.'
+  - role: Plate player (corner 4)
+    count: 1
+    does: 'Identical duties for the fourth corner (e.g. R2): plate coverage, slam/symbol response, Ogre
+      + Knight kills, blight detonation in Aura, DPS chest.'
+  - role: Flex / front runner
+    count: 1
+    does: 'Floats in the middle toward Oryx. Helps clear opening adds and beefy Light-Eater Knights, covers
+      any front plate whose owner got Torn, and detonates a plate''s blight if that plate''s owner is
+      the Aura/brand holder. Frequently the player who becomes Torn: if Torn, goes to the slammed plate,
+      climbs the built platforms, grabs the orb (and on the 3rd climb the brand), then steals the Aura
+      from the Vessel Knight and holds it static in center. Strong DPS into the chest during damage.'
+  - role: Flex / back runner
+    count: 1
+    does: 'Floats in the middle toward the back/entrance. Same job as the front runner: opening adds,
+      cover a back plate whose owner is Torn, detonate a blight on behalf of the Aura/brand holder, and
+      be ready to be the Torn climber. Returns to the center Aura before/after detonations and DPSes the
+      exposed chest. During ''revenge'' tactics, runs/dodges Taken bombs or helps clear the side adds
+      feeding the Shade dome.'

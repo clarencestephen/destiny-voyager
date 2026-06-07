@@ -351,6 +351,26 @@ encounter:
     recommended_dps:
     - 'Burst-heavy: Two-Tailed Fox, Sleeper, Apex Predator, or a rocket-and-sword swap'
     - Pre-save supers and heavy ammo for the Final Stand single window
+    - 'Still Hunt (exotic Solar sniper) + Celestial Nighthawk — the top-recommended DPS option. Nighthawk
+      supercharges both the Golden Gun super and Still Hunt''s Nighthawk shot for big single-hit damage
+      while letting you keep moving to dodge the plate attacks. Cross-confirmed: Shadow Destiny calls
+      it ''very clearly the top damage option''; pairs with Hunter Golden Gun. Pre-save the super + special
+      ammo for Final Stand.'
+    - Triple Tap / Fourth Times the Charm heavy sniper + Rockets — sustained burst that works on any class
+      and frees a super slot. Shadow Destiny recommends a 4TTC sniper alongside rockets; the authored
+      YAML lists generic burst-heavies (Two-Tailed Fox, Sleeper, Apex Predator, or a rocket-and-sword
+      swap). Good for teams without Still Hunt.
+    - 'Titan: Twilight Arsenal super + sniper/rockets — Shadow Destiny''s recommended Titan setup; Twilight
+      Arsenal axes for burst plus a triple-tap/4TTC sniper and rockets for the rest of the window. Banner
+      Shield is also called out as the best damage-phase shot-caller because it tanks everything except
+      the ground slam.'
+    - 'Warlock: Song of Flame (radiance) + same sniper/rocket burst — Shadow Destiny notes Well isn''t
+      really needed here, so radiance/Song of Flame is favored for bonus damage resistance and ability
+      uptime; pair with the sniper-and-rocket burst.'
+    - Divinity (exotic Trace Rifle) on one player — confirmed by Shadow Destiny for opening a large crit
+      cage, good ammo economy, and add-clear utility; have one teammate run it to boost the whole team's
+      DPS into the chest. A weaken via Deterministic Chaos was also used effectively by True Vanguard
+      during Final Stand.
   role_loadouts:
   - role_id: glyphbreaker-sky
     subclass: ''
@@ -411,3 +431,132 @@ encounter:
       in the guide, so generic burst archetypes are given; verify current-meta exotics and burst weapons
       before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Boss-strategy cross-reference: In-repo authored guide: content/raids/salvations-edge/5-the-
+      | Firecrawl bundle salvations-edge__the-witness.json web[3] — '
+    note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
+  boss_strategies:
+  - name: Standard 4 Add-Clear / 2 Runners (split-side arena hold)
+    summary: 'The most-recommended normal split: 4 players clear adds (two per side of the V-shaped arena),
+      2 dedicated Runners do the entire read-collect-break-cleanse loop on the hands and chest glyphs.
+      Lowest-chaos setup for a typical 6-stack.'
+    steps:
+    - Pre-pull, assign 2 Runners and 4 Add-clear. Put two add-clear on the Light side and two on the Darkness
+      side of the V arena.
+    - 'Approach the Witness platform to start. Three hands open: SKY hand (triangle floor traps / Pyramidal),
+      FLOOR hand (circular ''bees'' mortar / Spherical), SIDE hand (horizontal laser / Hexahedral-square).'
+    - 'Runner step 1: pick a hand, dip into its telegraphed attack zone and shoot the wrist ARMBAND. It
+      lights one of two colors (never its own): GREEN = you need Pyramidal/triangle, YELLOW(orange) =
+      Spherical/circle, RED = Hexahedral/square.'
+    - 'Runner step 2: go stand in the DIFFERENT hand''s attack zone whose shape matches the color until
+      you hear the loud drone (~2-3s) to pick up that resonance. For the sky-triangle zone, stand just
+      inside a corner, never the center (center one-shots).'
+    - 'Runner step 3: return to the first hand, dip into its telegraph again and shoot the armband. The
+      hand explodes and you gain Glyphbreaker.'
+    - Carry Glyphbreaker to the central plate and shoot a chest glyph; this breaks a glyph AND cleanses
+      resonance from everyone standing on/near the plate.
+    - Runners alternate which hand types they break (don't break the same hand repeatedly or the Witness
+      spawns extra hands) and try to break two glyphs at nearly the same time to limit Subjugator spawns
+      to one or two.
+    - Add-clear hold both sides, kill Screebs/Weavers and especially Subjugators (they bow on spawn =
+      free big damage), and keep Runners safe. Anyone who accidentally grabs essence drops to the plate
+      when a glyph breaks to cleanse.
+    - On 'The Witness tests you' (gold-glowing hand / high-pitch scream), the Runner who last broke a
+      hand calls the shape; team draws it, then everyone jumps when the Witness's eyes flash and it pushes
+      its hands forward (ground wave).
+    - On the 5th glyph, whole team pre-converges to the central plate. 6th glyph breaks -> plate rises
+      -> damage phase.
+    - 'Damage phase: keep feet on the ground, move diagonally against each telegraph (usually right-then-left
+      or left-then-right), jump only on the glowing-eyes ground slam. When the Witness''s chest glows
+      WHITE and it pulls back, squeeze a couple shots then get OFF the plate before the slam.'
+    - Repeat until Final Stand; dump supers + heavy in the short window.
+    best_for: Most normal 6-player teams, first clears, and teams whose add-clear is shaky — minimizes
+      mob chaos and keeps Runner positioning predictable.
+    source_support: 'Cross-confirmed: True Vanguard transcript explicitly runs 4 add-clear (2 per side)
+      + 2 Runners; Shadow Destiny runs 3-or-4 add-clear with the same hand/glyph loop; authored YAML describes
+      the identical read-collect-break-cleanse loop, same-color-trap rule, Spike test, and Final Stand.
+      Color->shape mapping (green=triangle, yellow=circle, red=square) confirmed by BOTH videos.'
+  - name: 3 Glyphbreakers / 3 Add-Clear (fixed hand ownership)
+    summary: 'Faster glyph progress: three players are permanent Glyphbreakers, each owning one hand type
+      (sky / floor / side); the other three hold the arena. Each Glyphbreaker reads only their own hand,
+      so callouts are clean and the team breaks glyphs quickly toward a 2-phase.'
+    steps:
+    - Pre-pull, assign Glyphbreaker-sky, Glyphbreaker-floor, Glyphbreaker-side, and 3 Add-clear. Each
+      Glyphbreaker permanently owns one hand.
+    - Pull. Each Glyphbreaker reads their hand's armband and calls its color/needed shape (green=Pyramidal,
+      yellow=Spherical, red=Hexahedral) so teammates know what's being gathered.
+    - Each Glyphbreaker dips into a DIFFERENT hand's zone to grab the matching resonance (a hand's armband
+      never matches the resonance it itself spawns), returns, shoots their armband to break the hand,
+      and gains Glyphbreaker.
+    - All three take their buffs to the central plate and break chest glyphs; staggering two-at-a-time
+      limits Subjugators. Cleanse happens automatically at the plate.
+    - Add-clear (3) hold the arena, kill Subjugators on their spawn-bow, and keep the three Glyphbreakers
+      alive while they stand in zones.
+    - Handle the shape test and ground-wave jump exactly as in the standard plan, then converge for damage
+      phase and Final Stand.
+    - Because three people are breaking glyphs, watch essence stacks tightly — cleanse early and often;
+      never sit at 3 stacks with a low timer.
+    best_for: Coordinated teams with solid comms that want quicker glyph progress and a cleaner 2-phase;
+      experienced 6-stacks.
+    source_support: Authored YAML 'Standard 3 Glyphbreakers + 3 Add-Clear' permutation is the primary
+      source; mechanically identical loop is corroborated by both video transcripts (which use 2 Runners
+      but the same per-hand read/collect/break logic). The fixed per-hand ownership is YAML-specific (videos
+      use 2 free Runners), so this is YAML-backed and video-compatible rather than fully cross-confirmed
+      on the role count.
+  - name: 2 Glyphbreakers / 4 Add-Clear (slower, safer)
+    summary: Reduces Glyphbreaker load to two players who split the three hands (one handles two hand
+      types, the other handles one). Four add-clear gives maximum arena stability at the cost of slower
+      glyph progress.
+    steps:
+    - Assign Glyphbreaker-double (owns 2 hand types), Glyphbreaker-single (owns the remaining hand), and
+      4 Add-clear split two per side.
+    - Pull and run the same read armband -> grab matching resonance from a different zone -> return and
+      break -> Glyphbreaker -> break a chest glyph -> cleanse loop, with only two players carrying it.
+    - Four add-clear blanket both sides, prioritize Subjugators on their bow, and protect the two Glyphbreakers.
+    - Glyphbreakers vary which hands they break so the Witness doesn't flood extra hands, and break glyphs
+      in pairs when possible to keep Subjugator spawns low.
+    - Same shape test, ground-wave jump, damage-phase movement, and Final Stand as the other plans; expect
+      more glyph rotations (likely a 3-phase) because only two players progress glyphs.
+    best_for: Teams with thin add-clear capability or carrying a learner — trades speed for survivability;
+      aligns with True Vanguard's note to fall back to a 3-phase rather than force a risky push.
+    source_support: Authored YAML '2 Glyphbreakers + 4 Add-Clear (Slower, Safer)' permutation. The 4-person
+      add-clear emphasis matches True Vanguard's transcript (4 on adds), and 'don't be afraid to go to
+      a 3-phase' is directly from the True Vanguard transcript. Cross-confirmed on add-clear weighting;
+      the 2-Glyphbreaker count is YAML-specific.
+  boss_roles:
+  - role: Glyphbreaker / Runner (sky hand)
+    count: 1
+    does: Owns the SKY hand (Resonant Outburst, triangle floor traps / Pyramidal). Dips into its telegraph,
+      shoots the armband to read its color, grabs the matching resonance from a DIFFERENT hand's zone
+      (corner of the triangle zone, never center), returns to break the sky hand for Glyphbreaker, then
+      shoots a chest glyph at the central plate to cleanse and remove a glyph. Mixes up which hands get
+      broken; cleanses before hitting 4 essence stacks.
+  - role: Glyphbreaker / Runner (floor hand)
+    count: 1
+    does: Owns the FLOOR/ground 'tree' hand (Resonant Seekers, circular 'bees' mortar / Spherical). Same
+      read-collect-break-cleanse flow. Tries to break a chest glyph at nearly the same time as the other
+      Runner so only one or two Subjugators spawn instead of four. (In the 4-add-clear/2-Runner plan this
+      and the sky role are the two Runners who cover all three hand types between them.)
+  - role: Glyphbreaker / Runner (side hand)
+    count: 1
+    does: Owns the SIDE hand (Wrathful Disarray, horizontal laser / Hexahedral-square). Easiest beam to
+      dodge, so it is the recommended first Runner role for a learner. Same flow; calls the shape on 'The
+      Witness tests you' since the Runner who last broke a hand knows which shape to draw.
+  - role: Add-clear / arena hold (Light side)
+    count: 1
+    does: Holds the Light-themed side of the V arena. Kills Scorn, Screebs and Weavers (a nasty combo)
+      and one-shots Subjugators while they do their spawn-in bow (free damage). Keeps Runners alive and
+      uncovers nothing they need to grab. Can drop to the plate to cleanse accidental essence when a glyph
+      breaks.
+  - role: Add-clear / arena hold (Darkness side)
+    count: 1
+    does: 'Mirror of the Light-side add-clear on the Darkness side. Same job: suppress Subjugators, keep
+      the side clear so Runners aren''t yanked by Weavers or blasted by Screebs while standing in attack
+      zones.'
+  - role: Add-clear / shot-caller (flex)
+    count: 1
+    does: Floating add-clear who doubles as the damage-phase shot-caller, calling the diagonal dodge direction
+      and the jump on the ground-slam tell (eyes flash, hands push forward). A Banner Shield Titan works
+      well here because it survives everything except the ground wave. In the 3-Glyphbreaker plan this
+      slot is folded into add-clear; in the 4/2 plan this is the 4th add-clear and primary caller.

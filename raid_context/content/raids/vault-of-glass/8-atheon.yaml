@@ -1,6 +1,5 @@
 # raid_context/content/raids/vault-of-glass/8-atheon.yaml — schema v3.
 # Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -251,6 +250,27 @@ encounter:
     - Thundercrash (Cuirass of the Falling Star) on Titan
     - Well of Radiance with solar grenades (boost Grenade), or Chaos Reach with Geomag Stabilizers on
       Warlock
+    - 'Anarchy (heavy) applied first for the debuff, run with Breach and Clear, then layer all other damage
+      on top of the debuffed boss. Cross-confirmed: authored YAML + AbbyHour transcript.'
+    - 'Cartesian Coordinate fusion rifle with Vorpal Weapon (Boss Spec) as the primary repeatable boss-damage
+      weapon, cycled between Supers. Cross-confirmed: authored YAML meta_loadout + AbbyHour transcript.'
+    - 'Hunter: Blade Barrage + Shards of Galanor, killing a Supplicant while hitting Atheon to refund
+      the Super; alternatively Celestial Nighthawk + Star-Eater Scales Golden Gun for a one-shot burst.
+      Cross-confirmed: authored YAML + AbbyHour (Blade Barrage/Shards); Celestial one-shot is authored
+      YAML''s Speed permutation.'
+    - 'Titan: Thundercrash with Cuirass of the Falling Star; alternate top-tree Sentinel Bubble (Helm
+      of Saint-14) with a magnetic grenade stuck to the boss. Cross-confirmed: authored YAML + AbbyHour
+      transcript.'
+    - 'Warlock: Well of Radiance (Lunafaction Boots) if you are the only Warlock, then spam Solar grenades
+      (boost the Grenade stat) for heavy damage; if you have multiple Warlocks, swap one to Chaos Reach
+      (Arc) with Geomag Stabilizers to melt Atheon. Also consider Fusion Rifle Reserves since the fusion
+      is your main weapon. Cross-confirmed: authored YAML + AbbyHour transcript.'
+    - 'Generic burst heavies for the window: Linear Fusion Rifles, Whisper, Sleeper, or rockets, stacked
+      inside Well + a damage-amp Super. Source: authored YAML recommended_dps (web bundle confirms general
+      heavy/Super stacking via fast regen).'
+    - 'Oracle/add cleanup utility (not boss DPS): Xenophage or slug shotgun one-shots Oracles; Hung Jury
+      scout for two-player Oracle team-shooting; Fatebringer hand cannon trivializes add/Oracle cleanup.
+      Cross-confirmed: authored YAML + AbbyHour/Destinytracker.'
   role_loadouts:
   - role_id: inside_relic
     subclass: Survivable subclass with good neutral game to hold the Aegis and survive inside the portal
@@ -293,6 +313,11 @@ encounter:
     url: https://www.youtube.com/watch?v=s0cUSgIIhtw
     note: current loadout/build guide (Pass 2/3, firecrawl)
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Boss-strategy cross-reference: /home/cs/workspace/Destiny 2/destiny2-loadout-toolkit/raid_c
+      | /home/cs/workspace/Destiny 2/destiny2-loadout-toolkit/raid_c'
+    note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
   meta_loadout:
   - 'Hunter: Hung Jury (scout rifle) for team-shooting Oracles if teleported, Cartesian Coordinate (fusion
     rifle) with Vorpal for Atheon boss damage, and Anarchy for debuffs (with Breach and Clear). Super:
@@ -305,3 +330,95 @@ encounter:
     stat and throw as many solar grenades as you can (they do a lot of damage to Atheon); also consider
     Fusion Rifle Reserves since the fusion rifle is your main damage alongside Anarchy. Multiple Warlocks:
     Chaos Reach (middle-tree Arc) with Geomag Stabilizers melts Atheon.'
+  boss_strategies:
+  - name: Standard 3/3 split (teleport team + Present team)
+    summary: The default, learner-friendly normal-mode method confirmed by BOTH sources. Atheon teleports
+      3 random players into a portal (Past/Mars or Future/Venus); inside, one grabs the Aegis Relic for
+      cleanse while the team breaks Oracles in the order the outside 'Present' team calls. The 3 outside
+      players watch the Oracle spawn order, call it, and open the correct return portal. After the Oracle
+      waves, 'Guardians Make Their Own Fate' opens DPS; all 6 stack and burst.
+    steps:
+    - 'Rally at the banner outside, then walk into Atheon''s throne room: two portals (Venus/Future on
+      the right, Mars/Past on the left), a center platform holding the Aegis Relic, Atheon at the back.'
+    - Engage and fight off the wave of Harpies. About 30s in, Atheon teleports 3 random players into a
+      portal.
+    - 'Whoever sees the split calls who is inside and which planet: e.g. ''[name1, name2, name3] inside
+      VENUS.'' This is the most important early callout.'
+    - 'INSIDE (3 players): one player immediately grabs the Aegis Relic. Use its cleanse (block/guard
+      button) to clear the ''Marked by the Void'' vision-blinding debuff off the inside team.'
+    - 'OUTSIDE / ''Present'' team (3 players): hold Atheon''s aggro, chip its HP, and watch the Oracle
+      spawn order. Oracles must be broken in the order they appear, so the Present team calls the order
+      to the inside team.'
+    - 'INSIDE: shoot the 6 Oracles per wave in the called order (two players team-shooting a scout like
+      Hung Jury works; Xenophage/slug shotgun one-shots; the Relic Super-smash also one-shots). Clear
+      the planet''s adds too (Mars: 3 Descendant Hobgoblins, which the Relic instakills and non-relic
+      players must NOT shoot or shields activate; Venus: 2 Precursor Goblins + 1 tanky Praetorian that
+      grenades stagger).'
+    - 'OUTSIDE: open the CORRECT return portal matching the inside team''s called planet. Returning through
+      the wrong portal wipes the inside team.'
+    - After the final Oracle wave, 'Guardians Make Their Own Fate' appears on the left of the screen,
+      the inside team returns through the correct portal, and the DPS phase begins.
+    - All 6 converge on the floating center platform in front of Atheon. Drop Well of Radiance + a damage
+      Super/Bubble and burst. Supers and grenades recharge rapidly during DPS, so prioritize them over
+      weapons.
+    - Late in DPS one player is marked 'Imminent Detain' and will spawn a Vex Detain bubble; that player
+      runs FAR from the team before it triggers, or it traps and can wipe the team.
+    - Never drop the Aegis for more than ~5s (Curse of the Aegis). Repeat the teleport / Oracle / return
+      / DPS cycle (about 3 phases at normal skill) and push the final stand before the ~7-8 min enrage.
+    best_for: First-time, learner, and standard 6-player normal-mode teams. The reliable default.
+    source_support: CROSS-CONFIRMED by both sources. Authored YAML defines the 3/3 split, Aegis cleanse,
+      Mars/Venus add types, correct-portal-return rule, 'Guardians Make Their Own Fate' DPS trigger, and
+      Detain management. Destinytracker/Suttledge independently confirms the random 3-player teleport,
+      Present team calling Oracle order, asking the planet to open the correct portal, the DPS trigger
+      text, fast Super/grenade regen in DPS, and the 'Imminent Detain' move-away rule.
+  - name: Burst-down / 2-3 phase melt (Well + one-shot Supers)
+    summary: Same Standard 3/3 mechanics, but loadouts and the DPS phase are optimized to delete a huge
+      chunk of Atheon's health each window so the fight ends in roughly 2-3 phases. Built on stacking
+      a Well of Radiance with high-burst Supers (Celestial Nighthawk Golden Gun, Cuirass Thundercrash)
+      plus Anarchy debuff and fusion/heavy follow-up. Relies on disciplined Oracle clears so every DPS
+      window is reached cleanly.
+    steps:
+    - 'Run the Standard 3/3 split mechanics exactly: teleport, Aegis cleanse, Oracle order, correct-portal
+      return.'
+    - 'Pre-stage damage during the Oracle phase: outside DPS keep distance from Atheon and bank Supers;
+      the inside team clears Oracles fast to shorten the cycle.'
+    - When 'Guardians Make Their Own Fate' triggers, all 6 stack tightly on the center platform.
+    - A Warlock drops Well of Radiance (Lunafaction Boots) on the stack for the heal + weapon damage buff.
+    - Apply the Anarchy debuff to Atheon (with Breach and Clear) at the start of the window so all follow-up
+      damage is amplified.
+    - 'Stack burst Supers into the buffed window: Hunter Celestial Nighthawk Golden Gun or Blade Barrage
+      (Shards of Galanor), Titan Cuirass Thundercrash; follow up with Cartesian Coordinate (Vorpal) fusion,
+      linear fusions, Whisper/Sleeper, or rockets.'
+    - 'Exploit the fast Super/grenade regen: Warlocks throw as many Solar grenades as possible (boost
+      the Grenade stat) since they do heavy damage to Atheon; Hunters kill a Supplicant while hitting
+      Atheon to refund Blade Barrage; cycle Anarchy tick -> Super -> fusion repeatedly.'
+    - Handle the 'Imminent Detain' carrier (run away from the stack) without losing the burst, then reset
+      for the next (likely final) phase.
+    best_for: Coordinated teams with strong loadouts wanting a fast 2-3 phase clear; teams trying to beat
+      the enrage comfortably.
+    source_support: CROSS-CONFIRMED. Authored YAML lists the burst-Super stack (Well + Bubble, Celestial
+      Nighthawk/Star-Eater, Cuirass Thundercrash, Anarchy, fusion) and the Speed permutation. AbbyHour's
+      loadout transcript independently confirms Anarchy + Breach and Clear debuff, Cartesian Coordinate
+      (Vorpal) as main boss damage, Blade Barrage + Shards of Galanor with the Supplicant-kill Super refund,
+      Cuirass Thundercrash, Well + Lunafaction, and Solar-grenade spam during DPS. Destinytracker confirms
+      the fast Super/grenade regen that makes the burst stack work.
+  boss_roles:
+  - role: inside_relic (Aegis / Relic holder)
+    count: 1
+    does: Teleports inside the portal and immediately grabs the Aegis Relic. Uses the Relic cleanse (block/guard
+      button) to remove the team's 'Marked by the Void' vision-blinding debuff. The Relic Super-smash
+      one-shots Oracles and instakills the Mars Descendant Hobgoblins (and breaks the Venus Praetorian's
+      shield). Never drops the Relic for more than ~5s (Curse of the Aegis). Returns through the correct
+      portal with the team.
+  - role: inside_oracle (Oracle / add killer)
+    count: 2
+    does: 'Teleport inside with the Relic holder. Break the 6 Oracles per wave in the order the outside
+      Present team calls (two players team-shoot a scout like Hung Jury, or one-shot with Xenophage/slug).
+      Clear the planet''s adds: on Mars do NOT shoot the Hobgoblins (Relic kills them), on Venus clear
+      Goblins and grenade-stagger the Praetorian. Stay cleansed and return through the correct portal.'
+  - role: outside_dps / Present team
+    count: 3
+    does: 'Stay in the throne room (''Present'' team): hold Atheon''s aggro and chip its HP, keep distance
+      from Detain bubbles, and watch the Oracle spawn order. Call the Oracle break order and ask the inside
+      team their planet, then open the CORRECT return portal. When ''Guardians Make Their Own Fate'' hits,
+      all 6 converge for DPS. Bring the burst heavy/Super for the damage phase.'
