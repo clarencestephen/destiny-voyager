@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/5-riven.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish
@@ -310,6 +309,14 @@ encounter:
     - Highest-burst meta heavy (Linear Fusion or Rocket Launcher) for the limb/skydive
     - Well of Radiance stacked on the DPS spot
     - Cuirass-style one-and-done damage supers for the limb cheese
+    - Whisper of the Worm
+    - a shotgun (unspecified)
+    - Nation of Beasts (hand cannon, god roll)
+    - a good pulse rifle
+    - Chattering Bone (pulse rifle)
+    - Bygones (pulse rifle)
+    - The Supremacy (sniper)
+    - Sleeper Simulant
   role_loadouts:
   - role_id: stagger_dps
     subclass: Any (no element enforced); a survivable build for tentacle/fire baiting
@@ -341,3 +348,18 @@ encounter:
     note: Stat names use current Edge of Fate naming. Verify the meta DPS heavies and damage supers used
       in the cheese against the live sandbox; meta shifts seasonally.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Destiny 2 BEST WEAPONS LOADOUT FOR LAST WISH RAID - Kinetic, Energy, Power Raid Weapon Guide
+    url: https://www.youtube.com/watch?v=9uqpXkHAfXs
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Top priority: Whisper of the Worm (very effective here)'
+  - 'Special: a shotgun; or Nation of Beasts hand cannon (god roll) to clear the many adds'
+  - 'Primary: a good pulse rifle — Chattering Bone (shown as ''Shattering Bone'') or Bygones is the best
+    option'
+  - 'Double-sniper option: a hand cannon paired with double snipers (The Supremacy) to clear adds and
+    shoot Riven''s eyes'
+  - You can pop in Sleeper Simulant if comfortable
+  - 'Source''s preferred loadout: a good pulse rifle + a shotgun + Whisper of the Worm (would swap the
+    shotgun for Nation of Beasts if holding its god roll)'

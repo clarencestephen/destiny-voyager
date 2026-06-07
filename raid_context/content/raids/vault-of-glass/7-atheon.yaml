@@ -1,7 +1,6 @@
 # raid_context/content/raids/vault-of-glass/7-atheon.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -259,6 +258,13 @@ encounter:
     - Well of Radiance plus a damage-amp Super stack (e.g., Bubble) per the guide's DPS cue
     - 'High-burst Super options: Celestial Nighthawk (with Star-Eater Scales), Cuirass of the Falling
       Star Thundercrash; Fatebringer hand cannon trivializes add/Oracle cleanup'
+    - Anarchy (heavy) for debuffs (with Breach and Clear)
+    - Cartesian Coordinate (fusion rifle) with Vorpal — main boss damage
+    - Hung Jury (scout rifle) for team-shooting Oracles when teleported
+    - Blade Barrage + Shards of Galanor (Hunter), cycling Anarchy tick -> Blade Barrage -> fusion rifle
+    - Thundercrash (Cuirass of the Falling Star) on Titan
+    - Well of Radiance with solar grenades (boost Grenade), or Chaos Reach with Geomag Stabilizers on
+      Warlock
   role_loadouts:
   - role_id: inside_relic
     subclass: Survivable subclass with good neutral game to hold the Aegis and survive inside the portal
@@ -296,3 +302,20 @@ encounter:
     note: Damage meta (linears, rockets, one-shot Supers like Celestial Nighthawk/Cuirass) and Master
       Champions/surges rotate; verify current-meta burst and the weekly modifiers before the run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: Hung Jury (scout rifle) for team-shooting Oracles if teleported, Cartesian Coordinate (fusion
+    rifle) with Vorpal for Atheon boss damage, and Anarchy for debuffs (with Breach and Clear). Super:
+    Blade Barrage + Shards of Galanor — kill a Supplicant while hitting Atheon to get your super back
+    quickly; each DPS phase tick Atheon with Anarchy, use Blade Barrage, follow up with the fusion rifle,
+    repeat.'
+  - 'Titan: Thundercrash with Cuirass of the Falling Star (same weapons). Alternate bubble Titan (top-tree
+    Sentinel, Helm of Saint-14) with a magnetic grenade for the boss.'
+  - 'Warlock: Well of Radiance (with Lunafaction Boots) if you''re the only Warlock — boost your Grenade
+    stat and throw as many solar grenades as you can (they do a lot of damage to Atheon); also consider
+    Fusion Rifle Reserves since the fusion rifle is your main damage alongside Anarchy. Multiple Warlocks:
+    Chaos Reach (middle-tree Arc) with Geomag Stabilizers melts Atheon.'

@@ -1,7 +1,6 @@
 # raid_context/content/raids/crotas-end/4-crota.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: crotas-end
   name: Crota's End
@@ -258,6 +257,9 @@ encounter:
     - Match the DPS surge to your team's burst element. Crota is shield-broken by sword swings (amplified
       by Tractor Cannon), so pick the element your heavy/Well burst loadout uses and run matching surge
       mods.
+    - Match leg surge mods to the element of your heavy weapon — at least 2, preferably 3 (e.g. Solar
+      heavy -> Solar surges). The source prescribes matching the heavy element rather than a single fixed
+      surge element (KackisHD).
     burst_windows: DPS opens after the sword shield-break and lasts until the ~20s Oversoul timer is destroyed;
       destroying the Oversoul ends DPS, so burst hard inside Well and drop the Oversoul at ~3-4s left.
     recommended_dps:
@@ -265,6 +267,32 @@ encounter:
     - Hive swords (encounter-dropped) for the shield break
     - Heavy burst (rocket launcher such as Gjallarhorn, or linear fusion rifle) for the DPS window
     - Well of Radiance support — bring multiple Wells for sustain
+    - 'The Lament (exotic sword): block first to start the chainsaw, then 3-4 light attacks followed by
+      1 heavy, repeat — outputs a tremendous amount of damage; easiest one-phase option for the five non-debuffer
+      players (KackisHD). Mactics'' Lament combo: hold block, 2 swings, heavy attack, then 2 unblocked
+      light attacks (hold a movement key to re-enter block faster) to keep Loose Blades recharging.'
+    - 'Legend of Acrius (exotic shotgun, with Exotic Catalyst for Trench Barrel + extra reserves): melee
+      then shoot-shoot-shoot for the +50% Trench Barrel window; reload-one-then-shoot rhythm — Kackis
+      found this even easier than Lament for a consistent one-phase (KackisHD).'
+    - Fallen Guillotine (legendary sword) with Relentless Strikes + Whirlwind Blade for a one-phase if
+      you lack Lament; can hot-swap to Conditional Finality (with a Stasis loader mod) for a quick double-shot
+      of extra damage (KackisHD).
+    - 'Rockets for a safe two-phase from the upper ledge: Cold Comfort (God roll, bait-and-switch), Apex
+      Predator, or Hot Head, combined with a Gjallarhorn and a Divinity for the ranged debuff (KackisHD).'
+    - 'Gjallarhorn (exotic rocket): Mactics calls it a must-have — one player minimum must bring it to
+      buff the fireteam''s rocket damage by roughly 24% when others use rockets (Mactics).'
+    - 'Apex Predator: Mactics'' favorite legendary rocket — Bait and Switch + Reconstruction + Impact
+      Casing + Quick Launch + Boss Spec, Velocity Masterwork (avoid Handling Masterwork as it pulls the
+      rocket out too early on Izanagi''s swaps) (Mactics).'
+    - 'Izanagi''s Burden (kinetic sniper, exotic): high-damage option for bursting Crota, paired with
+      an auto-loading / Reconstruction rocket so you cancel the reload and cycle Izanagi''s -> rocket
+      for Bait and Switch (Mactics).'
+    - Thunderlord (exotic machine gun, with Catalyst required) for a stress-free two-phase from the upper
+      ledge after Rally with reserves, with one player on Divinity for the crit bubble (KackisHD).
+    - Tractor Cannon (exotic shotgun) as the team weaken debuffer, re-applied to Crota throughout DPS
+      (KackisHD / Mactics).
+    - 'Burning Maul super: hitting Crota makes him kneel again (chain-kneel), but you do poor damage as
+      the Burning Maul wielder; Gathering Storm can also make Crota kneel repeatedly (KackisHD).'
   role_loadouts:
   - role_id: sword_user
     subclass: Any survivable subclass; melee-resilient build for the shield-break swings
@@ -304,3 +332,51 @@ encounter:
     note: Edge of Fate renamed the six armor stats; Tractor Cannon, Gjallarhorn, and Well-of-Radiance
       value shift with each sandbox. Verify the DPS meta against the current in-game state before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Crota's End Loadouts (Weapons, Armor, Builds, And More...) [Mactics]; Best Weapons
+      to KILL CROTA FAST! - Crota's End Raid [KackisHD]
+    url: https://www.youtube.com/watch?v=bB1_3BuaDVw ; https://www.youtube.com/watch?v=G7uZxfNgei8
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'General Crota DPS leg armor: at least 2 and preferably 3 surge mods matching the element of your
+    heavy weapon (e.g. Solar heavy -> 3 Solar surge mods); accept dropping to ~90 Grenade instead of 100
+    to fit them (KackisHD).'
+  - 'Rally with reserves: keep a separate chest piece with triple Reserve mods matching your heavy element,
+    rally the flag with it on for max heavy, then swap to your normal (damage-resistance) chest — you
+    keep the maxed reserves (KackisHD).'
+  - 'Buff/support: stand in a Well of Radiance (or substitute Banner Shield / Weapons of Light); Mactics
+    recommends a minimum of one Well of Radiance in the fireteam — Sunbracers for more personal damage,
+    or Lunafaction Boots to empower the team''s reload during DPS (Mactics / KackisHD).'
+  - 'Debuff role: one player on Tractor Cannon re-applying Weakened to Crota every ~5 seconds (it lasts
+    ~7s), and meanwhile doing damage with an auto-loading fusion (e.g. Riptide) between Tractor shots;
+    Divinity is the alternate ranged debuff (KackisHD).'
+  - 'Jolt role: an Arc Hunter using Gathering Storm to stick Crota and apply Jolt for big extra damage;
+    boost it with Star-Eater Scales by collecting orbs before firing the super (KackisHD).'
+  - 'Arc Hunter (Mactics general-purpose / DPS swap): Gathering Storm super, Gambler''s Dodge, Combination
+    Blow, Pulse Grenade, Lethal Current + Flow State; fragments Feedback/Resistance/Shock/Magnitude. Run
+    Assassin''s Cowl for general use and hot-swap to Star-Eater Scales just before DPS (collect orbs)
+    (Mactics).'
+  - 'Void Hunter (Mactics): Deadfall or Moebius Quiver tether, Gambler''s Dodge, Vortex Grenade, Trapper''s
+    Ambush, Vanishing Step; fragments Obscurity/Starvation/Persistence/Harvest. Run Omnioculus general-purpose
+    and hot-swap to Orpheus Rig right before DPS for three Moebius Quiver shots (Gyrfalcon''s Hauberk
+    is an equivalent option, swapping Vanishing Step for Stylish Executioner) (Mactics).'
+  - 'Solar Hunter (Mactics): Blade Barrage super, Gambler''s Dodge, Knife Trick, Trip Mine Grenade, On
+    Your Mark + Knock ''Em Down; fragments Torches/Solace/Singeing/Benevolence/Ashes. Run Young Ahamkara''s
+    Spine general-purpose and hot-swap to Star-Eater Scales for the DPS phase (Mactics).'
+  - 'Strand Warlock (Mactics): Needlestorm super, Healing Rift, Threadling Grenade, Weaver''s Call + Weavewalk;
+    fragments Evolution/Fury/Generation; exotic Swarmers boots; pairs with Quicksilver Storm and Monte
+    Carlo (Mactics).'
+  - 'Solar Warlock (Mactics): Well of Radiance super, Healing Rift, Incinerator Snap, Solar Grenade, Heat
+    Rises + Touch of Flame; fragments Torches/Benevolence/Ashes/Solace; exotic Sunbracers (or Lunafaction
+    Boots to empower the team''s reload during DPS) (Mactics).'
+  - 'Arc Titan (Mactics): Thundercrash super, Thruster, Thunderclap (or Seismic Strike/shoulder charge),
+    Pulse Grenade, Knockout + Touch of Thunder; fragments Sparks of Resistance/Shock/Amplitude/Magnitude.
+    Run Heart of Inmost Light during add-clear and hot-swap to Cuirass of the Falling Star right when
+    you enter DPS (Mactics).'
+  - 'Strand Titan (Mactics, if swords damage the boss): Bladefury super, Rally Barricade, grapple/Shackle
+    grenade, Banner of War + Flechette Storm; fragments Warding/Theory/Generation/Transmutation; exotic
+    Synthoceps to juice melee + sword damage (Mactics).'
+  - 'Solar Titan (Mactics, ultra-survival add-clear): Hammer of Sol or Burning Maul super, Rally Barricade,
+    Throwing Hammer, Healing Grenade, Roaring Flames + Sol Invictus; fragments Torches/Solace/Ashes/Benevolence;
+    exotic Synthoceps (Mactics).'

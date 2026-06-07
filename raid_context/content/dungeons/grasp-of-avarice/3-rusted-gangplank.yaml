@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/grasp-of-avarice/3-rusted-gangplank.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
@@ -193,3 +192,13 @@ encounter:
     name: Recency caveat
     note: Traversal section; confirm any sparrow/movement-exotic preferences against the current meta.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: MASTER GRASP OF AVARICE GUIDE - TITAN LOADOUT WEAPONS + MODS - Destiny 2
+    url: https://www.youtube.com/watch?v=qoIECNzdNBM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Sparrow: Equip Always on Time if you have it (faster, quicker to summon, shorter re-summon cooldown);
+    Gjallarwing or the Swift sparrow are alternatives with a similarly short summon cooldown.'
+  - No specific weapon loadout for this section - it is the sparrow mine-disarming phase; hit the timer-extend
+    buttons and diffuse each mine on the way down.

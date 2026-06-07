@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/prophecy/3-hexahedron.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: prophecy
   name: Prophecy
@@ -191,6 +190,11 @@ encounter:
     - Precision primary or scout for the elevated Centurions
     - A heavy or burst special to finish the Centurions quickly
     - Witherhoard or DoT to chip Centurions while solo
+    - Queen Breaker (superapt) for the Centurion-Echo finale boss damage carried over from the intermission
+      loadout
+    - Hammerhead machine gun (mcflyy.) — stack Rampage + Feeding Frenzy vs Taken Acolytes
+    - Xenophage (mcflyy.) — high Impact/Range for Hobgoblins, Knights, and the Centurion Echo bosses
+    - Whispering Slab combat bow (mcflyy.) as a high-range kinetic to pair with Xenophage
   role_loadouts:
   - role_id: light_carrier
     subclass: Any survivable subclass with strong air control to handle the gravity flips while carrying
@@ -228,3 +232,19 @@ encounter:
     note: Stat names renamed in Edge of Fate (Resilience->Health, Mobility->Weapons). Verify movement
       exotics in-game; no fixed DPS element is required here.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Each Class in the Prophecy Dungeon (mcflyy.) + The Best Builds for Beating
+      Prophecy Ultimatum Fast! (superapt)
+    url: https://mcflyy.medium.com/the-best-builds-for-each-class-in-the-prophecy-dungeon-bdbbd131f6f3
+      ; https://www.youtube.com/watch?v=FjbPHzcbKLQ
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan/Warlock/Hunter (superapt, 2nd encounter): same builds and weapons as the intermission loadout
+    — superapt states the intermission weapons and armor mods were reused for both the 2nd and 3rd encounters
+    (Titan Storm''s Keep; Warlock Speaker''s Sight support; Hunter Prismatic; Supremacy / No Hesitation
+    / Queen Breaker; Hunter swaps to Tanasha''s Mastery Chill Clip sidearm).'
+  - 'General (mcflyy., Hexahedron): Kinetic = Whispering Slab combat bow (Swashbuckler) for Hobgoblins;
+    Energy = Reckless Oracle Rapid-Fire frame (Kill Clip / Swashbuckler / Demolitionist) or Nature of
+    the Beast Precision hand cannon (Subsistence + Dragonfly); Power = Hammerhead machine gun (Rampage
+    + Feeding Frenzy + Armor-Piercing Rounds) or Xenophage.'

@@ -1,7 +1,6 @@
 # raid_context/content/raids/desert-perpetual/0-nursery.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: desert-perpetual
   name: The Desert Perpetual

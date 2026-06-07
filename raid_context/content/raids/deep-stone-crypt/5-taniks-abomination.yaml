@@ -1,7 +1,6 @@
 # raid_context/content/raids/deep-stone-crypt/5-taniks-abomination.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: deep-stone-crypt
   name: Deep Stone Crypt
@@ -269,6 +268,14 @@ encounter:
     - Exotic rocket launcher (Eyes of Tomorrow) paired with a healing/Well support for the speed kill
     - Heavy burst options (linear fusion or rockets) plus a damage-buff support like Well of Radiance
       for sustained field DPS
+    - Heritage (raid precision/slug shotgun) — best slug for the damage phase
+    - Long Shadow (sniper rifle) — good sniper option (Ehroar)
+    - Cloudstrike (exotic sniper) or First and Last Out (slug shotgun) (Ehroar)
+    - First and Last Out + Heritage double-slug for the one-phase strat (Dychronic)
+    - Anarchy (exotic grenade launcher) as the heavy in the one-phase strat (Dychronic)
+    - Seventh Seraph SAW (machine gun) for add clear via warmind cells while saving specials for boss
+      DPS (Ehroar)
+    - Divinity (exotic trace rifle) on one player to make boss crits easier (both videos)
   role_loadouts:
   - role_id: operator
     subclass: Mobile, survivable subclass to reach and free detained players quickly
@@ -312,3 +319,22 @@ encounter:
     note: Eyes of Tomorrow and Well-based DPS are guide-cited strategies; rocket and support-class balance
       shifts each season, so verify the current burst-DPS meta and exact surge interactions before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: BEST Deep Stone Crypt Raid Loadout! [Beyond Light] (Ehroar); plus Best Deep Stone Crypt Raid
+      Loadouts (Dychronic)
+    url: https://www.youtube.com/watch?v=x2FpUQagHdw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Ehroar (team): two special weapons, mostly slugs and snipers — Heritage (raid slug shotgun) is the
+    best slug, Long Shadow is a good sniper option, paired with Cloudstrike or First and Last Out; run
+    two slugs and two snipers, mix and match. Heavy slot is a machine gun, preferably the Seventh Seraph
+    SAW so it can make warmind cells for add clear (save specials for boss DPS)'
+  - 'Ehroar (support roles): one person on Lunafaction Boots + Well to extend slug-shotgun range, one
+    person on bubble, and one person on Divinity to make hitting the boss easier'
+  - 'Dychronic (subclasses): Hunter on Celestial Nighthawk (Way of the Sharpshooter); Titan on Coat of
+    the Protector (bubble); Warlock on Lunafaction (Attunement of Grace) Well'
+  - 'Dychronic (standard team loadout): mid-range primary, a slug shotgun special, and Anarchy or a grenade
+    launcher as heavy, with one of the six on Divinity'
+  - 'Dychronic (one-phase strat): double slug shotgun — Heritage plus First and Last Out — plus Anarchy,
+    with one person on Divinity; slug shotties still break the boss''s jet engines'

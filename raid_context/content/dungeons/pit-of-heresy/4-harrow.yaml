@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/pit-of-heresy/4-harrow.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: pit-of-heresy
   name: Pit of Heresy
@@ -145,6 +144,9 @@ encounter:
       elemental:
       - Arc Resist helps against Wizard fire while platforming
       - General resist to avoid being staggered off ledges
+      - Void resistance
+      - Solar resistance
+      - Minor (minor enemy) resistance
       concussive:
       - Concussive Dampener can prevent knockback that would throw you into the abyss
   damage:
@@ -178,3 +180,13 @@ encounter:
     note: Edge of Fate renamed the six character stats (e.g., Mobility->Weapons); verify current mobility
       exotics in-game as the meta shifts each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Pit of Heresy Solo Flawless Guide - No Exotics or Pinnacles'
+    url: https://www.youtube.com/watch?v=aJkAgTMpnaU
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - You can swap to a Solar weapon here for easier Wizard shield removal if you want.
+  - Otherwise uses the general run loadout; the guide stresses this is a 'don't miss your jumps' platforming
+    section with no DPS requirement.
+  - 'Stats: favor Class (Class) per the guide''s general advice.'

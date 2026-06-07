@@ -1,7 +1,6 @@
 # raid_context/content/raids/deep-stone-crypt/2-crypt-security.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: deep-stone-crypt
   name: Deep Stone Crypt
@@ -216,6 +215,8 @@ encounter:
     recommended_dps:
     - Accurate precision primary (hand cannon or scout) to reliably tag the correct fuse cylinder; no
       heavy burst archetype needed
+    - Xenophage (exotic machine gun) for the end-of-encounter damage (Ehroar; also in Dychronic's favorite
+      loadout)
   role_loadouts:
   - role_id: operator
     subclass: Mobile survivable subclass for fast basement traversal and panel shooting under the timer
@@ -248,3 +249,24 @@ encounter:
     note: Champion type derived from the guide's note on Overload Captains. Confirm current anti-Champion
       methods and exotics against the live sandbox before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: BEST Deep Stone Crypt Raid Loadout! [Beyond Light] (Ehroar); plus Best Deep Stone Crypt Raid
+      Loadouts (Dychronic)
+    url: https://www.youtube.com/watch?v=x2FpUQagHdw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Ehroar (team): Xenophage in the heavy slot, used for the damage at the end of the encounter; the
+    rest is just add clear'
+  - 'Ehroar (Operator/Scanner role, his own): typical Stasis subclass build'
+  - 'Dychronic (general team loadout): mid-range add-clear primary such as a hand cannon, auto rifle,
+    or pulse rifle; a quick-burst special (shotgun or sniper rifle) to drop the Servitors fast; and a
+    mid-burst heavy (heavy machine gun or grenade launcher, with a bit more total ammo) to handle the
+    panels'
+  - 'Dychronic (his favorite): The Old-Fashioned (hand cannon) plus a First and Last-style special, plus
+    Xenophage as heavy'
+  - 'Dychronic (subclass note): subclass is not very important here, so pick something with good add-slaying
+    potential or good survivability'
+  - 'Scanner and Operator (both videos): equip a Lightweight weapon (e.g. Chattering Bone, CQC-12), a
+    speed exotic (Lion Rampant, St0mp-EE5, or Transversive Steps), and run high Weapons stat to traverse
+    the encounter faster'

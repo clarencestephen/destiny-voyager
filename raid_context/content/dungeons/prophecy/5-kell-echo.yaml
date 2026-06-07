@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/prophecy/5-kell-echo.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: prophecy
   name: Prophecy
@@ -259,12 +258,25 @@ encounter:
     surges:
     - No single mandated DPS element. Phase 2 is the real damage race; any sustained, high-uptime element
       works. Stasis/Solar/Void are all fine since the Kell Echo is not gated by a specific elemental shield.
+    - Titan (superapt) runs double Solar surge legs (triple Solar surge optional) carried from the first-encounter
+      build; not restated specifically for the final boss.
     burst_windows: 'Phase 2 is a continuous DPS chase: damage the Kell Echo while inside his aura and
       push forward each time he retreats a platform; finish before the phase timer resets to Phase 1.'
     recommended_dps:
     - Sustained linear fusion rifle or sniper (e.g., Whisper-of-the-Worm-style) to avoid reloading mid-chase
     - A Well of Radiance to anchor the aura overlap for the team
     - Witherhoard/DoT plus a strong primary for solo runs to chip while repositioning
+    - Queen Breaker (superapt) carried from the intermission loadout for boss damage
+    - Lord of Wolves (superapt) — boss melts when you hit fire while shooting (Warlock can run it in place
+      of Tractor Cannon if a Hunter runs tether)
+    - Tractor Cannon debuff + legendary shotgun spam (superapt, Warlock)
+    - Hunter Golden Gun with Celestial Nighthawk, used outside the Well after Transcendence (superapt)
+    - Falling Guillotine (mcflyy.) — heavy attack + Whirlwind Blade pattern with Oppressive Darkness and
+      Well of Radiance / Ward of Dawn
+    - Witherhoard (mcflyy.) — pre-fire the Psion spawn locations, the mote Ogres, and the final boss
+    - Bad Omens rocket (mcflyy.) — Cluster Bomb + Auto-Loading Holster swapped back and forth with Witherhoard
+      for high DPS
+    - Wendigo GL3 (mcflyy.) — Blinding Grenades to stun Knights and Ogres
   role_loadouts:
   - role_id: light_carrier
     subclass: Any survivable subclass for Phase 1 light pillars; bring sustain to survive the Devoured
@@ -319,3 +331,25 @@ encounter:
       DPS-meta weapons/exotics shift between seasons; verify current picks in-game. Specific exotic-armor
       names left blank where unverifiable rather than guessed.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Each Class in the Prophecy Dungeon (mcflyy.) + The Best Builds for Beating
+      Prophecy Ultimatum Fast! (superapt)
+    url: https://mcflyy.medium.com/the-best-builds-for-each-class-in-the-prophecy-dungeon-bdbbd131f6f3
+      ; https://www.youtube.com/watch?v=FjbPHzcbKLQ
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan/Warlock/Hunter (superapt, final encounter): same builds and weapons as the intermission/2nd
+    encounter — superapt reuses the same weapons, armor mods, subclass and fragments from the intermission
+    onward (Titan Storm''s Keep with Cuirass of the Falling Star; Warlock Speaker''s Sight Well of Radiance
+    support; Hunter Prismatic Golden Gun + Celestial Nighthawk; Supremacy / No Hesitation / Queen Breaker;
+    Hunter Tanasha''s Mastery Chill Clip sidearm).'
+  - 'Hunter note (superapt, final): pop Transcendence first, then Golden Gun, and stand OUTSIDE the Well
+    — using Golden Gun inside the Well deals less damage.'
+  - 'Warlock note (superapt): hit Tractor Cannon to debuff the boss, swap to legendary shotgun and spam,
+    then swap back to Tractor Cannon to re-proc the debuff.'
+  - 'General (mcflyy., Singularity/final boss): Kinetic = Witherhoard (blight damage on the Taken Psion
+    spawns, the mote Ogres, and the final boss) and Whispering Slab for the Hobgoblins around the boss;
+    Power = Wendigo GL3 (Blinding Grenades vs Knights/Ogres), Courageous Surrender (Spike Grenades, Rapid-Fire),
+    Bad Omens rocket (Cluster Bomb + Auto-Loading Holster swapped with Witherhoard), or Falling Guillotine
+    for the final boss.'

@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/duality/4-caiatl.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: duality
   name: Duality
@@ -244,6 +243,14 @@ encounter:
     - Burst heavy (rocket launcher or sword)
     - Synced damage Supers on the final bell of a phase
     - Heartshadow for solo (Void sword, self-cleave + invis)
+    - Fallen Guillotine (sword, Relentless Strikes + Whirlwind Blade) buffed by Font of Might
+    - The Lament (sword) if running Sunbreaker/solar with Font of Might
+    - Any good sword can one-phase the boss
+    - Heartshadow (exotic Void sword, the dungeon's reward)
+    - Wither Hoard (grenade launcher) as background DoT layered into sword DPS
+    - Moebius Quiver super (Hunter) for a large damage/Weaken burst
+    - Blade Barrage super (Hunter) with Knock 'Em Down + Star-Eater Scales
+    - Cataclysm super (Warlock) or Well of Radiance damage buff (Dawnblade)
   role_loadouts:
   - role_id: standard_runner
     subclass: Void Hunter (invisibility for fast parallel Nightmare runs) or any high-mobility subclass
@@ -282,3 +289,32 @@ encounter:
     note: Edge of Fate renamed the armor stats and the DPS/exotic meta shifts each season — verify current
       top Linear Fusions, heavies, and exotics before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Farm Duality Dungeon Loot FAST & EASY! - (Best Weapons in Destiny 2!) - KackisHD
+    url: https://www.youtube.com/watch?v=j-tu9ZC6nFY
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan (general build): Sentinel with Ward of Dawn super (void chosen over a high-damage super for
+    ad-clear; Thundercrash + Cuirass of the Falling Star is the alternative if you want pure damage).'
+  - 'Titan abilities: Scatter grenade (vortex got unintentionally nerfed), Controlled Demolition aspect
+    (ad-clear + healing), Bastion aspect; fragments Echo of Undermining (grenades apply Weaken), Echo
+    of Leeching (health regen), Echo of Instability (volatile rounds after a grenade kill).'
+  - 'Titan exotic armor: Heart of Inmost Light (run roughly 100 Health to keep class ability up constantly).'
+  - 'Titan/general weapons: Fallen Guillotine sword (Relentless Strikes + Whirlwind Blade) as main boss
+    DPS, paired with Font of Might (+25% sword damage from a void elemental well); Funnel Web SMG (Subsistence
+    + Adrenaline Junkie, benefits from volatile rounds); Wither Hoard grenade launcher for ad-clear and
+    background DoT during sword DPS.'
+  - 'Sunbreaker alternative (Titan): Sol Invictus for constant sunspots plus throwing hammers; run the
+    Lament sword (solar) with Font of Might if on this subclass.'
+  - 'Hunter (damage route): Blade Barrage Gunslinger with Knock ''Em Down aspect plus Star-Eater Scales
+    (orb pickups escalate super damage); if all three are Hunters this can nearly instantly burst the
+    boss.'
+  - 'Hunter (survivable route): Void Nightstalker with Moebius Quiver super (huge damage + Weaken debuff);
+    combine with Orpheus Rig for an extra tether shot. Same sword/SMG/grenade-launcher weapons as the
+    Titan.'
+  - 'Warlock: Void with Cataclysm super (powerful debuff void grenades) plus Child of the Old Gods and
+    a weakening grenade to keep a debuff up across each part of the phase; OR Dawnblade with Well of Radiance
+    (active for one third of the boss fight).'
+  - 'Recommended mods: Lucent Blade (sword damage boost while Charged with Light) plus an Elemental Charge
+    mod to become Charged with Light.'

@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/4-vault.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish
@@ -192,6 +191,8 @@ encounter:
     recommended_dps:
     - Reliable add-clear primary for Eyes and Mights
     - Tractor Cannon (utility) to push the Eye toward the center room
+    - Legend of Acrius (shotgun)
+    - Sleeper Simulant
   role_loadouts:
   - role_id: runner
     subclass: Any add-clearing subclass; mobility helps tunnel travel
@@ -217,3 +218,15 @@ encounter:
     note: Stat names use current Edge of Fate naming. Verify Tractor Cannon and any meta picks against
       the live sandbox; meta shifts seasonally.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Destiny 2 BEST WEAPONS LOADOUT FOR LAST WISH RAID - Kinetic, Energy, Power Raid Weapon Guide
+    url: https://www.youtube.com/watch?v=9uqpXkHAfXs
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Requires heavy ammo
+  - 'Number one priority special: Legend of Acrius shotgun'
+  - 'Heavy: Sleeper Simulant (heavy damage on the Knights as they come out)'
+  - 'Primary: a good pulse rifle, or a good hand cannon like the Duke, or Bygones, or Chattering Bone
+    (shown as ''Shattering Bone'') — any primary you are familiar with works as long as you have Acrius
+    and Sleeper'

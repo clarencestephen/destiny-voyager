@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/pit-of-heresy/1-necropolis.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: pit-of-heresy
   name: Pit of Heresy
@@ -177,6 +176,9 @@ encounter:
       elemental:
       - Arc Resist helps against Knight and Wizard pressure
       - Void Resist helps if Ogres are present in Disciple rooms
+      - Void resistance
+      - Solar resistance
+      - Minor (minor enemy) resistance
       concussive:
       - Concussive Dampener optional vs Ogre eye-blast knockback if you get caught in the open
   damage:
@@ -219,3 +221,22 @@ encounter:
     note: Edge of Fate renamed the six character stats (e.g., Resilience->Health, Recovery->Class); verify
       current exotics/weapons in-game as the meta shifts each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Pit of Heresy Solo Flawless Guide - No Exotics or Pinnacles'
+    url: https://www.youtube.com/watch?v=aJkAgTMpnaU
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan: top tree Sentinel (Sentinel Shield super) — used for this first encounter.'
+  - 'Warlock: bottom tree Nova (Nova Bomb super) — used for this first encounter.'
+  - 'Hunter: top tree Nightstalker (Shadowshot/Tether super) — used for this first encounter.'
+  - 'General loadout used across the run: Tranquility (Kinetic sniper), Premonition (Void pulse rifle,
+    farmable from this dungeon), Hammerhead (Arc LMG).'
+  - 'Recommended weapons (general): Izanagi''s Burden, Anarchy, Mountaintop, Recluse, 21% Delirium, any
+    other top-tier item, plus a bow for totems.'
+  - 'Recommended Titan exotics: One-Eyed Mask, Mask of the Quiet One, Stronghold (for sword encounters),
+    Helm of Saint-14, Crest of Alpha Lupi.'
+  - 'Recommended Warlock exotics: Nezarec''s Sin, Skull of Dire Ahamkara, The Stag, Karnstein Armlets.'
+  - 'Recommended Hunter exotics: Orpheus Rig, Graviton Forfeit, The Sixth Coyote (Celestial Nighthawk
+    reserved for the final boss).'
+  - 'Stats: favor Class (Class) — ''Class will be your friend'' per the guide.'

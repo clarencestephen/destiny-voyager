@@ -1,7 +1,6 @@
 # raid_context/content/raids/kings-fall/7-daughters-of-oryx.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: kings-fall
   name: King's Fall
@@ -222,6 +221,7 @@ encounter:
       elemental:
       - Run Health stat for Wizard fire and dense add waves; no single resist element forced by the guide.
         The deathsong wipe is timer-based and cannot be resisted, only outraced by the Brand steal.
+      - 'Arc-related: Thermoshock Plating cited generally for King''s Fall Boomer Knight Arc damage.'
       concussive:
       - Concussive Dampener helps survive Wizard bolt splash while plate-holding and add-clearing in the
         open.
@@ -234,6 +234,12 @@ encounter:
     recommended_dps:
     - High single-target burst heavy (Linear Fusion / Whisper / Sleeper) to drop a daughter inside one
       window; Well of Radiance for the burst stack.
+    - Celestial Nighthawk (Solar Hunter, swapped in for DPS) — 'might be better' on Oryx
+    - Tractor Cannon (alternative debuff)
+    - Izanagi's Burden + auto-loading rocket (Palmyra-B)
+    - Gjallarhorn (Wolfpack Rounds for legendary rockets)
+    - Taipan-4FR linear fusion; Cataclysmic solar fusion
+    - Warlock Fusion Grenades / Hunter Blade Barrage thrown during the DPS phase
   role_loadouts:
   - role_id: torn_runner
     subclass: Any mobile subclass; the role is randomly assigned, so everyone should be ready to run the
@@ -269,3 +275,19 @@ encounter:
     note: Burst-DPS exotics named generically; confirm the current single-target DPS meta and surge weapons
       in the live Edge of Fate sandbox before a Master run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST King's Fall Loadout (Weapons, Mods, Stats, And More...)
+    url: https://www.youtube.com/watch?v=s0wKQ-wbS0g
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: author plans Six Coyote through the encounter, then SWAP to Celestial Nighthawk for the DPS
+    phase, since Oryx is a boss where Nighthawk ''might be better''.'
+  - 'Blade Barrage flagged as uncertain on Oryx: the crit hitbox is centered and potentially far, so knife
+    tracking may not be reliable.'
+  - Divinity flagged as uncertain on Oryx (very large enemy; debuff bubble works oddly on big bosses).
+  - Tractor Cannon offered as an alternative boss debuff.
+  - 'DPS-phase ability roles (general): Warlocks throw Fusion Grenades, Hunters throw Blade Barrages,
+    Titans drop a bubble and run Divinity.'
+  - 'Heavy/burst DPS from the general kit: Izanagi''s Burden + auto-loading rocket (Palmyra-B), Gjallarhorn
+    for a rocket team, Taipan-4FR linear fusion, Cataclysmic fusion.'

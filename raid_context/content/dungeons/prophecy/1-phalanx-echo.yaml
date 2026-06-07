@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/prophecy/1-phalanx-echo.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: prophecy
   name: Prophecy
@@ -199,16 +198,31 @@ encounter:
       concussive:
       - Optional Concussive Dampener to soften the Phalanx shield-blast knockback if you keep getting
         bashed at close range
+      - Concussive Dampener to help against the Taken Knights' fire pools (mcflyy., general Mods section)
   damage:
     surges:
     - No fixed DPS element required; any high-burst element works during the ~50s shield-down window.
       Stasis/Solar/Void all viable since enemies are Taken, not shielded.
+    - Titan (superapt) runs double Solar surge leg mods, or triple Solar surge for more damage if confident
+      on survivability.
     burst_windows: Roughly a 50-second window opens after all 4 pillars are dispersed and the Phalanx
       shield drops.
     recommended_dps:
     - Burst-damage Super (e.g., a roaming or one-shot Super)
     - Rocket launcher or grenade launcher for the stacked burst window
     - Witherhoard or similar damage-over-time to chip the Phalanx between mote runs (solo)
+    - Lord of Wolves (superapt; hit fire while shooting and the boss falls over; recommends the catalyst
+      for reload/stability and scorch/ignite)
+    - Titan Thunder Crash Super with Cuirass of the Falling Star (superapt)
+    - Hunter Golden Gun with Celestial Nighthawk (superapt; pop transcendence then Golden Gun, stay outside
+      the Well)
+    - Tractor Cannon to debuff the boss then spam legendary shotgun (superapt, Warlock)
+    - Falling Guillotine — heavy attack + Whirlwind Blade pattern, paired with Oppressive Darkness and
+      Well of Radiance / Ward of Dawn (mcflyy., Phalanx boss)
+    - Witherhoard — blight DoT and AoE for Taken Thrall/Psions and the stationary Knights (mcflyy.)
+    - One Small Step / Threat Level Rapid-Fire shotguns (with One-Two Punch / Trench Barrel) to finish
+      Knights, paired with Riskrunner (mcflyy.)
+    - Riskrunner — Arc resist/output vs the Arc-damage Psions and Phalanx boss (mcflyy.)
   role_loadouts:
   - role_id: light_carrier
     subclass: Any; a survivable subclass with movement (Solar Warlock/Hunter or Arc for mobility) to reach
@@ -247,3 +261,38 @@ encounter:
     note: Edge of Fate renamed the six character stats (e.g., Resilience->Health, Recovery->Class). Verify
       current exotics/weapons in-game before committing; specifics left blank where unverifiable.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Each Class in the Prophecy Dungeon (mcflyy.) + The Best Builds for Beating
+      Prophecy Ultimatum Fast! (superapt)
+    url: https://mcflyy.medium.com/the-best-builds-for-each-class-in-the-prophecy-dungeon-bdbbd131f6f3
+      ; https://www.youtube.com/watch?v=FjbPHzcbKLQ
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan (superapt, 1st encounter): Arc subclass, Storm''s Keep build; aspects Storm''s Keep + Knockout;
+    class ability Rally Barricade; Thunderclap melee; Storm grenade; fragments Spark of Shock, Spark of
+    Magnitude, Spark of Frequency, Spark of Resistance; Super Thunder Crash with exotic Cuirass of the
+    Falling Star.'
+  - 'Titan (superapt, 1st encounter): Kinetic = Multimax CCX SMG (Attrition Orbs + Kinetic Tremors); Exotic
+    = Lord of Wolves (run catalyst); Power = Corrective Measure void machine gun (Destabilizing Rounds
+    + Killing Tally).'
+  - 'Warlock (superapt, 1st encounter): Solar Dawnblade support build; Super Well of Radiance; class ability
+    Healing Rift or Phoenix Dive; Incinerator Snap melee; Healing grenade; aspects Hellion + Touch of
+    Flame; fragments Ember of Benevolence, Ember of Mercy, Ember of Torches, Ember of Searing; exotic
+    Speaker''s Sight.'
+  - 'Warlock (superapt, 1st encounter): Kinetic = Sword Breaker strand shotgun (Threat Detector + Surrounded);
+    Energy = No Hesitation (Physic + Incandescent); Power = Tractor Cannon to debuff boss (swap to Lord
+    of Wolves if a Hunter runs tether).'
+  - 'Hunter (superapt, 1st encounter): Prismatic Hunter; Super Golden Gun (or Tether) with exotic Celestial
+    Nighthawk; aspects Stylish Executioner + Ascension; class ability Gambler''s Dodge; Threaded Spike
+    melee; Grapple grenade; fragments Facet of Protection, Facet of Dawn, Facet of Solitude, Facet of
+    Hope, Facet of Sacrifice.'
+  - 'Hunter (superapt, 1st encounter): same weapons as Titan — Multimax CCX, Lord of Wolves, Corrective
+    Measure.'
+  - 'General (mcflyy.): Hunter — bottom-tree Nightstalker Way of the Pathfinder (Vanish in Smoke), exotic
+    Wormhusk Crown; or top-tree Way of the Trapper with The Sixth Coyote under 1040 power. Keep Weapons
+    stat near 100 for Gambler''s Dodge uptime.'
+  - 'General (mcflyy.): Titan — top-tree Sentinel Code of the Protector (Ward of Dawn) with Helm of Saint-14
+    for blinding; or bottom-tree Sunbreaker Code of the Siegebreaker with Hallowfire Heart.'
+  - 'General (mcflyy.): Warlock — bottom-tree Voidwalker Attunement of Hunger (Devour) with Ophidian Aspect
+    or Nezarec''s Sin; or middle-tree Dawnblade Attunement of Grace (Well of Radiance) with Phoenix Protocol.'

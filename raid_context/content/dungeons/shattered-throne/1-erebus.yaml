@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/shattered-throne/1-erebus.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: shattered-throne
   name: The Shattered Throne
@@ -224,3 +223,11 @@ encounter:
     note: Edge of Fate renamed the six armor stats (e.g. Resilience->Health). Verify current exotics/mods
       in-game; no Master version of this dungeon exists, so champion mods are not mandatory.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Solo Flawless "Master" Shattered Throne Dungeon (-25 Power Under) [Destiny 2]
+    url: https://www.youtube.com/watch?v=2Yd8656g3FY
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'General team note (cited): post-Volatile-Marksman, use a Void weapon in the secondary slot to get
+    barricades back, or run a single grenade with Bolstering Detonation'

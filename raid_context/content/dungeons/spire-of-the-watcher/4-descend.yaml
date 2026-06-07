@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/spire-of-the-watcher/4-descend.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: spire-of-the-watcher
   name: Spire of the Watcher

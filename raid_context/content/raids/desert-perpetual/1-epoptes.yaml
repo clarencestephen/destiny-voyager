@@ -1,7 +1,6 @@
 # raid_context/content/raids/desert-perpetual/1-epoptes.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: desert-perpetual
   name: The Desert Perpetual
@@ -203,6 +202,9 @@ encounter:
     - Burst heavy (Linear Fusion Rifle or heavy GL)
     - Whisper-style Exotic sniper for sustained DPS
     - Rocket archetypes for the short window
+    - Mint Retrograde (primary that stays equipped across the raid)
+    - Geartight Apex (Warlock special that stays equipped)
+    - Finality's Auger (common Hunter heavy pairing with Mint Retrograde)
   role_loadouts:
   - role_id: temporality_holder
     subclass: ''
@@ -236,3 +238,29 @@ encounter:
     note: New raid (July 2025); DPS-phase element and meta loadouts unconfirmed in source — verify in-game
       before committing surges/exotics.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Epic Raid Builds For EVERY Class feat. @ToidiDestiny & @gmeinersYT (Notswap Included)
+    url: https://www.youtube.com/watch?v=LqmzDiDWvAY
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Team note: source presents one set of class builds used across all Desert Perpetual encounters (it
+    does not call out Epoptes by name); apply the general team loadout below.'
+  - 'Titan: Arc Titan with Storm''s Keep super and Knockout aspect; Pulse Grenade; Thunderclap melee.
+    Fragments: Spark of Resistance, Spark of Shock, Spark of Frequency, Spark of Magnitude (Resistance/Frequency/Magnitude
+    are the priority three). Exotic armor: Cuirass of the Falling Star (paired with Thundercrash).'
+  - 'Titan armor/sets: ~160 Weapons and ~150 Super at all times (2 Paragon pieces with tertiary Weapons
+    + 2 Gunner pieces with tertiary Super), roughly 60 Grenade / 80 Melee / 30 Class. Set bonus: 2-piece
+    Smoke Jumper + 2-piece Ion Adapter (orb-pickup damage resist + 20% incoming splash-damage resist).'
+  - 'Warlock (support): Solar Warlock with Well of Radiance super; exotic Boots of the Assembler (turns
+    Well into a 35% empowering buff for the team). Neutral on Healing Rift; Celestial Fire melee; Healing
+    Grenade. Aspects: Icarus Dash + Helion. Fragments: Ember of Benevolence, Ember of Torches, Ember of
+    Searing, Ember of Mending (class-ability refund on scorch). Stats: 200 Super / 160 Weapons (including
+    fonts). Weapons that stay equipped: Mint Retrograde + Geartight Apex.'
+  - 'Hunter: Prismatic Hunter with Golden Gun super (for orb generation to feed allied supers); Inmost
+    Light Exotic class item for the mid-game. Threaded Spike melee + Grapple grenade; Sever for enemy
+    outgoing-damage reduction. Aspects: Ascension + Gunpowder Gamble (Stylish Executioner is the alternative).
+    Stats: ~130 Weapons / 140 Super (140 Super reaching ~190 with super fonts in the damage loadout).
+    Mods: double Recuperation, siphon, special + heavy ammo finders, loader, Heavy Handed.'
+  - 'Not-swap note (applies all encounters): running and damage loadouts must keep identical stat mods
+    (including tuning slots) and identical character-sheet stats, or you lose abilities/ammo on swap.'

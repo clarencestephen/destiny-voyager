@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/1-kalli.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish
@@ -195,6 +194,13 @@ encounter:
     - High-burst boss damage (Linear Fusion Rifle or Rocket Launcher)
     - Divinity to aid hitting Kalli's small head
     - Well of Radiance / damage super for the center burst
+    - Sleeper Simulant
+    - Legend of Acrius (shotgun)
+    - Chattering Bone (pulse rifle)
+    - Bygones (pulse rifle)
+    - Ace of Spades (hand cannon)
+    - Rocket Launcher (unspecified)
+    - Nation of Beasts (hand cannon, god roll with Dragonfly)
   role_loadouts:
   - role_id: plate_runner
     subclass: Any (no element enforced); a survivable build for Knight melee
@@ -214,3 +220,18 @@ encounter:
     note: Loadout names use current Edge of Fate stat names (Weapons/Health/Class/Grenade/Super/Melee).
       Verify specific exotics/weapons against the live sandbox, as the meta shifts each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Destiny 2 BEST WEAPONS LOADOUT FOR LAST WISH RAID - Kinetic, Energy, Power Raid Weapon Guide
+    url: https://www.youtube.com/watch?v=9uqpXkHAfXs
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Heavy/exotic: Sleeper Simulant (recommended over anything else; compensates for her flinching)'
+  - 'Special: Acrius (Legend of Acrius) shotgun, to kill the Ravenous Knights quickly'
+  - 'Kinetic primary: Chattering Bone (shown as ''Shattering Bone'' in source) pulse rifle, picked up
+    from the raid; or Bygones pulse rifle (from Gambit) with Boss damage mod as an alternative'
+  - 'Alternate loadout (if you lack the above): Ace of Spades hand cannon (Firefly perk for add control)
+    + Acrius shotgun + a Rocket Launcher (because Kalli moves a lot and you cannot equip Whisper/Sleeper
+    there)'
+  - 'Optional: Nation of Beasts hand cannon with god roll (Dragonfly) if you have it'
+  - 'Source''s stated #1 loadout: a good pulse rifle + Chattering Bone + Acrius shotgun + Sleeper Simulant'

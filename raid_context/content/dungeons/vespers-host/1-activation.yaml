@@ -1,5 +1,4 @@
 # dungeons/vespers-host/1-activation.yaml — schema v3, authored from scratch (isolated). No guessing.
-
 activity:
   slug: vespers-host
   name: Vesper's Host
@@ -129,3 +128,36 @@ encounter:
     note: First encounter walkthrough; enrage timer, larger final Brig boss, deposit-station augment passing
       tip, heavy GL / Twilight Arsenal / Indebted Kindness w/ Voltshot loadout notes.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Builds & Loadouts to DOMINATE VESPER HOST Dungeon on EVERY Class! | Destiny 2 (Profane
+      Gaming)
+    url: https://www.youtube.com/watch?v=ce_9HKoOpgM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Warlock support (general team build): Solar subclass with Song of Flame super; Speaker''s Sight exotic
+    armor for constant healing turrets granting cure and restoration plus bonus orb generation; pair with
+    Solar weapons that have Heal Clip; No Hesitation support-frame auto rifle is a great choice; Red Death
+    or Lumina to double down on health regen, or Dragon''s Breath / Microcosm for damage.'
+  - 'Warlock max-DPS (general team build): Prismatic subclass with an exotic class item rolling Star-Eater
+    Scale (up to ~70% super damage) plus Spirit of Apotheosis; Nova Bomb, Needlestorm, or Song of Flame
+    super; Facet of Dominance with Vortex grenades for weaken; Feed the Void for devour; legendary heavies
+    like Apex Predator or Edge Transit with Bait and Switch; Wither Hoard exotic GL or Lost Signal legendary
+    GL for DoT and loadout rotation.'
+  - 'Titan survival (general team build): Strand subclass with Banner of War; Synthoceps exotic armor
+    (bonus sword/glaive damage); Frenzy blade melee; keep Woven Mail for ~40% damage resistance; Navigator
+    exotic to extend and share Woven Mail; shotguns with One-Two Punch or Trench Barrel, or sword/glaive
+    like Vexcalibur or Lament; Euphony to extend range.'
+  - 'Titan DPS (general team build): Prismatic with a Star-Eater Scale class item using Twilight Arsenal
+    or Thundercrash super; OR Hazardous Propulsion exotic for bonus rocket damage (works on any class,
+    best on Solar/Prismatic) with Dragon''s Breath or Buried Bloodline, The Call rocket sidearm, and a
+    legendary rocket like Apex Predator; focus on regenerating class ability quickly.'
+  - 'Hunter support/survival (general team build): Void subclass with Tether super; Orpheus Rig exotic
+    for increased tether uptime and weaken; Echo of Starvation for devour; volatile rounds on Void weapons
+    (boosts Choir of One); heavies like Edge Transit with Bait and Switch or Retrofit Escapade with Target
+    Lock.'
+  - 'Hunter DPS (general team build): Solar subclass with Celestial Nighthawk exotic paired with the Still
+    Hunt exotic sniper (better synergy/survival on standard Solar than Prismatic), prolonging restoration
+    and Radiance with a healing grenade option; include weapons with Heal Clip. Alternate Arc build: Gathering
+    Storm with a Star-Eater Scale exotic class item for damage resist and crowd control (jolt/blind),
+    Indebted Kindness with Voltshot, and Thunderlord.'

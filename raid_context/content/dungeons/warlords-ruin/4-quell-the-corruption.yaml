@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/warlords-ruin/4-quell-the-corruption.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: warlords-ruin
   name: Warlord's Ruin
@@ -278,6 +277,12 @@ encounter:
     - High-burst Heavy (rocket / Heavy GL / Linear Fusion) for the timed Floor 1-2 windows
     - Sustained-DPS weapon (Linear Fusion / sustained Heavy) for the infinite final-stand window
     - Devour/sustain weapon (this dungeon's exotic sidearm) for solo survivability
+    - Tractor Cannon (30% debuff so the rest of the team can destroy the boss; team plan is to run Tractor
+      instead of Tether)
+    - Rockets with Explosive Light, buffed by Argent Ordnance (charged-with-light setup for ~15% per rocket
+      and orbs)
+    - Golden Gun via Celestial Nighthawk for a high single-hit boss shot
+    - Gathering Storm (Arc tether super) thrown on the boss for jolt pick-damage during team DPS
   role_loadouts:
   - role_id: cleanser
     subclass: ''
@@ -313,3 +318,26 @@ encounter:
       in the current (Edge of Fate) sandbox. Confirm picks against the live game before attempting, especially
       for solo runs.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: WARLORDS RUIN Day 1 Loadouts (Hunter, Titan, Warlock) | Destiny 2
+    url: https://www.youtube.com/watch?v=cdaTD5DbP44
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'General team (whole-dungeon, source is not encounter-specific): bring two builds per class.'
+  - 'Warlock A: Solar Sunbracers, Heat Rises (keep melee for snap-melee / grenade spam, unlimited Restoration,
+    easy add-clear); weapons include Sunshot and the hand cannon.'
+  - 'Warlock B: Solar Well of Radiance with Phoenix Protocol (chain Wells via Rays of Precision ignitions,
+    Combustion fragment, Eruption, Ember of Wonder); use a Solar primary like Sunshot or the hand cannon;
+    Mantle of Battle Harmony is an alternative exotic for a x4 (25%) weapon surge while you hold your
+    Well; Apotheosis Veil is a swap exotic to spam grenades for ~8s before popping Well.'
+  - 'Hunter A: Solar Golden Gun with Celestial Nighthawk for boss DPS (swap exotics before super: Foetracer,
+    Athrys''s Embrace, Star-Eaters, Shards of Galanor, or Assassin''s Cowl); Blade Barrage is an option.'
+  - 'Hunter B: Arc Gathering Storm (throw the super to jolt the boss for pick damage); also viable as
+    an Arc melee punch build with Assassin''s Cowl / Liar''s Handshake / Star-Eaters; clyde plans to run
+    Hunter the whole dungeon for damage.'
+  - 'Titan A: Solar Burning Maul (bonk) with Synthoceps, Worm Gods, or Pyrogale Gauntlets (Pyrogale for
+    the burning-maul super throw); one-two-punch combo of Hammer / shotgun / melee with Roaring Flames
+    x3; Sunshot dominates add-clear; unlimited Restoration.'
+  - 'Titan B: Strand Banner of War with Synthoceps or Worm Gods (one-two-punch, hold Banner of War x4
+    ~30s); Flint Striker for radiant off a Solar weapon.'

@@ -1,7 +1,6 @@
 # raid_context/content/raids/desert-perpetual/4-koregos.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: desert-perpetual
   name: The Desert Perpetual
@@ -268,6 +267,9 @@ encounter:
     - Burst heavy (Linear Fusion Rifle or heavy GL)
     - Exotic special sniper (Whisper/Sleeper-style) for sustained head DPS
     - Whirling Ovation / rocket archetypes for the exposed window
+    - Tractor Cannon (Hunter role to extend the damage phase / debuff the boss)
+    - Parasite (part of the Hunter 'chicken' DPS rotation)
+    - Mint Retrograde (paired primary in the chicken rotation; stays equipped)
   role_loadouts:
   - role_id: absolute
     subclass: ''
@@ -312,3 +314,25 @@ encounter:
     note: New raid (July 2025); Whirling Ovation status (exotic/re-rollable) and DPS meta are flagged
       as needing in-game verification in the source — confirm before committing loadouts.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Epic Raid Builds For EVERY Class feat. @ToidiDestiny & @gmeinersYT (Notswap Included)
+    url: https://www.youtube.com/watch?v=LqmzDiDWvAY
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Koregos is the only encounter the source gives bespoke swaps for (referred to as "corgos"/"cordos"/"Coros").
+    Key team change: an Arc Titan is NOT needed on the final boss, so the Titan main swaps to a Prismatic
+    Titan for Koregos; a Hunter takes the Tractor Cannon role to extend the damage phase.'
+  - 'Titan (Koregos-specific): Prismatic Titan, standard Consecration build — Knockout + Consecration
+    aspects, Cuirass of the Falling Star (Thundercrash). Fragments: Facet of Balance, Facet of Dawn, Facet
+    of Protection, Facet of Courage (Courage adds 10% Thundercrash damage vs darkness-debuffed enemies).
+    Source notes the Titan does not need to be on Arc for this boss.'
+  - 'Warlock (support): Solar Warlock, Well of Radiance, Boots of the Assembler; Healing Rift / Celestial
+    Fire / Healing Grenade; Icarus Dash + Helion (Icarus Dash called out for dodging the giant laser here);
+    200 Super / 160 Weapons; Mint Retrograde + Geartight Apex.'
+  - 'Hunter (Koregos role): Prismatic Hunter on the Tractor Cannon role to extend the damage phase; keeps
+    Inmost Light for high ability regen, Grapple to reach awkwardly-spawning Chronons, and spams smoke
+    bombs to maintain ~30% damage resist. Sever DR plus dust-field/Threaded Spike stacking makes surviving
+    under the beam highly reliable. Mint Retrograde + Tractor Cannon.'
+  - 'Hunter alternate Koregos DPS ("chicken" rotation): Parasite + Mint Retrograde (requires a holster
+    mod).'

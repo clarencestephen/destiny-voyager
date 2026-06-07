@@ -1,7 +1,6 @@
 # raid_context/content/raids/vault-of-glass/2-confluxes.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -169,6 +168,7 @@ encounter:
       concussive:
       - Concussive Dampener helps reduce Wyvern and Minotaur burst when defending a Conflux up close on
         Master
+      - Concussive Dampener carried over on the Hunter chest during the complexes loadout
   damage:
     surges:
     - 'No traditional boss DPS phase; the only timed burst is deleting sacrificial Vex at the Conflux.
@@ -200,3 +200,22 @@ encounter:
     note: Master Champion types (Barrier Hydra / Overload Minotaur) and surge rotators can change with
       the sandbox; confirm against the current week before committing loadouts.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Complexes/Confluxes (all classes): Chroma Rush (auto rifle, Subsistence) + Ikelos SMG (Subsistence,
+    doubles as the Overload weapon) + heavy Anarchy (or a Legendary grenade launcher with Witherhoard
+    if you lack Anarchy — Witherhoard is great here to drop spots on all the spawns); save Blade Barrage
+    for the Wyverns.'
+  - 'Oracles (covered within this encounter): swap to Xenophage (one-shots Oracles) as heavy, keep the
+    Ikelos SMG, and add a scout rifle (Hung Jury) for the Hobgoblins. Mod changes: put Anti-Barrier Scout
+    Rifle on arms (to shoot Hobgoblins through their immunity), swap Grenade Launcher Ammo Finder to Machine
+    Gun Ammo Finder, and swap chest to Machine Gun Reserves.'
+  - 'Hunter subclass: Blade Barrage (middle-tree Solar) with Shards of Galanor; armor mods kept from the
+    opening (Reactive Pulse + Ashes to Assets, Overload SMG + Charged Up, Taking Charge + Grenade Launcher
+    Reserves + Concussive Dampener, Global Reach, Breach and Clear).'
+  - 'Titan: Thundercrash with Cuirass of the Falling Star (same weapons as Hunter); optional Crown-Splitter
+    for the add-clear phase. Warlock: well or a damaging super (same weapons as Hunter).'

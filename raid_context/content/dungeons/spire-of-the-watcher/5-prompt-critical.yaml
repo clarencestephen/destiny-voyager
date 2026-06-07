@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/spire-of-the-watcher/5-prompt-critical.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: spire-of-the-watcher
   name: Spire of the Watcher
@@ -232,6 +231,8 @@ encounter:
     surges:
     - No forced elemental burn. Persys has no specific elemental surge - bring your strongest burst element
       and match surge mods to your DPS weapon.
+    - Solar (triple Solar weapon surge for 1000 Voices on damage; Warlock Sanguine Alchemy gives 1000
+      Voices a x4 weapon surge; double Solar surge as the console/no-swap fallback)
     burst_windows: After the reactor purge forces Persys out, the small radiolarian core is vulnerable
       for roughly a 15-20 second DPS window.
     recommended_dps:
@@ -240,6 +241,10 @@ encounter:
     - Sniper Rifles for the precise core hit
     - Rockets for burst if the core is held steady
     - Witherhoard for chip damage during the circuit-running (especially solo)
+    - 1000 Voices (Solar exotic linear fusion) — main boss DPS; staggers the boss
+    - Thunderlord (or any other exotic weapon) — fallback if you don't have 1000 Voices
+    - Supremacy with Kinetic Tremors — Hunter, to also clear the supplicants/goblins the Hydra spawns
+      during DPS
   role_loadouts:
   - role_id: circuit_runner
     subclass: Mobile, survivable subclass for moving between outer pillars and the core (Solar for healing,
@@ -280,3 +285,28 @@ encounter:
       the current sandbox. Hierarchy of Needs (Solar exotic bow) drops from this final chest per the in-game
       pattern path. Master Champion types per the guide's overall_notes.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: These 3 Builds Will Make Spire Ultimatum EASY! | Destiny 2
+    url: https://www.youtube.com/watch?v=BE8ycf-I5X4
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter (final encounter): Prismatic Celestial Nighthawk Golden Gun build; exotic weapon = 1000 Voices
+    (staggers the boss; if you lack it use Thunderlord or any other exotic). Swap abilities to Marksman
+    Dodge for faster 1k reloads (skip it if a Titan provides Rally Barricade). Run Supremacy with Kinetic
+    Tremors as the kinetic (Kinetic Tremors helps clear the supplicants/goblins the Hydra spawns), or
+    just a sniper. Damage-phase boots: triple Solar weapon surge for the 1k. Rotation: out of Well, pop
+    Transcendence then Golden Gun (try for the precision hit), back into Well, fire 1k, repeat; dodge
+    when low on 1k ammo. Ammo economy: Harmonic Scavenger boots, Heavy Ammo Finder + Heavy Ammo Scout
+    helmet, finish Minotaurs for heavy ammo.'
+  - 'Warlock (final encounter): start in the Dawnblade Speaker Sight support build with 1000 Voices and
+    the No Hesitation healing auto; exotic weapon = 1000 Voices (Thunderlord or another exotic if you
+    lack it). Pop Well of Radiance, then loadout-swap to the Sanguine Alchemy build for a x4 weapon surge
+    on 1000 Voices during damage; swap back to the support build after each phase. If you can''t loadout-swap
+    on console, set boots to double Solar surge instead. Note Ember of Ashes makes every 1k shot proc
+    an ignition.'
+  - 'Titan (final encounter): Stormkeep / Cuirass of the Falling Star; exotic weapon = 1000 Voices (Thunderlord
+    or another weapon if you lack it). Loadout swap for three 1k charges: first loadout runs Recuperation
+    + Innervation + Solar Scavenger for heavy ammo; at damage-phase start swap to triple Solar weapon
+    surge, pop Rally Barricade, fire 1k, then Thundercrash. Non-swap option: Recuperation + double Solar
+    surge.'

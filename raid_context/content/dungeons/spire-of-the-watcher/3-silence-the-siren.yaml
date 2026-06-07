@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/spire-of-the-watcher/3-silence-the-siren.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: spire-of-the-watcher
   name: Spire of the Watcher
@@ -208,6 +207,8 @@ encounter:
     surges:
     - No fixed elemental burn is forced. Akelous has no specific elemental surge - bring your strongest
       burst element. Match any surge mods to your DPS weapon's element.
+    - Arc (double/triple Arc weapon surge on boots; Queenbreaker is the main Arc DPS weapon; Warlock's
+      Sanguine Alchemy + Prismatic + Stormtrance gives Queenbreaker a x4 Arc weapon surge)
     burst_windows: After all eyes are destroyed, the core opens for roughly a 20 second DPS window while
       Akelous retreats backward.
     recommended_dps:
@@ -215,6 +216,8 @@ encounter:
     - Linear Fusion Rifles or Sniper Rifles for the small core weak point
     - Whisper of the Worm / heavy precision for sustained core damage
     - Rockets for burst on the core
+    - Queenbreaker (Arc linear fusion rifle) — main damage weapon for this encounter
+    - Succession (aggressive-frame sniper) — Hunter, to one-shot the harpies during the damage phase
   role_loadouts:
   - role_id: platform_owner
     subclass: Mobile, survivable subclass for platform traversal and dodging the eye sweep (Solar for
@@ -255,3 +258,24 @@ encounter:
     note: DPS meta shifts each season - verify Trace Rifle and Linear Fusion picks and any exotic availability
       against the current sandbox. Master Champion types per the guide's overall_notes.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: These 3 Builds Will Make Spire Ultimatum EASY! | Destiny 2
+    url: https://www.youtube.com/watch?v=BE8ycf-I5X4
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter (second encounter): same Prismatic Celestial Nighthawk Golden Gun build. Main DPS weapon is
+    Queenbreaker (Arc linear fusion); set boots to double Arc weapon surge. Kinetic = Succession (aggressive-frame
+    sniper) to one-shot the harpies during damage phase so their laser flinch doesn''t make you miss.
+    Recommended stats: Health (for the 30% damage reduction), then Class as the second stat to push to
+    100.'
+  - 'Warlock (second encounter, double-swap method for a 2-phase): start in the Dawnblade Speaker Sight
+    support build with Queenbreaker; pop Well of Radiance in the middle of the bridge, then loadout-swap
+    to a Prismatic subclass with Sanguine Alchemy exotic and Stormtrance super. Standing in your rift
+    with Sanguine Alchemy on Prismatic gives the Queenbreaker (an Arc weapon) a x4 weapon surge (surge
+    matches the Stormtrance/Arc super). Swap back to the support build after the damage phase. If not
+    loadout-swapping, just set boots to double Arc weapon surge.'
+  - 'Titan (second encounter): Stormkeep / Cuirass of the Falling Star; kinetic = sniper, heavy = Queenbreaker.
+    Boots: double Arc weapon surge (or triple Arc surge if confident). After destroying the boss''s eyes,
+    Thundercrash immediately, push to the middle of the bridge, pop Rally Barricade for bolt charges,
+    and keep firing Queenbreaker at the boss.'

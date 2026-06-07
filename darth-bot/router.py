@@ -284,6 +284,9 @@ def _fmt_encounter_doc(doc: dict) -> str:
     loadouts = _collect_loadouts(enc)
     if loadouts:
         out.append("LOADOUTS BY ROLE:\n" + "\n".join(loadouts))
+    if enc.get("meta_loadout"):
+        out.append("META LOADOUT (sourced — current build guide):\n"
+                   + "\n".join(f"- {m}" for m in enc["meta_loadout"]))
     dfn = enc.get("defense") or {}
     if dfn.get("champions"):
         out.append("CHAMPIONS:\n" + "\n".join(f"- {c}" for c in dfn["champions"]))

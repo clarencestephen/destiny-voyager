@@ -1,7 +1,6 @@
 # raid_context/content/raids/kings-fall/3-basilica.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: kings-fall
   name: King's Fall
@@ -207,6 +206,7 @@ encounter:
       elemental:
       - Hive Wizard and Taken Knight attacks; run Health stat for survivability under totems. No single
         resist element forced by the guide.
+      - Thermoshock Plating to reduce incoming Arc damage from the Boomer Knights present in this section.
       concussive:
       - Concussive Dampener helps against Wizard/Ogre ranged blasts while the Brand holder is locked under
         the totem.
@@ -254,3 +254,15 @@ encounter:
     note: Champion list confirmed from the guide's overall_notes; verify which Anti-Champion mods are
       surge-active in the current Edge of Fate seasonal artifact before a Master run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST King's Fall Loadout (Weapons, Mods, Stats, And More...)
+    url: https://www.youtube.com/watch?v=s0wKQ-wbS0g
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Succession called out specifically as useful for the 'totems encounter' against Boomer Knights from
+    far away.
+  - 'General team loadout otherwise (pre-release overview): Arbalest as anti-Barrier; ad-clear primaries
+    with Major Spec for racking kills; Thermoshock Plating for the many Boomer Knights.'
+  - 'Stats (Edge of Fate names): 100 Super, 100 Health, max Weapons; core mods Font of Might, Harmonic
+    Siphon, Elemental Ordnance, Bountiful Wells, wellmaker mods.'

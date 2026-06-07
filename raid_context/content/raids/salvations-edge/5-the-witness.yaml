@@ -1,7 +1,6 @@
 # raid_context/content/raids/salvations-edge/5-the-witness.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: salvations-edge
   name: Salvation's Edge

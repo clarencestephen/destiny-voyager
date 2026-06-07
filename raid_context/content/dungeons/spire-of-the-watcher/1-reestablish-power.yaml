@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/spire-of-the-watcher/1-reestablish-power.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: spire-of-the-watcher
   name: Spire of the Watcher
@@ -139,3 +138,29 @@ encounter:
     note: Verify exact node positions and any sandbox stat/mod renames against the current in-game build
       before a run; loot pool and traversal layout are stable but mod names changed under Edge of Fate.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: These 3 Builds Will Make Spire Ultimatum EASY! | Destiny 2
+    url: https://www.youtube.com/watch?v=BE8ycf-I5X4
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter (entrance): Prismatic, Golden Gun: Marksman super; Celestial Nighthawk exotic. Kinetic = aggressive-frame
+    sniper (perks Reconstruction + Vorpal) to one-shot the Cyclops, or Succession / Izanagi''s Burden
+    / The Supremacy. Energy = Reckless Oracle (Void auto, Destabilizing Rounds + Repulsor Brace) to blind
+    shielded Minotaurs, or any other Void weapon. Heavy = Queenbreaker (Arc linear fusion, Combat Sights)
+    for the boss added at the end of the entrance, or an Eager''s Edge sword (e.g. The Slammer) to speedrun
+    the wires. Abilities: Gambler''s Dodge, Threaded Spike melee (severs to reduce incoming damage), Grapple
+    grenade. Aspects: Stylish Executioner + Ascension (or Threaded Spectre). Fragments: Facet of Protection,
+    Facet of Dawn, Facet of Sacrifice, Facet of Hope, Facet of Purpose.'
+  - 'Warlock (entrance, support build used for all encounters): Dawnblade, Well of Radiance super; Speaker
+    Sight exotic helmet (healing grenade spawns a restorative turret). Energy = No Hesitation (Solar healing
+    auto rifle applying restoration, perks Physic + Incandescent). Kinetic = sniper (Succession / Izanagi''s
+    Burden / The Supremacy). Heavy = Eager''s Edge sword, Queenbreaker, or another exotic heavy. Abilities:
+    Healing Rift, Incinerator Snap melee, Healing grenade. Aspects: Hellion + Touch of Flame. Fragments:
+    Ember of Benevolence, Ember of Mercy, Ember of Torches, Ember of Ashes (swap to Ember of Solace if
+    not using 1000 Voices).'
+  - 'Titan (entrance, Stormkeep used for all encounters): Striker (Storm''s Keep), Thundercrash super;
+    Cuirass of the Falling Star exotic (boosts Thundercrash). Kinetic = sniper. Energy = a Void primary.
+    Heavy = Eager''s Edge sword, Queenbreaker, or another heavy. Abilities: Rally Barricade, any Arc melee,
+    Storm grenade. Aspects: Knockout (+ Storm''s Keep). Fragments: Spark of Shock, Spark of Magnitude,
+    Spark of Frequency, Spark of Resistance.'

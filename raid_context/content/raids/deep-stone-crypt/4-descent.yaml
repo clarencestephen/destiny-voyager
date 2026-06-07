@@ -1,7 +1,6 @@
 # raid_context/content/raids/deep-stone-crypt/4-descent.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: deep-stone-crypt
   name: Deep Stone Crypt
@@ -262,3 +261,16 @@ encounter:
     note: Augment mod names reflect the in-repo guide; verify exact current mod naming and Solar-resist
       options against the live sandbox before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: BEST Deep Stone Crypt Raid Loadout! [Beyond Light] (Ehroar); plus Best Deep Stone Crypt Raid
+      Loadouts (Dychronic)
+    url: https://www.youtube.com/watch?v=x2FpUQagHdw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Ehroar (his role): his Stasis ''vessel/radius'' add-clear build focused on freezing everything and
+    making/destroying warmind cells; The Lament is carried for the Overload champions'
+  - 'Ehroar (note): this encounter is just a clear with no boss, so you can really use whatever you want'
+  - 'Dychronic (general team loadout): short-to-mid-range add-clear primary; an easy-to-use special for
+    captains or add clear; and a quick-burst heavy to handle the Overload Captain. A Lightweight weapon
+    for everybody is useful since you move around a lot'

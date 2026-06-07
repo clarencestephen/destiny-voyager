@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/prophecy/4-singularity.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: prophecy
   name: Prophecy
@@ -111,3 +110,17 @@ encounter:
     note: Sparrow-speed exotics and renamed stats (Mobility->Weapons) should be confirmed in-game post-Edge
       of Fate; no fixed gear is required for the race.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Each Class in the Prophecy Dungeon (mcflyy.) + The Best Builds for Beating
+      Prophecy Ultimatum Fast! (superapt)
+    url: https://mcflyy.medium.com/the-best-builds-for-each-class-in-the-prophecy-dungeon-bdbbd131f6f3
+      ; https://www.youtube.com/watch?v=FjbPHzcbKLQ
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'All classes (superapt, sparrow intermission): use the sparrow to traverse to the end; a timer on
+    the left wipes you at zero and is extended by running over the tool nodes. No weapon swaps called
+    out for this section.'
+  - 'General (mcflyy., Singularity sparrow section): use a Ghost with the Speed Demon perk or a Sparrow
+    with the Transmat Preloader perk to mount faster and avoid the Taken Vandal snipers; one good long-range
+    weapon is enough for the snipers.'

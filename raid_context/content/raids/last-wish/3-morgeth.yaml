@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/3-morgeth.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish
@@ -192,6 +191,12 @@ encounter:
     - High-burst single-target (Linear Fusion Rifle or Rocket Launcher) from the steps behind Morgeth
     - Well of Radiance on the DPS perch
     - Cuirass-style one-and-done damage supers fit the close perch
+    - Whisper of the Worm
+    - Sleeper Simulant
+    - Legend of Acrius (shotgun)
+    - Rocket Launcher (unspecified)
+    - Ace of Spades (hand cannon)
+    - a good pulse rifle
   role_loadouts:
   - role_id: strength_runner
     subclass: Any (no element enforced); mobility-friendly for collecting orbs across the arena
@@ -219,3 +224,17 @@ encounter:
     note: Stat names use current Edge of Fate naming. Verify specific exotics/weapons against the live
       sandbox; meta shifts seasonally.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Destiny 2 BEST WEAPONS LOADOUT FOR LAST WISH RAID - Kinetic, Energy, Power Raid Weapon Guide
+    url: https://www.youtube.com/watch?v=9uqpXkHAfXs
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Bring a sniper rifle: Whisper of the Worm, or Sleeper Simulant (source prefers Sleeper for more ammo
+    and more DPS from a safe distance to avoid his Attack Bolts)'
+  - If doing the shotgun strat instead, you can keep the shotgun loadout
+  - 'Secondary: Legend of Acrius shotgun, to take out Knights and Ogres effectively'
+  - Bring a long-range weapon to cover distance to a far target
+  - 'Alternate (if you lack these exotics): a good Rocket Launcher + Ace of Spades hand cannon (Firefly
+    perk for fast add clear)'
+  - 'Source''s overall recommendation: a good pulse rifle + a good shotgun + Whisper of the Worm'

@@ -1,7 +1,6 @@
 # raid_context/content/raids/crotas-end/2-bridge.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: crotas-end
   name: Crota's End
@@ -250,3 +249,13 @@ encounter:
     note: Edge of Fate renamed the six armor stats; exotic/weapon meta shifts each season. Verify specific
       loadouts against the current in-game sandbox before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Crota's End Loadouts (Weapons, Armor, Builds, And More...) [Mactics]; Best Weapons
+      to KILL CROTA FAST! - Crota's End Raid [KackisHD]
+    url: https://www.youtube.com/watch?v=bB1_3BuaDVw ; https://www.youtube.com/watch?v=G7uZxfNgei8
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Legendary long-range option, preferably a Scout rifle (Night Watch / Hung Jury) or a legendary sniper
+    (Succession is Mactics' favorite; perks like Firefly/Reconstruction) — 'maybe in the bridge encounter
+    you want to shoot an Ogre from far away'; kept legendary so it doesn't take your exotic slot (Mactics).

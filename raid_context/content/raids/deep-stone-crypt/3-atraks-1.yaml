@@ -1,7 +1,6 @@
 # raid_context/content/raids/deep-stone-crypt/3-atraks-1.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: deep-stone-crypt
   name: Deep Stone Crypt
@@ -236,6 +235,8 @@ encounter:
       elemental:
       - No mandatory elemental resist; general damage resistance is enough for sword-range exchanges with
         duplicates
+      - 'Ehroar: double Arc resist for ~40% damage reduction versus Arc damage to help stay alive in this
+        fight'
       concussive:
       - Concussive Dampener optional; low priority since damage is mostly direct-fire, not large area-of-effect
   damage:
@@ -248,6 +249,8 @@ encounter:
     recommended_dps:
     - Heavy sword (The Lament) for tight single-target burst
     - Aggressive-frame sniper (Whisper) for cross-room duplicate kills when sword approach is unsafe
+    - The Lament (exotic heavy sword) as the main damage weapon; full combo is 3 light attacks into a
+      heavy attack (Ehroar and Dychronic)
   role_loadouts:
   - role_id: scanner
     subclass: Survivable subclass with mobility to reposition between duplicate spawns
@@ -282,3 +285,20 @@ encounter:
     note: The Lament/Whisper remain strong but sandbox balance shifts; verify current sword and special
       DPS meta and exact surge interactions before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: BEST Deep Stone Crypt Raid Loadout! [Beyond Light] (Ehroar); plus Best Deep Stone Crypt Raid
+      Loadouts (Dychronic)
+    url: https://www.youtube.com/watch?v=x2FpUQagHdw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Ehroar (team): same as the prior encounter but switch the heavy to The Lament; everyone else stays
+    more or less the same. Combo per damage phase is 3 light attacks into a heavy attack'
+  - 'Ehroar (his role): may switch to a middle-tree Well (Warlock Well of Radiance) if needed, because
+    you want a Well or bubble for the top and bottom floor; team wants bubble or Well plus a tether for
+    the damage phase'
+  - 'Dychronic (general team loadout): mid-to-long range primary ammo weapon; special is a shotgun or
+    sniper rifle for the Servitors; heavy is a sword, and The Lament is far better than any other sword
+    for the quick-burst damage this fight needs'
+  - 'Dychronic (subclasses): Hunter on Celestial Nighthawk or tether Nightstalker; Titan on Coat of the
+    Protector (bubble); Warlock on Tomb of Grace (Well)'

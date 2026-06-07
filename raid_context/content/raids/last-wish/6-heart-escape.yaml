@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/6-heart-escape.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish

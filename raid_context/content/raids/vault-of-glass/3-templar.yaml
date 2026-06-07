@@ -1,7 +1,6 @@
 # raid_context/content/raids/vault-of-glass/3-templar.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -222,6 +221,7 @@ encounter:
         Health for arena AoE
       concussive:
       - Concussive Dampener can soften the Templar's AoE and add burst when stacking for DPS on Master
+      - Concussive Dampener (extra resistance to the Templar's splash damage)
   damage:
     surges:
     - DPS phase opens after the Aegis Super breaks the Templar's shield. No element is forced, so match
@@ -232,6 +232,12 @@ encounter:
     - 'Burst heavy: Linear Fusion Rifles, Sleeper, Whisper, or rockets'
     - Well of Radiance to anchor the stack (called out in the guide as the DPS cue)
     - Damage-buff supers (e.g., Bubble/Tether style support) and Cuirass-style burst options
+    - Anarchy (heavy) to tick/debuff the boss
+    - Cartesian Coordinate (fusion rifle) with Vorpal Weapon + Boss Spec; alternatives Null Composure
+      or a shotgun
+    - Blade Barrage (or Golden Gun) on Hunter
+    - Thundercrash (Cuirass of the Falling Star) on Titan
+    - Well of Radiance / Chaos Reach on Warlock
   role_loadouts:
   - role_id: relic_holder
     subclass: Survivable subclass with good neutral game (Void overshield or Solar restoration) to stay
@@ -267,3 +273,19 @@ encounter:
     note: DPS meta (linears/rockets/supers) and Master Champions/surges rotate; verify current-meta heavies
       and the weekly modifiers before the run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: stay on Blade Barrage + Shards of Galanor (or swap to Golden Gun if preferred). Heavy: Anarchy.
+    Energy: Cartesian Coordinate (fusion rifle) with Vorpal Weapon + Boss Spec (alternatives: Null Composure,
+    or a shotgun). Primary doesn''t matter unless hot-swapping a shotgun — just need something to shoot
+    Oracles, something for the boss, and Anarchy to debuff. Switch chest mods back to Grenade Launcher
+    + Grenade Launcher Reserves; Concussive Dampener is great here for splash-damage resistance.'
+  - 'Titan: Thundercrash with Cuirass of the Falling Star, same weapons. Alternate bubble Titan (top-tree
+    Sentinel, Helm of Saint-14) — run a magnetic grenade so it sticks to the boss.'
+  - 'Warlock: Well of Radiance (with Lunafaction Boots to extend shotgun range) if you''re the only Warlock;
+    or a damaging super such as Chaos Reach (middle-tree Arc) with Geomag Stabilizers if you have multiple
+    Warlocks. Same weapons as Hunter.'

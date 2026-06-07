@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/grasp-of-avarice/5-avarokk.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
@@ -247,6 +246,9 @@ encounter:
     - 'Burst DPS for the short window: heavy Rocket Launcher, Grenade Launcher, or Linear Fusion Rifle;
       Sword if you can safely close; Witherhoard for chip during deposit runs. Well of Radiance plus Bubble
       for a stationary front-of-room damage stack.'
+    - Reed's Regret (linear fusion) with Firing Line - primary boss DPS
+    - Sleeper Simulant (linear fusion) - alternative boss DPS, easy crit spots like the Ogre
+    - Arbalest - used to clear the anti-barrier Servitors in each section
   role_loadouts:
   - role_id: cannoneer
     subclass: Survivable subclass (strong sustain or Stasis crowd-control) so you can hold the cannon
@@ -287,3 +289,21 @@ encounter:
       burst-DPS and exotic meta before locking loadouts. Gjallarhorn is the quest reward, not a final-boss
       RNG drop.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: MASTER GRASP OF AVARICE GUIDE - TITAN LOADOUT WEAPONS + MODS - Destiny 2
+    url: https://www.youtube.com/watch?v=qoIECNzdNBM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Boss-phase weapons: Arbalest, Plug One, and Reed''s Regret (linear fusion) with Firing Line - described
+    as amazing for the boss DPS.'
+  - Arbalest is used to solo-kill the anti-barrier Servitors that float in each section (left/right/middle)
+    while teammates focus the boss's cronies (shank and the invisible add in the middle).
+  - 'Note: this is a double special-ammo setup (Arbalest + Reed''s Regret) but it worked out fine given
+    the limited number of Drags to kill per area.'
+  - 'DPS alternative: if not using Arbalest, swap back to Sleeper Simulant - a great boss DPS weapon here
+    because, like the Ogre, this final Captain''s crit spots are fairly easy to hit (pairs with linear
+    fusions + Particle Deconstruction).'
+  - Teammates were mostly using Scorch Cannon and Vex on the center adds/boss cronies.
+  - When swapping into the boss room, re-arrange mods back from the sword/overload setup to your fusion/sword
+    mods as needed.

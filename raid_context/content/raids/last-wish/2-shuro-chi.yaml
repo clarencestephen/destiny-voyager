@@ -1,7 +1,6 @@
 # raid_context/content/raids/last-wish/2-shuro-chi.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: last-wish
   name: Last Wish
@@ -227,6 +226,10 @@ encounter:
     - High-burst single-target (Linear Fusion Rifle or Rocket Launcher)
     - Well of Radiance for the burst
     - Eye of Riven Essence Super timed for the Obliterate cancel rather than damage
+    - Sleeper Simulant
+    - Legend of Acrius (shotgun)
+    - a good pulse rifle
+    - Bygones (pulse rifle)
   role_loadouts:
   - role_id: crystal_user
     subclass: Any (no element enforced); pick a subclass whose Super can also serve Essence cancels if
@@ -263,3 +266,15 @@ encounter:
     note: Stat names use current Edge of Fate naming. Verify specific exotics/weapons against the live
       sandbox; meta shifts seasonally.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Destiny 2 BEST WEAPONS LOADOUT FOR LAST WISH RAID - Kinetic, Energy, Power Raid Weapon Guide
+    url: https://www.youtube.com/watch?v=9uqpXkHAfXs
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Primarily uses your Super for this encounter; bring one long-range and one close-range weapon
+  - 'Recommended: a good pulse rifle + Legend of Acrius shotgun + Sleeper Simulant'
+  - You can swap the pulse for Bygones
+  - Avoid bringing too much long range (e.g. Whisper of the Worm or a sniper) since she flinches a lot
+  - 'Alternate (no Sleeper): Legend of Acrius shotgun for DPS, can run multiple shotguns; you mainly need
+    shotgun ammo plus your Super'

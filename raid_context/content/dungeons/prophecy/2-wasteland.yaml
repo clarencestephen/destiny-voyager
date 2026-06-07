@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/prophecy/2-wasteland.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: prophecy
   name: Prophecy
@@ -105,6 +104,11 @@ encounter:
     recommended_dps:
     - Any add-clear primary or special to pop Blights fast
     - Mobility-focused setup so you can keep moving and not get caught by Minotaurs
+    - Queen Breaker (superapt) for the boss at the end of the intermission — heavy weapon, boss has low
+      health
+    - Eager's Edge sword (superapt) as a speedrun alternative to Queen Breaker
+    - Xenophage (mcflyy.) — explosive Pyrotoxin Rounds make quick work of the Taken Blights
+    - The Long Walk sniper (mcflyy.) for long-range Hobgoblins
   role_loadouts:
   - role_id: all
     subclass: Any mobility-friendly subclass (Solar Hunter, Heat Rises Warlock, or any with strong air/movement)
@@ -124,3 +128,24 @@ encounter:
     note: Sparrow speed exotics and stat names may have shifted post-Edge of Fate (Mobility->Weapons).
       Confirm in-game; no specific gear is hard-required here.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Each Class in the Prophecy Dungeon (mcflyy.) + The Best Builds for Beating
+      Prophecy Ultimatum Fast! (superapt)
+    url: https://mcflyy.medium.com/the-best-builds-for-each-class-in-the-prophecy-dungeon-bdbbd131f6f3
+      ; https://www.youtube.com/watch?v=FjbPHzcbKLQ
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Titan (superapt, intermission): same Storm''s Keep Arc build; swaps Kinetic to a sniper rifle — The
+    Supremacy (Vorpal Weapon + Kinetic Tremors); Exotic heavy = Queen Breaker for the boss at the end
+    (or an Eager''s Edge sword to speedrun); Energy = No Hesitation (Physic + Incandescent) for survivability.'
+  - 'Warlock (superapt, intermission): same Speaker''s Sight support build; Kinetic = The Supremacy; heavy
+    = Queen Breaker (or Eager''s Edge / other exotic heavy).'
+  - 'Hunter (superapt, intermission): same Prismatic build; swaps SMG to Tanasha''s Mastery stasis sidearm
+    (Loose Change + Chill Clip — Chill Clip kills grant invisibility); Energy = No Hesitation; heavy =
+    Queen Breaker (or Eager''s Edge).'
+  - 'General (mcflyy., Wasteland): Kinetic = The Long Walk Aggressive Frame sniper (Slideshot/Quickdraw/Outlaw)
+    for Hobgoblins; Energy = Death Adder Lightweight Frame SMG (Armor-Piercing Rounds vs Phalanx shields);
+    Power = Xenophage to pop Blights quickly.'
+  - 'General (mcflyy., Wasteland exotics): Warlock — Transversive Steps (sprint speed + auto-reload);
+    Titan — Actium War Rig (Auto-Loading Link to feed Xenophage).'

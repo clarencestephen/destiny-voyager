@@ -1,7 +1,6 @@
 # raid_context/content/raids/vault-of-glass/1-opening-spire.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -137,6 +136,8 @@ encounter:
         snipers
       concussive:
       - Not required on Normal; Concussive Dampener can ease Cyclops blast knock and chip damage on Master
+      - Concussive Dampener on the Hunter chest (alternatively Sniper Damage Resistance to handle the
+        Hobgoblins out on the platforms)
   damage:
     surges:
     - No boss DPS phase in this encounter; this is a sync-plate hold, so element surge is not a factor
@@ -173,3 +174,23 @@ encounter:
     note: Vex add elements and Master modifiers can shift with sandbox/seasonal updates; verify Champion
       and surge rotators against the current week before locking loadouts.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: Blade Barrage (middle-tree Solar) with Shards of Galanor exotic; incendiary grenade. Door-opening/complexes
+    weapons: Chroma Rush (auto rifle, with Subsistence), an Ikelos SMG (with Subsistence, used as the
+    Overload weapon), heavy Anarchy (or a Legendary grenade launcher with Witherhoard if you lack Anarchy).'
+  - 'Hunter armor mods (kept most of the raid): Reactive Pulse + Ashes to Assets (artifact); Overload
+    SMG + Charged Up on arms; Taking Charge + Grenade Launcher Reserves + Concussive Dampener (or Sniper
+    Damage Resistance vs Hobgoblins) on chest; Global Reach on legs; Breach and Clear on cloak (for Anarchy
+    / Legendary GL / Witherhoard to debuff).'
+  - 'Titan: Thundercrash (Code of the Missile) with Cuirass of the Falling Star exotic; pulse grenade.
+    Same weapons per phase as Hunter; optional Crown-Splitter sword for add-clearing phases (run Lucent
+    Blade if so). Alternate: bubble Titan on top-tree Sentinel with Helm of Saint-14.'
+  - 'Warlock: well or a damaging super depending on how many Warlocks are in the group. Same weapons per
+    phase as Hunter. Solo Warlock typically runs Well of Radiance with Lunafaction Boots; multiple Warlocks
+    can run Chaos Reach (middle-tree Arc) with Geomag Stabilizers, or Boots of the Assembler / Phoenix
+    Protocol for add-clear phases.'

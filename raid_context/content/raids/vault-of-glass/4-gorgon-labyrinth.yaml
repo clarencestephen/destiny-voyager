@@ -1,7 +1,6 @@
 # raid_context/content/raids/vault-of-glass/4-gorgon-labyrinth.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -180,3 +179,12 @@ encounter:
     note: Smoke Bomb invisibility behavior and exotic interactions can change with subclass tuning; verify
       the current Nightstalker invis kit before relying on it.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Optional: switch to your Void subclass and run bottom tree so you can use the Smoke Bomb to make
+    your whole team invisible (as long as you''re grouped up) while crossing the Gorgon maze. Otherwise
+    no specific loadout is needed — you can go through normally.'

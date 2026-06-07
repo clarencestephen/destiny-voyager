@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/pit-of-heresy/5-cradle-of-damnation.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: pit-of-heresy
   name: Pit of Heresy
@@ -209,6 +208,9 @@ encounter:
       elemental:
       - Arc Resist is the primary pick against Zulmak and the Hive adds
       - Stack Health-affecting resist for the DPS aura window where Zulmak's basic attacks still hit
+      - Void resistance
+      - Solar resistance (helps against Zulmak's fire damage slam attack)
+      - Minor (minor enemy) resistance
       concussive:
       - Concussive Dampener can reduce knockback from Zulmak's slam splash and Boomer fire near the crystal
   damage:
@@ -221,6 +223,9 @@ encounter:
     - Burst-damage swords such as Lament or Falling Guillotine
     - Well of Radiance or a damage-boosting Super to maximize the aura window
     - Heavy burst options (linear fusion or rocket) that can be fired from inside the aura
+    - Izanagi's Burden
+    - Anarchy
+    - Mountaintop
   role_loadouts:
   - role_id: swordbearer
     subclass: Any; ability-uptime/survivability kit to weather Disciple alcoves
@@ -255,3 +260,17 @@ encounter:
       current DPS swords/supers (Lament, Falling Guillotine, Well of Radiance) in-game as the meta shifts
       each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Pit of Heresy Solo Flawless Guide - No Exotics or Pinnacles'
+    url: https://www.youtube.com/watch?v=aJkAgTMpnaU
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Hunter: Celestial Nighthawk is the recommended exotic for this final boss.'
+  - 'Recommended damage weapons (general guide list): Izanagi''s Burden, Anarchy, Mountaintop, Recluse,
+    21% Delirium, plus any other top-tier item.'
+  - The guide used Tranquility (Kinetic sniper) and Hammerhead (Arc LMG) as its general damage tools through
+    the run.
+  - 'Damage-phase note: after dunking orbs, pour as much damage as possible into Zulmak, then leave to
+    avoid his fire slam AoE.'
+  - 'Stats: favor Class (Class) per the guide''s general advice.'

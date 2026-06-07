@@ -1,7 +1,6 @@
 # raid_context/content/raids/kings-fall/1-hall-of-souls.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: kings-fall
   name: King's Fall
@@ -128,6 +127,8 @@ encounter:
       elemental:
       - No specific element confirmed for these adds in the guide; general add survivability favors Health
         stat for Hive AoE.
+      - Thermoshock Plating to reduce incoming Arc damage from combatants (many Boomer Knights in King's
+        Fall) and help against Acolyte solar grenades.
       concussive: []
   damage:
     surges:
@@ -162,3 +163,24 @@ encounter:
     note: Loadout specifics (exotics/weapons) left blank where the current Edge of Fate meta could not
       be verified; confirm element surges and meta exotics against the live sandbox before a Master run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST King's Fall Loadout (Weapons, Mods, Stats, And More...)
+    url: https://www.youtube.com/watch?v=s0wKQ-wbS0g
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'General team loadout (source is a pre-release overview, not encounter-specific): Hunter on Void or
+    Solar subclass; the author notes armor mods/weapons are ''pretty much the same'' on Warlock (Luna''s
+    Faction Boots, Starfire Protocol, Contraverse Hold) and Titan (Heart of Inmost Light, Cuirass of the
+    Falling Star, Loreley Splendor).'
+  - 'Kinetic: Arbalest (anti-Barrier, ammo-efficient, strong on tanky bosses); Izanagi''s Burden (burst);
+    Witherhoard (ad-clear + DoT DPS).'
+  - 'Ad-clear primaries run Major Spec / Adept Big Ones since they are used for general ad-clear, not
+    boss DPS: Time-Lost Fatebringer (Explosive Payload, Firefly), Night Watch scout (Rapid Hit, Explosive
+    Payload), BxR-55 Battler, The Vault (Vorpal scout).'
+  - 'Energy: Calus Mini-Tool (Incandescent + Threat Detector, solar), Funnelweb (Subsistence + Frenzy,
+    void), First In Last Out (slug shotgun).'
+  - 'Stats (Edge of Fate names): 100 Super, 100 Health, max Weapons (guide''s 100 Super / 100 Health /
+    max Weapons); author notes Super could be dropped toward Grenade.'
+  - 'Core armor mods: Font of Might, Harmonic Siphon, Elemental Ordnance, Bountiful Wells, Reaping Wellmaker
+    (Void) or Melee Wellmaker + Well of Life (Solar), Utility Kickstart, Thermoshock Plating.'

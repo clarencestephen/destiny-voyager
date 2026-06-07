@@ -1,7 +1,6 @@
 # raid_context/content/raids/crotas-end/1-abyss.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: crotas-end
   name: Crota's End
@@ -191,3 +190,25 @@ encounter:
     note: Edge of Fate renamed the six armor stats (Mobility->Weapons, etc.); exotic/weapon meta shifts
       each season. Verify specific loadouts against the current in-game sandbox before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The BEST Crota's End Loadouts (Weapons, Armor, Builds, And More...) [Mactics]; Best Weapons
+      to KILL CROTA FAST! - Crota's End Raid [KackisHD]
+    url: https://www.youtube.com/watch?v=bB1_3BuaDVw ; https://www.youtube.com/watch?v=G7uZxfNgei8
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Glaive (legendary): brought strictly for the first encounter — when you are not near the lanterns
+    you get Weight of Darkness which decreases sprint/walk speed and prevents jumping; the glaive block
+    makes you near-immune to Thrall/Cursed Thrall explosions when you are in a tight spot (Mactics).'
+  - 'Eager Edge sword (heavy): literally just for the first encounter — use the Eager Edge lunge to get
+    through the maze faster when Weight of Darkness stacks slow you down (still possible to bunny-hop
+    at x1-x9 stacks) (Mactics).'
+  - 'Forbearance: Mactics'' crafted roll is Quick Launch, Velocity Rounds (reload-speed frame), Ambitious
+    Assassin, Chain Reaction — ''insane for the first encounter,'' one shot can nuke the Thrall looking
+    at you; goes under enemy healing shields. If you lack it, bring any wave-frame grenade launcher (Mactics).'
+  - Legendary long-range option, preferably a Scout rifle (Night Watch is Mactics' pick; Hung Jury also
+    works) — kept as a legendary so it doesn't take your exotic slot; useful for toasting the Boomer Knights
+    up in the towers and for shooting an Ogre from far away in the Abyss/first encounter (Mactics).
+  - 'Wither Hoard (kinetic grenade launcher, exotic): great for spawn-trapping and for the throwaway/Abyss
+    run — drop it behind you so the Thrall chasing you run through it and die; stick tanky Knights/Acolytes
+    with it (Mactics).'

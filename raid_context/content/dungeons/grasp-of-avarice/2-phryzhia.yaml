@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/grasp-of-avarice/2-phryzhia.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
@@ -227,9 +226,15 @@ encounter:
       elemental:
       - Consider Void resistance for the Ogre eye laser; break line of sight rather than tanking it. Arc
         resistance helps against dense Thrall and Fallen add fire.
+      - Protective Light (Arms) for damage resistance, especially on Master / when under-leveled; alternatives
+        Well of Tenacity or Warmind's Protection.
+      - 'If under-leveled, double up on resistance: add Arc damage resistance (lots of Arc coming in -
+        night boomers do Arc, and Thrall melee is Arc) and/or Melee damage resistance.'
       concussive:
       - 'Optional: Concussive Dampener can soften the Ogre''s eye-laser splash if you are caught in the
         open, but breaking sightline is the primary defense.'
+      - Concussive Dampener; if under-leveled you can double up on Concussive Dampener (or pair it with
+        an elemental/melee resist mod) due to heavy Arc and Solar incoming damage.
   damage:
     surges:
     - No fixed elemental requirement; Phry'zhia takes increased damage while vulnerable. Match surges
@@ -239,6 +244,8 @@ encounter:
     recommended_dps:
     - 'Burst DPS (the window is short): heavy Grenade Launcher or Rocket, Linear Fusion Rifle, or Sword
       for an aggressive close perch; Witherhoard for sustained chip during deposit runs.'
+    - Sleeper Simulant (linear fusion, boss DPS - easy Ogre crits)
+    - Plug One (fusion rifle, paired with Particle Deconstruction)
   role_loadouts:
   - role_id: cannoneer
     subclass: Survivable subclass with good self-sustain so you can hold the Scorch Cannon through Thrall
@@ -277,3 +284,27 @@ encounter:
     note: Ogre eye-laser element treated as Void per Hive Ogre convention; verify and confirm current
       exotic/weapon meta before finalizing loadouts.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: MASTER GRASP OF AVARICE GUIDE - TITAN LOADOUT WEAPONS + MODS - Destiny 2
+    url: https://www.youtube.com/watch?v=qoIECNzdNBM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Subclass + Super: Thunder Crash (middle tree Arc Titan), with Pulse Grenade equipped.'
+  - 'Primary: Chroma Rush (auto rifle) with Auto Rifle Anti-Barrier equipped for the anti-barrier Knights
+    in the garage-door rooms.'
+  - 'Special: Plug One (fusion rifle) kept on for add-clear.'
+  - 'Heavy: Sleeper Simulant (linear fusion) for boss DPS, since the Ogre''s critical hits are fairly
+    easy to land. Anti-barrier alternative: a teammate without Sleeper can run Arbalest in the kinetic
+    slot for its intrinsic anti-barrier on the Knights.'
+  - 'Mods - Helmet: Hands On; Elemental Armaments (chance for Elemental Wells on Plug One kills); Linear
+    Fusion ammo finder.'
+  - 'Mods - Arms: Protective Light (key on Master / when under-leveled for damage resistance); Elemental
+    Charge (become Charged with Light x2 on picking up an Arc elemental well); reserves mods. Alternatives
+    to Protective Light mentioned: Well of Tenacity (combatant damage reduction) or Warmind''s Protection
+    (with Ikelos SMG / Warmind Cells).'
+  - 'Mods - Legs: Fire and Ice (artifact) or substitutes like Explosive Wellmaker / melee or grenade wellmaker
+    mods; plus scavenger and Recuperation (heal on Orb of Power pickup).'
+  - 'Mods - Class Item (mark): Particle Deconstruction (for fusion rifles) and Bountiful Wells (doubles
+    wells dropped).'
+  - 'Master note: Put a stat-armor mod on your Ghost so dropped armor has good stats.'

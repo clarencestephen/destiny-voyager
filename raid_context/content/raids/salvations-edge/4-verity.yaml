@@ -3,7 +3,6 @@
 # + verified v3 additions from the Verity vertical-slice pipeline (brief->author->verify).
 # Blank loadout fields = UNVERIFIED, not guessed. EoF stat names (Health/Class/...).
 # Verifier note: removed an incorrect 'Witness one-shot' threat (Witness = encounter 5).
-
 activity:
   slug: salvations-edge
   name: Salvation's Edge

@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/grasp-of-avarice/4-shield-shutdown.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: grasp-of-avarice
   name: Grasp of Avarice
@@ -223,3 +222,17 @@ encounter:
     note: Servitor bolt element treated as Void per Fallen Servitor convention; verify current exotic/weapon
       meta before finalizing.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: MASTER GRASP OF AVARICE GUIDE - TITAN LOADOUT WEAPONS + MODS - Destiny 2
+    url: https://www.youtube.com/watch?v=qoIECNzdNBM
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Threat: Overload Captains that teleport constantly. The creator doubles up on Overload here.'
+  - 'Special: Laminar (Lament-style / poison) swapped in for poison tick damage that can help stun the
+    teleporting Overload Captains.'
+  - 'Heavy: Switch to a Sword for this phase.'
+  - 'Mods - Arms (double Overload): Overload Sword and Overload Bow both equipped - the plan being to
+    land a bow shot then finish with the sword. Note this consumes most of the arms energy (only one stat
+    slot left); if you cannot fit both, pick one and try to bow-shot then sword.'
+  - 'Weapon flow: Get a shot on the Overload Captain with the bow, then go in with the sword.'

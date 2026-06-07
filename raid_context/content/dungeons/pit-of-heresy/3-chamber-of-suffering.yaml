@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/pit-of-heresy/3-chamber-of-suffering.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: pit-of-heresy
   name: Pit of Heresy
@@ -198,6 +197,9 @@ encounter:
       elemental:
       - Arc Resist is the main pick against Boomer Knight and Knight damage
       - Stack Health-affecting resist mods for the Curse of Suffering window
+      - Void resistance
+      - Solar resistance
+      - Minor (minor enemy) resistance
       concussive:
       - Concussive Dampener can reduce Boomer Knight blast knockback on the totem-sitter
   damage:
@@ -247,3 +249,20 @@ encounter:
     note: Edge of Fate renamed the six character stats; verify current exotics/weapons (e.g., Witherhoard,
       Gjallarhorn) in-game as the meta shifts each season.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Pit of Heresy Solo Flawless Guide - No Exotics or Pinnacles'
+    url: https://www.youtube.com/watch?v=aJkAgTMpnaU
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Bring a Rampage bow for this totem encounter (one-headshot acolyte kills); the guide used Subtle Calamity
+    (Rampage / Archer's Tempo). Le Monarch also works if you have it.
+  - Keep a machine gun (the guide used Hammerhead, Arc LMG) on hand for when you fall behind and adds
+    must die immediately.
+  - 'Titan: top tree Sentinel — melee kills heal you, charged melee grants overshield, and Ward of Dawn
+    enables a safer orb strategy and acts as a get-out-of-jail card.'
+  - 'Warlock: Devour and healing rift for healing on kills; Nova Bomb as a one-time ''this needs to die
+    now'' button.'
+  - 'Hunter: invisibility dodge plus Tether to shut down thrall after a dunk; spec for Class (Class) and
+    class-ability cooldown.'
+  - 'Stats: spec heavily for Class (Class), and the guide also specced class-ability cooldown on Hunter.'
