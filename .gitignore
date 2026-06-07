@@ -34,3 +34,6 @@ backend/data/
 darth-bot/*_test.png
 darth-bot/*.log
 .firecrawl/
+
+darth-bot/data/twab_watcher.log
+darth-bot/data/twab_watcher_state.json

@@ -203,7 +203,17 @@ def email2_aztecross(dry=False):
     st = _load_state()
     if v["id"] == st.get("last_aztecross_id") and not dry:
         print("no newer Aztecross TWAB since last email"); return
-    bullets = _highlights(v["md"]) or ["(transcript captured; see video)"]
+    # Prefer Aztecross-attributed points from the distilled summary (his specific takes).
+    bullets = []
+    fmj = HERE.parent / "raid_context" / "twab" / "future-meta-summary.json"
+    if fmj.exists():
+        fm = json.loads(fmj.read_text())
+        for key, tag in [("changes_overview", "Change"), ("buffs", "Buff ▲"), ("nerfs", "Nerf ▼")]:
+            for x in (fm.get(key) or []):
+                if "aztecross" in x.lower() and not MARATHON_RX.search(x):
+                    bullets.append(f"<b>{tag}:</b> " + re.sub(r"\s*Source:.*$", "", x))
+        bullets = bullets[:12]
+    bullets = bullets or _highlights(v["md"]) or ["(transcript captured; see video)"]
     html = _wrap("🎥 Aztecross TWAB Summary", v["title"], bullets,
                  f"Aztecross (TWAB source of truth) — {v['url']} . Recency-weighted: this supersedes "
                  "older breakdowns. Marathon excluded.")
