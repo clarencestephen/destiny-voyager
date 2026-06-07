@@ -121,8 +121,10 @@ def find_aztecross_twab() -> dict | None:
     """Newest Aztecross TWAB/Dev-Insight video via firecrawl search."""
     try:
         out = HERE.parent / "raid_context" / ".firecrawl" / "twab" / "_aztecross_latest.json"
-        subprocess.run(["firecrawl", "search", "Aztecross This Week in Destiny TWAB Dev Insights latest",
-                        "--scrape", "--limit", "6", "-o", str(out), "--json"],
+        # Just grab whatever recent Aztecross TWAB pops up (past week) — no clever
+        # newest-picking; the user has channel notifications as the real backstop.
+        subprocess.run(["firecrawl", "search", "Aztecross This Week in Destiny TWAB Dev Insights",
+                        "--tbs", "qdr:w", "--scrape", "--limit", "6", "-o", str(out), "--json"],
                        capture_output=True, timeout=150)
         d = json.loads(out.read_text())
         for w in (d.get("data", {}).get("web") or []):
