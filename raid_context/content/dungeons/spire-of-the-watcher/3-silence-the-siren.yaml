@@ -1,0 +1,257 @@
+# raid_context/content/dungeons/spire-of-the-watcher/3-silence-the-siren.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: silence-the-siren
+  name: Silence the Siren (Akelous, the Siren's Current)
+  difficulty: medium
+  estimated_time: 15-20 min
+  abstract: 'First boss. 4 numbered platforms extend from a central structure;
+
+    each has an Arc circuit ending at a fuel rod. Complete all 4 to
+
+    expose Akelous''s eyes → shoot eyes (Trace Rifle ideal) → core
+
+    exposed → DPS while it moves backward.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Central tower structure with 4 covered platforms extending outward (numbered 1-4 on signs).
+
+    - Conduit Minotaur + Goblin groups spawn on opposite platforms.
+
+    - Fuel rods at the end of each platform (revealed after circuit).
+
+    - Akelous (large Vex Hydra) on top of central tower.
+
+
+    PLATFORM MECHANICS:
+
+    - Each platform = its own yellow Arc circuit. Nodes hidden under catwalks + on platform sides.
+
+    - 4 circuits done = 4 fuel rods revealed = Akelous descends + reveals eyes.
+
+    - Shoot ALL EYES → core (radiolarian weak point) exposed.
+
+    - DPS while Akelous moves backward to center.
+
+    - Phase ends with a knockback BLAST → take cover behind gantry / behind Akelous.
+
+
+    START STATE: kill Minotaur Akelous is holding to start.
+
+    '
+  callouts:
+  - when: Platform circuit done
+    from: runner
+    to: team
+    say: '"[1/2/3/4] DONE."'
+    why: Progress to 4/4.
+  - when: All 4 done — eyes phase
+    from: any
+    to: team
+    say: '"EYES — sweep!"'
+    why: Switch to Trace Rifle / high-fire-rate for eye burst.
+  - when: Eyes all down — core exposed
+    from: any
+    to: team
+    say: '"CORE — DPS."'
+    why: Switch back to burst DPS.
+  - when: Phase ending (knockback prep)
+    from: any
+    to: team
+    say: '"BLAST — cover."'
+    why: Take cover or align behind gantry.
+  wipe_triggers:
+  - Knockback blast off the central platform = fall death.
+  - Hydra-laser sweep during eye phase.
+  - Supplicants from completed circuits chasing eye-shooters.
+  damage_phase_triggers:
+  - All 4 fuel rods revealed → eyes shootable → core exposed → ~20s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Kill the held Minotaur. Akelous engages.
+  - phase: Platform circuits (parallel)
+    runners_3: 'One platform each (1-3), pick up #4 with leftover Arctrician.'
+  - phase: Eyes
+    all: Sweep eyes ASAP. Trace Rifle preferred.
+  - phase: Core DPS
+    all: Burst Akelous core. Move back as he retreats.
+  - phase: Blast → reset
+    all: Take cover. Reset to platform circuits.
+  permutations:
+  - name: Standard 1-platform-each + 1 floater
+    learner_friendly: true
+    summary: Each player owns 1-2 platforms. Reassemble for eyes + core.
+    roles:
+    - id: platform_owner
+      count: 3
+      does: Assigned platform circuit(s); converge for eye/core phase.
+      loadout:
+        subclass: Mobile, survivable subclass for platform traversal and dodging the eye sweep (Solar
+          for healing, Arc for movement, or Void for overshield).
+        weapons: Precision Primary for nodes; a Trace Rifle for the eye phase; a Linear Fusion / Sniper
+          for the core. Add Anti-Barrier / Anti-Unstoppable on Master.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Match weapon surge mods to your heavy/special DPS element. On Master add Anti-Barrier
+          / Anti-Unstoppable.
+  - name: 'Speed: Whisper / Linear DPS'
+    learner_friendly: false
+    summary: Burst Akelous in 1 phase with Whisper of the Worm / Linear Fusion.
+    best_for: Practiced teams.
+    roles:
+    - id: dps
+      count: 3
+      does: Sustained Whisper/Linear during eye + core windows.
+      loadout:
+        subclass: A burst-damage subclass (Solar Well/Star-Eater pairing, Arc, or Void) to maximize the
+          one-phase core window.
+        weapons: Whisper of the Worm or a Linear Fusion Rifle for sustained core DPS, plus a Trace Rifle
+          to drop the eyes fast.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Super
+        surges_mods: Run surge mods matching your Linear/Whisper element. Damage-boosting class setups
+          (e.g. Star-Eater on Hunter) help the one-phase.
+  - name: Solo
+    learner_friendly: false
+    summary: 4 circuits alone, eyes alone, DPS alone. 2-3 phases expected.
+    roles:
+    - id: solo
+      count: 1
+      does: Trace Rifle for eyes; rocket/sniper for core.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
+          handle circuits, eyes, and DPS alone over 2-3 phases.
+        weapons: Trace Rifle for eyes; a Rocket or Sniper for the core. Precision Primary for the circuit
+          nodes. Anti-Barrier / Anti-Unstoppable on Master.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Match surge mods to your core-DPS element; prioritize survivability and (on Master)
+          Champion mods.
+  cheese: []
+  common_mistakes:
+  - Trying to burst Akelous BEFORE killing all eyes — core is protected until eyes are clear.
+  - Standing in front of Akelous during knockback blast — straight off the platform.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Terminus Horizon (machine gun, Arc)
+    - Seventh Seraph Officer Revolver (hand cannon, Kinetic)
+    - TM Cogburn armor — Gauntlets + Plate + Mark (Class Item)
+    - Liminal Vigil (sidearm)
+    - Seventh Seraph CQC-12 (shotgun)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: 1-platform owner.'
+  - '2nd: floater (covers slowest platform runner).'
+  plain_language_steps:
+  - 1. You arrive at a central tower with 4 covered platforms extending outward, each labeled 1-4 on signs.
+    Akelous (a large Vex Hydra) sits on top.
+  - 2. Start the fight by killing the Minotaur Akelous is holding.
+  - 3. Each of the 4 platforms is its own yellow Arc circuit. Pick up Arctrician from Conduit Minotaur
+    pools (Minotaurs and Goblins spawn on opposite platforms).
+  - 4. Split the platforms (for example one runner each on 1-3, picking up platform 4 with leftover Arctrician)
+    and shoot each platform's nodes in chevron order out to the fuel rod at the end.
+  - 5. Check node positions hidden under catwalks and on the platform sides. Call '[1/2/3/4] DONE' as
+    each finishes.
+  - 6. When all 4 fuel rods are revealed, Akelous descends and exposes its eyes. Call 'EYES - sweep!'
+  - 7. Switch to a Trace Rifle or other high-fire-rate weapon and shoot ALL of Akelous's eyes as fast
+    as possible - the faster the eyes die, the longer the DPS window.
+  - 8. Once every eye is destroyed the core (radiolarian weak point) is exposed. Call 'CORE - DPS' and
+    burst it.
+  - 9. DPS the core while Akelous moves backward toward center; keep following to stay on the weak point.
+  - 10. When the phase ends Akelous winds up a knockback BLAST. Call 'BLAST - cover' and take cover behind
+    the gantry or behind Akelous - never stand in front, or you get launched off the platform to your
+    death.
+  - 11. If Akelous survives, the encounter resets to the platform-circuit step; repeat until dead. Watch
+    for Supplicants from completed circuits chasing your eye-shooters.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Vex line/slap-rifle fire from Goblins and the Conduit Minotaurs)
+      - Supplicants deal explosive contact damage as they chase players
+      boss:
+      - Akelous Hydra-laser sweep (Vex Hydra eye beam) during the eye phase
+      - Knockback blast that launches players off the platform (lethal via fall, not raw element)
+    champions:
+    - 'Master only: Barrier Hydra -> Anti-Barrier (Akelous-adjacent Hydras / Master rotators)'
+    - 'Master only: Unstoppable Minotaur -> Anti-Unstoppable (the Conduit Minotaurs)'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist helps against the Hydra eye-beam sweep and Vex line-rifle fire. Survivability against
+        the laser sweep is the priority during the eye phase.
+      concussive:
+      - Concussive Dampener can soften the boss knockback/blast and Supplicant explosions, but positioning
+        behind cover is the real defense against the launch.
+  damage:
+    surges:
+    - No fixed elemental burn is forced. Akelous has no specific elemental surge - bring your strongest
+      burst element. Match any surge mods to your DPS weapon's element.
+    burst_windows: After all eyes are destroyed, the core opens for roughly a 20 second DPS window while
+      Akelous retreats backward.
+    recommended_dps:
+    - Trace Rifle to clear the eyes quickly
+    - Linear Fusion Rifles or Sniper Rifles for the small core weak point
+    - Whisper of the Worm / heavy precision for sustained core damage
+    - Rockets for burst on the core
+  role_loadouts:
+  - role_id: platform_owner
+    subclass: Mobile, survivable subclass for platform traversal and dodging the eye sweep (Solar for
+      healing, Arc for movement, or Void for overshield).
+    weapons: Precision Primary for nodes; a Trace Rifle for the eye phase; a Linear Fusion / Sniper for
+      the core. Add Anti-Barrier / Anti-Unstoppable on Master.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match weapon surge mods to your heavy/special DPS element. On Master add Anti-Barrier
+      / Anti-Unstoppable.
+  - role_id: dps
+    subclass: A burst-damage subclass (Solar Well/Star-Eater pairing, Arc, or Void) to maximize the one-phase
+      core window.
+    weapons: Whisper of the Worm or a Linear Fusion Rifle for sustained core DPS, plus a Trace Rifle to
+      drop the eyes fast.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run surge mods matching your Linear/Whisper element. Damage-boosting class setups (e.g.
+      Star-Eater on Hunter) help the one-phase.
+  - role_id: solo
+    subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you handle
+      circuits, eyes, and DPS alone over 2-3 phases.
+    weapons: Trace Rifle for eyes; a Rocket or Sniper for the core. Precision Primary for the circuit
+      nodes. Anti-Barrier / Anti-Unstoppable on Master.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge mods to your core-DPS element; prioritize survivability and (on Master) Champion
+      mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/spire-of-the-watcher.yaml (encounter 3: silence-the-siren
+      / Akelous, the Siren''s Current)'
+    note: Primary source for platform circuits, eye-then-core phase, knockback, and the Trace/Linear DPS
+      recommendations.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: DPS meta shifts each season - verify Trace Rifle and Linear Fusion picks and any exotic availability
+      against the current sandbox. Master Champion types per the guide's overall_notes.
+    date_checked: '2026-06-07'

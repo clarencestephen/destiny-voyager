@@ -1,0 +1,202 @@
+# raid_context/content/raids/vault-of-glass/2-confluxes.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: confluxes
+  name: Templar's Well — Confluxes (1st loot)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Defend 3 Confluxes from Vex sacrifices. 4 Vex sacrifices to a Conflux
+
+    = wipe. Phase 1 = 1 Conflux (center). Phase 2 = +2 Confluxes (L+R).
+
+    Final phase = all 3 active. Then Oracle wave (5 waves, kill IN ORDER).
+
+    '
+  setup: "WHAT YOU SEE:\n- Templar's Well arena — wide, with a center pool of light (cleanse pool).\n\
+    - 3 Conflux spawn points: center-front, far-left, far-right.\n- 7 Oracle spawn positions (use as map\
+    \ markers): mid, L1, R1, L2, R2, L3, R3.\n- Cave areas near L+R Confluxes for Vex add-spawns.\n- Hobgoblins\
+    \ on distant platforms (sniper threat).\n\nPLATFORM MECHANICS:\n- Conflux defense: Vex enemies (Wyvern\
+    \ / Overload Minotaur) try to walk INTO Conflux.\n  Each successful sacrifice = 1/4 of Conflux's \"\
+    tribute.\" 4 = wipe.\n- Cleanse pool: removes Marked for Negation. Despawns after several uses.\n\
+    - Fanatics (headless glowing Goblins) leave NEGATION POOLS — don't step in. Don't melee them.\n\n\
+    ORACLE PHASE:\n- 5 waves. EACH oracle spawn signals with a musical chime.\n- Must kill in SPAWN ORDER\
+    \ (D2 specific rule). Wrong order = team-wide Mark.\n\nSTART STATE: enter arena = encounter starts.\
+    \ Center Conflux spawns first.\n"
+  callouts:
+  - when: Vex approaching Conflux
+    from: defender
+    to: team
+    say: '"Wyvern center — burn!"'
+    why: Sacrifice imminent. Stop it.
+  - when: Tribute count
+    from: any
+    to: team
+    say: '"Center 2/4."'
+    why: Awareness — when to panic vs. proceed.
+  - when: Fanatic killed near anyone
+    from: killer
+    to: team
+    say: '"Fanatic pool [direction] — avoid."'
+    why: Negation.
+  - when: Marked for Negation
+    from: self
+    to: team
+    say: '"MARKED — pool now."'
+    why: Cleanse + don't double-stack pool usage.
+  - when: Oracle spawned
+    from: spotter
+    to: team
+    say: '"Oracle [position] — KILL."'
+    why: Order matters. Caller names sequence.
+  wipe_triggers:
+  - 4 sacrifices to ANY Conflux.
+  - 'Oracle phase: wrong-order kills = team Mark + death.'
+  - All cleanse-pool charges exhausted with Marks active.
+  damage_phase_triggers:
+  - All Oracle waves cleared → Templar's Well encounter completes.
+  parallel_timeline:
+  - phase: Pull
+    all: Split. Center Conflux defense first.
+  - phase: Conflux Phase 1 (center)
+    defenders_3: Hold center.
+    floaters_3: Far-side enemy clearing.
+  - phase: Conflux Phase 2 (+L+R)
+    all: Split L/M/R. 2 per Conflux.
+  - phase: Oracle Phase (5 waves)
+    spotters: Call spawn order.
+    killers: Kill in order. Use Aegis if available.
+  permutations:
+  - name: Standard 2-per-Conflux
+    learner_friendly: true
+    summary: 2 defenders per Conflux. Float for Praetorian pressure.
+    roles:
+    - id: conflux_defender
+      count: 6
+      does: Pair to a Conflux. Add-clear + sacrifice prevention.
+      loadout:
+        subclass: Any survivable subclass; a support subclass (Solar Well/restoration or Void overshield)
+          helps hold a Conflux
+        weapons: Add-clear primary plus an anti-major special/heavy (sniper or GL) to stop sacrifices;
+          precision scout for ranged Hobgoblins/Fanatics
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No DPS surge needed; run minor/major spec and, on Master, an anti-Champion verb (Anti-Overload
+          / Anti-Barrier)
+  - name: 'Speed: Wyvern-burst focus'
+    learner_friendly: false
+    summary: All 6 burst Wyverns/Minotaurs the instant they spawn. Faster Conflux drain.
+    best_for: Experienced teams.
+  cheese: []
+  common_mistakes:
+  - Killing Fanatics mid-arena — pools cluster, can't navigate to cleanse pool.
+  - Forgetting Oracle order — call positions LOUDLY.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - 'Combined Conflux + Oracle drop pool (blueberries treats these as 2 separate encounters; this YAML
+      block covers both):'
+    - Vision of Confluence (scout rifle, Solar)
+    - Found Verdict (shotgun, Arc)
+    - Praedyth's Revenge (sniper rifle, Kinetic)
+    - Corrective Measure (machine gun, Void)
+    - Vault of Glass armor (random slot)
+  master_challenge:
+    name: Wait for It…
+    requirement: 'Sacrificial Wyverns cannot die before they begin to sacrifice
+
+      themselves at the confluxes. Forces add-clear to LET the
+
+      Wyverns reach the plates before pile-on damage. Pairs with
+
+      Oracles'' "The Only Oracle for You" (each Oracle destroyed
+
+      only once across the encounter).
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: conflux_defender.'
+  - '2nd: Oracle caller.'
+  plain_language_steps:
+  - '1. Enter Templar''s Well. You see a wide arena with a center pool of light (the cleanse pool) and
+    three Conflux spawn points: center-front, far-left, and far-right.'
+  - 2. The encounter starts on entry. The center Conflux spawns first; defend it. Vex enemies (Wyverns
+    and Overload-style Minotaurs) walk toward the Conflux to sacrifice themselves.
+  - 3. Stop every Vex before it reaches the Conflux. Four successful sacrifices to a single Conflux wipes
+    the team, so call the tribute count out loud (for example 'Center 2 of 4').
+  - 4. After the center phase, two more Confluxes activate on the left and right. Split into pairs, two
+    players per Conflux, and defend all three at once.
+  - 5. Avoid the Fanatics (headless glowing Goblins). Do not melee them; when killed they leave a green
+    negation pool. Corral them toward the center and kill them at range.
+  - 6. If you get Marked for Negation, step into the center cleanse pool to remove it, and call it out
+    so the team does not exhaust the pool's limited charges.
+  - '7. Once the Confluxes are defended, the Oracle phase begins: five waves of glowing Vex Oracles, each
+    spawn signaled by a musical chime.'
+  - 8. Kill the Oracles strictly in the order they spawned. In Destiny 2, killing them out of order Marks
+    the entire team for Negation. Assign a caller to name positions (mid, L1, R1, L2, R2, L3, R3).
+  - 9. Clear all five Oracle waves to complete the encounter and earn the first loot drop.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Wyverns): Arc-heavy melee and ranged pressure as they march to sacrifice'
+      - 'Vex (Overload-style Minotaurs): Void slap-rifle fire and heavy melee'
+      - 'Vex (Hobgoblins): precision Solar snipers from distant platforms'
+      - 'Vex (Fanatics, headless Goblins): leave green negation pools on death that apply Marked for Negation'
+      boss: []
+    champions:
+    - Overload Minotaur -> Anti-Overload (Master only)
+    - Barrier Hydra -> Anti-Barrier (Master only)
+    recommended_defensive_mods:
+      elemental:
+      - Void resist helps vs Minotaur fire; Solar resist helps vs Hobgoblin snipers; Arc resist helps
+        vs Wyverns
+      concussive:
+      - Concussive Dampener helps reduce Wyvern and Minotaur burst when defending a Conflux up close on
+        Master
+  damage:
+    surges:
+    - 'No traditional boss DPS phase; the only timed burst is deleting sacrificial Vex at the Conflux.
+      Element surge is not a factor (note: the Master challenge ''Wait for It'' actually forbids killing
+      Wyverns before they begin sacrificing)'
+    burst_windows: No boss damage window; the priority window is bursting each Wyvern/Minotaur before
+      it reaches a Conflux (on Master, only after it starts sacrificing).
+    recommended_dps:
+    - Anti-major special or heavy (sniper, GL, rocket, LMG) to delete sacrificial Wyverns and Minotaurs
+    - Precision primary (scout or pulse) for Hobgoblins and Fanatics at range
+    - Champion-stun option on Master (Anti-Overload / Anti-Barrier)
+  role_loadouts:
+  - role_id: conflux_defender
+    subclass: Any survivable subclass; a support subclass (Solar Well/restoration or Void overshield)
+      helps hold a Conflux
+    weapons: Add-clear primary plus an anti-major special/heavy (sniper or GL) to stop sacrifices; precision
+      scout for ranged Hobgoblins/Fanatics
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surge needed; run minor/major spec and, on Master, an anti-Champion verb (Anti-Overload
+      / Anti-Barrier)
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: confluxes)'
+    note: Primary source for Conflux defense, Fanatic pools, Oracle in-order rule, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Master Champion types (Barrier Hydra / Overload Minotaur) and surge rotators can change with
+      the sandbox; confirm against the current week before committing loadouts.
+    date_checked: '2026-06-07'

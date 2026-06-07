@@ -1,0 +1,315 @@
+# raid_context/content/dungeons/warlords-ruin/4-quell-the-corruption.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: quell-the-corruption
+  name: Quell the Corruption (Hefnd's Vengeance, Blighted Chimaera)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Final boss. Same totem-cleanse + Naeem''s Wish loop as previous
+
+    encounters, plus the Hex of Vengeful Corruption (15s timer, pass via
+
+    melee to a Hex-Drinker Wraith). Boss teleports up 3 floors; each
+
+    floor repeats mechanics until the final stand grants infinite buff.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Mountain summit arena, central Taken blight + floating Ahamkara bones.
+
+    - Chimaera (Taken hydra-type) hovers in center. Void Eversion AoE around it.
+
+    - Broken Knights spawn at L+R ends once Imminent Wish triggers.
+
+    - Corrupted Hex-Drinkers (immune Wraiths) skulk around the perimeter — usually 2-3 visible.
+
+
+    PLATFORM MECHANICS:
+
+    - Floor 1: ground level. Standard totem/cleanse/DPS loop.
+
+    - Floor 2: climbable ruins. Same loop, smaller footprint.
+
+    - Floor 3 (final stand): 3 platforms in a triangle. Standing on a platform = Naeem''s Wish. Shooting
+    Blighted Eyes nearby extends duration. Chimaera teleports between platforms after each Wish drop.
+
+    - Hex-Drinkers: immune to gunfire. Melee = transfers your Hex to them. They melee back to re-apply.
+
+
+    START STATE: pull = shoot central blight to engage. Chimaera Void Eversion activates immediately.
+
+    '
+  callouts:
+  - when: Imminent Wish starts
+    from: first to see
+    to: team
+    say: '"Wish up — eyes on knights + hex-drinkers."'
+    why: Knights drop totems, hex-drinkers are your hex outlet.
+  - when: You receive Hex of Vengeful Corruption (red icon, 15s timer)
+    from: self
+    to: team
+    say: '"HEXED — going [direction] drinker."'
+    why: Other hexed players need to NOT go the same drinker (chain hex). 15s feels long; isn't.
+  - when: Hex passed to drinker
+    from: self
+    to: team
+    say: '"Clean."'
+    why: Confirms the drinker is committed. Don't melee a committed drinker.
+  - when: Floor 3 — boss teleports to new platform
+    from: first to see
+    to: team
+    say: '"Platform [N/S/E] active."'
+    why: Team needs to move + stand on the new platform before old buff drops.
+  - when: Naeem's Wish expiring (Floor 3)
+    from: any
+    to: team
+    say: '"Eyes! Eyes for extension!"'
+    why: Shooting nearby Blighted Eyes adds duration. Critical for survival on Floor 3.
+  - when: Final stand begins (Chimaera teleports team back to Floor 1)
+    from: any
+    to: team
+    say: '"FINAL STAND — burn it down."'
+    why: Buff is infinite at final stand. Take your time, don't panic.
+  wipe_triggers:
+  - Hex of Vengeful Corruption hits 0s on your bar = death.
+  - Two players melee'ing the same Hex-Drinker = one passes, one re-receives, one dies.
+  - Chimaera's Void Eversion at point-blank = death.
+  - Falling off Floor 2/3 ruins = full death (no revive available mid-encounter).
+  damage_phase_triggers:
+  - 'Floors 1-2: All totems cleansed + all Hexes resolved → Naeem''s Wish grants.'
+  - 'Floor 3: Standing on an active platform = Naeem''s Wish constant.'
+  - 'Final stand: Infinite Naeem''s Wish until boss dies.'
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Shoot center blight. Engage Chimaera. Locate nearest 2 Hex-Drinkers.
+  - phase: Floor 1 — Wish 1 (~0:20-1:30)
+    cleansers_2: Cleanse totems as Broken Knights drop them.
+    hex_runner: When hexed, sprint a Hex-Drinker. Melee. Return.
+    add_clear: Knights + Blighted Eyes. Watch your hex timer.
+  - phase: Floor 1 — DPS (~1:30-2:00)
+    all: Burst Chimaera. Take 30-50% per phase.
+  - phase: Floor 2 — climb + repeat (~2:00-3:30)
+    all: Climb ruins to Floor 2. Same mechanic loop. Smaller footprint = tighter cold.
+  - phase: Floor 3 — platform chase
+    all: Stand on active platform → DPS → Chimaera teleports → move to new platform → repeat.
+  - phase: Final stand (Floor 1 again)
+    all: Infinite buff. Don't panic. Burst Chimaera to 0.
+  permutations:
+  - name: Standard 2-cleanse / 1-hex (Floor 1-2)
+    learner_friendly: true
+    summary: Two players own totem cleanses; one owns hex-pass + add-clear backup.
+    best_for: First clears.
+    roles:
+    - id: cleanser
+      count: 2
+      does: Cleanse totems as Knights drop them.
+      loadout:
+        subclass: ''
+        weapons: Add-clear Primary for Broken Knights/eyes + high-burst Heavy for the Floor 1-2 windows
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera, Solar resist
+          for Broken Knights
+    - id: hex_runner
+      count: 1
+      does: Owns hex-pass priority. Map drinker locations on pull.
+      loadout:
+        subclass: ''
+        weapons: Mobile Primary + burst Heavy; reliable melee to pass the Hex to Hex-Drinkers
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Melee
+        surges_mods: Surge mods matched to your Heavy element; mobility/sprint-friendly mods to reach
+          drinkers inside the 15s hex timer
+  - name: 'Floor 3: triangle DPS rotation'
+    learner_friendly: false
+    summary: 'Designate one player per platform direction. When boss teleports,
+
+      the assigned player calls + sprints first; team follows. Avoids
+
+      all 3 racing to the same platform.
+
+      '
+    best_for: Floor 3 specifically. Use any Floor 1-2 perm beforehand.
+    roles:
+    - id: platform_caller
+      count: 3
+      does: One per direction (N/S/E). Calls + leads the move.
+      loadout:
+        subclass: ''
+        weapons: Sustained or burst Heavy plus a Special to pop Floor 3 Blighted Eyes for buff extensions
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera's Eversion
+          while platform-hopping
+  - name: Solo
+    learner_friendly: false
+    summary: 'Methodical: cleanse 1 totem, pass your own hex (drinkers spawn for
+
+      solo too), DPS what you can per phase. Expect 4-6 phases per floor.
+
+      '
+    best_for: Soloists.
+    roles:
+    - id: cleanser
+      count: 1
+      does: Full mechanics. Use stasis/strand crowd-control to manage knights.
+      notes:
+      - Buried Bloodline (this dungeon's exotic) is great for solo here — Devour-on-hit + decent damage.
+      loadout:
+        subclass: ''
+        weapons: Add-clear Primary for Broken Knights/eyes + high-burst Heavy for the Floor 1-2 windows
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera, Solar resist
+          for Broken Knights
+  cheese: []
+  common_mistakes:
+  - Two players hexed and going to the same Hex-Drinker — second player gets the hex re-applied AND now
+    there's no clean drinker. Always call direction.
+  - 'Floor 3: standing on a platform ''just to check'' — counts as your platform, may strand you when
+    boss teleports.'
+  - Trying to DPS during Final Stand from across the map — Chimaera's Void Eversion AoE still kills. Stay
+    close but not point-blank.
+  - Ignoring Blighted Eyes on Floor 3 — without extensions, the platform Wish drops too fast to find the
+    next platform.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final boss chest (extra roll, all loot pool)
+    hidden_chest:
+      location: 'BURIED BLOODLINE quest fragment: After the final boss, before
+
+        collecting the Ahamkara bone, look behind a fallen pillar on the
+
+        right side of the summit. Third bone fragment spawns here.
+
+        Completing all 3 fragments + the final boss → Buried Bloodline
+
+        exotic sidearm quest unlocks.
+
+        '
+      rewards:
+      - Bone Fragment 3 → Buried Bloodline exotic quest start
+      - Spoils of Conquest
+    potential_drops:
+    - '**Buried Bloodline** (exotic sidearm, Void) — per blueberries, drops from Hefn''s Vengeance chest.
+      The YAML''s ''quest, not random'' framing reflects the in-game Bone Fragment exotic quest path;
+      the weapon itself is gated on completing that quest, then drops here on subsequent runs.'
+    - Naeem's Lance (sniper rifle, Strand)
+    - Indebted Kindness (sidearm, Arc)
+    - Dragoncult Sickle (sword, Strand)
+    - Dark Age armor — Mask + Fists + Harness + Strides
+    - Dark Age armor (chest piece guaranteed)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: cleanser on Floor 1-2. Don''t volunteer for hex until you''ve seen a cycle.'
+  - '2nd: hex_runner — learn drinker spawn pattern.'
+  - '3rd: own a Floor 3 platform direction.'
+  - 'Solo: only attempt after a 3-player clear; the mechanic load compounds fast solo.'
+  plain_language_steps:
+  - 1. Enter the mountain summit and shoot the central Taken blight to engage Hefnd's Vengeance, the Blighted
+    Chimaera (Taken hydra) hovering in the center.
+  - 2. Stay out of its Void Eversion AoE, which activates immediately and pulses around the boss.
+  - 3. When Imminent Wish starts, Broken Knights spawn at the left and right ends — locate the 2-3 Corrupted
+    Hex-Drinker Wraiths skulking the perimeter on pull.
+  - 4. Wait for Broken Knights to swing (or kill them) so they drop totems, then stand in each totem ~5
+    seconds to cleanse it (blight gone + blue glow = done).
+  - 5. If you get the Hex of Vengeful Corruption (red icon, 15-second timer), call your direction and
+    sprint to a Hex-Drinker, then melee it to pass the hex.
+  - 6. Never send two hexed players to the same Hex-Drinker — the second person gets re-hexed and can
+    die; the drinkers melee the hex back, so do not linger.
+  - 7. Once all totems are cleansed and all hexes resolved, Naeem's Wish Empowerment grants — burst the
+    Chimaera (aim for 30-50% per phase).
+  - 8. Climb the ruins to Floor 2 and repeat the same totem/hex/DPS loop on a smaller, tighter footprint.
+  - 9. On Floor 3 (final stand area), stand on an active triangle platform to hold Naeem's Wish, and shoot
+    nearby Blighted Eyes to extend its duration.
+  - 10. When the Chimaera teleports between platforms, call the new platform (N/S/E) and move onto it
+    before your buff drops.
+  - 11. At the final stand the team is sent back to Floor 1 with an INFINITE buff — stay close but out
+    of the Void Eversion AoE and burn the Chimaera down without panicking.
+  - '12. Optional: grab the third Buried Bloodline bone fragment behind a fallen pillar on the right of
+    the summit before collecting the Ahamkara bone.'
+  defense:
+    incoming_damage:
+      adds:
+      - Solar (Scorn Broken Knights wield fire scepters)
+      - Physical/melee (Corrupted Hex-Drinker Wraiths apply/return the Hex via melee; immune to gunfire)
+      - Kinetic/physical (Scorn add fire)
+      boss:
+      - Void (Chimaera's Void Eversion AoE)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void resist mods help survive the Chimaera's Void Eversion AoE
+      - Solar resist helps against the Broken Knights' fire scepters
+      - There is no resist mod for the Hex of Vengeful Corruption — it must be passed to a Hex-Drinker
+        by melee, not mitigated
+      concussive:
+      - Concussive Dampener can soften the Chimaera's Void Eversion blast and Broken Knight knockback
+        if you are getting pushed near ledges on Floors 2/3
+  damage:
+    surges:
+    - No fixed DPS-phase element is enforced — bring your strongest burst Heavy and match armor surge
+      mods to it; final stand gives an infinite buff so sustained options also work
+    burst_windows: 'Floors 1-2: Naeem''s Wish opens after all totems are cleansed and all hexes resolved.
+      Floor 3: buff held by standing on active platforms (extend with Blighted Eyes). Final stand: infinite
+      buff back on Floor 1 — burn to zero.'
+    recommended_dps:
+    - High-burst Heavy (rocket / Heavy GL / Linear Fusion) for the timed Floor 1-2 windows
+    - Sustained-DPS weapon (Linear Fusion / sustained Heavy) for the infinite final-stand window
+    - Devour/sustain weapon (this dungeon's exotic sidearm) for solo survivability
+  role_loadouts:
+  - role_id: cleanser
+    subclass: ''
+    weapons: Add-clear Primary for Broken Knights/eyes + high-burst Heavy for the Floor 1-2 windows
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera, Solar resist
+      for Broken Knights
+  - role_id: hex_runner
+    subclass: ''
+    weapons: Mobile Primary + burst Heavy; reliable melee to pass the Hex to Hex-Drinkers
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surge mods matched to your Heavy element; mobility/sprint-friendly mods to reach drinkers
+      inside the 15s hex timer
+  - role_id: platform_caller
+    subclass: ''
+    weapons: Sustained or burst Heavy plus a Special to pop Floor 3 Blighted Eyes for buff extensions
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera's Eversion while
+      platform-hopping
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/warlords-ruin.yaml (encounter 4, Quell the Corruption
+      / Hefnd''s Vengeance, Blighted Chimaera)'
+    note: Primary source for the totem/hex loop, 3-floor chase, final-stand infinite buff, and permutation
+      roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Exotic, subclass, and surge meta change each season; loadout slots left blank where not verifiable
+      in the current (Edge of Fate) sandbox. Confirm picks against the live game before attempting, especially
+      for solo runs.
+    date_checked: '2026-06-07'

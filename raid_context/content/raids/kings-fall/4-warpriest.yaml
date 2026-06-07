@@ -1,0 +1,272 @@
+# raid_context/content/raids/kings-fall/4-warpriest.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: warpriest
+  name: Warpriest
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'First major boss. 3 plates (L/M/R). After clearing adds + Hallowed
+
+    Knights, a GLYPH SEQUENCE starts (which plate first → glow on
+
+    Monolith back). Step plates in sequence → last stepper gets Brand
+
+    of the Initiate (DPS aura). DPS Warpriest. Brand expires after 5
+
+    stacks → Brand Claimer swap. End-of-DPS: hide behind a Monolith
+
+    from Oculus or die.
+
+    '
+  setup: "WHAT YOU SEE:\n- 3 plates (L/M/R) facing 3 Monoliths (the hide-from-Oculus pillars).\n- Warpriest\
+    \ on a far balcony (Hive Boomer Knight).\n- Adds: Blistered Wizards + Revenant Knights (Hive) then\
+    \ Servile Minotaurs + Boomer Knights (Taken at 50%).\n\nPLATFORM MECHANICS:\n- 3 plates stepped simultaneously\
+    \ = Warpriest spawns + immune.\n- Adds: kill Hallowed Knights (signaled by yell when Adept Acolytes\
+    \ die).\n- Glyph sequence: Monolith back GLOWS WHITE = that side first.\n  • Middle plate stepper\
+    \ checks L+R Monoliths — if either glowing, that side first.\n  • If neither, middle first.\n  • Sequence:\
+    \ 3 plates step in order.\n- Last stepper = Brand of the Initiate (red aura). Anyone in aura = damages\
+    \ Warpriest.\n- Brand reaches ~3s timer (5 stacks) → kill add or Brand transfers via Brand Claimer.\n\
+    - Brand Claimer: kill Blightguard (during DPS phase) → grab buff → claim before Brand expires.\n-\
+    \ 2 successful claims per phase → Warpriest summons Oculus → hide behind a Monolith or wipe.\n- Each\
+    \ surviving Monolith gives Warpriest a Taken ability for next phase.\n- 4 DPS phases without kill\
+    \ = wipe (Oculus persistent after Enrage).\n\nSTART STATE: rally banner. 3 plates simultaneous to\
+    \ start.\n"
+  callouts:
+  - when: All 3 plates stepped
+    from: any
+    to: team
+    say: '"WARPRIEST UP — clearing adds."'
+    why: Pre-glyph state.
+  - when: Hallowed Knights spawning
+    from: spotter
+    to: team
+    say: '"Hallowed Knights — burn 3 quick."'
+    why: Clears for glyph phase.
+  - when: Glyph sequence triggered
+    from: middle stepper
+    to: team
+    say: '"GLYPHS — [L/M/R] first, [direction] second, [direction] third."'
+    why: Critical sequence.
+  - when: Brand acquired
+    from: holder
+    to: team
+    say: '"INITIATE — stacking on me."'
+    why: Team converges in aura.
+  - when: Brand low (5s)
+    from: holder
+    to: team
+    say: '"5 SECONDS — Claimer!"'
+    why: Claimer-pickup window.
+  - when: Oculus incoming
+    from: any
+    to: team
+    say: '"OCULUS — MONOLITH!"'
+    why: Hide or die.
+  - when: Final stand
+    from: any
+    to: team
+    say: '"FINAL — burn!"'
+    why: Push through.
+  wipe_triggers:
+  - Failed glyph sequence too many times.
+  - Oculus exposure — not behind a Monolith.
+  - Brand expires without successful Claim AND no Oculus survivors.
+  - 4 DPS phases without kill = enrage.
+  damage_phase_triggers:
+  - Brand of the Initiate held by last plate stepper → red aura → ~30s damage window per phase.
+  parallel_timeline:
+  - phase: Pull
+    all: 3 plates step simultaneously.
+  - phase: Add clear
+    all: Burst adds + Hallowed Knights.
+  - phase: Glyph sequence (~0:30 in)
+    middle_stepper: Check Monoliths, call order.
+    steppers_2: Step on call.
+    last_stepper: Step last → Brand.
+  - phase: DPS (~30s)
+    brand_holder: Aura center. Burst Warpriest with team in red zone.
+    claimers_2: Kill Blightguard, prep Claimer buff.
+  - phase: Brand swap
+    claimer_1: Take Brand from holder at ~5s.
+  - phase: Reset / Oculus
+    all: Hide behind Monolith. Cycle.
+  permutations:
+  - name: Standard 3-plate / 2-claimer
+    learner_friendly: true
+    summary: 3 dedicated plate steppers; 2 dedicated Claimers; 1 floater.
+    roles:
+    - id: plate_stepper
+      count: 3
+      does: Always on a specific plate (L/M/R). Step on glyph call. Last stepper = Brand.
+      loadout:
+        subclass: Any subclass; Well of Radiance Warlock ideal on the middle/last stepper to drop a well
+          in the Brand aura for the team.
+        weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) plus an add-clear primary for between
+          phases.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Super
+        surges_mods: Match surge mods to your heavy DPS element; ability-regen mods to keep the aura window
+          strong.
+    - id: brand_claimer
+      count: 2
+      does: Hunt Blightguard, get Claimer, relieve Brand holder.
+      loadout:
+        subclass: Any subclass with reliable precision for fast Blightguard kills.
+        weapons: Precision primary (scout / pulse) to drop the Blightguard quickly, plus a DPS heavy for
+          the aura window.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Class
+        surges_mods: Match surges to your DPS element; mobility helps reaching the holder before the Brand
+          expires.
+    - id: floater
+      count: 1
+      does: Add-clear + backup Claimer.
+      loadout:
+        subclass: Any subclass with strong add-clear and Super generation for backup Claiming.
+        weapons: Add-clear primary plus a DPS heavy; flexible to cover plate or Claimer duties.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: Match surges to your DPS element; ability-regen mods for sustained add-clear and
+          backup Claims.
+  - name: 'Master: Devious Thievery'
+    learner_friendly: false
+    summary: Brand Claimer cannot be held > 5s. Holder MOVES toward Claimer.
+  cheese: []
+  common_mistakes:
+  - Middle stepper fails to identify glowing Monolith — sequence wrong.
+  - Brand holder runs out of aura — team loses DPS window.
+  - Claimer holds buff too long — Brand expires.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Smite of Merain (pulse rifle, Kinetic)
+    - Defiance of Yasmin (sniper rifle, Kinetic)
+    - King's Fall armor (random slot)
+  master_challenge:
+    name: Devious Thievery
+    requirement: 'Players must steal the Brand of the Initiate within a couple
+
+      of seconds of taking the Brand Claimer buff. Tight rotation
+
+      between the killer and the stealer; you cannot sit on the
+
+      Brand Claimer waiting for a safe steal.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: plate_stepper (specific side).'
+  - '2nd: floater / Claimer.'
+  - '3rd: middle plate (calls glyph sequence).'
+  plain_language_steps:
+  - 1. Place the rally banner; three players step the three plates (Left, Middle, Right) simultaneously
+    to spawn the Warpriest, who is immune at first.
+  - '2. Clear the add waves: Blistered Wizards and Revenant Knights early, then Servile Minotaurs and
+    Boomer Knights (Taken) once the Warpriest hits about 50 percent.'
+  - 3. Burn the Hallowed Knights quickly when they spawn (signaled by a yell as Adept Acolytes die) to
+    clear for the glyph phase.
+  - '4. When the glyph sequence triggers, the middle plate stepper checks the Left and Right Monoliths:
+    whichever one''s back GLOWS WHITE goes first.'
+  - 5. If neither side Monolith glows, the middle plate goes first; the middle stepper calls the full
+    order (first, second, third).
+  - 6. Step the three plates in the called order; the LAST stepper receives the Brand of the Initiate,
+    a red damage aura.
+  - 7. The whole team stacks inside the red aura to deal damage to the Warpriest during the roughly 30-second
+    window.
+  - 8. When the Brand nears expiry (about 5 seconds / 5 stacks), a claimer kills a Blightguard for the
+    Brand Claimer, then steals the Brand to keep DPS going.
+  - '9. After two successful claims in a phase the Warpriest summons the Oculus: hide behind a Monolith
+    immediately or you die.'
+  - 10. Each Monolith left standing gives the Warpriest a Taken ability next phase, so weigh which to
+    protect.
+  - 11. Repeat the glyph-then-DPS cycle; finish the boss within four DPS phases or the persistent Oculus
+    enrage wipes you.
+  defense:
+    incoming_damage:
+      adds:
+      - Blistered Wizards (Hive)
+      - Revenant Knights (Hive)
+      - Hallowed Knights (Hive)
+      - Servile Minotaurs (Taken, post-50%)
+      - Boomer Knights (Taken, post-50%)
+      - Blightguard (Taken Knight, drops Brand Claimer)
+      boss:
+      - Hive Boomer Knight ranged Arc cannon (Warpriest)
+      - Oculus eye-beam wipe mechanic (instant kill if not behind a Monolith)
+    champions:
+    - 'On Master: Barrier Knights -> Anti-Barrier, Overload Hobgoblins -> Anti-Overload per raid Master
+      notes'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist helps against the Boomer Knight cannon volleys; Health stat for the heavy Hive AoE.
+        Oculus is not resistible, only avoidable behind a Monolith.
+      concussive:
+      - Concussive Dampener mitigates Boomer/Wizard splash while the team is stacked in the Brand aura.
+  damage:
+    surges:
+    - No element forced by the boss. Pick your DPS element to match your burst weapon; bring surge mods
+      for that element. Kinetic options (Smite of Merain / Defiance of Yasmin drop here) and heavy burst
+      are common.
+    burst_windows: Roughly a 30-second damage window per phase while the Brand of the Initiate red aura
+      is active; extend it via a Brand Claimer steal.
+    recommended_dps:
+    - Burst heavy (Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle) per the guide's general
+      loadout; Well of Radiance for the team in the aura.
+  role_loadouts:
+  - role_id: plate_stepper
+    subclass: Any subclass; Well of Radiance Warlock ideal on the middle/last stepper to drop a well in
+      the Brand aura for the team.
+    weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) plus an add-clear primary for between
+      phases.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your heavy DPS element; ability-regen mods to keep the aura window
+      strong.
+  - role_id: brand_claimer
+    subclass: Any subclass with reliable precision for fast Blightguard kills.
+    weapons: Precision primary (scout / pulse) to drop the Blightguard quickly, plus a DPS heavy for the
+      aura window.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surges to your DPS element; mobility helps reaching the holder before the Brand
+      expires.
+  - role_id: floater
+    subclass: Any subclass with strong add-clear and Super generation for backup Claiming.
+    weapons: Add-clear primary plus a DPS heavy; flexible to cover plate or Claimer duties.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surges to your DPS element; ability-regen mods for sustained add-clear and backup
+      Claims.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Warpriest encounter block + Devious Thievery
+      Master challenge)'
+    note: Tier-1 primary source. Glyph sequence, Brand/Claimer mechanic, Oculus, and add roster derived
+      directly from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Specific burst-DPS exotics (Whisper/Sleeper/Linear) are named generically from the guide; confirm
+      current DPS meta and surge weapons in the live Edge of Fate sandbox before relying on them.
+    date_checked: '2026-06-07'

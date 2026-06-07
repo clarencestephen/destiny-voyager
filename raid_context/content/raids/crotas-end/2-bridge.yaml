@@ -1,0 +1,252 @@
+# raid_context/content/raids/crotas-end/2-bridge.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: bridge
+  name: Cross the Bridge
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Bridge requires sword + Chalice to cross. Swordbearer + Gatekeeper
+
+    mechanic. Annihilation Totems at sides — keep pacified or wipe. D2:
+
+    Chalice carrier can cross bridge safely (only exception). 5
+
+    Gatekeepers per side. Then 5 swords back for the side that crossed.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Wide gap with 2 sync plates (L+R, build bridge).
+
+    - 2 Annihilation Totems (must be pacified).
+
+    - Swordbearer Hive Knight on starting side.
+
+    - Gatekeeper Hive Knight on far side (immune except to sword).
+
+    - 5 sword-preservation points on far side.
+
+
+    PLATFORM MECHANICS:
+
+    - 2 on each plate, 1 swordbearer hunter, 1 Chalice holder.
+
+    - Chalice cycle to get everyone Enlightened.
+
+    - 1st person across = sword wielder. Kill Gatekeeper.
+
+    - Chalice holder is 2nd across (only person who can cross safely without sword).
+
+    - Preserve sword at preservation point + Chalice in front.
+
+    - Repeat for 5 Gatekeepers / 5 sword preservations.
+
+    - All 6 across → Enlighten 5 → pick up 5 preserved swords → kill 5 final Gatekeepers.
+
+    - Preserve Chalice = encounter ends.
+
+
+    START STATE: rally banner at bridge gap. Engage by picking Chalice.
+
+    '
+  callouts:
+  - when: Swordbearer ready
+    from: spotter
+    to: team
+    say: '"SWORDBEARER — Enlightened ready?"'
+    why: Sync sword pickup + cross.
+  - when: Sword in hand, crossing
+    from: sword_user
+    to: team
+    say: '"CROSSING — Chalice on me."'
+    why: Chalice + sword pair.
+  - when: Gatekeeper down
+    from: killer
+    to: team
+    say: '"Gate [N] DOWN — sword preserved."'
+    why: Progress.
+  - when: Totem hot
+    from: any
+    to: team
+    say: '"TOTEM [L/R] — cover!"'
+    why: Annihilation wipe risk.
+  wipe_triggers:
+  - Annihilation Totem unattended.
+  - Chalice death (full charge + no pass).
+  - Falling into bridge gap.
+  damage_phase_triggers:
+  - All Gatekeepers dead + 5 swords preserved + 6 across + Chalice preserved = encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    plate_holders_2x2: L+R plates, 2 each.
+    sword_hunter: Drop Swordbearer.
+    chalice_holder: Initial Chalice.
+  - phase: First cross
+    sword_user: Take sword, cross.
+    chalice_holder: Cross with sword user (immune).
+  - phase: Preserve + repeat
+    far_side: Kill Gatekeeper + preserve sword + Chalice.
+    near_side: Cycle Chalice for next sword run.
+  - phase: All across
+    all: 5 Enlightened, 5 preserved swords picked up, 5 Gatekeepers down.
+  - phase: End
+    chalice_holder: Preserve Chalice → encounter ends.
+  permutations:
+  - name: Standard 2-plate + cycle
+    learner_friendly: true
+    summary: 2 per plate; cycle Chalice + Swordbearer runs.
+    roles:
+    - id: plate_holder
+      count: 4
+      does: Hold plates; cycle sword pickups.
+      loadout:
+        subclass: Any survivable subclass with good add-clear (Solar, Void, or Arc)
+        weapons: Add-clear primary plus a Special (shotgun/sidearm) for Thralls rushing the plate
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge to add-clear element; on Master slot Champion-counter mods (Anti-Barrier
+          / Anti-Unstoppable)
+    - id: chalice_runner
+      count: 2
+      does: Manage Chalice + sword pairs.
+      loadout:
+        subclass: Any subclass with reliable self-survivability while juggling the Chalice
+        weapons: Add-clear primary; prioritize mobility and survivability over DPS since the Chalice carrier
+          crosses with sword users
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surge to add-clear element; on Master slot Champion-counter mods
+  - name: 'Master: Precarious Balance'
+    learner_friendly: false
+    summary: Cross bridge with NO ONE on plate. Bridge deforms — jump small gap.
+  cheese: []
+  common_mistakes:
+  - Crossing without sword AND without Chalice = die.
+  - Killing Swordbearer too early — sword expires before crossing.
+  - Totem unattended = wipe.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest:
+      location: 'SECRET CHEST 2 (Shrieker Hallway): After Bridge, in the Shrieker
+
+        hallway. When the second green field drops, sprint Chalice
+
+        forward and DUNK at the preservation node at the front of the
+
+        hole BEFORE the door closes. Door mostly closes but chest
+
+        spawns + door reopens.
+
+        '
+      rewards:
+      - Random raid loot
+    potential_drops:
+    - Swordbreaker (shotgun, Strand)
+    - Fang of Ir Yût (scout rifle, Strand)
+    - Oversoul Edict (pulse rifle, Arc)
+    - Willbreaker's armor — Chest + Arms + Legs (encounter-specific slots)
+  master_challenge:
+    name: Precarious Balance
+    requirement: 'Guardians cannot step on the bridge while it is fully built.
+
+      Once the final piece locks in, everyone must already be on the
+
+      opposite side (or step OFF before the last piece slots). Builders
+
+      especially have to clear the bridge BEFORE finishing it.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: plate_holder.'
+  - '2nd: chalice_runner / sword_user.'
+  plain_language_steps:
+  - 1. Rally at the bridge gap. Assign two players to the Left sync plate, two to the Right plate, one
+    Swordbearer hunter, and one Chalice holder.
+  - 2. Pick up the Chalice to engage. Standing on both plates begins building the bridge across the gap.
+  - 3. Keep the two Annihilation Totems pacified by standing under them — an unattended Totem wipes the
+    team.
+  - 4. Cycle the Chalice so players get Enlightened. The Swordbearer hunter kills the Hive Swordbearer
+    Knight to drop a sword (45-second timer).
+  - 5. First player across takes the sword and uses it to kill the immune Gatekeeper Knight on the far
+    side. The Chalice holder crosses second — they are the only player who can cross safely without a
+    sword.
+  - 6. On the far side, preserve the sword at a sword-preservation point and place the Chalice in front
+    of it.
+  - '7. Repeat the cross: kill each Gatekeeper, preserve a sword and the Chalice, while the near side
+    keeps cycling the Chalice for the next sword run. There are 5 Gatekeepers and 5 sword-preservation
+    points.'
+  - 8. Once all six players are across, get 5 players Enlightened, pick up the 5 preserved swords, and
+    kill the 5 final Gatekeepers.
+  - 9. Preserve the Chalice one last time to end the encounter.
+  - 10. Crossing without a sword and without the Chalice means instant death — always pair the sword user
+    with the Chalice carrier.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive Knights (Swordbearer and Gatekeeper) deal Solar/melee damage; Gatekeepers are immune except
+        to the sword
+      - Hive Thralls deal Arc melee
+      - Annihilation Totems apply a stacking 'Annihilation' wipe debuff if left unattended
+      boss: []
+    champions:
+    - 'Master only: Barrier Knight -> Anti-Barrier'
+    - 'Master only: Unstoppable Ogre -> Anti-Unstoppable'
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist for Knight blasts
+      concussive:
+      - Concussive Dampener mitigates Knight boomer knockback near the bridge edge to avoid being pushed
+        into the gap
+  damage:
+    surges:
+    - No boss DPS phase — no DPS surge applies. This is a mechanics/crossing encounter; tune surges to
+      add-clear and Champion counters on Master.
+    burst_windows: No damage phase; 'completion' is killing all Gatekeepers with swords and preserving
+      the Chalice, not a boss burn.
+    recommended_dps:
+    - Add-clear primary to thin Thralls and adds on both sides
+    - Sword (the encounter-dropped Hive sword) is the only thing that damages Gatekeepers
+  role_loadouts:
+  - role_id: plate_holder
+    subclass: Any survivable subclass with good add-clear (Solar, Void, or Arc)
+    weapons: Add-clear primary plus a Special (shotgun/sidearm) for Thralls rushing the plate
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to add-clear element; on Master slot Champion-counter mods (Anti-Barrier
+      / Anti-Unstoppable)
+  - role_id: chalice_runner
+    subclass: Any subclass with reliable self-survivability while juggling the Chalice
+    weapons: Add-clear primary; prioritize mobility and survivability over DPS since the Chalice carrier
+      crosses with sword users
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to add-clear element; on Master slot Champion-counter mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/crotas-end.yaml (encounter: bridge)'
+    note: Primary source — mechanics, permutations, roles, and enemies authored in the repo's v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats; exotic/weapon meta shifts each season. Verify specific
+      loadouts against the current in-game sandbox before a run.
+    date_checked: '2026-06-07'

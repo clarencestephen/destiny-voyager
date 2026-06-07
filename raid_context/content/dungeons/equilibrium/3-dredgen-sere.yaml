@@ -1,0 +1,297 @@
+# raid_context/content/dungeons/equilibrium/3-dredgen-sere.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: dredgen-sere
+  name: Dredgen Sere (final boss)
+  difficulty: hard
+  estimated_time: 30-45 min
+  abstract: 'Final boss. First HUMAN boss in any D2 dungeon. 45s Lure of the
+
+    Dark setup → pulled into Ascendant realm → Compel 5 Blistered
+
+    Shadows with Shadow Master → return to normal arena → destroy 5
+
+    Taken orbs → DPS. End-of-DPS hazard: Arc fills the center, sprint
+
+    to edges.
+
+    '
+  setup: "WHAT YOU SEE:\n- Throne-world arena with Sere center.\n- 5 Taken orbs hovering in arena center.\n\
+    - Taken wells (Darkness pools) scattered for Shadow building.\n- Nameless Apprentices spawn throughout.\n\
+    - Lure of the Dark timer at top of screen (45s).\n- Ascendant version of arena (when pulled): same\
+    \ shape, hostile Taken.\n  - 5 Blistered Shadows (Sere clones) in the Ascendant realm.\n  - 1 Blistered\
+    \ Shadow elevated; requires Darkness-corrupted device → ghost platforms.\n\nPLATFORM MECHANICS:\n\
+    - Lure of the Dark timer starts immediately. 45s window:\n  • Collect Darkness wells → build to SHADOW\
+    \ MASTER (3-tier progression)\n  • Kill Nameless Apprentices (enables Taken orb destruction later)\n\
+    - Timer expires → pulled into Ascendant.\n- In Ascendant: find all 5 Blistered Shadows. Compel each\
+    \ with Renegade ability + Shadow Master.\n- Each Compel = +1 Lure of the Dark stack + permits 1 Taken\
+    \ orb destruction back in normal arena.\n- Elevated Shadow: hit the Darkness-corrupted device to spawn\
+    \ ghost platforms → access.\n- Exit Ascendant with 5 Lure of the Dark stacks.\n- Normal arena: finish\
+    \ remaining Apprentices. Destroy all 5 Taken orbs.\n- DPS phase opens.\n- During DPS: if Sere uses\
+    \ lightning hand attack, SHOOT his hands to stun briefly.\n- DPS ends: Arc energy fills the center.\
+    \ SPRINT to edges immediately or melt.\n- Cycle repeats: hunt → Ascendant → Compel → orbs → DPS →\
+    \ evade → repeat.\n\nSTART STATE: rally banner outside arena. Walk in to start. 45s timer begins immediately.\n"
+  callouts:
+  - when: Lure of the Dark timer started
+    from: all
+    to: team
+    say: '"45 — building Master."'
+    why: Setup phase clarity.
+  - when: Shadow tier reached
+    from: self
+    to: team
+    say: '"[Novice / Apprentice / Master]."'
+    why: Tier check before Ascendant.
+  - when: Pulled into Ascendant
+    from: any
+    to: team
+    say: '"ASCENDANT — 5 Shadows."'
+    why: Spread out to Compel.
+  - when: Compel done
+    from: self
+    to: team
+    say: '"Compelled [N/5]."'
+    why: Progress.
+  - when: Elevated Shadow needs device
+    from: spotter
+    to: team
+    say: '"Elevated Shadow — device [direction]."'
+    why: One player hits device for ghost platforms.
+  - when: Returned to normal arena
+    from: any
+    to: team
+    say: '"BACK — orbs."'
+    why: Destroy 5 Taken orbs.
+  - when: Orb destroyed
+    from: destroyer
+    to: team
+    say: '"Orb [N/5] — DPS soon."'
+    why: Progress.
+  - when: DPS open
+    from: any
+    to: team
+    say: '"DAMAGE."'
+    why: Stack + Super dump.
+  - when: Sere lightning hands
+    from: any
+    to: team
+    say: '"HANDS — stun!"'
+    why: Shoot hands to stop lightning + stun.
+  - when: DPS ending
+    from: any
+    to: team
+    say: '"EDGES — Arc filling!"'
+    why: Sprint to perimeter or die.
+  wipe_triggers:
+  - Lure of the Dark timer expires with team not at Shadow Master — Ascendant Compels fail.
+  - Standing in center after DPS = Arc fill = melt.
+  - Sere's lightning hands unstunned = sustained damage death.
+  - Compelling without Master tier = wasted attempt.
+  damage_phase_triggers:
+  - 5 Blistered Shadows Compelled + 5 Taken orbs destroyed → Sere shield drops → DPS window.
+  parallel_timeline:
+  - phase: Pull + 45s Lure (~0:00-0:45)
+    all: Build Shadow → Master. Kill Apprentices for orb-destruction permits.
+  - phase: Ascendant (~0:45-2:00)
+    compellers_3: Each takes 1-2 Blistered Shadows. Compel for stacks.
+    elevator_handler: Hit Darkness device for elevated Shadow access.
+  - phase: Return + orb destruction (~2:00-2:30)
+    all: Finish Apprentices. Destroy 5 orbs.
+  - phase: DPS (~2:30-3:00)
+    all: Stack. Burst Sere. Shoot hands on lightning. Super dump.
+  - phase: Evade + reset
+    all: Sprint edges. Cycle repeats.
+  permutations:
+  - name: Standard 3-compel sync
+    learner_friendly: true
+    summary: Each player compels assigned Blistered Shadows. Return together, destroy orbs in unison.
+    roles:
+    - id: compeller
+      count: 3
+      does: Each owns 1-2 Blistered Shadows. Sync return.
+      loadout:
+        subclass: ''
+        weapons: Primary for Nameless Apprentice clear during setup, plus a heavy burst weapon (Linear
+          Fusion or Rocket) for the DPS window. Eager Edge sword or grapple for fast Ascendant traversal
+          and reaching wells.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Ability-regen and Arc resist; reserve a burst-DPS surge for the shield-down window.
+  - name: 'Speed: Whisper / Heirloom DPS'
+    learner_friendly: false
+    summary: 'Heirloom (this dungeon''s exotic bow) staggers Sere consistently.
+
+      Combined with Whisper of the Worm / Linear Fusion stack for
+
+      1-2 phase clears.
+
+      '
+    best_for: Practiced teams.
+    roles:
+    - id: dps_anchor
+      count: 3
+      does: All burst-DPS in unison. Sync Supers (Thundercrash, Golden Gun, Needlestorm) on hand-stun.
+      loadout:
+        subclass: ''
+        weapons: Maximum burst loadout for the short window — heavy Linear Fusion / Rocket stack, plus
+          the 'Heirloom' Exotic Combat Bow for stagger if obtained. Sync your Super (Thundercrash, Golden
+          Gun, or Needlestorm) to the hand-stun.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Super
+        surges_mods: Burst-DPS surge matched to your heavy; Arc resist for the lightning attack.
+  - name: Solo
+    learner_friendly: false
+    summary: 'All 5 Compels yourself. All 5 orbs yourself. Lure of the Dark
+
+      timer feels tight. Bring strong sustain + Heirloom if obtained.
+
+      Expect 4-6 phases.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Don't engage Sere outside DPS windows.
+      loadout:
+        subclass: ''
+        weapons: 'Self-sufficient, sustain-heavy kit: primary for Apprentice clear, heavy burst for DPS,
+          and strong self-sustain. Bring the ''Heirloom'' Exotic Combat Bow if obtained to make the tight
+          Lure-of-the-Dark cycle manageable; expect 4-6 phases.'
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Prioritize survivability and Arc resist; reserve burst surge for the short DPS window.
+  cheese: []
+  common_mistakes:
+  - Wasting Renegade ability on adds during setup — save for Master + Compel.
+  - Missing the elevated Blistered Shadow — counts toward 5 stacks.
+  - Trying to DPS while in center after Arc fill — melts.
+  - Not shooting Sere's hands on lightning = sustained damage death.
+  - Compeller dying in Ascendant = lost stacks.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (extra roll)
+    - Imperium's Adversary emblem (first clear)
+    hidden_chest: null
+    potential_drops:
+    - '**Heirloom** (Exotic Combat Bow, Solar) — note blueberries lists it as a per-encounter drop; the
+      YAML''s ''quest, not random'' framing reflects the in-game quest path ''The Way Between''. Verify
+      in-game whether the final-chest pool also includes it as RNG.'
+    - High Tyrant (pulse rifle, Void)
+    - Sullen Claw (sword, Void)
+    - Any other Legendary weapon from prior encounters.
+    - Equilibrium / Sage Protector armor — Class Item + Legs
+    - Sage Protector armor (all classes)
+    - Static Data Shell (exotic ghost)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: compeller. Watch tier-build pacing.'
+  - '2nd: dps_anchor + Heirloom-quest progress.'
+  - 'Solo: only after multi-player Heirloom acquisition.'
+  plain_language_steps:
+  - 1. Place the rally banner outside the arena, then walk in to start. A 45-second 'Lure of the Dark'
+    timer begins immediately, so be ready to move fast.
+  - 2. During those 45 seconds, all three players collect Darkness wells to build the Gathering Shadow
+    resource all the way to Shadow Master (the third tier). You need Master to Compel later.
+  - 3. While building, also kill the Nameless Apprentices that spawn — killing them is what later enables
+    destroying the Taken orbs in the normal arena.
+  - '4. When the timer expires, the team is pulled into the Ascendant version of the arena. Spread out:
+    there are five Blistered Shadows (Sere clones) to find.'
+  - 5. With Shadow Master active, use the Renegade ability to Compel each Blistered Shadow. Each Compel
+    grants +1 'Lure of the Dark' stack and permits destroying one matching Taken orb back in the normal
+    arena. Don't waste the Renegade ability on adds here.
+  - 6. One Blistered Shadow is elevated. Have a player hit the Darkness-corrupted device to spawn ghost
+    platforms so someone can reach it — don't forget this one, it counts toward the five.
+  - 7. Once all five are Compelled (five stacks), exit the Ascendant back to the normal arena.
+  - 8. In the normal arena, finish off any remaining Nameless Apprentices, then destroy all five Taken
+    orbs hovering in the center.
+  - 9. With the orbs gone and Compels done, Sere's shield drops and the DPS phase opens. Stack up and
+    burst him down, dumping Supers.
+  - 10. If Sere uses his lightning hand attack during DPS, shoot his hands to stop the lightning and briefly
+    stun him.
+  - 11. When DPS ends, Arc energy floods the center of the arena. SPRINT to the edges immediately or you'll
+    be melted.
+  - '12. If Sere survives, the cycle repeats: build to Master, get pulled into the Ascendant, Compel,
+    destroy orbs, DPS, evade — until he''s dead.'
+  defense:
+    incoming_damage:
+      adds:
+      - Nameless Apprentices (Renegade red-bars) throughout setup and orb phases
+      - Hostile Taken enemies in the Ascendant realm
+      boss:
+      - Arc (Dredgen Sere's lightning hand attack and the post-DPS Arc fill of the center)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc resistance is most relevant against Sere's lightning hands; the post-DPS center Arc fill is
+        a positional hazard, not survivable by resist — sprint to the edges instead
+      concussive:
+      - No source-confirmed concussive-blast threat is called out for this encounter; Concussive Dampener
+        is optional
+  damage:
+    surges:
+    - Sere has a clear DPS phase after orbs and Compels are done. Element is not source-confirmed; given
+      his Arc lightning theme, Arc surge is a reasonable default, but use whatever maximizes your burst
+      in the short window.
+    burst_windows: Short DPS window after Compelling 5 Blistered Shadows and destroying 5 Taken orbs;
+      shoot his hands on the lightning attack to extend safe damage, then sprint out before the Arc fill.
+    recommended_dps:
+    - Heavy burst-DPS (Linear Fusion Rifles, Rocket Launchers); Whisper of the Worm as a sustained option
+      per the v2 speed note
+    - This dungeon's Exotic Combat Bow ('Heirloom') for consistent stagger on Sere, if obtained
+    - Synchronized Supers on hand-stun (Thundercrash, Golden Gun, Needlestorm) for one-to-two-phase potential
+  role_loadouts:
+  - role_id: compeller
+    subclass: ''
+    weapons: Primary for Nameless Apprentice clear during setup, plus a heavy burst weapon (Linear Fusion
+      or Rocket) for the DPS window. Eager Edge sword or grapple for fast Ascendant traversal and reaching
+      wells.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Ability-regen and Arc resist; reserve a burst-DPS surge for the shield-down window.
+  - role_id: dps_anchor
+    subclass: ''
+    weapons: Maximum burst loadout for the short window — heavy Linear Fusion / Rocket stack, plus the
+      'Heirloom' Exotic Combat Bow for stagger if obtained. Sync your Super (Thundercrash, Golden Gun, or
+      Needlestorm) to the hand-stun.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Burst-DPS surge matched to your heavy; Arc resist for the lightning attack.
+  - role_id: solo
+    subclass: ''
+    weapons: 'Self-sufficient, sustain-heavy kit: primary for Apprentice clear, heavy burst for DPS, and
+      strong self-sustain. Bring the ''Heirloom'' Exotic Combat Bow if obtained to make the tight Lure-of-the-Dark
+      cycle manageable; expect 4-6 phases.'
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Prioritize survivability and Arc resist; reserve burst surge for the short DPS window.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/equilibrium.yaml (encounter 3: Dredgen Sere, final boss)'
+    note: Primary source for the Lure-of-the-Dark cycle, Ascendant Compels, orb destruction, DPS, and
+      Arc-fill evade.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (Renegades, Dec 2025 release)
+    note: Sere's exact DPS-phase surge, the 'Heirloom' drop/quest behavior, and any Master champions are
+      still being confirmed; verify against current in-game state and patch notes before committing a
+      loadout.
+    date_checked: '2026-06-07'

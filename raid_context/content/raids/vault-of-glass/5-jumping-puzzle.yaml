@@ -1,0 +1,116 @@
+# raid_context/content/raids/vault-of-glass/5-jumping-puzzle.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: jumping-puzzle
+  name: Jumping Puzzle
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Disappearing platforms across a bottomless chamber. Jump
+
+    platform → platform until reaching the narrow ledge across.
+
+    Hunters (Bladedancer / Way of the Wind) or Warlocks (Bottom-tree
+
+    Dawnblade) cross easiest. Hidden chest #3 above the hallway to
+
+    Atheon''s room.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Bottomless chamber. Initial platform near entry.
+
+    - Stepping = next platform spawns, current one starts decay.
+
+    - Narrow ledge on the far side leads to recessed doorway.
+
+    - Alternate route: from edge, jump up-left into cave → alt platforms direct to far side.
+
+    '
+  callouts: []
+  wipe_triggers:
+  - Falling = death (long respawn outside Darkness Zone).
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Sequential jumps
+    learner_friendly: true
+    summary: One at a time. Patience over speed.
+  cheese: []
+  common_mistakes:
+  - Jumping too early — platforms haven't spawned yet.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'HIDDEN CHEST 3: After crossing the chasm, look directly UP and
+
+        RIGHT of the hallway immediately before Atheon''s chamber. Chest
+
+        is on a small ledge.
+
+        '
+      rewards:
+      - Random raid loot drop
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Just play.
+  plain_language_steps:
+  - 1. You arrive at a bottomless chamber with an initial platform near the entry.
+  - 2. Stepping onto a platform spawns the next one and starts the current platform decaying, so keep
+    moving forward.
+  - 3. Cross platform to platform toward the narrow ledge on the far side, which leads to a recessed doorway.
+  - 4. Take the jumps one at a time. Patience beats speed; do not jump before the next platform has actually
+    appeared.
+  - 5. Falling means death and a long respawn outside the Darkness Zone, so reset to a safe platform if
+    unsure.
+  - '6. Optional alternate route: from the edge, jump up and to the LEFT into a cave that has alternate
+    platforms leading more directly to the far side.'
+  - '7. Optional hidden chest: after crossing the chasm, look directly UP and to the RIGHT of the hallway
+    just before Atheon''s chamber; the chest sits on a small ledge.'
+  - 8. Reach the far ledge and proceed through the doorway toward Atheon's room.
+  defense:
+    incoming_damage:
+      adds: []
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase; this is a platforming/traversal section with no enemies to damage
+    burst_windows: No damage window; this is a jumping puzzle.
+    recommended_dps:
+    - No DPS loadout needed; movement-friendly setups help (Hunter Bladedancer/dodge, bottom-tree Dawnblade
+      glide) for easier crossings
+  role_loadouts:
+  - role_id: jumper
+    subclass: A movement-friendly subclass eases the crossing (Hunter with dodge, Warlock Dawnblade glide);
+      any subclass completes it
+    weapons: No specific weapons required for the puzzle
+    exotic_armor: ''
+    armor_stats:
+    - Weapons
+    - Class
+    surges_mods: No surge needed; movement-oriented setup only
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: jumping-puzzle)'
+    note: Primary source for the decaying-platform route, alternate cave route, and hidden chest 3.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Movement tools and glide/dodge behavior can shift with subclass tuning; verify your current
+      traversal kit before the run.
+    date_checked: '2026-06-07'

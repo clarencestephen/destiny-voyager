@@ -1,0 +1,195 @@
+# raid_context/content/dungeons/grasp-of-avarice/3-rusted-gangplank.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: rusted-gangplank
+  name: Rusted Gangplank → Sparrow Mines (jumping puzzle + race)
+  difficulty: medium
+  estimated_time: 10-20 min
+  abstract: 'Two unrelated mid-dungeon sections lumped together. (a) Spike-trap
+
+    jumping puzzle through Wilhelm-7''s booby-trapped facility. (b) Sparrow
+
+    race to disarm 4 splinter mines before they detonate.
+
+    '
+  setup: 'JUMPING PUZZLE:
+
+    - Pressure plates = spike traps. Jump OVER them, don''t step.
+
+    - Falling-panel platforms — land on LEFT panel (right one blocks console once it falls).
+
+    - Multi-door lever room: doors flip in a sequence (open #3 → #1 → #2 → #4 via Scorch Cannon).
+
+    - Rolling barrel staircase: hide in side alcoves as it rolls past.
+
+
+    SPARROW SECTION:
+
+    - 4 splinter mines on a sparrow track. Each has a despawn timer.
+
+    - Boost pads extend time. Web mines + Fallen gunfire harass.
+
+    - Failure (mine detonates) = full encounter reset.
+
+    '
+  callouts:
+  - when: Pressure plate identified
+    from: first to see
+    to: team
+    say: '"Trap ahead — jump."'
+    why: Saves a wipe if anyone's distracted.
+  - when: Lever in 4-door room hit
+    from: self
+    to: team
+    say: '"3 OPEN — head 3."'
+    why: Coordinates door sequence.
+  - when: Sparrow mine count
+    from: front-runner
+    to: team
+    say: '"2 down, 2 to go — left fork."'
+    why: Slow players follow path.
+  wipe_triggers:
+  - Stepping on pressure plate = instant death.
+  - Sparrow mine detonates = full reset.
+  - Falling off pseudo-platform climb = long respawn or death (no checkpoint mid-section).
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Lead-follower
+    learner_friendly: true
+    summary: Experienced player leads, calls every trap + lever. Others follow exactly.
+    roles:
+    - id: leader
+      count: 1
+      does: Knows the route. Calls every pressure plate + lever.
+      loadout:
+        subclass: Movement-focused subclass that aids precise platforming and fast sparrow handling; survivability
+          for the Fallen harass.
+        weapons: Whatever you carry forward; no weapon is load-bearing here, so keep your boss-fight loadout.
+          Bring a sparrow for the race.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge requirement; favor traversal and resist mods.
+    - id: follower
+      count: 2
+      does: Wait at safe points; advance only on call.
+      loadout:
+        subclass: Mobile subclass for clean jumps; wait at safe points and advance only on the leader's
+          call.
+        weapons: Carry-forward loadout; sparrow for the mine race.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: No surge requirement; favor traversal and resist mods.
+  cheese:
+  - title: Skip rolling barrel
+    detail: 'Stay flush against either side wall of the staircase from the bottom.
+
+      The barrel doesn''t roll over wall-flush positions in most spots —
+
+      alcoves still safer, but flush works in a pinch.
+
+      '
+  common_mistakes:
+  - Sprinting the jumping puzzle — every section punishes haste.
+  - 'Sparrow section: trying to fight Fallen instead of racing — they respawn, mines don''t wait.'
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'GJALLARHORN catalyst chest 2: In the 4-door lever room. Look UP
+
+        at one of the vertical metal struts on the side walls. There''s
+
+        a small platform with a chest, facing the concrete wall. Requires
+
+        a jump from a high beam.
+
+        '
+      rewards:
+      - Gjallarhorn Catalyst fragment 2 (of 3)
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st time: follow leader, look at the layout for the next run.'
+  - '2nd: lead the puzzle for someone else.'
+  plain_language_steps:
+  - '1. This is two sections back to back: a spike-trap jumping puzzle through Wilhelm-7''s booby-trapped
+    facility, then a sparrow race to disarm splinter mines.'
+  - 2. Go slow. Every section punishes haste; do not sprint blindly.
+  - 3. Watch for pressure plates that trigger spike traps. Jump OVER them, never step on them; the visual
+    cue is dust plus a wall mechanism. Stepping on one is an instant kill.
+  - 4. The lead player calls out each trap so distracted teammates do not wipe the run.
+  - 5. On falling-panel platforms, land on the LEFT panel; the right one blocks the console once it falls.
+  - 6. In the multi-door lever room, open the doors in sequence using a Scorch Cannon and call each door
+    as you trigger it so the team follows the order.
+  - 7. On the rolling-barrel staircase, hide in the side alcoves as the barrel rolls past (staying flush
+    against a side wall works in a pinch).
+  - '8. Enter the sparrow section: there are 4 splinter mines on a track, each with a despawn timer.'
+  - 9. Race to each mine and disarm it before it detonates; ride boost pads to extend your time, and ignore
+    the harassing Web mines and Fallen gunfire rather than stopping to fight.
+  - 10. The front-runner calls the mine count and the path (for example, 'left fork') so slower players
+    follow.
+  - 11. If any mine detonates, the whole section resets, so prioritize speed and route over kills.
+  - '12. Optional (Gjallarhorn Catalyst): in the 4-door lever room, look up at a vertical metal strut
+    on the side wall for a small chest platform facing the concrete wall, reachable by a jump from a high
+    beam, for Catalyst fragment 2 of 3 (no-checkpoint run required).'
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Fallen gunfire during the sparrow race)
+      - Web mines (movement-slowing trap hazard, not elemental)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No verified mandatory resist; the lethal threats are spike-trap pressure plates and mine detonation,
+        not enemy elements.
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase. This is a traversal and race section with no boss to damage.
+    burst_windows: No damage window; progress is gated by completing the jumping puzzle and disarming
+      all 4 splinter mines in time.
+    recommended_dps:
+    - No DPS weapon needed; bring a sparrow and movement-friendly mods. Prioritize mobility and survivability
+      over damage.
+  role_loadouts:
+  - role_id: leader
+    subclass: Movement-focused subclass that aids precise platforming and fast sparrow handling; survivability
+      for the Fallen harass.
+    weapons: Whatever you carry forward; no weapon is load-bearing here, so keep your boss-fight loadout.
+      Bring a sparrow for the race.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; favor traversal and resist mods.
+  - role_id: follower
+    subclass: Mobile subclass for clean jumps; wait at safe points and advance only on the leader's call.
+    weapons: Carry-forward loadout; sparrow for the mine race.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement; favor traversal and resist mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: rusted-gangplank)'
+    note: Primary source for the spike-trap/pressure-plate puzzle, falling panels, 4-door lever sequence,
+      rolling barrel, sparrow mine race, and Catalyst chest 2.
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Traversal section; confirm any sparrow/movement-exotic preferences against the current meta.
+    date_checked: '2026-06-07'

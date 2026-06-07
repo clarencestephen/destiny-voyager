@@ -1,0 +1,265 @@
+# raid_context/content/raids/last-wish/2-shuro-chi.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: shuro-chi
+  name: Shuro Chi, the Corrupted
+  difficulty: medium
+  estimated_time: 15-20 min
+  abstract: '3 floors. Per floor: clear adds → 3 crystals on 3 plates → shoot
+
+    crystals in triangle pattern to break Shuro Chi''s shield → burst
+
+    1/6 HP bar. If wipe-attack starts: use Eye of Riven Taken Essence
+
+    super to cancel. Then symbol image puzzle (3 wall images, 9 plates)
+
+    to ascend.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Wide arena, Shuro Chi at far end.
+
+    - 3 plates with crystals during shield-break phase.
+
+    - Symbol images on walls + 9 plates between phases.
+
+    - Eye of Riven Captain spawns periodically — drops Taken Essence.
+
+
+    PLATFORM MECHANICS:
+
+    - 4-min song timer per floor (resets after image puzzle).
+
+    - Kill adds first. Then 3 crystals spawn on plates (damage to stand).
+
+    - 3 players pick up crystals, shoot in TRIANGLE pattern (each shoots to RIGHT or LEFT carrier, consistent
+    direction).
+
+    - Shield breaks → DPS. Need to drop 1/6 HP bar per shield-break.
+
+    - Obliterate prep: pick up Taken Essence from Eye of Riven, use Super NEXT TO Shuro Chi as LATE as
+    possible = cancels wipe.
+
+    - 2 designated Taken Essence carriers (alternate across 6 phases).
+
+    - Image puzzle between floors: 3 wall images, 9 plates. Stand on plates corresponding to EMPTY parts
+    of each image (4 players doing this, 2 on add-clear especially Phalanxes).
+
+    - Plate cannot be re-stood after stepping off → swap with teammate.
+
+
+    START STATE: rally banner. Enter arena to engage.
+
+    '
+  callouts:
+  - when: Adds clear, crystals ready
+    from: any
+    to: team
+    say: '"CRYSTALS — triangle right."'
+    why: Direction call.
+  - when: Shield down
+    from: any
+    to: team
+    say: '"DPS!"'
+    why: Burst.
+  - when: Wipe attack starting
+    from: any
+    to: team
+    say: '"OBLITERATE — Essence super!"'
+    why: Cancel cue.
+  - when: Image puzzle
+    from: spotter
+    to: team
+    say: '"Image [1/2/3] — plates [list]"'
+    why: Coordinated plate stand.
+  wipe_triggers:
+  - Song timer expires (4-min).
+  - Obliterate not canceled.
+  - Wrong triangle direction = no shield break.
+  - Greed debuff from Eye of Riven Essence carrying.
+  damage_phase_triggers:
+  - Crystal triangle breaks shield → burst 1/6 HP bar → cycle next phase.
+  parallel_timeline:
+  - phase: Per phase (×6)
+    add_clear: Clear waves first.
+    crystal_users_3: Pick up + shoot triangle.
+    essence_carriers_2: Hold Taken Essence (alternating each phase).
+  - phase: Image puzzle
+    plate_steppers_4: Stand on plates per image holes.
+    phalanx_killers_2: Suppress Phalanx pushes.
+  permutations:
+  - name: Standard 3-crystal / 1-Essence / 2-clear
+    learner_friendly: true
+    summary: Roles per phase. Essence carrier rotates 2 designated players.
+    roles:
+    - id: crystal_user
+      count: 3
+      does: 'Per phase: pick crystal, shoot triangle.'
+      loadout:
+        subclass: Any (no element enforced); pick a subclass whose Super can also serve Essence cancels
+          if rotating
+        weapons: Fast add-clear primary to reach the crystal step quickly, plus a burst heavy for the
+          shield-break DPS
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Match surge mods to heavy element; Weapons (Mobility) helps reposition for triangle
+          shots and dodge the Arc Blast
+    - id: essence_carrier
+      count: 1
+      does: Hold Essence for Obliterate cancel.
+      loadout:
+        subclass: A subclass with a reliable damaging or quick-cast Super to slam Shuro Chi during the
+          Obliterate cancel
+        weapons: Add-clear primary to farm Eye of Riven kills for Essence; secondary burst heavy
+        exotic_armor: ''
+        armor_stats: &id002
+        - Super
+        - Health
+        surges_mods: Super (Intellect) to keep the Essence-cancel Super charged each phase; Health for
+          survivability while holding Essence
+    - id: add_clear
+      count: 2
+      does: Burst Eyes of Riven + Phalanx pushes.
+      loadout:
+        subclass: Any add-clearing subclass; suppression/control helps against Phalanx pushes
+        weapons: Strong ad-clear primary plus a wave-clearing special; focus on Eyes of Riven and Phalanxes
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: Grenade (Discipline) for repeated add-clear ability uptime; Health for Knight/Phalanx
+          melee
+  - name: 'Master: No ranged blast damage'
+    learner_friendly: false
+    summary: Cannot take damage from Shuro Chi's ranged blast attack. Move actively.
+  cheese:
+  - title: Shuro Chi rally checkpoint
+    detail: 'Shuro Chi is the easiest farm spot in the game. Rally flag near
+
+      her, quick-mob clears for triumphs / catalysts / mod farming.
+
+      '
+  common_mistakes:
+  - Wrong triangle direction = shield doesn't break.
+  - Forgetting Taken Essence carrier alternation = Greed kills carrier.
+  - Phalanx pushing plate-steppers off during image puzzle.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Shared pool with E1/E3/E4 — see kalli encounter for full weapon + armor list.
+  master_challenge:
+    name: Which Witch
+    requirement: 'No one in the fireteam may get hit by Shuro Chi''s Arc Blast
+
+      (her long-range AoE attack). Hard to dodge over a full
+
+      encounter; teams stack at long range and disperse the moment
+
+      wind-up animation begins.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear.'
+  - '2nd: crystal_user.'
+  - '3rd: essence_carrier.'
+  plain_language_steps:
+  - 1. Rally at the banner and enter the wide arena; Shuro Chi stands at the far end. You will repeat
+    the same loop across 3 floors.
+  - 2. A roughly 4-minute song timer runs each floor. If it expires, you wipe, so keep moving the loop
+    forward.
+  - 3. Clear the add waves first (watch for Eye of Riven Captains and Phalanxes). Then 3 crystals spawn
+    on 3 plates; standing on a plate deals damage.
+  - 4. Three players pick up the crystals and shoot them in a TRIANGLE pattern, each consistently passing
+    to the same direction (all 'right' or all 'left'). Wrong direction means no shield break.
+  - 5. When the triangle is correct, Shuro Chi's shield breaks. Call 'DPS' and burst down 1 of her 6 HP
+    segments.
+  - 6. Two designated players carry Taken Essence from killed Eye of Riven Captains, alternating who carries
+    each phase so the Greed debuff never maxes out.
+  - 7. When Shuro Chi begins her Obliterate wipe attack, an Essence carrier uses their Super right next
+    to her, as LATE as possible, to cancel the wipe.
+  - '8. Between floors, solve the image puzzle: 3 images appear on the walls with 9 plates. Stand on the
+    plates matching the EMPTY parts of each image.'
+  - '9. Four players handle the plate stands while 2 keep Phalanxes off them. Note: once you step off
+    a plate you cannot re-stand it, so swap with a teammate if needed.'
+  - 10. Completing the image puzzle ascends you to the next floor and resets the song timer. Repeat the
+    whole loop until all 6 HP segments are gone (3 floors).
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Eye of Riven Captains, Taken Phalanxes that push you, plus ambient Taken waves; standing
+        on a crystal plate deals damage)
+      boss:
+      - Arc (Shuro Chi's long-range Arc Blast AoE attack, per the Which Witch challenge); plus her Taken
+        Obliterate wipe spell
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No enforced burn (no Master). To survive Shuro Chi's Arc Blast on harder runs, an Arc resist option
+        or simply dodging at the wind-up animation is the intended counter.
+      concussive:
+      - Phalanxes push players (especially during the image puzzle); plate-steppers being shoved off is
+        the main displacement threat, managed by 2 dedicated Phalanx killers rather than a mod.
+  damage:
+    surges:
+    - No fixed DPS-phase element enforced. Burst element is free; bring your strongest single-target option.
+    burst_windows: Short burst window opens each time the crystal triangle breaks her shield; drop 1 of
+      6 HP segments per window, six windows total across 3 floors.
+    recommended_dps:
+    - High-burst single-target (Linear Fusion Rifle or Rocket Launcher)
+    - Well of Radiance for the burst
+    - Eye of Riven Essence Super timed for the Obliterate cancel rather than damage
+  role_loadouts:
+  - role_id: crystal_user
+    subclass: Any (no element enforced); pick a subclass whose Super can also serve Essence cancels if
+      rotating
+    weapons: Fast add-clear primary to reach the crystal step quickly, plus a burst heavy for the shield-break
+      DPS
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to heavy element; Weapons (Mobility) helps reposition for triangle shots
+      and dodge the Arc Blast
+  - role_id: essence_carrier
+    subclass: A subclass with a reliable damaging or quick-cast Super to slam Shuro Chi during the Obliterate
+      cancel
+    weapons: Add-clear primary to farm Eye of Riven kills for Essence; secondary burst heavy
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Super (Intellect) to keep the Essence-cancel Super charged each phase; Health for survivability
+      while holding Essence
+  - role_id: add_clear
+    subclass: Any add-clearing subclass; suppression/control helps against Phalanx pushes
+    weapons: Strong ad-clear primary plus a wave-clearing special; focus on Eyes of Riven and Phalanxes
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Grenade (Discipline) for repeated add-clear ability uptime; Health for Knight/Phalanx
+      melee
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: shuro-chi)'
+    note: Mechanics, roles, the Arc Blast element, and Essence-cancel flow derived from the authored v2
+      block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use current Edge of Fate naming. Verify specific exotics/weapons against the live
+      sandbox; meta shifts seasonally.
+    date_checked: '2026-06-07'

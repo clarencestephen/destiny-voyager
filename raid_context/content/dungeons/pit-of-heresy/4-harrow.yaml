@@ -1,0 +1,180 @@
+# raid_context/content/dungeons/pit-of-heresy/4-harrow.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: harrow
+  name: The Harrow (jumping puzzle + Wizard runes)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Verticality test. Jump across ledges in a vast abyss. Find towers
+
+    with runes matching a sealed door. Each tower contains a Hive Wizard
+
+    + adds — kill them all → rune disappears. All 3 done → door opens.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Massive vertical cavern with floating platforms + tower structures.
+
+    - A sealed door at one end with 3 rune symbols displayed.
+
+    - Towers scattered through the verticality — each with a rune on top.
+
+
+    PLATFORM MECHANICS:
+
+    - Jump platform → platform. Falls = death (long respawn).
+
+    - Match runes on towers to the 3 on the door.
+
+    - In each correct tower: kill Wizard + all ambient enemies → rune extinguishes.
+
+
+    START STATE: walk in, identify the 3 door runes, start scouting.
+
+    '
+  callouts:
+  - when: Tower rune scouted
+    from: scout
+    to: team
+    say: '"Tower at [landmark] = [rune], correct/incorrect."'
+    why: Coordinates pathing — no wasted jumps.
+  - when: Wizard killed in correct tower
+    from: killer
+    to: team
+    say: '"Tower 1/3 cleared."'
+    why: Progress.
+  wipe_triggers:
+  - Falling into the abyss = death.
+  - Wizard tomb-ship adds overwhelming a solo killer.
+  damage_phase_triggers:
+  - All 3 correct towers cleared → door opens.
+  parallel_timeline:
+  - phase: Identify door runes
+    all: Read door runes. Screenshot.
+  - phase: Split + scout
+    scouts_3: Spread out. Identify tower rune-tops.
+  - phase: Convergence + clears
+    all: Meet at correct tower → clear Wizard + adds.
+  - phase: Wrap
+    all: Repeat for tower 2 + 3, then door.
+  permutations:
+  - name: Standard 3-scout-then-clear
+    learner_friendly: true
+    summary: Split for scouting; reconverge per tower for clears.
+    roles:
+    - id: scout_clear
+      count: 3
+      does: Scout + help clear.
+      loadout:
+        subclass: High-mobility kit for platforming (e.g., a glide/lift or Heat Rises style traversal)
+        weapons: Strong primary for Wizards and ambient adds; nothing heavy needed for damage
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge requirement; prioritize movement and survivability
+  - name: Solo
+    learner_friendly: false
+    summary: Slower. Sword from Necropolis is gone — bring high-mobility kit.
+    roles:
+    - id: solo
+      count: 1
+      does: All scouts + clears. Bring Bottom-tree Dawnblade / Stompees.
+      loadout:
+        subclass: High-mobility traversal kit; the guide notes a Dawnblade-style glide build or a triple-jump
+          approach for skipping platforms
+        weapons: Strong primary for Wizards and adds; no DPS weapon required
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: No surge requirement; prioritize jump height and mobility
+  cheese:
+  - title: Stompees + Hunter triple-jump
+    detail: 'Long Hunter triple-jumps skip several intended platforms entirely.
+
+      Speedruns route directly tower-to-tower.
+
+      '
+  common_mistakes:
+  - Killing Wizard in a WRONG tower — wasted time, rune doesn't go away.
+  - Trying to fight Wizard before clearing ambient enemies — they kite you off a platform.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: bring stompees, don''t pioneer routes.'
+  - '2nd: lead routing.'
+  plain_language_steps:
+  - 1. Walk into the massive vertical cavern and read the 3 Hive rune symbols displayed on the sealed
+    door. Screenshot them.
+  - 2. Note that there is no Cleaver here; you will jump across floating platforms over a deadly abyss,
+    so bring high-mobility gear.
+  - 3. Split up and scout the towers scattered through the verticality, checking the rune on top of each.
+  - 4. Match each tower's rune to the 3 runes on the door, and call out which towers are correct.
+  - 5. Avoid falling into the abyss; a fall means death and a long respawn.
+  - 6. Converge on a correct tower and clear all the ambient enemies first so a Wizard cannot kite you
+    off a platform.
+  - 7. Kill the Hive Wizard in the correct tower along with its adds; clearing it makes that rune extinguish.
+  - 8. Make sure you only clear correct towers; killing a Wizard in a wrong tower wastes time and does
+    not remove a rune.
+  - 9. Repeat for all 3 correct towers.
+  - 10. With all 3 runes extinguished, the door opens and you advance.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Hive Wizard projectiles/poison)
+      - Void (Hive Ogre eye blast, if present)
+      - Arc (ambient Hive Knight melee)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resist helps against Wizard fire while platforming
+      - General resist to avoid being staggered off ledges
+      concussive:
+      - Concussive Dampener can prevent knockback that would throw you into the abyss
+  damage:
+    surges:
+    - No DPS phase. Progress comes from clearing the Wizard and adds in each correct tower, not from burst
+      damage on a boss.
+    burst_windows: No burst window; this is a jumping-puzzle and rune-clear encounter with no boss.
+    recommended_dps:
+    - Strong primary to clear Wizards and tomb-ship adds quickly so you can keep moving
+  role_loadouts:
+  - role_id: scout_clear
+    subclass: High-mobility kit for platforming (e.g., a glide/lift or Heat Rises style traversal)
+    weapons: Strong primary for Wizards and ambient adds; nothing heavy needed for damage
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; prioritize movement and survivability
+  - role_id: solo
+    subclass: High-mobility traversal kit; the guide notes a Dawnblade-style glide build or a triple-jump
+      approach for skipping platforms
+    weapons: Strong primary for Wizards and adds; no DPS weapon required
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement; prioritize jump height and mobility
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/pit-of-heresy.yaml (encounter: harrow)'
+    note: Primary source for the jumping puzzle, Wizard rune towers, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (e.g., Mobility->Weapons); verify current mobility
+      exotics in-game as the meta shifts each season.
+    date_checked: '2026-06-07'

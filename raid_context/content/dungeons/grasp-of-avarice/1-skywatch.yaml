@@ -1,0 +1,172 @@
+# raid_context/content/dungeons/grasp-of-avarice/1-skywatch.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: skywatch
+  name: Skywatch (Loot Cave intro)
+  difficulty: easy
+  estimated_time: 5-8 min
+  abstract: 'Tutorial. The original Loot Cave is now a mechanic-teach. Build
+
+    Burdened stacks from Hive engrams + deposit 50 at the Icon to
+
+    collapse the floor and progress.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Skywatch landing zone, crashed Hive Seeder visible.
+
+    - The Loot Cave proper (mouth, then descending tunnel).
+
+    - Icon of Excess (white quartz crystal) inside the cave at the back.
+
+    - Hive + Fallen actively fighting at the cave mouth.
+
+
+    PLATFORM MECHANICS:
+
+    - Engrams drop from killed Hive. Walk over to pick up = +1 Burdened stack + timer.
+
+    - Icon: stand within ~2m. Auto-deposits stacks at ~1/second.
+
+    - No platform damage zones — just the Burdened timer.
+
+
+    START STATE: pull = engage. No countdown, no callout-triggered start.
+
+    '
+  callouts:
+  - when: First engram picked up
+    from: self
+    to: team
+    say: '"[N] stacks."'
+    why: Lets team gauge collective progress without checking individual buffs.
+  - when: Burdened timer < 5s
+    from: self
+    to: team
+    say: '"Depositing!"'
+    why: Avoids 3 players crowding the Icon and one running out of timer mid-walk.
+  wipe_triggers:
+  - Burdened timer = 0 on any player.
+  - Standing too close to an unpicked engram when it explodes.
+  damage_phase_triggers:
+  - 50 stacks deposited cumulatively = floor collapses, encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage enemies at cave mouth. Pick engrams as they drop.
+  - phase: Build stacks (~0:30-1:30)
+    gatherers: Each holds 8-10 stacks max. Deposit. Repeat.
+  - phase: Final deposit
+    all: Push to 50 cumulative. Floor collapses → drop into encounter 2 path.
+  permutations:
+  - name: Standard 3-gatherer
+    learner_friendly: true
+    summary: All 3 gather + deposit. No specialization.
+    roles:
+    - id: gatherer
+      count: 3
+      does: Pick + deposit. Self-manage timer.
+      loadout:
+        subclass: Any subclass with strong add-clear; an ability loop that regenerates Super fast pairs
+          well with the every-10-stacks instant Super recharge.
+        weapons: Add-clear primary (auto rifle or SMG) plus any secondary; nothing specialized required
+          for the tutorial.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge requirement; run general add-clear and ability-uptime mods.
+  cheese: []
+  common_mistakes:
+  - Hoarding 15+ stacks for a 'super-deposit' — timer doesn't wait. Cap at 10, then deposit.
+  - Standing inside the Loot Cave during a Hive Seeder spawn — splash damage.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'GJALLARHORN catalyst chest 1: After encounter, before progressing,
+
+        a Reaver Vandal ("Randal") spawns near the cave. Damage him
+
+        until he drops a Cursed Engram. Pick up + go to the chest in
+
+        the back-right corner of the Loot Cave alcove. Catalyst piece 1.
+
+        REQUIRES no-checkpoint run for Randal to spawn.
+
+        '
+      rewards:
+      - Gjallarhorn Catalyst fragment 1 (of 3)
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    hidden_chest: ''
+  learner_path:
+  - Just play. Mechanics are self-teaching.
+  plain_language_steps:
+  - 1. Land at Skywatch and head for the original Loot Cave; Hive and Fallen are already fighting at the
+    cave mouth.
+  - 2. Kill the Hive at the mouth and tunnel to make them drop Cursed Engrams.
+  - 3. Walk over a dropped engram to pick it up. This grants 1 stack of Burdened by Riches and starts
+    a 30-second death timer.
+  - 4. Keep picking up engrams to add stacks, but remember each pickup resets the timer and the timer
+    never pauses.
+  - 5. Do not hoard. Cap yourself around 8-10 stacks so you can deposit before the timer runs out.
+  - 6. Go to the Icon of Excess (white quartz crystal) at the back of the cave and stand within about
+    2 meters; it auto-deposits your stacks at roughly 1 per second.
+  - 7. Call out your stack count so the team can track collective progress, and call 'Depositing!' when
+    your timer is low so you do not crowd the Icon.
+  - 8. Repeat gather-and-deposit until the team has deposited 50 stacks cumulatively.
+  - 9. At 50 deposited the floor collapses and the encounter ends, dropping you toward the next area.
+  - '10. Optional (Gjallarhorn Catalyst, no-checkpoint runs only): a Reaver Vandal nicknamed Randal spawns
+    near the cave; damage him until he drops a Cursed Engram, then open the chest in the back-right alcove
+    of the Loot Cave for Catalyst fragment 1 of 3.'
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Hive Thrall/Acolyte melee and projectiles)
+      - Void (Hive Knight boomers/Acolyte fire)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No verified mandatory resist in this encounter; the only real threat is the Burdened by Riches
+        death timer, not enemy elements.
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase in this encounter. It is a deposit-only tutorial; there is no boss to burst.
+    burst_windows: No damage window; progress is gated entirely by depositing 50 Burdened stacks at the
+      Icon of Excess.
+    recommended_dps:
+    - Any reliable add-clear primary or wave-clear ability to farm engrams quickly; no dedicated DPS weapon
+      needed.
+  role_loadouts:
+  - role_id: gatherer
+    subclass: Any subclass with strong add-clear; an ability loop that regenerates Super fast pairs well
+      with the every-10-stacks instant Super recharge.
+    weapons: Add-clear primary (auto rifle or SMG) plus any secondary; nothing specialized required for
+      the tutorial.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; run general add-clear and ability-uptime mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: skywatch)'
+    note: Primary source for mechanics, Burdened by Riches timer, 50-deposit trigger, and the Randal/Catalyst
+      chest 1 path.
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats; verify exotic and weapon availability against
+      the current in-game meta before locking loadouts.
+    date_checked: '2026-06-07'

@@ -1,0 +1,164 @@
+# raid_context/content/raids/kings-fall/1-hall-of-souls.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: hall-of-souls
+  name: Hall of Souls (Opener)
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Opener. Split 3 teams of 2. Two pickup Relics ("Tomb Husks") and
+
+    deposit at statues. Gunner + Relic-holder per side. 6 statues
+
+    total via 3 rounds of double-deposit.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Court of Oryx-style hall with a central blocked gate.
+
+    - Statues at multiple positions (6 total need activation).
+
+    - Tomb Husks (relics) at start.
+
+    - Taken Blight in center (D2: shoot to break walls blocking Relic carriers).
+
+
+    PLATFORM MECHANICS:
+
+    - Pick up Relic = Tomb Husk → carry to statue, INTERACT to slam.
+
+    - 2 relics must be deposited at near-same time (or first statue silences).
+
+    - Gunner clears path for Relic carrier.
+
+
+    START STATE: rally banner, pick up Relics.
+
+    '
+  callouts:
+  - when: Statue active
+    from: depositor
+    to: team
+    say: '"Statue [N] DOWN."'
+    why: Sync deposits.
+  wipe_triggers: []
+  damage_phase_triggers:
+  - All 6 statues active → portal opens → loot chest.
+  parallel_timeline:
+  - phase: Pull
+    relic_carriers_2: Pick up Tomb Husks.
+    gunners_2: Lead Relic carriers.
+    center_clear_2: Burst enemies in center to break central gate.
+  - phase: Cycle (×3, 6 statues total)
+    carriers: Walk to statues, double-deposit.
+  permutations:
+  - name: Standard 3-pair split
+    learner_friendly: true
+    summary: L/center/R 3 pairs. Each round, 2 pairs cover left+right Relic + 1 pair holds center.
+    roles:
+    - id: relic_pair
+      count: 4
+      does: 2 pairs Relic-carry + gunner.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary for path clearing (auto rifle / SMG / pulse) plus a reliable special;
+          Relic carrier swaps to gun only when not carrying.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge mods to your add-clear weapon element; no encounter-forced element.
+    - id: center_clear
+      count: 2
+      does: Burst Court enemies.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary plus a hard-hitting special (shotgun or fusion) to break the central
+          gate enemies quickly.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Match surge mods to your weapon element; ability-regen armor mods help sustained
+          add-clear.
+  cheese: []
+  common_mistakes:
+  - Slow double-deposit — first statue silences if late.
+  rewards:
+    guaranteed:
+    - Chest with Doom of Chelchis or class item
+    hidden_chest: null
+    potential_drops:
+    - Doom of Chelchis (scout)
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: gunner. 2nd: Relic carrier.'
+  plain_language_steps:
+  - 1. Place the rally banner and split your fireteam of six into three pairs covering Left, Center, and
+    Right.
+  - 2. Two players pick up the Relics, called Tomb Husks, from the start of the hall.
+  - 3. Each Relic carrier gets a gunner partner who clears the path of Court of Oryx-style Hive enemies
+    ahead of them.
+  - 4. The center pair bursts the enemies in the middle to break the central gate and shoots the Taken
+    Blight to clear walls blocking the Relic carriers.
+  - 5. Carry each Relic to its statue and interact to slam it, activating the statue.
+  - 6. Deposit both Relics at near the same time so the first statue does not silence (deactivate) while
+    you wait for the second.
+  - 7. Call out 'Statue down' each time so the two depositors stay synced.
+  - 8. Repeat the double-deposit cycle three times until all six statues are active.
+  - 9. When all six statues are lit, the portal opens and the loot chest appears, ending the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive enemies (Court of Oryx-style adds, no element specified in guide)
+      - Taken Blight (stationary, shoot to break walls)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No specific element confirmed for these adds in the guide; general add survivability favors Health
+        stat for Hive AoE.
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase. This is a Relic-deposit opener with no boss damage check.
+    burst_windows: No boss burst window; the encounter ends when all 6 statues are activated and the portal
+      opens.
+    recommended_dps:
+    - Add-clear primary (auto rifle, SMG, or pulse) for fast center gate clears; no burst DPS required.
+  role_loadouts:
+  - role_id: relic_pair
+    subclass: ''
+    weapons: Add-clear primary for path clearing (auto rifle / SMG / pulse) plus a reliable special; Relic
+      carrier swaps to gun only when not carrying.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your add-clear weapon element; no encounter-forced element.
+  - role_id: center_clear
+    subclass: ''
+    weapons: Add-clear primary plus a hard-hitting special (shotgun or fusion) to break the central gate
+      enemies quickly.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your weapon element; ability-regen armor mods help sustained add-clear.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Hall of Souls encounter block)'
+    note: Tier-1 primary source. Mechanics, roles, and permutations derived directly from the authored
+      v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Loadout specifics (exotics/weapons) left blank where the current Edge of Fate meta could not
+      be verified; confirm element surges and meta exotics against the live sandbox before a Master run.
+    date_checked: '2026-06-07'

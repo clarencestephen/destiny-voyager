@@ -1,0 +1,189 @@
+# raid_context/content/dungeons/pit-of-heresy/2-tunnels-of-despair.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: tunnels-of-despair
+  name: Tunnels of Despair
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Maze of small tunnels + 3 unkillable Harrowing Pariah Ogres patrolling
+
+    wider tunnels. Kill 3 Heretical Knights for Void Orbs, dunk one at
+
+    each of 3 doors. Avoid Ogre line-of-sight.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Dimly lit cavern, tall ceilings.
+
+    - Small wall tunnels (crawl-height) hidden behind Hive membranes (purple veiny barriers — destroy
+    with shots).
+
+    - 3 unkillable Ogres patrolling the wide tunnels.
+
+    - 3 sealed doors with vessels (orb dunk points) outside each.
+
+
+    PLATFORM MECHANICS:
+
+    - Shoot membranes to reveal crawl tunnels.
+
+    - Kill Heretical Knight in small tunnel → Void Orb drops.
+
+    - Carry orb → dunk at any of the 3 vessels outside the doors.
+
+    - Ogres patrol on a set route — time movement around them.
+
+
+    START STATE: drop into the dim room. Ogres already patrolling.
+
+    '
+  callouts:
+  - when: Ogre in your path
+    from: self
+    to: team
+    say: '"Ogre [direction], hold."'
+    why: Prevents teammates from sprinting into one-shot LoS.
+  - when: Knight killed, orb in hand
+    from: self
+    to: team
+    say: '"Got orb, dunking [N/S/E]."'
+    why: Tells team which door is being progressed.
+  wipe_triggers:
+  - Ogre LoS at close range (one-shot).
+  - Slow play — Knights respawn, manageable but tedious.
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Pull + scout
+    all: Drop in. Identify Ogre patrol routes.
+  - phase: Knight kill loop
+    runner: Crawl tunnel → kill Knight → orb → dunk.
+    watchers_2: Spot Ogre movements + call them out.
+  - phase: 3rd dunk
+    all: Path forward opens.
+  permutations:
+  - name: Standard 1-runner / 2-watch
+    learner_friendly: true
+    summary: One player handles orbs; two flank to call Ogres.
+    roles:
+    - id: runner
+      count: 1
+      does: Kill Knights, dunk orbs.
+      loadout:
+        subclass: Any; mobility or invisibility-leaning kit helps dodge Ogre LoS
+        weapons: Strong primary to drop Heretical Knights fast so you can grab the orb
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: No surge requirement
+    - id: ogre_watcher
+      count: 2
+      does: Call Ogre LoS. Don't engage — they're unkillable.
+      loadout:
+        subclass: Any; pick whatever keeps you alive while spotting
+        weapons: Strong primary; long-range option to support the runner without engaging Ogres
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No surge requirement
+  - name: Solo
+    learner_friendly: false
+    summary: All 3 yourself. Use cover and tunnel paths to avoid Ogres.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient routing.
+      loadout:
+        subclass: Any; mobility/invisibility kit for patient routing
+        weapons: Strong primary for Knights; rely on cover and tunnel paths to avoid Ogres
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Weapons
+        surges_mods: No surge requirement
+  cheese: []
+  common_mistakes:
+  - Trying to shoot the Ogres — they don't die. Wastes ammo.
+  - Dunking the orb at the WRONG door — has to be at the door for an unkilled-Knight-section.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - Just play. Mechanic is self-teaching.
+  plain_language_steps:
+  - 1. Drop into the dim cavern; three unkillable Harrowing Pariah Ogres are already patrolling the wide
+    tunnels.
+  - 2. Spend a moment watching the Ogre patrol routes so you can time your movement around them.
+  - 3. Shoot the purple veiny Hive membranes covering the small crawl tunnels to open them.
+  - 4. Crawl into a small tunnel and kill the Heretical Knight inside; it drops a Void Orb.
+  - 5. Pick up the Void Orb and carry it out, avoiding Ogre line-of-sight (an Ogre at close range one-shots
+    you).
+  - 6. Have teammates call out Ogre movements so the orb carrier can route safely.
+  - 7. Dunk the orb at one of the 3 vessels located outside the sealed doors.
+  - 8. Repeat the Knight-kill-and-dunk loop until all 3 doors have been progressed.
+  - 9. Do not waste ammo shooting the Ogres; they cannot be killed.
+  - 10. After the third dunk, the path forward opens.
+  defense:
+    incoming_damage:
+      adds:
+      - Void (Harrowing Pariah Ogre eye blast, one-shot at close range)
+      - Arc (Heretical Hive Knight melee)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resist is the priority here against Ogre eye-blast damage
+      - Arc Resist minor help vs Knights
+      concussive:
+      - Concussive Dampener can soften Ogre eye-blast splash if you are briefly in LoS, but the intended
+        play is avoidance
+  damage:
+    surges:
+    - No DPS phase. Progress is made by killing Heretical Knights and dunking Void Orbs, not by burst
+      damage.
+    burst_windows: No burst window; the encounter is a stealth-and-routing orb loop with no boss.
+    recommended_dps:
+    - Strong primary to quickly kill each Heretical Knight in the tunnels
+  role_loadouts:
+  - role_id: runner
+    subclass: Any; mobility or invisibility-leaning kit helps dodge Ogre LoS
+    weapons: Strong primary to drop Heretical Knights fast so you can grab the orb
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement
+  - role_id: ogre_watcher
+    subclass: Any; pick whatever keeps you alive while spotting
+    weapons: Strong primary; long-range option to support the runner without engaging Ogres
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement
+  - role_id: solo
+    subclass: Any; mobility/invisibility kit for patient routing
+    weapons: Strong primary for Knights; rely on cover and tunnel paths to avoid Ogres
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge requirement
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/pit-of-heresy.yaml (encounter: tunnels-of-despair)'
+    note: Primary source for mechanics, enemies, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats; verify current exotics/weapons in-game as the
+      meta shifts each season.
+    date_checked: '2026-06-07'

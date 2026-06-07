@@ -1,0 +1,221 @@
+# raid_context/content/dungeons/pit-of-heresy/1-necropolis.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: necropolis
+  name: Necropolis (Disciples of the Broken Blade)
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'Cliffside arena with multiple Hive towers. Find the Accursed
+
+    Swordbearer in the first tower, read the 3 displayed runes, then
+
+    visit the matching 3 towers and kill the Disciple inside each
+
+    with the correct sword input.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Cliffside vista with multiple Hive towers (small Hive structures with rune-symbols on top).
+
+    - A drop-down point that leads to the FIRST tower (rune-reveal room).
+
+    - Brigde, broken in one spot — that gap exits to Tunnels of Despair (later).
+
+
+    PLATFORM MECHANICS:
+
+    - First tower: enter → kill Accursed Swordbearer → relic Hive Cleaver drops + 3 runes display.
+
+    - Other towers: walk in to identify the rune on top. Match to your 3.
+
+    - In each matched tower: kill ambient adds, then the Disciple inside.
+
+    - Sword DESPAWNS if you take too long — pull from the next Swordbearer.
+
+
+    START STATE: rally banner at the cliff top. Drop down to start.
+
+    '
+  callouts:
+  - when: 3 runes revealed
+    from: first-in
+    to: team
+    say: '"Runes: [name/icon 1], [name/icon 2], [name/icon 3]."'
+    why: Team needs them all to scout towers in parallel.
+  - when: Tower scouted, matches a needed rune
+    from: scout
+    to: team
+    say: '"[direction] tower = [rune] — [Disciple type] inside."'
+    why: Tells swordbearer the next input + where.
+  - when: Disciple killed
+    from: killer
+    to: team
+    say: '"Disciple 1/3 down."'
+    why: Progress check.
+  wipe_triggers:
+  - No specific wipe. Just slow if you screw up sword inputs (sword breaks / despawns; refresh).
+  - Falling off cliffs during navigation.
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Pull
+    all: Drop down. Push to first tower.
+  - phase: Read runes (~0:30)
+    swordbearer: Kill Accursed Swordbearer, read 3 runes.
+    scouts_2: Identify rune-tops at other towers.
+  - phase: Disciple clears (~1:00-4:00)
+    swordbearer: Move tower → tower with correct sword input. Light for Might, Heavy for Omen, Block for
+      Oracle.
+    add_clear: Clear ambient Hive + Revenant Wizards/Ogres in Disciple rooms.
+  - phase: Wrap
+    all: Loot chest at exit, look for hole-in-wall to right of broken bridge.
+  permutations:
+  - name: Standard 1-sword / 2-scout
+    learner_friendly: true
+    summary: One sword carrier; two scout + add-clear the Disciple rooms ahead of time.
+    roles:
+    - id: swordbearer
+      count: 1
+      does: Carry Cleaver. Execute correct input per Disciple.
+      loadout:
+        subclass: Any; ability-uptime subclass to survive while sword-swinging
+        weapons: Strong primary for clearing ambient adds between Disciples; rely on the relic Hive Cleaver
+          for Disciple kills
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge requirement; sword damage on Disciples is fixed by input type
+    - id: scout_add_clear
+      count: 2
+      does: Identify towers + clear adds before swordbearer arrives.
+      loadout:
+        subclass: Any; pick something with strong add-clear
+        weapons: Strong primary for long-range Boomer/Revenant Wizard picks; sniper or linear fusion to
+          pick Knights from cover
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Weapons
+        surges_mods: No surge requirement
+  - name: Solo
+    learner_friendly: false
+    summary: Do everything sequentially. Take the picture, scout, sword, kill.
+    roles:
+    - id: solo
+      count: 1
+      does: Self-paced. Bring strong primary for ambient adds.
+      loadout:
+        subclass: Any; high survivability subclass
+        weapons: Strong primary for ambient adds; the relic Hive Cleaver for Disciples
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: No surge requirement
+  cheese: []
+  common_mistakes:
+  - Forgetting which rune matched which Disciple type — screenshot the rune room AND each tower top.
+  - Letting Revenant Wizards/Ogres hit you while sword-swinging — kill them with primary FIRST.
+  - Light attack on Omen (Wizard) wastes seconds. Confirm input before swinging.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Shared 'Any Encounter' pool — PoH does NOT have per-encounter loot pools. Every loot-bearing encounter
+      rolls from the same set.
+    - 'Pool: Every Waking Moment (SMG, Void), Loud Lullaby (HC, Kinetic), Love and Death (GL, Solar),
+      Arc Logic (auto, Arc), A Fine Memorial (LMG, Arc), Dream Breaker (fusion, Solar), One Small Step
+      (shotgun, Kinetic), Tranquility (sniper, Kinetic), **Premonition** (pulse, Void — only farmable
+      from PoH), Night Terror (sword, Arc).'
+    - 'Hymn of Desecration quest weapons (drop only after the quest): Apostate (sniper, Arc), Blasphemer
+      (shotgun, Kinetic), Heretic (RL, Arc).'
+    - Dreambane armor (any slot, source of high-stat armor farming).
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: scout/add-clear. Watch the swordbearer to learn inputs.'
+  - '2nd: swordbearer.'
+  plain_language_steps:
+  - 1. Place the rally banner at the cliff top, then drop down into the arena and push to the first Hive
+    tower.
+  - 2. Inside the first tower, kill the Accursed Swordbearer to make the relic Hive Cleaver drop, and
+    pick it up.
+  - 3. Read the 3 Hive runes that are revealed in that room. Screenshot them so everyone can scout in
+    parallel.
+  - 4. Send teammates to walk into the other towers and check the rune displayed on top of each one.
+  - 5. Match those rune-tops against your 3 correct runes; ignore any tower whose rune is not on your
+    list.
+  - 6. Before the swordbearer arrives at a matched tower, clear the ambient Hive (Revenant Wizards/Ogres)
+    inside with primary fire.
+  - '7. At a matched tower, kill the Disciple inside using the correct Cleaver input: Light attack for
+    Might (Knight), Heavy/projectile for Omen (Wizard), Block/deflect for Oracle (Shrieker).'
+  - 8. If the Cleaver despawns because you took too long, pull a fresh one from the next Accursed Swordbearer.
+  - 9. Repeat until all 3 matching Disciples are dead.
+  - 10. Loot the chest at the exit, then find the hole-in-the-wall to the right of the broken bridge to
+    continue.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Hive Knight melee/cleaver and Boomer fire)
+      - Arc (Hive Wizard poison/projectiles)
+      - Void (Hive Ogre eye blast)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resist helps against Knight and Wizard pressure
+      - Void Resist helps if Ogres are present in Disciple rooms
+      concussive:
+      - Concussive Dampener optional vs Ogre eye-blast knockback if you get caught in the open
+  damage:
+    surges:
+    - No gun DPS phase. Disciples die only to the correct Hive Cleaver input (Light=Might, Heavy=Omen,
+      Block=Oracle), not to weapon damage.
+    burst_windows: No burst window; this is a sword-input encounter, so kills happen per-Disciple via
+      the Cleaver, not in a timed phase.
+    recommended_dps:
+    - Strong primary for ambient Hive and Boomer Knights
+    - The relic Hive Cleaver for the actual Disciple kills
+  role_loadouts:
+  - role_id: swordbearer
+    subclass: Any; ability-uptime subclass to survive while sword-swinging
+    weapons: Strong primary for clearing ambient adds between Disciples; rely on the relic Hive Cleaver
+      for Disciple kills
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; sword damage on Disciples is fixed by input type
+  - role_id: scout_add_clear
+    subclass: Any; pick something with strong add-clear
+    weapons: Strong primary for long-range Boomer/Revenant Wizard picks; sniper or linear fusion to pick
+      Knights from cover
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement
+  - role_id: solo
+    subclass: Any; high survivability subclass
+    weapons: Strong primary for ambient adds; the relic Hive Cleaver for Disciples
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge requirement
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/pit-of-heresy.yaml (encounter: necropolis)'
+    note: Primary source for mechanics, enemies, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (e.g., Resilience->Health, Recovery->Class); verify
+      current exotics/weapons in-game as the meta shifts each season.
+    date_checked: '2026-06-07'

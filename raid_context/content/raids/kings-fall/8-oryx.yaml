@@ -1,0 +1,287 @@
+# raid_context/content/raids/kings-fall/8-oryx.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 8
+  slug: oryx
+  name: Oryx, the Taken King (final boss)
+  difficulty: hard
+  estimated_time: 30-45 min
+  abstract: 'Final boss. 5 platform rotations (Light-Eater Ogres spawn in spawn
+
+    order = platform order). Kill Ogres (+ Light-Eater Knights eat orbs
+
+    if alive!) → Vessel of Oryx with Aura of Immortality spawns. Torn
+
+    player gets Aura. Detonate Corrupted Light in Aura = stun Oryx +
+
+    chest weak point. 4 detonations = max stun. Then burst chest. Final
+
+    stand at low HP.
+
+    '
+  setup: "WHAT YOU SEE:\n- Throne room of Oryx. 4 corner platforms + center area.\n- Oryx (massive Taken\
+    \ Hive King) far back.\n- Black orb at end — approach to start.\n\nPLATFORM MECHANICS:\n- 5 platform\
+    \ rotations per phase (rotation = which 4 corners spawn).\n  • Phase 1: Front Right or Front Left\n\
+    \  • Phase 2: Back Left or Back Right\n  • Phase 3: Front Left or Front Right\n  • Phase 4: Front\
+    \ Left or Front Right\n  • Phase 5: Back Left or Back Right\n- Light-Eater Ogres spawn at 4 corner\
+    \ platforms in order.\n- 2 players on platforms (one becomes Torn).\n- Add-clear team kills Ogres\
+    \ in spawn order. KILL Light-Eater Knights too — they EAT Corrupted Light orbs if not killed.\n- Killed\
+    \ Ogre drops Corrupted Light orb at platform.\n- Torn player picks up Relic at center → steals Aura\
+    \ of Immortality from Vessel of Oryx (special Knight) → kill Vessel.\n- Vessel down: platform players\
+    \ stand in Aura. Then run to Corrupted Light orbs at their platforms → DETONATE.\n- 4 detonations\
+    \ max = max stun. Failure = wipe.\n- Stun reveals Oryx's CHEST weak point — burst all weapons.\n-\
+    \ After 5 platform phases, 50% HP → Blight phase: Oryx sucks players into Shade-Blight. Hammer Shade.\
+    \ Health doesn't replenish. Once Shade dies = phase over.\n- Final stand: Oryx walks to front, chest\
+    \ exposed. All-in DPS.\n\nSTART STATE: rally banner. Walk to black orb to start.\n"
+  callouts:
+  - when: Ogre spawn
+    from: spotter
+    to: team
+    say: '"OGRE [Front-L/F-R/B-L/B-R] — burn!"'
+    why: Spawn order tells platform sequence.
+  - when: Vessel up
+    from: spotter
+    to: team
+    say: '"VESSEL [direction] — Aura steal."'
+    why: Torn player goes to Vessel.
+  - when: Light-Eater Knight
+    from: spotter
+    to: team
+    say: '"LIGHT-EATER KNIGHT [direction] — KILL IT (eats orbs)."'
+    why: Knight will eat Corrupted Light if alive.
+  - when: Aura stolen
+    from: torn
+    to: team
+    say: '"AURA — stay center."'
+    why: Aura player STATIC at center. Others detonate around.
+  - when: Detonating
+    from: platform player
+    to: team
+    say: '"[name] DETONATING [direction]."'
+    why: Stagger detonations or sync for max stun.
+  - when: Oryx stunned, chest weak point
+    from: any
+    to: team
+    say: '"CHEST OPEN — burn!"'
+    why: DPS window. Whisper / Sleeper / Linear / Celestial.
+  - when: Blight phase
+    from: any
+    to: team
+    say: '"BLIGHT — Shade!"'
+    why: Burst Shade of Oryx in Blight realm.
+  wipe_triggers:
+  - Failure to detonate Corrupted Light in Aura = wipe.
+  - Light-Eater Knight eats orb = wasted detonation.
+  - Shade of Oryx not killed in Blight phase.
+  - Oryx enrages (5 platform phases without sufficient damage).
+  damage_phase_triggers:
+  - Oryx stunned by Corrupted Light detonations (in Aura) → chest weak point exposed → DPS.
+  - 'Final stand: chest exposed continuously.'
+  parallel_timeline:
+  - phase: Pull
+    all: Approach black orb. Oryx spawns. 2 on first platform corner.
+  - phase: Ogre phase (~0:30-1:30)
+    platform_players_2: Stand on platforms in spawn order.
+    add_clear_2: Kill Ogres + Light-Eater Knights.
+    torn: Steal Aura from Vessel of Oryx.
+  - phase: Detonate Corrupted Light (~1:30-2:00)
+    platform_players: Walk to platform orbs, detonate. Stagger or sync.
+    aura_holder: Stay center, all team in Aura range.
+  - phase: DPS (~2:00-2:20)
+    all: Burst Oryx's chest.
+  - phase: Reset / Next platform rotation
+    all: Cycle 5 platform rotations total before 50%.
+  - phase: Blight phase (~3:00)
+    all: Pulled into Blight. Burst Shade of Oryx. Watch for adds.
+  - phase: Final stand
+    all: Oryx at front. All-in DPS.
+  permutations:
+  - name: Standard 4-platform / 2-clear
+    learner_friendly: true
+    summary: 4 dedicated platform players (1 per corner); 2 add-clear (Ogres + Knights).
+    roles:
+    - id: platform_player
+      count: 4
+      does: Stand on assigned corner platform. Detonate Corrupted Light.
+      loadout:
+        subclass: Any subclass; reliable movement to reach platform orbs and detonate within the Aura.
+          Well of Radiance Warlock or a Super-heavy class works well in the DPS stack.
+        weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) for the chest window; Touch of Malice
+          for added Oryx chest DPS if owned; add-clear primary for Ogres.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Super
+        surges_mods: Match surge mods to your heavy/special DPS element; ability-regen mods to keep Supers
+          and abilities up across rotations.
+    - id: add_clear
+      count: 2
+      does: Kill Ogres in order. KILL Light-Eater Knights ASAP.
+      loadout:
+        subclass: Any subclass with strong sustained add-clear and Super uptime to drop Ogres and snap
+          Light-Eater Knights fast.
+        weapons: Add-clear primary (auto / SMG / pulse) plus an Anti-Unstoppable or heavy for Ogres; precision
+          option to delete Light-Eater Knights before they eat orbs.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Run Anti-Unstoppable on Master (Light-Eater Ogres); match surges to your DPS element
+          for the chest window.
+  - name: 'Speed: Celestial Nighthawk chest one-shot'
+    learner_friendly: false
+    summary: 'Hunter with Celestial Nighthawk + Star-Eater Scales fires Super
+
+      into Oryx''s chest = massive damage. Touch of Malice helps too.
+
+      1-2 phase clears.
+
+      '
+    best_for: Endgame teams + Touch of Malice farmers.
+  - name: 'Master: Hands Off'
+    learner_friendly: false
+    summary: Each Light-Eater Ogre/Knight can only be killed by a given player ONCE. Rotate killers.
+  cheese: []
+  common_mistakes:
+  - Letting Light-Eater Knight eat Corrupted Light = detonation lost.
+  - Detonating outside Aura range = wipe (Corrupted Light kills detonator).
+  - Wrong platform order = Oryx tantrum.
+  - 'Blight phase: Shade health regenerates if you don''t burst.'
+  - 'Final stand: not bursting chest = Oryx reattacks.'
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (extra roll)
+    - Deepsight chest (if all 9 runes shot — see Overall Notes)
+    hidden_chest: null
+    potential_drops:
+    - '**Touch of Malice** (exotic scout rifle, Kinetic) — RNG drop from Oryx chest.'
+    - 'Any Legendary weapon from previous encounters: Doom of Chelchis, Smite of Merain, Qullim''s Terminus,
+      Defiance of Yasmin, Midha''s Reckoning, Zaouli''s Bane.'
+    - King's Fall armor (random slot).
+  master_challenge:
+    name: Hands Off
+    requirement: 'Players must not kill the same Ogre or Light-Eater Knight
+
+      throughout the encounter. With 4 Ogres + 6 Light-Eater
+
+      Knights across 3 stand phases, the 6 players need to track
+
+      their own kills so no one duplicates. Add-clear assignments
+
+      rotate phase-to-phase.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear (study Ogre + Knight spawn pattern).'
+  - '2nd: platform_player.'
+  - '3rd: torn / Aura holder.'
+  plain_language_steps:
+  - 1. Place the rally banner and walk to the black orb at the end to start; Oryx, the Taken King, spawns
+    at the back of the throne room.
+  - 2. Light-Eater Ogres spawn at the four corner platforms in a set order, and that spawn order tells
+    you the platform sequence for the phase.
+  - 3. Two players go to the platforms in spawn order; one of them becomes the Torn player.
+  - 4. The add-clear team kills the Ogres in spawn order and MUST also kill the Light-Eater Knights fast,
+    because the Knights eat Corrupted Light orbs if left alive.
+  - 5. Each killed Ogre drops a Corrupted Light orb at its platform.
+  - 6. The Torn player picks up the Relic at center, steals the Aura of Immortality from the Vessel of
+    Oryx (a special Knight), and the team kills the Vessel.
+  - 7. With the Vessel down, the platform players run to the Corrupted Light orbs at their platforms and
+    detonate them while inside the Aura of Immortality.
+  - 8. Detonating Corrupted Light outside the Aura range kills the detonator and wipes the team, so stay
+    in the Aura; the Aura holder stays static at center.
+  - 9. Four detonations give maximum stun, which reveals Oryx's CHEST weak point.
+  - 10. Burst the exposed chest with all weapons during the DPS window.
+  - '11. Cycle through five platform rotations until Oryx hits about 50 percent, which triggers the Blight
+    phase: you are pulled into a Shade-Blight realm where you must hammer and kill the Shade of Oryx (its
+    health does not replenish for you, and the Shade regenerates if you stop bursting).'
+  - 12. For the final stand, Oryx walks to the front with his chest exposed, so go all-in on DPS to finish
+    him.
+  defense:
+    incoming_damage:
+      adds:
+      - Light-Eater Ogres (Taken, kill in spawn order)
+      - Light-Eater Knights (Taken, eat Corrupted Light orbs if alive)
+      - Vessel of Oryx (special Taken Knight holding the Aura of Immortality)
+      - Shade of Oryx (Blight-realm enemy)
+      boss:
+      - Oryx, the Taken King heavy slams and Taken energy; Corrupted Light detonation is lethal outside
+        the Aura of Immortality
+    champions:
+    - 'On Master: Unstoppable Ogres -> Anti-Unstoppable (Light-Eater Ogres), plus Barrier Knights / Overload
+      Hobgoblins per raid Master notes'
+    recommended_defensive_mods:
+      elemental:
+      - Health stat for Oryx's heavy AoE and the dense Taken adds; no single resist element forced by
+        the guide. Corrupted Light death is positional (stay in the Aura), not resistible.
+      concussive:
+      - Concussive Dampener helps platform players survive Ogre blasts and Oryx splash while moving to
+        detonate.
+  damage:
+    surges:
+    - No element forced by the boss. Match your surge mods to your chosen burst weapon. Kinetic options
+      are highlighted by the guide (Touch of Malice exotic scout synergizes with Oryx DPS); pick surges
+      for your heavy/special DPS element.
+    burst_windows: Chest weak point opens for a roughly 20-second DPS window after four Corrupted Light
+      detonations stun Oryx; the chest is exposed continuously during the final stand.
+    recommended_dps:
+    - Burst heavy (Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle) into the chest; Touch
+      of Malice for synergy; Celestial Nighthawk Hunter (optionally with Star-Eater Scales) to one-shot
+      the chest with a precision Super; Well of Radiance for the DPS stack.
+  role_loadouts:
+  - role_id: platform_player
+    subclass: Any subclass; reliable movement to reach platform orbs and detonate within the Aura. Well
+      of Radiance Warlock or a Super-heavy class works well in the DPS stack.
+    weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) for the chest window; Touch of Malice
+      for added Oryx chest DPS if owned; add-clear primary for Ogres.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your heavy/special DPS element; ability-regen mods to keep Supers
+      and abilities up across rotations.
+  - role_id: add_clear
+    subclass: Any subclass with strong sustained add-clear and Super uptime to drop Ogres and snap Light-Eater
+      Knights fast.
+    weapons: Add-clear primary (auto / SMG / pulse) plus an Anti-Unstoppable or heavy for Ogres; precision
+      option to delete Light-Eater Knights before they eat orbs.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run Anti-Unstoppable on Master (Light-Eater Ogres); match surges to your DPS element
+      for the chest window.
+  - role_id: torn_runner
+    subclass: Any subclass; the Torn/Aura role is chosen from platform and add-clear players, so all should
+      be ready. Celestial Nighthawk Hunter fits the chest one-shot speed permutation.
+    weapons: Standard DPS heavy plus add-clear primary; if running the Celestial permutation, slot a precision
+      Super build (Golden Gun) for the chest.
+    exotic_armor: ''
+    armor_stats:
+    - Super
+    - Health
+    surges_mods: Match surge mods to your DPS element; for the Celestial Nighthawk permutation, prioritize
+      Super stat to fire into the chest quickly.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Oryx encounter block, Celestial/Speed and Hands
+      Off permutations, overall_notes on Touch of Malice)'
+    note: Tier-1 primary source. Platform rotations, Light-Eater Ogres/Knights, Vessel/Aura of Immortality,
+      Corrupted Light detonation, Blight phase, and final stand derived directly from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Exotic loadouts (Celestial Nighthawk, Star-Eater Scales, Touch of Malice, Whisper/Sleeper/Linear)
+      are named from the guide; verify their current Edge of Fate damage profile and stat names (Mobility->Weapons,
+      etc.) before relying on a one-phase strategy.
+    date_checked: '2026-06-07'

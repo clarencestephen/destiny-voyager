@@ -1,0 +1,207 @@
+# raid_context/content/raids/last-wish/6-heart-escape.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 6
+  slug: heart-escape
+  name: The Heart of Riven (Fate's Chosen escape)
+  difficulty: hard
+  estimated_time: 10-15 min
+  abstract: 'Post-Riven kill. One player is chosen Fate''s Chosen → carries Heart
+
+    out of Riven''s mouth. 15s timer; at 0, anyone NEAR Heart-holder is
+
+    sucked INTO Heart realm. Carry Heart all the way back through the
+
+    raid to the Vault deposit point. Heart holders inside grab Taken
+
+    Strength orbs to delay rip timer.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Inside Riven''s mouth post-kill: Heart of Riven on the ground.
+
+    - Path: Riven''s mouth → back of room → left → right → blight crossing room → left → Vault → Stairs
+    deposit.
+
+
+    PLATFORM MECHANICS:
+
+    - Fate''s Chosen has 15s rip timer. AURA around them protects from Creeping Darkness.
+
+    - Stay close to Heart holder ALL THE TIME (except last 3-5s of rip timer).
+
+    - When timer hits 0: anyone in radius = sucked into Heart realm.
+
+    - Inside Heart realm: collect Taken Strength orbs (max 2 each — like Morgeth). Last orb resets rip
+    timer (once per holder).
+
+    - Mights of Riven appear inside Heart. Kill before plate slam.
+
+    - Route: Riven''s mouth → out → left door → right door → blight room (cross via platforms or just
+    heal) → right door → left → Vault → Trees or Rocks open → tunnel to Stairs → up stairs → deposit Heart
+    at small room.
+
+
+    START STATE: Riven dead. Heart spawns. Fate''s Chosen begins.
+
+    '
+  callouts:
+  - when: Heart picked up
+    from: carrier
+    to: team
+    say: '"HEART — 15."'
+    why: Timer broadcast.
+  - when: Timer at 5s
+    from: carrier
+    to: team
+    say: '"5 — back!"'
+    why: Team backs off.
+  - when: Sucked in
+    from: absorbed
+    to: team
+    say: '"IN HEART — finding Strength."'
+    why: Coordinate inside.
+  - when: Approaching Vault
+    from: carrier
+    to: team
+    say: '"Vault next — [Trees/Rocks] open!"'
+    why: Route confirmation.
+  wipe_triggers:
+  - Creeping Darkness 10 stacks (outside aura).
+  - Heart drops too long without pickup.
+  - Mights of Riven slam plate inside Heart realm.
+  damage_phase_triggers:
+  - Heart deposited at Stairs → raid complete + loot chests spawn.
+  parallel_timeline:
+  - phase: Pull (Riven dies)
+    fate_chosen: Heart picked up.
+    team: Run out of mouth, stay close until ~3s on timer.
+  - phase: Cycle (every 15s)
+    fate_chosen: Move + count timer.
+    absorbed_players: Collect Taken Strength inside.
+  - phase: Vault entry
+    all: Route through Vault to Stairs.
+  - phase: Deposit
+    carrier: Deposit Heart → raid complete.
+  permutations:
+  - name: Standard escape route
+    learner_friendly: true
+    summary: Fate's Chosen rotates as each gets sucked. Route is fixed.
+    roles:
+    - id: heart_carrier
+      count: 1
+      does: Rotates among players. Manages timer.
+      loadout:
+        subclass: Any movement-friendly subclass; high mobility helps manage the route and timer
+        weapons: Light, fast add-clear primary so the carrier can move and self-defend without slowing
+          the run
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: Weapons (Mobility) for route speed; Class (Recovery) for survivability while carrying
+    - id: support
+      count: 5
+      does: Stay close, run with carrier, clear ambient.
+      loadout:
+        subclass: Any add-clearing subclass; suppression helps stop Might plate slams inside the Heart
+        weapons: Strong add-clear primary to kill Mights of Riven and ambient Taken along the route
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Weapons
+        surges_mods: Weapons (Mobility) to stay in the carrier's aura; Health for survivability while
+          clearing
+  cheese: []
+  common_mistakes:
+  - Heart holder stops too far from team — Creeping Darkness kills team.
+  - 'Inside Heart: 3rd Strength = death (like Morgeth).'
+  - Route confusion at Vault — go to open room.
+  rewards:
+    guaranteed:
+    - Final raid chest opens after deposit
+    - Ethereal Keys (from Wish 1 + others) open additional chests under Awoken statues
+    hidden_chest: null
+    potential_drops:
+    - 1000 Voices (exotic) — random chance
+    - Last Wish armor + weapons
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: support — learn route.'
+  - '2nd: heart_carrier.'
+  plain_language_steps:
+  - 1. Riven is dead and the Heart of Riven spawns on the ground inside her mouth. One player becomes
+    Fate's Chosen and picks up the Heart.
+  - 2. The Heart carrier has a 15-second rip timer. An aura around them protects nearby teammates from
+    Creeping Darkness, so call out 'Heart, 15' when you grab it.
+  - 3. Everyone stays close to the carrier almost the entire time, leaving the aura only in the last 3-5
+    seconds before the timer hits 0.
+  - 4. When the timer reaches 0, anyone still inside the carrier's radius gets sucked INTO the Heart realm.
+    The carrier calls '5, back' so the team can spread out in time.
+  - 5. Players pulled into the Heart realm collect Taken Strength orbs, same 2-orb cap as Morgeth; a 3rd
+    orb kills you. The last orb resets the rip timer once per holder.
+  - 6. Mights of Riven appear inside the Heart realm. Kill them before they slam a plate.
+  - '7. Follow the fixed escape route out of Riven''s mouth: out, left door, then right door, into the
+    blight crossing room.'
+  - 8. Cross the blight room (via platforms or just stay healed), then take the right door and the left
+    door toward the Vault.
+  - 9. At the Vault, the Trees or Rocks room will be open; take the tunnel through to the Stairs. Call
+    out which room is open so nobody gets lost.
+  - 10. Carry the Heart up the Stairs and deposit it in the small room. This completes the raid and spawns
+    the loot chests.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Mights of Riven Major Knights inside the Heart realm; ambient Taken along the route)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No enforced burn (no Master). The lethal threat is Creeping Darkness outside the aura, countered
+        by staying near the carrier rather than by an element resist.
+      concussive:
+      - Not called for; the danger is plate slams from Mights and Creeping Darkness, not knockback.
+  damage:
+    surges:
+    - No DPS phase; this is an escort/escape sequence. No surge applies.
+    burst_windows: No boss damage phase; 'damage' is limited to quickly killing Mights of Riven inside
+      the Heart realm before they slam a plate.
+    recommended_dps:
+    - Reliable single-target add-clear to drop Mights of Riven fast
+    - Movement-friendly loadout to keep pace with the carrier
+  role_loadouts:
+  - role_id: heart_carrier
+    subclass: Any movement-friendly subclass; high mobility helps manage the route and timer
+    weapons: Light, fast add-clear primary so the carrier can move and self-defend without slowing the
+      run
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Weapons (Mobility) for route speed; Class (Recovery) for survivability while carrying
+  - role_id: support
+    subclass: Any add-clearing subclass; suppression helps stop Might plate slams inside the Heart
+    weapons: Strong add-clear primary to kill Mights of Riven and ambient Taken along the route
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Weapons (Mobility) to stay in the carrier's aura; Health for survivability while clearing
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: heart-escape)'
+    note: Fate's Chosen rip timer, aura, Strength-orb cap inside the Heart realm, Might kills, and the
+      fixed escape route to the Stairs deposit derived from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use current Edge of Fate naming. Verify any specific exotics/weapons against the
+      live sandbox; meta shifts seasonally.
+    date_checked: '2026-06-07'

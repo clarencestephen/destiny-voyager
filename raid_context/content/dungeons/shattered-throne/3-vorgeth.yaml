@@ -1,0 +1,276 @@
+# raid_context/content/dungeons/shattered-throne/3-vorgeth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: shattered-throne
+  name: The Shattered Throne
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: vorgeth
+  name: Vorgeth, the Boundless Hunger
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Taken Ogre boss. Kill 4 Keeper of Petitions Wizards → grab their
+
+    orbs → deposit at central pillars. 4th orb = Petitioner''s Burden
+
+    (death timer). Deposit before timer ends → DPS window opens.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Round arena, Vorgeth in center, immune.
+
+    - Central deposit pillars (a small set of 3-4 short pillars near Vorgeth).
+
+    - 4 Keeper of Petitions Wizards in alcoves around the perimeter (visible cast animations).
+
+    - Purple cleanse pedestal at the room edge (clears Burden if needed).
+
+    - Axion Dart swarms from Vorgeth periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Kill a Wizard → orb drops at their feet.
+
+    - Pick up orb = Petitioner''s Mark (45s timer, stacks 3x).
+
+    - 4TH orb pickup = Petitioner''s Burden (timer dropping; 0 = death).
+
+    - Deposit at central pillars to clear stacks + advance toward DPS.
+
+    - Need all 4 Wizard orbs deposited for DPS phase.
+
+
+    START STATE: rally banner, walk in. Wizards engage immediately.
+
+    '
+  callouts:
+  - when: Wizard [N/S/E/W] down
+    from: killer
+    to: team
+    say: '"Wizard [direction] down — orb."'
+    why: Pairs runner with orb.
+  - when: Picking up orb
+    from: runner
+    to: team
+    say: '"Orb [N/N-of-3 stacks]."'
+    why: Stack count = how close to Burden.
+  - when: Burden timer < 10s
+    from: self
+    to: team
+    say: '"BURDEN — depositing NOW."'
+    why: Team backs off, gives runner clear path to pillars.
+  - when: DPS open (all 4 deposited)
+    from: any
+    to: team
+    say: '"DPS — well center."'
+    why: Stack + Well/Bubble call.
+  wipe_triggers:
+  - Petitioner's Burden timer to 0 = death.
+  - Vorgeth's eye blast at exposed sightline.
+  - Axion Dart swarm not shot down — they chase + cluster-hit.
+  damage_phase_triggers:
+  - All 4 Wizard orbs deposited → Vorgeth becomes vulnerable + Axion Darts intensify.
+  parallel_timeline:
+  - phase: Pull
+    wizard_killers_2: Pick first 2 Wizards (N + S, or as positioned).
+    runner: Ready to collect first orbs.
+  - phase: Orb cycle (~1:00-2:00)
+    runner: Walk between Wizard kills, pick orb, deposit.
+    wizard_killers: Continue burning Wizards as they cast.
+  - phase: Burden run (if needed)
+    runner: Sprint deposit. Cleanse if timer red.
+  - phase: DPS
+    all: Stack center. Burst Vorgeth. Shoot incoming Axion Darts.
+  - phase: Reset
+    all: Wizards respawn. Cycle.
+  permutations:
+  - name: Standard 1-runner / 2-killers
+    learner_friendly: true
+    summary: One dedicated orb runner; two on Wizards. Runner self-manages Mark/Burden.
+    roles:
+    - id: runner
+      count: 1
+      does: Owns orb pipeline. Track own stacks loudly.
+      loadout:
+        subclass: Mobile, self-sustaining subclass (Void for Devour or Solar Heat Rises for fast orb runs)
+        weapons: Add-clear primary plus a burst heavy for the DPS window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: Match surge mods to your DPS heavy's element; run mobility/movement mods to sprint
+          orb-to-orb and beat the Burden timer
+    - id: wizard_killer
+      count: 2
+      does: Burst Wizards before/as runner arrives.
+      loadout:
+        subclass: Any subclass with strong single-target burst to drop Wizards quickly (Solar or Void)
+        weapons: Precision primary or special to burst Wizards fast, plus a burst heavy for the DPS window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: Match surge mods to your DPS heavy's element; run targeting/loader mods for fast
+          Wizard kills
+  - name: 'Speed: 4-orb 1-Burden run'
+    learner_friendly: false
+    summary: Runner collects ALL 4 orbs (3 Mark + 1 Burden), sprints deposit all at once.
+    best_for: Practiced teams, faster reset.
+    roles:
+    - id: runner
+      count: 1
+      does: Sprint orb-to-orb to deposit in one trip.
+      loadout:
+        subclass: Mobile, self-sustaining subclass (Void for Devour or Solar Heat Rises for fast orb runs)
+        weapons: Add-clear primary plus a burst heavy for the DPS window
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Match surge mods to your DPS heavy's element; run mobility/movement mods to sprint
+          orb-to-orb and beat the Burden timer
+    - id: wizard_killer
+      count: 2
+      does: Burst all 4 Wizards in rapid succession.
+      loadout:
+        subclass: Any subclass with strong single-target burst to drop Wizards quickly (Solar or Void)
+        weapons: Precision primary or special to burst Wizards fast, plus a burst heavy for the DPS window
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: Match surge mods to your DPS heavy's element; run targeting/loader mods for fast
+          Wizard kills
+  - name: Solo
+    learner_friendly: false
+    summary: Wizards + orbs yourself. Take 2-3 cycles.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Use sustain (Devour, Restoration).
+      loadout:
+        subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple cycles alone
+        weapons: Add-clear primary plus a high-damage heavy (Sword, Linear Fusion, or rocket) for several
+          DPS phases
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Match surge mods to your heavy's element; run survivability and ammo-finder mods
+          for the longer solo fight
+  cheese: []
+  common_mistakes:
+  - 4th orb pickup forgetting it's Burden — call your stack count BEFORE picking up.
+  - Standing exposed during Wizard kill phase — Vorgeth's eye blast still hits.
+  - Not shooting Axion Darts during DPS — they cluster + spike damage.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'WISH-ENDER quest Boss 3 (Xavoth, the Waking): MUST NOT kill
+
+        Vorgeth first. Find a Vorgeth sigil in the arena → cleanse it
+
+        → Fleeting Shade (Taken Minotaur) spawns. Drop orb at marked
+
+        statue. Xavoth spawns. Defeat Xavoth BEFORE killing Vorgeth.
+
+        Killing Vorgeth voids the quest.
+
+        '
+      rewards:
+      - Wish-Ender quest token 3 (final)
+    potential_drops:
+    - Same shared 'Any Encounter' pool as the first loot encounter — see that block for the full weapon
+      + armor list.
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: wizard_killer (no Mark management to learn).'
+  - '2nd: runner.'
+  - 'Quest run: do separately from a clear run.'
+  plain_language_steps:
+  - 1. Place the rally banner and walk into the round arena. Vorgeth, the Boundless Hunger (a Taken Ogre)
+    sits in the center, immune. The four Keeper of Petitions Wizards in perimeter alcoves engage immediately.
+  - 2. Locate the central deposit pillars near Vorgeth and the purple cleanse pedestal at the room edge
+    before you start; know where both are.
+  - 3. Kill a Keeper of Petitions Wizard; an orb drops at its feet.
+  - 4. Have your runner pick up the orb. Each orb gives Petitioner's Mark, a 45-second timer that stacks
+    up to three times.
+  - 5. Call your stack count out loud. Picking up a FOURTH orb gives Petitioner's Burden, whose timer
+    counts down to death if it hits zero.
+  - 6. Deposit your stacks at the central pillars to clear the Mark/Burden and advance. If your Burden
+    timer goes red, step on the cleanse pedestal.
+  - 7. Repeat until all four Wizard orbs have been deposited. Watch for Vorgeth's eye blast and shoot
+    down the Axion Dart swarms so they do not cluster on you.
+  - 8. Once all four orbs are deposited, Vorgeth becomes vulnerable and a DPS window opens (Axion Darts
+    intensify).
+  - 9. Stack up at center, drop a Well or Bubble, and burst Vorgeth while shooting incoming Axion Darts.
+  - 10. If he survives, the Wizards respawn and you repeat the cycle.
+  - '11. Optional Wish-Ender quest: do NOT kill Vorgeth first. Cleanse the Vorgeth sigil to spawn Fleeting
+    Shade, drop an orb at the marked statue to spawn Xavoth, and defeat Xavoth before killing Vorgeth,
+    or the quest is voided.'
+  defense:
+    incoming_damage:
+      adds:
+      - Keeper of Petitions Wizards deal Void/Arc caster bolts and poison clouds
+      - Axion Darts deal Void tracking-projectile cluster damage
+      boss:
+      - Vorgeth (Taken Ogre) deals a Void eye-blast beam
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resist helps against Vorgeth's eye blast and Wizard/Axion Dart Void damage on Master-tier
+        difficulty
+      concussive:
+      - No mandatory Concussive Dampener use; arena is enclosed with low ledge-death risk, though it can
+        soften Vorgeth's blast pressure if desired
+  damage:
+    surges:
+    - DPS phase opens once all 4 Wizard orbs are deposited; Vorgeth is a Taken Ogre with no fixed elemental
+      shield, so no specific surge element is required (bring your strongest burst)
+    burst_windows: One ~limited damage window after depositing all 4 orbs; stack center under a Well or
+      Bubble and burst while shooting down Axion Darts.
+    recommended_dps:
+    - Burst heavy such as rocket launchers, Linear Fusion Rifles, or a Sword for an Ogre-sized target
+    - Super damage stacked during the window (Well of Radiance for a stationary platform)
+  role_loadouts:
+  - role_id: runner
+    subclass: Mobile, self-sustaining subclass (Void for Devour or Solar Heat Rises for fast orb runs)
+    weapons: Add-clear primary plus a burst heavy for the DPS window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your DPS heavy's element; run mobility/movement mods to sprint orb-to-orb
+      and beat the Burden timer
+  - role_id: wizard_killer
+    subclass: Any subclass with strong single-target burst to drop Wizards quickly (Solar or Void)
+    weapons: Precision primary or special to burst Wizards fast, plus a burst heavy for the DPS window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your DPS heavy's element; run targeting/loader mods for fast Wizard
+      kills
+  - role_id: solo
+    subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple cycles alone
+    weapons: Add-clear primary plus a high-damage heavy (Sword, Linear Fusion, or rocket) for several
+      DPS phases
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge mods to your heavy's element; run survivability and ammo-finder mods for
+      the longer solo fight
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/shattered-throne.yaml (encounter 3, vorgeth)'
+    note: Primary source; Petitioner's Mark/Burden orb mechanic, Wizard/Axion Dart threats, and DPS trigger
+      derived directly from the authored v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (e.g. Discipline->Grenade). Verify current heavy DPS
+      meta and exotics in-game; no Master version exists so champion mods are not mandatory.
+    date_checked: '2026-06-07'

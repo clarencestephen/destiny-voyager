@@ -1,0 +1,230 @@
+# raid_context/content/dungeons/prophecy/3-hexahedron.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: hexahedron
+  name: Hexahedron
+  difficulty: medium
+  estimated_time: 15-25 min
+  abstract: 'Cube-room mote mechanic with gravity rotation. Find a floating Taken
+
+    probe → it indicates which wall to deposit your mote on → disperse
+
+    pillar → room rotates so that wall becomes the floor → new probe
+
+    position → repeat ~6 times. Finishes with 2 Centurion Echoes.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Cubic room with pillars on each face.
+
+    - A floating Taken probe (orb) that hovers near one face.
+
+    - Symbols of the Nine engrave on walls as the room reorients.
+
+    - Knight Echoes spawn in light/shadow as usual.
+
+    - 2 Centurion Echoes appear at finale on corner platforms.
+
+
+    PLATFORM MECHANICS:
+
+    - Probe indicates which face = where to deposit mote.
+
+    - Disperse pillar on probe-face → room rotates so that face becomes floor.
+
+    - Repeat until all 6 cycles done.
+
+    - Finale: 2 Centurion Echoes spawn on platforms. Kill both = exit.
+
+
+    START STATE: walk to probe to start. Pillars + adds appear.
+
+    '
+  callouts:
+  - when: Probe position spotted
+    from: spotter
+    to: team
+    say: '"Probe on [ceiling/floor/N wall]."'
+    why: Tells team which face to disperse on.
+  - when: Carrier with 5 motes
+    from: carrier
+    to: team
+    say: '"5 [type] — depositing [face]."'
+    why: Confirms target before commit.
+  - when: Room rotated
+    from: any
+    to: team
+    say: '"Floor [direction] now."'
+    why: Cue to reorient + find next probe.
+  wipe_triggers:
+  - Hobgoblin snipes during gravity transition.
+  - Carry timer to 0 (waste, not wipe).
+  - Falling off platforms in finale.
+  damage_phase_triggers:
+  - 2 Centurion Echoes die (finale) → exit opens.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Walk in. Probe + pillars + Knights spawn.
+  - phase: Mote cycle (×6 face rotations)
+    carriers_2: Light + Dark. Match to probe-indicated face.
+    add_clear: Lock down Acolytes + Hobgoblins.
+  - phase: Finale Centurions
+    all: Burst both Centurions on corner platforms.
+  permutations:
+  - name: Standard 1L / 1D / 1 add-clear
+    learner_friendly: true
+    summary: Same role split as Phalanx. Communicate probe positions loudly.
+    roles:
+    - id: light_carrier
+      count: 1
+      does: Light Motes per probe-face.
+      loadout:
+        subclass: Any survivable subclass with strong air control to handle the gravity flips while carrying
+          Light Motes
+        weapons: Long-range primary for Knight Echoes; special for Hobgoblins/Centurions
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge required; survivability and movement mods for the rotating room
+    - id: dark_carrier
+      count: 1
+      does: Dark Motes per probe-face.
+      loadout:
+        subclass: Any survivable, mobile subclass for Dark Mote runs across rotating faces
+        weapons: Long-range primary for shadow-zone Knight Echoes; special backup
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: No surge required; air-control and resist mods
+    - id: add_clear
+      count: 1
+      does: Hobgoblin priority + cover.
+      loadout:
+        subclass: Any add-clear subclass; prioritize range to delete Hobgoblins before they snipe carriers
+        weapons: Precision primary (scout/pulse) for Hobgoblin priority, plus heavy for Centurions
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Weapons
+        surges_mods: No surge required; ability-uptime and targeting mods
+  - name: Solo
+    learner_friendly: false
+    summary: Alternate light/shadow per probe. Slow but doable.
+    roles:
+    - id: solo
+      count: 1
+      does: All cycles. Witherhoard Centurions.
+      loadout:
+        subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive the long cycle alone
+        weapons: Witherhoard for the Centurions plus a long-range primary for Knights
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No surge required; sustain and ability-regen mods
+  cheese: []
+  common_mistakes:
+  - Depositing on the WRONG face — pillar shatters but room doesn't rotate properly. Always face-check
+    probe.
+  - Standing under a falling pillar during rotation — minor damage but disorienting.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - A Sudden Death (shotgun, Void)
+    - Adjudicator (SMG, Kinetic)
+    - Crushing Guard (Arms)
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: light_carrier. Visualize the cube as 6 ''faces of a die''.'
+  plain_language_steps:
+  - 1. Walk into the cubic room and approach the probe to start; pillars, Knight Echoes, and a floating
+    Taken probe spawn.
+  - 2. Note the floating Taken probe (an orb) hovering near one face of the cube; that face is where you
+    must deposit your mote.
+  - 3. As before, stand in a sunbeam and kill a Knight Echo for Light Motes, or stand in shadow and kill
+    one for Dark Motes.
+  - 4. Collect exactly 5 motes to enter carry mode (third person, no weapons, 30-second timer).
+  - 5. Carry your motes to the pillar on the probe-indicated face and fire to disperse it; double-check
+    you are on the correct face first.
+  - 6. When the pillar disperses, the room rotates so that face becomes the new floor and your gravity
+    flips with it.
+  - 7. Reorient, find the new probe position, and repeat the deposit-and-rotate loop about 6 times total.
+  - 8. Keep one player locking down the Taken Acolytes and Hobgoblins so snipes do not catch carriers
+    mid-rotation.
+  - 9. After the cycles finish, 2 Centurion Echoes spawn on the corner platforms.
+  - 10. Burst both Centurion Echoes (mind your footing so you do not fall off) to open the exit.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Taken faction: Hobgoblin Echoes (long-range snipes, especially dangerous during gravity transitions),
+        Taken Acolytes, Knight Echoes'
+      - 2 Centurion Echoes at the finale (heavier ranged Taken units)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Master version, so no mandatory resist; the key survival tip is breaking Hobgoblin line of
+        sight during room rotations rather than tanking the hits
+      concussive: []
+  damage:
+    surges:
+    - No dedicated boss DPS phase; the finale is bursting 2 Centurion Echoes. Any burst element works
+      since Taken enemies here are not shielded by a fixed element.
+    burst_windows: 'The only burst moment is the finale: kill both Centurion Echoes on the corner platforms
+      to exit.'
+    recommended_dps:
+    - Precision primary or scout for the elevated Centurions
+    - A heavy or burst special to finish the Centurions quickly
+    - Witherhoard or DoT to chip Centurions while solo
+  role_loadouts:
+  - role_id: light_carrier
+    subclass: Any survivable subclass with strong air control to handle the gravity flips while carrying
+      Light Motes
+    weapons: Long-range primary for Knight Echoes; special for Hobgoblins/Centurions
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge required; survivability and movement mods for the rotating room
+  - role_id: dark_carrier
+    subclass: Any survivable, mobile subclass for Dark Mote runs across rotating faces
+    weapons: Long-range primary for shadow-zone Knight Echoes; special backup
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge required; air-control and resist mods
+  - role_id: add_clear
+    subclass: Any add-clear subclass; prioritize range to delete Hobgoblins before they snipe carriers
+    weapons: Precision primary (scout/pulse) for Hobgoblin priority, plus heavy for Centurions
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge required; ability-uptime and targeting mods
+  - role_id: solo
+    subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive the long cycle alone
+    weapons: Witherhoard for the Centurions plus a long-range primary for Knights
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No surge required; sustain and ability-regen mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/prophecy.yaml (encounter: hexahedron)'
+    note: Primary source; gravity-rotation mote loop, probe-face deposits, Hobgoblin threat, and 2 Centurion
+      Echo finale taken from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names renamed in Edge of Fate (Resilience->Health, Mobility->Weapons). Verify movement
+      exotics in-game; no fixed DPS element is required here.
+    date_checked: '2026-06-07'

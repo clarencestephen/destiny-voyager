@@ -1,0 +1,213 @@
+# raid_context/content/raids/garden-of-salvation/3-consecrated-mind.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: garden-of-salvation
+  name: Garden of Salvation
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: consecrated-mind
+  name: Defeat The Consecrated Mind
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'First boss for damage. Split 3/3: one team chases boss (collects
+
+    Voltaic Charges → DETAINED → calls inner/outer eye circle to other
+
+    team), other team defends a relay (Major Minotaur drops Voltaic
+
+    Motes → bank 30+ at Conflux). Boss visits 4 platforms (N/S/E/W).
+
+    After 30 motes banked → boss to overloaded conflux → eye-burst → DPS.
+
+    '
+  setup: "WHAT YOU SEE:\n- Same diamond arena as encounter 2.\n- Consecrated Mind hovers center, then\
+    \ moves to 4 platforms.\n- Voltaic Charges on platforms (Detain trigger).\n- 4 relays + Confluxes\
+    \ (1 designated with light beam each phase).\n- Major Minotaur spawns at active relay = mote drop.\n\
+    \nPLATFORM MECHANICS:\n- Tether starts encounter.\n- Split 3/3:\n  • Boss team: follows Consecrated\
+    \ Mind to platforms. One player steps in Voltaic Charge = Detained.\n    Boss opens up → 6 red eyes\
+    \ on fins (2 per fin × 3 fins).\n    Detained player sees only INNER or OUTER circle lit → CALLS that\
+    \ to non-Detained.\n    Non-Detained players shoot called circle. Wrong = Detained player dies.\n\
+    \  • Relay team: defends the LIT relay. Major Minotaur drops 5 Voltaic Motes per kill. One player\
+    \ collects all 5, banks at Conflux.\n- 30+ motes total → boss drawn to overloaded Conflux.\n- All\
+    \ 6 eyes visible. Shoot all 6 → DPS phase.\n- Boss retreats to center. Stay distance — too close =\
+    \ wipe attack.\n- Cycle.\n\nSTART STATE: rally banner. Tether to initial Conflux.\n"
+  callouts:
+  - when: Boss heading to platform
+    from: tracker
+    to: team
+    say: '"Boss [N/S/E/W] platform."'
+    why: Boss team converges.
+  - when: Detained in Voltaic Charge
+    from: detained
+    to: team
+    say: '"INNER!"'
+    why: Tells non-Detained which eye circle to shoot.
+  - when: Minotaur spawning at relay
+    from: relay defender
+    to: team
+    say: '"Minotaur [relay] — collecting motes."'
+    why: Designate mote runner.
+  - when: 30 motes banked
+    from: banker
+    to: team
+    say: '"30 IN — boss to conflux."'
+    why: DPS prep.
+  - when: 6 eyes lit (DPS prep)
+    from: any
+    to: team
+    say: '"BURN EYES — DPS soon."'
+    why: Coordinate eye burst.
+  wipe_triggers:
+  - Wrong eye circle shot during Detain = Detained player dies.
+  - Sacrifices at Conflux.
+  - Standing too close to boss during DPS retreat = wipe attack.
+  - Voltaic Overflow uncollected = mass damage.
+  damage_phase_triggers:
+  - 30 motes banked → boss to Conflux → 6 eyes burst → ~25-30s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Tether start. Split 3/3.
+  - phase: Phase loop
+    boss_team_3: Follow boss. Voltaic Charge → Detain → eye call → burst.
+    relay_team_3: Kill Minotaur, collect motes, bank.
+  - phase: 30 motes + eye burst
+    all: Burst all 6 eyes.
+  - phase: DPS
+    all: Burst Consecrated Mind. Stay distance.
+  permutations:
+  - name: Standard 3-boss / 3-relay
+    learner_friendly: true
+    summary: Pre-assigned 3+3. Within boss team, one designated Detained per Voltaic Charge (rotate).
+    roles:
+    - id: boss_team
+      count: 3
+      does: Chase boss, Detain rotation, eye-burst.
+      loadout:
+        subclass: ''
+        weapons: Precision primary to snipe the called eye circles accurately, plus high-burst heavy (Linear
+          Fusion or Rocket) for the DPS window; Divinity on a teammate to lock the crit
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Super
+        surges_mods: Arc and Void resist for boss attacks and Vex fire; Concussive Dampener for the boss's
+          area slams
+    - id: relay_team
+      count: 3
+      does: Defend lit relay, kill Minotaur, bank motes.
+      loadout:
+        subclass: ''
+        weapons: Strong add-clear primary plus a special for fast Major Minotaur kills; mobility to gather
+          and bank the five-mote drops quickly
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Arc and Void resist for Vex fire and Voltaic detonations; Concussive Dampener for
+          Conflux defense
+  - name: 'Speed: Divinity + Whisper'
+    learner_friendly: false
+    summary: Divinity creates a precision crit on Mind. Whisper / Sleeper burst the crit during DPS.
+  cheese: []
+  common_mistakes:
+  - Wrong eye call = teammate dies.
+  - Trying to shoot eyes from wrong angle = miss (eyes are on fins).
+  - Standing too close on DPS = wipe attack.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Ancient Gospel (adaptive hand cannon, Void)
+    - Sacred Provenance (aggressive pulse rifle, Kinetic)
+    - Plate of Transcendence (Chest)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: relay_team (mote collection less stressful).'
+  - '2nd: boss_team.'
+  plain_language_steps:
+  - 1. Drop your rally banner. You are in the same diamond arena as the summon encounter, with the Consecrated
+    Mind hovering in the center.
+  - 2. Tether a Vex Lens to the initial Conflux to start the encounter, then split into two groups of
+    three.
+  - '3. Boss group: follow the Consecrated Mind as it moves to the four platforms (North, South, East,
+    West).'
+  - 4. One boss-group player steps into a Voltaic Charge on the platform and becomes Detained. The boss
+    opens up, revealing six red eyes on its fins (two per fin across three fins).
+  - 5. The Detained player can only see whether the INNER or OUTER circle of eyes is lit. They call it
+    out, and the non-Detained players shoot that circle. Calling or shooting the wrong circle kills the
+    Detained player.
+  - '6. Relay group: defend the one relay lit by a light beam. A Major Minotaur spawns there and drops
+    five Voltaic Motes per kill.'
+  - 7. One player collects all five motes and banks them at that relay's Conflux. Keep clearing Minotaurs
+    and banking.
+  - 8. Bank 30 or more motes total. This draws the boss to the overloaded Conflux and exposes all six
+    eyes at once.
+  - 9. Shoot all six eyes to trigger the damage phase.
+  - 10. During DPS, burst the Consecrated Mind hard, but keep your distance — standing too close when
+    it retreats to center triggers a wipe attack.
+  - 11. Keep collecting any Voltaic Overflow so it never explodes, and keep the Conflux free of Vex sacrifices.
+  - 12. If the boss survives, it retreats and the cycle repeats — re-split and run the platform/relay
+    loop again.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex adds (Goblins, Harpies, Major Minotaurs) deal Arc and Void slap-rifle damage
+      - Voltaic Overflow charges deal Arc damage and detonate if uncollected
+      boss:
+      - Arc
+      - Void
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc and Void resist help against Vex slap-rifle fire, the boss's close-range wipe attack, and
+        Voltaic detonations
+      concussive:
+      - Concussive Dampener helps mitigate the boss's area attacks and Vex slap-rifle volleys while chasing
+        platforms
+  damage:
+    surges:
+    - No single fixed DPS element is dictated; bring your highest-burst element. Pair Divinity (this raid's
+      exotic trace rifle) to debuff and create a precision crit on the Mind, then burst that crit
+    burst_windows: After 30+ motes are banked and all six eyes are shot, you get roughly a 25-30 second
+      burn on the Consecrated Mind's exposed core.
+    recommended_dps:
+    - Divinity to debuff and lock a precision crit
+    - Heavy burst options such as Linear Fusion Rifles, Rocket Launchers, or precision Snipers (e.g. Whisper/Sleeper-style)
+      into the crit
+    - A Super-amp support like Well of Radiance under the Divinity-debuffed boss
+  role_loadouts:
+  - role_id: boss_team
+    subclass: ''
+    weapons: Precision primary to snipe the called eye circles accurately, plus high-burst heavy (Linear
+      Fusion or Rocket) for the DPS window; Divinity on a teammate to lock the crit
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Arc and Void resist for boss attacks and Vex fire; Concussive Dampener for the boss's
+      area slams
+  - role_id: relay_team
+    subclass: ''
+    weapons: Strong add-clear primary plus a special for fast Major Minotaur kills; mobility to gather
+      and bank the five-mote drops quickly
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Arc and Void resist for Vex fire and Voltaic detonations; Concussive Dampener for Conflux
+      defense
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/garden-of-salvation.yaml (encounter consecrated-mind)'
+    note: Primary source for the Detain/eye mechanic, mote banking, DPS trigger, and Divinity speed note.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Subclass and exact heavy/exotic picks left general where the current Edge of Fate meta could
+      not be verified; confirm best burst options in-game.
+    date_checked: '2026-06-07'

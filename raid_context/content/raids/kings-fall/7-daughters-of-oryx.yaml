@@ -1,0 +1,271 @@
+# raid_context/content/raids/kings-fall/7-daughters-of-oryx.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 7
+  slug: daughters-of-oryx
+  name: Daughters of Oryx (Ir Anûk + Ir Halak)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Two Wizard sisters. One sings deathsong (wipe in ~2 min), other
+
+    actively shoots. Plate sequence + Torn Between Dimensions player
+
+    collects Blightguard pieces via jumping platforms only they see.
+
+    3 cycles → Brand Claimer steals the active daughter''s Brand → DPS
+
+    that daughter. Once one daughter dies, MUST kill the other in next
+
+    phase or wipe.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - 4 corner plates in the Threshold arena.
+
+    - 2 Wizard bosses (Ir Anûk + Ir Halak) — one sleeping, one active.
+
+    - Knights on plates initially.
+
+    - Sleeping daughter sings deathsong (2-min timer).
+
+
+    PLATFORM MECHANICS:
+
+    - Kill Knights on plates → step on dimly-glowing plate.
+
+    - 1 random player becomes Torn Between Dimensions (can''t shoot, sees special platforms).
+
+    - Torn player must walk path of invisible-to-others platforms, made physical by 2 other players on
+    separate plates.
+
+    - At end of path: orb pickup ("a piece of the Blightguard has been found").
+
+    - Repeat 3 times. On 3rd run, the Torn player picks up Brand Claimer.
+
+    - Brand Claimer: STEAL the ACTIVE daughter''s Brand (the one shooting, NOT the singing one). After
+    steal → DPS the daughter you stole from.
+
+    - Kill one daughter = must kill the other next phase or WIPE.
+
+    - 2-min deathsong timer — if not stolen by ~1:30, wipe at 2:00.
+
+
+    START STATE: rally banner. Walk in to start. Deathsong begins.
+
+    '
+  callouts:
+  - when: Torn Between Dimensions
+    from: torn player
+    to: team
+    say: '"TORN — going [direction] path."'
+    why: Plate-holders sync to enable path.
+  - when: Plate stepped
+    from: stepper
+    to: team
+    say: '"Plate [N] up — second plate now."'
+    why: Coordinated activation.
+  - when: Blightguard piece found
+    from: any
+    to: team
+    say: '"PIECE [N/3] — back to plates."'
+    why: Cycle restart.
+  - when: Brand Claimer ready (3rd cycle)
+    from: torn
+    to: team
+    say: '"CLAIMER — stealing [active daughter]."'
+    why: DPS target.
+  - when: Brand stolen, DPS
+    from: claimer
+    to: team
+    say: '"STOLEN — burn [Ir Anûk/Ir Halak]!"'
+    why: All burst target daughter.
+  wipe_triggers:
+  - Deathsong completes without Brand steal = wipe.
+  - Killing one daughter without killing the other in next phase = wipe.
+  - Torn player fails to claim Blightguard pieces in time.
+  damage_phase_triggers:
+  - Brand stolen via Claimer → DPS window on that daughter.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Knights on plates.
+  - phase: Plate cycle (3 times)
+    torn: Walk invisible platforms to orb.
+    plate_holders_2: Stand plates to enable platforms.
+    add_clear: Suppress add waves.
+  - phase: Claimer + DPS
+    torn: Pick up Brand Claimer. Steal active daughter's Brand.
+    team: Burst that daughter.
+  - phase: Phase 2
+    all: Repeat for second daughter. Same singer/active swap.
+  permutations:
+  - name: Standard 1-torn / 2-plate / 3-clear
+    learner_friendly: true
+    summary: Torn is RANDOM. 2 plates per cycle; 3 clear adds + watch.
+    roles:
+    - id: torn_runner
+      count: 1
+      does: Random pick. Walk invisible path, grab pieces.
+      loadout:
+        subclass: Any mobile subclass; the role is randomly assigned, so everyone should be ready to run
+          the invisible path.
+        weapons: Loadout is irrelevant while Torn (cannot shoot); equip your standard DPS heavy and add-clear
+          primary for after the steal.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: Match surges to your DPS element; mobility helps walk the platform path quickly within
+          the deathsong timer.
+    - id: plate_holder
+      count: 2
+      does: Enable platforms during torn run.
+      loadout:
+        subclass: Any subclass; needs to hold a plate reliably while watching the Torn player's route.
+        weapons: Add-clear primary to keep the plate area clear, plus a DPS heavy for the burst window.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surges to your DPS element; ability-regen mods for sustained add-clear on the
+          plate.
+    - id: add_clear
+      count: 3
+      does: Burst Knights + adds. Backup plates.
+      loadout:
+        subclass: Any subclass with strong add-clear and Super generation; backup plate duty.
+        weapons: Add-clear primary (auto / SMG / pulse) for Knights and waves, plus a high-burst DPS heavy.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: Match surges to your DPS element; ability-regen mods to keep waves suppressed and
+          Supers ready for DPS.
+  - name: 'Master: Under Construction'
+    learner_friendly: false
+    summary: Plate cannot be stepped > 1× per Brand cycle. Use middle ledges instead.
+  cheese: []
+  common_mistakes:
+  - Stealing wrong daughter's Brand — DPS wrong target = wipe.
+  - Plate stepped too early — platforms not synced for Torn player.
+  - Trying to fight while Torn — can't attack.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Smite of Merain (pulse rifle, Kinetic)
+    - Defiance of Yasmin (sniper rifle, Kinetic)
+    - Zaouli's Bane (hand cannon, Solar)
+    - King's Fall armor (random slot)
+  master_challenge:
+    name: Under Construction
+    requirement: 'Players cannot stand on the same plate twice in a single
+
+      phase. With 4 plates and 6 players across multiple Daughter
+
+      kills, plate-rotation has to be deliberate — typically:
+
+      plate-holders for the first pair of Daughters swap to the
+
+      opposite pair of plates for the second.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: add_clear.'
+  - '2nd: plate_holder.'
+  - '3rd: torn_runner (volunteer-rotation).'
+  plain_language_steps:
+  - 1. Place the rally banner and walk into the Threshold arena to start; the sleeping daughter begins
+    her deathsong, a roughly 2-minute wipe timer.
+  - '2. Two Wizard bosses are present: Ir Anuk and Ir Halak. One sings the deathsong while the other is
+    the active daughter that shoots at you.'
+  - 3. Kill the Knights standing on the four corner plates so the plates can be used.
+  - '4. One random player becomes Torn Between Dimensions: they cannot shoot but can see special platforms
+    others cannot.'
+  - 5. The Torn player walks a path of platforms that two other players make physical by standing on separate
+    plates.
+  - 6. At the end of the path the Torn player grabs an orb and you hear 'a piece of the Blightguard has
+    been found'.
+  - 7. Repeat this plate-and-path run three times while the rest of the team clears add waves.
+  - 8. On the third run the Torn player picks up the Brand Claimer.
+  - 9. Use the Claimer to STEAL the ACTIVE daughter's Brand (the one shooting, NOT the one singing), then
+    DPS the daughter you stole from.
+  - 10. You must steal before the deathsong finishes (steal by about 1:30) or you wipe at the 2:00 mark.
+  - 11. Once you kill one daughter, you MUST kill the other in the very next phase or the encounter wipes
+    you.
+  - 12. Phase two repeats the same plate cycle and singer/active swap to finish the second daughter.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive Knights on the corner plates (kill to free the plates)
+      - Hive add waves during the plate cycles
+      boss:
+      - Ir Anuk and Ir Halak Wizard fire (Hive arc/void bolts); deathsong is a timed wipe mechanic, not
+        resistible
+    champions:
+    - 'On Master: Barrier Knights -> Anti-Barrier, Overload Hobgoblins -> Anti-Overload per raid Master
+      notes'
+    recommended_defensive_mods:
+      elemental:
+      - Run Health stat for Wizard fire and dense add waves; no single resist element forced by the guide.
+        The deathsong wipe is timer-based and cannot be resisted, only outraced by the Brand steal.
+      concussive:
+      - Concussive Dampener helps survive Wizard bolt splash while plate-holding and add-clearing in the
+        open.
+  damage:
+    surges:
+    - No element forced by the boss. Match your surge mods to your burst weapon. The window is short,
+      so high single-target burst matters more than element.
+    burst_windows: A single short DPS window per daughter, opened only after the Brand is stolen via the
+      Claimer; you must finish the second daughter in the phase after the first.
+    recommended_dps:
+    - High single-target burst heavy (Linear Fusion / Whisper / Sleeper) to drop a daughter inside one
+      window; Well of Radiance for the burst stack.
+  role_loadouts:
+  - role_id: torn_runner
+    subclass: Any mobile subclass; the role is randomly assigned, so everyone should be ready to run the
+      invisible path.
+    weapons: Loadout is irrelevant while Torn (cannot shoot); equip your standard DPS heavy and add-clear
+      primary for after the steal.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surges to your DPS element; mobility helps walk the platform path quickly within
+      the deathsong timer.
+  - role_id: plate_holder
+    subclass: Any subclass; needs to hold a plate reliably while watching the Torn player's route.
+    weapons: Add-clear primary to keep the plate area clear, plus a DPS heavy for the burst window.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surges to your DPS element; ability-regen mods for sustained add-clear on the plate.
+  - role_id: add_clear
+    subclass: Any subclass with strong add-clear and Super generation; backup plate duty.
+    weapons: Add-clear primary (auto / SMG / pulse) for Knights and waves, plus a high-burst DPS heavy.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surges to your DPS element; ability-regen mods to keep waves suppressed and Supers
+      ready for DPS.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Daughters of Oryx encounter block + Under Construction
+      Master challenge)'
+    note: Tier-1 primary source. Torn Between Dimensions, plate path, Brand Claimer steal of the active
+      daughter, and twin-kill rule derived directly from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Burst-DPS exotics named generically; confirm the current single-target DPS meta and surge weapons
+      in the live Edge of Fate sandbox before a Master run.
+    date_checked: '2026-06-07'

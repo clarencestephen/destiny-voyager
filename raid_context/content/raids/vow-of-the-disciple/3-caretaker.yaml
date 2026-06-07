@@ -1,0 +1,271 @@
+# raid_context/content/raids/vow-of-the-disciple/3-caretaker.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: caretaker
+  name: The Caretaker
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Boss escorts an obelisk down 3 floors. Symbol Team collects symbols
+
+    from dark room, shoots matching on obelisk. Stun Team stomp-baits
+
+    Caretaker (face glows), shoots face + back weak point. Kill Team
+
+    handles Abated Adherents + Darkness Scale drones. 9 symbols cleared
+
+    → DPS phase (3 plates around obelisk). 4 floors total.
+
+    '
+  setup: "WHAT YOU SEE:\n- Floor arena with obelisk on one side, Caretaker (large encased boss) walking\
+    \ toward it.\n- Dark room opposite obelisk (symbol collection).\n- 3 plates surrounding the obelisk\
+    \ (DPS positions).\n- Pyramid switches by the door.\n\nPLATFORM MECHANICS:\n- Shoot Pyramid switch\
+    \ on the door = encounter starts.\n- Caretaker walks toward obelisk. If it reaches it = wipe.\n- Symbol\
+    \ Team: 1 enters dark room at a time, grabs up to 3 symbols, exits, shoots matching on obelisk.\n\
+    \  • Dark room = Pervading Darkness stacks (10 = death).\n  • Pick 2 symbols max (3 risks rotating\
+    \ obelisk faces).\n  • Wrong shot = rejected, symbols return.\n  • 9 symbols on obelisk total.\n-\
+    \ Stun Team: Face side baits stomp (well-timed melee blocks stomp), face glows → shoot. Back side\
+    \ shoots weak point in coffin-like rear → STUN.\n- Kill Team: Abated Adherents + Darkness Scale drones\
+    \ (these turn into homing missiles if left alive).\n- 9 symbols cleared → DPS phase. 3 plates light\
+    \ in sequence (per side Caretaker approaches from). Resonant Breakthrough buff while on lit plate.\n\
+    - 3 floors of obelisk → final stand floor with 3 plates in a row.\n\nSTART STATE: rally banner. Pyramid\
+    \ switch starts.\n"
+  callouts:
+  - when: Symbol Team going in
+    from: self
+    to: team
+    say: '"IN — keep door open!"'
+    why: Door closes; need switch.
+  - when: Symbols collected
+    from: symbol team
+    to: team
+    say: '"Got [N1, N2] — shooting obelisk."'
+    why: Pre-shot prep.
+  - when: Stun ready (face glow)
+    from: face team
+    to: team
+    say: '"FACE GLOWING — shoot back!"'
+    why: Back-team stuns.
+  - when: Stunned
+    from: back team
+    to: team
+    say: '"STUNNED — push back to obelisk."'
+    why: Face team rotates Caretaker direction.
+  - when: DPS plate
+    from: any
+    to: team
+    say: '"PLATE [N/3] — Resonant Breakthrough!"'
+    why: Move team to current lit plate.
+  wipe_triggers:
+  - Caretaker reaches obelisk = wipe (over-fill).
+  - Pervading Darkness 10 in dark room = death.
+  - Wrong symbol shot = rejected = fill increases.
+  - Drones turning into homing missiles = mid-fight chaos.
+  damage_phase_triggers:
+  - 9 symbols cleared per floor → 3 plates light in sequence based on Caretaker approach → ~10s per plate
+    damage window.
+  - 'Final stand floor: 3 plates in a row.'
+  parallel_timeline:
+  - phase: Pull
+    all: Pyramid switch. Roles assigned.
+  - phase: Symbol + stun cycle
+    symbol_team_2: One in dark room, other door-keeper.
+    stun_team_2: Face baits stomp + shoots; back-side stuns.
+    kill_team_2: Abated Adherents + drones.
+  - phase: DPS (3 plates)
+    all: Move plate-to-plate with Resonant Breakthrough.
+  - phase: Floor swap
+    all: Caretaker teleports next floor. Repeat.
+  permutations:
+  - name: Standard 2-Symbol / 2-Stun / 2-Kill
+    learner_friendly: true
+    summary: Pre-assigned 2-pair roles.
+    roles:
+    - id: symbol_team
+      count: 2
+      does: Dark room runs + obelisk shoots.
+      loadout:
+        subclass: Survivability-leaning subclass to tank Pervading Darkness on dark-room runs
+        weapons: Symbol-shooting primary for fast obelisk hits + linear fusion for the plate DPS windows
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge to your DPS weapon (e.g., Solar if running Cataclysmic); add-clear/resist
+          mods otherwise
+    - id: stun_team
+      count: 2
+      does: Face stomp-bait + back weak point stun.
+      loadout:
+        subclass: Subclass with a reliable melee for stomp-baiting and self-sustain
+        weapons: Precision weapon for the face and rear weak point + linear fusion for plate DPS
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Melee
+        surges_mods: Match surge to your DPS weapon; melee-uptime and resist mods help the bait loop
+    - id: kill_team
+      count: 2
+      does: Abated Adherents + drones + ambient.
+      loadout:
+        subclass: Add-clear subclass that can quickly delete drones before they go homing
+        weapons: Fast add-clear primary/special (SMG, auto, wave-frame GL) + heavy for the DPS phase
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: Match surge to your DPS weapon for the plate phase; otherwise add-clear and resist
+          mods
+  - name: Skip Floor 3 via Floor 2 DPS push
+    learner_friendly: false
+    summary: 'Don''t push Caretaker HP to next segment on Plate 2. Save it
+
+      for Plate 3 (longest window). Push damage into next floor''s HP
+
+      segment to skip Floor 3 obelisk entirely.
+
+      '
+    best_for: Optimized teams.
+  - name: Master (Chaff)
+    learner_friendly: false
+    summary: No radar. Stun team blind to drones. Slower.
+  cheese: []
+  common_mistakes:
+  - Stun team forgets to bait stomp = face won't glow = no stun.
+  - Drones ignored = homing missile wipes stun team.
+  - Pervading Darkness in dark room = symbol team dies.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest:
+      location: 'HIDDEN CHEST (Platforming): Between Caretaker and Exhibition,
+
+        the platforming has 2 paths. Hugging RIGHT wall takes you to
+
+        a secret chest room via vaguely tubular platforms. Shortcut to
+
+        intended path opens after chest.
+
+        '
+      rewards:
+      - Random raid loot already-obtained + raid mod
+    potential_drops:
+    - Submission (SMG, Kinetic)
+    - Insidious (pulse rifle, Arc)
+    - Cataclysmic (linear fusion rifle, Solar)
+    - Forbearance (grenade launcher, Arc)
+    - Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)
+  master_challenge:
+    name: Base Information
+    requirement: 'Each runner entering the Dark Room collects only a SINGLE
+
+      symbol per trip (not all 3). Forces a 2-team split: 3 stun
+
+      the boss, 3 take one glyph each. Wait for the obelisk to
+
+      request its offering (player-name message appears in the
+
+      feed) before depositing.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: kill_team.'
+  - '2nd: stun_team (specific role).'
+  - '3rd: symbol_team.'
+  plain_language_steps:
+  - 1. Place a rally banner and pre-assign 2 Symbol, 2 Stun, and 2 Kill players. Shoot the Pyramid switch
+    on the door to start.
+  - 2. The Caretaker (large stone-encased boss) begins walking toward the obelisk. If it reaches the obelisk,
+    that is a wipe, so the symbol work must keep pace.
+  - '3. Symbol Team: one player at a time enters the dark room, grabs up to 2 symbols (3 risks rotating
+    the obelisk faces), exits, and shoots the matching symbols on the obelisk. The dark room stacks Pervading
+    Darkness, so do not linger.'
+  - 4. Keep the door open for the player inside — call 'IN' so a teammate watches the Pyramid switch.
+    A wrong symbol shot is rejected and raises the fill.
+  - '5. Stun Team: the Face side baits the Caretaker''s stomp (a well-timed melee blocks it) so its face
+    glows, then calls it out; the Back side shoots the weak point in the coffin-like rear to STUN the
+    boss.'
+  - 6. After a stun, push the Caretaker back toward the obelisk and rotate its facing so the cycle continues.
+  - '7. Kill Team: clear Abated Adherents and the Darkness Scale drones — leave a drone alive too long
+    and it becomes a homing missile that can wipe the stun team.'
+  - '8. Once 9 symbols are cleared on that floor, the DPS phase opens: 3 plates light in sequence based
+    on the side the Caretaker approaches from. Stand on the lit plate for the Resonant Breakthrough buff
+    and damage the boss (~10s per plate).'
+  - 9. The Caretaker teleports down to the next floor; repeat the symbol/stun/kill cycle. There are 3
+    obelisk floors plus a final stand floor where the 3 plates sit in a row.
+  - 10. Advanced teams can save HP for Plate 3 (the longest window) to push damage into the next floor's
+    HP segment and skip Floor 3's obelisk entirely.
+  - 11. On Master (Chaff), radar is off and the stun team is blind to drones — slow down and call everything.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Abated Adherents)
+      - Darkness (Darkness Scale drones that become homing missiles; Pervading Darkness in the dark room)
+      boss:
+      - Physical stomp (the Caretaker's stomp shockwave — baited and blocked rather than resisted)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No fixed elemental resist requirement; survivability comes from blocking the stomp and limiting
+        dark-room time rather than resist mods. On Master, general resist coverage helps the kill/stun
+        teams stay up.
+      concussive:
+      - Optional — a Concussive Dampener can soften the Caretaker's stomp shockwave and drone explosions
+        for players forced to hold close to the boss
+  damage:
+    surges:
+    - No element is forced by the encounter; the Caretaker has no elemental shield, so any-element DPS
+      works. Cataclysmic (this raid's Solar linear fusion) is a standout — if running it, a Solar surge
+      is reasonable, but match surges to your fireteam's chosen DPS weapons.
+    burst_windows: Burst on each lit plate while holding the Resonant Breakthrough buff (~10s per plate,
+      3 plates per floor, longest window on Plate 3).
+    recommended_dps:
+    - Linear fusion rifles (Cataclysmic with Disciple's Bane melts this boss), heavy/special burst options,
+      and a Well/healing super to sustain on plates
+  role_loadouts:
+  - role_id: symbol_team
+    subclass: Survivability-leaning subclass to tank Pervading Darkness on dark-room runs
+    weapons: Symbol-shooting primary for fast obelisk hits + linear fusion for the plate DPS windows
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to your DPS weapon (e.g., Solar if running Cataclysmic); add-clear/resist
+      mods otherwise
+  - role_id: stun_team
+    subclass: Subclass with a reliable melee for stomp-baiting and self-sustain
+    weapons: Precision weapon for the face and rear weak point + linear fusion for plate DPS
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to your DPS weapon; melee-uptime and resist mods help the bait loop
+  - role_id: kill_team
+    subclass: Add-clear subclass that can quickly delete drones before they go homing
+    weapons: Fast add-clear primary/special (SMG, auto, wave-frame GL) + heavy for the DPS phase
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge to your DPS weapon for the plate phase; otherwise add-clear and resist mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vow-of-the-disciple.yaml (encounter: caretaker, incl. Base Information
+      Master challenge and platforming hidden chest)'
+    note: Primary source for the 3-team split, stomp-bait/back weak point stun, plate DPS, and floor-skip
+      permutation.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use the Edge of Fate rename. Cataclysmic with Disciple's Bane is cited in the guide
+      as a boss-melt; confirm it and any current heavy DPS picks against the live sandbox, as DPS meta
+      shifts per season.
+    date_checked: '2026-06-07'

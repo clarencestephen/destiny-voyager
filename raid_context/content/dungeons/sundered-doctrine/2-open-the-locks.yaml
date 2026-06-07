@@ -1,0 +1,275 @@
+# raid_context/content/dungeons/sundered-doctrine/2-open-the-locks.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: open-the-locks
+  name: Open the Locks (Zoetic Lockset)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Mid-boss. Rotating-light wheels with knowledge-stack rotations.
+
+    The Zoetic Lockset shines on wheels left→right (tracked via
+
+    Lockout Progression buff); when right wheel locks, its current
+
+    symbol triggers an effect. Goal: get KILL locked in for DPS.
+
+    '
+  setup: "WHAT YOU SEE:\n- Zoetic Lockset (Hive boss) in the center.\n- 4 symbol wheels in a row.\n- Lockout\
+    \ Progression buff bar (4 sections) at the top of the screen.\n- Pillars next to each wheel for knowledge\
+    \ deposits.\n- Pyramid switches above center pedestals.\n\nPLATFORM MECHANICS:\n- Lockout buff cycles\
+    \ through wheels L→R as time passes (4 sections, each = 1 wheel light).\n- The wheel currently lit\
+    \ is the wheel CURRENTLY rotatable.\n- Kill Preceptor Wizard → knowledge shard (stacks: Heightened\
+    \ 1 / Brimming 2 / Overflowing 3).\n- Deposit knowledge at the wheel's pillar → rotates wheel light\
+    \ to specific symbol.\n- When the buff fills + cycle resets, the RIGHTMOST wheel's currently-lit symbol\
+    \ LOCKS IN.\n\nLocked symbol effects:\n  • Hive       → Ogres spawn\n  • Remember   → Wizards spawn\n\
+    \  • Commune    → Lockset shoots Resonant Sun projectiles\n  • Stop       → enemies stop spawning\n\
+    \  • Kill       → DPS phase begins\n\n- If Kill is NOT locked, Lockset keeps locking symbols R→L (more\
+    \ added each cycle).\n- DPS length is INVERSELY related to how many symbols locked before Kill.\n\
+    - During DPS: Lockset's shell closes periodically (damage paused).\n\nSTART STATE: rally banner. Walk\
+    \ past flag = encounter starts.\n"
+  callouts:
+  - when: Lockout buff section [N/4]
+    from: watcher
+    to: team
+    say: '"Lockout [N], wheel [N] active."'
+    why: Tells knowledge-depositors which wheel to focus.
+  - when: Preceptor down + knowledge held
+    from: killer
+    to: team
+    say: '"[Heightened/Brimming/Overflowing] knowledge — depositing wheel [N]."'
+    why: Coordinates rotations.
+  - when: Symbol locked in
+    from: any
+    to: team
+    say: '"LOCKED: [Hive/Remember/Commune/Stop/Kill]."'
+    why: Tracks effects + DPS readiness.
+  - when: Kill locked = DPS begins
+    from: any
+    to: team
+    say: '"KILL — DAMAGE."'
+    why: Burst window opens. Coordinate Supers.
+  wipe_triggers:
+  - Wrong symbol → Tormentor spawns.
+  - Commune Resonant Sun projectiles untracked = pile damage.
+  - DPS phase too short (locked too many bad symbols first).
+  damage_phase_triggers:
+  - Kill symbol locked in by Lockout cycle → DPS opens (length varies).
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Lockset. Burst Preceptors for knowledge.
+  - phase: First cycle (~1:00)
+    knowledge_runners: Drop Preceptors, deposit knowledge at the lit wheel.
+    symbol_caller: Track Lockout progression. Aim for Stop early to slow spawns.
+  - phase: Second cycle (~2:00)
+    all: Set up Kill on the rightmost wheel BEFORE the buff fills.
+  - phase: DPS
+    all: Burst Lockset. Watch for shell-close phases (damage stops). Use Supers.
+  - phase: Reset
+    all: Encounter cycles.
+  permutations:
+  - name: Standard Stop-first / Kill-second
+    learner_friendly: true
+    summary: Lock Stop on 1st cycle to halt spawns. Lock Kill 2nd for DPS.
+    roles:
+    - id: knowledge_runner
+      count: 2
+      does: Continuous Preceptor kills + deposits.
+      loadout:
+        subclass: A high-uptime add-clear subclass to chain Preceptor Wizard kills (Strand, Solar, or
+          Arc builds with strong ability regen)
+        weapons: Fast-killing primary plus add-clear special to drop Preceptors quickly; a heavy LFR or
+          Whisper/Sleeper held for the Kill window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Grenade
+        surges_mods: Match surge to your DPS heavy's element. Add ammo-finder and reload mods to sustain
+          Preceptor farming.
+    - id: caller
+      count: 1
+      does: Tracks Lockout buff. Calls deposit targets + Lockset shell state.
+      loadout:
+        subclass: A survivable subclass so you can track the Lockout buff and Lockset shell state without
+          dying (Void or a healing build)
+        weapons: Range primary to clear from a safe vantage plus a burst heavy for the Kill window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: Match surge to your DPS heavy. Survivability and Super-regen mods to have a Super
+          ready for the burst window.
+  - name: 'Speed: instant Kill'
+    learner_friendly: false
+    summary: 'Skip Stop, focus all rotations on Kill IMMEDIATELY on rightmost
+
+      wheel. Highest-DPS phase but you eat all the spawning. Burst
+
+      with sustained DPS (Whisper, Sleeper, Linear).
+
+      '
+    best_for: Experienced teams. 1-phase potential.
+    roles:
+    - id: dps_anchor
+      count: 1
+      does: Pre-loaded Sleeper / Whisper. Doesn't deposit, just burns.
+      loadout:
+        subclass: A damage-boosting Super subclass (Star-Eater-style burst Super or a Well/buff setup)
+          to maximize the short Kill window
+        weapons: Pre-loaded sustained heavy - Sleeper Simulant, Whisper of the Worm, or a top-tier Linear
+          Fusion Rifle (the guide's named picks)
+        exotic_armor: ''
+        armor_stats: &id003
+        - Super
+        - Health
+        surges_mods: Surge mods matching your heavy's element (x3 if possible). Holds DPS only; does not
+          deposit knowledge.
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Take Stop first. Expect 2-3 cycles.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Witherhoard the Lockset during cycles.
+      loadout:
+        subclass: A self-sustaining subclass that can both clear adds and survive long cycles (healing
+          Solar or Void invisibility)
+        weapons: Witherhoard to chip the Lockset during cycles, plus an add-clear primary and a burst
+          heavy for the Kill phase
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Match surge to your burst heavy. Survivability and recovery mods; take Stop first
+          and expect 2-3 cycles.
+  cheese: []
+  common_mistakes:
+  - Depositing knowledge on the WRONG (unlit) wheel — wastes shard.
+  - Letting buff cycle end without Stop locked — Ogre/Wizard wave overwhelms.
+  - Trying to do too many rotations on one cycle — depleted knowledge supply.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Boss CORE drop (carry to bowl near loot chest to open next area)
+    hidden_chest: null
+    potential_drops:
+    - Unworthy (scout rifle, Arc)
+    - Unvoiced (shotgun, Void)
+    - Unsworn (trace rifle, Strand)
+    - Talons of the Flain (Legs) + Reach of the Flain (Arms)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: knowledge_runner.'
+  - '2nd: caller.'
+  plain_language_steps:
+  - 1. Drop your rally banner, then walk past the flag to start the fight against the Zoetic Lockset (a
+    Hive boss) in the center of the room.
+  - '2. Note the layout: four symbol wheels in a row, a four-section Lockout Progression buff bar at the
+    top of your screen, deposit pillars next to each wheel, and Pyramid switches above center.'
+  - '3. Watch the Lockout buff: it lights the wheels left-to-right over time, and the currently lit wheel
+    is the only one you can rotate right now. Call out ''Lockout [N], wheel [N] active''.'
+  - 4. Kill Preceptor Wizards to drop knowledge shards. Stacks build as Heightened (1), Brimming (2),
+    or Overflowing (3), which rotate the wheel light by 1, 2, or 3 spaces.
+  - 5. Carry knowledge to the pillar of the CURRENTLY LIT wheel and deposit it to rotate that wheel's
+    light onto the symbol you want. Depositing on an unlit wheel wastes the shard.
+  - 6. When the buff fills and the cycle resets, the RIGHTMOST wheel's currently lit symbol LOCKS IN and
+    triggers its effect.
+  - '7. Learn the locked-symbol effects: Hive spawns Ogres, Remember spawns Wizards, Commune makes the
+    Lockset fire Resonant Sun projectiles, Stop halts enemy spawns, and Kill begins the DPS phase.'
+  - 8. On the first cycle, aim to lock STOP on the rightmost wheel to halt the add waves and relieve pressure.
+  - 9. On the next cycle, set up KILL on the rightmost wheel before the buff fills so the damage phase
+    opens; call 'KILL - DAMAGE' when it locks.
+  - 10. Burst the Lockset hard during the window. Note its shell closes periodically and pauses damage,
+    so time your Supers and heavy around the open shell.
+  - 11. Remember DPS length is inversely tied to how many symbols you locked before Kill, so locking too
+    many bad symbols first shortens your damage window.
+  - 12. After damage, the encounter cycles. Repeat until the boss dies, then carry the Boss CORE drop
+    to the bowl near the loot chest to open the next area.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive Ogres (spawned when 'Hive' symbol locks) - heavy Arc/Solar eye-beam and stomp pressure
+      - Hive Wizards (spawned when 'Remember' locks, plus the Preceptor Wizards you farm for knowledge)
+        - Arc/poison ranged attacks
+      - Resonant Sun projectiles fired by the Lockset itself when 'Commune' locks - tracking AoE damage
+      boss:
+      - Zoetic Lockset Resonant Sun projectiles (when Commune is locked) - tracking ranged damage that
+        piles up if untracked
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Resist Arc/Solar against Hive Ogres and Wizards on Master tier
+      - General damage-resist while depositing knowledge near the Lockset
+      concussive:
+      - Concussive Dampener helps blunt Ogre stomps and the Lockset's Resonant Sun projectile barrage
+        if Commune gets locked
+  damage:
+    surges:
+    - DPS phase opens only when the 'Kill' symbol is locked on the rightmost wheel. No single canon DPS
+      element is fixed by the guide, so match your surge mods to your chosen burst weapon's element.
+    burst_windows: When 'Kill' locks in, burst the Lockset until its shell closes (damage pauses), then
+      resume when it reopens; window length shrinks the more symbols you locked beforehand.
+    recommended_dps:
+    - 'Sustained heavy: Whisper of the Worm, Sleeper Simulant, or any Linear Fusion Rifle (the guide names
+      these for the short window)'
+    - Roaming or burst Supers timed to the open-shell window
+    - Witherhoard to chip the Lockset between cycles, especially when soloing
+  role_loadouts:
+  - role_id: knowledge_runner
+    subclass: A high-uptime add-clear subclass to chain Preceptor Wizard kills (Strand, Solar, or Arc
+      builds with strong ability regen)
+    weapons: Fast-killing primary plus add-clear special to drop Preceptors quickly; a heavy LFR or Whisper/Sleeper
+      held for the Kill window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to your DPS heavy's element. Add ammo-finder and reload mods to sustain Preceptor
+      farming.
+  - role_id: caller
+    subclass: A survivable subclass so you can track the Lockout buff and Lockset shell state without
+      dying (Void or a healing build)
+    weapons: Range primary to clear from a safe vantage plus a burst heavy for the Kill window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to your DPS heavy. Survivability and Super-regen mods to have a Super ready
+      for the burst window.
+  - role_id: dps_anchor
+    subclass: A damage-boosting Super subclass (Star-Eater-style burst Super or a Well/buff setup) to
+      maximize the short Kill window
+    weapons: Pre-loaded sustained heavy - Sleeper Simulant, Whisper of the Worm, or a top-tier Linear
+      Fusion Rifle (the guide's named picks)
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surge mods matching your heavy's element (x3 if possible). Holds DPS only; does not deposit
+      knowledge.
+  - role_id: solo
+    subclass: A self-sustaining subclass that can both clear adds and survive long cycles (healing Solar
+      or Void invisibility)
+    weapons: Witherhoard to chip the Lockset during cycles, plus an add-clear primary and a burst heavy
+      for the Kill phase
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Match surge to your burst heavy. Survivability and recovery mods; take Stop first and
+      expect 2-3 cycles.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/sundered-doctrine.yaml (encounter: open-the-locks /
+      Zoetic Lockset)'
+    note: Tier-1 authored v2 guide; locked-symbol effects, knowledge stacks, and DPS framing taken directly
+      from it.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Verify the current top DPS heavies, Master Champion types, and any sandbox changes against live
+      Bungie data; meta DPS picks shift between seasons.
+    date_checked: '2026-06-07'

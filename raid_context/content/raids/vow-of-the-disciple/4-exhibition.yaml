@@ -1,0 +1,258 @@
+# raid_context/content/raids/vow-of-the-disciple/4-exhibition.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: exhibition
+  name: Exhibition (relics race)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: '4-room race against Terminal Resonance timer. Pick up Resonant
+
+    Shard → enter room → kill Glyphkeepers → identify SHARED symbol
+
+    → shoot door symbol → advance. Room 2 adds Aegis (VoG) for Pervading
+
+    Darkness cleanse. Room 3 adds Taken Essence for blight
+
+    cleanse. Disciple''s Hourglass Taken Knight = reset Terminal
+
+    Resonance timer.
+
+    '
+  setup: "WHAT YOU SEE:\n- 4 rooms, each progressively harder.\n- Resonant Shard in initial small room.\n\
+    - Glyphkeepers spawn pairs (one Chieftain, one Phalanx).\n- Shielded Disciple's Hourglass Knights\
+    \ (require Shard laser to break shield).\n- Aegis relic in Room 2 (VoG-style sword shield).\n- Taken\
+    \ Essence in Room 3 (blight cleanse).\n- 4 of 6 wall symbols around each locked door.\n\n\
+    PLATFORM MECHANICS:\n- Pick up Resonant Shard = encounter starts. Terminal Resonance timer = wipe\
+    \ at 0.\n- Per room:\n  • Kill 2 Glyphkeepers (left = Phalanx, right = Chieftain).\n  • Phalanx symbols\
+    \ (LEFT column) visible only to RELIC HOLDER.\n  • Chieftain symbols (RIGHT column) visible only to\
+    \ NON-RELIC HOLDERS.\n  • Identify SHARED symbol → shoot it on the door = door opens.\n- Disciple's\
+    \ Hourglass: Shard-laser to drop shield → kill = reset Terminal Resonance.\n- Room 2 onward: deposit\
+    \ Shard at deposit point, pickup Aegis + Shard (2 relic holders).\n  • Aegis cleanse on the team's\
+    \ Pervading Darkness.\n  • Curbed Resonance debuff on Shard-depositor (30s no-relic-pickup).\n- Room\
+    \ 3: add Taken Essence. Cleanse blights with grenade button.\n- Room 4: large abyss platforming +\
+    \ same mechanics. Drop relic into abyss = back to start.\n- All 3 relics deposited in Room 4 = encounter\
+    \ ends.\n\nSTART STATE: rally banner. Pick up Shard to start.\n"
+  callouts:
+  - when: Symbols read
+    from: phalanx side
+    to: team
+    say: '"Left: [symbol1], [symbol2], [symbol3]"'
+    why: Pair team identifies shared.
+  - when: Shared symbol
+    from: non-relic
+    to: team
+    say: '"SHARED: [symbol]"'
+    why: Shoot door symbol.
+  - when: Disciple's Hourglass spotted
+    from: spotter
+    to: team
+    say: '"HOURGLASS — Shard laser!"'
+    why: Reset Terminal Resonance.
+  - when: Aegis cleanse
+    from: aegis_holder
+    to: team
+    say: '"CLEANSING — stack!"'
+    why: Team stack for Pervading Darkness clear.
+  - when: Curbed Resonance
+    from: self
+    to: team
+    say: '"CURBED 30s — Shard back to me later."'
+    why: Avoids picking another relic.
+  wipe_triggers:
+  - Terminal Resonance timer = 0.
+  - Pervading Darkness 10.
+  - Falling into abyss in Room 4.
+  - Drop relic into abyss = back to start.
+  damage_phase_triggers:
+  - All 3 relics deposited in Room 4 = encounter ends.
+  parallel_timeline:
+  - phase: Pull (Room 1)
+    relic_holder: Pick Shard.
+    team_l_3: Push left, kill Phalanx Glyphkeeper.
+    team_r_3: Push right, kill Chieftain Glyphkeeper.
+  - phase: Door symbol + advance
+    all: Identify shared, shoot door, advance.
+  - phase: Room 2 (Aegis added)
+    aegis_holder: Pick Aegis after Shard deposit.
+    shard_holder_new: Pick Shard, juggle roles.
+  - phase: Room 3 (Essence added)
+    essence_holder: Cleanse blights with grenade button.
+  - phase: Room 4 (final)
+    all: Same mechanics + abyss platforming. Deposit all 3 = done.
+  permutations:
+  - name: Standard 3 relics rotating
+    learner_friendly: true
+    summary: Pre-assigned relic holders. Pace by Terminal Resonance.
+    roles:
+    - id: shard_holder
+      count: 1
+      does: Carries Shard. Drops Hourglass.
+      loadout:
+        subclass: Mobile subclass with good single-target to laser and finish Hourglass Knights fast
+        weapons: Quick-kill primary for shield-broken Knights + Glyphkeepers; mobility-friendly loadout
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: No DPS surge; prioritize mobility/uptime and add-clear mods
+    - id: aegis_holder
+      count: 1
+      does: Pervading Darkness cleanse.
+      loadout:
+        subclass: Survivability subclass to hold position while cleansing the team
+        weapons: Add-clear primary for between-cleanse fighting; flexible special
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No DPS surge; resist and add-clear mods
+    - id: essence_holder
+      count: 1
+      does: Blight cleanse.
+      loadout:
+        subclass: Subclass with grenade uptime (Essence cleanse uses the grenade button)
+        weapons: Add-clear primary + flexible special for room adds
+        exotic_armor: ''
+        armor_stats: &id003
+        - Grenade
+        - Class
+        surges_mods: No DPS surge; grenade-uptime and resist mods
+    - id: symbol_reader
+      count: 3
+      does: Glyphkeeper kills + symbol identification.
+      loadout:
+        subclass: Mobile subclass for fast Glyphkeeper kills and symbol reads
+        weapons: Precision primary (hand cannon / pulse) for correct-Glyphkeeper kills + quick special
+        exotic_armor: ''
+        armor_stats: &id004
+        - Weapons
+        - Class
+        surges_mods: No DPS surge; mobility/uptime and add-clear mods
+  - name: 'Speed: 2-rooms-fast'
+    learner_friendly: false
+    summary: Skip cleanse on intermediate rooms. Push to Room 4 with stack tolerance.
+  cheese: []
+  common_mistakes:
+  - Shard drop into abyss = back to start.
+  - Curbed Resonance forgot = can't pick up Shard at deposit.
+  - Slow Hourglass kills = timer death.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Submission (SMG, Kinetic)
+    - Deliverance (fusion rifle, Stasis)
+    - Resonant Fury armor — Chest + Legs (encounter-specific slots)
+  master_challenge:
+    name: Defenses Down
+    requirement: 'Each player can kill no more than one Taken Knight throughout
+
+      the encounter. 7 knights total (one starting room + 2 per
+
+      chamber); skip the second knight in room 2 to land 6 unique
+
+      kills across 6 players. Requires deliberate relic-hand-off
+
+      choreography.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: symbol_reader.'
+  - '2nd: shard_holder.'
+  - '3rd: aegis or essence holder.'
+  plain_language_steps:
+  - 1. Place a rally banner. Pick up the Resonant Shard in the first small room to start the encounter
+    and begin the Terminal Resonance timer — it wipes the team at 0.
+  - '2. In each room, two Glyphkeepers spawn: a Phalanx on the LEFT and a Chieftain on the RIGHT. Push
+    your side and kill the correct one.'
+  - '3. Read the symbols: the LEFT (Phalanx) column is visible only to the Relic Holder; the RIGHT (Chieftain)
+    column is visible only to non-relic holders. Compare the two columns to find the one SHARED symbol.'
+  - 4. Shoot the shared symbol on the locked door to open it and advance to the next room.
+  - 5. Whenever a shielded Disciple's Hourglass Taken Knight appears, hit it with the Shard's laser to
+    drop its shield, then kill it to RESET the Terminal Resonance timer — this is how you buy time.
+  - 6. From Room 2 onward, deposit the Shard at the deposit point and pick up the Aegis relic (VoG sword-shield).
+    The depositor gets Curbed Resonance (30s no relic pickup), so call it out and hand the Shard back
+    later.
+  - 7. The Aegis holder cleanses the team's Pervading Darkness — call 'CLEANSING' and have the team stack
+    in the bubble.
+  - 8. In Room 3, add the Taken Essence relic; the Essence holder cleanses blights using the grenade button.
+  - '9. Room 4 is a large abyss-platforming room with the same symbol mechanics. Be careful: falling in,
+    or dropping a relic into the abyss, sends you back to the start.'
+  - 10. Deposit all 3 relics in Room 4 to end the encounter.
+  - 11. On Master, manage the Defenses Down challenge (each player kills at most one Taken Knight, 6 unique
+    kills across 6 players) by choreographing the relic hand-offs.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Disciple's Hourglass shielded Taken Knights, Taken Phalanx Glyphkeepers, blights in Room
+        3)
+      - Scorn (Scorn Chieftain Glyphkeepers)
+      - Darkness (Pervading Darkness, cleansed by the Aegis)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No fixed resist requirement; the Aegis cleanse and Essence blight-cleanse handle the Darkness/blight
+        threats. On Master, general resist coverage helps survive the Knight-heavy rooms under timer pressure.
+      concussive:
+      - Optional on Master — a Concussive Dampener can reduce heavy Taken/Scorn burst while a relic holder
+        is locked out of fighting
+  damage:
+    surges:
+    - No DPS phase — this is a timed mechanics race, so no DPS-phase surge applies
+    burst_windows: No boss burst window; the time pressure is the Terminal Resonance timer, extended by
+      killing shielded Disciple's Hourglass Knights.
+    recommended_dps:
+    - Fast single-target for shield-broken Hourglass Knights and Glyphkeepers (SMG, hand cannon, pulse
+      rifle); prioritize speed and mobility over raw burst
+  role_loadouts:
+  - role_id: shard_holder
+    subclass: Mobile subclass with good single-target to laser and finish Hourglass Knights fast
+    weapons: Quick-kill primary for shield-broken Knights + Glyphkeepers; mobility-friendly loadout
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surge; prioritize mobility/uptime and add-clear mods
+  - role_id: aegis_holder
+    subclass: Survivability subclass to hold position while cleansing the team
+    weapons: Add-clear primary for between-cleanse fighting; flexible special
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No DPS surge; resist and add-clear mods
+  - role_id: essence_holder
+    subclass: Subclass with grenade uptime (Essence cleanse uses the grenade button)
+    weapons: Add-clear primary + flexible special for room adds
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No DPS surge; grenade-uptime and resist mods
+  - role_id: symbol_reader
+    subclass: Mobile subclass for fast Glyphkeeper kills and symbol reads
+    weapons: Precision primary (hand cannon / pulse) for correct-Glyphkeeper kills + quick special
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No DPS surge; mobility/uptime and add-clear mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vow-of-the-disciple.yaml (encounter: exhibition, incl. Defenses
+      Down Master challenge)'
+    note: Primary source for the relic juggle (Shard/Aegis/Essence), shared-symbol door mechanic, Hourglass
+      timer resets, and abyss room.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names follow the Edge of Fate rename. No DPS phase here, so weapon picks emphasize speed;
+      verify current exotics against the live sandbox before a Master attempt.
+    date_checked: '2026-06-07'

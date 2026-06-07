@@ -1,0 +1,306 @@
+# raid_context/content/raids/crotas-end/4-crota.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: crota
+  name: Crota, Son of Oryx (final boss)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Final boss. Crystal-entry chamber → split L+R, clear adds → 4 boomer
+
+    Knights + 2 Ogres + Swordbearer → sword pickup by Enlightened. 3
+
+    swords per DPS phase typically. Tractor Cannon for shield-amp. 1
+
+    Enlightened destroys Oversoul (DPS-end). Crota''s final stand at low HP.
+
+    '
+  setup: "WHAT YOU SEE:\n- Crystal chamber on a raised platform. Two towers L+R (boomer Knight spawn).\n\
+    - Open arena around the chamber.\n- Crota (massive Hive Knight) spawns in front of chamber after activation.\n\
+    - Swordbearer + sword in middle.\n- 5 possible \"small circles of light\" for safe Chalice swap (D2\
+    \ Presence debuff blocks normal swaps).\n\nPLATFORM MECHANICS:\n- \"Kiss the crystal\" — all 6 touch\
+    \ crystal to start.\n- Green barriers seal team in ~5s. Crota spawns in front (stand behind crystal).\n\
+    - Cycle:\n  • Kill 4 boomer Knights (L+R towers, 2 each).\n  • 2 Ogres + Swordbearer spawn in middle.\n\
+    \  • Kill Swordbearer → sword on ground (45s pickup window).\n  • Cycle repeats (Knights respawn).\n\
+    - 3 swords per DPS phase (or 2 + Tractor Cannon).\n- Presence of Crota debuff: no healing. Chalice\
+    \ swap ONLY in safe-circle spots.\n- Enlightened cycle: 4-6 players. Spare Enlightened can Expunge\
+    \ Crota for damage.\n- Sword shield-break:\n  • Option 1 (challenge): all sword users attack simultaneously.\n\
+    \  • Option 2: sword as each one arrives.\n- Tractor Cannon: hit Crota before swords → damage amp,\
+    \ swords more effective.\n- DPS opens after shield break.\n- Oversoul: large green orb summoned at\
+    \ DPS start. 20s timer. Enlightened destroys.\n  Destroying ENDS DPS. Coordinate timing — drop at\
+    \ 3-4s left.\n- Multiple Wells of Radiance recommended (Crota destroys them fast).\n- Final stand:\
+    \ ~30% HP, Crota stands up, immune briefly, then shield drops + Oversoul again with 20s. Extend DPS\
+    \ by 10s if Oversoul destroyed.\n\nSTART STATE: rally outside. \"Kiss the crystal\" to start.\n"
+  callouts:
+  - when: Boomer Knights down
+    from: killer
+    to: team
+    say: '"KNIGHTS DOWN — Ogres + Sword incoming."'
+    why: Sword pickup prep.
+  - when: Swordbearer ready
+    from: spotter
+    to: team
+    say: '"SWORDBEARER — [name] take."'
+    why: Designate sword wielder.
+  - when: Sword in hand
+    from: wielder
+    to: team
+    say: '"[N/3] swords ready."'
+    why: Count to DPS trigger.
+  - when: 3 swords ready
+    from: any
+    to: team
+    say: '"TRACTOR + SWORDS — SHIELD."'
+    why: Tractor Cannon hit → all swords swing simultaneously.
+  - when: Shield down (DPS)
+    from: any
+    to: team
+    say: '"DPS — WELL!"'
+    why: Stack on Well. Multiple Wells for sustain.
+  - when: Oversoul up (20s timer)
+    from: scout
+    to: team
+    say: '"OVERSOUL — 20s, drop at 3."'
+    why: Time Enlightened destruction for max DPS.
+  - when: Final stand
+    from: any
+    to: team
+    say: '"FINAL — burn!"'
+    why: Push through.
+  wipe_triggers:
+  - Oversoul not destroyed at 20s = wipe.
+  - Falling into chamber pit.
+  - Presence of Crota + no healing + no Chalice swap = death cascade.
+  - Chalice death.
+  damage_phase_triggers:
+  - Crota's shield broken (3 sword swings, or 2 + Tractor) → DPS window (until Oversoul timer expires).
+  parallel_timeline:
+  - phase: Pull
+    all: Kiss crystal. Barriers seal.
+  - phase: Split + clear
+    team_l_3: Push L tower, clear adds.
+    team_r_3: Push R tower, clear adds.
+  - phase: Sword cycle (×3)
+    sword_users: Pick up sword on call.
+    chalice_runners: Cycle Enlightened buffs in safe-circles.
+  - phase: Shield break
+    tractor_user: Hit Crota with Tractor Cannon.
+    swords_3: Simultaneous swing → shield drops.
+  - phase: DPS
+    all: Burst Crota. Track Oversoul timer.
+  - phase: Oversoul destruction
+    scout: Destroy Oversoul at 3-4s left.
+  - phase: Reset / Final stand
+    all: Cycle or push final stand.
+  permutations:
+  - name: Standard 3-sword + Tractor
+    learner_friendly: true
+    summary: 3 designated sword users + 1 Tractor user. Chalice cycle to keep 4-5 Enlightened.
+    roles:
+    - id: sword_user
+      count: 3
+      does: Pre-assigned. Pick up sword on call.
+      loadout:
+        subclass: Any survivable subclass; melee-resilient build for the shield-break swings
+        weapons: Encounter-dropped Hive sword for the shield break, plus a heavy burst weapon for the
+          DPS window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: DPS surge matching your burst element; on Master add Anti-Unstoppable / Anti-Barrier
+          Champion mods
+    - id: tractor_user
+      count: 1
+      does: Hits Crota with Tractor Cannon before sword swings.
+      loadout:
+        subclass: Any survivable subclass
+        weapons: Tractor Cannon (exotic) to amp the shield break, plus a burst-DPS heavy
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: DPS surge matching team burst; on Master add assigned Champion-counter mods
+    - id: chalice_runner
+      count: 1
+      does: Manages Enlightened pipeline + safe-circle swaps.
+      loadout:
+        subclass: Any subclass with strong self-survivability for safe-circle swaps under the Presence
+          debuff
+        weapons: Add-clear primary plus a heavy for DPS; prioritize survivability while managing the Enlightened
+          pipeline
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: DPS surge matching team burst; on Master add Champion-counter mods
+    - id: oversoul_dunker
+      count: 1
+      does: Stays Enlightened, destroys Oversoul on call.
+      loadout:
+        subclass: Well of Radiance Warlock or any subclass that can stay Enlightened and reach the Oversoul
+        weapons: Add-clear primary plus a heavy burst weapon; stays Enlightened to destroy the Oversoul
+          on call
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Super
+        surges_mods: DPS surge matching team burst; on Master add Champion-counter mods
+  - name: 'Speed: 2-sword + Tractor'
+    learner_friendly: false
+    summary: Skip 3rd sword. Tractor Cannon doubles sword damage. Faster cycle.
+    best_for: Experienced teams.
+  - name: 'Master: All For One'
+    learner_friendly: false
+    summary: Crota's shield must be FULLY broken within seconds of first damage. Sync sword swings precisely.
+  - name: 'Master: Singular Sensation'
+    learner_friendly: false
+    summary: Only 1 Enlightened at a time. Hot-potato strict.
+  cheese: []
+  common_mistakes:
+  - Oversoul ignored = 20s wipe.
+  - Trying to swap Chalice without safe-circle = death.
+  - Killing Crota during Oversoul = team wipes but loot still drops (grace period).
+  - Solo Well = Crota destroys it. Multiple Wells needed.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (extra roll)
+    - Deepsight chest (if all 3 statue puzzle activations correct — see Overall Notes)
+    hidden_chest: null
+    potential_drops:
+    - Word of Crota (hand cannon, Void)
+    - Abyss Defiant (auto rifle, Solar)
+    - Swordbreaker (shotgun, Strand)
+    - Willbreaker's Watch (Helmet) + Greaves (Legs)
+    - Mark of the Pit (Class Item)
+    - 'Note: **Necrochasm** (exotic auto rifle, Kinetic) is NOT a final-chest RNG drop — it''s obtained
+      via the ''Bottomless Pit'' exotic quest, spending Essence of the Oryx earned from Crota''s End Encounter
+      Challenges. Adept (Enhanced) variants of the raid weapons also drop from Master mode.'
+  master_challenge:
+    name: All for One
+    requirement: 'Crota''s overshield must be destroyed in full within about
+
+      three seconds. Forces a coordinated burst — usually requires
+
+      all 6 players landing damage in the same window (linear
+
+      fusions, sniper crit lineups, Two-Tailed Fox + Wolfpack
+
+      Rounds, Touch of Malice synergy, etc.).
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: chalice_runner OR sword_user with sherpa guidance.'
+  - '2nd: sword_user.'
+  - '3rd: oversoul_dunker.'
+  plain_language_steps:
+  - 1. Rally outside, then have all six players 'kiss the crystal' (touch it) to start. Green barriers
+    seal the team in after about 5 seconds and Crota, Son of Oryx spawns in front of the chamber — stand
+    behind the crystal.
+  - 2. Split Left and Right (3 and 3) and clear adds, including the 4 boomer Knights in the two towers
+    (2 each).
+  - 3. After the boomer Knights, 2 Ogres and a Swordbearer Knight spawn in the middle. Kill the Swordbearer
+    to drop a sword (45-second pickup window).
+  - 4. An Enlightened player picks up the sword. Cycle the Chalice in the safe 'circles of light' — the
+    Presence of Crota debuff blocks normal healing and normal Chalice swaps, so only swap inside a safe
+    circle.
+  - 5. Repeat the cycle (Knights respawn) to collect 3 swords per damage phase (or 2 swords plus a Tractor
+    Cannon hit).
+  - 6. To break Crota's shield, hit him with Tractor Cannon for a damage amp, then have the sword users
+    swing — simultaneously for the challenge, or one-by-one normally.
+  - 7. When the shield breaks, the DPS window opens. Stack on Well of Radiance (bring multiple Wells —
+    Crota destroys a single Well fast) and burn him.
+  - 8. At DPS start a large green Oversoul orb appears with a roughly 20-second timer. An Enlightened
+    player must destroy it before it expires or the team wipes — time the destruction for about 3-4 seconds
+    left to maximize damage.
+  - 9. Destroying the Oversoul ENDS the DPS phase, so coordinate the timing. If you don't break the shield,
+    reset the sword cycle and try again.
+  - '10. At around 30% HP Crota enters his final stand: he stands up, is briefly immune, then the shield
+    drops and the Oversoul returns with another 20-second timer. Destroying it extends DPS by about 10
+    seconds.'
+  - 11. Push burst damage through the final stand to defeat Crota.
+  defense:
+    incoming_damage:
+      adds:
+      - Boomer Hive Knights fire Solar boomer blasts
+      - Hive Ogres fire Void eye-beams
+      - Swordbearer Knight deals melee/Solar
+      boss:
+      - Crota deals heavy melee/Knight sword swings (physical/kinetic) — high Health stat helps survive
+      - Oversoul is a timed wipe orb rather than an elemental projectile
+    champions:
+    - 'Master only: Unstoppable Ogre -> Anti-Unstoppable'
+    - 'Master only: Barrier Knight -> Anti-Barrier'
+    - 'Master only: Overload Wizard -> Anti-Overload'
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist for boomer Knight fire
+      - Void resist for Ogre eye-beams
+      concussive:
+      - Concussive Dampener helps against Ogre eye-beam and boomer Knight knockback that can push players
+        into the chamber pit
+  damage:
+    surges:
+    - Match the DPS surge to your team's burst element. Crota is shield-broken by sword swings (amplified
+      by Tractor Cannon), so pick the element your heavy/Well burst loadout uses and run matching surge
+      mods.
+    burst_windows: DPS opens after the sword shield-break and lasts until the ~20s Oversoul timer is destroyed;
+      destroying the Oversoul ends DPS, so burst hard inside Well and drop the Oversoul at ~3-4s left.
+    recommended_dps:
+    - Tractor Cannon (exotic shotgun) to apply the shield-break damage amp
+    - Hive swords (encounter-dropped) for the shield break
+    - Heavy burst (rocket launcher such as Gjallarhorn, or linear fusion rifle) for the DPS window
+    - Well of Radiance support — bring multiple Wells for sustain
+  role_loadouts:
+  - role_id: sword_user
+    subclass: Any survivable subclass; melee-resilient build for the shield-break swings
+    weapons: Encounter-dropped Hive sword for the shield break, plus a heavy burst weapon for the DPS
+      window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: DPS surge matching your burst element; on Master add Anti-Unstoppable / Anti-Barrier
+      Champion mods
+  - role_id: tractor_user
+    subclass: Any survivable subclass
+    weapons: Tractor Cannon (exotic) to amp the shield break, plus a burst-DPS heavy
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: DPS surge matching team burst; on Master add assigned Champion-counter mods
+  - role_id: chalice_runner
+    subclass: Any subclass with strong self-survivability for safe-circle swaps under the Presence debuff
+    weapons: Add-clear primary plus a heavy for DPS; prioritize survivability while managing the Enlightened
+      pipeline
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: DPS surge matching team burst; on Master add Champion-counter mods
+  - role_id: oversoul_dunker
+    subclass: Well of Radiance Warlock or any subclass that can stay Enlightened and reach the Oversoul
+    weapons: Add-clear primary plus a heavy burst weapon; stays Enlightened to destroy the Oversoul on
+      call
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: DPS surge matching team burst; on Master add Champion-counter mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/crotas-end.yaml (encounter: crota)'
+    note: Primary source — mechanics, permutations, roles, and enemies authored in the repo's v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats; Tractor Cannon, Gjallarhorn, and Well-of-Radiance
+      value shift with each sandbox. Verify the DPS meta against the current in-game state before a run.
+    date_checked: '2026-06-07'

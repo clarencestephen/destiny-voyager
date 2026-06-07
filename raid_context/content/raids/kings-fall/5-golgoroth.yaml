@@ -1,0 +1,221 @@
+# raid_context/content/raids/kings-fall/5-golgoroth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: golgoroth
+  name: Golgoroth
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Hive Ogre boss in a cellar. Mechanics: capture Gaze (shoot back),
+
+    shoot down Pool of Reclaimed Light orbs from ceiling, stand in pool
+
+    while another player captures Gaze, burst Golgoroth''s chest. Unstable
+
+    Light explosions detonate near Golgoroth for huge damage. 6 orbs total.
+
+    '
+  setup: "WHAT YOU SEE:\n- Cavern arena with Golgoroth (massive Hive Ogre) in the back.\n- 6 orbs hanging\
+    \ from ceiling (Pool of Reclaimed Light sources).\n- Tablet of Ruin (Soulsiphon Plinth) at front —\
+    \ fills on lost gaze or death.\n- Upper platform near front.\n- Lower level with Taken Phalanxes that\
+    \ push.\n\nPLATFORM MECHANICS:\n- Start: shoot starting orb above Golgoroth.\n- Capture Gaze: shoot\
+    \ Golgoroth in the BACK enough = Gaze captured (3-min duration).\n  Gaze holder takes Golgoroth's\
+    \ aggro + stomach reveals weak point.\n- Shoot a ceiling orb to spawn Pool of Reclaimed Light below.\n\
+    - Stand in Pool = massive damage buff.\n- Fireteam in pool shoots Golgoroth's chest.\n- Pool spawning\
+    \ pattern (D2): L → R → L → R → L → R, toward Tablet of Ruin.\n- Unstable Light debuff: random player\
+    \ in pool gets it. Timer expires → explosion. Run toward Golgoroth + detonate near him = huge damage.\n\
+    - Lose gaze = +1 glyph on Tablet of Ruin. 6 glyphs = wipe.\n- 6 orbs exhausted = Golgoroth \"grows\
+    \ tired\" → add wave → cycle repeats.\n\nSTART STATE: shoot the starting orb to start.\n"
+  callouts:
+  - when: Gaze captured
+    from: holder
+    to: team
+    say: '"GAZE — orb [L/R]."'
+    why: Team shoots indicated ceiling orb.
+  - when: Pool active
+    from: any
+    to: team
+    say: '"POOL [L/R] — in!"'
+    why: Team enters pool for DPS.
+  - when: Gaze timer low
+    from: current holder
+    to: team
+    say: '"GAZE LOW — back swap!"'
+    why: Backup player captures Gaze from opposite position.
+  - when: Unstable Light
+    from: self
+    to: team
+    say: '"UNSTABLE — Golgoroth bomb!"'
+    why: Move toward Golgoroth, detonate close.
+  wipe_triggers:
+  - Tablet of Ruin fills (6 lost-gaze glyphs).
+  - Golgoroth enrage.
+  - Unstable Light detonation in team cluster.
+  damage_phase_triggers:
+  - Pool active + Gaze captured + chest visible → DPS window (per gaze cycle).
+  parallel_timeline:
+  - phase: Pull
+    all: Shoot starting orb. Engage Hive adds.
+  - phase: First gaze
+    gaze_holder_1: Shoot Golgoroth's back, capture Gaze.
+    pool_shooters: 'Shoot ceiling orb #1.'
+  - phase: DPS cycle
+    gaze_holder: Hold position behind team (opposite side from pool).
+    team: Stand in pool, shoot chest.
+  - phase: Gaze swap
+    gaze_holder_2: Stand diagonally opposite, capture next gaze.
+  - phase: Repeat ×6 orbs
+    all: Cycle until Golgoroth dies or grows tired.
+  permutations:
+  - name: Standard 2-gaze swap
+    learner_friendly: true
+    summary: Two designated gaze holders alternate. 4 DPS in pool.
+    roles:
+    - id: gaze_holder
+      count: 2
+      does: Alternate capturing Gaze. Stand opposite the pool.
+      loadout:
+        subclass: Any survivable subclass; an over-shield, barricade, or healing option helps tank Golgoroth's
+          aggro while holding the Gaze.
+        weapons: Hard-hitting weapon to capture the Gaze quickly by shooting his back (sniper / scout);
+          a DPS heavy for when not holding.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surges to your DPS element; survivability and resist mods prioritized since
+          the holder soaks aggro.
+    - id: pool_dps
+      count: 4
+      does: Stand in pool, shoot chest. Detonate Unstable Light at Golgoroth.
+      loadout:
+        subclass: Any subclass; Well of Radiance Warlock ideal to drop a well in the pool for the DPS
+          stack.
+        weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) plus an add-clear primary for between
+          cycles.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: Match surge mods to your heavy DPS element; ability-regen mods to keep Supers up
+          for pool DPS.
+  - name: 'Master: Gaze Amaze'
+    learner_friendly: false
+    summary: Current gaze holder must be IN the pool when partner relieves.
+  cheese: []
+  common_mistakes:
+  - Standing in pool when gaze swap happens — Unstable Light wipes team.
+  - Forgetting to shoot ceiling orb in correct sequence (L/R/L/R/L/R).
+  - Unstable Light detonation on team = wipe.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Qullim's Terminus (machine gun, Stasis)
+    - Midha's Reckoning (fusion rifle, Arc)
+    - Zaouli's Bane (hand cannon, Solar)
+    - King's Fall armor (random slot)
+  master_challenge:
+    name: Gaze Amaze
+    requirement: 'The gaze holder must stand IN the Pool of Unclaimed Light
+
+      when swapping the gaze to the next player. No mid-room
+
+      handoffs — every swap happens at the central pool.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: pool_dps.'
+  - '2nd: gaze_holder.'
+  plain_language_steps:
+  - 1. Shoot the starting orb above Golgoroth (the massive Hive Ogre at the back of the cavern) to begin.
+  - 2. A designated gaze holder shoots Golgoroth in the BACK enough to capture his Gaze, which lasts about
+    3 minutes and pulls his aggro while exposing his stomach weak point.
+  - 3. Once the Gaze is held, the team shoots a ceiling orb to spawn a Pool of Reclaimed Light below it.
+  - 4. Everyone except the gaze holder stands in the Pool for a massive damage buff and shoots Golgoroth's
+    chest.
+  - 5. Spawn the pools in the pattern Left, Right, Left, Right, Left, Right working toward the Tablet
+    of Ruin.
+  - 6. The gaze holder stands opposite the pool (diagonally) and away from the team so they do not get
+    caught by mechanics.
+  - 7. A random player in the pool gets Unstable Light; when its timer expires they run toward Golgoroth
+    and detonate close to him for huge bonus damage.
+  - 8. Never stand clustered with the team when Unstable Light goes off; a detonation in the group wipes
+    you.
+  - 9. When the Gaze timer runs low, a backup gaze holder captures the next Gaze from the opposite position
+    so aggro never drops.
+  - 10. If you lose the Gaze or a player dies, a glyph is added to the Tablet of Ruin; six glyphs wipe
+    the team.
+  - 11. After six orbs are exhausted Golgoroth grows tired, an add wave spawns, and the cycle repeats
+    until he dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken Phalanxes (lower level, push players with shield bash)
+      - Hive add waves between cycles
+      boss:
+      - Golgoroth Hive Ogre eye-beam / stomp (heavy damage on the gaze holder who takes aggro)
+      - Unstable Light detonation (lethal if it goes off in a cluster)
+    champions:
+    - 'On Master: Unstoppable Ogres/Phalanxes -> Anti-Unstoppable, plus Barrier Knights / Overload Hobgoblins
+      per raid Master notes'
+    recommended_defensive_mods:
+      elemental:
+      - Health stat for Golgoroth's heavy hits on the gaze holder; no single resist element forced by
+        the guide.
+      concussive:
+      - Concussive Dampener helps the gaze holder tank Golgoroth's aggro and against Phalanx pushes near
+        ledges.
+  damage:
+    surges:
+    - No element forced by the boss. Match your surge mods to your chosen burst weapon; the buffed Pool
+      of Reclaimed Light plus Unstable Light detonations are the real damage multipliers, not an element.
+    burst_windows: One DPS window per gaze cycle while the Pool is active and the Gaze keeps the chest
+      weak point exposed; spike it with Unstable Light detonations at Golgoroth.
+    recommended_dps:
+    - Burst heavy (Linear Fusion / Whisper / Sleeper) fired from inside the pool; Well of Radiance for
+      the pool stack.
+  role_loadouts:
+  - role_id: gaze_holder
+    subclass: Any survivable subclass; an over-shield, barricade, or healing option helps tank Golgoroth's
+      aggro while holding the Gaze.
+    weapons: Hard-hitting weapon to capture the Gaze quickly by shooting his back (sniper / scout); a
+      DPS heavy for when not holding.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surges to your DPS element; survivability and resist mods prioritized since the
+      holder soaks aggro.
+  - role_id: pool_dps
+    subclass: Any subclass; Well of Radiance Warlock ideal to drop a well in the pool for the DPS stack.
+    weapons: Burst-DPS heavy (Linear Fusion / Whisper / Sleeper) plus an add-clear primary for between
+      cycles.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your heavy DPS element; ability-regen mods to keep Supers up for
+      pool DPS.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Golgoroth encounter block + Gaze Amaze Master
+      challenge)'
+    note: Tier-1 primary source. Gaze swap, Pool of Reclaimed Light pattern, Unstable Light, and Tablet
+      of Ruin derived directly from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Burst-DPS exotics named generically; confirm current DPS meta and surge weapons in the live
+      Edge of Fate sandbox before a Master run.
+    date_checked: '2026-06-07'

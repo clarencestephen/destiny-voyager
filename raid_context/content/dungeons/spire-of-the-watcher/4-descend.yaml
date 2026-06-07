@@ -1,0 +1,173 @@
+# raid_context/content/dungeons/spire-of-the-watcher/4-descend.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: descend
+  name: Descend (Pillory cell stacks — red circuits + reactor descent)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Multi-room descent introducing RED Arc circuits (any-order, time-
+
+    windowed). Each room: kill Conduit Minotaur, get Arctrician,
+
+    activate all nodes within time window. Ventilation shafts with
+
+    spinning fans between rooms. Hidden chest 2 here.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Connected rooms (3 total), each with red-cable circuits.
+
+    - Spinning fans in ventilation shafts between rooms.
+
+    - Arc gates in last room with Incarcerator Hydra inside.
+
+
+    PLATFORM MECHANICS:
+
+    - Red nodes: any order, but ALL within time window. Reset if late.
+
+    - Fans: stand on platforms on top OR use wall crevices to bypass blades.
+
+    - Final room: Arc gates around perimeter. 4 nodes outside, 1 inside (with Hydra).
+
+
+    HIDDEN CHEST 2:
+
+    Under stairs at each corner of the final descent room is a vent
+
+    cover. One vent opens to a shaft with the chest.
+
+    '
+  callouts:
+  - when: Red circuit started
+    from: starter
+    to: team
+    say: '"RED CIRCUIT — go go go."'
+    why: Time-windowed, all must hit nodes.
+  - when: Fan section
+    from: first to descend
+    to: team
+    say: '"Fans below, use crevices."'
+    why: Avoids fan-deaths.
+  wipe_triggers:
+  - Fan blade contact = death.
+  - Red circuit timer expires mid-activation = reset.
+  - Hydra in final room sweeping = damage.
+  damage_phase_triggers:
+  - All red circuits in each room done → next shaft opens.
+  parallel_timeline:
+  - phase: Per room
+    all: Kill Minotaur, all 3 get Arctrician, hit all red nodes within window.
+  permutations:
+  - name: Standard parallel-nodes
+    learner_friendly: true
+    summary: Each player owns a fraction of nodes; all hit simultaneously.
+    roles:
+    - id: node_owner
+      count: 3
+      does: Pre-assigned node subset per room.
+      loadout:
+        subclass: Any survivable subclass with good mobility for the fan shafts (Solar Heat Rises, or
+          Arc/Void movement options).
+        weapons: A precision Primary to tag your assigned red nodes quickly, plus an add-clear Special
+          for the Incarcerator Hydra. Anti-Barrier on Master for the Hydra.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No DPS surge needed. On Master run Anti-Barrier / Anti-Unstoppable; otherwise ammo-finder
+          and resist mods.
+  cheese: []
+  common_mistakes:
+  - One player hits all nodes alone — Arctrician timer expires before last node.
+  - Fan timing — use wall crevices instead, much safer.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'HIDDEN CHEST 2: Final descent room (Arc gates + Hydra inside).
+
+        Under the stairs at each corner is a vent cover. One of the four
+
+        opens to a shaft containing the chest.
+
+        '
+      rewards:
+      - Random roll of an already-obtained dungeon weapon
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: follow the lead. Don''t pioneer.'
+  plain_language_steps:
+  - 1. This is a multi-room descent (3 connected rooms) that introduces RED Arc circuits - red cables
+    mean activate nodes in ANY order, but ALL within a short time window.
+  - 2. In each room, kill the Conduit Minotaur and have all 3 players grab the Arctrician buff from its
+    pool.
+  - 3. Pre-assign each player a subset of the room's red nodes so you can hit them together. Call 'RED
+    CIRCUIT - go go go' to start the timed activation.
+  - 4. Hit your assigned nodes within the time window. If the timer expires before the last node, the
+    circuit resets - so split the nodes rather than one player soloing them all.
+  - 5. Between rooms there are ventilation shafts with spinning fans. Call 'Fans below, use crevices.'
+  - 6. Bypass the fans by standing on the platforms on top, or use the wall crevices to slip past the
+    blades - touching a fan blade is instant death.
+  - 7. In the final room there are Arc gates around the perimeter and an Incarcerator Hydra inside; 4
+    nodes are outside the gates and 1 is inside with the Hydra.
+  - 8. Manage the Hydra's sweeping fire while you activate the final room's nodes within the window.
+  - '9. OPTIONAL: grab Hidden Chest 2 - under the stairs at each corner of the final descent room is a
+    vent cover; one of the four opens to a shaft containing the chest.'
+  - 10. Completing each room's red circuits opens the next shaft; continue down until the descent is complete.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Vex line/slap-rifle fire, including the Incarcerator Hydra's sweep in the final room)
+      - Arc gate barriers deal line-of-sight Arc damage
+      - Spinning fan blades are instant-kill contact hazards (environmental, not elemental)
+      boss: []
+    champions:
+    - 'Master only: Barrier Hydra -> Anti-Barrier (the Incarcerator Hydra in the final room)'
+    - 'Master only: Unstoppable Minotaur -> Anti-Unstoppable (the Conduit Minotaurs)'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist helps against the Hydra sweep and Arc gates. The bigger killers here are environmental
+        (fans, falls), so movement caution matters most.
+      concussive:
+      - Not a priority - incoming damage is line-rifle/sweep, not blast-based.
+  damage:
+    surges:
+    - No boss / no DPS phase - this is a timed-circuit descent, so there are no surges to set.
+    burst_windows: No damage phase; the only timed pressure is hitting all red nodes within each room's
+      activation window.
+    recommended_dps:
+    - Not applicable (no boss). Bring reliable mid-range add-clear for the Incarcerator Hydra in the last
+      room.
+  role_loadouts:
+  - role_id: node_owner
+    subclass: Any survivable subclass with good mobility for the fan shafts (Solar Heat Rises, or Arc/Void
+      movement options).
+    weapons: A precision Primary to tag your assigned red nodes quickly, plus an add-clear Special for
+      the Incarcerator Hydra. Anti-Barrier on Master for the Hydra.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surge needed. On Master run Anti-Barrier / Anti-Unstoppable; otherwise ammo-finder
+      and resist mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/spire-of-the-watcher.yaml (encounter 4: descend)'
+    note: Primary source for red circuits, fan hazards, the final-room Hydra/Arc gates, and Hidden Chest
+      2.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Verify Master Champion types and any mod renames against the current build; vent/chest positions
+      are stable but mod names changed under Edge of Fate.
+    date_checked: '2026-06-07'

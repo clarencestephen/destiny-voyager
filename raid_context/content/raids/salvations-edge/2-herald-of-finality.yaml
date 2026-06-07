@@ -1,0 +1,335 @@
+# raid_context/content/raids/salvations-edge/2-herald-of-finality.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: herald-of-finality
+  name: Herald of Finality
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Boss fight in a triple-circuit arena. 3 teams of 2 across
+
+    left / middle / right sides. Each side has a Trammel
+
+    (Demise / Conflict / Time) — kill yours. Herald summons one
+
+    player from each side to centre via Called to Reckoning;
+
+    they get Stolen Favor from shooting Herald''s head spot
+
+    (after blights around the arena are destroyed). Locks
+
+    conductors with a NEW twist: triangle (Pyramidal) OR circle
+
+    (Spherical) — wrong shape = wipe. Deposit resonance → damage
+
+    phase → repeat.
+
+    '
+  setup: "WHAT YOU SEE\n- Triangular arena split into 3 sides: LEFT, MIDDLE, RIGHT.\n- Each side has its\
+    \ own circuit plate + Resonant Conductor.\n- Central blight in the middle of the arena — destroy to\
+    \ start.\n- Side blights spawn around the arena edges during Called to\n  Reckoning — must be destroyed\
+    \ to drop Herald's head shield.\n- **Trammel of Demise** = LEFT side enemy. **Trammel of Conflict**\n\
+    \  = MIDDLE. **Trammel of Time** = RIGHT.\n- Witness Hand: floor-based version this time. Resonant\
+    \ Seekers\n  (circular swarm) launch at floor targets.\n\nPLATFORM MECHANICS\n- Plates and conductors:\
+    \ same as Substratum.\n- NEW — conductor shape requirement: each conductor displays\n  EITHER a triangle\
+    \ (needs Pyramidal Resonance) OR a circle\n  (needs Spherical Resonance). Check before locking.\n\
+    - Resonance OVERRIDE: the LAST shape you picked up is the one\n  you'll deposit. Pick up the correct\
+    \ shape last. Earlier\n  wrong shapes are overridden.\n\nSTART STATE\n- Encounter starts when central\
+    \ blight is destroyed → Herald\n  spawns → Final Shape Looming starts.\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"Left pair = [names], middle pair = [names], right pair = [names]. Best players to LEFT (harder
+      terrain)."'
+    why: Left side has the trickiest movement + Trammel of Demise; designate accordingly.
+  - when: Trammel killed on a side
+    from: any
+    to: team
+    say: '"Trammel [side] down."'
+    why: First Trammel kill triggers Herald to summon players to centre via Called to Reckoning.
+  - when: Player gets Called to Reckoning buff (pulled to centre)
+    from: called-guardian
+    to: team
+    say: '"Called — coming to centre."'
+    why: Tells the team that the called player is leaving their side; others on that side cover their
+      work.
+  - when: Blights spotted around arena edges
+    from: any
+    to: team
+    say: '"Blight [position] — break it!"'
+    why: Herald's head spot is shielded until all surrounding blights are destroyed. Calling locations
+      lets the team kill them fast.
+  - when: Called Guardians have Stolen Favor
+    from: called-guardian
+    to: side
+    say: '"Stolen Favor — reading conductor [side]."'
+    why: Tells the side that the called Guardian will now check the conductor's shape and call out what's
+      needed.
+  - when: Conductor shape requirement read
+    from: called-guardian-with-stolen-favor
+    to: side
+    say: '"Conductor [side] wants TRIANGLE."'
+    why: Tells the conductor + plate-runner pair which shape resonance to grab. WRONG shape = wipe.
+  - when: Shape mismatch noticed
+    from: any
+    to: team
+    say: '"WAIT — don''t dunk!"'
+    why: Last-chance call before a wipe. Player can override their last pickup by walking to the correct
+      shape spawn.
+  - when: All conductors locked
+    from: any
+    to: team
+    say: '"All locked — deposit at vista."'
+    why: Chest spawns at the vista under the Witness's hand. Converge, dump, wipe-timer extends.
+  - when: Damage phase open
+    from: any
+    to: team
+    say: '"Vulnerable — DPS!"'
+    why: Edges of the arena glow when Herald is damageable. Burst-DPS now.
+  - when: Final Stand
+    from: any
+    to: team
+    say: '"FINAL STAND — 30 SECONDS. Trammels everywhere. Focus Herald."'
+    why: Herald spawns all Trammels at once. Ignore them. 30s to delete Herald or wipe.
+  wipe_triggers:
+  - WRONG shape resonance in a conductor → instant wipe.
+  - Final Shape Looming timer expires.
+  - Called team killed by Herald in centre → 'celebrate your failure' → wipe.
+  - Final Stand timer expires.
+  - Standing in Resonant Seekers (floor swarm) without dodging.
+  damage_phase_triggers:
+  - All 3 conductors locked + all resonance deposited at the vista chest → arena edges glow → Herald damageable.
+  parallel_timeline:
+  - phase: Pull
+    all: Move to assigned side (left / mid / right). Destroy the central blight.
+  - phase: Trammel + add wave
+    left_pair: Kill Ravenous Taken Knights, Attendants, Trammel of Demise.
+    middle_pair: Same with Trammel of Conflict.
+    right_pair: Same with Trammel of Time.
+  - phase: First Trammel dies → Called to Reckoning
+    called_guardians_3: One player from each side summoned to centre. Move there.
+    side_remaining_3: Cover your partner's work back on your side.
+  - phase: Centre — destroy blights, gain Stolen Favor
+    called_guardians_3: Kill arena-edge blights around Herald. Then shoot Herald's head spot. Get Stolen
+      Favor.
+    side_remaining_3: Continue add-clear, prep for plate bouncing.
+  - phase: Reading conductors + bouncing charges
+    called_guardians_3: Return to your side. Read the conductor's shape (triangle or circle). Call out
+      to your partner.
+    side_remaining_3: Bounce charges between plates. Collect the correct shape last.
+  - phase: Lockdown + deposit
+    all: Lock 3 conductors with correct shapes. Converge at vista chest. Dump resonance.
+  - phase: Damage phase
+    all: Arena edges glow. Burst-DPS the Herald.
+  - phase: Loop / Final Stand
+    all: Repeat until Herald reaches Final Stand. Timer drops to 30s + all Trammels spawn. Ignore Trammels;
+      delete Herald.
+  permutations:
+  - name: Standard 3 Sides × 2 Players
+    learner_friendly: true
+    summary: Each side has 1 conductor + 1 plate/add-clear. Called Guardian role rotates per round.
+    roles:
+    - id: side-pair
+      count: 6
+      does: Two per side. One arms + locks the conductor; the other handles plate-runs + adds. Either
+        may be Called to Reckoning.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary plus a burst-heavy for the Herald damage window; one of the pair carries
+          the conductor read and lockdown
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match Surge to your heavy; Concussive Dampener and a resist mod for the Called centre
+          fight
+  - name: Designated Caller (1 fixed Called per side, 3 fixed plate-runners)
+    summary: Pre-pick the 3 best mechanic players to ALWAYS be Called to Reckoning. The other 3 stay on
+      plates.
+    best_for: Master, or coaching new teams through the Called complexity.
+    roles:
+    - id: caller
+      count: 3
+      does: One per side. Always the one summoned. Reads conductor + handles head-shot in centre.
+      loadout:
+        subclass: ''
+        weapons: Reliable precision primary to expose and shoot the Herald's head spot for Stolen Favor;
+          special for the edge blights
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Concussive Dampener and a resist mod (must survive the centre); match damage Surge
+          to heavy
+    - id: plate-runner
+      count: 3
+      does: One per side. Plate-bouncing + ads. Never called.
+      loadout:
+        subclass: ''
+        weapons: Mobile add-clear plus a burst-heavy for the Herald window; handles plate bouncing and
+          adds
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Match Surge to your heavy; resist mod for the Resonant Seekers floor swarm
+  - name: Plate-First Variant
+    summary: Instead of dealing with Herald first when called, called Guardians IMMEDIATELY return to
+      side and start plate-bouncing. Stolen Favor read happens during the next Called cycle. Trades extra
+      Trammel risk for cleaner plate work.
+    best_for: Teams comfortable with the Trammels.
+    roles:
+    - id: side-pair
+      count: 6
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary plus a burst-heavy for the Herald damage window; one of the pair carries
+          the conductor read and lockdown
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Match Surge to your heavy; Concussive Dampener and a resist mod for the Called centre
+          fight
+  cheese: []
+  common_mistakes:
+  - Calling out the wrong shape needed — verify before dumping into conductor.
+  - Picking up Spherical when Pyramidal needed (or vice versa) and forgetting to override → wipe.
+  - Called Guardians dying in centre = wipe. They MUST survive.
+  - 'Final Stand: trying to clear Trammels instead of focusing Herald.'
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest:
+      location: 'After completing Substratum (encounter 1). Instead of jumping
+
+        up the GREEN-coloured blocks leading to encounter 2, look for
+
+        a grate on the wall and go past it. Contains the 2nd hidden
+
+        conductor for the Deepsight puzzle.
+
+        '
+      rewards:
+      - Second of 3 hidden conductors for the Deepsight puzzle.
+    potential_drops:
+    - Summum Bonum (sword, Arc)
+    - Non-Denouement (combat bow, Arc)
+    - Forthcoming Deviance (glaive, Void)
+    - Imminence (SMG, Strand)
+  master_challenge:
+    name: At Capacity
+    requirement: 'Only deposit Resonance in the conductor chest when holding
+
+      exactly 3 stacks. Forces a 4-person 3-stack rotation per
+
+      damage phase: starting-plate players pick up 3, conductor-
+
+      closers pick up 1 (matching the conductor''s shape) — except
+
+      right side, where both pick up 3 and one ferries an extra
+
+      from the middle ground stack.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: middle side-pair (easiest terrain).'
+  - '2nd: left side-pair (hardest terrain).'
+  - '3rd+: Designated Caller — handle Stolen Favor for the team.'
+  plain_language_steps:
+  - 1. Pre-pull, split into three pairs across LEFT, MIDDLE, and RIGHT sides. Put your best players on
+    LEFT (trickiest terrain and the Trammel of Demise).
+  - 2. Everyone moves to their assigned side and destroys the central blight. This spawns the Herald and
+    starts the Final Shape Looming timer.
+  - '3. On each side, clear the add wave (Ravenous Taken Knights, Attendants) and kill your side''s Trammel:
+    Demise on LEFT, Conflict in MIDDLE, Time on RIGHT.'
+  - 4. The first Trammel kill triggers Called to Reckoning. One player from each side is pulled to the
+    centre. Those players call 'Called' and head to the middle while their partner covers their side.
+  - 5. In the centre, the Called Guardians destroy the blights spawning around the arena edges to drop
+    the shield on the Herald's head spot.
+  - 6. With the head exposed, Called Guardians shoot the Herald's head spot to earn Stolen Favor. They
+    must not die in the centre, or it is a wipe.
+  - '7. Called Guardians return to their side and use Stolen Favor to read what shape their conductor
+    needs: a TRIANGLE wants Pyramidal Resonance, a CIRCLE wants Spherical Resonance. Call it out clearly.'
+  - 8. The plate partner bounces charges between plates while the pair collects the correct shape. Because
+    the last shape you pick up is the one you deposit, grab the correct shape LAST to override any wrong
+    picks.
+  - 9. Arm and lock all three conductors with the correct shapes. Putting the WRONG shape into a conductor
+    is an instant wipe, so confirm before dunking.
+  - 10. With all conductors locked, converge at the vista chest under the Witness's hand and dump remaining
+    resonance to extend the timer.
+  - 11. When the arena edges glow, the Herald is vulnerable. Burst-DPS it.
+  - '12. Repeat the loop until Final Stand: the timer drops to 30 seconds and every Trammel spawns at
+    once. Ignore the Trammels and delete the Herald.'
+  defense:
+    incoming_damage:
+      adds:
+      - Ravenous Taken Knights and Taken Attendants (Taken faction) deal Void/Taken damage
+      - Trammels of Demise, Conflict, and Time as side mini-enemies
+      boss:
+      - Herald of Finality (kills Called Guardians in the centre on a failed read; Resonant Seekers floor
+        swarm from the Witness Hand)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Resist Void/Taken from the Taken Knights and Attendants; keep high Health so Called Guardians
+        survive in the centre
+      concussive:
+      - Concussive Dampener helps Called Guardians survive the Herald's centre attacks while exposing
+        and shooting the head spot
+  damage:
+    surges:
+    - DPS phase opens after all 3 conductors are locked and resonance is deposited; the Herald is the
+      damage target. No fixed single element is stated, so match a Surge to your strongest burst weapon.
+    burst_windows: Arena edges glow when the Herald is damageable after lockdown and deposit; the final
+      window is Final Stand (~30 seconds, all Trammels spawn).
+    recommended_dps:
+    - 'Burst-heavy DPS: Two-Tailed Fox, Sleeper, rocket-and-sword swap, or a Special heavy'
+    - Save supers and heavy for the Final Stand 30-second window
+  role_loadouts:
+  - role_id: side-pair
+    subclass: ''
+    weapons: Add-clear primary plus a burst-heavy for the Herald damage window; one of the pair carries
+      the conductor read and lockdown
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match Surge to your heavy; Concussive Dampener and a resist mod for the Called centre
+      fight
+  - role_id: caller
+    subclass: ''
+    weapons: Reliable precision primary to expose and shoot the Herald's head spot for Stolen Favor; special
+      for the edge blights
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Concussive Dampener and a resist mod (must survive the centre); match damage Surge to
+      heavy
+  - role_id: plate-runner
+    subclass: ''
+    weapons: Mobile add-clear plus a burst-heavy for the Herald window; handles plate bouncing and adds
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match Surge to your heavy; resist mod for the Resonant Seekers floor swarm
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/salvations-edge.yaml (encounter: herald-of-finality)'
+    note: Primary source; the triangle/circle conductor twist, Called to Reckoning, Stolen Favor, and
+      Final Stand derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate stat renames applied (Health/Class). DPS Surge element not specified in the guide,
+      so generic burst archetypes given; verify current-meta exotics and weapons before a run.
+    date_checked: '2026-06-07'

@@ -1,0 +1,193 @@
+# raid_context/content/raids/crotas-end/1-abyss.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: abyss
+  name: Enter the Abyss (Hellmouth maze)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Pitch-black Hellmouth maze. Chalice tutorial. Weight of Darkness +
+
+    Engulfed in Darkness debuffs build. Light lamps via Enlightened to
+
+    preserve Chalice + cleanse stacks. Reach end plate, dunk Chalice
+
+    to form final bridge.
+
+    '
+  setup: "WHAT YOU SEE:\n- Top of Hellmouth (rally area) with Chalice on a small altar.\n- Drop down:\
+    \ pitch-black maze with abyssal lamps (some lit, some not).\n- Thralls, Cursed Thralls, Knights, Ogres\
+    \ swarm.\n- Final plate at end of maze.\n\nPLATFORM MECHANICS:\n- Pick up Chalice at start: charges\
+    \ → pass before 10s or die.\n- First plate: dunk Enlightened to form initial bridge.\n- In Hellmouth:\
+    \ lamps. Lit lamps have preservation nodes (refresh Chalice).\n  Enlightened can also activate UNLIT\
+    \ lamps to make them safe.\n- Lamp lit ~30s, then EXPLODES (kills nearby).\n- Stick to lit lamps,\
+    \ move lamp-to-lamp.\n- Final plate: Enlighten + dunk = bridge starts forming. 90s default;\n  faster\
+    \ with more Enlightened dunks.\n\nSTART STATE: rally banner. Pick up Chalice to start.\n"
+  callouts:
+  - when: Chalice handoff ready
+    from: holder
+    to: team
+    say: '"FULL — [name] take."'
+    why: Avoid death timer.
+  - when: Engulfed timer low
+    from: self
+    to: team
+    say: '"PRESERVE NOW — lamp [direction]."'
+    why: Wipe timer threat.
+  - when: Lamp about to explode
+    from: spotter
+    to: team
+    say: '"Lamp [direction] BLOWING — move!"'
+    why: Save player who's stationary.
+  wipe_triggers:
+  - Engulfed in Darkness timer to 0.
+  - Standing near lamp on explosion = death.
+  - Holding Chalice past full charge = death.
+  damage_phase_triggers:
+  - Final bridge forms → cross to next encounter.
+  parallel_timeline:
+  - phase: Top of Hellmouth
+    chalice_holder_1: Pick up Chalice, pass.
+    plate_steppers: Dunk Enlightened on first plate.
+  - phase: Hellmouth maze
+    chalice_passer: Cycle Chalice through team via lit lamps.
+    lamp_lighter: Use Enlightened to light unlit lamps.
+  - phase: Final plate
+    all: Reach end. Enlighten + dunk to form final bridge.
+  permutations:
+  - name: Standard Chalice cycle
+    learner_friendly: true
+    summary: Chalice rotates fixed order through 6 players, lit lamps as relay points.
+    roles:
+    - id: chalice_runner
+      count: 6
+      does: Hot-potato Chalice in fixed order. Cover via Enlightened lamp lighting.
+      loadout:
+        subclass: Any subclass with strong mobility/airborne traversal (e.g. Warlock Heat Rises or Hunter
+          for movement)
+        weapons: Add-clear primary (auto rifle or SMG) plus a Special for tougher adds; movement-focused
+          build over raw DPS
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: Match surge mods to your add-clear element; on Master add the relevant Champion-counter
+          mods (Anti-Barrier / Anti-Unstoppable)
+  - name: 'Master: Conservation Of Energy'
+    learner_friendly: false
+    summary: Only 1 lamp per Chalice deposit. Must move tight, accept Weight stacks.
+  cheese: []
+  common_mistakes:
+  - Holding Chalice too long — death timer.
+  - Bunching near a lamp about to explode.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'SECRET CHEST 1 (Abyss/Maze): From start of Abyss, run LEFT and hug
+
+        wall. Lit-up doors appear periodically. Keep following doors until
+
+        you can turn LEFT — turn. One door on left + one ahead. Chest is
+
+        BEHIND the door directly ahead.
+
+        '
+      rewards:
+      - Random raid loot
+    potential_drops:
+    - Song of Ir Yût (machine gun, Arc)
+    - Fang of Ir Yût (scout rifle, Strand)
+    - Abyss Defiant (auto rifle, Solar)
+    - Willbreaker's armor — Chest + Arms + Helmet (encounter-specific slots)
+  master_challenge:
+    name: Conservation of Energy
+    requirement: 'Fireteam must alternate between depositing the Chalice of Light
+
+      in a podium AND Enlightening a lamp — only one lamp Enlightenment
+
+      per podium of Light used. Most of the encounter is spent with
+
+      10 stacks of Weight of Darkness, so the Engulfed-in-Darkness
+
+      timer matters a lot more than a regular run.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: chalice_runner with sherpa guidance.'
+  plain_language_steps:
+  - 1. Rally at the top of the Hellmouth, then have one player pick up the Chalice of Light from the small
+    altar to start the encounter.
+  - 2. Whoever holds the Chalice watches the charge meter (bottom-left). When it fills, immediately pass
+    it to a teammate within about 10 seconds or you die. Each pass grants both players the Enlightened
+    buff.
+  - 3. Have an Enlightened player dunk on the first plate to form the initial bridge into the maze.
+  - 4. Drop into the pitch-black maze. Knights, Ogres, Thralls, and Cursed Thralls swarm. Stay grouped
+    and keep moving.
+  - 5. Standing in the dark stacks Weight of Darkness (a slow) and runs the 1-minute Engulfed in Darkness
+    wipe timer. Reset both by standing near lit lamps with preservation nodes.
+  - 6. Use Enlightened players to light unlit lamps so they are safe, then deposit the Chalice at lit
+    lamps to refresh the Engulfed timer.
+  - 7. Lit lamps stay safe for about 30 seconds, then EXPLODE and kill anyone nearby. Move lamp-to-lamp
+    and leave before a lamp blows.
+  - 8. Cycle the Chalice through all six players in a fixed order, using lit lamps as relay/refresh points
+    as you push deeper into the maze.
+  - 9. Reach the final plate at the end of the maze. Get Enlightened and dunk on the plate to begin forming
+    the final bridge (about 90 seconds by default).
+  - 10. More Enlightened dunks build the bridge faster. Once it forms, cross to the next area.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive Thralls and Cursed Thralls deal Arc melee damage (Cursed Thralls explode on death)
+      - Hive Knights fire Solar boomer blasts
+      - Hive Ogres fire Void eye-beams
+      boss: []
+    champions:
+    - 'Master only: Unstoppable Ogre -> Anti-Unstoppable'
+    - 'Master only: Barrier Knight -> Anti-Barrier'
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist for Knight boomer fire
+      - Void resist for Ogre eye-beams
+      concussive:
+      - Concussive Dampener helps against Ogre eye-beam knockback and clustered Knight boomer blasts in
+        the dark
+  damage:
+    surges:
+    - No boss DPS phase in this encounter — no DPS surge applies. Match surges to your add-clear and Champion-counter
+      element on Master.
+    burst_windows: No damage phase; the 'objective' is forming the final bridge via Enlightened dunks
+      rather than burning a boss.
+    recommended_dps:
+    - Reliable add-clear primary (auto rifle, SMG, or pulse)
+    - Wave-clear ability builds (grenades / Solar or Arc abilities) for the Thrall swarms
+  role_loadouts:
+  - role_id: chalice_runner
+    subclass: Any subclass with strong mobility/airborne traversal (e.g. Warlock Heat Rises or Hunter
+      for movement)
+    weapons: Add-clear primary (auto rifle or SMG) plus a Special for tougher adds; movement-focused build
+      over raw DPS
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your add-clear element; on Master add the relevant Champion-counter
+      mods (Anti-Barrier / Anti-Unstoppable)
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/crotas-end.yaml (encounter: abyss)'
+    note: Primary source — mechanics, permutations, roles, and enemies authored in the repo's v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (Mobility->Weapons, etc.); exotic/weapon meta shifts
+      each season. Verify specific loadouts against the current in-game sandbox before a run.
+    date_checked: '2026-06-07'

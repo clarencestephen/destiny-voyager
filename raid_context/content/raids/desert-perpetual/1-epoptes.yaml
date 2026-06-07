@@ -1,0 +1,238 @@
+# raid_context/content/raids/desert-perpetual/1-epoptes.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: epoptes
+  name: Epoptes, Lord of Quanta
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Vex Hydra trio: Epoptes + Particle Lens + Wave Lens. Lenses
+
+    protected by 6-eye shields (visible via shield-of-light cones).
+
+    Constant + Cyclical Temporality players see eye positions on
+
+    pillars → call out cross-team → destroy 3 eyes per side → break
+
+    shields → kill Lenses → Epoptes DPS phase with sub-phase eye
+
+    mechanic.
+
+    '
+  setup: "WHAT YOU SEE:\n- Central arena pit.\n- Epoptes (large Hydra) hovers above pit, supported by\
+    \ Particle Lens (L) + Wave Lens (R).\n- Plates L+R for Temporality debuffs.\n- Pillars in each side\
+    \ room with 6 eye positions visible only via shield-of-light cone.\n- Time's Magistrates (Major Cyclopses)\
+    \ on each side.\n\nPLATFORM MECHANICS:\n- Approach Epoptes → Lenses vanish briefly; Epoptes attacks.\n\
+    - Kill Time's Magistrates (L + R) → plates unlock.\n- Two players step plates simultaneously: L =\
+    \ Constant Temporality, R = Cyclical Temporality (30s death timer).\n- Constant + Cyclical players\
+    \ enter side rooms (their respective Lens).\n- Inside cone of light from Lens shield: timer freezes\
+    \ + see 1 of 6 lit eye on pillar.\n- Call eye position cross-team. Constant destroys the eye Cyclical\
+    \ called; Cyclical destroys the eye Constant called. (Cross-talk.)\n- Wrong eye = regen + stalls time\
+    \ + Epoptes accelerates wipe meter.\n- Destroy 3 eyes max per Lens (more triggers wipe phase).\n-\
+    \ Wipe phase (\"Broken by Quanta\"): inside players (NOT Hydra-eyes shooters) deal with Epoptes' own\
+    \ 2 shields.\n  Same 2-shield, 3-eyes-each system. Cross-call again.\n- Cleanse all 6 Epoptes eyes\
+    \ → wipe averted, eyes refresh.\n- Refresh Temporality at plates. Continue eye-burst.\n- Once all\
+    \ 6 Lens eyes done → shoot central Lens eye = Lens dies.\n- On first Lens death → Epoptes wipe sub-phase\
+    \ → 6-eye dance.\n- Repeat for second Lens. Lens shield breaks on central eye → Epoptes vulnerable\
+    \ → DPS phase.\n- During DPS: Epoptes regenerates 2 shields. Random 2 players get Constant/Cyclical.\
+    \ They see 6 orbiting eyes around central eye → shoot all → break shield → continue DPS.\n- 3 sub-phases\
+    \ → Epoptes immunity → restart mechanics.\n\nSTART STATE: rally banner. Approach to engage.\n"
+  callouts:
+  - when: Magistrates down
+    from: killer
+    to: team
+    say: '"MAGISTRATES — plates open."'
+    why: Step plates for debuffs.
+  - when: Plate stepped
+    from: self
+    to: team
+    say: '"CONSTANT/CYCLICAL — going [L/R] room."'
+    why: Designate Lens hunter.
+  - when: Eye position seen (in cone)
+    from: Constant
+    to: team
+    say: '"Constant sees: [position]"'
+    why: Cyclical player destroys this on their Lens.
+  - when: Cyclical sees
+    from: Cyclical
+    to: team
+    say: '"Cyclical sees: [position]"'
+    why: Constant destroys.
+  - when: 3 eyes done
+    from: self
+    to: team
+    say: '"3 EYES — wipe phase incoming."'
+    why: Switch to inside-Epoptes 6-eye dance.
+  - when: DPS phase
+    from: any
+    to: team
+    say: '"DPS — orbiting eyes for shield cycle!"'
+    why: 2 selected players go to shields.
+  wipe_triggers:
+  - Wrong Lens eye destroyed = wipe mechanic.
+  - Wrong Epoptes eye in 6-eye dance = wipe.
+  - Temporality 0s = death.
+  - Failure to refresh shield cycle during DPS = forced reset.
+  damage_phase_triggers:
+  - Both Lenses' central eyes shot → shields drop → Epoptes vulnerable → ~30s DPS window.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage. Burst Magistrates.
+  - phase: Lens kill cycle
+    L_team_3: Constant + Hydra eyes + add-clear.
+    R_team_3: Cyclical + Hydra eyes + add-clear.
+  - phase: Epoptes wipe sub-phase
+    inside_team: Burst 6 orbiting eyes per shield. Cleanse.
+  - phase: DPS
+    all: Burst Epoptes after shields drop.
+  - phase: Reset
+    all: Cycle.
+  permutations:
+  - name: Standard 3L / 3R split
+    learner_friendly: true
+    summary: Each side has Constant/Cyclical player + Hydra eye shooter + add-clear.
+    roles:
+    - id: temporality_holder
+      count: 2
+      does: Constant (L) + Cyclical (R). Lens eyes.
+      loadout:
+        subclass: ''
+        weapons: Precision primary (scout/pulse) for fast single-eye destruction; burst heavy held for
+          DPS windows.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Run surges matching your DPS heavy; add minor-elemental resist if uptime in the Lens
+          rooms is risky.
+    - id: hydra_eye_shooter
+      count: 2
+      does: Shoot called eyes on Lens shields.
+      loadout:
+        subclass: ''
+        weapons: Accurate hitscan primary (scout or hand cannon) to snap called eyes on the Lens shields;
+          burst heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy weapon element.
+    - id: add_clear
+      count: 2
+      does: Suppress Harpies + Goblins.
+      loadout:
+        subclass: ''
+        weapons: Add-clearing primary/special (auto/SMG/wave-frame) to suppress Harpies and Goblins; heavy
+          for DPS.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy; ammo-finder and reserves mods for sustained add-clear.
+  - name: 'Challenge: No sequential eye'
+    learner_friendly: false
+    summary: Cannot destroy same Lens' eye twice in a row. 2 players per side swap eye-destruction roles.
+  cheese: []
+  common_mistakes:
+  - Misreading 6-eye position (top/middle/bottom × L/R/center).
+  - Forgetting cross-talk (Constant shoots what Cyclical sees).
+  - Stalling time = wipe meter fills.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Opaque Hourglass (combat bow, Arc)
+    - Collective Psyche armor — Arms (encounter-specific slot)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear.'
+  - '2nd: hydra_eye_shooter.'
+  - '3rd: temporality_holder.'
+  plain_language_steps:
+  - 1. After the rally banner, approach Epoptes (the large Hydra) — its two supporting Lenses (Particle
+    Lens on the left, Wave Lens on the right) vanish briefly while Epoptes attacks.
+  - 2. Kill the Time's Magistrates (Major Cyclopses) on both the left and right sides to unlock the two
+    Temporality plates.
+  - '3. Two players step the plates at the same time: left grants Constant Temporality, right grants Cyclical
+    Temporality (a 30-second death timer starts).'
+  - 4. The Constant player goes into the left Lens room, the Cyclical player into the right; stand inside
+    the Lens shield's cone of light to freeze your timer and reveal one of six lit eyes on the pillar.
+  - '5. Use cross-talk: Constant destroys the eye that Cyclical called out, and Cyclical destroys the
+    eye that Constant called out. Wrong eye = it regenerates, stalls time, and fills Epoptes'' wipe meter.'
+  - '6. Destroy up to three eyes per Lens, then handle the ''Broken by Quanta'' wipe phase: the inside
+    players burst Epoptes'' own two shields (same three-eyes-each, cross-call system) and cleanse all
+    six eyes to avert the wipe.'
+  - 7. Refresh Temporality at the plates between cycles so your timer never hits zero.
+  - 8. Once all six of a Lens' eyes are done, shoot that Lens' central eye to kill it; on the first Lens
+    death Epoptes enters a six-eye wipe sub-phase you must clear.
+  - 9. Repeat the whole cycle for the second Lens until its central eye breaks and Epoptes becomes vulnerable.
+  - '10. During DPS, Epoptes regenerates two shields: two random players are given Constant/Cyclical and
+    shoot the six orbiting eyes around its central eye to break the shield and keep damage flowing.'
+  - 11. After three damage sub-phases Epoptes goes immune and the mechanics restart — keep repeating until
+    it dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex Harpies (suppress during add-clear)
+      - Vex Goblins (suppress during add-clear)
+      - Time's Magistrates / Major Cyclopses (eye-beam line damage)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - DPS-phase damage element is not specified in the source; match your surge to your chosen heavy/burst
+      weapon.
+    burst_windows: Both Lenses' central eyes shot drops Epoptes' shields, opening roughly a 30-second
+      vulnerability window per cycle (three sub-phases).
+    recommended_dps:
+    - Burst heavy (Linear Fusion Rifle or heavy GL)
+    - Whisper-style Exotic sniper for sustained DPS
+    - Rocket archetypes for the short window
+  role_loadouts:
+  - role_id: temporality_holder
+    subclass: ''
+    weapons: Precision primary (scout/pulse) for fast single-eye destruction; burst heavy held for DPS
+      windows.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run surges matching your DPS heavy; add minor-elemental resist if uptime in the Lens
+      rooms is risky.
+  - role_id: hydra_eye_shooter
+    subclass: ''
+    weapons: Accurate hitscan primary (scout or hand cannon) to snap called eyes on the Lens shields;
+      burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surges matched to your heavy weapon element.
+  - role_id: add_clear
+    subclass: ''
+    weapons: Add-clearing primary/special (auto/SMG/wave-frame) to suppress Harpies and Goblins; heavy
+      for DPS.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surges matched to your heavy; ammo-finder and reserves mods for sustained add-clear.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/desert-perpetual.yaml (encounter: epoptes)'
+    note: Mechanics, roles, and enemies derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: New raid (July 2025); DPS-phase element and meta loadouts unconfirmed in source — verify in-game
+      before committing surges/exotics.
+    date_checked: '2026-06-07'

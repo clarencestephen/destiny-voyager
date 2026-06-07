@@ -1,0 +1,343 @@
+# raid_context/content/raids/last-wish/5-riven.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: riven
+  name: Riven of a Thousand Voices (final boss)
+  difficulty: hard
+  estimated_time: 30-50 min
+  abstract: 'Most communication-heavy boss in Destiny. Split into 2 rooms (Crystal
+
+    + Tree). Riven appears in one, Eye of Riven in other. Stagger Riven
+
+    via tentacle attack or fire attack → 2 of her 10 eyes glow → call
+
+    to other team. Other team shoots called eyes when Riven swaps rooms.
+
+    6 eyes total over phase 1. Then skydive DPS on her chest sores +
+
+    Axion Darts. Final stand = Ascendant Plane race + chest blight inside
+
+    her mouth. POST-KILL: Heart of Riven Fate''s Chosen escape run.
+
+
+    MOST GROUPS use the WALL-HUG CHEESE that skips eyes entirely.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Riven, a massive Ahamkara dragon, in a vast chamber.
+
+    - 2 side rooms: Crystal (blue) + Tree.
+
+    - Lens at the back of each room (jump up + look through).
+
+    - Riven''s body has 10 eyes around it.
+
+    - Heart of Riven (post-kill): in her mouth.
+
+
+    PLATFORM MECHANICS (legitimate):
+
+    - Split 3/3 into Crystal + Tree rooms.
+
+    - Riven appears in one, Eye of Riven in the other.
+
+    - Riven''s tentacle attack: bait melee range, dodge, hit her until staggered.
+
+    - Riven''s fire attack: wait for end → mouth glows → shoot mouth = stagger.
+
+    - 2 of 10 eyes glow on stagger → call to other room.
+
+    - Other room (with Eye): kill Eye → Essence → use lens to ID symbol on a column → cleanse symbol via
+    grenade-button at matching spot.
+
+    - Riven swaps rooms after stagger. New room has DPS window + must shoot CALLED eyes.
+
+    - Repeat for room 2 (now Riven in opposite room).
+
+    - Both groups go upper room (starting room) for joint phase.
+
+    - 3 staggers in upper room = 6 eyes total → shoot all 6 → Creeping Darkness debuff (10 stacks death)
+    → starting plates.
+
+    - SKYDIVE DPS: floating down past Riven. Shoot her chest sores. Axion Darts harass.
+
+    - If insufficient damage, cycle repeats.
+
+    - Final stand: teleported to Ascendant Plane → race to top while taking environmental damage → grab
+    Taken Strength orb → return.
+
+    - Riven''s final attack: shoot her glowing mouth → kill.
+
+    - Climb into her mouth → shoot blight inside her body → done.
+
+
+    PLATFORM MECHANICS (cheese — most-used method):
+
+    - All 6 in upper crystal room. Watch for shadow.
+
+    - If shadow crosses → Riven not coming first → leave room.
+
+    - Hug purple crystal wall → "Joining Allies" teleport back to initial.
+
+    - Race back to OTHER room before Riven arrives.
+
+    - Gather upper-left where Riven''s limb rests on arrival.
+
+    - Drop Well + hammer limb with meta DPS.
+
+    - Skip past eye-shooting entirely.
+
+
+    POST-KILL: Heart of Riven Fate''s Chosen escape (see below).
+
+    '
+  callouts:
+  - when: Riven appearing
+    from: spotter
+    to: team
+    say: '"RIVEN [Crystal/Tree] room."'
+    why: Identifies which team gets Riven.
+  - when: Stagger achieved
+    from: stagger team
+    to: team
+    say: '"EYES: [eye N1], [eye N2]"'
+    why: Other room shoots called eyes when Riven swaps.
+  - when: Riven swapping rooms
+    from: any
+    to: team
+    say: '"SWAP — shoot eyes [N1, N2]."'
+    why: Damage + correct-eye shot.
+  - when: Lens symbol ID
+    from: lens_user
+    to: team
+    say: '"Symbol [name] — position [direction]."'
+    why: Cleansing direction for Essence runner.
+  - when: Skydive DPS
+    from: any
+    to: team
+    say: '"SORES — shoot darts!"'
+    why: Coordinate sore-vs-dart prioritization.
+  - when: Final stand — Ascendant
+    from: any
+    to: team
+    say: '"RACE TOP — burst Phalanxes!"'
+    why: Don't pause.
+  wipe_triggers:
+  - Wrong eye shot = wipe.
+  - Creeping Darkness 10 stacks = death.
+  - Skydive without damage to break HP segment = restart.
+  - 'Final blight inside Riven''s body: health depletes, no time to wait.'
+  damage_phase_triggers:
+  - Skydive past Riven = unlimited DPS window (must break HP segment).
+  - Final stand inside Riven's body.
+  parallel_timeline:
+  - phase: Pull
+    all: Step starting plates → skydive down to rooms.
+  - phase: Phase 1 — 2 rooms (legitimate)
+    crystal_team_3: Engage whatever (Riven OR Eye) is there.
+    tree_team_3: Same on other side.
+  - phase: Stagger + eye calls
+    riven_team: Stagger Riven → call eyes.
+    eye_team: Kill Eye → cleanse symbol via lens.
+  - phase: Swap
+    all: Wait for Riven to swap rooms. Shoot called eyes.
+  - phase: Upper room joint (3 staggers)
+    all: Gather, kill Goblins/Ogres, stagger 3× = 6 eyes.
+  - phase: Skydive DPS
+    all: Shoot chest sores + Axion Darts.
+  - phase: Final stand — Ascendant
+    all: Race top, grab Strength orb.
+  - phase: Riven mouth shot + blight
+    all: Climb mouth, shoot blight inside body.
+  permutations:
+  - name: Legitimate 3/3 split
+    learner_friendly: true
+    summary: True intended encounter. 3-room rotation, eye calls, lens cleanse.
+    roles:
+    - id: stagger_dps
+      count: 3
+      does: 'Per room: stagger Riven, call eyes.'
+      loadout:
+        subclass: Any (no element enforced); a survivable build for tentacle/fire baiting
+        weapons: Add-clear primary plus a burst heavy for the eye-DPS windows
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Match surge mods to heavy element; Health for boss melee, Weapons (Mobility) for
+          repositioning
+    - id: essence_runner
+      count: 3
+      does: 'Per room: kill Eye, cleanse via lens.'
+      loadout:
+        subclass: Any add-clearing subclass; mobility helps reach the lens and cleanse spot
+        weapons: Strong add-clear primary to kill Eye of Riven Captains for Essence
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: Weapons (Mobility) for lens jumps and cleanse travel; Health for survivability
+  - name: Wall-hug cheese (most common)
+    learner_friendly: true
+    summary: 'All 6 in upper crystal room. Watch shadow → leave or stay.
+
+      Hug purple wall → teleport back via ''Joining Allies''. Race
+
+      to other room. Hammer limb with Well + meta DPS.
+
+      '
+    best_for: All practical clears.
+    roles:
+    - id: cheese_dps
+      count: 6
+      does: All 6 hammer limb in upper-left during cheese.
+      loadout:
+        subclass: A subclass built around a high-burst damage Super and Well support for the limb hammer
+        weapons: Highest-burst meta heavy (Linear Fusion or Rocket Launcher) for the limb burst
+        exotic_armor: ''
+        armor_stats: &id003
+        - Super
+        - Weapons
+        surges_mods: Match weapon surge mods to your heavy element; Super (Intellect) and Weapons (Mobility)
+          for repeated burst and the race-back movement
+  - name: 'Master: Each player different eye'
+    learner_friendly: false
+    summary: No player can shoot the same eye more than once.
+  cheese:
+  - title: Wall-hug method
+    detail: 'The standard. See PLATFORM MECHANICS (cheese) above. Has
+
+      minor luck element (shadow crossing). Once Riven arrives at
+
+      the limb, stack Well + sustained DPS for ~5-10s burst per
+
+      cycle. Skips eye-coordination entirely.
+
+      '
+  common_mistakes:
+  - 'Cheese: wrong shadow read → wasted cycle.'
+  - 'Legitimate: wrong eye shot = full wipe.'
+  - 'Skydive: not shooting Axion Darts = chest sores blocked.'
+  - 'Ascendant race: stopping to fight Phalanxes = environmental damage death.'
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (Heart of Riven escape)
+    hidden_chest: null
+    potential_drops:
+    - '**One Thousand Voices** (exotic fusion rifle, Solar) — RNG drop from Riven chest. Can re-roll with
+      Spoils of Conquest.'
+    - Any Legendary weapon from the Last Wish pool (Chattering Bone, The Supremacy, Transfiguration, Apex
+      Predator, Age-Old Bond, Nation of Beasts, Techeun Force, Tyranny of Heaven).
+    - Any Great Hunt armor piece.
+  master_challenge:
+    name: Strength of Memory
+    requirement: 'Each fireteam must NEVER shoot the same Riven eye twice. With
+
+      6 eyes per phase and 6 players, this works out to one eye per
+
+      player per phase — call-outs lock who has which eye before
+
+      DPS opens. Repeated eye = fail.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: cheese_dps (the way 95% of groups run it).'
+  - '2nd: legitimate stagger_dps.'
+  - '3rd: lens_user / essence_runner.'
+  plain_language_steps:
+  - '1. Step on the starting plates to skydive down. The fireteam splits 3/3 into two side rooms: Crystal
+    (blue) and Tree. This is the most communication-heavy fight in the raid.'
+  - 2. Riven, a massive Ahamkara dragon, appears in one room while an Eye of Riven appears in the other.
+    Spotters call which room has Riven.
+  - '3. The Riven team staggers her: bait her tentacle attack, dodge, and hit her until staggered, or
+    wait out her fire attack and shoot her glowing mouth to stagger.'
+  - 4. On a stagger, 2 of her 10 eyes glow. Call those eye numbers (1-10) to the other room so they know
+    which eyes to shoot.
+  - 5. The Eye team kills their Eye of Riven, grabs Essence, looks through the lens to identify a symbol
+    on a column, and cleanses it with the grenade button at the matching spot.
+  - 6. When Riven swaps rooms, the receiving team gets a DPS window and must shoot ONLY the called eyes.
+    Shooting a wrong eye wipes the team.
+  - '7. Both groups then meet in the upper starting room for the joint phase: kill the adds and stagger
+    her 3 times for 6 eyes total. Shooting all 6 applies Creeping Darkness (10 stacks kills you).'
+  - '8. Skydive DPS: float down past Riven, shoot the sores on her chest, and clear the Axion Darts that
+    otherwise block your shots.'
+  - '9. If you do not break the HP segment, the cycle repeats. Otherwise you proceed to the final stand
+    in the Ascendant Plane: race to the top through environmental damage and grab a Taken Strength orb
+    without stopping to fight Phalanxes.'
+  - '10. Shoot Riven''s glowing mouth on her final attack, climb into her mouth, and shoot the blight
+    inside her body to finish. Note: most groups instead use the wall-hug CHEESE, hugging the purple crystal
+    wall to get a ''Joining Allies'' teleport, racing to the other room, and hammering her limb with a
+    stacked Well plus meta DPS to skip the eyes entirely.'
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Eye of Riven Captains, Taken Goblins and Ogres in the joint phase, Phalanxes during the
+        Ascendant Plane race, Axion Darts during skydive)
+      boss:
+      - Taken (Riven's tentacle melee and fire attack); Creeping Darkness stacking debuff that kills at
+        10 stacks; Ascendant Plane environmental damage
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No enforced burn (no Master). Survivability matters most during Creeping Darkness and the Ascendant
+        race; no specific element resist required.
+      concussive:
+      - Not specifically called for; the threats are wrong-eye wipes, Creeping Darkness, and the environmental
+        race rather than knockback.
+  damage:
+    surges:
+    - No fixed DPS-phase element enforced. Burst element is free; the cheese leans on a stacked Well plus
+      the highest-burst meta heavy.
+    burst_windows: Skydive past Riven is an effectively unlimited window but you must break an HP segment;
+      in the wall-hug cheese, roughly a 5-10 second limb-hammer burst per cycle once she arrives.
+    recommended_dps:
+    - Highest-burst meta heavy (Linear Fusion or Rocket Launcher) for the limb/skydive
+    - Well of Radiance stacked on the DPS spot
+    - Cuirass-style one-and-done damage supers for the limb cheese
+  role_loadouts:
+  - role_id: stagger_dps
+    subclass: Any (no element enforced); a survivable build for tentacle/fire baiting
+    weapons: Add-clear primary plus a burst heavy for the eye-DPS windows
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to heavy element; Health for boss melee, Weapons (Mobility) for repositioning
+  - role_id: essence_runner
+    subclass: Any add-clearing subclass; mobility helps reach the lens and cleanse spot
+    weapons: Strong add-clear primary to kill Eye of Riven Captains for Essence
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Weapons (Mobility) for lens jumps and cleanse travel; Health for survivability
+  - role_id: cheese_dps
+    subclass: A subclass built around a high-burst damage Super and Well support for the limb hammer
+    weapons: Highest-burst meta heavy (Linear Fusion or Rocket Launcher) for the limb burst
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match weapon surge mods to your heavy element; Super (Intellect) and Weapons (Mobility)
+      for repeated burst and the race-back movement
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: riven)'
+    note: Two-room eye/lens flow, Creeping Darkness, skydive, Ascendant race, and the wall-hug cheese
+      all derived from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use current Edge of Fate naming. Verify the meta DPS heavies and damage supers used
+      in the cheese against the live sandbox; meta shifts seasonally.
+    date_checked: '2026-06-07'

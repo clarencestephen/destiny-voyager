@@ -1,0 +1,126 @@
+# raid_context/content/dungeons/warlords-ruin/2-imprisoned-and-climb.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: imprisoned-and-climb
+  name: Imprisoned! → Venture Deeper (jumping puzzle)
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Not a boss encounter. Two puzzle gates between Rathil and the second
+
+    boss. Included here because each blocks progress and the gear puzzle
+
+    stumps learners.
+
+    '
+  setup: "IMPRISONED! (gear puzzle):\n- You're locked in cells. Each cell has a \"node\" — round, glowing,\n\
+    \  on the wall. Shoot to spin (1 shot = counterclockwise, 2 = clockwise).\n- Skeletons on cell floors\
+    \ have tally marks next to one hand. Right\n  hand = N gears spin CW. Left hand = N gears spin CCW.\n\
+    - When all 6 nodes are spinning correctly, a switch glows near a cell\n  door. Shoot it. All cells\
+    \ open.\n\nVENTURE DEEPER (climb):\n- Spike-trap maze: griddle plates on walls fire spikes. Step IN\
+    \ FRONT\n  of the plate triggers it. Walk past on the OPPOSITE side of the\n  corridor.\n- Cliffside\
+    \ climb under Chimaera fire — sprint between cover, don't\n  stop on bridges.\n- Sewer drain entry\
+    \ to Encounter 2 arena.\n"
+  callouts:
+  - when: Skeleton found
+    from: finder
+    to: team
+    say: '"Skeleton in [N/S/E/W] cell — [right/left] hand, [N] marks."'
+    why: Two cells have skeletons. Both clues are needed to know the full CW/CCW split.
+  wipe_triggers:
+  - Spike traps in the maze (instant kill, full team needs revives → optimization wipe at MM).
+  - Falling off cliffside (no respawn until checkpoint).
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations: []
+  cheese:
+  - title: Solo Imprisoned skip
+    detail: 'Solo players have access to all cells via wall holes. Spin all 6
+
+      nodes yourself, then shoot the switch. No skeleton-reading needed
+
+      if you brute-force combinations (12 perms max — fast).
+
+      '
+  common_mistakes:
+  - Shooting nodes the wrong number of times — count your shots, the CW/CCW indicator changes per shot.
+  - Sprinting through the spike maze — walking gives you time to read the griddle plates.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'BURIED BLOODLINE secret chest 1: After the Imprisoned! puzzle, in
+
+        the prison cell with the LEFTMOST skeleton, look up — there''s a
+
+        ledge above the cell door. Jump up and behind it, you''ll find a
+
+        chest with a fragment for the Buried Bloodline exotic quest.
+
+        '
+      rewards:
+      - 'Hidden quest item: Bone Fragment 1 (Buried Bloodline catalyst seed)'
+      - Spoils of Conquest
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st time: bring a teammate who''s run it for the gear puzzle walkthrough.'
+  - 'Spike maze: walk every section once before sprinting.'
+  plain_language_steps:
+  - 1. This is a puzzle/traversal section, not a boss fight — you will be locked into separate prison
+    cells.
+  - 2. Find the glowing round node on your cell wall; shooting it once spins it counterclockwise, shooting
+    twice spins it clockwise.
+  - 3. Look for skeletons lying on cell floors — the tally marks next to one hand tell you how many nodes
+    to spin and which way (right hand = clockwise, left hand = counterclockwise).
+  - '4. Call out every skeleton you find: which cell, which hand, and how many marks, because two cells
+    have skeletons and you need both clues.'
+  - 5. Spin all 6 nodes to the correct orientation based on the combined skeleton clues, counting your
+    shots carefully.
+  - 6. When all 6 nodes are correct, a switch glows near a cell door — shoot it to open every cell.
+  - '7. Move into the Venture Deeper climb: a spike-trap maze where wall plates fire spikes if you step
+    in front of them.'
+  - 8. Walk (do not sprint) on the OPPOSITE side of each corridor from the griddle plates so you have
+    time to read and dodge them.
+  - 9. Climb the cliffside while the Chimaera fires at you — sprint between cover and never stop on the
+    open bridges.
+  - '10. Optional: grab the first Buried Bloodline secret chest above the leftmost skeleton''s cell door
+    for a Bone Fragment.'
+  - 11. Drop through the sewer drain at the end to reach the Wailing Tempest arena.
+  defense:
+    incoming_damage:
+      adds:
+      - Physical/Kinetic (spike traps in the maze are instant-kill hazards, not elemental)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase — this is a gear puzzle and a traversal/jumping section with no boss and no Naeem's
+      Wish damage window
+    burst_windows: None — there is no boss or damage phase in this section.
+    recommended_dps: []
+  role_loadouts: []
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/warlords-ruin.yaml (encounter 2, Imprisoned! / Venture
+      Deeper)'
+    note: Primary source for the gear puzzle logic, spike maze, and secret chest location.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Puzzle and traversal mechanics are stable, but secret-chest placement and quest gating can change
+      with patches; verify against the live dungeon if seeking Buried Bloodline fragments.
+    date_checked: '2026-06-07'

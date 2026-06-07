@@ -1,0 +1,388 @@
+# raid_context/content/raids/root-of-nightmares/2-scission.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: scission
+  name: Scission
+  ingame_name: Enter the Root
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Climb 3 vertical floors split by an un-jumpable chasm. Per floor:
+
+    complete one Field of Light chain AND one Flux of Darkness chain
+
+    before Imminent Expulsion expires. Use launchers to cross the
+
+    chasm and ascend. Floor 3 chains complete = encounter done.
+
+    '
+  setup: "WHAT YOU SEE\n- Arena divided down the middle by a deep CHASM. Left side and\n  right side each\
+    \ have their own nodes.\n- 3 floors stacked vertically. You start on floor 1. The chasm\n  and floors\
+    \ are visible above you.\n- On floor 1: 2 active Nodes of Splendor (one per side) and 2\n  active\
+    \ Nodes of Decay (one per side). Inactive nodes (no aura)\n  are scattered further down the floor.\n\
+    - At the far end of each side floor: a LAUNCHER — a small\n  Pyramid platform with a glowing arrow.\
+    \ In front of each\n  launcher: a small PYRAMID SWITCH (a button you shoot).\n\nPLATFORM MECHANICS\n\
+    - Launchers DO NOT shoot you across automatically. You must:\n    1. SPRINT onto the launcher and\
+    \ STAND on it.\n    2. WHILE STANDING ON IT, shoot the small switch in front\n       of it.\n    3.\
+    \ The launcher fires you across the chasm to the\n       corresponding spot on the other side.\n \
+    \ If you shoot the switch while floating ABOVE the launcher (mid-\n  jump), or NEXT to it, the launcher\
+    \ under-throws and you die in\n  the chasm.\n- Buffs CAN be shared. If a runner refreshes Field of\
+    \ Light from\n  an active node, anyone INSIDE THE AURA at the same moment also\n  gets the buff. Use\
+    \ this to ferry buffs to add-clear for\n  Redolence cleanup without an extra launcher trip.\n- The\
+    \ Imminent Expulsion timer pauses ONLY when BOTH chains on\n  the current floor complete — not just\
+    \ one. Both colours must\n  finish before the timer resets.\n\nSTART STATE\n- Encounter starts the\
+    \ moment anyone shoots the first active\n  node on floor 1. Position both runners and the floaters\n\
+    \  before pulling.\n"
+  callouts:
+  - when: Pre-pull, before anyone shoots an active node
+    from: lead
+    to: team
+    say: '"Light runner on [left|right], Dark runner on [opposite side]. Floaters mid."'
+    why: Establishes sides so runners don't collide and floaters know who to back up.
+  - when: About to shoot first active node
+    from: light-runner-side
+    to: team
+    say: '"Pulling — Light chain starting."'
+    why: Timer starts; everyone wants to be in position.
+  - when: A Redolence of Splendor (Light-aura Cabal) appears
+    from: floater
+    to: light-runner-side
+    say: '"Redolence Light at [position] — need Field of Light over here."'
+    why: Redolence of Splendor can only be damaged by Field of Light. Tells runner to refresh buff in
+      your aura on their next pass.
+  - when: A Redolence of Decay (Dark-aura Cabal) appears
+    from: floater
+    to: dark-runner-side
+    say: '"Redolence Dark at [position] — need Flux of Darkness."'
+    why: Mirror — Redolence of Decay requires Flux of Darkness to damage.
+  - when: Barrier Colossus appears near end of chain
+    from: any
+    to: floater
+    say: '"Barrier up at [side]!"'
+    why: Anti-Barrier required. Floater swaps to Anti-Barrier weapon and drops it.
+  - when: Light chain on current floor completes
+    from: light-runner-side
+    to: team
+    say: '"Light done [floor #]."'
+    why: Half the floor is clear. Track progress toward Imminent Expulsion reset.
+  - when: Dark chain completes
+    from: dark-runner-side
+    to: team
+    say: '"Dark done [floor #]. Timer should pause."'
+    why: If timer doesn't pause, a node was mis-linked and the chain isn't actually complete — verify
+      before launcher.
+  - when: Aura-Cabal wave spawns after both chains
+    from: any
+    to: team
+    say: '"Aura wave — grab buffs and clear."'
+    why: Reminder to pick up matching buffs from your runner's aura before engaging.
+  - when: Launcher switch lights up at the far end
+    from: any
+    to: team
+    say: '"Switch is up — going up."'
+    why: Everyone moves to launchers. One at a time per launcher (you can clip into each other and ruin
+      the jump if you stack).
+  wipe_triggers:
+  - Imminent Expulsion expires → Pyramid walls push everyone into the chasm.
+  - Shooting the launcher switch while NOT standing on the launcher → under-throw → death in chasm.
+  - Nezarec wipe pulse during the post-encounter traversal — need Darkness's Refuge to survive.
+  damage_phase_triggers:
+  - Floor 3 chains complete → encounter ends. No separate damage phase.
+  parallel_timeline:
+  - phase: Floor 1 pull
+    light_runner: Walk to your side's active Node of Splendor (white seed). Shoot → Field of Light. Follow
+      trail to inactive Node of Splendor → shoot to link → refresh → continue.
+    dark_runner: Walk to your side's active Node of Decay (dark seed). Shoot → Flux of Darkness. Same
+      flow with Nodes of Decay.
+    add_clear_4: Hold mid-floor on each side. Kill Cabal waves. Save Anti-Barrier ammo — Colossus comes
+      at end of chain.
+  - phase: Mid-floor (~0:30)
+    light_runner: Mid-chain. Refresh, link, repeat.
+    dark_runner: Mid-chain.
+    add_clear_4: Redolence-shielded Cabal start spawning. Call out colours; grab matching buff from runner's
+      aura on their next pass.
+  - phase: Both chains complete on current floor
+    all: Imminent Expulsion halts. Aura-Cabal wave spawns — kill with matching buffs (Light buff kills
+      Decay-shielded, Dark buff kills Splendor-shielded).
+  - phase: Launcher switch active
+    all: Run to far-end launcher on your side. STAND ON IT. Shoot the switch. Get launched up to floor
+      2.
+  - phase: Floors 2 + 3
+    all: Identical to floor 1 except node layout is more vertical. Faster pacing because everyone knows
+      the flow now.
+  - phase: Post-encounter traversal (Cataclysm overgrown)
+    all: 'Open the Tree of Silver Wings root using one of each buff. Then **Nezarec starts wipe pulses**:
+      make Darkness''s Refuge (get Field of Light → shoot INACTIVE Node of Decay) to survive. All 6 must
+      reach the door.'
+  permutations:
+  - name: Standard 1 Light + 1 Dark Runner per side, 2 Floaters
+    learner_friendly: true
+    summary: Split 3-and-3 across sides. Each side has its own Light runner + Dark runner. Two floaters
+      handle anti-Barrier and Redolence cleanup.
+    roles:
+    - id: light-runner-side
+      count: 2
+      does: Build the Light chain on your side. Stay on side as much as possible.
+      loadout:
+        subclass: Any movement-focused subclass with a strong traversal exotic
+        weapons: One-shot seed weapon plus add-clear primary; Anti-Barrier source carried
+        exotic_armor: ''
+        armor_stats: &id002
+        - Class
+        - Health
+        surges_mods: No DPS surge; Anti-Barrier on artifact, movement priority
+    - id: dark-runner-side
+      count: 2
+      does: Build the Dark chain on your side.
+      loadout:
+        subclass: Any movement-focused subclass with a strong traversal exotic
+        weapons: One-shot seed weapon plus add-clear primary; Anti-Barrier source carried
+        exotic_armor: ''
+        armor_stats: &id003
+        - Class
+        - Health
+        surges_mods: No DPS surge; Anti-Barrier on artifact, movement priority
+    - id: floater
+      count: 2
+      does: Anti-Barrier for Colossus + Redolence cleanup + Refuge backup.
+      loadout:
+        subclass: Any ad-clear subclass with strong area damage
+        weapons: Anti-Barrier weapon for the Colossus plus add-clear primary; carries both buffs for Redolence
+          cleanup
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Anti-Barrier mandatory; Concussive Dampener optional
+  - name: Jump-Minimizer (no chasm crossings during chains)
+    summary: Pre-assigned no-crossing rule. One dedicated launcher player handles all chasm trips. Other
+      5 stay on their side.
+    roles:
+    - id: side-locked-runner
+      count: 4
+      does: Light + Dark runners. Never cross the chasm during chains — work only your assigned side.
+      loadout:
+        subclass: Any subclass (no chasm crossing needed, so mobility is less critical)
+        weapons: Seed weapon plus add-clear primary; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id004
+        - Class
+        - Health
+        surges_mods: No DPS surge; Anti-Barrier on artifact
+    - id: launcher-jumper
+      count: 1
+      does: Only player who uses launchers between sides. Removes failure points.
+      loadout:
+        subclass: High-mobility subclass with a reliable traversal exotic for repeated launcher trips
+        weapons: Seed weapon plus Anti-Barrier; lightweight add-clear
+        exotic_armor: ''
+        armor_stats: &id005
+        - Weapons
+        - Class
+        surges_mods: No DPS surge; movement/handling priority, Anti-Barrier on artifact
+    - id: floater
+      count: 1
+      does: Anti-Barrier + Redolence cleanup.
+      loadout:
+        subclass: Any ad-clear subclass with strong area damage
+        weapons: Anti-Barrier weapon for the Colossus plus add-clear primary; carries both buffs for Redolence
+          cleanup
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Anti-Barrier mandatory; Concussive Dampener optional
+  - name: Underman (4-Person Variant)
+    summary: 'Doable with 2-4 players. With 4: one Light + one Dark runner per side, each also doing add-clear.'
+    best_for: Underman challenge runs, low-roster nights.
+    roles:
+    - id: hybrid-runner
+      count: 4
+      does: Build chain + clear ads between buff refreshes.
+      loadout:
+        subclass: Any subclass balancing movement and ad-clear (4-person underman use)
+        weapons: Seed weapon plus area-damage add-clear primary; Anti-Barrier source carried
+        exotic_armor: ''
+        armor_stats: &id006
+        - Class
+        - Health
+        surges_mods: No DPS surge; Anti-Barrier mandatory
+  cheese:
+  - title: Launcher pre-positioning
+    detail: 'Sprint onto the launcher BEFORE the switch is shootable. The
+
+      moment it lights up, fire and go. Cuts ~1s per crossing —
+
+      adds up across 3 floors.
+
+      '
+  - title: Colony soft-lock recovery
+    detail: 'If the team is soft-locked at end-of-floor without buffs (all
+
+      buff sources used, shield enemies still up), use Colony. Run
+
+      into the shielded majors and shoot at your own feet — the
+
+      drones bypass the buff-gated shields and clear the lock.
+
+      Source: r/raidsecrets community megathread, Tier-2 cheese.
+
+      '
+  common_mistakes:
+  - Shooting the launcher switch while floating above it → under-throw → fall.
+  - Letting a Redolence-shielded enemy live → it tanks damage and runs the clock.
+  - Refuge confusion during post-encounter traversal — shooting an ACTIVE Light node instead of inactive.
+  - Both runners pushing the same chain side → other side never finishes.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest:
+      location: 'Post-encounter-1 traversal. Look for a side path off the
+
+        main route. Past the first staircase, head DOWN instead of
+
+        through the rectangular hole leading into encounter 2. The
+
+        chest contains the first Deepsight puzzle seed (see
+
+        overall_notes for the full puzzle).
+
+        '
+      rewards:
+      - Spoils of Conquest (×1)
+      - First of 3 Deepsight puzzle seeds
+    potential_drops:
+    - Mykel's Reverence (sidearm, Strand)
+    - Koraxis's Distress (heavy grenade launcher, Strand)
+    - Acasia's Dejection (trace rifle, Solar)
+    - Nessa's Oblation (shotgun, Void)
+  master_challenge:
+    name: Crossfire
+    requirement: 'Players can only shoot the launcher-activation crystals on the
+
+      OPPOSITE side of the chasm from where they''re standing. Same-
+
+      side shots fail the challenge. Forces deliberate light/dark
+
+      side coordination.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: floater. Lowest mechanic load.'
+  - '2nd: light-runner-side or dark-runner-side.'
+  - '3rd+: launcher-jumper in Jump-Minimizer.'
+  plain_language_steps:
+  - '1. Before pulling, assign sides: one Light runner and one Dark runner per side of the chasm, plus
+    floaters in the middle. Call it out so runners do not collide. The encounter starts the instant anyone
+    shoots the first active node on floor 1.'
+  - '2. Look at the arena: a deep chasm splits it down the middle, and there are 3 floors stacked vertically.
+    Each side of floor 1 has an active Node of Splendor (white seed) and an active Node of Decay (dark
+    seed), with inactive nodes scattered further along.'
+  - 3. The Light runner shoots their side's active white node to gain Field of Light, then follows the
+    trail and shoots the next inactive white node to link. Refresh and repeat.
+  - 4. The Dark runner does the same with the dark Nodes of Decay to gain and chain Flux of Darkness.
+  - 5. Add-clear holds mid-floor on each side, killing Cabal waves and saving Anti-Barrier ammo for the
+    Colossus that arrives at the end of a chain.
+  - 6. When a Redolence of Splendor (Light-aura Cabal) appears, call it out - it can only be damaged by
+    a player holding Field of Light. A Redolence of Decay needs Flux of Darkness. Grab the matching buff
+    from a runner's aura as they pass and clean it up.
+  - 7. Both the Light chain AND the Dark chain on the floor must complete before the Imminent Expulsion
+    timer pauses. If the timer does not pause, a node was mis-linked - verify before moving on.
+  - 8. After both chains finish, an aura-Cabal wave spawns; kill the shielded enemies with the matching
+    buff (Light buff kills Decay-shielded, Dark buff kills Splendor-shielded).
+  - 9. When the far-end launcher switch lights up, SPRINT onto the launcher and STAND on it, then shoot
+    the small pyramid switch in front of it. You get flung up to the next floor. Shooting the switch while
+    floating above or beside the launcher under-throws you into the chasm.
+  - 10. Repeat the same Light + Dark chain process on floors 2 and 3. Floor 3 chains completing ends the
+    encounter - there is no separate damage phase.
+  - '11. During the post-encounter traversal, Nezarec begins wipe pulses: make a Darkness''s Refuge by
+    holding Field of Light and shooting an INACTIVE Node of Decay, then stand in the bubble. All 6 players
+    must reach the door.'
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal infantry waves (Legionaries, Phalanxes) deal Solar damage
+      - Redolence of Splendor and Redolence of Decay (aura-shielded Cabal majors) - only damageable with
+        the matching paracausal buff
+      - Barrier Colossus deals Solar (slug-rifle) damage
+      boss: []
+    champions:
+    - Barrier Colossus -> Anti-Barrier (artifact mod or intrinsic weapon perk; mandatory this encounter)
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist helps against the Cabal infantry and the Barrier Colossus slug rifle
+      concussive:
+      - Concussive Dampener can reduce damage from clustered Cabal explosive/AoE fire if add-clear holds
+        a tight mid-floor position
+  damage:
+    surges:
+    - No boss and no dedicated DPS phase - completing the floor-3 chains ends the encounter, so no DPS
+      surge applies
+    - The only damage priority is killing aura-shielded Redolence enemies with the matching paracausal
+      buff, not an elemental surge
+    burst_windows: No boss damage phase; clear shielded Redolence majors promptly with matching buffs
+      so they do not run the Imminent Expulsion clock.
+    recommended_dps:
+    - Add-clear primary or special that clears Cabal waves quickly
+    - Anti-Barrier weapon staged for the end-of-chain Colossus
+  role_loadouts:
+  - role_id: light-runner-side
+    subclass: Any movement-focused subclass with a strong traversal exotic
+    weapons: One-shot seed weapon plus add-clear primary; Anti-Barrier source carried
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No DPS surge; Anti-Barrier on artifact, movement priority
+  - role_id: dark-runner-side
+    subclass: Any movement-focused subclass with a strong traversal exotic
+    weapons: One-shot seed weapon plus add-clear primary; Anti-Barrier source carried
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No DPS surge; Anti-Barrier on artifact, movement priority
+  - role_id: floater
+    subclass: Any ad-clear subclass with strong area damage
+    weapons: Anti-Barrier weapon for the Colossus plus add-clear primary; carries both buffs for Redolence
+      cleanup
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Anti-Barrier mandatory; Concussive Dampener optional
+  - role_id: side-locked-runner
+    subclass: Any subclass (no chasm crossing needed, so mobility is less critical)
+    weapons: Seed weapon plus add-clear primary; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No DPS surge; Anti-Barrier on artifact
+  - role_id: launcher-jumper
+    subclass: High-mobility subclass with a reliable traversal exotic for repeated launcher trips
+    weapons: Seed weapon plus Anti-Barrier; lightweight add-clear
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: No DPS surge; movement/handling priority, Anti-Barrier on artifact
+  - role_id: hybrid-runner
+    subclass: Any subclass balancing movement and ad-clear (4-person underman use)
+    weapons: Seed weapon plus area-damage add-clear primary; Anti-Barrier source carried
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: No DPS surge; Anti-Barrier mandatory
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/root-of-nightmares.yaml (encounter: scission)'
+    note: Primary source - mechanics, enemies, launcher rules and permutations authored from destinypedia
+      + blueberries.gg loot tables; hidden-chest/Deepsight from r/raidsecrets + Skarrow9 (Pass 2, 2026-05-25).
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Verify current Anti-Barrier sources and meta loadouts each Episode; cheese options (e.g. Colony)
+      may be patched. Edge of Fate stat names applied.
+    date_checked: '2026-06-07'

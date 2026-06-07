@@ -1,0 +1,264 @@
+# raid_context/content/raids/deep-stone-crypt/4-descent.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: deep-stone-crypt
+  name: Deep Stone Crypt
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: descent
+  name: Surviving the Descent (Rapture)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Pre-Taniks encounter. Taniks Reborn looms. Deposit 6 nuclear cores
+
+    in correct deposit bins (Scanner-guided). Operator shoots red
+
+    panels for cores. Suppressor stuns Taniks at security drones.
+
+    Failure = nuclear detonation. Then escape pod sprint.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Command deck of Rapture (orbital station crashing).
+
+    - 4 nuclear core terminals (far L+R walls + L+R upper catwalks).
+
+    - 3 deposit boxes spread around the room.
+
+    - 3 security drones (1 mid floor + 2 elevated L+R).
+
+    - Taniks looming, immune.
+
+
+    PLATFORM MECHANICS:
+
+    - Approach Taniks to start.
+
+    - Operator picks Operator augment, alarm sounds → shoot red panel near nuclear core terminal to spawn
+    cores (2 normally; 3 if missed).
+
+    - Cores: Radiation debuff on carrier. 10 = death. Pass via Interact to redistribute.
+
+    - Scanner identifies WHICH deposit boxes glow yellow.
+
+    - Carriers deposit cores at correct boxes (wrong = nuclear detonation = wipe).
+
+    - Taniks turns deposit boxes OFFLINE periodically.
+
+    - Suppressor (from Suppressor Vandal) → stand under one of 3 security drones → shoot Taniks → STUN.
+
+    - 6 deposit cycles → Crypt AI deactivates protocol → hatch opens.
+
+    - Sprint to escape pod via lower hallways. Taniks chases with Molten Welder.
+
+    - Escape pod doors close → encounter ends.
+
+
+    START STATE: rally banner. Approach or shoot Taniks to start.
+
+    '
+  callouts:
+  - when: Alarm + core panel shot
+    from: operator
+    to: team
+    say: '"Panel HIT — cores spawning [N]."'
+    why: Cores ready for pickup.
+  - when: Scanner identifies bins
+    from: scanner
+    to: team
+    say: '"Bins [N1] + [N2] — deposit there."'
+    why: Pre-assign carriers.
+  - when: Carrying core
+    from: self
+    to: team
+    say: '"Core — rad [N]."'
+    why: Pass cores to teammates if stacking.
+  - when: Boxes offline
+    from: spotter
+    to: team
+    say: '"OFFLINE — Suppressor stun!"'
+    why: Triggers stun phase.
+  - when: Drone stun done
+    from: suppressor
+    to: team
+    say: '"STUNNED — deposit now!"'
+    why: Carriers deposit.
+  - when: Boxes deposited
+    from: carrier
+    to: team
+    say: '"[N/6] deposited."'
+    why: Progress.
+  wipe_triggers:
+  - Radiation 10 = death.
+  - Wrong deposit box = nuclear detonation.
+  - Cores not deposited in time = explode = wipe.
+  - Operator missing panel shot = 3 cores spawn (worse spread).
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Pull
+    all: Approach Taniks. Augments distributed.
+  - phase: Per cycle
+    operator: Shoot red panel for cores.
+    scanner: ID correct deposit bins.
+    carriers_2: Pick up cores, manage radiation.
+    suppressor: Stand drone, stun Taniks when boxes go offline.
+    depositor: Drop cores in correct bins.
+  - phase: 6 deposits
+    all: Cycle 6 times.
+  - phase: Escape pod sprint
+    all: Run lower hallways. Avoid Taniks Molten Welder.
+  permutations:
+  - name: Standard 3-role with floaters
+    learner_friendly: true
+    summary: Op + Scanner + Suppressor as dedicated; 3 carriers/floaters.
+    roles:
+    - id: operator
+      count: 1
+      does: Panel shots.
+      loadout:
+        subclass: Mobile, survivable subclass for fast panel access and the escape sprint
+        weapons: Accurate primary (hand cannon/scout) to hit the red core panels; add-clear special
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Health
+        surges_mods: Run Enhanced Operator augment mod. No DPS surge needed.
+    - id: scanner
+      count: 1
+      does: Deposit bin ID.
+      loadout:
+        subclass: Survivable subclass with mobility to relay deposit-bin calls
+        weapons: Precision primary for self-defense; nothing boss-specific
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Run Enhanced Scanner augment mod. No DPS surge needed.
+    - id: suppressor
+      count: 1
+      does: Drone routing + Taniks stun.
+      loadout:
+        subclass: Survivable subclass to hold drone positions while shooting Taniks for the stun
+        weapons: Reliable primary to land the stun shot on Taniks after charging at a drone; add-clear
+          special
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Run Enhanced Suppressor augment mod. No DPS surge needed.
+    - id: carrier
+      count: 3
+      does: Core management + deposits.
+      loadout:
+        subclass: Mobile subclass with self-sustain to manage Radiation while ferrying cores
+        weapons: Add-clear primary plus a wave-clear special to fight through to deposit bins
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Survivability and ability-regen mods; Solar-resist mods help during the escape sprint.
+          No DPS surge needed.
+  cheese: []
+  common_mistakes:
+  - Wrong deposit bin = full team death.
+  - Radiation cascading because nobody passes cores.
+  - Suppressor without drone position = no stun.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Posterity (precision hand cannon, Arc)
+    - Legacy's Oath armor — Chest + Arms + Class Item (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: carrier.'
+  - '2nd: operator / scanner.'
+  - '3rd: suppressor.'
+  plain_language_steps:
+  - 1. Drop the rally banner, then approach or shoot Taniks (looming and immune) to start the encounter
+    on the Rapture command deck.
+  - '2. Distribute the augments: one Operator, one Scanner, one Suppressor, with the remaining players
+    acting as core carriers/floaters.'
+  - 3. The Operator picks the Operator augment; an alarm sounds. The Operator shoots the red panel near
+    a nuclear core terminal to spawn cores (2 normally, 3 if the panel shot is missed).
+  - 4. Carriers pick up nuclear cores. Each core stacks Radiation; at 10 stacks you die. Pass cores to
+    teammates with the Interact button to spread the radiation load.
+  - 5. The Scanner identifies which deposit boxes glow yellow and calls them (for example 'Bins 1 and
+    2'). Pre-assign which carrier deposits where.
+  - 6. Taniks periodically turns the deposit boxes OFFLINE. When that happens, the Suppressor needs to
+    act.
+  - 7. The Suppressor stands under one of the 3 security drones, shoots Taniks, and stuns him. Without
+    a drone position there is no stun.
+  - 8. Once Taniks is stunned, carriers deposit cores into the correct yellow bins. A wrong bin causes
+    a nuclear detonation and wipes the team.
+  - 9. Complete 6 deposit cycles. After the sixth, the Crypt AI deactivates the protocol and a hatch opens.
+  - 10. Sprint to the escape pod through the lower hallways while Taniks chases with his Molten Welder.
+    Avoid his attacks.
+  - 11. Get everyone into the escape pod so the doors close, which ends the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Kinetic/ballistic damage from ambient Fallen House of Salvation adds on the command deck
+      boss:
+      - Solar damage from Taniks Reborn's Molten Welder during the escape-pod sprint
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resistance helps survive the Molten Welder chase during the escape sprint
+      concussive:
+      - Concussive Dampener optional; the main threat is the Molten Welder and add fire, not large area
+        blasts
+  damage:
+    surges:
+    - No DPS phase in this encounter. It is a puzzle/survival encounter (core deposits + Suppressor stuns
+      + escape sprint), so no damage surge applies
+    burst_windows: No boss burst window; Taniks is immune. The only 'windows' are the Suppressor stuns
+      that let carriers safely deposit cores.
+    recommended_dps:
+    - No boss-DPS archetype needed; bring reliable add-clear and a quick stun weapon for the Suppressor
+  role_loadouts:
+  - role_id: operator
+    subclass: Mobile, survivable subclass for fast panel access and the escape sprint
+    weapons: Accurate primary (hand cannon/scout) to hit the red core panels; add-clear special
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run Enhanced Operator augment mod. No DPS surge needed.
+  - role_id: scanner
+    subclass: Survivable subclass with mobility to relay deposit-bin calls
+    weapons: Precision primary for self-defense; nothing boss-specific
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run Enhanced Scanner augment mod. No DPS surge needed.
+  - role_id: suppressor
+    subclass: Survivable subclass to hold drone positions while shooting Taniks for the stun
+    weapons: Reliable primary to land the stun shot on Taniks after charging at a drone; add-clear special
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Run Enhanced Suppressor augment mod. No DPS surge needed.
+  - role_id: carrier
+    subclass: Mobile subclass with self-sustain to manage Radiation while ferrying cores
+    weapons: Add-clear primary plus a wave-clear special to fight through to deposit bins
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Survivability and ability-regen mods; Solar-resist mods help during the escape sprint.
+      No DPS surge needed.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/deep-stone-crypt.yaml (encounter: descent)'
+    note: Primary source for nuclear-core deposits, Radiation handling, Suppressor stuns, and the escape-pod
+      sprint.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Augment mod names reflect the in-repo guide; verify exact current mod naming and Solar-resist
+      options against the live sandbox before a run.
+    date_checked: '2026-06-07'

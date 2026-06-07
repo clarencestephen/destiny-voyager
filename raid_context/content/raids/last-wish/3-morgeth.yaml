@@ -1,0 +1,221 @@
+# raid_context/content/raids/last-wish/3-morgeth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: morgeth
+  name: Morgeth, the Spirekeeper
+  difficulty: hard
+  estimated_time: 12-18 min
+  abstract: 'Taken Ogre boss. Collect 10 Taken Strength orbs (max 2 per player —
+
+    3rd kills you) to spawn final Strength → DPS Morgeth before his
+
+    wipe meter fills. Rescue Umbral Enervation players (trapped, 20s)
+
+    via Eye of Riven Essence + Grenade button. Rescuer absorbs Strength
+
+    — risk of 3-stack death.
+
+    '
+  setup: "WHAT YOU SEE:\n- Cavernous arena with Morgeth (Taken Ogre) sleeping center.\n- 4 Taken Ogres\
+    \ in front of Morgeth (Challenge: do NOT kill).\n- First Taken Strength floating in front of Morgeth.\n\
+    - Steps directly behind Ogre = recommended DPS spot.\n\nPLATFORM MECHANICS:\n- Pick up first Taken\
+    \ Strength → encounter starts.\n- Split L+R 3-3.\n- 10 Taken Strength total: 1 to start, 4 wave 1,\
+    \ 4 wave 2, 1 final (where first was).\n- Max 2 Taken Strength per player (3rd = death).\n- Morgeth's\
+    \ wipe meter ticks UP in 10% increments (each faster).\n- Umbral Enervation: random Strength-holder\
+    \ trapped for 20s.\n  • Kill Eye of Riven → grab Essence → grenade-button on trapped player = rescue.\n\
+    \  • Rescuer ABSORBS trapped's Strength. Don't rescue with 2 Strength already.\n- Once all 10 Strength\
+    \ collected (or 12 if cycle), Morgeth vulnerable.\n- DPS: shoot pulsating glowing spots on his body.\n\
+    - Steps behind Morgeth: great DPS perch (close + Well-friendly).\n- Near-100%: grab spare Eye of Riven\
+    \ Essence + super-hit Morgeth = resets wipe meter (extends fight).\n\nSTART STATE: rally banner. Pick\
+    \ up first Strength to start.\n"
+  callouts:
+  - when: Taken Strength spotted
+    from: spotter
+    to: team
+    say: '"Strength [direction] — picker up?"'
+    why: Coordinate avoid-3 rule.
+  - when: Holding 2 Strength
+    from: self
+    to: team
+    say: '"I''M AT 2 — no more!"'
+    why: Warn rescuers.
+  - when: Umbral Enervation
+    from: trapped
+    to: team
+    say: '"TRAPPED [direction] — rescue!"'
+    why: 20s timer.
+  - when: Eye of Riven down + Essence
+    from: killer
+    to: team
+    say: '"Essence — rescuing [name]."'
+    why: Confirm rescuer.
+  - when: All Strength collected
+    from: any
+    to: team
+    say: '"DPS — Well behind Morgeth!"'
+    why: Coordinated DPS.
+  wipe_triggers:
+  - 3 Taken Strength on one player = death.
+  - Morgeth wipe meter to 100%.
+  - Trapped player not rescued in 20s.
+  - Rescuer with 1+ Strength absorbs to 3 = death.
+  damage_phase_triggers:
+  - 10 Taken Strength collected → Morgeth vulnerable.
+  - Near-100% wipe + Essence super = resets meter, extends DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Pick first Strength.
+  - phase: Wave 1 (~1:00)
+    runners: Collect 4 Strength.
+    rescuers: Be ready for Umbral Enervation.
+  - phase: Wave 2 (~2:00)
+    all: Collect 4 more Strength. Manage 2-cap rule.
+  - phase: DPS
+    well_warlock: Drop Well behind Morgeth.
+    all: Burst pulsating spots.
+  - phase: Reset (Essence super if needed)
+    carrier: Hit Morgeth with Eye Essence Super.
+  permutations:
+  - name: Standard 3-runner / 3-rescue
+    learner_friendly: true
+    summary: 3 collect Strength on assigned side; 3 ready for Umbral rescue + Eye kills.
+    roles:
+    - id: strength_runner
+      count: 3
+      does: Collect assigned Strength orbs.
+      loadout:
+        subclass: Any (no element enforced); mobility-friendly for collecting orbs across the arena
+        weapons: Add-clear primary plus a burst heavy for the behind-Morgeth DPS perch
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Match surge mods to heavy element; Weapons (Mobility) for fast orb collection, Health
+          for survivability
+    - id: rescuer
+      count: 3
+      does: Keep 0 Strength. Kill Eye of Riven. Rescue Umbral targets.
+      loadout:
+        subclass: A subclass with a quick-charging Super for the optional Essence wipe-meter reset
+        weapons: Strong add-clear primary to reliably kill Eye of Riven Captains for Essence, plus a burst
+          heavy
+        exotic_armor: ''
+        armor_stats: &id002
+        - Super
+        - Health
+        surges_mods: Super (Intellect) to keep an Essence-reset Super ready; Health for survivability
+          while clearing Eyes
+  - name: 'Challenge: Keep Ogres alive'
+    learner_friendly: false
+    summary: 4 front Ogres must NOT be killed. Maneuver around their LoS.
+  cheese: []
+  common_mistakes:
+  - Picking 3rd Strength = instant death.
+  - Rescuer with 2 Strength absorbing = 3-stack death.
+  - Spreading DPS = Morgeth wipe meter wins.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Shared pool with E1/E2/E4 — see kalli encounter for full weapon + armor list.
+  master_challenge:
+    name: Forever Fight
+    requirement: 'Do not kill the smaller Ogres that spawn during the
+
+      encounter. Only Morgeth''s Strength orbs may be picked up
+
+      and absorbed; let the Ogres live for the duration. Forces
+
+      runners to focus on positioning instead of add-clear.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: strength_runner with sherpa Strength-counting.'
+  - '2nd: rescuer.'
+  plain_language_steps:
+  - 1. Rally at the banner. Morgeth (a Taken Ogre) sleeps in the center, with 4 smaller Taken Ogres in
+    front of him and the first Taken Strength orb floating ahead.
+  - 2. Pick up the first Taken Strength to start the encounter, then split into two teams of 3, left and
+    right.
+  - '3. There are 10 Taken Strength orbs total: 1 to start, 4 in wave 1, 4 in wave 2, and 1 final orb
+    where the first one was.'
+  - '4. Important cap: each player can hold at most 2 Strength. Picking up a 3rd kills you instantly,
+    so call out ''I''m at 2, no more'' when you reach the cap.'
+  - 5. Watch Morgeth's wipe meter; it ticks up in 10% increments that get faster, so collect efficiently.
+  - 6. If a Strength holder gets caught by Umbral Enervation, they are trapped for 20 seconds. Call your
+    direction immediately.
+  - '7. To rescue: kill an Eye of Riven, grab its Taken Essence, and use the grenade button on the trapped
+    player. The rescuer ABSORBS the trapped player''s Strength.'
+  - 8. Never rescue while already holding 2 Strength, or absorbing pushes you to 3 and you die. Rescuers
+    should keep 0 Strength.
+  - 9. Once all 10 Strength are collected, Morgeth becomes vulnerable. Shoot the pulsating glowing spots
+    on his body.
+  - 10. Drop a Well of Radiance on the steps directly behind Morgeth and burst him there. If the wipe
+    meter is near 100%, hit him with a spare Eye of Riven Essence Super to reset the meter and extend
+    DPS.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Eye of Riven Captains; 4 smaller Taken Ogres present; ambient Taken)
+      boss:
+      - Taken (Morgeth's wipe-meter pressure; holding a 3rd Taken Strength is the instant-death threat
+        rather than a projectile)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No enforced burn (no Master). Build for survivability; Well of Radiance behind Morgeth covers
+        the DPS perch.
+      concussive:
+      - Not called for in the authored guide; the danger is Strength stacking and the wipe meter, not
+        knockback.
+  damage:
+    surges:
+    - No fixed DPS-phase element enforced. Free choice of burst element.
+    burst_windows: DPS opens once all 10 Taken Strength are collected; a near-100% Essence Super reset
+      can extend the window before the wipe meter caps.
+    recommended_dps:
+    - High-burst single-target (Linear Fusion Rifle or Rocket Launcher) from the steps behind Morgeth
+    - Well of Radiance on the DPS perch
+    - Cuirass-style one-and-done damage supers fit the close perch
+  role_loadouts:
+  - role_id: strength_runner
+    subclass: Any (no element enforced); mobility-friendly for collecting orbs across the arena
+    weapons: Add-clear primary plus a burst heavy for the behind-Morgeth DPS perch
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to heavy element; Weapons (Mobility) for fast orb collection, Health
+      for survivability
+  - role_id: rescuer
+    subclass: A subclass with a quick-charging Super for the optional Essence wipe-meter reset
+    weapons: Strong add-clear primary to reliably kill Eye of Riven Captains for Essence, plus a burst
+      heavy
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Super (Intellect) to keep an Essence-reset Super ready; Health for survivability while
+      clearing Eyes
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: morgeth)'
+    note: Strength-cap rule, Umbral Enervation rescue flow, DPS perch, and meter reset derived from the
+      authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use current Edge of Fate naming. Verify specific exotics/weapons against the live
+      sandbox; meta shifts seasonally.
+    date_checked: '2026-06-07'

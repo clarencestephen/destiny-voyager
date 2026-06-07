@@ -1,0 +1,288 @@
+# raid_context/content/raids/salvations-edge/3-repository.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: repository
+  name: Repository
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Series of 3 rooms with overlapping circuit wiring. NEW resonance
+
+    shape introduced: **Hexahedral Resonance** (cube). Each room
+
+    has a Threshold Sentinel + Honored Scorpius turrets to clear.
+
+    Shape spawn assignment is FIXED: Hexahedral on RIGHT, Spherical
+
+    in MIDDLE, Pyramidal on LEFT. Lock conductors + deposit + advance.
+
+    '
+  setup: "WHAT YOU SEE\n- 3 sequential rooms. Each has 3 circuit plates + 3 conductors.\n- Wiring between\
+    \ plates and conductors CHANGES per room:\n    • Room 1: straight — left↔left, mid↔mid, right↔right.\n\
+    \    • Room 2: left↔mid swap, right↔right.\n    • Room 3: left↔mid, mid↔right, right↔left (all rotated).\n\
+    - Honored Scorpius turrets on elevated platforms after the\n  Threshold Sentinel dies.\n- Witness\
+    \ Hand: new beam variant from the side walls.\n- Shape spawn locations are FIXED:\n    • Hexahedral\
+    \ (cube) — spawns on RIGHT side only.\n    • Spherical (circle) — spawns in MIDDLE only.\n    • Pyramidal\
+    \ (triangle) — spawns on LEFT only.\n\nPLATFORM MECHANICS\n- Same as Substratum + Herald. Watch the\
+    \ wire rotation per room\n  before starting the bounce.\n- Stolen Favor: this encounter, the player\
+    \ who lands the\n  KILLING BLOW on the Threshold Sentinel gets Stolen Favor.\n  Preferably this should\
+    \ be the conductor player so they can\n  immediately read what shape their conductor needs.\n\nSTART\
+    \ STATE\n- Encounter starts when team deposits resonance into the first\n  room's chest after Substratum.\
+    \ Threshold Sentinels then spawn.\n"
+  callouts:
+  - when: Pre-pull (per room)
+    from: lead
+    to: team
+    say: '"Room [N] wiring: left→[X], mid→[Y], right→[Z]."'
+    why: Wire rotation changes per room. Lock it down out loud.
+  - when: Threshold Sentinel about to die — designate killer
+    from: lead
+    to: conductor-player-on-that-side
+    say: '"You take the killing blow [side]."'
+    why: Stolen Favor goes to the killer; you want it on the conductor player so they can read the shape
+      requirement.
+  - when: Stolen Favor acquired + conductor read
+    from: conductor-with-favor
+    to: their side
+    say: '"My conductor wants [TRIANGLE | CIRCLE | CUBE]."'
+    why: Spawn-location rule means shapes must be ferried between sides — left has no cube, right has
+      no triangle, etc.
+  - when: Shape ferry needed (conductor needs a shape not native to their side)
+    from: conductor
+    to: teammate on the matching-spawn side
+    say: '"Right needs CUBE — grab a triangle for me from left."'
+    why: Hexahedral only spawns right; Pyramidal only on left; Spherical only mid. Someone has to walk
+      the shape across.
+  - when: Honored Scorpius turrets active
+    from: any
+    to: team
+    say: '"Scorpii up — drop the [position] one."'
+    why: Constant hailstorm of bullets. Two-shot the turret platforms with a sniper / heavy.
+  - when: Unstoppable Incendior spawns after conductor lockdowns
+    from: any
+    to: team
+    say: '"Unstop Incendior — Anti-Stun!"'
+    why: Anti-Unstoppable required. Catches teams off-guard if not slotted.
+  - when: All 3 conductors locked
+    from: any
+    to: team
+    say: '"Locked — dump at chest, advance."'
+    why: Final Shape Looming extends after dump; door to next room opens.
+  wipe_triggers:
+  - Wrong shape in conductor → wipe.
+  - Final Shape Looming expires.
+  - Holding 4+ stacks.
+  damage_phase_triggers:
+  - No boss DPS — completion = 3 successive room lockdowns + Unstoppable Incendior kill.
+  parallel_timeline:
+  - phase: Pull room 1
+    all: 3 teams of 2 to sides. Confirm wire rotation.
+  - phase: Threshold Sentinels
+    each_side_pair: Burn their side's Tormentor. Pre-assigned conductor player takes the killing blow
+      → Stolen Favor.
+  - phase: Scorpius wave
+    all: Drop turrets quickly — they will not stop firing.
+  - phase: Bounce charges + read conductors
+    each_side_pair: Plate-runner bounces between connected plates per wire rotation. Conductor reads shape
+      requirement.
+  - phase: Shape ferry
+    side-needing-non-native: Player with no native shape on their side walks to the spawn-source side,
+      picks up correct shape (override any wrong picks last).
+  - phase: Lock all 3 conductors
+    each_side_pair: Conductor armed → step on plate at charge arrival → lock.
+  - phase: Unstoppable Incendior
+    all: Burn Unstoppable. Anti-Unstoppable rounds required.
+  - phase: Deposit + advance
+    all: Dump remaining resonance into central chest. Advance to next room.
+  - phase: Repeat rooms 2 + 3
+    all: Same flow with NEW wire rotations per setup notes.
+  permutations:
+  - name: Standard 3-Side Pairs
+    learner_friendly: true
+    summary: Same 3 teams of 2 as Herald. Maintain pairings across rooms.
+    roles:
+    - id: side-pair
+      count: 6
+      loadout:
+        subclass: ''
+        weapons: Anti-Unstoppable for the Incendior; a sniper or heavy for the Scorpius turrets and burst
+          on the Tormentor; conductor player should be able to land the killing blow on the Sentinel
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Anti-Unstoppable; resist mod for the Incendior fire and Concussive Dampener for the
+          Tormentor
+  - name: Shape Courier
+    summary: Designate 1 player as a dedicated shape ferry across all 3 rooms — never owns a conductor
+      or plate, just walks shapes.
+    best_for: Teams that struggle with the shape spawn-location rule.
+    roles:
+    - id: pair-without-courier
+      count: 4
+      loadout:
+        subclass: ''
+        weapons: Anti-Unstoppable plus add-clear and a sniper/heavy for the turrets; one owns the conductor,
+          one the plate
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Anti-Unstoppable; resist mod and Concussive Dampener
+    - id: shape-courier
+      count: 1
+      does: Walks shapes between sides. Carries the cube to the right conductor, etc. Never locks down
+        — just delivers.
+      loadout:
+        subclass: ''
+        weapons: Light, mobile loadout for ferrying shapes between sides; no mechanic-specific weapon
+          needed
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Resist mod for the wall beam; Concussive Dampener for stray Tormentor hits
+    - id: floater
+      count: 1
+      does: Add-clear, Unstoppable Incendior.
+      loadout:
+        subclass: ''
+        weapons: Anti-Unstoppable for the Incendior plus a sniper or heavy for the Honored Scorpius turrets
+          and general add-clear
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Anti-Unstoppable; resist mod for the Incendior fire
+  cheese: []
+  common_mistakes:
+  - Ignoring wire rotation per room → bouncing charges to the wrong plates.
+  - Picking up Hexahedral on the right when your conductor needs Pyramidal → wrong shape in conductor
+    → wipe.
+  - Forgetting Anti-Unstoppable mod for the Incendior.
+  - Letting Honored Scorpii turrets live too long → constant chip damage.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest: null
+    potential_drops:
+    - Nullify (pulse rifle, Solar)
+    - Critical Anomaly (sniper rifle, Stasis)
+    - Forthcoming Deviance (glaive, Void)
+  master_challenge:
+    name: Balanced Diet
+    requirement: 'Individual Guardians cannot pick up the same Resonance type
+
+      twice in a row. If you grab a triangle, the next buff must
+
+      be a circle or square before another triangle. Doesn''t reset
+
+      between rooms — your final pickup in room 1 carries forward
+
+      as a constraint into room 2.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: any side-pair.'
+  - '2nd: Shape Courier (mechanic-light, intent-heavy).'
+  - '3rd+: conductor player in any side-pair.'
+  plain_language_steps:
+  - 1. This encounter is three sequential rooms with overlapping circuit wiring. Keep the same three pairs
+    across all rooms and assign a conductor player per side.
+  - 2. At the start of each room, read the wire rotation out loud. Room 1 is straight (left to left, mid
+    to mid, right to right). Room 2 swaps left and mid. Room 3 rotates everything (left to mid, mid to
+    right, right to left).
+  - 3. Pull the room. Each pair burns their side's Threshold Sentinel (Tormentor). Pre-assign the conductor
+    player on each side to land the KILLING BLOW so they gain Stolen Favor.
+  - 4. After the Sentinel dies, Honored Scorpius turrets activate on elevated platforms. Drop them quickly
+    with a sniper or heavy, since they fire constantly.
+  - '5. The conductor player with Stolen Favor reads their conductor''s required shape and calls it out:
+    TRIANGLE (Pyramidal), CIRCLE (Spherical), or CUBE (Hexahedral).'
+  - '6. Remember the FIXED shape spawn rule: Hexahedral (cube) only spawns on the RIGHT, Spherical (circle)
+    only in the MIDDLE, Pyramidal (triangle) only on the LEFT.'
+  - 7. If a conductor needs a shape that doesn't spawn on its side, call a ferry, for example 'Right needs
+    cube, grab a triangle from left for me.' Someone walks the shape across.
+  - 8. Plate-runners bounce charges between the plates connected by that room's wire rotation. Step on
+    at the shrinking aura, step off after the bounce.
+  - 9. Collect the correct shape LAST to override any wrong pickups, then arm and lock all three conductors.
+    Wrong shape in a conductor is an instant wipe.
+  - 10. After the lockdowns, an Unstoppable Incendior spawns. Stun and burn it with Anti-Unstoppable.
+  - 11. Dump remaining resonance into the central chest to extend the Final Shape Looming timer and open
+    the door to the next room.
+  - 12. Repeat for rooms 2 and 3 with their new wire rotations. Clearing room 3 completes the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Sol Divisive Vex and Dread forces in the rooms
+      - Honored Scorpius turrets lay down constant ranged fire from elevated platforms
+      boss: []
+    champions:
+    - Unstoppable Incendior -> Anti-Unstoppable
+    recommended_defensive_mods:
+      elemental:
+      - Resist Solar from the Incendior's fire; prioritize Health for the Witness Hand's wall beam (Wrathful
+        Disarray variant)
+      concussive:
+      - Concussive Dampener helps against the Threshold Sentinel (Tormentor) per side and the Incendior's
+        explosive output
+  damage:
+    surges:
+    - No boss DPS phase in Repository. Completion is three successive room lockdowns plus killing the
+      Unstoppable Incendior, not a damage check.
+    burst_windows: No damage phase; burst priority is the per-side Threshold Sentinel (conductor player
+      should land the killing blow for Stolen Favor) and the post-lockdown Unstoppable Incendior.
+    recommended_dps:
+    - Anti-Unstoppable special or heavy for the Incendior
+    - Sniper or heavy to drop Honored Scorpius turrets quickly; burst special for the Tormentors
+  role_loadouts:
+  - role_id: side-pair
+    subclass: ''
+    weapons: Anti-Unstoppable for the Incendior; a sniper or heavy for the Scorpius turrets and burst
+      on the Tormentor; conductor player should be able to land the killing blow on the Sentinel
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Anti-Unstoppable; resist mod for the Incendior fire and Concussive Dampener for the Tormentor
+  - role_id: pair-without-courier
+    subclass: ''
+    weapons: Anti-Unstoppable plus add-clear and a sniper/heavy for the turrets; one owns the conductor,
+      one the plate
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Anti-Unstoppable; resist mod and Concussive Dampener
+  - role_id: shape-courier
+    subclass: ''
+    weapons: Light, mobile loadout for ferrying shapes between sides; no mechanic-specific weapon needed
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Resist mod for the wall beam; Concussive Dampener for stray Tormentor hits
+  - role_id: floater
+    subclass: ''
+    weapons: Anti-Unstoppable for the Incendior plus a sniper or heavy for the Honored Scorpius turrets
+      and general add-clear
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Anti-Unstoppable; resist mod for the Incendior fire
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/salvations-edge.yaml (encounter: repository)'
+    note: Primary source; fixed shape spawn rule, per-room wire rotations, Stolen Favor on killing blow,
+      and the Unstoppable Incendior derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate stat renames applied (Health/Class). Confirm Champion mod sources and current-meta
+      weapons before a run; specific exotics left blank where unverifiable.
+    date_checked: '2026-06-07'

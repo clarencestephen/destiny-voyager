@@ -1,0 +1,321 @@
+# raid_context/content/dungeons/prophecy/5-kell-echo.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 5
+  slug: kell-echo
+  name: Kell Echo (final boss)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Two-phase final boss. Phase 1: tetrahedral room with 3 Kell Echo
+
+    clones each in front of a pillar — disperse all 3 pillars to force
+
+    retreat. Phase 2: linear hallway DPS race with Dark Entropy debuff
+
+    (stay in boss aura or you stack to death).
+
+    '
+  setup: 'PHASE 1 — Tetrahedral room:
+
+    - 3 Kell Echo clones, each at a pillar (Light or Dark depending on cycle).
+
+    - 2 Taken Psion groups (left + right at pull).
+
+    - 2 Knight Echoes per cycle.
+
+    - A Devoured Ogre spawns after each clone retreats.
+
+    - Cleanse pedestal (purple) at the room entry.
+
+
+    PHASE 2 — Final hallway:
+
+    - Linear set of fragmented platforms heading away from boss.
+
+    - Kell Echo at far end with a Shrapnel Launcher + Taken Hobgoblin support.
+
+    - Protective aura SURROUNDS the Kell Echo (~10m radius).
+
+    - Dark Entropy stacks 1/sec OUTSIDE the aura. 10 stacks = death.
+
+    - Darkness Bolt ability TELEPORTS you back several platforms — outside aura, stacking begins.
+
+
+    START STATE: tetrahedral pull → walk to probe to engage.
+
+    '
+  callouts:
+  - when: Clone retreating (pillar dispersed)
+    from: carrier
+    to: team
+    say: '"Clone [N] retreating — Ogre incoming."'
+    why: Cue add-clear to focus the Devoured Ogre.
+  - when: Phase 2 — aura visible
+    from: any
+    to: team
+    say: '"IN AURA — burning."'
+    why: Tells team where to stack.
+  - when: Darkness Bolt cast
+    from: any
+    to: team
+    say: '"BOLT — DODGE."'
+    why: Avoid getting teleported back. Out-of-aura = Dark Entropy.
+  - when: Dark Entropy ≥ 7 stacks
+    from: self
+    to: team
+    say: '"7 stacks — back in aura."'
+    why: 'Self-call: sprint back.'
+  wipe_triggers:
+  - Dark Entropy 10 stacks = death.
+  - Devoured Ogre rapid attacks on stationary players (phase 1).
+  - Kell Echo Shrapnel Launcher direct hit (phase 2).
+  - Falling off platforms in phase 2.
+  damage_phase_triggers:
+  - 'Phase 1: all 3 clones forced to retreat (3 pillars dispersed × correct types) → portal to phase 2.'
+  - 'Phase 2: damage Kell Echo continuously while in aura. Once Echo retreats to next platform → continue
+    chase.'
+  parallel_timeline:
+  - phase: Phase 1 — Pull
+    all: Engage. Burst 2 Psion groups first.
+  - phase: Phase 1 — Cycle 1
+    carriers_2: Light + Dark per clone-pillar.
+    add_clear: Devoured Ogre + cover.
+  - phase: Phase 1 — Cycle 2 + 3
+    all: Repeat for 2nd + 3rd clone.
+  - phase: Phase 1 — convergence
+    all: Meet center triangle. Get pulled into Phase 2 tube.
+  - phase: Phase 2 — DPS chase
+    all: Stay in aura. Burst Kell Echo. Move forward as he retreats.
+  - phase: Phase 2 — final
+    all: Burst to 0 before Phase 2 ends + room resets to phase 1.
+  permutations:
+  - name: Standard 1L / 1D / 1 add-clear (Phase 1) → stack DPS (Phase 2)
+    learner_friendly: true
+    summary: Same mote roles in phase 1. All collapse to single-target burst in phase 2.
+    roles:
+    - id: light_carrier
+      count: 1
+      does: Phase 1 light pillars.
+      loadout:
+        subclass: Any survivable subclass for Phase 1 light pillars; bring sustain to survive the Devoured
+          Ogre
+        weapons: Long-range primary for Knight Echoes plus a Phase-2 DPS weapon (linear/sniper)
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge required; sustain and ability-regen mods for Phase 1
+    - id: dark_carrier
+      count: 1
+      does: Phase 1 dark pillars.
+      loadout:
+        subclass: Any survivable subclass for Phase 1 dark pillars; sustain to handle Ogres
+        weapons: Long-range primary for shadow Knights plus a Phase-2 DPS weapon
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No surge required; survivability mods
+    - id: dps_anchor
+      count: 1
+      does: Phase 1 add-clear; phase 2 burst lead.
+      loadout:
+        subclass: Any subclass; Phase 1 add-clear that converts to the Phase 2 burst lead, ideally with
+          self-sustain (Devour/Restoration) for the aura race
+        weapons: Add-clear primary in Phase 1; sustained Phase-2 DPS (linear fusion or sniper) that does
+          not need mid-chase reloads
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: No surge required; ability-uptime mods plus heavy/special ammo finders
+  - name: 'Speed: Well + Linear / Sniper DPS (Phase 2)'
+    learner_friendly: false
+    summary: Whisper of the Worm / Sleeper Simulant / Linear Fusion for sustained phase-2 chase. Well
+      anchors aura overlap.
+    best_for: 1-phase Phase 2 attempts.
+    roles:
+    - id: well_warlock
+      count: 1
+      does: Drop Well in aura overlap. Stays put.
+      loadout:
+        subclass: Solar Warlock with Well of Radiance to anchor the aura overlap in Phase 2
+        weapons: Sustained Phase-2 DPS weapon (linear fusion or sniper); long-range primary for Phase
+          1 Knights
+        exotic_armor: ''
+        armor_stats: &id004
+        - Class
+        - Health
+        surges_mods: No surge required; Super and Class-regen mods to keep Well uptime
+    - id: sustained_dps
+      count: 2
+      does: Linear / sniper / Whisper. Don't reload mid-chase.
+      loadout:
+        subclass: Any subclass with self-sustain for the Phase 2 chase (Devour or Restoration)
+        weapons: Linear fusion rifle, sniper, or Whisper of the Worm; avoid reloading mid-chase
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: No surge required; reload/ammo mods so DPS stays continuous through the aura chase
+  - name: Solo
+    learner_friendly: false
+    summary: 'Phase 1: 3 clones one-at-a-time, alternating light/shadow. Phase 2:
+
+      stay AGGRESSIVE — out of aura = death. Bring sustain (Devour /
+
+      Restoration). Multiple Phase 2 attempts expected.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: All cycles. Don't panic.
+      loadout:
+        subclass: Self-sustain subclass (Solar Restoration or Void Devour); aggression plus range for
+          Phase 2
+        weapons: Witherhoard plus a strong primary or linear for the Phase 2 chase
+        exotic_armor: ''
+        armor_stats: &id006
+        - Health
+        - Class
+        surges_mods: No surge required; sustain and ability-regen mods; expect multiple Phase 2 attempts
+  cheese: []
+  common_mistakes:
+  - 'Phase 2: getting teleported by Darkness Bolt + freezing in panic — sprint immediately back to aura,
+    don''t try to fight from outside.'
+  - 'Phase 1: forgetting to clear the Devoured Ogre — it stacks damage fast on a stationary carrier.'
+  - 'Phase 2: hugging Kell Echo too close = Shrapnel Launcher one-shot. Stay aura-edge.'
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest from the Emissary
+    hidden_chest: null
+    potential_drops:
+    - 'Kell Echo (final boss): drops Moonfang-X7 armor — Helm + Gauntlets + Chassis + Greaves + Mark (the
+      moon-themed exotic-looking armor set unique to Prophecy).'
+    - 'The Emissary''s Final Chest: Judgment (hand cannon, Stasis) + Darkest Before (pulse rifle, Solar)
+      + Crushing armor (Helm + Plate + Mark Judgment Class Item).'
+    - 'Note: ''Trustee'' and ''Apex Predator'' are NOT in Prophecy''s loot pool (removed).'
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear (Phase 1 first to see mechanic without mote pressure).'
+  - '2nd: carrier role.'
+  - '3rd: solo for Dark Entropy mastery.'
+  plain_language_steps:
+  - '1. Phase 1 is a tetrahedral room: walk to the probe to engage, then immediately burst the 2 Taken
+    Psion groups (left and right at the pull).'
+  - 2. Spot the 3 Kell Echo clones, each standing in front of a pillar that wants a Light or Dark mote
+    depending on the cycle.
+  - '3. Generate motes the usual way: stand in a sunbeam and kill a Knight Echo for Light, or stand in
+    shadow for Dark.'
+  - 4. Collect 5 matching motes, enter carry mode, and disperse the clone's pillar with the correct mote
+    type.
+  - 5. When a clone's pillar is dispersed, the clone retreats and a Devoured Ogre spawns; call it out
+    so your add-clear focuses it down.
+  - 6. Clear that Ogre fast (it stacks damage quickly on a stationary carrier), then repeat for the 2nd
+    and 3rd clones.
+  - 7. With all 3 clones forced to retreat, converge on the center triangle to get pulled into the Phase
+    2 tube.
+  - 8. Phase 2 is a linear hallway of fragmented platforms; the Kell Echo waits at the far end with a
+    Shrapnel Launcher and Hobgoblin support.
+  - 9. Stay inside the boss's protective aura (about a 10m radius) at all times; outside it, Dark Entropy
+    stacks 1 per second and 10 stacks kills you.
+  - 10. When the boss casts Darkness Bolt, dodge it; it teleports you back several platforms out of the
+    aura, where Dark Entropy starts stacking.
+  - 11. Burst the Kell Echo while staying near the aura edge (do not hug him or the Shrapnel Launcher
+    can one-shot you), and push forward each time he retreats.
+  - 12. Damage him to zero before Phase 2 ends, otherwise the room resets back to Phase 1.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Taken faction: Taken Psion groups and Knight Echoes (Phase 1), Devoured Ogre after each clone
+        retreats (Phase 1), Taken Hobgoblin support (Phase 2 ranged snipes)'
+      boss:
+      - Kell Echo Shrapnel Launcher direct hit (can one-shot at close range, Phase 2)
+      - Kell Echo Darkness Bolt (teleports you back out of the aura, enabling Dark Entropy stacking)
+      - 'Dark Entropy stacking debuff outside the aura: 1 stack/sec, 10 stacks = instant death'
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Master version, so no fixed champion/element resist; the killing threat is the Dark Entropy
+        debuff and the Shrapnel Launcher, both handled by aura discipline and spacing rather than resist
+        mods
+      concussive:
+      - Optional Concussive Dampener could soften the Shrapnel Launcher's burst if you keep taking aura-edge
+        hits
+  damage:
+    surges:
+    - No single mandated DPS element. Phase 2 is the real damage race; any sustained, high-uptime element
+      works. Stasis/Solar/Void are all fine since the Kell Echo is not gated by a specific elemental shield.
+    burst_windows: 'Phase 2 is a continuous DPS chase: damage the Kell Echo while inside his aura and
+      push forward each time he retreats a platform; finish before the phase timer resets to Phase 1.'
+    recommended_dps:
+    - Sustained linear fusion rifle or sniper (e.g., Whisper-of-the-Worm-style) to avoid reloading mid-chase
+    - A Well of Radiance to anchor the aura overlap for the team
+    - Witherhoard/DoT plus a strong primary for solo runs to chip while repositioning
+  role_loadouts:
+  - role_id: light_carrier
+    subclass: Any survivable subclass for Phase 1 light pillars; bring sustain to survive the Devoured
+      Ogre
+    weapons: Long-range primary for Knight Echoes plus a Phase-2 DPS weapon (linear/sniper)
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge required; sustain and ability-regen mods for Phase 1
+  - role_id: dark_carrier
+    subclass: Any survivable subclass for Phase 1 dark pillars; sustain to handle Ogres
+    weapons: Long-range primary for shadow Knights plus a Phase-2 DPS weapon
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge required; survivability mods
+  - role_id: dps_anchor
+    subclass: Any subclass; Phase 1 add-clear that converts to the Phase 2 burst lead, ideally with self-sustain
+      (Devour/Restoration) for the aura race
+    weapons: Add-clear primary in Phase 1; sustained Phase-2 DPS (linear fusion or sniper) that does not
+      need mid-chase reloads
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge required; ability-uptime mods plus heavy/special ammo finders
+  - role_id: well_warlock
+    subclass: Solar Warlock with Well of Radiance to anchor the aura overlap in Phase 2
+    weapons: Sustained Phase-2 DPS weapon (linear fusion or sniper); long-range primary for Phase 1 Knights
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No surge required; Super and Class-regen mods to keep Well uptime
+  - role_id: sustained_dps
+    subclass: Any subclass with self-sustain for the Phase 2 chase (Devour or Restoration)
+    weapons: Linear fusion rifle, sniper, or Whisper of the Worm; avoid reloading mid-chase
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: No surge required; reload/ammo mods so DPS stays continuous through the aura chase
+  - role_id: solo
+    subclass: Self-sustain subclass (Solar Restoration or Void Devour); aggression plus range for Phase
+      2
+    weapons: Witherhoard plus a strong primary or linear for the Phase 2 chase
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: No surge required; sustain and ability-regen mods; expect multiple Phase 2 attempts
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/prophecy.yaml (encounter: kell-echo)'
+    note: Primary source; two-phase structure, Devoured Ogre adds, Dark Entropy aura mechanic, Shrapnel
+      Launcher/Darkness Bolt, and all role permutations (light_carrier, dark_carrier, dps_anchor, well_warlock,
+      sustained_dps, solo) taken from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six stats (Resilience->Health, Recovery->Class, Intellect->Super).
+      DPS-meta weapons/exotics shift between seasons; verify current picks in-game. Specific exotic-armor
+      names left blank where unverifiable rather than guessed.
+    date_checked: '2026-06-07'

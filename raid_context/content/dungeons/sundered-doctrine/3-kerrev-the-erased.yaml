@@ -1,0 +1,341 @@
+# raid_context/content/dungeons/sundered-doctrine/3-kerrev-the-erased.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: kerrev-the-erased
+  name: Kerrev, the Erased (final boss)
+  difficulty: hard
+  estimated_time: 25-35 min
+  abstract: 'Final boss. Subjugator Dread leader. Tethers pedestals with Strand
+
+    that you can only break under Unwritten Empowerment (7s from kill).
+
+    A central dial has TRUTH side + LIE side. Choose which side to light
+
+    via lensed beams. Truthspeakers only drop TRUTH symbols.
+
+    Enough symbols lit → interact with pillar → fire trap → shield drops
+
+    → DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Large vault chamber. Kerrev (Subjugator) in the center.
+
+    - Pyramid spikes around with Strand tethers to pedestals.
+
+    - Central dial near vault door — TRUTH symbols on one side, LIE on the other.
+
+    - Pedestals + Pyramid switches throughout (same lens/beam pattern as encounter 1).
+
+    - Unwritten Attendants spawn periodically.
+
+    - Truthspeakers (from encounter 1) spawn periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Kerrev''s Strand tethers PROTECT pedestals — you can''t lens them without breaking tethers.
+
+    - Kill Unwritten Attendant → Unwritten Empowerment buff (7s) → destroy tethers (Threadlings counter-attack).
+
+    - Truthspeakers drop TRUTH side symbols only. (Lie side has separate spawns — confirm in-encounter;
+    might be a different enemy or simply "default" symbols.)
+
+    - Decide which side to back: Truth OR Lie (team commits).
+
+    - Lens beams to wheels showing the chosen side''s symbols (same routing as encounter 1).
+
+    - Enough symbols lit on chosen dial side → interact with pillar near dial → ROOM IGNITES (fire trap).
+
+    - Take cover during fire trap.
+
+    - Kerrev''s shield drops post-fire → DPS window.
+
+
+    START STATE: rally banner. Approach boss to start. Strand tethers appear immediately.
+
+    '
+  callouts:
+  - when: Strand tether spotted
+    from: spotter
+    to: team
+    say: '"Tether on [pedestal direction]."'
+    why: Identifies which pedestal needs unlocking.
+  - when: Unwritten Attendant down + buff active
+    from: killer
+    to: team
+    say: '"EMPOWERED — 7 seconds — tethers."'
+    why: All buff-holders sprint to assigned tethers.
+  - when: Truthspeaker down + symbol revealed
+    from: killer
+    to: team
+    say: '"TRUTH symbol: [name]."'
+    why: Identifies which dial-side symbol to lens.
+  - when: Lensing wheel
+    from: lens_handler
+    to: team
+    say: '"Lensing [direction] wheel — [Truth/Lie] side."'
+    why: Routing confirmation.
+  - when: Dial side fully lit
+    from: any
+    to: team
+    say: '"FIRE TRAP — cover."'
+    why: Interact triggers fire room AoE.
+  - when: Shield down
+    from: any
+    to: team
+    say: '"DPS — Kerrev."'
+    why: Burst window.
+  wipe_triggers:
+  - Tether-breaking Threadling explosions while no Empowerment.
+  - Wrong lens routing → broken lenses + Tormentor.
+  - Standing in fire trap = death.
+  - Mixing Truth + Lie symbol contributions — undefined behavior, likely fail.
+  - Kerrev's Subjugator-grade abilities at close range.
+  damage_phase_triggers:
+  - Chosen side's dial fully lit + pillar interacted + fire trap fired → Kerrev's shield drops → ~15-20s
+    DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Kerrev. Tethers appear on pedestals. Identify them.
+  - phase: Empowerment + tether break (~0:30-1:00)
+    attendant_killer: Drop Attendant.
+    tether_breaker: Within 7s, destroy assigned tether(s). Handle Threadlings.
+  - phase: Truthspeaker hunt + symbol ID (~1:00-1:30)
+    symbol_caller: Drop Truthspeaker, name TRUTH symbol.
+  - phase: Lens routing (~1:30-2:30)
+    lens_handler: Place lens at pedestal connecting to wheel with target symbol.
+    beam_shooter: Pyramid switch routing.
+  - phase: Fire trap + DPS (~2:30-3:00)
+    all: Interact, take cover, then burst Kerrev when shield drops.
+  - phase: Reset
+    all: Kerrev re-shields. Cycle.
+  permutations:
+  - name: Standard 3-role
+    learner_friendly: true
+    summary: 'Pre-assign roles: symbol_caller, lens_handler, tether_breaker.'
+    roles:
+    - id: symbol_caller
+      count: 1
+      does: Truthspeaker focus + symbol naming.
+      loadout:
+        subclass: A survivable, add-clearing subclass; Void invisibility or a healing build helps you
+          hunt Truthspeakers safely
+        weapons: Long-range primary to drop Truthspeakers across the chamber, plus a special; a burst
+          heavy for the shield-down window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Super
+        surges_mods: Match surge to your DPS heavy (Solar if running Finality's Auger). Strand-resist
+          and survivability mods.
+    - id: lens_handler
+      count: 1
+      does: Lens placement + routing.
+      loadout:
+        subclass: A mobile/survivable subclass for fast lens runs across the vault; Void or a movement-focused
+          build helps reposition
+        weapons: Mid-range add-clear primary plus a special to drop Lens Bearers; burst heavy held for
+          the DPS window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Class
+        surges_mods: Match surge to your DPS heavy. Lift/movement and Strand-resist mods; survivability
+          for Subjugator and Tormentor overlap.
+    - id: tether_breaker
+      count: 1
+      does: Attendant kill + tether destruction; backup add clear.
+      loadout:
+        subclass: A high add-clear subclass to chain Unwritten Attendant kills and handle Threadling counter-swarms
+          (Strand or Solar builds work well)
+        weapons: Fast-killing primary and add-clear special to drop Attendants and Threadlings; burst
+          heavy for the shield-down window
+        exotic_armor: ''
+        armor_stats: &id003
+        - Grenade
+        - Health
+        surges_mods: Match surge to your DPS heavy. Strand-resist mods are key here due to tether Threadlings;
+          add-clear and ability-regen mods.
+  - name: Solo
+    learner_friendly: false
+    summary: 'All roles. Expect 4-5 phases. Bring sustain + a wide-mag DPS
+
+      option (Finality''s Auger if obtained — it''s a beast for this).
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical. Don't engage tethers without Empowerment.
+      loadout:
+        subclass: A self-sustaining subclass with strong survivability and add-clear (healing Solar or
+          Void invisibility) for methodical multi-phase play
+        weapons: Wide-magazine burst DPS - Finality's Auger if obtained - plus sustain weapons and an
+          add-clear primary
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Match surge to your DPS option (Solar for Finality's Auger). Strand and Solar resist
+          plus recovery mods; never touch tethers without Empowerment.
+  cheese: []
+  common_mistakes:
+  - Hitting Strand tethers WITHOUT Unwritten Empowerment — does nothing, wastes time.
+  - Mixing Truth + Lie lit symbols — dial doesn't fire fire-trap correctly.
+  - Not taking cover during fire trap = death.
+  - DPS window short — bring burst weapons (Whisper, Sleeper).
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (extra roll)
+    - Vault chest (if all 3 Pyramid codes found this run — separate exotic-quest progression)
+    hidden_chest:
+      location: 'PYRAMID CODES: 3 codes scattered through the dungeon area
+
+        (Hive Grief Darkness, Fleet Remember Witness, Worm Give
+
+        Guardian). Input at the device near the Hidden''s base of
+
+        operations (encounter 1 area). All 3 found this run = vault
+
+        door opens behind Kerrev → bonus chest with Memory of Oryx
+
+        + bonus loot.
+
+        '
+      rewards:
+      - Memory of Oryx (lore + collectable)
+      - Bonus dungeon loot roll
+    potential_drops:
+    - '**Finality''s Auger** (linear fusion rifle, Solar) — primary boss drop. The YAML''s ''exotic''
+      / ''quest, not random'' framing reflects the in-game craftable pattern unlock; the weapon itself
+      drops here per blueberries.'
+    - Unvoiced (shotgun, Void)
+    - Unsworn (trace rifle, Strand)
+    - Unworthy (scout rifle, Arc)
+    - Talons of the Flain (Legs) + Reach of the Flain (Arms)
+    - Flain armor
+    - Future Proof sparrow
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: tether_breaker. Most action, least mental load.'
+  - '2nd: lens_handler.'
+  - '3rd: symbol_caller (hardest — must know symbols).'
+  plain_language_steps:
+  - 1. Drop your rally banner, then approach Kerrev (a Dread Subjugator) in the center of the large vault
+    chamber. Strand tethers connecting the pyramid spikes to the pedestals appear immediately.
+  - 2. Spot the Strand tethers protecting the pedestals and call out their directions; you cannot lens
+    a tethered pedestal until its tether is destroyed.
+  - 3. Kill an Unwritten Attendant to gain the Unwritten Empowerment buff (lasts 7 seconds). Call 'EMPOWERED
+    - 7 seconds - tethers'.
+  - 4. While empowered, sprint to your assigned Strand tether and destroy it. Be ready for the Threadlings
+    that counter-attack when a tether breaks.
+  - 5. As a team, commit to ONE side of the central dial - either the TRUTH side or the LIE side. Do not
+    mix contributions from both sides.
+  - '6. Kill a Truthspeaker to reveal a TRUTH-side symbol, and have the caller name it (for example ''TRUTH
+    symbol: Worm'').'
+  - 7. Kill a Lens Bearer to get a lens, then place it on the pedestal pillar connecting to the side wheel
+    that shows your chosen side's target symbol; call 'Lensing [direction] wheel - [Truth/Lie] side'.
+  - 8. Shoot the Pyramid switches above center to route the light beam to that wheel, exactly like the
+    first encounter. Wrong routing breaks the lenses and spawns a Tormentor.
+  - 9. Light enough symbols on your chosen dial side, then interact with the pillar near the dial. Call
+    'FIRE TRAP - cover' because the whole room ignites.
+  - 10. Immediately take cover from the fire trap AoE - standing in it is lethal.
+  - 11. Once the fire trap fires, Kerrev's shield drops, opening roughly a 15-20 second DPS window. Call
+    'DPS - Kerrev' and burst the boss.
+  - 12. After the window, Kerrev re-shields and the encounter cycles. Repeat until the boss dies; if you
+    have found all three Pyramid codes this run, the vault door behind Kerrev opens for the bonus chest.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Dread adds: Unwritten Attendants (Strand) - killing them grants Unwritten Empowerment'
+      - Threadlings (Strand) released when you break a Kerrev Strand tether - counter-attack swarm
+      - Truthspeaker Grim (Hive/Dread) spawning periodically - Arc/Solar ranged pressure
+      - Lens Bearer Subjugator (Dread) - close-range Stasis/Strand pressure
+      - Tormentor (Dread) spawns on a wrong-routing mistake - heavy melee and suppression
+      boss:
+      - Strand (Kerrev's pedestal tethers and Subjugator-grade Strand abilities)
+      - Solar (the dial fire-trap AoE that ignites the room before the DPS window)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Resist Strand against Kerrev's tethers, Threadling counter-swarms, and Subjugator abilities
+      - Resist Solar to survive splash from the fire-trap ignition if you are caught out of cover
+      concussive:
+      - Concussive Dampener helps against Tormentor slams, Subjugator burst, and the Threadling explosion
+        pressure when breaking tethers
+  damage:
+    surges:
+    - DPS phase opens after the fire trap fires and Kerrev's shield drops. No single canon DPS element
+      is fixed by the guide, so match your surge mods to your chosen burst weapon. Note Finality's Auger
+      (the dungeon's Solar Linear Fusion) excels here, which favors a Solar surge if you run it.
+    burst_windows: Roughly a 15-20 second window after the fire trap ignites and the shield drops - pre-position
+      and pre-load your heavy to maximize it before Kerrev re-shields.
+    recommended_dps:
+    - 'Burst heavy: Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle (the guide''s named
+      picks for the short window)'
+    - Finality's Auger (Solar Linear Fusion) if obtained from this dungeon - called out as ideal here
+    - Burst Supers timed to the moment the shield drops
+  role_loadouts:
+  - role_id: symbol_caller
+    subclass: A survivable, add-clearing subclass; Void invisibility or a healing build helps you hunt
+      Truthspeakers safely
+    weapons: Long-range primary to drop Truthspeakers across the chamber, plus a special; a burst heavy
+      for the shield-down window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to your DPS heavy (Solar if running Finality's Auger). Strand-resist and
+      survivability mods.
+  - role_id: lens_handler
+    subclass: A mobile/survivable subclass for fast lens runs across the vault; Void or a movement-focused
+      build helps reposition
+    weapons: Mid-range add-clear primary plus a special to drop Lens Bearers; burst heavy held for the
+      DPS window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to your DPS heavy. Lift/movement and Strand-resist mods; survivability for
+      Subjugator and Tormentor overlap.
+  - role_id: tether_breaker
+    subclass: A high add-clear subclass to chain Unwritten Attendant kills and handle Threadling counter-swarms
+      (Strand or Solar builds work well)
+    weapons: Fast-killing primary and add-clear special to drop Attendants and Threadlings; burst heavy
+      for the shield-down window
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge to your DPS heavy. Strand-resist mods are key here due to tether Threadlings;
+      add-clear and ability-regen mods.
+  - role_id: solo
+    subclass: A self-sustaining subclass with strong survivability and add-clear (healing Solar or Void
+      invisibility) for methodical multi-phase play
+    weapons: Wide-magazine burst DPS - Finality's Auger if obtained - plus sustain weapons and an add-clear
+      primary
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Match surge to your DPS option (Solar for Finality's Auger). Strand and Solar resist
+      plus recovery mods; never touch tethers without Empowerment.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/sundered-doctrine.yaml (encounter: kerrev-the-erased)'
+    note: Tier-1 authored v2 guide; Strand tethers, Unwritten Empowerment, Truth/Lie dial, fire trap,
+      and DPS framing taken directly from it.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Truth-vs-Lie spawn details and Master Champion types are flagged as unconfirmed in the source.
+      Verify current DPS meta, Finality's Auger availability, and any sandbox changes against live Bungie
+      data.
+    date_checked: '2026-06-07'

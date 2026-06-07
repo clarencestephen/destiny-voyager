@@ -1,0 +1,282 @@
+# raid_context/content/dungeons/spire-of-the-watcher/5-prompt-critical.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 5
+  slug: prompt-critical
+  name: Prompt Critical (Persys, Primordial Ruin)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Final boss. Persys is a Vex Wyvern. Mechanic: activate yellow Arc
+
+    circuits leading INTO the reactor core. Then trigger red circuits
+
+    OUTSIDE for reactor purge → core opens → Persys exits → DPS its
+
+    small radiolarian core. CRITICAL: lure Persys INTO the core BEFORE
+
+    completing the last yellow circuit, or fight resets.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Starting room with 4 pillars, central door to reactor core (closed initially).
+
+    - 5 yellow Arc nodes (4 on inside-facing pillar faces + 1 above main door) for opening reactor.
+
+    - 4 yellow Arc circuits starting outside the pillars, leading INTO the reactor core.
+
+    - Red Arc circuit on inside pillar faces for the reactor purge.
+
+    - 2 Incarcerator Hydras on each side at pull.
+
+
+    PLATFORM MECHANICS:
+
+    - Kill both Hydras → Conduit Minotaurs spawn → Arctrician pool drops.
+
+    - Activate the 5 yellow nodes (4 pillar + 1 door) → reactor doors open.
+
+    - Trigger 2 of 4 yellow circuits (start outside pillars, end inside reactor).
+
+    - LURE Persys INSIDE core BEFORE completing last circuit (or soft-reset).
+
+    - Once all circuits done with Persys inside, EVACUATE → refresh Arctrician → red circuit nodes inside
+    pillars + above door → reactor PURGE → Persys exits, vulnerable.
+
+    - DPS Persys''s small radiolarian core (Wyvern-style weak point).
+
+    - Short damage window. Repeat if not killed.
+
+
+    START STATE: shoot/approach Persys to start. He emerges from reactor.
+
+    '
+  callouts:
+  - when: Hydras down
+    from: killer
+    to: team
+    say: '"Hydras down — Minotaurs incoming."'
+    why: Arctrician pool prep.
+  - when: Reactor open
+    from: any
+    to: team
+    say: '"REACTOR OPEN — start circuits."'
+    why: Move to outer pillars for yellow circuits.
+  - when: Persys movement
+    from: tracker
+    to: team
+    say: '"Persys [in/out] of core."'
+    why: Timing for last circuit completion.
+  - when: Last circuit ready
+    from: runner
+    to: team
+    say: '"Last circuit READY — Persys check?"'
+    why: Confirm Persys is in core before finishing.
+  - when: Reactor purge complete
+    from: any
+    to: team
+    say: '"PURGE — DPS core."'
+    why: Persys vulnerable, burst window.
+  wipe_triggers:
+  - Persys's slap-rifle barrage in tight spaces.
+  - Falling into reactor bottomless pit.
+  - Finishing last yellow circuit BEFORE Persys is in core = soft reset.
+  damage_phase_triggers:
+  - All yellow circuits done with Persys INSIDE core → evacuate + red circuit → purge → ~15-20s DPS window.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Engage Persys. Burst Hydras.
+  - phase: Arctrician + 5 yellow nodes (~0:30)
+    all: Activate 5 pillar+door nodes to open reactor.
+  - phase: Yellow circuits (parallel ×2)
+    runners_2: Take 2 of the 4 outside-pillar circuits.
+    add_clear: Lure Persys toward / into the core.
+  - phase: Persys check + finish
+    all: Confirm Persys in core. Finish last circuit.
+  - phase: Evacuate + red purge
+    all: Exit core. Refresh Arctrician. Red circuit on inside pillars + door.
+  - phase: DPS (~0:15-0:20)
+    all: Burst Persys core.
+  - phase: Reset (if not killed)
+    all: Persys overcharges shields. Cycle from yellow circuits.
+  permutations:
+  - name: Standard 2-runner / 1-lure
+    learner_friendly: true
+    summary: Two runners on yellow circuits; one luring Persys + Hydra mgmt.
+    roles:
+    - id: circuit_runner
+      count: 2
+      does: Take 2 of 4 yellow circuits each cycle.
+      loadout:
+        subclass: Mobile, survivable subclass for moving between outer pillars and the core (Solar for
+          healing, Arc for movement, or Void for overshield).
+        weapons: Precision Primary for the yellow nodes; a Linear Fusion / Sniper or Whisper for the core
+          DPS window. Anti-Barrier on Master for the Hydras.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Match weapon surge mods to your core-DPS element. On Master add Anti-Barrier / Anti-Unstoppable.
+    - id: lurer
+      count: 1
+      does: Keeps Persys in/near core during last-circuit phase.
+      loadout:
+        subclass: Survivable subclass for tanking Persys's attention near the core (Void for overshield/invis
+          or Solar for self-heal).
+        weapons: A reliable Primary to keep aggro and tag adds, plus a heavy/special for the shared DPS
+          window. Anti-Barrier on Master for the Hydras.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surge mods to your DPS element for the burst window. On Master add Anti-Barrier
+          / Anti-Unstoppable.
+  - name: Solo
+    learner_friendly: false
+    summary: All mechanics in sequence. Expect 3+ phases.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Witherhoard Persys during circuit-running.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
+          run every mechanic alone over 3+ phases.
+        weapons: Witherhoard to chip Persys while running circuits, plus Whisper / Linear / Sniper for
+          the core window. Precision Primary for nodes. Anti-Barrier / Anti-Unstoppable on Master.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Match surge mods to your burst-DPS element; prioritize survivability and (on Master)
+          Champion mods.
+  cheese: []
+  common_mistakes:
+  - Finishing last yellow circuit BEFORE Persys is in core — soft-resets mechanic. ALWAYS check.
+  - Refreshing Arctrician requires NEW Conduit Minotaur — they spawn after Hydras die. If you killed nothing,
+    no pool.
+  - DPS phase ends fast — bring burst weapons (Whisper, Sleeper, Linear).
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (extra roll)
+    hidden_chest: null
+    potential_drops:
+    - '**Hierarchy of Needs** (exotic combat bow, Solar) — per blueberries, drops from Persys chest. YAML''s
+      ''quest, not random'' framing reflects the in-game pattern path.'
+    - Liminal Vigil (sidearm, Stasis)
+    - Wilderflight (grenade launcher, Void)
+    - Any weapon from prior encounters (Terminus Horizon, Long Arm, Seventh Seraph Carbine, Seventh Seraph
+      Officer Revolver).
+    - Any TM Cogburn armor piece.
+    - Seventh Seraph CQC-12 (shotgun)
+    - Seraph armor
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: lurer (lowest cognitive load).'
+  - '2nd: circuit_runner.'
+  - 'Solo: do team clear first.'
+  plain_language_steps:
+  - '1. Enter the boss room: 4 pillars surround a central door to the reactor core (closed at first).
+    Persys (a Vex Wyvern) emerges from the reactor when you start.'
+  - 2. At the pull there are 2 Incarcerator Hydras (one on each side). Burst both Hydras down - call 'Hydras
+    down - Minotaurs incoming.'
+  - 3. Killing the Hydras spawns Conduit Minotaurs; kill those to drop Arctrician pools, and have the
+    team pick up the buff.
+  - '4. Activate the 5 yellow nodes that open the reactor: 4 are on the inside-facing pillar faces and
+    1 is above the main door. When done, call ''REACTOR OPEN - start circuits.'''
+  - 5. Move to the outer pillars. There are 4 yellow Arc circuits that start outside the pillars and lead
+    INTO the reactor core. Two runners take 2 circuits each.
+  - 6. One player acts as the lurer, pulling Persys toward and INTO the reactor core. Call 'Persys [in/out]
+    of core' to keep the team updated.
+  - '7. CRITICAL: you must lure Persys INSIDE the core BEFORE you complete the last yellow circuit. Finishing
+    the last circuit while Persys is outside soft-resets the mechanic.'
+  - 8. When the last circuit is ready, call 'Last circuit READY - Persys check?' and only finish once
+    Persys is confirmed inside the core.
+  - 9. With all circuits done and Persys inside, EVACUATE the core and refresh Arctrician from a fresh
+    Conduit Minotaur (you need a new Minotaur for a new pool).
+  - 10. Trigger the RED Arc circuit nodes on the inside pillar faces and above the door to start the reactor
+    PURGE. Call 'PURGE - DPS core.'
+  - 11. The purge forces Persys out and vulnerable; DPS its small radiolarian core (Wyvern weak point)
+    during the roughly 15-20 second window.
+  - 12. If Persys survives, it overcharges its shields and the cycle restarts from the yellow circuits
+    - bring burst weapons and repeat.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Vex line/slap-rifle fire from the Incarcerator Hydras and Conduit Minotaurs)
+      boss:
+      - Persys slap-rifle barrage (Vex Wyvern line-rifle volleys), most dangerous in tight spaces near
+        the pillars and reactor
+    champions:
+    - 'Master only: Barrier Hydra -> Anti-Barrier (the two Incarcerator Hydras at pull)'
+    - 'Master only: Unstoppable Minotaur -> Anti-Unstoppable (the Conduit Minotaurs)'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist helps against Persys's slap-rifle barrage and the Hydra/Minotaur fire. Falling into
+        the reactor's bottomless pit is a major non-elemental death - mind your footing.
+      concussive:
+      - Concussive Dampener can reduce the Wyvern slap-rifle barrage damage in the tight pillar spaces,
+        though spacing and cover matter more.
+  damage:
+    surges:
+    - No forced elemental burn. Persys has no specific elemental surge - bring your strongest burst element
+      and match surge mods to your DPS weapon.
+    burst_windows: After the reactor purge forces Persys out, the small radiolarian core is vulnerable
+      for roughly a 15-20 second DPS window.
+    recommended_dps:
+    - Whisper of the Worm or other heavy precision for the small weak point
+    - Sleeper Simulant or other Linear Fusion Rifles
+    - Sniper Rifles for the precise core hit
+    - Rockets for burst if the core is held steady
+    - Witherhoard for chip damage during the circuit-running (especially solo)
+  role_loadouts:
+  - role_id: circuit_runner
+    subclass: Mobile, survivable subclass for moving between outer pillars and the core (Solar for healing,
+      Arc for movement, or Void for overshield).
+    weapons: Precision Primary for the yellow nodes; a Linear Fusion / Sniper or Whisper for the core
+      DPS window. Anti-Barrier on Master for the Hydras.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match weapon surge mods to your core-DPS element. On Master add Anti-Barrier / Anti-Unstoppable.
+  - role_id: lurer
+    subclass: Survivable subclass for tanking Persys's attention near the core (Void for overshield/invis
+      or Solar for self-heal).
+    weapons: A reliable Primary to keep aggro and tag adds, plus a heavy/special for the shared DPS window.
+      Anti-Barrier on Master for the Hydras.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your DPS element for the burst window. On Master add Anti-Barrier
+      / Anti-Unstoppable.
+  - role_id: solo
+    subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you run
+      every mechanic alone over 3+ phases.
+    weapons: Witherhoard to chip Persys while running circuits, plus Whisper / Linear / Sniper for the
+      core window. Precision Primary for nodes. Anti-Barrier / Anti-Unstoppable on Master.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge mods to your burst-DPS element; prioritize survivability and (on Master)
+      Champion mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/spire-of-the-watcher.yaml (encounter 5: prompt-critical
+      / Persys, Primordial Ruin)'
+    note: Primary source for the lure-before-last-circuit rule, reactor purge sequence, small core weak
+      point, and the burst DPS recommendations (Whisper, Sleeper, Linear, Witherhoard).
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: DPS meta and exotic availability shift each season - verify Whisper/Sleeper/Linear picks against
+      the current sandbox. Hierarchy of Needs (Solar exotic bow) drops from this final chest per the in-game
+      pattern path. Master Champion types per the guide's overall_notes.
+    date_checked: '2026-06-07'

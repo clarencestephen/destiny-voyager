@@ -1,0 +1,314 @@
+# raid_context/content/raids/desert-perpetual/4-koregos.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: koregos
+  name: Koregos, the Worldline (final boss)
+  difficulty: hard
+  estimated_time: 30-50 min
+  abstract: 'Final boss. Mega Hydra. 6-min Digitization wipe timer. Constant
+
+    stunners take down Koregos''s 4 arms (Arc beam interrupt). 3-team
+
+    Temporality cycle: Absolute sees Chronon color in Hoop, Constant
+
+    sees Mine colors, Cyclical sees TRUE mines (3 of 6 are real). Dunk
+
+    6 Chronons in Hoop → diamond → Koregos exposes head. 4-arm cube
+
+    puzzle (Constant+Cyclical see, Absolute interacts). Head DPS with
+
+    Arc beams + final stand with shrinking time + Decoherence wipe at
+
+    death.
+
+    '
+  setup: "WHAT YOU SEE:\n- Wide circular arena with central pit.\n- Koregos hovers center, then teleports\
+    \ to corners.\n- 3 plates: Constant (L), Absolute (M), Cyclical (R) from spawn perspective.\n- 6 \"\
+    sea-mine\" devices around arena.\n- Hoop-mounted Hourglass over central pit.\n- 4 Tetrad pillar pools\
+    \ (Temporal Oculus refresh).\n\nPLATFORM MECHANICS:\n- Approach to engage. 6-min Digitization timer\
+    \ starts.\n- Split: STUNNER team (Constant + add-clear) + MECHANIC team (1 Constant + 1 Absolute +\
+    \ 1 or 2 Cyclical).\n- Mechanic loop:\n  • Kill ambient + Coryphaeus Hydras → 3 plates active.\n \
+    \ • Pick Temporalities.\n  • Stand in Temporal Oculus pool → get Oculus buff.\n  • Absolute: sees\
+    \ Chronon color needed in Hoop (Cinnabar/Antimony/Cobalt).\n  • Constant: sees which mines hold that\
+    \ color (dust aura).\n  • Cyclical: sees TRUE mines (digital aura). 3 of 6 are real.\n  • Cross-talk:\
+    \ Absolute calls color → Constant marks colored mines (e.g., Trace Rifle ping) → Cyclical confirms\
+    \ TRUE.\n  • Absolute destroys TRUE mines = Chronons drop.\n  • Cyclical picks Chronon, dunks in Hoop.\
+    \ DOUBLE-DUNK strategy = 2 Cyclicals dunk near-simultaneously.\n- Wrong dunk = instant death.\n- 6\
+    \ Chronons in Hoop → diamond Oracle visible → shoot to advance.\n- Koregos teleports up. 4-arm cube\
+    \ puzzle phase:\n  • 2 cubes for Constant + Cyclical (each sees 2 of 3) per arm.\n  • Absolute interacts\
+    \ with the cube BOTH see common.\n  • Constant: from Koregos perspective, calls cube positions (e.g.,\
+    \ \"middle + left\").\n  • Cyclical: from Koregos perspective, calls cube positions.\n  • Absolute\
+    \ interacts with the common position.\n  • Optional: Constant/Cyclical STAND on the absent-cube position\
+    \ (the one only they see). Shows Absolute the common.\n- All 4 arms = head exposed.\n- DPS phase:\
+    \ shoot head (3-eye sets). Arc beam diamond fires 2 beams in changing paths — dodge.\n- 1 player can\
+    \ extend phase: matches dusty aura around local Hoop with Chronon around Koregos. Dunk = extension.\n\
+    - 3 damage extension checks per phase.\n- Final stand: spinning head, beams more erratic. Decoherence\
+    \ Imminent debuff at boss death — get FAR from Koregos or wipe.\n\nSTART STATE: rally banner. Interact\
+    \ cube in middle to start.\n"
+  callouts:
+  - when: Stunner ready
+    from: stunner
+    to: team
+    say: '"STUN — arms down!"'
+    why: Refresh Constant timers.
+  - when: Absolute color
+    from: absolute
+    to: team
+    say: '"Hoop wants [RED/WHITE/BLUE]."'
+    why: Constant identifies that mines.
+  - when: Constant marks
+    from: constant
+    to: team
+    say: '"Mines [N1, N2, N3] colored — Cyclical confirm."'
+    why: Cyclical confirms which are TRUE.
+  - when: Cyclical confirms
+    from: cyclical
+    to: team
+    say: '"Real: [N1, N2]. False: [N3]."'
+    why: Absolute destroys true ones.
+  - when: Chronon ready
+    from: cyclical
+    to: team
+    say: '"CYCLICAL holds — dunking!"'
+    why: Double-dunk sync.
+  - when: Cube position (Koregos perspective)
+    from: constant
+    to: team
+    say: '"Constant sees middle + left (Koregos POV)."'
+    why: Absolute compares with Cyclical.
+  - when: DPS open
+    from: any
+    to: team
+    say: '"HEAD — DPS! Watch beams!"'
+    why: Burst + dodge.
+  - when: Final stand
+    from: any
+    to: team
+    say: '"DECOHERENCE — RUN!"'
+    why: Avoid death explosion.
+  wipe_triggers:
+  - Digitization 6-min timer.
+  - Wrong Chronon dunked = instant Cyclical death.
+  - Wrong cube interacted by Absolute = encounter reset.
+  - Arc beam direct hit.
+  - Decoherence Imminent at boss death.
+  damage_phase_triggers:
+  - 6 Chronons dunked + 4 cube-arm puzzles done → head exposed → DPS.
+  - Damage extension via Chronon-color match around Koregos.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage. 3 plates.
+  - phase: Temporality + mine cycle
+    absolute: Oculus, calls color.
+    constant: Marks mines.
+    cyclical: Confirms + dunks.
+    stunner: Arm destruction.
+  - phase: Cube puzzle (×4 arms)
+    constant: Calls 2 cubes from Koregos POV.
+    cyclical: Calls 2 cubes from Koregos POV.
+    absolute: Interacts common cube.
+  - phase: DPS head
+    all: Burst + dodge beams. Damage extension Chronon dunks.
+  - phase: Final stand
+    all: Burn + Decoherence escape.
+  permutations:
+  - name: Standard 1-Absolute / 1-Constant-mechanic / 1-Cyclical / 2-Constant-stunners / 1-floater
+    learner_friendly: true
+    summary: Three Constants total (one mechanic + two stunners).
+    roles:
+    - id: absolute
+      count: 1
+      does: Hoop color caller.
+      loadout:
+        subclass: ''
+        weapons: Trace Rifle for mine/Chronon identification and pinging, plus a burst heavy for the head
+          DPS window.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+    - id: constant_mechanic
+      count: 1
+      does: Mine color marker.
+      loadout:
+        subclass: ''
+        weapons: Trace Rifle or accurate primary to mark colored mines; burst heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+    - id: cyclical
+      count: 1
+      does: True mine confirm + Chronon dunk.
+      loadout:
+        subclass: ''
+        weapons: Mobile kit for confirming TRUE mines and running Chronon dunks; burst heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Weapons
+        - Health
+        surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+    - id: constant_stunner
+      count: 2
+      does: Arm destruction + Constant Temporality refresh.
+      loadout:
+        subclass: ''
+        weapons: Arc-capable kit to interrupt and destroy Koregos's arms (Arc-beam interrupt); burst heavy
+          for DPS.
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Arc surge to support arm-stun damage; Arc resist recommended for the boss beams.
+    - id: floater
+      count: 1
+      does: Add-clear + Coryphaeus + backup.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary/special for Coryphaeus and ambient Vex backup, plus burst heavy for
+          DPS.
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy; ammo-finder/reserves for sustained add-clear; Arc resist
+          recommended.
+  - name: 'Speed: Double-dunk (2 Cyclical)'
+    learner_friendly: false
+    summary: '2 Cyclicals dunk near-simultaneously. Faster phase. Risk: Hoop color changes after first.'
+  - name: 'Challenge: Every player dunks'
+    learner_friendly: false
+    summary: 3 teams of 2 cycle through Cyclical role so all 6 dunk a Chronon.
+  cheese: []
+  common_mistakes:
+  - Constant misreading Koregos-POV vs entrance-POV = wrong cube call.
+  - Cyclical Chronon mistype = instant death.
+  - Decoherence escape distance miscalculated = wipe at boss death.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (Conductor statue extra)
+    hidden_chest: null
+    potential_drops:
+    - Whirling Ovation (rocket launcher, Strand) — primary boss-specific drop. Some sources/community
+      label as exotic + re-rollable; verify in-game.
+    - Any Desert Perpetual Legendary weapon (Antedate, Lance Ephemeral, Intercalary, Finite Maybe, The
+      When and Where, Opaque Hourglass).
+    - Collective Psyche armor — Class Items (any slot) per blueberries final-encounter row.
+    - Wayward Psyche armor (Epic variant — only drops from Epic difficulty per user notes; verify against
+      Epic loot table when published).
+    - Cusp Sempiternal / Starscape Null / The Ever-Present (Epic-only weapons)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: floater.'
+  - '2nd: constant_stunner.'
+  - '3rd: cyclical (mechanic role).'
+  - '4th: absolute (caller — most complex).'
+  plain_language_steps:
+  - 1. After the banner, interact with the middle cube to start; the moment you engage Koregos (a Mega
+    Hydra) the 6-minute Digitization wipe timer begins.
+  - 2. Split into a STUNNER team (Constant players plus add-clear) and a MECHANIC team (one Constant,
+    one Absolute, and one or two Cyclical players).
+  - 3. Clear ambient Vex and Coryphaeus Hydras to activate the three plates (Constant left, Absolute middle,
+    Cyclical right), then pick up your Temporalities.
+  - '4. Stand in a Temporal Oculus pool to gain the Oculus buff: Absolute sees which Chronon color the
+    Hoop wants (Cinnabar/Antimony/Cobalt), Constant sees which mines hold that color (dust aura), and
+    Cyclical sees the TRUE mines (digital aura) — only three of six are real.'
+  - '5. Cross-talk it out: Absolute calls the color, Constant marks the colored mines (e.g., a Trace Rifle
+    ping), and Cyclical confirms which marked mines are TRUE; Absolute then destroys the true mines to
+    drop Chronons.'
+  - 6. Cyclical picks up a Chronon and dunks it in the Hoop — a wrong-color dunk is an instant death;
+    the double-dunk strategy has two Cyclicals dunk near-simultaneously.
+  - 7. Meanwhile the stunner team uses Arc-beam interrupts to take down Koregos's four arms, which also
+    refreshes Constant timers.
+  - 8. Once six Chronons are in the Hoop, the diamond Oracle appears — shoot it to advance and Koregos
+    teleports up for the four-arm cube puzzle.
+  - 9. For each arm there are cubes that Constant and Cyclical each partially see; both call their cube
+    positions from Koregos's perspective, and Absolute interacts with the cube position both have in common
+    (optionally standing on the absent-cube position to reveal the common one).
+  - '10. Completing all four arms exposes the head for DPS: shoot the head''s three-eye sets while dodging
+    the Arc beam diamond that fires two beams along changing paths.'
+  - 11. Extend the phase by matching the dusty aura around the local Hoop with the Chronon around Koregos
+    and dunking (three extension checks per phase).
+  - 12. In the final stand the head spins and beams get more erratic; when Koregos dies the Decoherence
+    Imminent debuff triggers, so get FAR from the body or the fireteam wipes.
+  defense:
+    incoming_damage:
+      adds:
+      - Coryphaeus Hydras (Vex)
+      - Ambient Vex
+      boss:
+      - Arc (Koregos Arc beam diamond fires two beams along changing paths)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc resistance recommended for the boss Arc beams (guide notes Health for the Koregos Arc beam).
+      concussive: []
+  damage:
+    surges:
+    - DPS-phase weapon element is not specified in the source; set surges to match your burst heavy (the
+      boss-specific drop Whirling Ovation is Strand, but no required surge element is documented).
+    burst_windows: Six Chronons dunked plus all four cube-arm puzzles done exposes the head; DPS continues
+      with Chronon-color-match extensions (three per phase) before the final stand.
+    recommended_dps:
+    - Burst heavy (Linear Fusion Rifle or heavy GL)
+    - Exotic special sniper (Whisper/Sleeper-style) for sustained head DPS
+    - Whirling Ovation / rocket archetypes for the exposed window
+  role_loadouts:
+  - role_id: absolute
+    subclass: ''
+    weapons: Trace Rifle for mine/Chronon identification and pinging, plus a burst heavy for the head
+      DPS window.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+  - role_id: constant_mechanic
+    subclass: ''
+    weapons: Trace Rifle or accurate primary to mark colored mines; burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+  - role_id: cyclical
+    subclass: ''
+    weapons: Mobile kit for confirming TRUE mines and running Chronon dunks; burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surges matched to your heavy; Arc resist recommended for the boss beams.
+  - role_id: constant_stunner
+    subclass: ''
+    weapons: Arc-capable kit to interrupt and destroy Koregos's arms (Arc-beam interrupt); burst heavy
+      for DPS.
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Arc surge to support arm-stun damage; Arc resist recommended for the boss beams.
+  - role_id: floater
+    subclass: ''
+    weapons: Add-clear primary/special for Coryphaeus and ambient Vex backup, plus burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: Surges matched to your heavy; ammo-finder/reserves for sustained add-clear; Arc resist
+      recommended.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/desert-perpetual.yaml (encounter: koregos)'
+    note: Mechanics, roles, enemies, and the Arc-beam note derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: New raid (July 2025); Whirling Ovation status (exotic/re-rollable) and DPS meta are flagged
+      as needing in-game verification in the source — confirm before committing loadouts.
+    date_checked: '2026-06-07'

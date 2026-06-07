@@ -1,0 +1,284 @@
+# raid_context/content/raids/deep-stone-crypt/3-atraks-1.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: deep-stone-crypt
+  name: Deep Stone Crypt
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: atraks-1
+  name: Atraks-1, Fallen Exo
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Atraks-1 spawns 8 duplicate clones (4 in lab, 4 in orbital space
+
+    station). Scanner finds correct duplicate to attack. Operator
+
+    handles space-pod elevators + Replication orb cleanup (eject via
+
+    airlock or wipe). 4 damage phases + final stand. Sword DPS (Lament)
+
+    recommended.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Laboratory (Clarity Control): 4 space pods to orbital station.
+
+    - Orbital Station (Morning Star): 4 airlocks for Replication ejection.
+
+    - Atraks-1 duplicates: 4 per room (lab: middle pods, red room, yellow room upper+lower; orbital: middle
+    front+back, left, right).
+
+    - Augment Terminals: 3 in lab, 4 in orbital (extra one by space pods).
+
+
+    PLATFORM MECHANICS:
+
+    - Approach purple orb near space pods → encounter starts.
+
+    - Split 3/3: lab + orbital.
+
+    - Kill 6 Sentinel Servitors (3 per room) to start damage phase.
+
+    - Damage phase: Atraks-1 initiates Extinction Protocol. Scanner sees correct duplicate glowing YELLOW.
+
+    - Kill duplicate → drops Atraks-1 Replication purple orb. 45s timer.
+
+    - Take orb to airlock → Operator shoots red panel to OPEN → walk in → door closes → ejected to space
+    (orb destroyed).
+
+    - Damage phases alternate orbital ↔ lab. 4 phases total before final stand.
+
+    - Scanner augment must be juggled lab/orbital via terminals.
+
+    - Operator can extend orb timer by shooting it overhead (45s reset).
+
+    - Final stand: all 6 in orbital. 8 duplicates spawn at once. Burst correct sequence.
+
+
+    START STATE: rally banner. Touch purple orb to start.
+
+    '
+  callouts:
+  - when: Sentinel Servitor down
+    from: killer
+    to: team
+    say: '"Sentinel [N/6] down."'
+    why: Progress to DPS.
+  - when: Atraks duplicate spotted
+    from: scanner
+    to: team
+    say: '"Atraks [position] — lab/orbital."'
+    why: Sword team converges.
+  - when: Replication orb dropped
+    from: killer
+    to: team
+    say: '"REPLICATION — airlock [N]!"'
+    why: 45s timer to eject.
+  - when: Operator opening airlock
+    from: operator
+    to: team
+    say: '"Airlock [N] OPEN — go!"'
+    why: Carrier walks in.
+  - when: Augment swap needed
+    from: self
+    to: team
+    say: '"Scanner to [lab/orbital] — terminal."'
+    why: Side transfer.
+  - when: Final stand
+    from: any
+    to: team
+    say: '"FINAL — all 8 duplicates."'
+    why: Burst correct sequence.
+  wipe_triggers:
+  - Replication orb timer to 0 = Atraks spawn-kills team.
+  - Wrong duplicate damaged = no progress, time wasted.
+  - Operator misses augment transfer = no airlock = wipe.
+  - Player stuck in closed airlock = ejected into space.
+  damage_phase_triggers:
+  - 6 Sentinels destroyed → Extinction Protocol → Scanner-guided duplicate kills.
+  parallel_timeline:
+  - phase: Pull
+    lab_team_3: Push lab.
+    orbital_team_3: Take space pod up.
+  - phase: Sentinel clear
+    all: Burst 6 Sentinels (3 per room).
+  - phase: Damage phase 1 (orbital)
+    scanner_orbital: ID correct duplicate.
+    sword_users: Kill duplicate.
+    operator: Open airlock, eject orb.
+  - phase: Damage phase 2 (lab)
+    scanner_lab: ID correct duplicate.
+    sword_users: Kill, eject.
+  - phase: Phases 3-4
+    all: Cycle orbital + lab.
+  - phase: Final stand
+    all: Stack orbital. Burst 8 duplicates.
+  permutations:
+  - name: Standard 3-lab / 3-orbital
+    learner_friendly: true
+    summary: Pre-assigned split with Operator + Scanner roles.
+    roles:
+    - id: scanner
+      count: 2
+      does: One per side. Identify duplicates.
+      loadout:
+        subclass: Survivable subclass with mobility to reposition between duplicate spawns
+        weapons: Precision primary for self-defense; sword as a backup for duplicate kills if needed
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Run Enhanced Scanner augment mod. No DPS surge required for the Scanner role itself.
+    - id: operator
+      count: 2
+      does: One per side. Replication airlock control.
+      loadout:
+        subclass: Mobile subclass for fast airlock access and orb-timer management
+        weapons: Accurate primary (hand cannon/scout) to hit airlock red panels and the overhead orb for
+          timer resets
+        exotic_armor: ''
+        armor_stats: &id002
+        - Class
+        - Health
+        surges_mods: Run Enhanced Operator augment mod. No DPS surge required.
+    - id: sword_user
+      count: 2
+      does: Lament DPS on correct duplicate.
+      loadout:
+        subclass: Subclass that boosts melee/sword survivability and damage uptime for close-range duplicate
+          kills
+        weapons: The Lament sword for single-target DPS; aggressive sniper (Whisper) as an alternate for
+          cross-room duplicates
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Melee
+        surges_mods: Arc surge to match The Lament; reload/ability mods to keep sword charge and survivability
+          up.
+  - name: 'Speed: 2-Lament parallel'
+    learner_friendly: false
+    summary: Both teams use Lament + Operator/Scanner roles cycled fast. 2-3 phases.
+  cheese:
+  - title: Sniper from across room
+    detail: 'Some duplicates can be Whisper''d from across the room without
+
+      sword approach. Faster damage if Scanner calls position quickly.
+
+      '
+  common_mistakes:
+  - Failing to throw Replication orb in airlock = wipe.
+  - Wrong duplicate damaged = no progress.
+  - Scanner / Operator transfer failure during damage phase.
+  - Standing in airlock when door closes too long = ejected (also a wipe).
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest:
+      location: 'HIDDEN CHEST 2 (Orbital Space Walk): During the platforming
+
+        section after Atraks-1, collect from a platform off the
+
+        standard path. Also: Exo Stranger logs.
+
+        '
+      rewards:
+      - Random raid loot
+      - Exo Stranger lore logs
+    potential_drops:
+    - Succession (aggressive sniper rifle, Kinetic)
+    - Heritage (precision shotgun, Kinetic)
+    - Legacy's Oath armor — Arms + Legs + Class Item (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: sword_user.'
+  - '2nd: scanner.'
+  - '3rd: operator.'
+  plain_language_steps:
+  - '1. Drop the rally banner, then touch the purple orb near the space pods to start the fight. Split
+    3 and 3: three stay in the Laboratory and three take the space pods up to the Orbital Station.'
+  - 2. Each team destroys 3 Sentinel Servitors (6 total) to begin the damage phase. Call each Sentinel
+    down as it dies.
+  - 3. When 6 Sentinels are down, Atraks-1 begins Extinction Protocol. The Scanner in that room finds
+    the one duplicate glowing yellow and calls its position.
+  - 4. The sword users (Lament recommended) converge on the correct duplicate and kill it. Whisper can
+    also snipe some duplicates from across the room if the Scanner calls fast.
+  - 5. Killing the correct duplicate drops a purple Atraks-1 Replication orb with a 45-second timer. Call
+    it out immediately.
+  - 6. A carrier takes the Replication orb to an airlock. The Operator shoots the red panel to open that
+    airlock, the carrier walks in, and the door closes to eject the orb into space.
+  - 7. Do not stand in the airlock too long when the door closes, or you get ejected into space and die.
+    Step out as soon as the orb is in.
+  - 8. If the timer is running low, the Operator can shoot the orb overhead to reset it back to 45 seconds.
+  - 9. Damage phases alternate between Orbital and Lab. Juggle the Scanner and Operator augments between
+    sides through the terminals so each room is covered.
+  - 10. Run 4 damage phases total, ejecting a Replication orb each time, until the final stand begins.
+  - 11. For the final stand, bring all 6 players to the Orbital Station. All 8 duplicates spawn at once.
+    Burst the correct sequence to finish Atraks-1.
+  defense:
+    incoming_damage:
+      adds:
+      - Void damage from Sentinel Servitor projectiles
+      - Kinetic/ballistic damage from ambient Fallen House of Salvation adds in lab and orbital
+      boss:
+      - Arc/ballistic damage from Atraks-1 duplicates' weapons at close range during sword approach
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No mandatory elemental resist; general damage resistance is enough for sword-range exchanges with
+        duplicates
+      concussive:
+      - Concussive Dampener optional; low priority since damage is mostly direct-fire, not large area-of-effect
+  damage:
+    surges:
+    - Sword DPS with The Lament is the recommended primary damage; pair with a damage surge matching your
+      chosen sword's element (Lament is Arc), and stack the same surge across the team for the duplicate
+      kills
+    burst_windows: Burst window opens each phase once the Scanner marks the correct yellow duplicate;
+      converge and kill it fast before the Replication timer pressures the room.
+    recommended_dps:
+    - Heavy sword (The Lament) for tight single-target burst
+    - Aggressive-frame sniper (Whisper) for cross-room duplicate kills when sword approach is unsafe
+  role_loadouts:
+  - role_id: scanner
+    subclass: Survivable subclass with mobility to reposition between duplicate spawns
+    weapons: Precision primary for self-defense; sword as a backup for duplicate kills if needed
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run Enhanced Scanner augment mod. No DPS surge required for the Scanner role itself.
+  - role_id: operator
+    subclass: Mobile subclass for fast airlock access and orb-timer management
+    weapons: Accurate primary (hand cannon/scout) to hit airlock red panels and the overhead orb for timer
+      resets
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run Enhanced Operator augment mod. No DPS surge required.
+  - role_id: sword_user
+    subclass: Subclass that boosts melee/sword survivability and damage uptime for close-range duplicate
+      kills
+    weapons: The Lament sword for single-target DPS; aggressive sniper (Whisper) as an alternate for cross-room
+      duplicates
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Arc surge to match The Lament; reload/ability mods to keep sword charge and survivability
+      up.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/deep-stone-crypt.yaml (encounter: atraks-1)'
+    note: Primary source for duplicate mechanics, Replication-orb handling, airlock ejection, and Lament
+      sword DPS recommendation.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: The Lament/Whisper remain strong but sandbox balance shifts; verify current sword and special
+      DPS meta and exact surge interactions before a run.
+    date_checked: '2026-06-07'

@@ -1,0 +1,131 @@
+# raid_context/content/raids/kings-fall/2-portico-jumping.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: portico-jumping
+  name: Crux & Portico (Jumping Puzzle 1)
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Swinging platforms + ship-jumping puzzle. Two plates + 1 ship at end.
+
+    One person on each plate, one on ship. Door opens when plates active +
+
+    ship arrives. Hidden Chest 1 (secret) accessible during this section.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Swinging Hive platforms across a gap.
+
+    - Series of ships you must jump to in order.
+
+    - 2 plates near a ship.
+
+
+    PLATFORM MECHANICS:
+
+    - Jump from swinging platform to swinging platform when they hit apex.
+
+    - Ride ships across.
+
+    - 2 plates active + ship arriving = door opens.
+
+
+    HIDDEN CHEST 1: While 2 plates are held + ship is moving, the 3rd
+
+    player on the ship jumps off LEFT before the shield wall, onto a
+
+    spike-like platform, climbs to a side door = chest. Need plates
+
+    held while you climb.
+
+    '
+  callouts: []
+  wipe_triggers:
+  - Falling = death (long respawn).
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Standard
+    learner_friendly: true
+    summary: Sequential. Plate / plate / ship-rider for door open. 3 others jump ahead.
+  cheese: []
+  common_mistakes:
+  - Mistiming swinging platform jump — fall.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'HIDDEN CHEST 1: While 2 plates are held during the ship section,
+
+        the ship-rider jumps off LEFT before the shield wall onto a
+
+        spike platform → walk up the small walkway → through a side
+
+        door at the top.
+
+        '
+      rewards:
+      - Random raid loot
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Follow + learn.
+  plain_language_steps:
+  - '1. This is the first jumping puzzle: swinging Hive platforms and a series of ships you ride across
+    a gap.'
+  - 2. Jump from one swinging platform to the next, leaping when each platform reaches the top (apex)
+    of its swing.
+  - 3. Ride the ships across in order to progress toward the end.
+  - 4. At the end, two plates sit near a ship; one player stands on each plate.
+  - 5. A third player rides the ship across while the two plates are held.
+  - 6. The door opens when both plates are active and the ship arrives.
+  - '7. For Hidden Chest 1: while the two plates are held and the ship is moving, the ship-rider jumps
+    off to the LEFT before the shield wall onto a spike-like platform.'
+  - 8. Walk up the small walkway and through the side door at the top to reach the chest; the plates must
+    stay held while you climb.
+  - 9. Be careful timing platform jumps, since falling means death and a long respawn.
+  defense:
+    incoming_damage:
+      adds: []
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No combat in this section; environmental fall damage only.
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase. This is a jumping puzzle with no boss and no damage check.
+    burst_windows: No boss burst window; the door opens when both plates are held and the ship arrives.
+    recommended_dps:
+    - None required; bring mobility tools (high jump / movement) rather than DPS weapons.
+  role_loadouts:
+  - role_id: standard
+    subclass: Any subclass with strong vertical movement (high Lift / Glide / Strafe Jump or Heat Rises)
+      for the platform jumps.
+    weapons: No combat loadout needed; any setup is fine for the jumping puzzle.
+    exotic_armor: ''
+    armor_stats:
+    - Weapons
+    - Class
+    surges_mods: No surge requirement; mobility-focused stats (Weapons/Class) help the platforming.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Crux & Portico encounter block)'
+    note: Tier-1 primary source. Jumping-puzzle steps and Hidden Chest 1 route derived directly from the
+      authored v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Edge of Fate renamed the six stats (Mobility->Weapons, Resilience->Health, Recovery->Class).
+      Movement exotic choices left blank; verify current jump-mod meta if relevant.
+    date_checked: '2026-06-07'

@@ -1,0 +1,220 @@
+# raid_context/content/raids/vow-of-the-disciple/2-acquisition.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: acquisition
+  name: Acquisition (3 obelisks)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Defend 3 obelisks from Abated Adherent lurkers (fill obelisks =
+
+    wipe). Reveal 3 symbols per obelisk via Disciple''s Compass (Taken
+
+    Knight) → 9 rooms → kill Glyphkeeper (Light or Dark side per call).
+
+    Shoot 3 correct symbols on obelisk within timeframe. Repeat 3
+
+    obelisks × 3 symbols each.
+
+    '
+  setup: "WHAT YOU SEE:\n- 3 obelisks (large stone pillars) around the arena.\n- Columns of 3-panel symbols\
+    \ across from each obelisk (start blank).\n- 9 rooms spread around the area (3 per runner area).\n\
+    - Central area with Traveler/Pyramid switches.\n- Pyramid switches for door open/close on rooms.\n\
+    \nPLATFORM MECHANICS:\n- Approach Pyramid switch in middle to start.\n- Per obelisk:\n  • Top symbol\
+    \ on column reveals: Traveler OR Pyramid (= Disciple's Compass spawn side).\n  • Kill Disciple's Compass\
+    \ → middle symbol reveals (= room to enter).\n  • Runner enters room. Shoot Pyramid switch if door\
+    \ is wrong (Traveler/Pyramid toggle).\n  • Inside room: 2 Glyphkeepers (Light + Dark side).\n  • Third\
+    \ symbol on column reveals: light or dark.\n  • Kill the correct Glyphkeeper → drops symbol → call\
+    \ it out.\n  • That symbol must be shot on obelisk OUTSIDE within short window.\n- Repeat to get all\
+    \ 3 symbols for an obelisk.\n- Shoot the 3 symbols on the obelisk → offering accepted (if correct).\n\
+    - Wrong = offering rejected, symbols shuffle, obelisk fills more.\n- Killing a Glyphkeeper RESETS\
+    \ obelisk fill levels.\n- 3 obelisks × 3 symbols each = encounter complete.\n\nSTART STATE: rally\
+    \ banner. Pyramid switch in middle to start.\n"
+  callouts:
+  - when: Column top symbol
+    from: spotter
+    to: team
+    say: '"Compass spawn [TRAVELER/PYRAMID]."'
+    why: Identifies Disciple's Compass side.
+  - when: Compass down + room symbol
+    from: killer
+    to: team
+    say: '"Room [symbol name]."'
+    why: Tells runner which room.
+  - when: Light/Dark indicator
+    from: outside spotter
+    to: runner
+    say: '"[LIGHT/DARK] Glyphkeeper."'
+    why: Runner kills correct side.
+  - when: Symbol dropped
+    from: runner
+    to: team
+    say: '"Symbol: [name] — obelisk [N]."'
+    why: Shoot symbol on obelisk window.
+  - when: 3 symbols ready
+    from: any
+    to: team
+    say: '"OFFERING — shoot now!"'
+    why: Short window.
+  wipe_triggers:
+  - Obelisk fills to max = wipe.
+  - Wrong-Glyphkeeper kill = wasted, fills obelisk.
+  - Wrong symbol shot on obelisk = offering rejected, fills.
+  damage_phase_triggers:
+  - 3 symbols correctly shot on each of 3 obelisks → encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    all: Pyramid switch. Split 3 pairs to 3 obelisks.
+  - phase: Per obelisk cycle (×3 symbols)
+    defender: Defend obelisk from Abated Adherents.
+    runner: Enter room, kill correct Glyphkeeper, return symbol.
+  - phase: Shoot 3 symbols
+    all: Within window, shoot all 3 on obelisk.
+  - phase: Repeat for other obelisks
+    all: Cycle.
+  permutations:
+  - name: Standard 3 pairs (defender + runner)
+    learner_friendly: true
+    summary: Each pair owns 1 obelisk + 3 nearby rooms.
+    roles:
+    - id: defender
+      count: 3
+      does: Defend obelisk + add-clear.
+      loadout:
+        subclass: Survivability-leaning subclass for holding an obelisk under constant pressure
+        weapons: Strong add-clear primary (auto rifle / SMG) + special for Abated Adherents; on Master
+          add anti-Champion mods
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Run add-clear and resist mods; no DPS surge needed
+    - id: runner
+      count: 3
+      does: Enter rooms, kill correct Glyphkeeper, deliver symbols.
+      loadout:
+        subclass: Mobile subclass with good single-target for fast Glyphkeeper kills
+        weapons: Precision primary (hand cannon / pulse) for correct-Glyphkeeper kills + a quick special;
+          on Master add the matching anti-Champion mod
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Class
+        surges_mods: Mobility/uptime and anti-Champion (Master) mods; no DPS surge needed
+  - name: Master (Chaff + Shielded)
+    learner_friendly: false
+    summary: No radar. Glyphkeepers = Champions. Slow pace, callouts essential.
+  cheese: []
+  common_mistakes:
+  - Missing the Light/Dark call = wrong Glyphkeeper = wasted.
+  - Symbol-shot window too slow = rejected.
+  - Forgetting Disciple's Compass alive = obelisk fills.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Submission (SMG, Kinetic)
+    - Deliverance (fusion rifle, Stasis)
+    - Cataclysmic (linear fusion rifle, Solar)
+    - Resonant Fury armor — Helmet + Chest + Legs (encounter-specific slots)
+  master_challenge:
+    name: Swift Destruction
+    requirement: 'Kill the three Unstoppable Champions that spawn in the arena
+
+      very quickly — all three down within 5 seconds of the first
+
+      kill. Failure flashes "Challenge Failed." Strategy: defenders
+
+      stun-lock the Unstoppables while symbol-finders complete the
+
+      obelisk reads, then everyone collapses to kill the champions
+
+      in a single window.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: defender (no symbol responsibility yet).'
+  - '2nd: runner.'
+  plain_language_steps:
+  - 1. Place a rally banner, then split into 3 defender+runner pairs, each pair owning 1 of the 3 obelisks
+    and its 3 nearby rooms.
+  - 2. Shoot the Pyramid switch in the middle of the arena to start the encounter.
+  - '3. Watch the top symbol on the column across from your obelisk: it shows Traveler or Pyramid, telling
+    you which side the Disciple''s Compass (Taken Knight) spawns on. Kill that Compass.'
+  - 4. Killing the Compass reveals the middle column symbol, which names the room your runner must enter.
+    Use the Pyramid switches to toggle the door open if needed.
+  - 5. The runner enters the room and finds 2 Glyphkeepers (a Light side and a Dark side one). The third
+    column symbol shows whether to kill the Light or Dark Glyphkeeper — the outside spotter calls it.
+  - 6. The runner kills the correct Glyphkeeper, which drops a symbol; call that symbol name out clearly.
+  - 7. Shoot that symbol on the obelisk OUTSIDE within the short window. Repeat the cycle until you have
+    all 3 symbols for the obelisk.
+  - 8. Once 3 symbols are ready, shoot all 3 on the obelisk during the offering window. Correct = offering
+    accepted; wrong = rejected, symbols shuffle, and the obelisk fills more.
+  - 9. Throughout, defenders kill the Abated Adherent lurkers so the obelisk does not fill to max (which
+    is a wipe). Note that killing a Glyphkeeper resets obelisk fill levels.
+  - 10. Complete all 3 obelisks (3 correct symbols each) to finish the encounter.
+  - 11. On Master, Glyphkeepers become Champions and radar is disabled — slow the pace and rely entirely
+    on callouts.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Disciple's Compass Taken Knight, Abated Adherent lurkers, Taken Glyphkeeper Phalanx)
+      - Scorn (Scorn Chieftain Glyphkeeper)
+      boss: []
+    champions:
+    - 'Master only: Unstoppable Champions tied to the Swift Destruction challenge -> Anti-Unstoppable'
+    - 'Master only: Glyphkeeper Champions -> Anti-Champion mods matching their displayed type'
+    recommended_defensive_mods:
+      elemental:
+      - No fixed resist requirement on Normal; on Master, bring resist coverage for sustained Taken/Scorn
+        fire while defending the obelisk
+      concussive:
+      - Optional on Master — a Concussive Dampener can blunt heavy Taken/Scorn burst while a defender
+        holds an obelisk alone
+  damage:
+    surges:
+    - No traditional DPS phase — completion is mechanical (correct symbols), so no DPS-phase surge applies
+    burst_windows: No boss burst window; the time-pressure window is the short offering window to shoot
+      3 correct symbols on the obelisk.
+    recommended_dps:
+    - 'Reliable add-clear and single-target for Glyphkeepers/Compass: hand cannon, pulse rifle, or SMG;
+      on Master pair anti-Champion primaries with a quick-kill heavy'
+  role_loadouts:
+  - role_id: defender
+    subclass: Survivability-leaning subclass for holding an obelisk under constant pressure
+    weapons: Strong add-clear primary (auto rifle / SMG) + special for Abated Adherents; on Master add
+      anti-Champion mods
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run add-clear and resist mods; no DPS surge needed
+  - role_id: runner
+    subclass: Mobile subclass with good single-target for fast Glyphkeeper kills
+    weapons: Precision primary (hand cannon / pulse) for correct-Glyphkeeper kills + a quick special;
+      on Master add the matching anti-Champion mod
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Mobility/uptime and anti-Champion (Master) mods; no DPS surge needed
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vow-of-the-disciple.yaml (encounter: acquisition, incl. Swift
+      Destruction Master challenge)'
+    note: Primary source for obelisk/Glyphkeeper mechanics, roles, and Master Unstoppable Champion detail.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names follow the Edge of Fate rename (Weapons/Health/Class/Grenade/Super/Melee). Confirm
+      Champion counters and live exotics against the current sandbox before a Master run.
+    date_checked: '2026-06-07'

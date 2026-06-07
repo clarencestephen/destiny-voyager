@@ -1,0 +1,149 @@
+# raid_context/content/raids/deep-stone-crypt/1-surviving-blizzard.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: deep-stone-crypt
+  name: Deep Stone Crypt
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: surviving-blizzard
+  name: Surviving the Blizzard (Desolation)
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'Opening blizzard traversal. 6 Shelter from the Storm bubbles to
+
+    sprint between. Frostbite stacks outside (10 = death). Clear adds
+
+    at each bubble to checkpoint. Final shelter has Brigs.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Blizzard arena with 6 heat-bubble shelters (chain through the storm).
+
+    - 6 Fallen Pikes in the first shelter (triumph: transport all to last).
+
+    - Lamps + Web Mines mark the route.
+
+    - Final shelter: Brigs + Dark Council Guards.
+
+
+    PLATFORM MECHANICS:
+
+    - Outside bubble = Frostbite stacks. 10 = death.
+
+    - Bubble entry = Shelter From The Storm + clears Frostbite.
+
+    - Clear shelter adds = checkpoint (respawn there).
+
+    - Sparrows speed traversal.
+
+
+    START STATE: rally banner at start. Begin sprint between bubbles.
+
+    '
+  callouts:
+  - when: Bubble cleared
+    from: any
+    to: team
+    say: '"Bubble [N/6] CLEAR."'
+    why: Progress + checkpoint.
+  - when: Frostbite high
+    from: self
+    to: team
+    say: '"FROST 8 — bubble!"'
+    why: Find shelter.
+  wipe_triggers:
+  - Frostbite 10 = death.
+  - Brigs at end can wipe.
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Standard sprint
+    learner_friendly: true
+    summary: Sparrow between bubbles, clear together.
+  cheese: []
+  common_mistakes:
+  - Stopping mid-storm to fight = Frostbite cascades.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'HIDDEN CHEST 1: At final shelter near the entrance to next
+
+        encounter, look around for an off-path crate. Walk around
+
+        before pushing forward.
+
+        '
+      rewards:
+      - Random raid loot
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Just play.
+  plain_language_steps:
+  - 1. Drop your rally banner at the start, gear up, then begin sprinting into the blizzard toward the
+    first heat-bubble shelter (Shelter From The Storm).
+  - 2. Watch your Frostbite stacks while you are outside a bubble. At 10 stacks you die, so do not linger
+    in the open storm.
+  - 3. Use Sparrows to cross the gaps between bubbles quickly. The Lamps and Web Mines along the route
+    mark the safe path forward.
+  - 4. When you reach a bubble, step inside. It grants Shelter From The Storm and immediately clears your
+    Frostbite.
+  - 5. Kill all the adds inside each shelter. Clearing a shelter sets a checkpoint, so you respawn there
+    if you die later.
+  - 6. Call out each cleared bubble (for example 'Bubble 3 of 6 clear') so the team tracks progress together.
+  - 7. If your Frostbite spikes mid-storm, call it out (for example 'Frost 8, bubble!') and dive into
+    the nearest shelter rather than stopping to fight.
+  - 8. Chain through all 6 bubbles as a group. Do not stop in the open to engage enemies, or Frostbite
+    will cascade and kill you.
+  - 9. At the final shelter, expect Brigs and Dark Council Guards. Clear them carefully since they can
+    wipe the team.
+  - 10. Before moving on from the final shelter, look around for the off-path Hidden Chest near the entrance
+    to the next area, then push forward to end the section.
+  defense:
+    incoming_damage:
+      adds:
+      - Kinetic/ballistic damage from Fallen Dark Council Guards and other Fallen adds in the shelters
+      - Arc damage from Brig stomps and turrets at the final shelter
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No specific elemental resist required; prioritize surviving Brig burst at the final shelter with
+        overall damage resistance
+      concussive:
+      - Concussive Dampener helps blunt the Brig area-of-effect and stomp pressure at the final shelter
+  damage:
+    surges:
+    - No DPS phase in this encounter; it is a traversal/survival section with no boss damage window
+    burst_windows: No burst DPS window; the only combat goal is clearing adds in each shelter to checkpoint.
+    recommended_dps:
+    - Reliable add-clear primary or wave-clear special (no boss-DPS archetype needed)
+  role_loadouts:
+  - role_id: any
+    subclass: Any well-rounded subclass with strong add-clear and self-sustain (survivability for the
+      final-shelter Brigs)
+    weapons: Primary for add clear plus a wave-clear special such as a shotgun or fusion; nothing boss-specific
+      required
+    exotic_armor: ''
+    armor_stats:
+    - Health
+    - Class
+    surges_mods: No surge needed; run general survivability and add-clear armor mods. Mobility aids the
+      bubble-to-bubble sprint.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/deep-stone-crypt.yaml (encounter: surviving-blizzard)'
+    note: Primary source for mechanics, enemies, and Frostbite handling.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Loadout/mod naming reflects the Edge of Fate stat rename. Verify exact exotics and meta before
+      a run, as sandbox balance shifts each season.
+    date_checked: '2026-06-07'

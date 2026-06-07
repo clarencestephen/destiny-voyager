@@ -1,0 +1,314 @@
+# raid_context/content/raids/deep-stone-crypt/5-taniks-abomination.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: deep-stone-crypt
+  name: Deep Stone Crypt
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: taniks-abomination
+  name: Taniks, the Abomination (final boss)
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Final boss. 3 areas (spawn / blue / orange). Per cycle: Taniks at
+
+    one area → shoot 2-4 nuclear cores from his booster jets (before
+
+    Turbulent Detonation wipe). Scanner finds correct deposit bins
+
+    (6 total across 3 areas, 2 each). Suppressor stuns via security
+
+    drones (3 per area). 4 cores deposited → Shock Field DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - 3 areas: spawn, blue, orange.
+
+    - 6 deposit bins (2 per area).
+
+    - 9 security drones (3 per area).
+
+    - Augment Terminals: 3 (one per area).
+
+
+    PLATFORM MECHANICS:
+
+    - Approach wreckage to start.
+
+    - Taniks flies between 3 areas.
+
+    - At each area, his booster jets become vulnerable. Shoot for 2-4 nuclear cores.
+
+    - Turbulent Barrage (purple light columns from above) — preview of Turbulent Detonation wipe attack.
+
+    - 2-4 cores collected → stops Turbulent Detonation.
+
+    - Taniks detains players in spheres. Operator (red augment) shoots sphere to free.
+
+    - Scanner (yellow) identifies which 2 deposit bins glow yellow this cycle.
+
+    - Carriers deposit cores at correct bins (Radiation 10 = death).
+
+    - Suppressor walks through 3 drones in any area to charge, shoots Taniks (glows blue) to STUN.
+
+    - Suppressor recommendation: wait for Taniks to encase players TWICE before stunning third.
+
+    - 4 cores deposited → Shock Field appears. Position between 2 spheres in field.
+
+    - DPS Taniks while staying in field (too close = Arc damage; too far = rotating debris death).
+
+    - Field push-out: re-enter carefully.
+
+    - 3 damage phases until enrage.
+
+    - Final stand: Taniks teleports between spawn/blue/orange. 5 teleports without kill = instant team
+    death.
+
+
+    START STATE: rally banner. Approach Taniks wreckage to start.
+
+    '
+  callouts:
+  - when: Taniks at area
+    from: tracker
+    to: team
+    say: '"Taniks [SPAWN/BLUE/ORANGE]."'
+    why: Converge for booster shoot.
+  - when: Cores dropped
+    from: any
+    to: team
+    say: '"4 CORES — pick + go."'
+    why: Pickup cue.
+  - when: Scanner bins
+    from: scanner
+    to: team
+    say: '"Bins [N1] + [N2] — [area]."'
+    why: Deposit targets.
+  - when: Player detained
+    from: detained
+    to: team
+    say: '"DETAINED [direction] — Operator!"'
+    why: Operator free with shoot.
+  - when: Suppressor drone progress
+    from: suppressor
+    to: team
+    say: '"Drones [N/3] — third when ready."'
+    why: Pacing for stun.
+  - when: Stun done
+    from: suppressor
+    to: team
+    say: '"STUNNED — deposit!"'
+    why: Carriers go.
+  - when: Shock Field DPS open
+    from: any
+    to: team
+    say: '"FIELD — between spheres!"'
+    why: Stand correct position.
+  - when: Final stand teleports
+    from: tracker
+    to: team
+    say: '"Taniks [SPAWN/BLUE/ORANGE] — [N/5] teleports!"'
+    why: 5 teleports = instant team death.
+  wipe_triggers:
+  - Turbulent Detonation (not enough cores collected).
+  - Radiation 10 = death.
+  - Wrong deposit bin = death.
+  - 5 final-stand teleports without kill = instant team death.
+  - Too close to Shock Field spheres = Arc damage.
+  - Too far from field center = rotating debris death.
+  damage_phase_triggers:
+  - 4 cores deposited correctly → Shock Field opens → DPS until field times out / Taniks resists.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Taniks at spawn.
+  - phase: Cycle (per area)
+    booster_shooters: Shoot Taniks's jets for cores.
+    operator: Free detained players.
+    scanner: ID deposit bins.
+    suppressor: Walk drones (wait for 2nd encase, then stun).
+    carriers: Deposit cores.
+  - phase: DPS (Shock Field)
+    all: Position between spheres in field. Burst Taniks.
+  - phase: Cycle / Final stand
+    all: 3 damage phases until enrage. Final stand = teleport tracking.
+  permutations:
+  - name: Standard 1-Op / 1-Scanner / 1-Supp / 3-carriers
+    learner_friendly: true
+    summary: Pre-assigned augment roles. Floaters carry cores.
+    roles:
+    - id: operator
+      count: 1
+      does: Sphere-free rescues.
+      loadout:
+        subclass: Mobile, survivable subclass to reach and free detained players quickly
+        weapons: Accurate primary (hand cannon/scout) to shoot detainment spheres; heavy burst weapon
+          for the Shock Field DPS phase
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Health
+        surges_mods: Run Enhanced Operator augment mod; add a damage surge matching your heavy for the
+          field phase.
+    - id: scanner
+      count: 1
+      does: Deposit bin calls.
+      loadout:
+        subclass: Survivable subclass with mobility to relay deposit-bin calls across areas
+        weapons: Precision primary for self-defense; heavy burst weapon for the Shock Field DPS phase
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Run Enhanced Scanner augment mod; add a damage surge matching your heavy for the
+          field phase.
+    - id: suppressor
+      count: 1
+      does: Drone routing + stun.
+      loadout:
+        subclass: Survivable subclass to hold drone routes and land the stun shot on Taniks
+        weapons: Reliable primary to land the blue-glow stun shot; heavy burst weapon for the Shock Field
+          DPS phase
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Run Enhanced Suppressor augment mod; add a damage surge matching your heavy for the
+          field phase.
+    - id: carrier
+      count: 3
+      does: Cores + boosters + deposits.
+      loadout:
+        subclass: Mobile, self-sustaining subclass to manage Radiation, shoot boosters, and deposit cores
+        weapons: Add-clear primary plus a heavy burst weapon (Eyes of Tomorrow or linear) for the Shock
+          Field DPS phase
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Damage surge matching your heavy (Solar for Eyes of Tomorrow); survivability and
+          Arc-resist mods for the field phase.
+  - name: 'Speed: Eyes of Tomorrow DPS'
+    learner_friendly: false
+    summary: Multiple Eyes of Tomorrow + Well = 1-2 phase Taniks. Spawn-side DPS.
+  cheese: []
+  common_mistakes:
+  - Wrong bin deposit.
+  - Suppressor stunning too fast → augment deactivation cascade.
+  - Standing in Turbulent Barrage columns = damage.
+  - 'Final stand: not tracking teleports = 5-teleport instant death.'
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest
+    hidden_chest: null
+    potential_drops:
+    - '**Eyes of Tomorrow** (exotic rocket launcher, Solar) — RNG drop from final chest.'
+    - Bequest (adaptive sword, Arc)
+    - Commemoration (adaptive machine gun, Void)
+    - Legacy's Oath armor — Helm + Chest + Legs (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: carrier.'
+  - '2nd: operator or scanner.'
+  - '3rd: suppressor (most complex routing).'
+  plain_language_steps:
+  - '1. Drop the rally banner, then approach the Taniks wreckage to start. Distribute augments: one Operator,
+    one Scanner, one Suppressor, with three carriers/floaters.'
+  - 2. Taniks flies between 3 areas (spawn, blue, orange). Track and call his location each time so the
+    team converges.
+  - 3. At the area Taniks is in, his booster jets become vulnerable. Shoot them to drop 2 to 4 nuclear
+    cores. Collecting enough cores stops his Turbulent Detonation wipe.
+  - 4. Watch for Turbulent Barrage (purple light columns from above). It previews the Turbulent Detonation
+    wipe, so do not stand in the columns and make sure cores get collected in time.
+  - 5. Taniks detains players in spheres. The Operator shoots a detained player's sphere to free them;
+    the detained player calls their direction.
+  - 6. The Scanner identifies which 2 deposit bins glow yellow this cycle (2 per area, 6 total) and calls
+    them.
+  - 7. The Suppressor walks through all 3 drones in an area to charge, then shoots Taniks (he glows blue)
+    to stun him. A good pace is to let Taniks encase players twice, then stun on the third opportunity.
+  - 8. While Taniks is stunned, carriers deposit cores into the correct yellow bins. Manage Radiation
+    (10 stacks = death) by passing cores, and never use a wrong bin or you die.
+  - 9. After 4 cores are deposited correctly, the Shock Field appears. Position between the 2 spheres
+    inside the field.
+  - '10. DPS Taniks from inside the field: too close to the spheres takes Arc damage, and too far from
+    center means rotating-debris death. If pushed out of the field, re-enter carefully.'
+  - 11. Repeat the cycle through 3 damage phases until enrage.
+  - 12. In the final stand, Taniks teleports between spawn, blue, and orange. Track every teleport and
+    kill him fast, because 5 teleports without a kill is an instant team death.
+  defense:
+    incoming_damage:
+      adds:
+      - Kinetic/ballistic damage from ambient Fallen House of Salvation adds across the 3 areas
+      boss:
+      - Arc damage from Taniks's Shock Field spheres when standing too close
+      - Physical/collision damage from rotating debris when too far from the field center
+      - Wipe-level area damage from Turbulent Barrage columns and the Turbulent Detonation attack
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc resistance helps survive the Shock Field sphere proximity damage during DPS
+      concussive:
+      - Concussive Dampener optional; primary threats are the Arc field and scripted wipe attacks rather
+        than typical add area blasts
+  damage:
+    surges:
+    - DPS happens inside the Shock Field after 4 cores are deposited. Match your damage surge to your
+      chosen burst weapon; with Eyes of Tomorrow or other Solar rockets, run Solar surge and stack it
+      team-wide for the speed strategy
+    burst_windows: Burst window opens when the Shock Field appears after 4 correct deposits; stand between
+      the spheres and unload until the field times out or Taniks resists, aiming for 1-3 phases.
+    recommended_dps:
+    - Exotic rocket launcher (Eyes of Tomorrow) paired with a healing/Well support for the speed kill
+    - Heavy burst options (linear fusion or rockets) plus a damage-buff support like Well of Radiance
+      for sustained field DPS
+  role_loadouts:
+  - role_id: operator
+    subclass: Mobile, survivable subclass to reach and free detained players quickly
+    weapons: Accurate primary (hand cannon/scout) to shoot detainment spheres; heavy burst weapon for
+      the Shock Field DPS phase
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run Enhanced Operator augment mod; add a damage surge matching your heavy for the field
+      phase.
+  - role_id: scanner
+    subclass: Survivable subclass with mobility to relay deposit-bin calls across areas
+    weapons: Precision primary for self-defense; heavy burst weapon for the Shock Field DPS phase
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run Enhanced Scanner augment mod; add a damage surge matching your heavy for the field
+      phase.
+  - role_id: suppressor
+    subclass: Survivable subclass to hold drone routes and land the stun shot on Taniks
+    weapons: Reliable primary to land the blue-glow stun shot; heavy burst weapon for the Shock Field
+      DPS phase
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Run Enhanced Suppressor augment mod; add a damage surge matching your heavy for the field
+      phase.
+  - role_id: carrier
+    subclass: Mobile, self-sustaining subclass to manage Radiation, shoot boosters, and deposit cores
+    weapons: Add-clear primary plus a heavy burst weapon (Eyes of Tomorrow or linear) for the Shock Field
+      DPS phase
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Damage surge matching your heavy (Solar for Eyes of Tomorrow); survivability and Arc-resist
+      mods for the field phase.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/deep-stone-crypt.yaml (encounter: taniks-abomination)'
+    note: Primary source for booster-jet cores, deposit bins, Suppressor stun pacing, Shock Field DPS,
+      and the final-stand teleport rule.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Eyes of Tomorrow and Well-based DPS are guide-cited strategies; rocket and support-class balance
+      shifts each season, so verify the current burst-DPS meta and exact surge interactions before a run.
+    date_checked: '2026-06-07'

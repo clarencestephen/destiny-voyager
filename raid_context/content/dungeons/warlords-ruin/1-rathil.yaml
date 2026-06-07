@@ -1,0 +1,233 @@
+# raid_context/content/dungeons/warlords-ruin/1-rathil.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: rathil
+  name: Rathil, First Broken Knight of Fikrul
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'Tutorial fight. Rathil teleports you into spike cages on a timer;
+
+    you shoot 3 Blighted Eyes per cage to drop, then cleanse Taken totems
+
+    to earn Naeem''s Wish Empowerment for DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Open ridge arena with Rathil in the center (large Broken Knight wielding a fire scepter).
+
+    - 4-5 small altars around the perimeter with central Taken blights (corrupted Ether Totems — start
+    dormant).
+
+    - Floating Blighted Eyes above the arena (3 per gibbet cage when triggered).
+
+
+    PLATFORM MECHANICS:
+
+    - Totems: walk up, stand still. Cleanses in ~5s. Blight disappears + blue glow = done.
+
+    - Gibbets: forced teleport. Look UP and OUT — 3 Blighted Eyes float around your cage. Shoot all 3
+    → cage opens → fall back down. Eyes count for ALL caged players, but each player''s cage has its own
+    set.
+
+    - Pillar (DPS): none here. Damage Rathil from anywhere once Naeem''s Wish triggers.
+
+
+    START STATE: pull = engage Rathil. Imminent Wish fires automatically after first damage threshold.
+
+    '
+  callouts:
+  - when: Rathil casts (red flash + Imminent Wish text)
+    from: first to see
+    to: team
+    say: '"Cages incoming — eyes up."'
+    why: Everyone needs to be looking UP/OUT, not at adds. Gibbet spawns in ~2s.
+  - when: You break out of your cage
+    from: self
+    to: team
+    say: '"Free, going [N/S/E/W] totem."'
+    why: Avoids 2 cleansers running to the same totem; spreads the cleanse load.
+  - when: Imminent Wish < 10s remaining
+    from: any
+    to: team
+    say: '"10 seconds — last totems!"'
+    why: Triggers people to abandon dying-totem attempts and prep for DPS positioning.
+  - when: Naeem's Wish Empowerment grants
+    from: any
+    to: team
+    say: '"DAMAGE."'
+    why: 'Buff duration = #totems cleansed × ~5s. Don''t waste the first 2s reloading.'
+  wipe_triggers:
+  - Cage timer expires while a Blighted Eye is still alive = impaled, dead.
+  - Cleansing zero totems → Naeem's Wish Empowerment = 0s → can't damage Rathil → enrage.
+  damage_phase_triggers:
+  - Imminent Wish countdown reaches 0 with ≥1 totem cleansed → buff applies.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Damage Rathil to trigger first Imminent Wish cast. Add-clear on Scorn fodder.
+  - phase: Imminent Wish 1 (cages drop ~0:30)
+    all: Shoot YOUR 3 Blighted Eyes. Fall. Pick a totem. Cleanse.
+  - phase: Cleanse window (~0:35-1:15)
+    cleanser_1_2: Solo each totem; rotate to nearest unclaimed.
+    add_clear: Pick off Scorn pulling cleanser attention.
+  - phase: DPS window (~1:15-1:45)
+    all: Stack mid-arena. Burst with Naeem's Wish active.
+  - phase: Reset
+    all: Rathil retreats. Wait for next cast.
+  permutations:
+  - name: Standard 3-cleanser
+    learner_friendly: true
+    summary: Each player owns 1-2 totems. All damage together.
+    best_for: Default. Soloable variant with same logic.
+    roles:
+    - id: cleanser
+      count: 3
+      does: Cage break → assigned totem → DPS position.
+      loadout:
+        subclass: ''
+        weapons: Reach Special for eyes (sniper or scout) + high-burst Heavy for the short Naeem's Wish
+          window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge mods to your Heavy/DPS weapon element; add Solar resistance for Rathil's
+          fire AoE
+      notes:
+      - Soloists do all totems alone — Imminent Wish is generous.
+  - name: 'Speed: 2 cleanse / 1 DPS-anchor'
+    learner_friendly: false
+    summary: Two players cleanse all totems; third reloads + opens DPS the instant the buff drops.
+    best_for: 1-phase attempts with strong burst weapons.
+    roles:
+    - id: cleanser
+      count: 2
+      does: Each takes 2 totems back-to-back.
+      loadout:
+        subclass: ''
+        weapons: Reach Special for eyes (sniper or scout) + high-burst Heavy for the short Naeem's Wish
+          window
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Match surge mods to your Heavy/DPS weapon element; add Solar resistance for Rathil's
+          fire AoE
+    - id: dps_anchor
+      count: 1
+      does: Skip cleanse (only need ≥1 totem for any buff). Pre-position for instant fire.
+      notes:
+      - Risky — if cleansers miss a totem, buff duration is too short.
+      loadout:
+        subclass: ''
+        weapons: Fast-acquire precision Special to pop eyes + top-tier burst Heavy ready to fire the instant
+          the buff drops
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: Surge mods matched to your burst Heavy element; reload/loader mods to skip the first
+          wasted seconds of the buff
+  cheese: []
+  common_mistakes:
+  - Tunnel-visioning Blighted Eyes — Scorn adds can melt cleansers.
+  - Cleansing then running mid-arena for DPS — pillar position doesn't matter, but Rathil's fire AoE does.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Vengeful Whisper (combat bow, Kinetic)
+    - Dragoncult Sickle (sword, Strand)
+    - Indebted Kindness (sidearm, Arc)
+    - Dark Age armor — Mask + Fists + Strides
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: cleanser (3-player team).'
+  - '2nd clear: solo Rathil''s mechanic on master rotators to internalize timing.'
+  plain_language_steps:
+  - 1. Walk into the open ridge arena and shoot Rathil (the large Broken Knight with the fire scepter)
+    in the center to start the fight.
+  - 2. After his first damage threshold, the Imminent Wish timer fires automatically and the room flashes
+    red — get ready, cages are coming.
+  - 3. When you are teleported into a spike (gibbet) cage, look UP and OUT to find the 3 Blighted Eyes
+    floating around your own cage.
+  - 4. Shoot all 3 of YOUR cage's eyes before the cage timer runs out, then drop back down to the arena
+    floor.
+  - 5. Call out which direction you are going (N/S/E/W) and run to one of the dormant Taken Ether Totems
+    on the perimeter.
+  - 6. Stand still inside a totem for about 5 seconds to cleanse it — it is done when the central Taken
+    blight vanishes and a blue glow appears.
+  - 7. Spread out so two people are not cleansing the same totem; each cleanse you complete lengthens
+    the upcoming damage window.
+  - 8. When the Imminent Wish countdown hits zero with at least one totem cleansed, you receive Naeem's
+    Wish Empowerment — listen for the 'DAMAGE' call.
+  - 9. Stack mid-arena and burst Rathil with everything you have while the buff is active (its length
+    equals number of totems cleansed times ~5s).
+  - 10. Stay clear of Rathil's fire AoE on the ground during DPS — pillar position does not matter here,
+    but his fire does.
+  - 11. When the buff ends, Rathil retreats; survive the Scorn adds and wait for the next Imminent Wish
+    cast.
+  - 12. Repeat the cage-cleanse-damage loop until Rathil dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Solar (Scorn Broken Knights wield fire scepters)
+      - Kinetic/physical (Scorn fodder melee and ranged)
+      boss:
+      - Solar (Rathil's fire scepter AoE)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist helps against Rathil's fire AoE and Broken Knight scepters
+      - Run Solar resistance armor mods if you keep taking chip damage near the boss
+      concussive:
+      - Concussive Dampener is optional here; it reduces Rathil's fire AoE knock/blast damage if you are
+        getting shoved out of position
+  damage:
+    surges:
+    - No fixed DPS-phase element is enforced — bring your best burst weapon regardless of element; match
+      armor surge mods to whatever DPS weapon you carry
+    burst_windows: Short Naeem's Wish Empowerment window (~15-30s) that opens when Imminent Wish hits
+      0 with at least one totem cleansed; its length scales with totems cleansed.
+    recommended_dps:
+    - High-burst Heavy (rocket / Heavy GL / Linear Fusion)
+    - Sniper-archetype Special for precision burst
+    - Damage-over-time setup to chip during cleanse phase
+  role_loadouts:
+  - role_id: cleanser
+    subclass: ''
+    weapons: Reach Special for eyes (sniper or scout) + high-burst Heavy for the short Naeem's Wish window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your Heavy/DPS weapon element; add Solar resistance for Rathil's
+      fire AoE
+  - role_id: dps_anchor
+    subclass: ''
+    weapons: Fast-acquire precision Special to pop eyes + top-tier burst Heavy ready to fire the instant
+      the buff drops
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surge mods matched to your burst Heavy element; reload/loader mods to skip the first
+      wasted seconds of the buff
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/warlords-ruin.yaml (encounter 1, Rathil)'
+    note: Primary source for mechanics, callouts, and permutation roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Exotic/weapon/subclass meta shifts each season; specific armor and subclass picks were left
+      blank where not verifiable in the current (Edge of Fate) meta. Verify loadouts against the live
+      sandbox before a run.
+    date_checked: '2026-06-07'

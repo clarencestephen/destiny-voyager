@@ -1,0 +1,126 @@
+# raid_context/content/dungeons/duality/2-statue-puzzle.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: statue-puzzle
+  name: Statue Puzzle (4 gladiator statues)
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Mid-dungeon platforming + puzzle. 4 gladiator statues around a
+
+    central bell. All must point to the middle to unlock the next door.
+
+    Use switches at the base of each (visible only in Nightmare) to
+
+    rotate 90° each press. Hidden chest 1 is here.
+
+    '
+  setup: "WHAT YOU SEE:\n- Wide circular room with central bell.\n- 4 gladiator statues facing different\
+    \ directions.\n- One statue already correctly aligned (facing center).\n- Switches at the base of\
+    \ statues (Nightmare-visible only).\n\nPLATFORM MECHANICS:\n- Shift Nightmare → switches glow.\n-\
+    \ Press switch = statue rotates 90°. Each statue needs:\n  • 1 statue: already correct (0 turns)\n\
+    \  • 2 statues: 2 turns each\n  • 1 statue: 3 turns\n  (exact rotation count varies per attempt —\
+    \ verify in Waking after each turn)\n- Once all 4 facing center → bell area unlocks in Waking.\n"
+  callouts:
+  - when: Statue alignment confirmed in Waking
+    from: checker
+    to: team
+    say: '"Statue [N/S/E/W] correct."'
+    why: Tracks alignment progress.
+  wipe_triggers: []
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Divide-and-conquer
+    learner_friendly: true
+    summary: Each player owns 1-2 statues. Press switch on call.
+    roles:
+    - id: statue_owner
+      count: 3
+      does: Press assigned switch on Waking-check confirmation.
+      loadout:
+        subclass: Any subclass with strong vertical mobility for the platforming (Hunter Lift/dodge, Heat
+          Rises, or Lift)
+        weapons: No combat loadout required; carry your standard traversal kit
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: No combat mods needed; mobility/traversal mods are optional
+  cheese: []
+  common_mistakes:
+  - Pressing a switch on the already-correct statue = misaligns it. Confirm before pressing.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'HIDDEN CHEST 1: After statue puzzle resolved, look for a slightly
+
+        ajar door in the Waking realm (alcove off the main puzzle room).
+
+        Walk in. Chest contains a random roll of an already-collected
+
+        dungeon item.
+
+        '
+      rewards:
+      - Random roll of any dungeon weapon already obtained
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Just play.
+  plain_language_steps:
+  - 1. Enter the wide circular room with the central bell and four gladiator statues, each facing a different
+    direction.
+  - 2. Note that one statue is already correctly aligned and points to the center — do not touch that
+    one.
+  - 3. Shoot the central bell to shift into the Nightmare realm. The switches at the base of each statue
+    glow and become usable only in the Nightmare.
+  - 4. Press a switch to rotate its statue 90 degrees. Each press is one quarter-turn.
+  - 5. Shift back to the Waking realm (stay inside the bell circle on the shift) and check which statues
+    now point to the center.
+  - '6. Repeat: shift to Nightmare, turn the statues that are still wrong, shift back, and verify in the
+    Waking realm after each set of turns. Rotation counts vary per attempt, so always confirm.'
+  - 7. When all four statues face the center, the bell area unlocks in the Waking realm and the next door
+    opens.
+  - '8. Before moving on, grab Hidden Chest 1: look for a slightly ajar door in an alcove off the main
+    puzzle room in the Waking realm and walk in.'
+  defense:
+    incoming_damage:
+      adds: []
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase — this is a platforming and puzzle room with no boss to damage.
+    burst_windows: No damage window; there is no boss in this encounter.
+    recommended_dps: []
+  role_loadouts:
+  - role_id: statue_owner
+    subclass: Any subclass with strong vertical mobility for the platforming (Hunter Lift/dodge, Heat
+      Rises, or Lift)
+    weapons: No combat loadout required; carry your standard traversal kit
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No combat mods needed; mobility/traversal mods are optional
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/duality.yaml (encounter 2: statue-puzzle)'
+    note: Puzzle steps, hidden chest location, and roles taken directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: No combat meta dependency here, but exact rotation counts vary per attempt — always verify alignment
+      in the Waking realm.
+    date_checked: '2026-06-07'

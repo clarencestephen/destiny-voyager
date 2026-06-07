@@ -1,0 +1,220 @@
+# raid_context/content/raids/garden-of-salvation/1-evade-consecrated.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: garden-of-salvation
+  name: Garden of Salvation
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: evade-consecrated
+  name: Evade The Consecrated Mind (Embrace)
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: 'First encounter. Boss is invulnerable — must EVADE by progressing
+
+    through barriers via tether chains. Split 3/3: one team holds boss
+
+    area (collects Voltaic Overflow), other pushes forward (kills
+
+    Angelic Hydra → tether box → next barrier). Swap roles after each
+
+    barrier. End: 3-tether barrier + final room with Cyclopses.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Multi-room corridor of the Embrace, Black Garden.
+
+    - Consecrated Mind (Ultra Harpy) at start, hovering.
+
+    - Vex Lens boxes (tether sources) at various spawn points.
+
+    - Barriers blocking forward progress.
+
+    - Voltaic Overflow charges drop from boss periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Shoot Vex Lens → tether to nearest player → chain through team to barrier in back-right.
+
+    - Barrier opens → split 3/3.
+
+    - Team 1 (boss room): hold boss area, kill Voltaic Overflow charges as they spawn (distribute among
+    3 — never 2+ stacks on one player; explodes if uncollected).
+
+    - Team 2 (forward room): clear ambient + Angelic Hydra → new tether box → next barrier.
+
+    - Once team 2 unlocks next barrier, boss teleports to team 2. SWAP roles.
+
+    - Repeat through 4-5 rooms.
+
+    - Penultimate room: 3 tether boxes to chain → 1 barrier.
+
+    - Final room: boss appears + Cyclopses. Sprint forward while collecting Voltaic Charges. End reached
+    = chest spawns.
+
+
+    START STATE: enter arena. Tether first lens to first barrier to start.
+
+    '
+  callouts:
+  - when: Tether chain forming
+    from: shooter
+    to: team
+    say: '"Tether on [name] — chain to [direction]."'
+    why: Tells team to align for chain.
+  - when: Voltaic Overflow charge
+    from: spotter
+    to: team
+    say: '"VOLTAIC [direction] — [name] take it."'
+    why: Designate collector to avoid stacking.
+  - when: Angelic spawned (forward room)
+    from: team 2
+    to: team
+    say: '"Angelic [direction] — burn."'
+    why: Required for tether box.
+  - when: Barrier opens, swap
+    from: team 2
+    to: team
+    say: '"SWAP — boss to us."'
+    why: Boss teleports to new team.
+  wipe_triggers:
+  - Voltaic Overflow uncollected = explosion.
+  - Two Overflows on one player = death.
+  - Forward team failure (Angelic alive too long) = boss enrages.
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Pull
+    all: First tether to first barrier.
+  - phase: Split + cycle
+    boss_team_3: Hold area, collect Voltaic, distribute.
+    forward_team_3: Push, kill Angelic, tether next barrier.
+  - phase: Swap
+    all: Boss teleports. Swap roles.
+  - phase: Final 3-tether barrier
+    all: Chain 3 tether boxes to final barrier.
+  - phase: Sprint to end
+    all: Race past Cyclopses + Voltaic Charges. Chest at end.
+  permutations:
+  - name: Standard 3/3 rotate
+    learner_friendly: true
+    summary: Rotate boss/forward team per barrier.
+    roles:
+    - id: voltaic_holder
+      count: 3
+      does: 'Per phase: assigned to take Voltaic. Rotate so no one doubles.'
+      loadout:
+        subclass: ''
+        weapons: Reliable add-clear primary plus a fast-clearing special for ambient Vex; mobility is
+          the priority for grabbing Voltaic charges
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Arc and Void resist for Voltaic detonations and Vex fire; Concussive Dampener to
+          soften slap-rifle volleys
+    - id: forward_pusher
+      count: 3
+      does: 'Per phase: kill Angelic, tether barrier, advance.'
+      loadout:
+        subclass: ''
+        weapons: Strong add-clear primary plus a special with burst to drop the Angelic Hydra quickly
+          so the next tether box unlocks
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Weapons
+        surges_mods: Arc and Void resist for Vex fire; mobility/movement aids for fast barrier pushes
+  cheese: []
+  common_mistakes:
+  - Same player takes 2 Voltaics in same phase = death.
+  - Tether chain not aligned = chain breaks before barrier.
+  - Forward team too slow on Angelic = boss enrage.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Zealot's Reward (rapid-fire fusion rifle, Void)
+    - Accrued Redemption (precision combat bow, Kinetic)
+    - Greaves of Ascendancy (Legs)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: voltaic_holder.'
+  - '2nd: forward_pusher.'
+  plain_language_steps:
+  - 1. Enter the Embrace corridor. The Consecrated Mind (an Ultra Harpy) hovers at the start and is invulnerable
+    — you do not kill it here, you escape it.
+  - 2. Find the first Vex Lens (a floating box) and shoot it. It projects a tether to the nearest player,
+    and that tether chains through teammates standing close together.
+  - 3. Line the chain up so it reaches the barrier in the back-right of the room. Once the chain touches
+    the barrier, it opens and lets you progress.
+  - 4. Split into two groups of three. One group stays in the boss room; the other pushes forward into
+    the next room.
+  - '5. Boss-room group: hold the area and watch for Voltaic Overflow charges that drop from the boss.
+    Three players take turns grabbing them — never let the same player grab two in one phase, and never
+    leave one on the ground (it explodes).'
+  - '6. Forward group: clear the ambient Vex and kill the Angelic (a unique Hydra mini-boss). Killing
+    it exposes a new tether box.'
+  - 7. Shoot the new Vex Lens and chain the tether to the next barrier to open it.
+  - 8. When the next barrier opens, the boss teleports to the forward group. Now SWAP roles — whoever
+    was forward holds the boss area, and the other team pushes.
+  - 9. Repeat this push-tether-swap cycle through four to five rooms.
+  - 10. In the penultimate room there are three tether boxes feeding one barrier — chain all three to
+    open it.
+  - 11. In the final room the boss reappears alongside Cyclopses. Sprint forward, grabbing Voltaic Charges
+    as you go.
+  - 12. Reach the end of the corridor to finish the chase. The reward chest spawns.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex adds (Goblins, Harpies, Minotaurs, the Angelic Hydra) deal Arc and Void slap-rifle damage
+      - Voltaic Overflow charges deal Arc damage if left uncollected and detonate
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc and Void resist help against Vex slap-rifle barrages and Voltaic Overflow detonations
+      concussive:
+      - Concussive Dampener helps mitigate Vex slap-rifle volleys and Cyclops eye-blasts in the final
+        sprint room
+  damage:
+    surges:
+    - No DPS phase — the boss is invulnerable here; this encounter is a chase/escape with no damage window
+    burst_windows: No burst window; the goal is to chain tethers through barriers and reach the end, not
+      to deal boss damage.
+    recommended_dps:
+    - Add-clear and mobility tools (none for boss damage)
+  role_loadouts:
+  - role_id: voltaic_holder
+    subclass: ''
+    weapons: Reliable add-clear primary plus a fast-clearing special for ambient Vex; mobility is the
+      priority for grabbing Voltaic charges
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Arc and Void resist for Voltaic detonations and Vex fire; Concussive Dampener to soften
+      slap-rifle volleys
+  - role_id: forward_pusher
+    subclass: ''
+    weapons: Strong add-clear primary plus a special with burst to drop the Angelic Hydra quickly so the
+      next tether box unlocks
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Arc and Void resist for Vex fire; mobility/movement aids for fast barrier pushes
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/garden-of-salvation.yaml (encounter evade-consecrated)'
+    note: Primary source for mechanics, enemies, roles, and timeline.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Subclass names and exotic/weapon picks left blank where the current Edge of Fate meta could
+      not be verified; confirm in-game before committing loadouts.
+    date_checked: '2026-06-07'

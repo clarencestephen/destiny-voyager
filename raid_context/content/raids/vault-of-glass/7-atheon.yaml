@@ -1,0 +1,298 @@
+# raid_context/content/raids/vault-of-glass/7-atheon.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 7
+  slug: atheon
+  name: Atheon, Time's Conflux (final boss)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Final boss. Atheon randomly teleports 3 players to PAST (Mars) or
+
+    FUTURE (Venus). Inside team: 1 Relic holder + 2 Oracle killers (6
+
+    red/yellow Oracles to destroy in 30s). Outside team: 3 players hold
+
+    Atheon''s aggro + DPS. Inside team returns through correct portal.
+
+    DPS phase: 6 stack + Well + burst Atheon. Final stand at 30%.
+
+    '
+  setup: "WHAT YOU SEE:\n- Atheon's Throne room with 2 portals (Venus right, Mars left).\n- Center platform\
+    \ with Aegis Relic.\n- Atheon (large Vex Conflux) at the back.\n\nPLATFORM MECHANICS:\n- Atheon teleports\
+    \ 3 random players (or specific 3 in some perms) into a portal — past or future.\n- Inside team:\n\
+    \  • Past (Mars): 3 Descendant Hobgoblins (Relic instant-kills them; team don't shoot or shields activate).\n\
+    \  • Future (Venus): 2 Precursor Goblins + 1 Praetorian (very tanky; grenades stagger).\n  • 6 red/yellow\
+    \ Oracles spawn — kill all (Relic Super smash works, or 1-shot with jump+heavy).\n  • \"Marked by\
+    \ the Void\" debuff clouds vision. Aegis cleanse removes.\n  • 30s timer to kill enemies + Oracles\
+    \ → return through correct portal.\n- Outside team:\n  • 3 players stay with Atheon. Atheon attacks\
+    \ them (Detains them on Master).\n  • Burst Atheon's HP.\n- When inside team returns: all 6 stand\
+    \ on center plate → DPS phase.\n- DPS phase: ~30-40s window. Drop Well + Bubble. Burst with Cuirass\
+    \ / Celestial / Whisper.\n- Cycle repeats. ~3 phases typical normal-skill.\n\nSTART STATE: rally banner\
+    \ outside. Walk in to start. First teleport ~30s in.\n"
+  callouts:
+  - when: Teleport — who's inside
+    from: first to see
+    to: team
+    say: '"[name1, name2, name3] inside [Venus/Mars]."'
+    why: Outside team knows who's missing.
+  - when: Inside team — planet ID
+    from: diver
+    to: team
+    say: '"VENUS!"'
+    why: Outside team prepares correct portal for return cleanse.
+  - when: Oracle position inside portal
+    from: spotter
+    to: team
+    say: '"Oracle [position] — Relic on it."'
+    why: Relic Super = 1-shot Oracle.
+  - when: Returning
+    from: diver
+    to: team
+    say: '"COMING OUT — portal!"'
+    why: Cleanse + ready DPS.
+  - when: DPS open
+    from: any
+    to: team
+    say: '"DAMAGE — WELL!"'
+    why: Stack, Well, Bubble, burst.
+  - when: Final stand (~30% HP)
+    from: any
+    to: team
+    say: '"FINAL — burn!"'
+    why: Push through.
+  wipe_triggers:
+  - Inside team timer expires → all inside die.
+  - Oracle phase mismanaged → cascading Marks.
+  - Aegis dropped > 5s = Curse of the Aegis team kill.
+  - Atheon enrages (~7-8 min).
+  damage_phase_triggers:
+  - All 6 stand on center plate after inside team returns → ~30-40s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Atheon. 3 dive on first teleport.
+  - phase: Inside portal (~0:30)
+    relic_diver: Pick up Aegis, kill planet's enemies.
+    oracle_killers_2: Destroy 6 Oracles in order. Relic Super or jump+heavy.
+  - phase: Return + cleanse
+    diver: Aegis cleanse on team blackness.
+  - phase: DPS (~30-40s)
+    all: Stack, Well, Bubble, burst.
+  - phase: Reset
+    all: Cycle teleports.
+  permutations:
+  - name: Standard 3/3 split
+    learner_friendly: true
+    summary: 3 inside (1 Relic + 2 Oracle), 3 outside (Atheon DPS).
+    roles:
+    - id: inside_relic
+      count: 1
+      does: Inside portal, holds Aegis.
+      loadout:
+        subclass: Survivable subclass with good neutral game to hold the Aegis and survive inside the
+          portal
+        weapons: Lightweight since the Aegis Super one-shots Oracles and instakills Mars Hobgoblins; an
+          add-clear primary for support
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No weapon surge needed; prioritize survivability and ability regen, and use the Aegis
+          cleanse on return blindness
+    - id: inside_oracle
+      count: 2
+      does: Inside portal, kill enemies + Oracles.
+      loadout:
+        subclass: Any subclass with strong precision add-clear and ability uptime for fast Oracle and
+          add kills
+        weapons: Precision primary/special to one-shot Oracles (jump+heavy melee also works) and clear
+          Goblins; grenades to stagger the Venus Praetorian
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Add-clear and Oracle focus; on Master carry an anti-Champion verb (Anti-Barrier /
+          Anti-Overload)
+    - id: outside_dps
+      count: 3
+      does: Stay with Atheon, burst HP, prep for return DPS.
+      loadout:
+        subclass: A damage-support or high-burst subclass (Solar for Well of Radiance, Void for Bubble,
+          or a one-shot Super class)
+        weapons: Burst heavy (Linear Fusion, Whisper, Sleeper, or rocket) for the DPS phase, plus a special
+          to fill
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: Match your heavy/Super element to the weekly surge on Master; otherwise bring your
+          highest-DPS burst and keep distance from Detain bubbles
+  - name: 'Speed: Celestial Nighthawk one-shot'
+    learner_friendly: false
+    summary: 'Hunter with Celestial Nighthawk + Star-Eater Scales can hit
+
+      Atheon for 8+ million per Super (with Well + Cuirass Crash combo).
+
+      1-2 phase clears common.
+
+      '
+    best_for: Endgame teams.
+  - name: Atheon Cheese (D2 jail)
+    learner_friendly: false
+    summary: '(D1 era) Pushing Atheon off the edge via grenade was an old
+
+      cheese. Mostly patched in D2. Some teams still use specific
+
+      knockback strategies on Master.
+
+      '
+  cheese:
+  - title: Edge knockback
+    detail: 'Specific knockback grenades + sword pushes can shove Atheon
+
+      off the platform in certain D2 reprises. Patched on most
+
+      difficulty tiers — verify with current sandbox."
+
+      '
+  common_mistakes:
+  - Inside team picks up Relic on Mars but doesn't burst Hobgoblins fast — shields up, wasted timer.
+  - Outside team forgets to keep distance from Atheon Detain bubbles.
+  - Not Well-ing DPS phase — Atheon shrugs sustained damage.
+  - Confusing Past vs Future portal — return through WRONG one = team wipe.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (extra roll)
+    hidden_chest: null
+    potential_drops:
+    - '**Vex Mythoclast** (exotic fusion rifle, Solar) — RNG drop from Atheon chest. The OG raid exotic.'
+    - Praedyth's Revenge (sniper rifle, Kinetic)
+    - Corrective Measure (machine gun, Void)
+    - Hezen Vengeance (rocket launcher, Solar)
+    - Vault of Glass armor (random slot).
+    - Time-Worn Spire shader (raid completion reward)
+  master_challenge:
+    name: Ensemble's Refrain
+    requirement: 'Each player may only destroy one Oracle per wave (3 Oracles
+
+      appear per damage cycle while inside Atheon''s time portals).
+
+      Forces every fireteam member to engage in oracle clear — no
+
+      one player solo-cleaning a wave. Master adds a second pair
+
+      of Supplicants per wave.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: outside_dps.'
+  - '2nd: inside_oracle.'
+  - '3rd: inside_relic.'
+  plain_language_steps:
+  - 1. Rally at the banner, then walk into Atheon's throne room. You see two portals (Venus on the right,
+    Mars on the left), a center platform with the Aegis relic, and Atheon at the back.
+  - 2. About 30 seconds in, Atheon teleports three players into a portal, sending them to either the PAST
+    (Mars) or the FUTURE (Venus).
+  - 3. The inside team is one Relic holder plus two Oracle killers. The Relic holder grabs the Aegis.
+    Call the planet out loud ('VENUS!' or 'MARS!') so the outside team knows which portal to prep.
+  - '4. Inside Mars (Past): three Descendant Hobgoblins appear; the Relic instantly kills them, and the
+    other two must NOT shoot them or their shields activate. Inside Venus (Future): two Precursor Goblins
+    plus one very tanky Praetorian appear; grenades stagger the Praetorian.'
+  - 5. Inside the portal, six red/yellow Oracles spawn. Destroy all six within the 30-second timer, using
+    the Relic Super-smash or a jump+heavy melee to one-shot them. The 'Marked by the Void' debuff clouds
+    vision; the Aegis cleanse removes it.
+  - 6. The outside team (three players) stays with Atheon, holds aggro, and chips its HP while keeping
+    distance from Detain bubbles (especially on Master).
+  - 7. The inside team returns through the CORRECT portal. Returning through the wrong portal wipes the
+    team, so confirm Past vs Future before stepping through.
+  - 8. When the inside team is back, all six stack on the center plate to open the DPS phase, roughly
+    a 30 to 40 second window.
+  - 9. Drop a Well of Radiance and a Bubble, then burst Atheon with your highest-damage options (linears,
+    Whisper, Cuirass, Celestial Nighthawk).
+  - 10. Never drop the Aegis for more than 5 seconds, or 'Curse of the Aegis' wipes the team.
+  - 11. Repeat the teleport, Oracle, return, and DPS cycle (about three phases at normal skill). Push
+    hard at the final stand around 30% HP before the 7 to 8 minute enrage.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Descendant Hobgoblins, Mars/Past): precision Solar fire; shields activate if non-relic players
+        shoot them'
+      - 'Vex (Precursor Goblins, Venus/Future): Void slap-rifle fire'
+      - 'Vex (Praetorian, Venus/Future): very tanky Void heavy melee and slap-rifle; grenades stagger
+        it'
+      - 'Vex (Oracles): not damage-dealers, but failing the wave cascades Marks for Negation onto the
+        team'
+      boss:
+      - Void (Atheon's eye fire and Detain bubbles that trap the outside team)
+    champions:
+    - Barrier Hydra -> Anti-Barrier (Master only)
+    - Overload Minotaur -> Anti-Overload (Master only)
+    recommended_defensive_mods:
+      elemental:
+      - Void resist for Atheon's fire and the inside Goblins/Praetorian; Solar resist for the Mars Descendant
+        Hobgoblins; the inside 'Marked by the Void' blindness is cleared by the Aegis cleanse, not resist
+        mods
+      concussive:
+      - Concussive Dampener can soften Atheon's burst and Detain-area damage when stacking for the DPS
+        phase on Master
+  damage:
+    surges:
+    - DPS phase opens when all six stack on the center plate after the inside team returns. No element
+      is forced; bring your strongest burst and, on Master, match the weekly surge to your damage weapon/Super
+    burst_windows: Roughly a 30 to 40 second window each cycle once the inside team returns and all six
+      stack on the center plate; drop Well and Bubble, then burst.
+    recommended_dps:
+    - 'Burst heavy: Linear Fusion Rifles, Whisper, Sleeper, or rockets'
+    - Well of Radiance plus a damage-amp Super stack (e.g., Bubble) per the guide's DPS cue
+    - 'High-burst Super options: Celestial Nighthawk (with Star-Eater Scales), Cuirass of the Falling
+      Star Thundercrash; Fatebringer hand cannon trivializes add/Oracle cleanup'
+  role_loadouts:
+  - role_id: inside_relic
+    subclass: Survivable subclass with good neutral game to hold the Aegis and survive inside the portal
+    weapons: Lightweight since the Aegis Super one-shots Oracles and instakills Mars Hobgoblins; an add-clear
+      primary for support
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No weapon surge needed; prioritize survivability and ability regen, and use the Aegis
+      cleanse on return blindness
+  - role_id: inside_oracle
+    subclass: Any subclass with strong precision add-clear and ability uptime for fast Oracle and add
+      kills
+    weapons: Precision primary/special to one-shot Oracles (jump+heavy melee also works) and clear Goblins;
+      grenades to stagger the Venus Praetorian
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Add-clear and Oracle focus; on Master carry an anti-Champion verb (Anti-Barrier / Anti-Overload)
+  - role_id: outside_dps
+    subclass: A damage-support or high-burst subclass (Solar for Well of Radiance, Void for Bubble, or
+      a one-shot Super class)
+    weapons: Burst heavy (Linear Fusion, Whisper, Sleeper, or rocket) for the DPS phase, plus a special
+      to fill
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match your heavy/Super element to the weekly surge on Master; otherwise bring your highest-DPS
+      burst and keep distance from Detain bubbles
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: atheon)'
+    note: Primary source for the 3/3 teleport split, inside-portal enemies/Oracles, return-portal rule,
+      Aegis cleanse, and DPS-phase cues.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Damage meta (linears, rockets, one-shot Supers like Celestial Nighthawk/Cuirass) and Master
+      Champions/surges rotate; verify current-meta burst and the weekly modifiers before the run.
+    date_checked: '2026-06-07'

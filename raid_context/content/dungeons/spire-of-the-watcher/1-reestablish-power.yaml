@@ -1,0 +1,141 @@
+# raid_context/content/dungeons/spire-of-the-watcher/1-reestablish-power.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: reestablish-power
+  name: Reestablish Power (intro outpost — 4 circuits)
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Tutorial. 4 yellow Arc circuits to activate in an outpost. Two
+
+    buildings with circuits on rooftop + inside each. Goal: door
+
+    opens at center when all 4 done. Triggers Supplicants if completed
+
+    separately — finish them all near-simultaneously.
+
+    '
+  setup: "WHAT YOU SEE:\n- Two buildings (left + right) framing an outpost square.\n- Conduit Minotaur\
+    \ in the center for first Arctrician.\n- 4 separate circuits: 2 per building (one inside, one on rooftop).\n\
+    - Central door (locked) with end-node convergence.\n\nPLATFORM MECHANICS:\n- Kill Conduit Minotaur\
+    \ → step in pool = Arctrician (30s).\n- Each circuit's start node has chevrons pointing direction.\n\
+    - Complete each one → Supplicants spawn from THAT side. Finish 3 to\n  ~90%, save the final node for\
+    \ each, sweep all 4 last steps.\n"
+  callouts:
+  - when: Circuit started
+    from: runner
+    to: team
+    say: '"[L-inside / R-rooftop / etc] STARTED."'
+    why: Avoids 2 runners on same circuit.
+  - when: Circuit at last node (held)
+    from: runner
+    to: team
+    say: '"[location] LAST NODE — holding."'
+    why: Sync for parallel finish to avoid Supplicants.
+  wipe_triggers:
+  - Supplicant chain explosions during finish sweep.
+  - Falling from rooftops (long fall = death).
+  damage_phase_triggers:
+  - All 4 circuits ended → central door opens.
+  parallel_timeline:
+  - phase: Setup
+    all: Kill Conduit Minotaur, all 3 get Arctrician.
+  - phase: Build to 90%
+    runners_2: Take 2 circuits each — activate everything except last node.
+  - phase: Sweep
+    all: Hit last nodes near-simultaneously. Manage Supplicants.
+  permutations:
+  - name: Standard split
+    learner_friendly: true
+    summary: Each player owns 1-2 circuits. Sync final activations.
+    roles:
+    - id: circuit_runner
+      count: 3
+      does: Owns assigned circuit. Reports start/last-node status.
+      loadout:
+        subclass: Any subclass with strong vertical mobility for rooftop traversal (Arc or Solar movement
+          options recommended).
+        weapons: A precision Primary to tag distant Arc nodes (Long Arm scout or any scout/hand cannon),
+          plus a quick add-clear weapon for Supplicants. Heavy is not needed here.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge mods needed (no DPS phase). Run general survivability and ammo-finder mods.
+  cheese: []
+  common_mistakes:
+  - Finishing one circuit fully = Supplicants spawn = next runner takes damage.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - Just play. Self-teaching mechanic.
+  plain_language_steps:
+  - 1. Drop into the outpost square. You will see two buildings (left and right) framing the area, with
+    a central locked door between them.
+  - 2. Find and kill the Conduit Minotaur in the center. A glowing pool drops where it dies.
+  - 3. Have all three players step into the pool to pick up the Arctrician buff (30 second timer). This
+    buff is what lets you shoot the Arc nodes.
+  - '4. Locate the 4 separate yellow Arc circuits: two per building, one inside and one on the rooftop
+    of each.'
+  - 5. At each circuit's start node look for the chevron arrows that point toward the next node, so you
+    trace the circuit in the correct order.
+  - '6. Split up: each runner takes 1-2 circuits and shoots the nodes in order from start toward the central
+    door.'
+  - '7. IMPORTANT: do not fully finish any single circuit yet. Activate everything except the very last
+    node on each, then call ''[location] LAST NODE - holding.'''
+  - 8. Once all circuits are sitting on their last node, sweep and hit all final nodes near-simultaneously.
+  - 9. Each completed circuit spawns Supplicants (chasing exploders) from that side, so finishing together
+    keeps the explosions from picking off the next runner.
+  - 10. With all 4 circuits ended, the central door opens. Regroup and proceed.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Vex line/slap-rifle fire from Vex defenders)
+      - Supplicants deal explosive contact damage when they reach you
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Champions on Normal; survivability is mostly about not falling off rooftops. An Arc resist
+        option helps against Vex line-rifle fire but is optional here.
+      concussive:
+      - Concussive Dampener can blunt Supplicant explosion damage during the final sweep if a chain catches
+        you, but tight finish timing matters more than the mod.
+  damage:
+    surges:
+    - No boss / no DPS phase in this intro encounter - there are no surges to optimize for.
+    burst_windows: No damage phase; the only 'window' is the synchronized final-node sweep to finish all
+      4 circuits at once.
+    recommended_dps:
+    - Not applicable (no boss). Bring reliable add-clear for Supplicants.
+  role_loadouts:
+  - role_id: circuit_runner
+    subclass: Any subclass with strong vertical mobility for rooftop traversal (Arc or Solar movement
+      options recommended).
+    weapons: A precision Primary to tag distant Arc nodes (Long Arm scout or any scout/hand cannon), plus
+      a quick add-clear weapon for Supplicants. Heavy is not needed here.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge mods needed (no DPS phase). Run general survivability and ammo-finder mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/spire-of-the-watcher.yaml (encounter 1: reestablish-power)'
+    note: Primary source for mechanics, parallel timeline, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Verify exact node positions and any sandbox stat/mod renames against the current in-game build
+      before a run; loot pool and traversal layout are stable but mod names changed under Edge of Fate.
+    date_checked: '2026-06-07'

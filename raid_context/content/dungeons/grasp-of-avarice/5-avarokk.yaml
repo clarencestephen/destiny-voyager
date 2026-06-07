@@ -1,0 +1,289 @@
+# raid_context/content/dungeons/grasp-of-avarice/5-avarokk.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 5
+  slug: avarokk
+  name: Wilhelm's Hoard (Captain Avarokk, the Covetous)
+  difficulty: hard
+  estimated_time: 12-18 min
+  abstract: 'Final boss. Avarokk + 2 lieutenants (R-M80, Grisprax). Charge Fallen
+
+    batteries with Scorch Cannons → engrams rain from ceiling → deposit
+
+    60 at Icon → DPS phase. Lieutenants drop ~10 engrams each on death.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Sphere interior, opulent loot piles, Avarokk + lieutenants in center.
+
+    - 3 Fallen batteries around the perimeter (visible orange chargers).
+
+    - Icon of Excess in the room center.
+
+    - Scorch Cannons drop from Vandal spawns periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Approach the central engram on pull to summon Avarokk + lieutenants.
+
+    - Kill lieutenants ASAP (high damage + drop 10 engrams each).
+
+    - Scorch Cannon → aim at a battery → hold trigger to charge → release at full = engrams fall from
+    ceiling near that battery.
+
+    - Deposit 60 cumulative stacks → DPS phase.
+
+
+    START STATE: rally banner outside the door. Walk to center engram to start.
+
+    '
+  callouts:
+  - when: Lieutenants spotted (Grisprax + R-M80)
+    from: spotter
+    to: team
+    say: '"R-M80 [direction], Grisprax [direction]."'
+    why: Focus-fire priority. They one-shot from melee range.
+  - when: Lieutenant down
+    from: killer
+    to: team
+    say: '"[Lieutenant] DOWN — 10 engrams [location]."'
+    why: Gatherers converge.
+  - when: Battery charged + engrams falling
+    from: cannoneer
+    to: team
+    say: '"[N/S/E] battery RAINING."'
+    why: Gatherers run that direction.
+  - when: Deposit milestone
+    from: any
+    to: team
+    say: '"40 in."'
+    why: Pacing — push 1 more battery or sprint last 20.
+  - when: Avarokk succumbs (DPS open)
+    from: any
+    to: team
+    say: '"DAMAGE — front of room."'
+    why: Avarokk retreats to front during DPS. Position there.
+  wipe_triggers:
+  - Burdened timer = 0 (very tight on this fight — engram density is variable).
+  - Lieutenant melee (one-shot most builds).
+  - Avarokk's grenade barrage at full LoS.
+  damage_phase_triggers:
+  - 60 stacks deposited → Avarokk retreats to front of room + becomes vulnerable.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Approach center engram. Avarokk + lieutenants spawn.
+  - phase: Lieutenant kill (~0:15-0:45)
+    focus_fire: Burst R-M80 + Grisprax. Pick up their 20 engrams.
+  - phase: Battery cycle (~0:45-2:00)
+    cannoneer: Charge 1-2 batteries.
+    gatherers_2: Run under raining engrams. Pick + deposit.
+  - phase: DPS (~2:00-2:30)
+    all: Stack at front. Well + Bubble. Burst Avarokk to threshold.
+  - phase: Reset (if not 1-phased)
+    all: Lieutenants respawn. Cycle.
+  permutations:
+  - name: Standard 1-cannon / 2-gather
+    learner_friendly: true
+    summary: Dedicated cannoneer charges batteries; 2 gatherers focus lieutenants then engrams.
+    roles:
+    - id: cannoneer
+      count: 1
+      does: Hold cannon all phases. Charge 2 batteries per cycle.
+      loadout:
+        subclass: Survivable subclass (strong sustain or Stasis crowd-control) so you can hold the cannon
+          and charge batteries through lieutenant and add pressure.
+        weapons: Primary to help drop Vandals and lieutenants; hold the Scorch Cannon to charge batteries
+          (2 per cycle). Switching weapons drops the cannon but preserves ammo for re-pickup.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No mandatory surge; prioritize resilience and ability-uptime mods over weapon surges
+          for the cannoneer.
+    - id: gatherer
+      count: 2
+      does: Kill lieutenants → gather lieutenant engrams → gather battery engrams → deposit.
+      loadout:
+        subclass: Add-clear plus self-healing subclass; the every-10-stacks instant Super recharge supports
+          frequent Super use for lieutenant burst and survival.
+        weapons: Burst heavy for the damage window plus an add-clear primary; Witherhoard to chip Avarokk
+          during deposit runs.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Heavy surge matched to your burst weapon's element; otherwise resilience and ability
+          mods.
+  - name: 'Speed: 2-cannon / 1-gather'
+    learner_friendly: false
+    summary: Two batteries simultaneously, one gatherer races both rain points.
+    best_for: 1-phase teams with good burst.
+    roles:
+    - id: cannoneer
+      count: 2
+      does: Charge batteries in parallel.
+      loadout:
+        subclass: Survivable subclass (strong sustain or Stasis crowd-control) so you can hold the cannon
+          and charge batteries through lieutenant and add pressure.
+        weapons: Primary to help drop Vandals and lieutenants; hold the Scorch Cannon to charge batteries
+          (2 per cycle). Switching weapons drops the cannon but preserves ammo for re-pickup.
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: No mandatory surge; prioritize resilience and ability-uptime mods over weapon surges
+          for the cannoneer.
+    - id: gatherer
+      count: 1
+      does: Sprint between rain zones. Deposit.
+      loadout:
+        subclass: Add-clear plus self-healing subclass; the every-10-stacks instant Super recharge supports
+          frequent Super use for lieutenant burst and survival.
+        weapons: Burst heavy for the damage window plus an add-clear primary; Witherhoard to chip Avarokk
+          during deposit runs.
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: Heavy surge matched to your burst weapon's element; otherwise resilience and ability
+          mods.
+  - name: Solo
+    learner_friendly: false
+    summary: Cannon → battery → gather → deposit, alone. Expect 4-6 phases.
+    roles:
+    - id: solo
+      count: 1
+      does: Cannon for 1 battery per cycle. Witherhoard Avarokk during deposit runs.
+      notes:
+      - Stasis crowd-control on lieutenants helps survive while cannoneering.
+      loadout:
+        subclass: Stasis or other crowd-control subclass to freeze/control lieutenants while you cannoneer;
+          high sustain for the 4-6 phase grind.
+        weapons: Witherhoard to chip Avarokk during deposit runs, plus a burst heavy for the window; add-clear
+          primary for lieutenants and Vandals.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Heavy surge matched to your burst weapon; lean on survivability and ability mods
+          for the solo attempt.
+  cheese: []
+  common_mistakes:
+  - Picking engrams BEFORE killing lieutenants — lieutenants kill you while you're on a timer.
+  - Trying to cannon BEFORE killing lieutenants — cannon is needed but lieutenant DPS interrupts.
+  - Depositing one-by-one — bank 10, then deposit. Fewer Icon trips.
+  - DPS from the back of the room — Avarokk moves to front during DPS, range matters.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final boss chest (extra roll)
+    hidden_chest: null
+    potential_drops:
+    - Matador 64 (shotgun, Arc)
+    - Hero of Ages (sword, Arc)
+    - Eyasluna (hand cannon, Stasis)
+    - 1000-Yard Stare (sniper rifle, Void)
+    - Descending Echo armor — Helm + Gauntlets (encounter-specific slots)
+    - 'Note: **Gjallarhorn** (exotic rocket launcher) is the quest reward from encounter 4''s hidden chest
+      sequence, not a final-boss RNG drop. Guaranteed on first clear via the quest path.'
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: gatherer (lieutenant focus → engrams).'
+  - '2nd: cannoneer (battery routing practice).'
+  - 'Solo: only after 3-player clear. Mechanic load compounds.'
+  plain_language_steps:
+  - 1. Place the rally banner outside the door, then walk to the central engram inside the sphere interior
+    to start the fight and summon Captain Avarokk plus his two lieutenants, R-M80 and Grisprax.
+  - 2. Immediately focus-fire the lieutenants. They deal very high damage and can one-shot from melee
+    range, so call their positions and burst them first.
+  - 3. Each lieutenant drops about 10 Cursed Engrams on death (20 total); pick those up first, since they
+    spawn near the deposit point.
+  - 4. Pick up a Scorch Cannon dropped from Vandal spawns.
+  - 5. Aim the cannon at one of the 3 Fallen batteries around the perimeter, hold the trigger to charge
+    fully, then release to rain engrams from the ceiling near that battery.
+  - 6. The cannoneer calls which battery is raining so gatherers run that direction.
+  - 7. Gather the falling engrams, but manage your Burdened timer tightly (engram density is variable
+    and this fight is unforgiving); bank around 10 stacks, then deposit at the Icon of Excess in the room
+    center.
+  - 8. Keep cycling batteries and depositing until the team reaches 60 cumulative deposited stacks.
+  - 9. At 60, Avarokk retreats to the front of the room and becomes vulnerable.
+  - 10. Stack up at the front of the room, drop a Well and Bubble, and burst Avarokk during the damage
+    window; range matters because he moves forward.
+  - 11. If he survives, the lieutenants respawn and the cycle resets; repeat the gather-deposit-DPS loop
+    until he dies.
+  - 12. Avoid Avarokk's grenade barrage by breaking line of sight when you are not actively depositing
+    or damaging.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Fallen Dreg/Vandal/Marauder fire and Scorch Cannon Vandals)
+      - Arc (lieutenants R-M80 and Grisprax melee and shots; one-shot from melee range)
+      boss:
+      - Arc (Captain Avarokk grenade barrage / Fallen Captain attacks)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc resistance helps against the dense Fallen adds and the hard-hitting lieutenants. Break line
+        of sight on Avarokk's grenade barrage rather than tanking it.
+      concussive:
+      - 'Optional: Concussive Dampener can reduce splash from Avarokk''s grenade barrage and Fallen explosives
+        if you cannot break sightline.'
+  damage:
+    surges:
+    - No fixed elemental requirement; match surges to your strongest burst heavy. The window after 60
+      stacks is short, so prioritize raw burst over element.
+    burst_windows: Opens at 60 cumulative deposited stacks; Avarokk retreats to the front and is vulnerable
+      for a short window before resetting (expect to threshold rather than one-phase on learning runs).
+    recommended_dps:
+    - 'Burst DPS for the short window: heavy Rocket Launcher, Grenade Launcher, or Linear Fusion Rifle;
+      Sword if you can safely close; Witherhoard for chip during deposit runs. Well of Radiance plus Bubble
+      for a stationary front-of-room damage stack.'
+  role_loadouts:
+  - role_id: cannoneer
+    subclass: Survivable subclass (strong sustain or Stasis crowd-control) so you can hold the cannon
+      and charge batteries through lieutenant and add pressure.
+    weapons: Primary to help drop Vandals and lieutenants; hold the Scorch Cannon to charge batteries
+      (2 per cycle). Switching weapons drops the cannon but preserves ammo for re-pickup.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No mandatory surge; prioritize resilience and ability-uptime mods over weapon surges
+      for the cannoneer.
+  - role_id: gatherer
+    subclass: Add-clear plus self-healing subclass; the every-10-stacks instant Super recharge supports
+      frequent Super use for lieutenant burst and survival.
+    weapons: Burst heavy for the damage window plus an add-clear primary; Witherhoard to chip Avarokk
+      during deposit runs.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Heavy surge matched to your burst weapon's element; otherwise resilience and ability
+      mods.
+  - role_id: solo
+    subclass: Stasis or other crowd-control subclass to freeze/control lieutenants while you cannoneer;
+      high sustain for the 4-6 phase grind.
+    weapons: Witherhoard to chip Avarokk during deposit runs, plus a burst heavy for the window; add-clear
+      primary for lieutenants and Vandals.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Heavy surge matched to your burst weapon; lean on survivability and ability mods for
+      the solo attempt.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: avarokk)'
+    note: Primary source for the lieutenant focus-fire, Scorch Cannon battery raining, 60-deposit DPS
+      trigger, front-of-room positioning, and permutations (cannoneer/gatherer/solo).
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Avarokk and lieutenant attacks treated as Arc per Fallen Captain convention; confirm current
+      burst-DPS and exotic meta before locking loadouts. Gjallarhorn is the quest reward, not a final-boss
+      RNG drop.
+    date_checked: '2026-06-07'

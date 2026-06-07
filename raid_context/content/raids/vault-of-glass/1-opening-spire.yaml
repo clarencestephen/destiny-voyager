@@ -1,0 +1,175 @@
+# raid_context/content/raids/vault-of-glass/1-opening-spire.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: opening-spire
+  name: Opening — Waking Ruins (Spire)
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'Pre-raid opener. 3 sync plates around a Vex spire. Stand on all 3
+
+    for 5 minutes continuously (Praetorians try to interrupt) → spire
+
+    assembles → vault portal opens. Tutorial for sync-plate defense.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - 3 sync plates (L / center / R) around a partially-assembled Vex spire.
+
+    - Goblins + Hobgoblins spawn near each plate.
+
+    - Praetorians (elite Minotaurs) spawn every few waves — they SPRINT to plates.
+
+    - Malignant Cyclops spawns occasionally on rocks (annoying ranged threat).
+
+
+    PLATFORM MECHANICS:
+
+    - Player on plate = plate active = spire builds.
+
+    - Praetorian on plate = plate reverses.
+
+    - All 3 active for ~5 minutes = spire complete.
+
+
+    START STATE: pull = step on any plate to start.
+
+    '
+  callouts:
+  - when: Praetorian spawned
+    from: spotter
+    to: team
+    say: '"PRAETORIAN [direction] — burn."'
+    why: Highest-priority kill. Will deactivate plate fast.
+  - when: Cyclops up
+    from: spotter
+    to: team
+    say: '"Cyclops [direction] — pick it."'
+    why: Annoying ranged. Kill or hide.
+  wipe_triggers:
+  - All 3 plates deactivated simultaneously (rare, but possible if Praetorians overrun).
+  damage_phase_triggers:
+  - Spire fully built → portal opens.
+  parallel_timeline:
+  - phase: Pull
+    all: 3 split to L/center/R plates.
+  - phase: Hold (5min)
+    plate_defenders_3: Stand on plate. Defend from Praetorians.
+    floaters_3: Patrol between plates. Burst Praetorians + Cyclops.
+  permutations:
+  - name: Standard 1 plate / 1 floater per side
+    learner_friendly: true
+    summary: Each side gets a plate defender + a floater for Praetorian pressure.
+    roles:
+    - id: plate_defender
+      count: 3
+      does: Stand on plate. Self-defend.
+      loadout:
+        subclass: Any survivable subclass with self-sustain (e.g., Solar for restoration or Void for overshield)
+        weapons: Add-clear primary (auto rifle or pulse) plus a special you can self-defend with; sidearm
+          or shotgun for adds that close in
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge needed (no DPS phase); run an add-clear-focused loadout and minor-spec where
+          applicable
+    - id: floater
+      count: 3
+      does: Praetorian hunting + cover.
+      loadout:
+        subclass: Any mobile subclass with strong ability uptime for chasing Praetorians
+        weapons: Burst special or heavy (sniper, GL, or rocket) to delete Praetorians, plus a precision
+          primary for Hobgoblins/Cyclops
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: No surge needed; prioritize anti-major/anti-Praetorian burst and ammo economy
+  cheese: []
+  common_mistakes:
+  - Stepping off plate to chase a Praetorian — plate reverses.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+  learner_path:
+  - '1st: plate_defender. Easy intro.'
+  plain_language_steps:
+  - 1. Walk into the Waking Ruins. You see three sync plates (left, center, right) arranged around a half-built
+    Vex spire.
+  - 2. Split your six players so each of the three plates has someone standing on it; the other three
+    roam as floaters.
+  - 3. Step onto a plate to start. While a Guardian stands on a plate, the spire slowly builds. You must
+    hold all three for roughly five continuous minutes.
+  - '4. Watch for Vex adds: Goblins and Hobgoblins spawn near each plate, and an occasional Malignant
+    Cyclops appears on the rocks as a ranged threat.'
+  - 5. When a Praetorian (a large elite Minotaur) spawns, call it out by direction and focus it down fast.
+    Praetorians sprint to plates to capture them.
+  - 6. If a Praetorian reaches an active plate, that plate reverses its progress, so never let one stand
+    on a plate.
+  - 7. Do not step off your plate to chase a Praetorian; the plate stops building the moment you leave
+    it. Let the floaters hunt the Praetorians.
+  - 8. Keep all three plates held until the spire finishes assembling, which opens the vault portal and
+    ends the opener.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Goblins, Hobgoblins): Hobgoblins are precision Solar snipers from distant platforms'
+      - 'Vex (Malignant Cyclops): ranged Void eye-blast pressure'
+      - 'Vex (Praetorian Minotaurs): heavy melee and Void slap-rifle fire as they rush plates'
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - On Master, Void resist helps vs Cyclops blasts and Praetorian fire; Solar resist helps vs Hobgoblin
+        snipers
+      concussive:
+      - Not required on Normal; Concussive Dampener can ease Cyclops blast knock and chip damage on Master
+  damage:
+    surges:
+    - No boss DPS phase in this encounter; this is a sync-plate hold, so element surge is not a factor
+      here
+    burst_windows: No DPS window; instead, burst Praetorians the instant they spawn so they never reach
+      a plate.
+    recommended_dps:
+    - Add-clear primaries (auto rifle, pulse, scout) for Goblins/Hobgoblins
+    - High-burst special or heavy (sniper, GL, rocket) to delete Praetorians quickly
+    - Long-range scout or sniper for distant Hobgoblins and Cyclops
+  role_loadouts:
+  - role_id: plate_defender
+    subclass: Any survivable subclass with self-sustain (e.g., Solar for restoration or Void for overshield)
+    weapons: Add-clear primary (auto rifle or pulse) plus a special you can self-defend with; sidearm
+      or shotgun for adds that close in
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge needed (no DPS phase); run an add-clear-focused loadout and minor-spec where
+      applicable
+  - role_id: floater
+    subclass: Any mobile subclass with strong ability uptime for chasing Praetorians
+    weapons: Burst special or heavy (sniper, GL, or rocket) to delete Praetorians, plus a precision primary
+      for Hobgoblins/Cyclops
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge needed; prioritize anti-major/anti-Praetorian burst and ammo economy
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: opening-spire)'
+    note: Primary source for mechanics, enemies, plate behavior, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Vex add elements and Master modifiers can shift with sandbox/seasonal updates; verify Champion
+      and surge rotators against the current week before locking loadouts.
+    date_checked: '2026-06-07'

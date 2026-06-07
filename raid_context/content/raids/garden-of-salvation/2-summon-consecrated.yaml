@@ -1,0 +1,201 @@
+# raid_context/content/raids/garden-of-salvation/2-summon-consecrated.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: garden-of-salvation
+  name: Garden of Salvation
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: summon-consecrated
+  name: Summon The Consecrated Mind (Undergrowth — 5 relays)
+  difficulty: medium
+  estimated_time: 15-20 min
+  abstract: 'Diamond-shaped map with 5 relays (S center, N center, E, W, +
+
+    central). Each relay has a Vex Conflux + tether box (shielded
+
+    until Angelic dies). Tether to conflux = Enlightenment. Defend
+
+    confluxes from Vex sacrifices using Enlightened buffs (Vex are
+
+    immune-shielded — only Enlightened can damage). 3 Angelics per
+
+    relay over time → central relay tether finale.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Diamond-shaped arena. Relays at S (Alcove), W (Hedges), E (Pavilion), N (top), plus central.
+
+    - Vex Confluxes at each relay.
+
+    - Tether boxes near each conflux (shielded initially).
+
+    - Warp Gates flanking each relay (activate when tether to conflux).
+
+
+    PLATFORM MECHANICS:
+
+    - Split 3/3/2 (or 2/2/2) per relay area initially. Push to first 3 relays (S, W, E).
+
+    - Kill Angelic at each relay → shield drops on tether box → shoot Lens → tether to Conflux → 45s Enlightenment.
+
+    - Defend Conflux from Vex sacrifices.
+
+    - Use Enlightenment to break Vex immune shields.
+
+    - After 3 relays clear: 4 players defend ONE chosen relay, 2 cycle between relays refreshing buffs.
+
+    - 3 Angelics will eventually spawn at each relay (cycle, kill them all).
+
+    - All Angelics dead → regroup at CENTER relay.
+
+    - Central relay: tether box + Angelic + waves. Defend until done → chest.
+
+
+    START STATE: rally banner at S spawn. Push relays.
+
+    '
+  callouts:
+  - when: Angelic spotted
+    from: spotter
+    to: team
+    say: '"Angelic [relay] — burn."'
+    why: Need to drop for tether shield.
+  - when: Tether to Conflux done
+    from: tetherer
+    to: team
+    say: '"[relay] LIVE — Enlightened."'
+    why: Team can now break shields.
+  - when: Buff timer low
+    from: self
+    to: team
+    say: '"Enl LOW — refreshing [relay]."'
+    why: Cycle re-tether.
+  - when: Sacrifice approaching
+    from: defender
+    to: team
+    say: '"Conflux [relay] — sacrifice!"'
+    why: Burst Vex before tribute.
+  wipe_triggers:
+  - Conflux fully sacrificed.
+  - Failure to break Vex shields → cascading sacrifices.
+  - Enlightenment expires + no refresh.
+  damage_phase_triggers:
+  - All Angelics + central encounter completed → chest spawns.
+  parallel_timeline:
+  - phase: Pull
+    teams_3x2: Push to S, W, E relays. 2 per relay.
+  - phase: Per relay cycle
+    angelic_killer: Drop Angelic.
+    tetherer: Tether box to Conflux.
+    defenders: Hold Conflux with Enlightenment shields-break.
+  - phase: Convergence
+    all: Meet at central relay.
+  - phase: Central finale
+    all: Tether central, defend, kill Angelics + waves.
+  permutations:
+  - name: Standard 2 per relay
+    learner_friendly: true
+    summary: Spread to 3 outer relays; collapse on central.
+    roles:
+    - id: relay_holder
+      count: 6
+      does: Pair to a relay. Kill Angelic, tether, defend Conflux.
+      loadout:
+        subclass: ''
+        weapons: Anti-Barrier-capable primary for Barrier Hobgoblins (East/West) plus a special for fast
+          Angelic kills; consistent add-clear to defend the Conflux
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Anti-Barrier mod; Arc and Void resist for Vex fire; Concussive Dampener for close-range
+          Conflux defense
+  - name: 'Speed: parallel tethers'
+    learner_friendly: false
+    summary: Tether all 4 outer relays in parallel cycles. Faster but coordination-heavy.
+  cheese: []
+  common_mistakes:
+  - Barrier Hobgoblins at E + W — bring Anti-Barrier mods.
+  - Trying to damage Vex without Enlightenment = no damage.
+  - Slow Conflux defense = sacrifices stack.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Prophet of Doom (precision shotgun, Arc)
+    - Reckless Oracle (rapid-fire auto rifle, Void)
+    - Gauntlets of Exaltation (Arms)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: relay_holder (defensive role first).'
+  plain_language_steps:
+  - '1. Drop your rally banner at the South spawn. You are in a diamond-shaped arena with five relays:
+    South (Alcove), West (Hedges), East (Pavilion), North, and a central relay.'
+  - 2. Each relay has a Vex Conflux to defend and a tether box that is shielded until you kill the Angelic
+    Hydra guarding that relay.
+  - '3. Split up (3/3/2 or 2/2/2) and push to the first three outer relays: South, West, and East.'
+  - 4. At each relay, kill the Angelic to drop the shield on that relay's tether box.
+  - 5. Shoot the Vex Lens and chain the tether to that relay's Conflux. Standing in the chain grants Enlightenment
+    for 45 seconds.
+  - 6. Enlightenment is required to damage the immune-shielded Vex — without it your shots do nothing.
+    Use it to break their shields and stop Vex sacrifices reaching the Conflux.
+  - 7. Watch for Barrier Hobgoblins at the East and West relays — bring Anti-Barrier so you can break
+    their shields.
+  - 8. Once the first three relays are stable, have four players defend one chosen relay while two players
+    cycle between relays refreshing Enlightenment.
+  - 9. Three Angelics will eventually spawn at each relay over time — kill them all as they cycle in.
+  - 10. When every Angelic is dead, regroup at the CENTER relay.
+  - 11. At the central relay, tether its box to the Conflux, then defend against the Angelic and incoming
+    waves.
+  - 12. Survive the central finale to complete the encounter and spawn the chest.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex adds (Goblins, Harpies, Minotaurs, Hobgoblins including Barrier Hobgoblins, the Angelic Hydra)
+        deal Arc and Void slap-rifle and line-rifle damage
+      - Hobgoblin line-rifles deal Void/Solar precision damage at range
+      boss: []
+    champions:
+    - Barrier Hobgoblin -> Anti-Barrier
+    recommended_defensive_mods:
+      elemental:
+      - Arc and Void resist help against Vex slap-rifle barrages; Hobgoblin snipers favor ranged resist
+        and cover
+      concussive:
+      - Concussive Dampener softens Vex slap-rifle volleys while defending Confluxes at close range
+  damage:
+    surges:
+    - No traditional boss DPS phase — this is a defend/summon encounter; damage is spent breaking Enlightenment-gated
+      Vex shields and clearing Angelics rather than a boss burn
+    burst_windows: No boss burn window; the closest thing to a burst window is quickly clearing each Angelic
+      to unlock its tether box.
+    recommended_dps:
+    - Add-clear and shield-break weapons usable while Enlightened (Anti-Barrier primary for Hobgoblins)
+  role_loadouts:
+  - role_id: relay_holder
+    subclass: ''
+    weapons: Anti-Barrier-capable primary for Barrier Hobgoblins (East/West) plus a special for fast Angelic
+      kills; consistent add-clear to defend the Conflux
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Anti-Barrier mod; Arc and Void resist for Vex fire; Concussive Dampener for close-range
+      Conflux defense
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/garden-of-salvation.yaml (encounter summon-consecrated)'
+    note: Primary source for mechanics, relays, Barrier Hobgoblin note, roles, and timeline.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Subclass and specific weapon/exotic picks left blank where the current Edge of Fate meta could
+      not be verified; confirm Anti-Barrier availability and loadouts in-game.
+    date_checked: '2026-06-07'

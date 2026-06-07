@@ -1,0 +1,272 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/3-simmumah.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: simmumah
+  name: Šimmumah ur-Nokru, Lucent Necromancer
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Final boss. Open cove with Oryx''s half-buried corpse. Šimmumah floats
+
+    above. Crush an unclaimed Ghost to start. 3 cycles: Deepsight reveals
+
+    3 small orbs above Oryx body parts; kill Vorlog UNDER an orb to lure
+
+    Šimmumah; align ring + symbol when she lands; reveals rune; kill a
+
+    Lightbearer (knight/acolyte/wizard) in methane pocket → crush Ghost
+
+    → Vestige with that rune → deposit at matching orb. 3 done = Šimmumah
+
+    vulnerable → DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Massive cove, Oryx (Taken King) corpse half-buried.
+
+    - Šimmumah floats above Oryx.
+
+    - 3 methane pockets concealing rooms with Lightbearer Hive (knight / acolyte / wizard).
+
+    - Vorlog, Risen in Heresy roams + respawns on kill.
+
+
+    PLATFORM MECHANICS:
+
+    - Crush the unclaimed Ghost above Oryx to start.
+
+    - Kill ambient Hive → Deepsight illusion spawns mid-arena.
+
+    - Use Deepsight → 3 orbs revealed above Oryx body parts (head, hand-left, hand-right, foot-left, foot-right).
+
+    - Kill Vorlog (he respawns) — BUT kill him while you''re STANDING UNDER one of the revealed orbs =
+    lures Šimmumah to that part.
+
+    - When Šimmumah lands → a ring + symbol appears. Align them from a ground perspective (move until
+    ring overlaps symbol).
+
+    - Aligned = reveals a rune above Oryx body part.
+
+    - Enter the matching methane pocket → fight Lightbearer (knight / acolyte / wizard) → crush Ghost
+    → Vestige with the rune.
+
+    - Deposit Vestige at matching orb (must be Deepsight-revealed).
+
+    - 3 orbs deposited = Šimmumah''s shield drops = DPS window.
+
+
+    START STATE: rally banner at entry. Crush Ghost above Oryx to begin.
+
+    '
+  callouts:
+  - when: Deepsight ready
+    from: any
+    to: team
+    say: '"DEEPSIGHT — orbs."'
+    why: Reveals orb positions.
+  - when: Vorlog spotted
+    from: spotter
+    to: team
+    say: '"Vorlog [direction] — kill under [head/hand/foot] orb."'
+    why: Designates lure position.
+  - when: Šimmumah landed (alignment phase)
+    from: first to see
+    to: team
+    say: '"ALIGN — ring + symbol."'
+    why: Cues someone to align ground perspective.
+  - when: Rune revealed
+    from: aligner
+    to: team
+    say: '"Rune [shape] — [direction] pocket."'
+    why: Lightbearer hunter goes to matching methane pocket.
+  - when: Vestige in hand
+    from: crusher
+    to: team
+    say: '"Vestige — depositing [head/hand/foot]."'
+    why: Confirms deposit target.
+  - when: 3rd deposited
+    from: any
+    to: team
+    say: '"SHIELD DOWN — DPS."'
+    why: Burst Šimmumah.
+  wipe_triggers:
+  - Vorlog rapid-attacks on stationary aligners.
+  - Wrong-orb deposit = death.
+  - Šimmumah's Necrocharger explosions at close range.
+  - Methane pocket Lightbearer overwhelming a solo hunter.
+  damage_phase_triggers:
+  - 3 Vestiges deposited at correct orbs → Šimmumah's shield drops → ~20-25s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Crush Ghost above Oryx. Vorlog + Hive spawn.
+  - phase: Deepsight + orb reveal (~0:30)
+    deepsight_user: Trigger illusion.
+    spotters: ID orb locations.
+  - phase: Lure cycle 1 (~0:45-1:30)
+    vorlog_killer: Kill Vorlog UNDER chosen orb position.
+    aligner: Move ground perspective until ring + symbol overlap → rune reveals.
+    crusher: Methane pocket → kill Lightbearer → crush Ghost → Vestige.
+    depositor: Deposit at correct orb.
+  - phase: Cycle 2 + 3
+    all: Repeat for 2 more orbs.
+  - phase: DPS (~3:30)
+    all: Stack mid. Well/Bubble. Burst Šimmumah.
+  - phase: Reset
+    all: Šimmumah re-shields. Cycle repeats.
+  permutations:
+  - name: Standard rotating with assignments
+    learner_friendly: true
+    summary: All 3 rotate roles per cycle. Pre-assign body-part orb per player.
+    roles:
+    - id: orb_owner
+      count: 3
+      does: Each owns one body-part orb. Vorlog-kill + align + Vestige for that orb.
+      loadout:
+        subclass: Any survivable build; Void Devour or Solar Restoration to survive Vorlog and the methane-pocket
+          Lightbearer
+        weapons: Lightbearer-shredder primary (hand cannon or trace rifle) for the pocket fights + burst
+          heavy (Whisper / Sleeper / Linear) for the DPS window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods for the cycles; heavy-weapon damage and super
+          mods for the window
+  - name: Solo
+    learner_friendly: false
+    summary: 'All 3 cycles + DPS yourself. 3-5 phases expected. Bring sustain
+
+      (Devour) + a Lightbearer-shredder primary (Hand Cannon + Lucky
+
+      Pants, or trace rifle).
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Don't rush the alignment.
+      loadout:
+        subclass: Void (Devour) for sustain; expect 3-5 phases
+        weapons: Lightbearer-shredder primary (Hand Cannon, or a trace rifle) for pocket fights + burst
+          heavy; take the alignment slowly
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+  cheese: []
+  common_mistakes:
+  - Killing Vorlog away from any orb = wasted, Šimmumah doesn't lure.
+  - Alignment confusion — you must view from a SPECIFIC ground angle for ring + symbol overlap.
+  - Methane pocket fights — Lightbearer is in a tight room, easy to die from acolyte adds.
+  - DPS phase short — don't waste 5s reloading at the start.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (extra roll)
+    hidden_chest: null
+    potential_drops:
+    - '**The Navigator** (exotic trace rifle, Strand) — per blueberries, drops here. YAML''s ''quest reward''
+      framing reflects the in-game pattern unlock.'
+    - Any weapon from previous encounters (No Survivors, New Pacific Epitaph, Cold Comfort, Greasy Luck).
+    - Any Taken King armor piece (final encounter rolls any slot).
+    - 'Note: Wicked Implement (exotic stasis scout) is the SEPARATE secret-room exotic quest, NOT a final-chest
+      drop.'
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: orb_owner with sherpa walkthrough on first alignment.'
+  - '2nd: lead the alignment phase.'
+  - 'Solo: hardest dungeon boss currently. Practice cycles.'
+  plain_language_steps:
+  - 1. Place your rally banner at the cove entry. Oryx's half-buried corpse dominates the arena and Šimmumah
+    ur-Nokru floats above it. Crush the unclaimed Ghost above Oryx to begin.
+  - 2. Vorlog (a Risen Hive enemy that respawns when killed) and ambient Lucent Hive spawn. Clear ambient
+    Hive until a Deepsight illusion appears mid-arena.
+  - 3. Use Deepsight. It reveals three orbs above Oryx's body parts (head, left/right hand, left/right
+    foot). Call out which orb positions appeared.
+  - 4. Pick an orb to work. Kill Vorlog while STANDING UNDER that chosen orb position — this lures Šimmumah
+    down to that body part. Killing Vorlog away from an orb is wasted.
+  - 5. When Šimmumah lands, a ring and a symbol appear. Move around on the ground until your viewing angle
+    makes the ring overlap the symbol — that alignment reveals a rune above the body part.
+  - 6. Read the revealed rune, then go to the matching methane pocket (a concealed room) and fight the
+    Lightbearer Hive inside (a Knight, Acolyte, or Wizard).
+  - 7. Kill that Lightbearer and CRUSH its Ghost to get a Vestige carrying that rune.
+  - 8. Carry the Vestige back and deposit it at the matching Deepsight-revealed orb. Depositing at the
+    WRONG orb kills you instantly, so confirm first.
+  - 9. Repeat the lure-align-pocket-crush-deposit cycle for the other two orbs (three orbs total). Pre-assigning
+    one body-part orb per player keeps it organized.
+  - 10. Once all three orbs are deposited, Šimmumah's shield drops, opening roughly a 20-25 second damage
+    window.
+  - 11. Stack mid-arena under a Well or Bubble and burst Šimmumah. Do not waste the first seconds reloading.
+    If she survives, she re-shields and the cycle repeats.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc damage from Lucent Hive Knights (melee and boomer)
+      - Solar damage from Acolyte projectiles in the methane pockets
+      - Hive Wizard poison/Arc bolts
+      - Vorlog (Risen) rapid melee/ranged attacks, dangerous to stationary aligners
+      boss:
+      - Šimmumah's Necrocharger explosions (close-range burst)
+      - Hive Wizard ranged bolts (poison/Arc-aligned)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Champion or burn modifiers (no Master version).
+      - Mixed Arc/Solar/Wizard-bolt incoming plus Šimmumah's Necrocharger blasts — prioritize the Health
+        stat and keep a heal/overshield up; no single resist element dominates.
+      concussive:
+      - Concussive Dampener helps survive Šimmumah's Necrocharger explosions at close range and Hive boomer
+        splash while aligning.
+  damage:
+    surges:
+    - DPS phase is against Šimmumah (a Hive Wizard) after the third deposit. No forced damage type — match
+      your strongest burst. Her shield drops from the mechanic, not from a matched-element break, so pick
+      the highest-damage option.
+    burst_windows: 'One ~20-25s window per cycle: after the third orb deposit, stack mid under Well/Bubble
+      and unload immediately before she re-shields.'
+    recommended_dps:
+    - 'Heavy burst: Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle from a Well of Radiance'
+    - A damage-boost super or Bubble (Ward of Dawn + Weapons of Light) to amplify the short window
+    - Witherhoard for pre-stacked chip before the window opens
+  role_loadouts:
+  - role_id: orb_owner
+    subclass: Any survivable build; Void Devour or Solar Restoration to survive Vorlog and the methane-pocket
+      Lightbearer
+    weapons: Lightbearer-shredder primary (hand cannon or trace rifle) for the pocket fights + burst heavy
+      (Whisper / Sleeper / Linear) for the DPS window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Survivability + ability-regen mods for the cycles; heavy-weapon damage and super mods
+      for the window
+  - role_id: solo
+    subclass: Void (Devour) for sustain; expect 3-5 phases
+    weapons: Lightbearer-shredder primary (Hand Cannon, or a trace rifle) for pocket fights + burst heavy;
+      take the alignment slowly
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/ghosts-of-the-deep.yaml (encounter 3, simmumah)'
+    note: Primary source for setup, parallel_timeline, permutations (orb_owner rotating + solo), Vorlog/orb/alignment
+      mechanics, and enemies.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats; burst-DPS and exotic meta shift seasonally. Confirm
+      current loadouts and stat priorities in-game. Specific exotic armor left blank where it could not
+      be verified.
+    date_checked: '2026-06-07'

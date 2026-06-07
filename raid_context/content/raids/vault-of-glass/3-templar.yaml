@@ -1,0 +1,269 @@
+# raid_context/content/raids/vault-of-glass/3-templar.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: templar
+  name: The Templar
+  difficulty: hard
+  estimated_time: 12-20 min
+  abstract: 'First boss. Aegis relic appears at the cleanse pool. Holder uses
+
+    Super-smash to break Templar''s shield → ~30s DPS → Templar tries
+
+    to TELEPORT (red circle marks destination — stand in it to deny).
+
+    Cycle: shield + Oracles + teleport-deny + DPS. 7-8 min enrage timer.
+
+    '
+  setup: "WHAT YOU SEE:\n- Same arena as Confluxes. Templar (large Vex Hydra) appears center.\n- Aegis\
+    \ relic on the spot where cleanse pool was.\n- Same 7 Oracle spawn positions.\n- Red circle on the\
+    \ radar = Templar teleport destination.\n- Major Harpies spawn (Aegis Super-charges from killing them).\n\
+    \nPLATFORM MECHANICS:\n- Pick up Aegis → Templar engages.\n- Aegis abilities:\n  • Melee (R1) — dash\n\
+    \  • Heavy melee (R2 or jump+melee) — death-from-above\n  • Cleanse (grenade) — removes Marks; has\
+    \ cooldown based on use length\n  • Super (Super button) — breaks Templar shield (wave or bubble)\n\
+    - Templar's shield drops on Aegis Super → ~30s DPS window.\n- Templar attempts to teleport at end\
+    \ of DPS. Red circle marks destination.\n- Player STANDS IN red circle = teleport denied + Minotaur\
+    \ spawns instead.\n- If allowed to teleport, Oracle wave begins (3 → 5 → 9 over 7 waves, spacing tightens).\n\
+    - 7-8 minute enrage. Get Templar down fast.\n\nSTART STATE: post-Confluxes. Cleanse pool replaced\
+    \ by Aegis. Pickup = engage.\n"
+  callouts:
+  - when: Aegis picked up
+    from: holder
+    to: team
+    say: '"AEGIS UP — building Super."'
+    why: Team focuses on Harpy add-clear for Super charge.
+  - when: Shield phase ready
+    from: holder
+    to: team
+    say: '"SHIELD DOWN INCOMING — 3, 2, 1."'
+    why: DPS prep.
+  - when: DPS open
+    from: holder
+    to: team
+    say: '"DPS — Well!"'
+    why: Stack + burst.
+  - when: Red circle (teleport)
+    from: first to see
+    to: team
+    say: '"RED [direction] — stand it!"'
+    why: Teleport-deny.
+  - when: Oracle wave
+    from: spotter
+    to: team
+    say: '"Oracle [position] — kill order!"'
+    why: Same musical-note positions, same in-order rule.
+  wipe_triggers:
+  - Aegis dropped + not picked up in 5s = 'Curse of the Aegis' team kill.
+  - Templar enrages at 7-8 minutes.
+  - Oracle waves not cleared → cascading Marks → team death.
+  damage_phase_triggers:
+  - Aegis Super-smash breaks Templar's shield → ~30s DPS.
+  parallel_timeline:
+  - phase: Pickup
+    relic_holder: Grab Aegis.
+  - phase: Charge Super (~1:00)
+    add_clearers_5: Burst Major Harpies for Super orbs.
+    relic_holder: Stay alive, gain orbs.
+  - phase: Shield down
+    relic_holder: Fire Aegis Super.
+    all: Burst Templar.
+  - phase: Teleport-deny
+    denier: Stand red circle.
+    relic_holder: Reset for next cycle.
+  permutations:
+  - name: Standard 1-Aegis / 5-clear
+    learner_friendly: true
+    summary: One dedicated Relic holder all encounter; team supports.
+    roles:
+    - id: relic_holder
+      count: 1
+      does: Holds Aegis from pickup to Templar death.
+      loadout:
+        subclass: Survivable subclass with good neutral game (Void overshield or Solar restoration) to
+          stay alive while holding the Aegis
+        weapons: Lightweight loadout since the Aegis is the main tool; an add-clear primary for between
+          cycles
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No weapon surge needed (Aegis does the shield break); prioritize survivability and
+          ability regen
+    - id: add_clear
+      count: 4
+      does: Major Harpy hunters for Super orbs; Oracle killers; teleport-deny.
+      loadout:
+        subclass: Any subclass with strong add-clear and ability uptime to farm Major Harpies for Super
+          orbs
+        weapons: Precision primary (scout/pulse) for Harpies, Hobgoblins, and Oracles; special for spawned
+          Minotaurs
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Add-clear focus; on Master carry an anti-Champion verb (Anti-Barrier / Anti-Overload)
+    - id: dps_anchor
+      count: 1
+      does: Pre-position for DPS windows.
+      loadout:
+        subclass: A damage-support subclass (e.g., Solar for Well of Radiance) or a high-burst Super subclass
+          for the shield-down window
+        weapons: Burst heavy (Linear Fusion, Sleeper, Whisper, or rocket) plus a special to fill
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: Match your heavy's element to the weekly surge on Master; otherwise bring your highest-DPS
+          burst
+  - name: 'Speed: deny ALL teleports'
+    learner_friendly: false
+    summary: 'Standing in EVERY red circle prevents teleports = no Oracle waves
+
+      = 2-phase Templar with sustained burst.
+
+      '
+    best_for: Experienced teams. Higher-stakes.
+  cheese:
+  - title: Cheese spot DPS perch
+    detail: '(D1-era) Specific corner perches allowed pre-shield Templar
+
+      DPS via geometry exploits. Mostly patched in D2 reprise.
+
+      '
+  common_mistakes:
+  - Dropping Aegis to dodge — 5s timer = team death.
+  - Spreading DPS away from a Well — Templar shrugs.
+  - Forgetting Oracle order under pressure.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest:
+      location: 'HIDDEN CHEST 1 (Gorgon Labyrinth): After Templar, in the Gorgon
+
+        Labyrinth section. Hug right wall on entry. Inside the chest
+
+        room: opened by destroying 3 hidden Oracles in the labyrinth.
+
+        '
+      rewards:
+      - Random raid loot drop
+    potential_drops:
+    - Fatebringer (hand cannon, Kinetic)
+    - Vision of Confluence (scout rifle, Solar)
+    - Corrective Measure (machine gun, Void)
+    - Vault of Glass armor (random slot)
+  master_challenge:
+    name: Out of Its Way
+    requirement: 'Defeat the Templar without letting him teleport. He teleports
+
+      each time his Ritual of Negation channel (the shield-down DPS
+
+      window) completes, OR when the Aegis-holder ejects the
+
+      relic''s blast. Counter: keep the Oracle waves clean so the
+
+      Aegis-holder doesn''t need to detonate, and push damage hard
+
+      enough to break shield + finish phase in a single Ritual.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear (Harpy focus).'
+  - '2nd: teleport-deny rotation.'
+  - '3rd: Relic holder.'
+  plain_language_steps:
+  - 1. After the Confluxes, the Templar (a large Vex Hydra) appears at the center of the same arena. The
+    cleanse pool spot is now replaced by the Aegis relic (Kabr's shield).
+  - '2. Assign one player as the dedicated Relic holder. They pick up the Aegis to engage the Templar.
+    Learn its four abilities: melee dash, heavy death-from-above, cleanse (grenade button), and Super-smash
+    (Super button).'
+  - 3. The rest of the team focuses Major Harpies that spawn around the arena; killing them charges the
+    Aegis Super.
+  - 4. The Relic holder fires the Aegis Super-smash to break the Templar's shield. This opens roughly
+    a 30-second damage window.
+  - 5. During the window, stack up (ideally on a Well of Radiance) and burst the Templar hard.
+  - 6. When the window ends, the Templar tries to teleport. A red circle appears marking its destination.
+    Call the direction and have a player stand in the red circle to deny the teleport (a Minotaur spawns
+    instead).
+  - 7. If a teleport is allowed, an Oracle wave begins. Kill the Oracles in spawn order using the same
+    musical-note positions, or the team gets Marked.
+  - 8. Never drop the Aegis for more than 5 seconds; that triggers 'Curse of the Aegis' and wipes the
+    team.
+  - 9. Repeat the cycle (charge Super, break shield, DPS, deny teleport) until the Templar dies. Beat
+    the 7 to 8 minute enrage timer.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Major Harpies): Arc/Void ranged fire; needed for Aegis Super charge'
+      - 'Vex (Minotaurs): spawn on denied teleports, Void slap-rifle fire and heavy melee'
+      - 'Vex (Hobgoblins): precision Solar snipers'
+      - 'Vex (Oracles): not damage-dealers, but mismanaged order Marks the whole team for Negation'
+      boss:
+      - Void (Templar Hydra torch-hammer / eye fire and arena AoE)
+    champions:
+    - Barrier Hydra -> Anti-Barrier (Master only)
+    - Overload Minotaur -> Anti-Overload (Master only)
+    recommended_defensive_mods:
+      elemental:
+      - Void resist for the Templar's fire and Minotaur adds; Solar resist for Hobgoblin snipers; run
+        Health for arena AoE
+      concussive:
+      - Concussive Dampener can soften the Templar's AoE and add burst when stacking for DPS on Master
+  damage:
+    surges:
+    - DPS phase opens after the Aegis Super breaks the Templar's shield. No element is forced, so match
+      your strongest burst; on Master, match the weekly surge for the bonus
+    burst_windows: Roughly a 30-second window each cycle after the Aegis Super-smash breaks the Templar's
+      shield; stack on a Well and burst.
+    recommended_dps:
+    - 'Burst heavy: Linear Fusion Rifles, Sleeper, Whisper, or rockets'
+    - Well of Radiance to anchor the stack (called out in the guide as the DPS cue)
+    - Damage-buff supers (e.g., Bubble/Tether style support) and Cuirass-style burst options
+  role_loadouts:
+  - role_id: relic_holder
+    subclass: Survivable subclass with good neutral game (Void overshield or Solar restoration) to stay
+      alive while holding the Aegis
+    weapons: Lightweight loadout since the Aegis is the main tool; an add-clear primary for between cycles
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No weapon surge needed (Aegis does the shield break); prioritize survivability and ability
+      regen
+  - role_id: add_clear
+    subclass: Any subclass with strong add-clear and ability uptime to farm Major Harpies for Super orbs
+    weapons: Precision primary (scout/pulse) for Harpies, Hobgoblins, and Oracles; special for spawned
+      Minotaurs
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Add-clear focus; on Master carry an anti-Champion verb (Anti-Barrier / Anti-Overload)
+  - role_id: dps_anchor
+    subclass: A damage-support subclass (e.g., Solar for Well of Radiance) or a high-burst Super subclass
+      for the shield-down window
+    weapons: Burst heavy (Linear Fusion, Sleeper, Whisper, or rocket) plus a special to fill
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match your heavy's element to the weekly surge on Master; otherwise bring your highest-DPS
+      burst
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: templar)'
+    note: Primary source for Aegis abilities, shield-break DPS cycle, teleport-deny, Oracle waves, and
+      roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: DPS meta (linears/rockets/supers) and Master Champions/surges rotate; verify current-meta heavies
+      and the weekly modifiers before the run.
+    date_checked: '2026-06-07'

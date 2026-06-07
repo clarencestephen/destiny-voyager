@@ -1,0 +1,284 @@
+# raid_context/content/dungeons/duality/4-caiatl.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: caiatl
+  name: Nightmare of Caiatl (final boss)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Final boss. Standard mechanic + new bell-stun + Waking Resonance
+
+    DPS buff. 4 Standards (one per side) → chains glow → shoot to ring
+
+    the immense bell → drag into Nightmare → Caiatl heads to a bell to
+
+    escape → kill Bellkeepers + ring bell yourself → Caiatl stuns →
+
+    DPS with Waking Resonance buff. Repeat 3 bells.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Larger arena. 4 elevated ledges (2 per side) with symbol reliefs.
+
+    - 3 bells: left, middle, right.
+
+    - 4 chains next to Standard deposit projections.
+
+    - Immense bell in background.
+
+
+    PLATFORM MECHANICS:
+
+    - Hunt Standard Bearers in Nightmare (same loop).
+
+    - Deposit all 4 Standards → chains glow → shoot chains → immense bell rings.
+
+    - You''re dragged into Nightmare with Caiatl (immune).
+
+    - Caiatl walks to a bell to escape.
+
+    - Kill Bellkeepers at that bell. Ring bell yourself = Caiatl STUNNED.
+
+    - If Caiatl is CLOSE to a rung bell when stun fires → players get Waking Resonance buff (increased
+    damage to her).
+
+    - 3 bells must be exhausted (rung at her) per phase. Cycle ends, returns to Waking.
+
+
+    START STATE: rally on stairs. Step down to start.
+
+    '
+  callouts:
+  - when: 4 Standards needed
+    from: spotter
+    to: team
+    say: '"Standards: [list 4]"'
+    why: Plan all 4 routes.
+  - when: Chains glowing
+    from: any
+    to: team
+    say: '"CHAINS — shoot."'
+    why: Triggers immense bell + DPS phase.
+  - when: Caiatl heading to [direction] bell
+    from: tracker
+    to: team
+    say: '"Caiatl going [L/M/R] — Bellkeepers there."'
+    why: Bellkeeper crew gets to that bell ahead of her.
+  - when: Stun fired
+    from: ringer
+    to: team
+    say: '"STUNNED — DPS."'
+    why: Waking Resonance active, burst window.
+  - when: Stun ending, Caiatl moving
+    from: tracker
+    to: team
+    say: '"Moving to [next bell]."'
+    why: Cycle next bell prep.
+  wipe_triggers:
+  - Nightmare Collapse timer to 0.
+  - Caiatl reaches a bell unrung by you = phase ends (waste — repeat 4-Standard cycle).
+  - Caiatl's slam + melee at close range.
+  damage_phase_triggers:
+  - Chains shot → dragged into Nightmare with Caiatl → bell stun = Waking Resonance buff = damage window.
+  - 3 bells exhausted = phase ends, return to Waking.
+  parallel_timeline:
+  - phase: Pull
+    all: Identify all 4 Standards.
+  - phase: Standard runs (parallel)
+    runners_2: Hunt 2 + 2 Standards across Nightmare.
+    bellkeeper: Coverage on all 3 bells alternately.
+  - phase: Chains + shift
+    all: Deposit 4, shoot chains, dragged into Nightmare.
+  - phase: DPS phase (3 bells)
+    bellkeeper_killer: Sprint to Caiatl's target bell. Clear Bellkeepers.
+    ringer: Ring bell when Caiatl is CLOSE = Waking Resonance.
+    dps: Burst Caiatl with Waking Resonance buff.
+  - phase: Reset
+    all: Return to Waking. Repeat 4-Standard cycle.
+  permutations:
+  - name: Standard 2-runner / 1-anchor
+    learner_friendly: true
+    summary: Two parallel Standard runners; one stays for bell + add coordination.
+    roles:
+    - id: standard_runner
+      count: 2
+      does: Parallel Standards (Sun+War Beast / Chalice+Axe per cycle).
+      loadout:
+        subclass: Void Hunter (invisibility for fast parallel Nightmare runs) or any high-mobility subclass
+        weapons: Ad-clear primary plus a Linear Fusion Rifle or burst heavy for the stun windows
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+    - id: anchor
+      count: 1
+      does: Tracks Caiatl, calls bells, leads stuns.
+      loadout:
+        subclass: Any survivable subclass with strong add-clear and good uptime (Void or Solar)
+        weapons: Reliable add-clear primary for Bellkeepers; LFR or burst heavy for stun DPS
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surge to DPS element; Concussive Dampener; Solar resist
+  - name: 'Speed: Linear Fusion / Stormchaser DPS'
+    learner_friendly: false
+    summary: All 3 use Stormchaser (LFR from this dungeon) for stun-DPS bursts.
+    best_for: Speed clears with Waking Resonance optimization.
+    roles:
+    - id: dps_anchor
+      count: 3
+      does: Burst Caiatl on each stun. Sync Supers on final bell.
+      loadout:
+        subclass: Any subclass that maximizes burst on the stun windows (damage-buff Super preferred)
+        weapons: Linear Fusion Rifle (Stormchaser) for repeated stun-DPS bursts; synced Supers on the
+          final bell
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: Match surge to your LFR/heavy element (Arc if using Stormchaser)
+  - name: Solo
+    learner_friendly: false
+    summary: '4 Standards alone, 3 bell stuns alone. Bring Heartshadow (this
+
+      dungeon''s exotic) for self-cleave + invis. Expect 3-4 cycles.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Self-pace. Don't engage Caiatl outside bell stuns.
+      loadout:
+        subclass: Void Hunter for self-pace; invisibility to survive the long four-Standard cycles
+        weapons: Self-sufficient ad-clear plus a strong burst; Heartshadow strongly recommended for self-cleave
+          + invis
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+  cheese: []
+  common_mistakes:
+  - Ringing bell when Caiatl is FAR from it = stun without Waking Resonance = minimal damage.
+  - Forgetting Bellkeepers at her target bell = can't ring = she escapes.
+  - All 3 going for Standards in same Nightmare zone = clutter, slower.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (extra roll)
+    hidden_chest: null
+    potential_drops:
+    - '**Heartshadow** (exotic sword, Void) — per blueberries, drops from Caiatl chest. YAML''s ''quest,
+      not random'' framing reflects the in-game pattern path.'
+    - New Purpose (pulse rifle, Stasis)
+    - Fixed Odds (machine gun, Solar)
+    - Any weapon from prior encounters (Lingering Dread, The Epicurean, Stormchaser, Unforgiven).
+    - Calus-themed armor — Caiatl drops 2× per kill (any slot).
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: anchor (lowest mechanic load, learn the bell-stun rhythm).'
+  - '2nd: standard_runner.'
+  - 'Solo: only after team clear; Heartshadow makes it much easier.'
+  plain_language_steps:
+  - '1. Rally on the stairs. Note the larger arena: four elevated ledges (two per side) with symbol reliefs,
+    three bells (left, middle, right), four chains next to the Standard deposit projections, and the immense
+    bell in the background.'
+  - 2. Step down to start. Identify all four Standards needed and plan four routes.
+  - 3. Two runners enter the Nightmare and hunt Standards in parallel (for example Sun + War Beast on
+    one runner, Chalice + Axe on the other), reading symbols and killing the correct Standard Bearer Psions
+    (+15 seconds each).
+  - 4. The anchor tracks the bells and the bellkeeper player clears Bellkeepers so bells stay usable.
+    Shift back to the Waking realm inside the bell circle.
+  - 5. Deposit all four Standards at their matching projections. The four chains begin to glow.
+  - 6. Shoot the glowing chains. The immense bell rings and the whole team is dragged into the Nightmare
+    with Caiatl, who is immune.
+  - 7. Caiatl walks toward one of the three bells to escape. The tracker calls which bell (L/M/R) she
+    is heading to.
+  - 8. The bellkeeper crew sprints ahead to that bell and clears its Bellkeepers so it can be rung.
+  - 9. Ring that bell yourself to STUN Caiatl. Time it so Caiatl is CLOSE to the rung bell — that grants
+    the team the Waking Resonance buff for increased damage.
+  - 10. Burst Caiatl hard during the stun while Waking Resonance is active.
+  - 11. When the stun ends she moves to the next bell. Repeat the bell-clear-ring-stun-DPS rhythm until
+    all three bells are exhausted; the phase then ends and you return to the Waking realm.
+  - 12. Repeat the full four-Standard cycle until Caiatl is dead. Never ring a bell when she is far from
+    it (stun with no Waking Resonance = wasted), and watch the collapse timer.
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal (Standard Bearer Psions, Bellkeepers, supporting Cabal) — primarily Solar slug/fire, Psion
+        scatter, plus melee adds
+      boss:
+      - Solar/kinetic — Caiatl's slam and close-range melee (treat as heavy physical/Cabal close threat)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist recommended for Cabal fire during the long Standard-run phases
+      - On Master, expect Barrier Colossus champions in this activity — plan survivability and a stun
+        source if Barriers appear
+      concussive:
+      - Concussive Dampener helps against Caiatl's slam knockback and Cabal slug blasts during the bell
+        phase
+  damage:
+    surges:
+    - No element is forced by the encounter; damage relies on the Waking Resonance buff, not a surge type.
+      Match surge to your DPS weapon. Stormchaser (Arc LFR from this dungeon) is the speed pick — pair
+      with Arc surge if used.
+    burst_windows: 'Each stun is the damage window: ring a bell with Caiatl close to gain Waking Resonance,
+      then burst during the stun. Three stun windows per phase before she returns to the Waking realm.'
+    recommended_dps:
+    - Linear Fusion Rifle (Stormchaser is the standard speed pick)
+    - Burst heavy (rocket launcher or sword)
+    - Synced damage Supers on the final bell of a phase
+    - Heartshadow for solo (Void sword, self-cleave + invis)
+  role_loadouts:
+  - role_id: standard_runner
+    subclass: Void Hunter (invisibility for fast parallel Nightmare runs) or any high-mobility subclass
+    weapons: Ad-clear primary plus a Linear Fusion Rifle or burst heavy for the stun windows
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+  - role_id: anchor
+    subclass: Any survivable subclass with strong add-clear and good uptime (Void or Solar)
+    weapons: Reliable add-clear primary for Bellkeepers; LFR or burst heavy for stun DPS
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to DPS element; Concussive Dampener; Solar resist
+  - role_id: dps_anchor
+    subclass: Any subclass that maximizes burst on the stun windows (damage-buff Super preferred)
+    weapons: Linear Fusion Rifle (Stormchaser) for repeated stun-DPS bursts; synced Supers on the final
+      bell
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge to your LFR/heavy element (Arc if using Stormchaser)
+  - role_id: solo
+    subclass: Void Hunter for self-pace; invisibility to survive the long four-Standard cycles
+    weapons: Self-sufficient ad-clear plus a strong burst; Heartshadow strongly recommended for self-cleave
+      + invis
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/duality.yaml (encounter 4: caiatl)'
+    note: Bell-stun mechanic, Waking Resonance damage buff, four-Standard cycle, roles, and DPS permutations
+      taken directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the armor stats and the DPS/exotic meta shifts each season — verify current
+      top Linear Fusions, heavies, and exotics before a run.
+    date_checked: '2026-06-07'

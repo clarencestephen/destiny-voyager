@@ -1,0 +1,276 @@
+# raid_context/content/dungeons/equilibrium/2-harrow.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: harrow
+  name: Harrow, Dredgen-Apprentice
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'Mid-boss. U-shaped outer rooms around an insta-kill center. Build
+
+    to Shadow Apprentice (1 tier higher than encounter 1). Activate
+
+    Taken panels in each room. Center phase: shoot Arc fuses to open
+
+    holes → bait Harrow into holes to strip shield (1/3 per hole) →
+
+    Renegade-melee trick speeds shield breaks → DPS to Final Stand.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - 4 U-shaped outer rooms surrounding a central insta-kill area.
+
+    - Harrow (Renegade Cabal, large) in center.
+
+    - Glowing Taken panels on walls/ceilings of each outer room.
+
+    - Arc fuses at center arena sides (visible only when Emergency Subsystems text shows).
+
+    - 2 holes in arena floor (opened by shooting fuses).
+
+
+    PLATFORM MECHANICS:
+
+    - Center = INSTA-KILL by Harrow. Rotate outer rooms ONLY during build phase.
+
+    - Build Shadow → Apprentice (1 tier higher than encounter 1).
+
+    - In each outer room: find glowing Taken panel → use Renegade ability with Shadow Apprentice → panel
+    activates.
+
+    - Activate panels in sequence until "Emergency subsystems activate" text appears.
+
+    - Center phase: shoot 2 Arc fuses at arena sides → 2 holes open in floor.
+
+    - Bait Harrow into a hole = strips 1/3 of his shield. Speed-up trick: use Taken melee ability THE
+    INSTANT Harrow jumps back up from a hole.
+
+    - 3 hole-trips (or 2 + Arc generator destroyed on far left) = shield fully stripped.
+
+    - DPS phase opens.
+
+    - Final Stand: follow Harrow through destroyed gate, clear Cabal Centurions + turrets, finish him.
+
+
+    START STATE: shoot fuse above the door from post-Harvester traversal, drop through hatch.
+
+    '
+  callouts:
+  - when: Shadow Apprentice ready
+    from: self
+    to: team
+    say: '"APPRENTICE — panel [room]."'
+    why: Cue for panel activation.
+  - when: Panel activated
+    from: self
+    to: team
+    say: '"Panel [N/4] done."'
+    why: Progress to Emergency Subsystems trigger.
+  - when: Emergency Subsystems text
+    from: any
+    to: team
+    say: '"CENTER PHASE — fuses now."'
+    why: Switch from outer rooms to center.
+  - when: Fuse shot, hole open
+    from: shooter
+    to: team
+    say: '"Hole [direction] OPEN — bait Harrow."'
+    why: Target for shield-strip.
+  - when: Harrow into hole + Renegade melee window
+    from: first to see
+    to: team
+    say: '"MELEE on rise — NOW."'
+    why: 'Speed-up trick: Taken melee right as Harrow emerges.'
+  - when: Shield fully down
+    from: any
+    to: team
+    say: '"DPS — Harrow."'
+    why: Damage window. Stack + burst.
+  wipe_triggers:
+  - Standing in center arena = Harrow insta-kill.
+  - Harrow's charge explosion at any range without cover.
+  - Falling into the holes (they close on you).
+  damage_phase_triggers:
+  - Shield fully stripped (3 hole-baits OR 2 holes + Arc generator) → DPS phase opens.
+  - 'Final Stand: Harrow retreats through gate, clear adds + finish.'
+  parallel_timeline:
+  - phase: Pull
+    all: Drop in. Rotate outer rooms. Begin Shadow build.
+  - phase: Outer room cycle (~1:00-2:30)
+    shadow_runners: Build Apprentice, activate panels.
+    add_clear: Suppress Renegade Cabal ambient.
+  - phase: Center phase (~2:30-3:30)
+    fuse_shooters_2: Shoot 2 Arc fuses to open holes.
+    baiter: Lead Harrow into hole.
+    melee_user: Time Renegade melee on rise.
+  - phase: DPS + Final Stand
+    all: Burst Harrow. Push through gate. Clear adds. Finish.
+  permutations:
+  - name: Standard 1-baiter / 2-shadow
+    learner_friendly: true
+    summary: One designated baiter; two on Shadow build + panels.
+    roles:
+    - id: baiter
+      count: 1
+      does: Harrow aggro management + center phase bait.
+      loadout:
+        subclass: ''
+        weapons: Mobile kit to manage Harrow aggro and lead him into holes; primary for control plus a
+          burst special/heavy (Linear Fusion or Rocket) for the DPS window. Eager Edge sword for fast
+          repositioning around the center.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Survivability and Arc resist mods; burst-damage surge for the window.
+    - id: shadow_runner
+      count: 2
+      does: Apprentice build + panel activation.
+      loadout:
+        subclass: ''
+        weapons: Primary for ambient Renegade Cabal suppression plus a heavy for the DPS window. Grapple
+          or Eager Edge sword for quick outer-room rotation between Taken wells and panels.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Ability-regen and Arc resist; burst-DPS surge for shield-down.
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Patient outer-room rotation.
+    roles:
+    - id: solo
+      count: 1
+      does: Slow, methodical. Use sustain.
+      loadout:
+        subclass: ''
+        weapons: 'Self-reliant kit: primary for adds, burst special/heavy for shield-down DPS, and an
+          Eager Edge sword for safe, methodical outer-room rotation. Anti-Champion mods if running Master.'
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Prioritize sustain and Arc resist; reserve burst surge for the short DPS window.
+  cheese: []
+  common_mistakes:
+  - Sprinting through center mid-build = insta-death.
+  - Renegade-meleeing too late on Harrow's rise — narrow window.
+  - Wasting Apprentice tier on standard add-clear — save for panels.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'SECRET CHEST 1: Post-Harvester traversal (between encounters 1
+
+        and 2). After clearing the middle room with the Arc-fuse puzzle,
+
+        look toward the back-right side of the room. Chest is on a
+
+        platform near the back, on the right.
+
+        '
+      rewards:
+      - Random roll of already-obtained dungeon weapon
+    potential_drops:
+    - Bitter End (machine gun, Arc)
+    - Voltaic Shade (scout rifle, Arc)
+    - Conspiracy Honed (sniper rifle, Stasis)
+    - Equilibrium / Sage Protector armor — Class Item + Arms + Helmet
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: shadow_runner. Watch baiter routes.'
+  - '2nd: baiter.'
+  plain_language_steps:
+  - 1. Coming out of the post-Harvester traversal, shoot the fuse above the door, then drop through the
+    hatch into Harrow's arena. You'll see four U-shaped outer rooms wrapped around a central area, with
+    Harrow (a large Renegade Cabal) in the middle.
+  - 2. The center is an instant-kill zone controlled by Harrow. During the build phase, only rotate through
+    the OUTER rooms — never cross the middle.
+  - 3. Step into the Taken wells to build Gathering Shadow, this time pushing one tier higher than the
+    opener — up to Shadow Apprentice.
+  - 4. In each outer room, find the glowing Taken panel on a wall or ceiling. With Shadow Apprentice active,
+    press the Renegade ability at the panel to activate it. Save the Apprentice tier for panels, not for
+    trash add-clear.
+  - 5. Keep activating panels in sequence (call out each one as it's done) while a teammate suppresses
+    the ambient Renegade Cabal, until the 'Emergency subsystems activate' text appears on screen.
+  - '6. When that text shows, switch to the center phase: two Arc fuses become visible at the sides of
+    the central arena. Shoot both fuses to open two holes in the floor.'
+  - 7. Bait Harrow into a hole. Each hole-trip strips one-third of his shield. To speed it up, use your
+    Taken (Renegade) melee the instant Harrow jumps back up out of a hole.
+  - 8. Repeat for three hole-baits total — or use two holes plus destroying the Arc generator on the far
+    left — to fully strip Harrow's shield.
+  - 9. With the shield down, stack up and burst Harrow during the DPS window.
+  - 10. For his Final Stand, follow Harrow through the destroyed gate, clear the Cabal Centurions and
+    turrets, then finish him off. Avoid his charge explosion — never take it without cover.
+  defense:
+    incoming_damage:
+      adds:
+      - Renegade Cabal Centurions (small-arms / slug fire) and emplaced turrets during Final Stand
+      - Arc damage from the central fuses/holes mechanic and the Arc generator area
+      boss:
+      - Arc (Harrow's central insta-kill field and Arc-fuse mechanic)
+      - Harrow charge explosion (heavy AoE; treat as a one-shot without cover)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc resistance is the most relevant given Harrow's center field, Arc fuses, and the Arc generator;
+        the insta-kill center is not survivable by resist, so positioning matters more than any mod
+      concussive:
+      - Concussive Dampener helps against Harrow's charge explosion and grouped Centurion/turret fire
+        during Final Stand
+  damage:
+    surges:
+    - Harrow has a real DPS phase once his shield is fully stripped. Element is not source-confirmed,
+      so use your highest-uptime burst; Arc surge is a sensible default given the encounter's Arc theme.
+    burst_windows: Short, repeated DPS window after each full shield-strip (3 hole-baits, or 2 holes plus
+      the Arc generator), then a Final Stand finish through the gate.
+    recommended_dps:
+    - Burst-DPS special/heavy for the short window (Linear Fusion Rifles, Rocket Launchers)
+    - Roaming or burst Supers to dump on shield-down (e.g., Thundercrash, Golden Gun, Needlestorm)
+    - Sword or shotgun for safe close-range damage when positioned with cover
+  role_loadouts:
+  - role_id: baiter
+    subclass: ''
+    weapons: Mobile kit to manage Harrow aggro and lead him into holes; primary for control plus a burst
+      special/heavy (Linear Fusion or Rocket) for the DPS window. Eager Edge sword for fast repositioning
+      around the center.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Survivability and Arc resist mods; burst-damage surge for the window.
+  - role_id: shadow_runner
+    subclass: ''
+    weapons: Primary for ambient Renegade Cabal suppression plus a heavy for the DPS window. Grapple or
+      Eager Edge sword for quick outer-room rotation between Taken wells and panels.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Ability-regen and Arc resist; burst-DPS surge for shield-down.
+  - role_id: solo
+    subclass: ''
+    weapons: 'Self-reliant kit: primary for adds, burst special/heavy for shield-down DPS, and an Eager
+      Edge sword for safe, methodical outer-room rotation. Anti-Champion mods if running Master.'
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Prioritize sustain and Arc resist; reserve burst surge for the short DPS window.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/equilibrium.yaml (encounter 2: Harrow, Dredgen-Apprentice)'
+    note: Primary source for mechanics, enemies, hole/shield-strip flow, roles, and secret chest note.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (Renegades, Dec 2025 release)
+    note: Harrow's exact DPS-phase element, champion presence on Master, and drop pool are not fully locked
+      in; confirm against current in-game state and patch notes.
+    date_checked: '2026-06-07'

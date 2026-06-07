@@ -1,0 +1,228 @@
+# raid_context/content/raids/desert-perpetual/2-agraios.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: agraios
+  name: Agraios, Inherent
+  difficulty: hard
+  estimated_time: 25-35 min
+  abstract: 'Vex Hobgoblin boss with 3 proxies (Made Constant/Cyclical/Absolute).
+
+    5 rings to charge with Cobalt Chronons (from Time''s Burden Minotaurs).
+
+    3 plates grant Temporality. Sniping proxy: matching-Temporality
+
+    player runs to proxy platform, interacts with Vex device → builds
+
+    Alignment Charge → ricochet detainment bubble to kill proxy →
+
+    Agraios exposed → DPS.
+
+    '
+  setup: "WHAT YOU SEE:\n- Central arena with 5 rings (number 1-5 clockwise from spawn).\n- 3 plates inside\
+    \ the ring circle (Constant L, Absolute M, Cyclical R).\n- Agraios + 3 proxies (Made Constant, Made\
+    \ Absolute, Made Cyclical) on 4 Vex platforms.\n- Time's Burden Minotaurs spawn in corners.\n- Ultra\
+    \ Hydra spawns mid-encounter.\n- Coryphaeus Wyverns spawn around arena after Ultra Hydra dies.\n\n\
+    PLATFORM MECHANICS:\n- Approach to engage.\n- Agraios teleports to 1 of 4 platforms; 3 proxies (Made\
+    \ X) occupy the others.\n- Kill ambient + Ultra Hydra → 5 Time's Burden Minotaurs spawn in corners\
+    \ → Cobalt Chronons drop.\n- 5 Guardians take 1 Chronon each, run through ring 1-5 to charge. Each\
+    \ charges only 1 ring.\n- 3 Coryphaeus Wyverns spawn → 3 plates activate.\n- 3 plate players step\
+    \ → take Constant/Absolute/Cyclical Temporality (longer-lasting than encounter 1).\n- One proxy starts\
+    \ SNIPING (Variable Elimination debuff: 10s, instant kill at 0 even if hidden afterwards).\n  Cover\
+    \ breaks LoS + resets timer to 10s.\n- Plate players ID the SNIPING proxy's title (Made Constant/Cyclical/Absolute)\
+    \ and call it.\n- Player with matching Temporality runs to proxy platform → interacts with Vex receptacle.\n\
+    - That player now has ALIGNMENT CHARGE buff + 5 small boxes beneath.\n- Other 2 plate players see\
+    \ 2 RINGS glowing BLUE (out of 5; others flash red).\n- Call blue rings to non-plate players → they\
+    \ Chronon-charge those blue rings.\n- Alignment player runs through CHARGED rings to fill the 5 boxes.\n\
+    - Max Alignment Charge → grenade ability replaces with Vex-gate icon.\n- One player draws proxy aggro,\
+    \ counts down. At ~4s: Alignment player detonates Detainment Bubble = ricochet = proxy dies.\n- Agraios\
+    \ exposed → DPS phase.\n- During DPS, Alignment buff returns → re-do ring run + detain ricochet for\
+    \ second/third proxy kill = extended DPS.\n- 3 ricochet detains per damage phase.\n\nSTART STATE:\
+    \ rally banner. Approach to engage.\n"
+  callouts:
+  - when: Time's Burden Minotaur
+    from: spotter
+    to: team
+    say: '"MINOTAUR [corner] — Chronons."'
+    why: Pickup target.
+  - when: Ring charged
+    from: self
+    to: team
+    say: '"Ring [N] CHARGED."'
+    why: Track 5 rings.
+  - when: Sniping proxy
+    from: tracker
+    to: team
+    say: '"SNIPING: Made [Constant/Cyclical/Absolute]."'
+    why: Designate Alignment player.
+  - when: Blue rings
+    from: plate player
+    to: team
+    say: '"Blue rings: [N1] + [N2]."'
+    why: Charge order.
+  - when: Alignment buff full
+    from: self
+    to: team
+    say: '"ALIGNMENT FULL — countdown!"'
+    why: Goader steps out.
+  - when: Goader counting
+    from: goader
+    to: team
+    say: '"5, 4, 3, 2, 1 — DETONATE."'
+    why: Sync ricochet.
+  wipe_triggers:
+  - Variable Elimination 0s = instant death.
+  - Wrong ring charged for Alignment player = stalled.
+  - Alignment Charge wasted on premature detonation = no DPS trigger.
+  - Agraios wipe meter fills (slow but ongoing).
+  damage_phase_triggers:
+  - Ricochet kills proxy → Agraios teleports center + vulnerable → ~25-30s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage. Ultra Hydra first.
+  - phase: Chronon + ring charge
+    chronon_runners: 5 players charge 5 rings.
+  - phase: Plate + proxy ID
+    plate_holders_3: Step Temporality plates.
+  - phase: Alignment phase
+    alignment_player: Sniper-matching Temp. Run rings, fill Charge.
+    ring_chargers: Charge blue rings on call.
+  - phase: Ricochet + DPS
+    goader: Steps out, counts down.
+    alignment_player: Detonates at ~4s.
+    team: Burst Agraios.
+  - phase: Re-ricochet during DPS
+    alignment_player: Re-fill Charge mid-DPS.
+  permutations:
+  - name: Standard 3-plate / 3-charge
+    learner_friendly: true
+    summary: 3 Temporality holders, 3 ring chargers + add-clear.
+    roles:
+    - id: temporality_holder
+      count: 3
+      does: Constant/Cyclical/Absolute. Alignment when proxy matches.
+      loadout:
+        subclass: ''
+        weapons: Mobile build with strong burst heavy for the DPS windows; keep a reliable primary for
+          the proxy run and self-defense vs the sniper.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Surges matched to your DPS heavy; consider sniper-resist/minor-resist for the Variable
+          Elimination phase.
+    - id: ring_charger
+      count: 3
+      does: Cobalt Chronons → ring charges.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary/special for Time's Burden Minotaurs plus burst heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: Surges matched to your heavy; movement-focused (run speed) helps the Chronon ring
+          runs.
+  - name: 'Challenge: All-Chronons collected'
+    learner_friendly: false
+    summary: No player picks Chronon until ALL have. Slow + coordinated.
+  cheese: []
+  common_mistakes:
+  - Charging the wrong-color ring.
+  - Premature Detainment Bubble = wasted DPS prep.
+  - Goader survives the Variable Elimination if not ricochet'd.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Antedate (SMG, Arc)
+    - Lance Ephemeral (sniper rifle, Strand)
+    - Intercalary (auto rifle, Stasis)
+    - Collective Psyche armor — Legs (encounter-specific slot)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: ring_charger.'
+  - '2nd: temporality_holder.'
+  plain_language_steps:
+  - 1. After the banner, engage Agraios (a Vex Hobgoblin) and its three proxies (Made Constant, Made Absolute,
+    Made Cyclical); Agraios takes one of four Vex platforms and the proxies occupy the others.
+  - 2. Clear ambient Vex and the Ultra Hydra that spawns mid-encounter — this triggers five Time's Burden
+    Minotaurs to spawn in the corners, which drop Cobalt Chronons.
+  - 3. Five Guardians each grab one Cobalt Chronon and run it through one of the five rings (numbered
+    1-5 clockwise from spawn) to charge it; each player charges only one ring.
+  - 4. Three Coryphaeus Wyverns then spawn and the three central plates activate (Constant left, Absolute
+    middle, Cyclical right) — three players step them to take long-lasting Temporality debuffs.
+  - 5. One proxy starts sniping, applying Variable Elimination (a 10-second instant-kill timer); break
+    line of sight behind cover to reset it to 10 seconds.
+  - 6. The plate players read the sniping proxy's title (Made Constant/Cyclical/Absolute) and call it;
+    the player whose Temporality matches runs to that proxy's platform and interacts with the Vex receptacle.
+  - 7. That player gains the Alignment Charge buff with five small boxes beneath them; the other two plate
+    players see two of the five rings glowing blue (the rest flash red) and call those numbers.
+  - 8. Non-plate players Chronon-charge the called blue rings, then the Alignment player runs through
+    the charged rings to fill all five boxes.
+  - 9. At max Alignment Charge the grenade slot becomes a Vex-gate icon; a goader draws proxy aggro and
+    counts down, and at about four seconds the Alignment player detonates the Detainment Bubble so the
+    ricochet kills the proxy.
+  - 10. Killing the proxy exposes Agraios for a roughly 25-30 second DPS phase.
+  - 11. During DPS the Alignment buff returns — redo the ring run and ricochet detain for the second and
+    third proxies to extend damage (three ricochet detains per phase). Repeat until Agraios dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Sniping proxy applies Variable Elimination (10s instant-kill debuff; reset by breaking line of
+        sight)
+      - Ultra Hydra (Vex)
+      - Coryphaeus Wyverns (Vex)
+      - Time's Burden Minotaurs (Vex)
+      - Ambient Vex
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - DPS-phase damage element is not specified in the source; set surges to match your burst heavy.
+    burst_windows: Each ricochet that kills a proxy teleports Agraios to center and opens roughly 25-30
+      seconds of vulnerability, extendable with two more in-phase detains.
+    recommended_dps:
+    - Burst heavy (Linear Fusion Rifle or heavy GL)
+    - Exotic special (Whisper/Sleeper-style) for the timed window
+    - Rockets for high front-loaded damage
+  role_loadouts:
+  - role_id: temporality_holder
+    subclass: ''
+    weapons: Mobile build with strong burst heavy for the DPS windows; keep a reliable primary for the
+      proxy run and self-defense vs the sniper.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Surges matched to your DPS heavy; consider sniper-resist/minor-resist for the Variable
+      Elimination phase.
+  - role_id: ring_charger
+    subclass: ''
+    weapons: Add-clear primary/special for Time's Burden Minotaurs plus burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surges matched to your heavy; movement-focused (run speed) helps the Chronon ring runs.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/desert-perpetual.yaml (encounter: agraios)'
+    note: Mechanics, roles, and enemies derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: New raid (July 2025); DPS-phase element and meta loadouts unconfirmed in source — verify in-game
+      before committing surges/exotics.
+    date_checked: '2026-06-07'

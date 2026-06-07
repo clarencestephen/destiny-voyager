@@ -1,0 +1,226 @@
+# raid_context/content/dungeons/shattered-throne/1-erebus.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: shattered-throne
+  name: The Shattered Throne
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: erebus
+  name: Erebus (Labyrinth)
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Maze of Taken-infested corridors. Find Labyrinth Architects (Taken
+
+    Knights), kill them to reveal a symbol pointing to the next area.
+
+    Loop the labyrinth ~4 times until the final encounter Architect
+
+    (Taken Captain variant) drops, opening exit.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Broken-bridge starting area, mist + ascendant geometry.
+
+    - Multiple branching corridors, Taken enemies scattered.
+
+    - Walls with Hive symbols (initially dormant).
+
+
+    PLATFORM MECHANICS:
+
+    - Drop down past starting bridge → engage Labyrinth Architect (Taken Knight) + Taken Acolytes.
+
+    - Acolytes spawn endless Eyes until parent Acolyte is killed.
+
+    - On Architect kill → symbol illuminates on a wall = navigation cue.
+
+    - Follow symbol to next chamber. Repeat ~4 rotations.
+
+    - Final loop: Asterion, Set Apart spawns as the Architect variant.
+
+
+    START STATE: pull = walk across bridge, drop into first labyrinth chamber.
+
+    '
+  callouts:
+  - when: Architect down
+    from: killer
+    to: team
+    say: '"Symbol [shape/description] — [direction]."'
+    why: Coordinates pathing. Symbols are easy to miss in mist.
+  - when: Hobgoblin spotted (sniper from elevation)
+    from: spotter
+    to: team
+    say: '"Hobgoblin [direction] — cover."'
+    why: Catwalks have line-of-sight from above. One-shots are real.
+  wipe_triggers:
+  - Catwalk fall damage = death.
+  - Hobgoblin from elevation on a stationary player.
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Pull
+    all: Cross bridge, drop into first chamber. Engage Taken.
+  - phase: Architect cycle (×4)
+    all: Kill Architect → read symbol → navigate → repeat.
+  - phase: Asterion (final Architect)
+    all: Same loop, with Captain variant. Drops, exit opens.
+  permutations:
+  - name: Standard team-flow
+    learner_friendly: true
+    summary: Stick together. One leads, others kill adds.
+    roles:
+    - id: pathfinder
+      count: 1
+      does: Reads symbols, leads movement.
+      loadout:
+        subclass: Any movement-strong subclass (Hunter or any class with good vertical mobility for reading
+          symbols and leading)
+        weapons: Long-range scout rifle for spotting symbols and sniping Hobgoblins, plus a reliable add-clear
+          primary
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge mods needed (no DPS phase); run mobility/movement mods and a resilience
+          setup for catwalk survivability
+    - id: add_clear
+      count: 2
+      does: Lock down Acolytes + Acolyte Eyes. Pick Hobgoblins.
+      loadout:
+        subclass: Any subclass with strong sustained add-clear (Solar or Arc for ad density)
+        weapons: Add-clear primary plus a sniper to pick Hobgoblins from range
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No surge mods needed (no DPS phase); prioritize ammo finder and resilience mods
+  - name: Solo
+    learner_friendly: false
+    summary: Take it slow. Read every symbol before moving.
+    roles:
+    - id: solo
+      count: 1
+      does: All roles. Watch for Hobgoblins on elevation.
+      loadout:
+        subclass: Sustain-focused subclass (Void for Devour or Solar for Restoration to survive alone)
+        weapons: Long-range scout or sniper for Hobgoblins plus an add-clear primary
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: No surge mods needed (no DPS phase); run survivability and ammo mods
+  cheese:
+  - title: Snipe Hobgoblins from start
+    detail: 'Many Hobgoblins spawn on visible elevation from initial chambers.
+
+      Snipe before approach to avoid getting caught in their LoS while
+
+      orienting on a new symbol.
+
+      '
+  common_mistakes:
+  - Missing a symbol — backtrack to last Architect spawn to find it.
+  - Killing Acolytes before their Eyes — Eyes keep spawning, wastes time.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'WISH-ENDER quest Boss 1 (Querim, the Waking): Find a blue orb
+
+        in the Tower of the Deep area. Place on the statue rooftop.
+
+        Triggers Theratos, Archersbane (Taken Minotaur) + Querim spawn.
+
+        Kill both. Required for Hunter''s Remembrance quest.
+
+        '
+      rewards:
+      - Wish-Ender quest token 1
+    potential_drops:
+    - Shared 'Any Encounter' pool — Shattered Throne does NOT have per-encounter loot pools. Every encounter
+      rolls from the same set.
+    - 'Pool: Vouchsafe (scout, Void), Twilight Oath (sniper, Solar), Abide the Return (sword, Solar),
+      Retold Tale (shotgun, Void), Sleepless (RL, Arc), Waking Vigil (HC, Arc), Tigerspite (auto, Kinetic).'
+    - '**Wish-Ender** (exotic combat bow, Kinetic) — quest reward from ''Hunter''s Remembrance'' (the
+      secret quest in this dungeon), not a random RNG drop.'
+    - Reverie Dawn armor (any slot — source of high-stat armor farming).
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: add_clear. Watch the pathfinder.'
+  - '2nd: pathfinder.'
+  plain_language_steps:
+  - 1. Walk across the broken bridge at the start and drop down into the first labyrinth chamber. Mist
+    and branching corridors are everywhere, so stay near your team.
+  - 2. Engage the first Labyrinth Architect (a Taken Knight) along with the Taken Acolytes around it.
+  - 3. Kill the parent Acolytes to stop the endless Acolyte Eyes from spawning, then finish off the Architect.
+  - 4. When the Architect dies, a Hive symbol illuminates on a wall. Memorize or screenshot it because
+    it points to your next chamber.
+  - 5. Follow the symbol's direction to the next area. Watch for Hobgoblins sniping from elevation and
+    pick them off before crossing open ground.
+  - 6. Repeat the kill-Architect, read-symbol, navigate loop roughly four times.
+  - 7. On the final loop, Asterion, Set Apart spawns as the Architect (a Taken Captain variant). Kill
+    it.
+  - 8. With Asterion down, the exit opens. If anyone lost track of a symbol, backtrack to the last Architect
+    spawn to find it.
+  - '9. Avoid catwalk falls throughout: fall damage here means death.'
+  defense:
+    incoming_damage:
+      adds:
+      - Taken Knights (Labyrinth Architects) deal Void melee and projectile damage
+      - Taken Acolytes and endless Acolyte Eyes deal Solar/Arc small-arms pressure
+      - Taken Hobgoblins deal Solar sniper shots from elevation (can one-shot stationary players)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No fixed-element threat to hard-counter; general damage resist (Void Resist or Solar Resist) helps
+        against Hobgoblin/Acolyte chip on Master-tier difficulty
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase in this encounter; it is a navigation and add-clear section, so no damage surge applies
+    burst_windows: No boss damage window; just sustained add-clear on Architects, Acolytes, and Hobgoblins.
+    recommended_dps:
+    - Long-range scout or sniper for picking Hobgoblins off elevation
+    - Reliable primary or add-clear special for Acolytes and Eyes
+  role_loadouts:
+  - role_id: pathfinder
+    subclass: Any movement-strong subclass (Hunter or any class with good vertical mobility for reading
+      symbols and leading)
+    weapons: Long-range scout rifle for spotting symbols and sniping Hobgoblins, plus a reliable add-clear
+      primary
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge mods needed (no DPS phase); run mobility/movement mods and a resilience setup
+      for catwalk survivability
+  - role_id: add_clear
+    subclass: Any subclass with strong sustained add-clear (Solar or Arc for ad density)
+    weapons: Add-clear primary plus a sniper to pick Hobgoblins from range
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge mods needed (no DPS phase); prioritize ammo finder and resilience mods
+  - role_id: solo
+    subclass: Sustain-focused subclass (Void for Devour or Solar for Restoration to survive alone)
+    weapons: Long-range scout or sniper for Hobgoblins plus an add-clear primary
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge mods needed (no DPS phase); run survivability and ammo mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/shattered-throne.yaml (encounter 1, erebus)'
+    note: Primary source; mechanics, enemies, and roles derived directly from the authored v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (e.g. Resilience->Health). Verify current exotics/mods
+      in-game; no Master version of this dungeon exists, so champion mods are not mandatory.
+    date_checked: '2026-06-07'

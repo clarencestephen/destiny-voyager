@@ -1,0 +1,146 @@
+# raid_context/content/raids/vow-of-the-disciple/1-bog-payload.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: bog-payload
+  name: Disciple's Bog (Payload)
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Escort a Pyramid payload to the entrance. 6 stops, Knowledge Bearer
+
+    Abominations spawn at each. Kill them, collect shards (max 3 each),
+
+    return to payload for progress. 3 hidden Pyramid Spikes spawn a
+
+    hidden chest near the 5th stop.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Swampy bog area, Pyramid payload at start.
+
+    - Knowledge Bearer Abominations spawn at each of 6 stops.
+
+    - 3 Pyramid Spikes hidden along the route (shoot for chest unlock).
+
+    - 26-symbol entry room before the first encounter.
+
+
+    PLATFORM MECHANICS:
+
+    - Approach payload to engage.
+
+    - Kill Knowledge Bearer → shards drop.
+
+    - Max 3 shards per player. Return to payload to deposit.
+
+    - Outside payload range = Pervading Darkness stacks (10 = death).
+
+    - 3 Pyramid Spikes scattered: shoot all 3 to unlock hidden chest near 5th stop (inside building).
+
+    '
+  callouts:
+  - when: Knowledge Bearer down
+    from: killer
+    to: team
+    say: '"Shards [direction]."'
+    why: Collectors converge.
+  - when: Spike spotted
+    from: spotter
+    to: team
+    say: '"SPIKE [N/3] — shoot."'
+    why: Hidden chest progress.
+  wipe_triggers:
+  - Pervading Darkness 10 = death (mostly individual).
+  damage_phase_triggers:
+  - Payload reaches Pyramid → enter for next encounter.
+  parallel_timeline: []
+  permutations:
+  - name: Standard escort
+    learner_friendly: true
+    summary: Stay near payload, kill Bearers, deposit shards.
+  cheese: []
+  common_mistakes:
+  - Forgetting to return shards to payload = stalled progress.
+  - Wandering too far from payload = Pervading Darkness death.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: "BOG SECRET CHEST: Shoot 3 Pyramid Spikes along the route:\n(1) under rocks/trees left\
+        \ side of 2nd stop;\n(2) end of long path to 3rd stop;\n(3) beneath bridge that payload flies\
+        \ over after 4th stop\n    (shoot from far side).\nChest in building above swamp level near 5th\
+        \ stop — door opens only with all 3 spikes shot.\n"
+      rewards:
+      - Random raid loot + raid mod chance
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Just play. Visit the 26-symbol room to learn names.
+  plain_language_steps:
+  - 1. Before anything else, step into the 26-symbol entry room and screenshot or memorize the Pyramid
+    symbols and their names — you will need them in every later encounter.
+  - 2. Walk up to the Pyramid payload at the start of the bog to begin escorting it forward.
+  - 3. Stay close to the payload at all times. Wandering out of its range builds Pervading Darkness, and
+    10 stacks kills you.
+  - 4. At each of the 6 stops, Knowledge Bearer Abominations spawn. Kill them so they drop Darkness knowledge
+    shards.
+  - 5. Pick up shards (you can carry a maximum of 3 at once) and return to the payload to deposit them
+    — this is what advances progress.
+  - 6. Call out shard locations so collectors converge quickly and nobody overcaps at 3.
+  - '7. Optional secret chest: shoot the 3 hidden Pyramid Spikes along the route — one under the rocks/trees
+    on the left of the 2nd stop, one at the end of the long path to the 3rd stop, and one beneath the
+    bridge the payload flies over after the 4th stop (shoot from the far side).'
+  - 8. With all 3 Spikes shot, the door to a hidden chest inside the building near the 5th stop opens
+    — grab it for bonus loot.
+  - 9. Keep killing Bearers, depositing shards, and following the payload until it reaches the Pyramid,
+    then enter to start the next encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Darkness (Pervading Darkness debuff stacks when away from payload)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No mandatory resist on Normal; the only real threat is the Pervading Darkness debuff, which is
+        mitigated by staying in payload range rather than by resist mods
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase in this encounter — it is an escort/add-clear section with no boss
+    burst_windows: No burst window; clear Knowledge Bearer Abominations efficiently and keep the payload
+      moving.
+    recommended_dps:
+    - Add-clear primary or special (auto rifle, SMG, pulse rifle, or wave-frame/area grenade launcher)
+      to quickly drop Abominations at each stop
+  role_loadouts:
+  - role_id: standard-escort
+    subclass: Any subclass with strong add-clear and self-sustain (a healing or survivability subclass
+      eases the Pervading Darkness pressure)
+    weapons: Add-clear primary (auto rifle / SMG / pulse) + a special for tougher Abominations; heavy
+      is flexible
+    exotic_armor: ''
+    armor_stats:
+    - Health
+    - Class
+    surges_mods: No surge requirement; run general add-clear and survivability mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vow-of-the-disciple.yaml (encounter: bog-payload)'
+    note: Primary source for mechanics, enemies, and hidden chest route.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (e.g., Resilience->Health, Recovery->Class); current
+      stat names are used above. Verify exotic/weapon availability against the live sandbox, as the meta
+      shifts each season.
+    date_checked: '2026-06-07'

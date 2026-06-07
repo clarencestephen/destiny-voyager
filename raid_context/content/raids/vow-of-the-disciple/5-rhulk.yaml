@@ -1,0 +1,298 @@
+# raid_context/content/raids/vow-of-the-disciple/5-rhulk.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: rhulk
+  name: Rhulk, Disciple of the Witness (final boss)
+  difficulty: hard
+  estimated_time: 30-50 min
+  abstract: 'Final boss. Pyramid Disciple. Two phases:
+
+    Phase 1: Glaive break → Leeching Force → 6 Emanating Force dunks
+
+    to push force field back. Phase 2: Glaive break + dunk on correct
+
+    symbol pillar → stun + weak point burst (×4) → DPS chase phase.
+
+    3 damage phases until forced final stand. Most complex final boss.
+
+    '
+  setup: "WHAT YOU SEE:\n- Tall arena with stair-stepped levels.\n- Sarcophagus at top with Rhulk floating.\n\
+    - 6 pillars around the arena (Reader's job to track).\n- Swapping plate in middle ground.\n- Force\
+    \ field initially pushes team back.\n\nPLATFORM MECHANICS:\nPHASE 1 (lower arena):\n- Approach Rhulk\
+    \ → force field push (don't jump or you go OFF the edge).\n- Step up to first stairs → Rhulk summons\
+    \ GLAIVE above his head + Pervading Darkness stacks all.\n- Shoot glaive (long range) to BREAK = killing\
+    \ blow grants LEECHING FORCE buff.\n- Swapper: stand on middle-ground plate while holding Leeching\
+    \ → spawn 2 Darkness Cruxes in back.\n  2 team members break Cruxes → Leeching transferred to them.\n\
+    - Lose Leeching across team = glaive resummons. 3 resummons = invincible glaive = wipe by Pervading\
+    \ Darkness.\n- Dunker: take Leeching → get hit by Rhulk's Darkness BEAM (or stand in it deliberately)\
+    \ = converts to EMANATING FORCE.\n- Emanating Force = barrier doesn't push you. Carry to specific\
+    \ pillar to dunk → barrier retreats.\n- Reader: ID pillars 1-6 (L1, L2, L3, R1, R2, R3). Calls correct\
+    \ pillar based on Glyphkeeper-revealed symbols.\n- Glyphkeepers (Phalanx left, Chieftain right) per\
+    \ wave drop symbol columns. Same shared-symbol mechanic.\n- 6 Emanating Force dunks total → Phase\
+    \ 2.\n\nPHASE 2 (upper arena):\n- Rhulk lands. Charges glaive + slices forward → damages target.\n\
+    - Glaive breaks → Leeching Force again. Rhulk's NEXT attack = X+ beam (Pervading Darkness + Leeching\
+    \ → Emanating conversion).\n- Dunker takes Emanating to pillar matching symbol left by broken glaive.\n\
+    - Dunk = Rhulk stun + weak point on SHOULDERS (then HIPS) exposed.\n- 4 dunks total = all 4 weak points\
+    \ broken → DPS phase (chasing Rhulk).\n- 3 damage phases until forced final stand.\n- Final stand:\
+    \ constant Pervading Darkness stacks. Limited time. Save Supers.\n\nSTART STATE: rally banner. Approach\
+    \ Rhulk to start.\n"
+  callouts:
+  - when: Glaive broken + Leeching Force
+    from: killer
+    to: team
+    say: '"LEECHING — pillar [reader call]"'
+    why: Reader assigns next.
+  - when: Pillar assignment (Reader)
+    from: reader
+    to: team
+    say: '"Pillar [L1/L2/L3/R1/R2/R3]."'
+    why: Dunker target.
+  - when: Emanating Force in hand
+    from: dunker
+    to: team
+    say: '"EMANATING — going [pillar]."'
+    why: Other dunkers don't go same pillar.
+  - when: Dunked + barrier retreats
+    from: dunker
+    to: team
+    say: '"DUNKED [N/6]."'
+    why: Progress.
+  - when: Beam telegraph
+    from: spotter
+    to: team
+    say: '"BEAM [direction]."'
+    why: Dodge or convert.
+  - when: Phase 2 weak point ready
+    from: any
+    to: team
+    say: '"SHOULDERS/HIPS — break!"'
+    why: Burst weak point exposed by dunk.
+  wipe_triggers:
+  - 3 glaive resummons = invincible glaive = wipe.
+  - Pervading Darkness 10 = death.
+  - Hit by force field at low arena = pushed off edge.
+  - Wrong pillar dunk = Dunker dies.
+  - Charge attack at end-point hit = damage.
+  - Final stand timer exhaust = wipe.
+  damage_phase_triggers:
+  - 'Phase 1: 6 dunks → Phase 2.'
+  - 'Phase 2: 4 weak point breaks → DPS phase (chasing Rhulk).'
+  parallel_timeline:
+  - phase: Phase 1 — Pull
+    all: Engage. Glaive break.
+  - phase: Phase 1 — Swap + dunk cycle
+    swappers_2: Plate + Cruxes.
+    readers: Track pillars.
+    dunkers: Convert + dunk.
+  - phase: Phase 1 — 6 dunks
+    all: Cycle until barrier fully back.
+  - phase: Phase 2 — Pull
+    all: Advance up to Rhulk.
+  - phase: Phase 2 — Glaive + dunk × 4
+    all: 'Cycle: glaive break → beam → emanating → dunk → weak point break.'
+  - phase: Phase 2 — DPS
+    all: Burst Rhulk (head + broken weak points crit).
+  - phase: Final stand
+    all: Constant Pervading Darkness. Burn supers.
+  permutations:
+  - name: Standard 2-Swap / 1-Reader / 2-Dunk / 1-Float
+    learner_friendly: true
+    summary: Pre-assigned roles. Reader is critical.
+    roles:
+    - id: swapper
+      count: 2
+      does: Manage Leeching Force pickup/transfer via plate.
+      loadout:
+        subclass: Survivability subclass to hold the plate and tank Pervading Darkness while transferring
+          Leeching
+        weapons: Long-range primary to break the glaive + a heavy/linear for the DPS phase
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge to your DPS weapon (Solar if running Cataclysmic); add resist mods for
+          beam survival
+    - id: dunker
+      count: 2
+      does: Convert to Emanating + dunk at correct pillar.
+      loadout:
+        subclass: Mobile subclass to convert beam-to-Emanating and reach pillars quickly
+        weapons: Add-clear primary for Glyphkeepers + a heavy/linear for the DPS phase
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: Match surge to your DPS weapon; mobility/uptime and resist mods
+    - id: reader
+      count: 1
+      does: Track 6 pillars, call correct pillar from symbol matches.
+      loadout:
+        subclass: Survivability subclass so the critical caller stays alive through Pervading Darkness
+        weapons: Flexible add-clear primary + a heavy/linear for the DPS phase
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Match surge to your DPS weapon; resist mods to keep the Reader alive
+    - id: floater
+      count: 1
+      does: Add-clear + backup swap/dunk.
+      loadout:
+        subclass: Add-clear subclass that can also back up a swap or dunk
+        weapons: Fast add-clear primary/special + a heavy/linear for the DPS phase
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Grenade
+        surges_mods: Match surge to your DPS weapon; add-clear and resist mods
+  - name: 'Speed: double dunks per cycle'
+    learner_friendly: false
+    summary: 2 Dunkers + 2 Swappers run in parallel. Time dunks to not scramble pillars.
+  - name: Master (Chaff + Shielded)
+    learner_friendly: false
+    summary: No radar, Champions for Glyphkeepers, Solar/Void Wraiths.
+  cheese: []
+  common_mistakes:
+  - Reader misreading pillar = Dunker dies.
+  - Losing Leeching 3 times = wipe.
+  - Hit by Phase 1 force field on jump = off edge.
+  - Phase 2 charge attack mistimed = sliced.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest (Rhulk's glaive)
+    - Deepsight chest (if all secret puzzle symbols correct — see Notes)
+    hidden_chest: null
+    potential_drops:
+    - '**Collective Obligation** (exotic pulse rifle, Void) — RNG drop from final chest.'
+    - Insidious (pulse rifle, Arc)
+    - Lubrae's Ruin (glaive, Solar)
+    - Forbearance (grenade launcher, Arc)
+    - Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots).
+  master_challenge:
+    name: Looping Catalyst
+    requirement: 'Do not lose Leeching Force before the damage phase. Split:
+
+      one team focused on add-clear, the other on duplicating/
+
+      maintaining the buff chain until the barrier is fully covered
+
+      and the DPS window opens.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: floater (no critical role).'
+  - '2nd: swapper or dunker.'
+  - '3rd: reader (most demanding).'
+  plain_language_steps:
+  - '1. Place a rally banner and assign roles: 2 Swappers, 2 Dunkers, 1 Reader, 1 Floater. Approach Rhulk
+    to start. In the lower arena a force field pushes you back — do NOT jump or you''ll be knocked off
+    the edge.'
+  - 2. Step up to the first stairs; Rhulk summons a glaive above his head and Pervading Darkness stacks
+    on everyone. Shoot the glaive at long range to break it — the killing blow grants the LEECHING FORCE
+    buff.
+  - 3. A Swapper stands on the middle-ground plate while holding Leeching to spawn 2 Darkness Cruxes in
+    the back; 2 teammates break the Cruxes to transfer Leeching to themselves. Keep at least one Leeching
+    alive — losing it across the whole team resummons the glaive, and 3 resummons makes it invincible
+    and wipes you.
+  - 4. A Dunker with Leeching gets hit by (or stands in) Rhulk's Darkness BEAM to convert Leeching into
+    EMANATING FORCE, which lets them ignore the barrier push.
+  - 5. The Reader identifies the 6 pillars (L1, L2, L3, R1, R2, R3) and, using the shared symbols revealed
+    by the Phalanx (left) and Chieftain (right) Glyphkeepers, calls the correct pillar.
+  - 6. The Dunker carries Emanating Force to the called pillar and dunks it; the barrier retreats. Call
+    'EMANATING - going [pillar]' so two dunkers don't pick the same one.
+  - 7. Complete 6 Emanating dunks total to push the barrier fully back and trigger Phase 2.
+  - '8. Phase 2 (upper arena): Rhulk lands and charges/slices his glaive. Break the glaive again for Leeching,
+    then his next beam attack converts it to Emanating.'
+  - 9. The Dunker takes Emanating to the pillar matching the symbol left by the broken glaive. A correct
+    dunk STUNS Rhulk and exposes a weak point on his SHOULDERS (then HIPS).
+  - 10. Break all 4 weak points (4 dunks) to open the DPS phase, where you burst Rhulk while chasing him
+    (head plus broken weak points crit).
+  - 11. Repeat for 3 damage phases until the forced final stand, where Pervading Darkness stacks constantly
+    on a limited timer — save your Supers for this window.
+  - 12. On Master, radar is off and Glyphkeepers/Hobgoblins become Champions and Solar/Void Wraiths appear
+    — keep Leeching alive (Looping Catalyst) and lean on callouts.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Taken Phalanx Glyphkeepers)
+      - Scorn (Scorn Chieftain Glyphkeepers)
+      - Darkness (Pervading Darkness stacks; Darkness Cruxes)
+      - 'Master only: Solar/Void Wraiths'
+      boss:
+      - Darkness (Rhulk's Darkness beam, the force-field push, and his charged glaive slice)
+    champions:
+    - 'Master only: Glyphkeeper Champions -> Anti-Champion mods matching the displayed type'
+    - 'Master only: Hobgoblin Champions -> Anti-Champion mods matching the displayed type'
+    recommended_defensive_mods:
+      elemental:
+      - No fixed resist is forced, but Rhulk deals Darkness damage (beam + Pervading Darkness); survivability
+        and a healing source matter more than a specific resist. On Master, account for Solar/Void Wraith
+        damage.
+      concussive:
+      - Optional — a Concussive Dampener can blunt Rhulk's beam/slice and add burst during the high-pressure
+        final stand
+  damage:
+    surges:
+    - No element is forced by Rhulk (no elemental shield). Cataclysmic, this raid's Solar linear fusion
+      with Disciple's Bane, is a top boss-DPS pick — if the fireteam runs it, a Solar surge fits; otherwise
+      match the surge to your chosen DPS weapons (Whisper/Sleeper/linear/Cataclysmic are all listed).
+    burst_windows: Burst during the DPS phase after breaking all 4 weak points (head + broken shoulders/hips
+      crit) while chasing Rhulk; final stand is a limited Super-dump window.
+    recommended_dps:
+    - Linear fusion rifles (Cataclysmic with Disciple's Bane), heavy burst options (Whisper, Sleeper,
+      or a strong linear), and a Well/healing super plus burst Supers saved for the final stand
+  role_loadouts:
+  - role_id: swapper
+    subclass: Survivability subclass to hold the plate and tank Pervading Darkness while transferring
+      Leeching
+    weapons: Long-range primary to break the glaive + a heavy/linear for the DPS phase
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to your DPS weapon (Solar if running Cataclysmic); add resist mods for beam
+      survival
+  - role_id: dunker
+    subclass: Mobile subclass to convert beam-to-Emanating and reach pillars quickly
+    weapons: Add-clear primary for Glyphkeepers + a heavy/linear for the DPS phase
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to your DPS weapon; mobility/uptime and resist mods
+  - role_id: reader
+    subclass: Survivability subclass so the critical caller stays alive through Pervading Darkness
+    weapons: Flexible add-clear primary + a heavy/linear for the DPS phase
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge to your DPS weapon; resist mods to keep the Reader alive
+  - role_id: floater
+    subclass: Add-clear subclass that can also back up a swap or dunk
+    weapons: Fast add-clear primary/special + a heavy/linear for the DPS phase
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Match surge to your DPS weapon; add-clear and resist mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vow-of-the-disciple.yaml (encounter: rhulk, incl. Looping Catalyst
+      Master challenge and overall_notes on Master Champions)'
+    note: Primary source for the Leeching/Emanating Force loop, 6 pillars, 4 weak-point breaks, 3 damage
+      phases, final stand, and Collective Obligation drop.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use the Edge of Fate rename. Cataclysmic/Whisper/Sleeper are cited as DPS in the
+      guide; confirm current top DPS weapons and exotic armor against the live sandbox, since boss-DPS
+      meta changes each season.
+    date_checked: '2026-06-07'

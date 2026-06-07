@@ -1,0 +1,432 @@
+# raid_context/content/raids/salvations-edge/5-the-witness.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: the-witness
+  name: The Witness
+  difficulty: hard
+  estimated_time: 20-40 min
+  abstract: 'Final encounter. Fight the Witness directly. Reads its hand
+
+    attacks to identify which resonance to collect, then break its
+
+    armband-colored arms. Each broken arm grants Glyphbreaker; with
+
+    that buff, shoot one of the Witness''s chest glyphs to cleanse
+
+    resonance + progress toward damage phase. All 6 glyphs broken =
+
+    central plate rises = DPS window.
+
+    '
+  setup: "WHAT YOU SEE\n- Wide circular arena. **The Witness** stands at the back wall.\n- 6 GLYPHS arranged\
+    \ in a row across the Witness's chest.\n- 3 active **HANDS** at any time:\n    • SKY HAND — Resonant\
+    \ Outburst (triangle floor AoE).\n    • FLOOR HAND — Resonant Seekers (circle swarm).\n    • SIDE\
+    \ HAND — Wrathful Disarray (horizontal beam).\n- Each hand has a glowing ARMBAND in a colour (green/yellow/red).\n\
+    \  Colour = which resonance is needed to break it.\n- Central CIRCULAR ORGANIC PLATFORM — rises during\
+    \ damage phase.\n\nPLATFORM MECHANICS\n- To pick up resonance: STAND in a hand's attack zone for ~2\n\
+    \  seconds (you'll hear a droning sound). Avoid these in normal\n  play — Glyphbreakers deliberately\
+    \ stand in them.\n- To BREAK a hand: with the matching resonance, return to the\n  attack zone of\
+    \ the hand whose armband matches that colour,\n  and shoot the armband. The hand explodes; you get\n\
+    \  **Glyphbreaker** buff.\n- To CLEANSE resonance: walk to the central organic platform,\n  shoot\
+    \ one of the Witness's 6 chest glyphs. Glyph disappears\n  + your resonance clears. Required: you\
+    \ DIE if you carry\n  resonance too long.\n- Spike test: after destroying a hand, a glowing hand may\
+    \ signal\n  a test. Pyramid spikes spawn in front of the Witness. The team\n  must DESTROY spikes\
+    \ in a pattern matching the attack hand's\n  shape (triangle/circle/square). Wrong = lose jump for\
+    \ 5\n  seconds + ground-energy wave kills anyone not in the air.\n\nSTART STATE\n- Encounter starts\
+    \ the moment players approach the Witness's\n  platform.\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"Glyphbreakers = [3 names]. Add-clear = [3 names]. Glyphbreakers take HAND assignments: [name1]
+      sky, [name2] floor, [name3] side."'
+    why: Each Glyphbreaker permanently owns one of the 3 hand types. Reduces confusion about who's reading
+      what.
+  - when: Sky hand armband read
+    from: glyphbreaker-sky
+    to: team
+    say: '"Sky hand: [GREEN | YELLOW | RED] — need [Pyramidal | Spherical | Hexahedral]."'
+    why: Tells team which resonance type needs gathering for this hand.
+  - when: Floor hand armband read
+    from: glyphbreaker-floor
+    to: team
+    say: '"Floor hand: [colour] — need [shape]."'
+    why: Same.
+  - when: Side hand armband read
+    from: glyphbreaker-side
+    to: team
+    say: '"Side hand: [colour] — need [shape]."'
+    why: Same.
+  - when: Glyphbreaker collecting wrong-shape resonance
+    from: any
+    to: that glyphbreaker
+    say: '"[Name] — you''ve got [wrong shape], need [right shape]!"'
+    why: Wrong shape can't break the matched hand. Player must cleanse via central glyph and start over.
+  - when: Hand broken
+    from: glyphbreaker
+    to: team
+    say: '"[Sky | Floor | Side] hand DOWN — Glyphbreaker active."'
+    why: Tells team one hand attack is now offline + this player will cleanse at central glyph.
+  - when: Spike test triggered
+    from: any
+    to: team
+    say: '"SPIKES — need [TRIANGLE | CIRCLE | SQUARE]!"'
+    why: Witness winds up a spike test; correct-shape pattern dissolves the spikes; failure = ground-energy
+      wave.
+  - when: 5th glyph being broken (last glyph imminent)
+    from: lead
+    to: team
+    say: '"5th glyph — converge to central plate."'
+    why: Once 6th glyph breaks, central plate rises and damage phase starts. Be on the plate already.
+  - when: Damage phase open
+    from: any
+    to: team
+    say: '"VULNERABLE — burst him."'
+    why: Central organic plate up + Witness's heart open. All DPS in.
+  - when: Witness wind-back during DPS (combined attack telegraph)
+    from: any
+    to: team
+    say: '"BACK LEFT, FRONT RIGHT, JUMP."'
+    why: Combined Wrathful Disarray + ground-energy attack. Standard callout format. Tells team which
+      direction to move + when to jump.
+  - when: Damage phase ending (Witness slamming central plate)
+    from: any
+    to: team
+    say: '"OUT — he''s slamming!"'
+    why: Witness ends the phase by slamming the central plate, killing or launching anyone still on it.
+      Get off.
+  - when: Final Stand
+    from: lead
+    to: team
+    say: '"FINAL STAND — supers + heavies NOW. He has one phase."'
+    why: Final Stand window is tight; team gets one DPS rotation. Pre-save burst-DPS for this moment.
+  wipe_triggers:
+  - Holding resonance too long → death.
+  - Spike test failed → ground-energy wave kills anyone not airborne.
+  - Wrathful Disarray (horizontal beam) hits low-Health players.
+  - Witness Final Shape wipe — Final Stand timer expires.
+  damage_phase_triggers:
+  - All 6 chest glyphs broken → central organic platform rises → Witness vulnerable.
+  parallel_timeline:
+  - phase: Pull
+    all: Approach Witness's platform. Final Shape Looming starts. Witness opens 3 hand attacks.
+    glyphbreaker_3: Read your assigned hand's armband colour. Move into the OPPOSITE attack zone to pick
+      up needed resonance.
+    add_clear_3: Hold the arena. Burn Scorn forces. Keep the Glyphbreakers alive.
+  - phase: First glyph break
+    glyphbreaker_with_resonance: Return to your hand's attack zone. Shoot armband to break the hand →
+      Glyphbreaker buff.
+    other_two_glyphbreakers: Continue collecting resonance for your hands.
+    add_clear_3: Continuous ad-clear.
+  - phase: Cleanse + repeat
+    glyphbreakers: Cleanse resonance by shooting one of the Witness's 6 chest glyphs at the central organic
+      platform.
+    all: Repeat for each of the 6 glyphs across multiple rotations.
+  - phase: Spike test (randomly between glyphs)
+    all: Read the attacking hand's shape. Destroy Pyramid spikes in matching pattern (triangle / circle
+      / square). Failure → jump to avoid the ground wave.
+  - phase: 6th glyph imminent
+    all: Pre-converge to central platform. Damage phase starts the moment 6th glyph breaks.
+  - phase: Damage phase
+    all: Central plate rises. Witness's heart open. Burst-DPS while ALSO moving around to avoid Resonant
+      Outburst + Wrathful Disarray. After 3 hand-attack pairs, Witness slams the plate — get off.
+  - phase: Loop / Final Stand
+    all: Repeat until Final Stand. Final Stand = Witness immune briefly, then opens for one tight DPS
+      window. Use supers + heavies.
+  permutations:
+  - name: Standard 3 Glyphbreakers + 3 Add-Clear
+    learner_friendly: false
+    summary: Default. Each Glyphbreaker permanently assigned to one of 3 hand types (sky, floor, side).
+      Add-clear holds the arena.
+    roles:
+    - id: glyphbreaker-sky
+      count: 1
+      does: Owns the sky hand (Resonant Outburst). Reads armband, collects matching resonance from another
+        hand's zone, returns to break the sky hand. Cleanses at central glyph.
+      loadout:
+        subclass: ''
+        weapons: Mobile survivable loadout for standing in attack zones (SMG/auto + special); a burst-heavy
+          held for the DPS window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener to survive in the Resonant Outburst zone; match
+          damage Surge to your heavy
+    - id: glyphbreaker-floor
+      count: 1
+      does: Owns the floor hand (Resonant Seekers). Same flow.
+      loadout:
+        subclass: ''
+        weapons: Same survivable add-clear plus burst-heavy for DPS; owns the floor hand (Resonant Seekers)
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener for the seeker swarm zone; match Surge to your
+          heavy
+    - id: glyphbreaker-side
+      count: 1
+      does: Owns the side hand (Wrathful Disarray). Same flow.
+      loadout:
+        subclass: ''
+        weapons: Survivable add-clear plus burst-heavy; owns the side hand (Wrathful Disarray beam)
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener for the beam zone; match Surge to your heavy
+    - id: add-clear
+      count: 3
+      does: Hold arena. Kill Scorn. Call combined attack telegraphs during DPS. Keep Glyphbreakers safe
+        while they're standing in attack zones to collect resonance.
+      loadout:
+        subclass: ''
+        weapons: Strong Scorn add-clear primary (Riskrunner/Outbreak Perfected/wave-frame GL) plus heavy;
+          calls combined-attack telegraphs
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Resist mod (Arc) and Concussive Dampener; match Surge to your DPS heavy
+  - name: 2 Glyphbreakers + 4 Add-Clear (Slower, Safer)
+    summary: Reduces glyphbreaker load to 2 players. They split 3 hand types between them; one handles
+      2 hands, other handles 1. Slower glyph progress, more add-clear stability.
+    best_for: Master / teams with thin add-clear capability.
+    roles:
+    - id: glyphbreaker-double
+      count: 1
+      does: Owns 2 of the 3 hand types. Heavier workload.
+      loadout:
+        subclass: ''
+        weapons: Survivable add-clear plus burst-heavy; owns two of the three hand types (heavier workload)
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener for the attack zones; match Surge to your heavy
+    - id: glyphbreaker-single
+      count: 1
+      does: Owns the remaining hand.
+      loadout:
+        subclass: ''
+        weapons: Survivable add-clear plus burst-heavy; owns the remaining single hand type
+        exotic_armor: ''
+        armor_stats: &id006
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener for the attack zone; match Surge to your heavy
+    - id: add-clear
+      count: 4
+      loadout:
+        subclass: ''
+        weapons: Strong Scorn add-clear primary (Riskrunner/Outbreak Perfected/wave-frame GL) plus heavy;
+          calls combined-attack telegraphs
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Resist mod (Arc) and Concussive Dampener; match Surge to your DPS heavy
+  - name: Rotating Glyphbreakers
+    summary: No fixed hand assignments. Whoever picks up a resonance first goes for the matching hand.
+      More flexible, requires comms-tight team.
+    best_for: Experienced fireteams comfortable with on-the-fly callouts.
+    roles:
+    - id: rotating
+      count: 6
+      does: Anyone can be Glyphbreaker. Read hands, pick up resonance, break matching hand. Call ownership
+        out loud.
+      loadout:
+        subclass: ''
+        weapons: Flexible survivable add-clear plus burst-heavy; anyone may become Glyphbreaker, so carry
+          both add-clear and DPS
+        exotic_armor: ''
+        armor_stats: &id007
+        - Health
+        - Class
+        surges_mods: Resist mod and Concussive Dampener for whichever zone you enter; match Surge to your
+          heavy
+  cheese:
+  - title: Stack Glyphbreakers near final glyph for instant DPS open
+    detail: 'When 5 glyphs are broken and the last Glyphbreaker is en
+
+      route to break the 6th, the OTHER 5 should already be on
+
+      the central plate ready to DPS. Saves 3-5 seconds of
+
+      repositioning, which is the difference between making it
+
+      to Final Stand in 4 phases vs 5.
+
+      '
+  common_mistakes:
+  - Glyphbreaker forgets to cleanse → dies to resonance timer.
+  - Glyphbreaker reads wrong-colour armband → picks up wrong shape → can't break hand.
+  - '**Same-color trap (verified Pass 2)**: a hand''s armband NEVER matches the resonance it itself spawns.
+    The FLOOR hand (spawns Spherical) won''t show yellow. The SKY hand (spawns Pyramidal) won''t show
+    green. The SIDE hand (spawns Hexahedral) won''t show red. So to break any hand you must grab resonance
+    from a DIFFERENT hand''s zone — never the one in front of you.'
+  - Add-clear standing in Resonant Seekers (floor swarm) → accidentally picks up Spherical resonance →
+    also dies to timer if not cleansed.
+  - Spike test ignored → instant team wipe.
+  - 'Spike-test pattern: shape matches the LAST destroyed hand. Text on screen reads ''The Witness tests
+    you...'' — that''s the cue.'
+  - 'Final Stand: trying for a 2nd damage phase — there isn''t one. Burst NOW or wipe.'
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    - Final-encounter chest (separate from per-encounter drops).
+    hidden_chest: null
+    potential_drops:
+    - '**Euphony** (exotic linear fusion rifle, Strand) — most-chased loot. RNG drop from final chest.'
+    - Summum Bonum (sword, Arc)
+    - Nullify (pulse rifle, Solar)
+    - Critical Anomaly (sniper rifle, Stasis)
+  master_challenge:
+    name: Coordinated Efforts
+    requirement: 'All 6 Witness glyphs must be broken within a few seconds of
+
+      each other. All 6 fireteam members need to obtain the
+
+      Glyphbreaker buff first (shoot an appendage with a buff that
+
+      matches its armband), then fire on glyphs simultaneously.
+
+      Side effect: makes Master easier — only 1 pair of Subjugators
+
+      per phase. Tradeoff: no opportunity to cleanse incorrect
+
+      Resonance before DPS opens.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: add-clear. Learn the rhythm of hand attacks + spike tests.'
+  - '2nd: glyphbreaker-side (Wrathful Disarray is the easiest beam to dodge).'
+  - '3rd: glyphbreaker-sky or glyphbreaker-floor.'
+  plain_language_steps:
+  - '1. Pre-pull, assign 3 Glyphbreakers and 3 Add-clear. Give each Glyphbreaker a permanent hand: one
+    owns the SKY hand, one the FLOOR hand, one the SIDE hand.'
+  - '2. Approach the Witness''s platform to start the encounter. The Final Shape Looming timer begins
+    and the Witness opens its three hand attacks: Resonant Outburst (sky, triangle floor AoE), Resonant
+    Seekers (floor, circle swarm), and Wrathful Disarray (side, horizontal beam).'
+  - '3. Each Glyphbreaker reads their hand''s armband colour: green needs Pyramidal, yellow needs Spherical,
+    red needs Hexahedral. Call it out so the team knows what to gather.'
+  - '4. Critical rule: a hand''s armband never matches the resonance it spawns itself. To break a hand
+    you must collect resonance by standing in a DIFFERENT hand''s attack zone for about 2 seconds, never
+    the one in front of you.'
+  - 5. With the matching resonance, return to your hand's attack zone and shoot its armband. The hand
+    explodes and you gain the Glyphbreaker buff.
+  - 6. Take that buff to the central organic platform and shoot one of the Witness's six chest glyphs.
+    This cleanses your resonance and removes a glyph. Cleanse before your resonance timer kills you.
+  - 7. Add-clear players hold the arena against the Scorn the whole time and keep Glyphbreakers alive
+    while they stand in attack zones collecting resonance.
+  - 8. When a Spike test triggers ('The Witness tests you...' appears), read the LAST destroyed hand's
+    shape and destroy the pyramid spikes in the matching pattern (triangle, circle, or square). On failure,
+    jump to avoid the ground-energy wave.
+  - 9. Repeat the read-collect-break-cleanse loop across multiple rotations until five glyphs are broken.
+    The whole team should pre-converge to the central platform.
+  - 10. When the sixth glyph breaks, the central organic platform rises and the Witness's heart opens.
+    Burst-DPS while constantly moving to dodge Resonant Outburst and Wrathful Disarray; use the directional
+    callouts and jump on cue.
+  - 11. When the Witness slams the central plate to end the phase, get off the plate immediately or you
+    die.
+  - 12. Repeat until Final Stand. There is only one tight DPS window left, so dump supers and heavies
+    the moment it opens, or wipe.
+  defense:
+    incoming_damage:
+      adds:
+      - Scorn faction forces deal Arc and physical damage throughout the arena
+      - Subjugators (Dread) appear on Master per the Coordinated Efforts pairing
+      boss:
+      - 'The Witness hand attacks: Resonant Outburst (triangular floor AoE), Resonant Seekers (circular
+        swarm), Wrathful Disarray (horizontal beam), plus the Spike-test ground-energy wave'
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Resist Arc from Scorn; keep high Health so Wrathful Disarray's beam and the Resonant Outburst
+        don't one-shot Glyphbreakers standing in zones
+      concussive:
+      - Concussive Dampener helps survive the Witness's combined beam and ground-energy attacks during
+        DPS and the Spike-test wave
+  damage:
+    surges:
+    - DPS phase opens once all 6 chest glyphs are broken and the central plate rises. The Witness's element
+      is not specified, so match your Surge to your strongest burst weapon.
+    burst_windows: Damage window opens when the 6th glyph breaks and the central organic platform rises;
+      you get roughly three hand-attack pairs before the Witness slams the plate. Final Stand is one last
+      tight window.
+    recommended_dps:
+    - 'Burst-heavy: Two-Tailed Fox, Sleeper, Apex Predator, or a rocket-and-sword swap'
+    - Pre-save supers and heavy ammo for the Final Stand single window
+  role_loadouts:
+  - role_id: glyphbreaker-sky
+    subclass: ''
+    weapons: Mobile survivable loadout for standing in attack zones (SMG/auto + special); a burst-heavy
+      held for the DPS window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Resist mod and Concussive Dampener to survive in the Resonant Outburst zone; match damage
+      Surge to your heavy
+  - role_id: glyphbreaker-floor
+    subclass: ''
+    weapons: Same survivable add-clear plus burst-heavy for DPS; owns the floor hand (Resonant Seekers)
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Resist mod and Concussive Dampener for the seeker swarm zone; match Surge to your heavy
+  - role_id: glyphbreaker-side
+    subclass: ''
+    weapons: Survivable add-clear plus burst-heavy; owns the side hand (Wrathful Disarray beam)
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Resist mod and Concussive Dampener for the beam zone; match Surge to your heavy
+  - role_id: add-clear
+    subclass: ''
+    weapons: Strong Scorn add-clear primary (Riskrunner/Outbreak Perfected/wave-frame GL) plus heavy;
+      calls combined-attack telegraphs
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Resist mod (Arc) and Concussive Dampener; match Surge to your DPS heavy
+  - role_id: glyphbreaker-double
+    subclass: ''
+    weapons: Survivable add-clear plus burst-heavy; owns two of the three hand types (heavier workload)
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: Resist mod and Concussive Dampener for the attack zones; match Surge to your heavy
+  - role_id: glyphbreaker-single
+    subclass: ''
+    weapons: Survivable add-clear plus burst-heavy; owns the remaining single hand type
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: Resist mod and Concussive Dampener for the attack zone; match Surge to your heavy
+  - role_id: rotating
+    subclass: ''
+    weapons: Flexible survivable add-clear plus burst-heavy; anyone may become Glyphbreaker, so carry
+      both add-clear and DPS
+    exotic_armor: ''
+    armor_stats: *id007
+    surges_mods: Resist mod and Concussive Dampener for whichever zone you enter; match Surge to your
+      heavy
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/salvations-edge.yaml (encounter: the-witness)'
+    note: Primary source; Glyphbreaker loop, armband-never-matches-its-own-shape rule, Spike test, and
+      Final Stand derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate stat renames applied (Health/Class). The Witness's DPS element is not specified
+      in the guide, so generic burst archetypes are given; verify current-meta exotics and burst weapons
+      before a run.
+    date_checked: '2026-06-07'

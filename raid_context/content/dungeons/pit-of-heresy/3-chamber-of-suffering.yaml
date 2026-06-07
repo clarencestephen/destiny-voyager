@@ -1,0 +1,249 @@
+# raid_context/content/dungeons/pit-of-heresy/3-chamber-of-suffering.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: chamber-of-suffering
+  name: Chamber of Suffering
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Wave defense + orb dunks under a Curse of Suffering debuff. 6 runes
+
+    on a central wall need destroying. Kill Knights for orbs, dunk to
+
+    clear YOUR debuff stacks. Someone MUST stand under the Annihilator
+
+    Totem to extinguish its fire or the team wipes.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Large chamber. Central plate with the Annihilator Totem (above) + 6 Hive runes on the wall.
+
+    - 6 sealed doors around the perimeter.
+
+    - Boomer-wielding Knights on high ledges (deadly long-range).
+
+    - Heretical Knights spawn around the room periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Annihilator Totem: stand under to extinguish its fire. If left unattended → wipe.
+
+    - Curse of Suffering: stacking debuff on ALL players. Each orb dunk clears YOUR stacks. Max stacks
+    = team wipe.
+
+    - Boomer Knights on ledges: snipe targets, weak themselves.
+
+    - Heretical Knight orbs: dunk at one of the 6 doors (each door = 1 rune destroyed).
+
+
+    START STATE: walk to central plate to begin.
+
+    '
+  callouts:
+  - when: Curse stacks ≥ 7
+    from: self
+    to: team
+    say: '"7 stacks — I need an orb."'
+    why: Cue runner to prioritize that player's next dunk.
+  - when: Totem fire visible
+    from: any
+    to: team
+    say: '"Totem hot — [name] cover."'
+    why: Wipe-prevention. Always have someone under it.
+  - when: Knight spotted
+    from: spotter
+    to: team
+    say: '"Knight [direction] — got it."'
+    why: Coordinates kill. Long-range weapon best.
+  - when: Orb dunked
+    from: self
+    to: team
+    say: '"[N] dunked. [N] runes left."'
+    why: Progress check + reminds team of stack-clear cycle.
+  wipe_triggers:
+  - Curse of Suffering reaches max stacks (team-wide).
+  - Totem fire left unattended too long.
+  - Boomer Knight headshot on a stationary player.
+  damage_phase_triggers:
+  - All 6 runes destroyed (= 6 orbs dunked total) → encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    plate_holder: Stand on plate. Engagement starts.
+    runner: Engage first Heretical Knight.
+    add_clear: Lock down Boomers + ambient.
+  - phase: Steady-state loop
+    runner: Kill Knight → orb → dunk → repeat.
+    plate_holder: Stay under Totem, clear adds + Boomers around it.
+    add_clear: Pick Knights from range, support runner.
+  - phase: Final dunks
+    all: Push last 1-2 runes, monitor stacks.
+  permutations:
+  - name: Standard 1-runner / 1-plate / 1-clear
+    learner_friendly: true
+    summary: One runner, one totem-sitter, one floater for Boomers/Knights.
+    roles:
+    - id: runner
+      count: 1
+      does: Owns orb pipeline. Calls own stacks.
+      loadout:
+        subclass: Any; mobility-leaning kit to move orbs fast
+        weapons: Strong primary to kill Heretical Knights quickly; sidearm/SMG for close adds
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: No surge requirement; favor Health for the Curse window
+    - id: plate_holder
+      count: 1
+      does: Stays under totem. Clears nearby adds.
+      loadout:
+        subclass: Any; survivability/ability-uptime kit to hold the totem
+        weapons: Long-range primary or sniper to kill Boomer Knights without leaving the totem
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No surge requirement; favor Health
+    - id: add_clear
+      count: 1
+      does: Boomer hunter. Backup orb runs if runner stacks high.
+      loadout:
+        subclass: Any; strong add-clear kit
+        weapons: Sniper or linear fusion to hunt Boomer Knights; rocket as a backup; strong primary for
+          ambient Hive
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Weapons
+        surges_mods: No surge requirement
+  - name: Solo
+    learner_friendly: false
+    summary: 'Long-range Knight kill (rocket / sniper) from totem position →
+
+      run to orb → dunk → back to totem. Loud Lullaby + Gjallarhorn
+
+      remain popular for this.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: All roles in sequence. Don't leave totem long.
+      notes:
+      - Use Witherhoard on far-spawn Knights — does work while you sprint.
+      loadout:
+        subclass: Any; survivable kit; ability uptime helps
+        weapons: Long-range Knight killer (rocket/sniper) from the totem position; Witherhoard for far-spawn
+          Knights; Loud Lullaby and Gjallarhorn remain popular here
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No surge requirement; favor Health for the Curse window
+  cheese: []
+  common_mistakes:
+  - All 3 going for orbs simultaneously → totem fires → wipe.
+  - Ignoring Boomer Knights — they erase totem-sitters from across the room.
+  - Hoarding an orb 'until safe to dunk' — stacks keep climbing.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Same shared 'Any Encounter' pool as the first loot encounter — see that block for the full weapon
+      + armor list.
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: plate_holder. Lowest movement + watches the rhythm.'
+  - '2nd: runner.'
+  - '3rd: floater.'
+  plain_language_steps:
+  - 1. Walk onto the central plate to begin the encounter; this starts the Curse of Suffering debuff on
+    the whole team.
+  - 2. Assign one player to stand under the Annihilator Totem at all times to extinguish its fire, or
+    the team wipes.
+  - 3. Watch for Boomer-wielding Knights on the high ledges; they snipe across the room, so kill them
+    quickly with a long-range weapon.
+  - 4. Have a runner kill the Heretical Knights that spawn around the room to collect Void Orbs.
+  - 5. Each player's Curse of Suffering stacks keep climbing; dunking a Void Orb clears YOUR own stacks.
+  - 6. Dunk each orb at one of the 6 perimeter doors; every dunk destroys one of the 6 Hive runes on the
+    central wall.
+  - 7. Call out your stacks when they get high (around 7) so the runner prioritizes getting you the next
+    orb.
+  - 8. Never have all 3 players leave the totem for orbs at once, or the totem fires and wipes the team.
+  - '9. Keep cycling: kill Knight, grab orb, dunk to clear stacks and destroy a rune, return near the
+    totem.'
+  - 10. Destroy all 6 runes (6 orbs dunked total) to end the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Boomer Knight long-range cannon fire)
+      - Arc (Heretical Hive Knight melee)
+      - 'Curse of Suffering: a stacking team-wide debuff cleared only by dunking Void Orbs'
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resist is the main pick against Boomer Knight and Knight damage
+      - Stack Health-affecting resist mods for the Curse of Suffering window
+      concussive:
+      - Concussive Dampener can reduce Boomer Knight blast knockback on the totem-sitter
+  damage:
+    surges:
+    - No boss DPS phase. The encounter ends when all 6 runes are destroyed via orb dunks, not through
+      burst damage on a boss.
+    burst_windows: No burst window; this is a wave-defense and orb-dunk race against the Curse of Suffering,
+      so prioritize clearing Boomers and keeping the orb pipeline moving.
+    recommended_dps:
+    - Long-range primary, sniper, or rocket for the ledge Boomer Knights
+    - Witherhoard for chip on far-spawn Knights while you reposition
+  role_loadouts:
+  - role_id: runner
+    subclass: Any; mobility-leaning kit to move orbs fast
+    weapons: Strong primary to kill Heretical Knights quickly; sidearm/SMG for close adds
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; favor Health for the Curse window
+  - role_id: plate_holder
+    subclass: Any; survivability/ability-uptime kit to hold the totem
+    weapons: Long-range primary or sniper to kill Boomer Knights without leaving the totem
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement; favor Health
+  - role_id: add_clear
+    subclass: Any; strong add-clear kit
+    weapons: Sniper or linear fusion to hunt Boomer Knights; rocket as a backup; strong primary for ambient
+      Hive
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge requirement
+  - role_id: solo
+    subclass: Any; survivable kit; ability uptime helps
+    weapons: Long-range Knight killer (rocket/sniper) from the totem position; Witherhoard for far-spawn
+      Knights; Loud Lullaby and Gjallarhorn remain popular here
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No surge requirement; favor Health for the Curse window
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/pit-of-heresy.yaml (encounter: chamber-of-suffering)'
+    note: Primary source for mechanics, enemies, and roles, including the Annihilator Totem and Curse
+      of Suffering.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats; verify current exotics/weapons (e.g., Witherhoard,
+      Gjallarhorn) in-game as the meta shifts each season.
+    date_checked: '2026-06-07'

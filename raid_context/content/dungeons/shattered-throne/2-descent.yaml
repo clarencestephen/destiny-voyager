@@ -1,0 +1,211 @@
+# raid_context/content/dungeons/shattered-throne/2-descent.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: shattered-throne
+  name: The Shattered Throne
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: descent
+  name: The Descent (catwalks + jumping puzzle)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'Long catwalk hallway + jumping puzzle. Taken Ogres on platforms
+
+    one-shot you off ledges with eye blasts. A Thrallway barrier
+
+    cancels your jump — use the orb on a side pedestal to bypass.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Long open hallway with pillars + catwalks at multiple elevations.
+
+    - Taken Ogres on elevated platforms (eye blast = knockback).
+
+    - Hobgoblins, Phalanxes, Knights as ambient pressure.
+
+    - A "barrier zone" mid-section that disables jumping + spawns endless Shadow Thrall.
+
+    - Orb pedestal to the right of the barrier entry.
+
+
+    PLATFORM MECHANICS:
+
+    - Snipe/burst Ogres on platforms before they line up an eye blast — Jötunn 2-shots, sniper headshots
+    work.
+
+    - Barrier zone: pick up orb from pedestal → walk through with orb → jump restored.
+
+    - Endless Thrall in barrier — don''t linger, melee + walk through.
+
+
+    START STATE: post-Erebus, walk into the descending corridor.
+
+    '
+  callouts:
+  - when: Ogre on platform [direction]
+    from: spotter
+    to: team
+    say: '"Ogre [direction] — burning."'
+    why: Designates Ogre target. They one-shot from above.
+  - when: Barrier entered, jump disabled
+    from: self
+    to: team
+    say: '"In barrier — orb at pedestal."'
+    why: Heads-up; orb route handles bypass.
+  wipe_triggers:
+  - Ogre eye blast knockback off a catwalk = death.
+  - Catwalk fall = death.
+  - Hobgoblin headshot on a stationary player.
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Standard lead-follow
+    learner_friendly: true
+    summary: Lead clears Ogres + Hobgoblins; team follows on cleared catwalks.
+    roles:
+    - id: lead
+      count: 1
+      does: Snipes Ogres + Hobgoblins. Calls movement windows.
+      loadout:
+        subclass: Any subclass with strong ranged single-target (Solar or Void for reliable burst on Ogres)
+        weapons: Sniper rifle for Ogres and Hobgoblins, plus an add-clear primary and a burst special/heavy
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge mods needed (no DPS phase); run mobility mods for the jumping puzzle and
+          resilience for catwalk survivability
+    - id: follow
+      count: 2
+      does: Cross catwalks after clear. Pick remaining adds.
+      loadout:
+        subclass: Any subclass with good mobility for catwalk crossings
+        weapons: Add-clear primary plus a sniper to help with remaining Ogres and Hobgoblins
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Weapons
+        surges_mods: No surge mods needed (no DPS phase); prioritize mobility and resilience mods
+  - name: Solo
+    learner_friendly: false
+    summary: Hold sniper. Take Ogres from cover, then move.
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical. Orb route through barrier.
+      loadout:
+        subclass: Sustain subclass (Void for Devour or Solar for Restoration) to survive the barrier and
+          Ogres alone
+        weapons: Sniper rifle held for Ogres from cover, plus an add-clear primary
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: No surge mods needed (no DPS phase); run survivability, mobility, and ammo mods
+  cheese: []
+  common_mistakes:
+  - Sprinting catwalks — Ogre eye blasts catch sprinters mid-jump.
+  - Trying to fight in the barrier — Shadow Thrall are infinite. Just walk through.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'WISH-ENDER quest Boss 2 (Eriviks, the Waking): Need 2 orbs.
+
+        (a) Behind first pillar in Ogre catwalk section.
+
+        (b) From the Thrallway barrier zone.
+
+        Place both orbs at statues without orbs → hidden door opens →
+
+        arena with Eriviks + Taken Psions.
+
+        '
+      rewards:
+      - Wish-Ender quest token 2
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+    hidden_chest: ''
+  learner_path:
+  - Follow + watch. Don't pioneer the orb routing your first time.
+  plain_language_steps:
+  - '1. After Erebus, walk into the descending corridor: a long hallway with pillars and catwalks at several
+    elevations.'
+  - 2. Spot the Taken Ogres standing on elevated platforms. Their eye blast knocks you off ledges, so
+    they are your priority targets.
+  - 3. Snipe or burst each Ogre before it lines up an eye blast. Sniper headshots and heavy options work;
+    clear one platform at a time.
+  - 4. Manage the ambient pressure from Hobgoblins, Phalanxes, and Knights as you advance, keeping cover
+    between catwalk crossings.
+  - 5. Do not sprint across catwalks. Ogre eye blasts catch sprinters mid-jump, and a catwalk fall means
+    death.
+  - 6. Approach the mid-section barrier zone, which disables your jump and spawns endless Shadow Thrall.
+  - 7. Grab the orb from the pedestal on the right of the barrier entry. Carrying the orb restores your
+    jump.
+  - 8. Walk through the barrier with the orb; do not stop to fight the infinite Thrall. Melee through
+    and keep moving.
+  - 9. Once past the barrier, continue down the corridor to finish the section.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken Ogres deal Void eye-blast knockback (can knock you off catwalks to your death)
+      - Taken Hobgoblins deal Solar sniper headshots from elevation
+      - Taken Phalanxes deal Solar shield-bash knockback
+      - Taken Knights deal Void projectiles
+      - Shadow Thrall in the barrier deal Arc/physical melee (infinite spawns)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resist helps against Ogre eye blasts and Knight fire; Solar Resist helps against Hobgoblin/Phalanx
+        chip on Master-tier difficulty
+      concussive:
+      - Concussive Dampener can reduce the knockback from Ogre eye blasts and Phalanx bashes near ledges,
+        lowering catwalk death risk
+  damage:
+    surges:
+    - No boss DPS phase in this encounter; it is a catwalk/jumping-puzzle traversal section, so no damage
+      surge applies
+    burst_windows: No boss damage window; focus burst on Ogres standing on platforms before they fire
+      an eye blast.
+    recommended_dps:
+    - Sniper rifle for headshotting Ogres and Hobgoblins from range
+    - Heavy or special burst to quickly drop an Ogre lining up a blast
+  role_loadouts:
+  - role_id: lead
+    subclass: Any subclass with strong ranged single-target (Solar or Void for reliable burst on Ogres)
+    weapons: Sniper rifle for Ogres and Hobgoblins, plus an add-clear primary and a burst special/heavy
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge mods needed (no DPS phase); run mobility mods for the jumping puzzle and resilience
+      for catwalk survivability
+  - role_id: follow
+    subclass: Any subclass with good mobility for catwalk crossings
+    weapons: Add-clear primary plus a sniper to help with remaining Ogres and Hobgoblins
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge mods needed (no DPS phase); prioritize mobility and resilience mods
+  - role_id: solo
+    subclass: Sustain subclass (Void for Devour or Solar for Restoration) to survive the barrier and Ogres
+      alone
+    weapons: Sniper rifle held for Ogres from cover, plus an add-clear primary
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge mods needed (no DPS phase); run survivability, mobility, and ammo mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/shattered-throne.yaml (encounter 2, descent)'
+    note: Primary source; catwalk/barrier mechanics and Ogre/Thrall threats derived directly from the
+      authored v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (e.g. Mobility->Weapons). Verify current exotics/mods
+      in-game; no Master version exists so champion mods are not mandatory.
+    date_checked: '2026-06-07'

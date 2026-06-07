@@ -1,0 +1,113 @@
+# raid_context/content/dungeons/prophecy/4-singularity.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: singularity
+  name: Singularity (sparrow race)
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Sparrow race down a fabric-like road to a massive octahedron. Watch
+
+    for crossing/twisting roads + Taken Vandals/Knights. End of road
+
+    pulls you into the next chamber.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Long fabric/cloth road through a starry void.
+
+    - Massive octahedron destination at the end.
+
+    - Crossing roads + twisting sections.
+
+    - Taken Vandals + Ravenous Knights on platforms.
+
+    '
+  callouts: []
+  wipe_triggers:
+  - Falling off the road = death (long fall, full reset of section).
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Sparrow + strafe
+    learner_friendly: true
+    summary: Sparrow fast, strafe to dodge enemy fire, mind crossing roads.
+    roles:
+    - id: all
+      count: 3
+      does: Race + strafe.
+      loadout:
+        subclass: Any mobility subclass (Solar Hunter with Stompees-style speed, or Heat Rises Warlock)
+          for the sparrow race and recovery from falls
+        weapons: Whatever you intend to use at Kell Echo; weapons are mostly irrelevant during the race
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: No surge required (no DPS phase); sparrow-speed and mobility-leaning mods
+  cheese: []
+  common_mistakes:
+  - Trying to fight enemies — keep moving.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+  learner_path:
+  - Just play. Stompees help.
+  plain_language_steps:
+  - 1. This is a sparrow race down a long fabric/cloth road through a starry void toward a massive octahedron;
+    summon your sparrow.
+  - 2. Keep moving forward and ride fast; do not stop to fight enemies.
+  - 3. Strafe to dodge incoming fire from Taken Vandals and Ravenous Knights positioned on platforms along
+    the road.
+  - 4. Watch for crossing roads and twisting sections; pick the correct path and stay on the surface.
+  - 5. Do not fall off the road; a fall is a long-drop death that resets the section.
+  - 6. Ride all the way to the octahedron at the end of the road, which pulls you into the next chamber
+    (Kell Echo).
+  defense:
+    incoming_damage:
+      adds:
+      - 'Taken faction: Taken Vandals (ranged fire) and Ravenous Knights firing from platforms along the
+        road'
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No resist mandatory; the lethal threat is falling off the road, not enemy elements, so movement
+        control matters most
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase; this is a pure sparrow race with no boss, so no surge element applies.
+    burst_windows: No damage window; the goal is to reach the octahedron at the end without falling.
+    recommended_dps:
+    - No DPS needed; bring a movement-focused setup and just race to the end
+  role_loadouts:
+  - role_id: all
+    subclass: Any mobility subclass (Solar Hunter with Stompees-style speed, or Heat Rises Warlock) for
+      the sparrow race and recovery from falls
+    weapons: Whatever you intend to use at Kell Echo; weapons are mostly irrelevant during the race
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge required (no DPS phase); sparrow-speed and mobility-leaning mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/prophecy.yaml (encounter: singularity)'
+    note: Primary source; sparrow race to the octahedron with Taken Vandals/Knights and fall-death risk
+      per the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Sparrow-speed exotics and renamed stats (Mobility->Weapons) should be confirmed in-game post-Edge
+      of Fate; no fixed gear is required for the race.
+    date_checked: '2026-06-07'

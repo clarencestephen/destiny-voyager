@@ -1,0 +1,219 @@
+# raid_context/content/raids/last-wish/4-vault.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: vault
+  name: The Vault (Symbol Puzzle)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'No boss. Symbol/Penumbra/Antumbra puzzle. 3 plates (Stairs, Tree,
+
+    Rocks). Each player sees 3 symbols (1 center, 2 sides). Identify
+
+    Penumbra (L) vs Antumbra (R) per plate via callouts. Run Eye of
+
+    Riven Essence to matching plate (grenade button cleanse). Kill
+
+    Mights of Riven before they slam plate. 3 cleanses per phase, 3
+
+    phases.
+
+    '
+  setup: "WHAT YOU SEE:\n- Central vault mechanism with 3 plates around it.\n- 3 rooms branching off (Stairs\
+    \ spawn, Tree, Rocks).\n- Each plate displays 1 center symbol + 2 side symbols (L=Penumbra, R=Antumbra).\n\
+    - Tunnels connecting the 3 rooms.\n\nPLATFORM MECHANICS:\n- 3 players stand on plates → 3 symbol sets\
+    \ revealed.\n- Match each plate's center symbol → another plate's left or right side.\n  • Match on\
+    \ LEFT = Penumbra\n  • Match on RIGHT = Antumbra\n- 1 room opens at a time → kill ambient + Eye of\
+    \ Riven → Essence with Penumbra or Antumbra buff.\n- Runner takes Essence + grenade-button on the\
+    \ matching plate.\n- Cleansed plate locks → next room opens (clockwise pattern).\n- Might of Riven\
+    \ (Major Taken Knight) spawns in rooms — kill before plate slam.\n- 3 cleanses per phase, 3 phases\
+    \ total. 3-min timer per phase resets on completion.\n- Tractor Cannon trick: push Eye of Riven into\
+    \ central room → no tunnel travel.\n\nSTART STATE: rally banner. 3 players stand plates to start.\n"
+  callouts:
+  - when: Symbols read
+    from: plate stander
+    to: team
+    say: '"Stairs middle [symbol]; Stairs left [symbol]; Stairs right [symbol]"'
+    why: All plates publish their symbol set.
+  - when: Penumbra/Antumbra determined
+    from: caller
+    to: team
+    say: '"Stairs P, Tree A, Rocks P"'
+    why: Each plate's cleanse direction.
+  - when: Eye of Riven down + Essence
+    from: runner
+    to: team
+    say: '"Essence Penumbra/Antumbra — heading [plate]."'
+    why: Pair runner with correct plate.
+  - when: Might of Riven spotted
+    from: spotter
+    to: team
+    say: '"MIGHT [room] — KILL!"'
+    why: Plate-slam wipe risk.
+  - when: Plate cleansed
+    from: runner
+    to: team
+    say: '"[plate] CLEAN — [N/3]."'
+    why: Progress.
+  wipe_triggers:
+  - Might of Riven slams plate.
+  - Wrong plate cleanse (counts as miss).
+  - 3-min timer expires.
+  damage_phase_triggers:
+  - 3 correct plate cleanses per phase × 3 phases = encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    plate_steppers_3: Step plates, read symbols.
+    callers: Determine P/A per plate.
+  - phase: Cleanse cycle
+    runners: Kill Eye, grab Essence, cleanse correct plate.
+    might_killers: Kill Might of Riven in their assigned room.
+  permutations:
+  - name: Standard 1 runner + 1 watcher per room
+    learner_friendly: true
+    summary: '2 per room: 1 runner, 1 Might watcher.'
+    roles:
+    - id: runner
+      count: 3
+      does: 'Per room: kill Eye, grab Essence, cleanse plate.'
+      loadout:
+        subclass: Any add-clearing subclass; mobility helps tunnel travel
+        weapons: Strong add-clear primary to kill Eyes for Essence; optionally a Tractor Cannon to push
+          the Eye toward center
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Weapons (Mobility) for fast tunnel/plate travel; Health for Knight melee survivability
+    - id: might_watcher
+      count: 3
+      does: 'Per room: watch + kill Might of Riven on spawn.'
+      loadout:
+        subclass: Any subclass with strong single-target add-kill; suppression helps stop Might slams
+        weapons: High-priority anti-Major weapon to drop Mights of Riven before they reach the plate
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Grenade (Discipline) for repeated ability kills on Mights; Health for survivability
+  - name: 'Speed: Tractor Cannon'
+    learner_friendly: false
+    summary: Tractor Cannon pushes Eye of Riven near center room — no tunnel travel.
+    best_for: Speed clears.
+  - name: 'Master: Mights stay in rooms'
+    learner_friendly: false
+    summary: Mights of Riven cannot cross room barrier — challenge fail if they do.
+  cheese:
+  - title: Tractor Cannon push
+    detail: 'Tractor Cannon shoots Eye of Riven Captain across the room.
+
+      Push him into central room before kill → drop Essence right
+
+      near plates → no tunnel running.
+
+      '
+  common_mistakes:
+  - Wrong plate cleanse = phase wasted.
+  - Might of Riven ignored = plate slammed = wipe.
+  - Bad symbol callouts → wrong P/A → confusion.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Shared pool with E1/E2/E3 — see kalli encounter for full weapon + armor list.
+  master_challenge:
+    name: Keep Out
+    requirement: 'No Might of Riven knights may reach the center chamber during
+
+      the Vault fight. Outside teams must kill every Might of Riven
+
+      before it gets through the door — failure (even one knight
+
+      entering) fails the challenge.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: might_watcher (clear role).'
+  - '2nd: runner.'
+  - '3rd: plate caller.'
+  plain_language_steps:
+  - '1. Rally at the banner. This is a puzzle encounter with no boss. A central vault mechanism sits in
+    the middle with 3 plates around it and 3 branching rooms: Stairs, Tree, and Rocks.'
+  - '2. Three players each stand on a plate to reveal its symbols: 1 center symbol plus 2 side symbols
+    (Left = Penumbra, Right = Antumbra).'
+  - 3. Each plate publishes its full symbol set over comms (for example, 'Stairs middle X, Stairs left
+    Y, Stairs right Z').
+  - 4. For each plate, match its CENTER symbol against another plate's side. If it matches on a LEFT side
+    it is Penumbra; if it matches on a RIGHT side it is Antumbra. The caller announces each plate's direction.
+  - 5. One room opens at a time. Inside, kill the ambient Taken and the Eye of Riven Captain to drop Taken
+    Essence carrying a Penumbra or Antumbra buff.
+  - 6. A runner takes the Essence and uses the grenade button on the matching plate to cleanse it. The
+    cleansed plate locks and the next room opens (clockwise).
+  - 7. Watch for Mights of Riven (Major Taken Knights) spawning in the rooms. Kill them before they slam
+    a plate, or you wipe.
+  - 8. You need 3 correct cleanses per phase, across 3 phases. A 3-minute timer runs per phase and resets
+    when you complete it.
+  - '9. Speed tip: a Tractor Cannon can push the Eye of Riven into the central room so you skip the tunnel
+    run when delivering Essence.'
+  - 10. Complete all 3 phases of cleanses to finish the encounter. Avoid wrong cleanses, since each wasted
+    phase costs you time.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Eye of Riven Captains, Mights of Riven Major Knights, ambient Taken)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No enforced burn (no Master). Build for survivability against Knight melee in the rooms; no element
+        resist required.
+      concussive:
+      - Not called for; the room threat is Mights of Riven slamming plates, countered by killing them
+        on sight rather than by a mod.
+  damage:
+    surges:
+    - No DPS phase in this encounter; it is a puzzle. No surge applies. Tractor Cannon is a utility pick
+      (pushing the Eye), not a damage surge.
+    burst_windows: No boss damage phase; 'damage' here means quickly killing Eye of Riven Captains and
+      Mights of Riven to keep cleanses flowing.
+    recommended_dps:
+    - Reliable add-clear primary for Eyes and Mights
+    - Tractor Cannon (utility) to push the Eye toward the center room
+  role_loadouts:
+  - role_id: runner
+    subclass: Any add-clearing subclass; mobility helps tunnel travel
+    weapons: Strong add-clear primary to kill Eyes for Essence; optionally a Tractor Cannon to push the
+      Eye toward center
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Weapons (Mobility) for fast tunnel/plate travel; Health for Knight melee survivability
+  - role_id: might_watcher
+    subclass: Any subclass with strong single-target add-kill; suppression helps stop Might slams
+    weapons: High-priority anti-Major weapon to drop Mights of Riven before they reach the plate
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Grenade (Discipline) for repeated ability kills on Mights; Health for survivability
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: vault)'
+    note: Penumbra/Antumbra symbol logic, room rotation, Might-kill priority, and Tractor Cannon trick
+      derived from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Stat names use current Edge of Fate naming. Verify Tractor Cannon and any meta picks against
+      the live sandbox; meta shifts seasonally.
+    date_checked: '2026-06-07'

@@ -1,0 +1,250 @@
+# raid_context/content/raids/deep-stone-crypt/2-crypt-security.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: deep-stone-crypt
+  name: Deep Stone Crypt
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: crypt-security
+  name: Crypt Security
+  difficulty: medium
+  estimated_time: 15-25 min
+  abstract: 'First boss encounter. 3 cylindrical fuses × 2 sides (6 fuses total).
+
+    Split 3/3: light room + dark room. Operator goes to basement, shoots
+
+    4 panels (2 per side) guided by Scanner. After 4 panels = damage
+
+    phase, shoot the indicated upstairs fuse. 6 fuses = encounter done.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Two rooms: LIGHT (white-lit) + DARK (dimmed), separated by closing doors.
+
+    - 3 cylindrical fuses each side (left/middle/right).
+
+    - 4 columns per room with plexiglass bottoms — view into basement.
+
+    - Augment Terminals: 1 each side, plus 1 in basement.
+
+    - Basement: panels on walls (red-glowing). 3 indicator lights per side glow yellow during damage phase.
+
+
+    PLATFORM MECHANICS:
+
+    - Initial split: 3 LIGHT, 3 DARK.
+
+    - One player picks Operator augment from terminal → goes to basement (shoot red glowing wall panel
+    to drop in).
+
+    - Hacker Vandal spawns → drops Scanner augment.
+
+    - Scanner upstairs uses column glass to view basement panels — sees ONE glowing YELLOW. Calls position.
+
+    - Operator (basement) shoots that yellow panel. Needs 4 panel hits total (2 dark + 2 light).
+
+    - Operator has 1-min timer before Crypt fires kill.
+
+    - Transfer Scanner between dark + light sides via terminal (only 1 augment per terminal).
+
+    - Sentinel Servitor spawns periodically — disables terminals. Kill on sight.
+
+    - 4 panels done → damage phase. Indicator lights on basement pillar show which fuse to shoot upstairs.
+
+    - Scanner (basement) calls fuse to upstairs team. Wrong fuse = wipe.
+
+    - 6 fuses = encounter ends.
+
+
+    START STATE: rally banner. Operator pickup starts.
+
+    '
+  callouts:
+  - when: Operator picked up
+    from: operator
+    to: team
+    say: '"OP — basement [DARK/LIGHT]."'
+    why: Side identification.
+  - when: Scanner sees panel
+    from: scanner
+    to: team
+    say: '"Panel [N] glowing — [DARK/LIGHT]."'
+    why: Operator shoots that panel.
+  - when: Panel shot
+    from: operator
+    to: team
+    say: '"Panel [N] HIT — [count]/4."'
+    why: Progress.
+  - when: Damage phase + fuse indicator
+    from: scanner
+    to: team
+    say: '"Fuse [L/M/R] — [DARK/LIGHT] side!"'
+    why: Upstairs team shoots correct fuse.
+  - when: Sentinel Servitor
+    from: spotter
+    to: team
+    say: '"SENTINEL — burn!"'
+    why: Terminal restore.
+  wipe_triggers:
+  - Operator 1-min timer = death.
+  - Wrong fuse shot during damage phase = wipe.
+  - Sacrifices at terminals (not really applicable — Sentinel just disables).
+  damage_phase_triggers:
+  - 4 panels shot (2 dark + 2 light) → damage phase opens → indicator lights show fuses.
+  parallel_timeline:
+  - phase: Pull
+    light_team_3: Push to light room.
+    dark_team_3: Push to dark room.
+  - phase: Operator + panel phase
+    operator: Basement, shoot 4 panels.
+    scanners_2: Guide via column view.
+  - phase: Augment transfer
+    scanner: Pass between sides via terminal.
+  - phase: Damage phase
+    upstairs_teams: Shoot indicated fuse cylinder.
+  - phase: Cycle (×6 fuses)
+    all: Repeat panel + fuse cycle.
+  permutations:
+  - name: Standard 1 Op / 1 Scanner per side
+    learner_friendly: true
+    summary: One Operator (basement) + 2 Scanners (one per side upstairs).
+    roles:
+    - id: operator
+      count: 1
+      does: Basement, panel shots.
+      loadout:
+        subclass: Mobile survivable subclass for fast basement traversal and panel shooting under the
+          timer
+        weapons: Accurate primary (hand cannon or scout) to hit red panels quickly; special/heavy for
+          self-defense in the basement
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Health
+        surges_mods: Run Enhanced Operator augment mod plus add-clear utility. No DPS surge needed.
+    - id: scanner
+      count: 2
+      does: Upstairs, column-view guidance + fuse calls.
+      loadout:
+        subclass: Any subclass with good survivability while standing over the column glass
+        weapons: Precision primary for self-defense and tagging the correct fuse cylinder
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Run Enhanced Scanner augment mod. No DPS surge needed.
+    - id: add_clear
+      count: 3
+      does: Suppress Overload Captains + Sentinel Servitor + ambient.
+      loadout:
+        subclass: Add-clear-focused subclass to suppress Overload Captains, the Sentinel Servitor, and
+          ambient Fallen
+        weapons: Add-clear primary plus a wave-clear special (fusion/shotgun); Anti-Overload option for
+          Captains
+        exotic_armor: ''
+        armor_stats: &id003
+        - Class
+        - Grenade
+        surges_mods: Overload anti-Champion mod for Captains; grenade/ability-regen mods for sustained
+          add clear.
+  cheese: []
+  common_mistakes:
+  - Operator overstays 1-min timer.
+  - Wrong fuse shot during damage phase.
+  - Sentinel disables terminal mid-augment-transfer.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Trustee (rapid-fire scout rifle, Solar)
+    - Legacy's Oath armor — Arms + Legs + Class Item (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: add_clear.'
+  - '2nd: scanner.'
+  - '3rd: operator.'
+  plain_language_steps:
+  - '1. Drop the rally banner. Split the team 3 and 3: three players go to the LIGHT (white-lit) room
+    and three to the DARK (dimmed) room.'
+  - 2. In one room a player takes the Operator augment (red) from a terminal, then shoots a red-glowing
+    wall panel to drop into the basement.
+  - 3. A Hacker Vandal spawns and drops the Scanner augment (yellow). Have a player grab it and stay upstairs.
+  - 4. The upstairs Scanner looks down through the plexiglass column bottoms into the basement and finds
+    the ONE panel glowing yellow, then calls its position and side.
+  - '5. The basement Operator shoots that yellow panel. You need 4 total panel hits: 2 on the dark side
+    and 2 on the light side.'
+  - 6. Move the Scanner augment between the dark and light sides using the Augment Terminals. Only one
+    augment fits per terminal, so coordinate transfers.
+  - 7. Watch the Operator's 1-minute timer. If the Operator overstays, the Crypt fires a kill, so swap
+    out before it expires.
+  - 8. When a Sentinel Servitor spawns, burn it immediately. It disables the terminals and stalls augment
+    transfers.
+  - 9. After 4 panels are shot, the damage phase opens. Indicator lights on the basement pillar show which
+    fuse (left, middle, or right) and which side to shoot.
+  - 10. The Scanner calls the correct fuse, and the upstairs teams shoot that fuse cylinder. A wrong fuse
+    wipes the team.
+  - 11. Repeat the panel-then-fuse cycle until all 6 fuses are shot, which ends the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Kinetic/ballistic damage from Fallen Overload Captains, Hacker Vandals, and ambient House of Salvation
+        adds
+      - Void damage from Sentinel Servitor projectiles
+      boss: []
+    champions:
+    - Overload Captain -> Anti-Overload (Overload rounds or an Overload-verb subclass)
+    recommended_defensive_mods:
+      elemental:
+      - No mandatory elemental resist; general damage resistance handles Captain and Servitor fire
+      concussive:
+      - Concussive Dampener optional; useful against clustered add explosions but not required
+  damage:
+    surges:
+    - 'No traditional boss-health DPS phase. The damage phase is a mechanic phase: shoot the indicated
+      fuse cylinder rather than burning a boss health bar, so no surge element is mandated'
+    burst_windows: Damage phase opens after 4 panels are shot; the action is shooting the single correct
+      indicated fuse, not sustained boss DPS.
+    recommended_dps:
+    - Accurate precision primary (hand cannon or scout) to reliably tag the correct fuse cylinder; no
+      heavy burst archetype needed
+  role_loadouts:
+  - role_id: operator
+    subclass: Mobile survivable subclass for fast basement traversal and panel shooting under the timer
+    weapons: Accurate primary (hand cannon or scout) to hit red panels quickly; special/heavy for self-defense
+      in the basement
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run Enhanced Operator augment mod plus add-clear utility. No DPS surge needed.
+  - role_id: scanner
+    subclass: Any subclass with good survivability while standing over the column glass
+    weapons: Precision primary for self-defense and tagging the correct fuse cylinder
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Run Enhanced Scanner augment mod. No DPS surge needed.
+  - role_id: add_clear
+    subclass: Add-clear-focused subclass to suppress Overload Captains, the Sentinel Servitor, and ambient
+      Fallen
+    weapons: Add-clear primary plus a wave-clear special (fusion/shotgun); Anti-Overload option for Captains
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Overload anti-Champion mod for Captains; grenade/ability-regen mods for sustained add
+      clear.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/deep-stone-crypt.yaml (encounter: crypt-security)'
+    note: Primary source for the 6-fuse mechanism, augment flow, and Sentinel Servitor priority.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Champion type derived from the guide's note on Overload Captains. Confirm current anti-Champion
+      methods and exotics against the live sandbox before a run.
+    date_checked: '2026-06-07'

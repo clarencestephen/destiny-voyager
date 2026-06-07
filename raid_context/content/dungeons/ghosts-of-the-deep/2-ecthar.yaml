@@ -1,0 +1,314 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/2-ecthar.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: ecthar
+  name: Ecthar, the Shield of Savathûn
+  difficulty: hard
+  estimated_time: 20-30 min
+  abstract: 'First boss. Underwater. 3 cycles: kill Hive → Keeper of the Deep
+
+    → Deepsight reveals 3 symbols on wall → dive underwater + activate
+
+    3 matching runes (pursued by Ecthar) → above-water Lightbearer
+
+    Wizards spawn → kill 3 + crush Ghosts → 3 Vestiges deposit into any
+
+    statue → Ecthar + Wellkeeper Knight spawn → kill Wellkeeper for
+
+    Piercing Light → break Ecthar''s shield → DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Underwater wreckage area. Oxygen bubble pockets along the route.
+
+    - 3 thrall statues (left/right/middle) above water near entry.
+
+    - Ecthar (large Hive Knight, Void shield) lurking underwater.
+
+    - Acolytes near entry (don''t engage until ready — they trigger encounter).
+
+
+    PLATFORM MECHANICS:
+
+    - Acolyte engagement = encounter start.
+
+    - Kill ambient Hive + spawned Keeper of the Deep (Ogre-class) → Deepsight illusion drops.
+
+    - Deepsight reveals 3 symbols on the entry wall.
+
+    - DIVE: locate underwater Hive runes, activate the 3 matching symbols (in any order). Wrong rune =
+    death.
+
+    - 3 correct = above-water spawns 3 Lightbearer Wizards.
+
+    - Kill each Wizard + crush Ghost = 3 Vestiges across 3 players.
+
+    - Deposit each Vestige at ANY statue (not rune-matched here — only 3 statues, all valid until charged).
+
+    - 3 statues charged = Ecthar arrives + Wellkeeper Knight.
+
+    - Kill Wellkeeper = Piercing Light well drops.
+
+    - Stand in well = break Ecthar''s shield = ~15-20s damage window.
+
+
+    START STATE: rally banner at entry. Engage Acolytes to trigger.
+
+    '
+  callouts:
+  - when: Keeper of the Deep down + Deepsight ready
+    from: killer
+    to: team
+    say: '"DEEPSIGHT at wall."'
+    why: Reveals the 3 target symbols.
+  - when: 3 symbols ID'd
+    from: deepsight_user
+    to: team
+    say: '"Symbols: [list 3]"'
+    why: Coordinated underwater dive targets.
+  - when: Rune activated underwater
+    from: diver
+    to: team
+    say: '"[symbol] activated, [N]/3."'
+    why: Track underwater progress.
+  - when: Lightbearer Wizard spotted
+    from: spotter
+    to: team
+    say: '"Lightbearer [direction]."'
+    why: Focus fire. 3 spawn over time.
+  - when: Vestige in hand
+    from: self
+    to: team
+    say: '"Vestige — depositing [L/M/R statue]."'
+    why: Avoids 2 depositors on same statue.
+  - when: Ecthar phase — Wellkeeper down
+    from: killer
+    to: team
+    say: '"WELL DOWN — stand on it."'
+    why: Shield-break window. Stack on well, DPS opens.
+  wipe_triggers:
+  - Wrong underwater rune = instant death.
+  - Oxygen run-out underwater (pressure gauge to 0).
+  - Ecthar's underwater attacks drain pressure faster than O2 refills.
+  - Not crushing Lightbearer Ghost = no Vestige, can't progress.
+  damage_phase_triggers:
+  - 3 Vestiges deposited → Ecthar + Wellkeeper spawn.
+  - Wellkeeper killed + standing in Piercing Light well → shield breaks → ~15-20s DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage Acolytes. Burst ambient Hive.
+  - phase: Deepsight + dive (~1:00)
+    deepsight_user: Drop Keeper, trigger Deepsight, call symbols.
+    divers_2: Underwater, activate 2 of 3 runes.
+    last_runner: Sync activation of last rune.
+  - phase: Lightbearer kills + Vestige (~2:00-3:30)
+    crushers: Each player handles 1 Lightbearer. Crush Ghost. Deposit.
+  - phase: Ecthar + Wellkeeper + DPS (~3:30)
+    wellkeeper_killer: Drop Wellkeeper instantly.
+    all: Stand in Piercing Light, burst Ecthar.
+  - phase: Reset (if not killed)
+    all: Ecthar re-shields. Cycle repeats.
+  permutations:
+  - name: Standard 1-deepsight / 2-divers
+    learner_friendly: true
+    summary: One leads Deepsight; two dive for runes; all 3 take a Vestige.
+    roles:
+    - id: deepsight_caller
+      count: 1
+      does: Owns rune-ID call. Suppresses ambient on dive.
+      loadout:
+        subclass: Any survivable build (Void Devour or Solar Restoration); add-clear focused for the dive
+        weapons: Add-clear primary + a burst special/heavy for the Ecthar window (Linear or sniper)
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; bring heavy-weapon damage mods for the shield-break
+          window
+    - id: diver
+      count: 2
+      does: Underwater rune activation + Lightbearer kill.
+      loadout:
+        subclass: Any; mobility/oxygen-friendly survivable build for underwater rune activation
+        weapons: Lightbearer-shredding primary (hand cannon or trace) + burst heavy for the DPS window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; heavy-damage mods for the window
+  - name: 'Speed: Whisper / Linear / Well DPS'
+    learner_friendly: false
+    summary: 1-phase Ecthar with sustained-DPS exotics. Well + Whisper combo.
+    roles:
+    - id: well_warlock
+      count: 1
+      does: Drop Well on Piercing Light spot. Stays.
+      loadout:
+        subclass: Solar Warlock (Well of Radiance) to drop the Well on the Piercing Light spot and hold
+          it
+        weapons: Heavy burst from the Well (Whisper / Sleeper / Linear) + add-clear primary
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Super and heavy-weapon damage mods; keep Health high for the underwater phase
+    - id: dps
+      count: 2
+      does: Whisper / Sleeper / Linear from Well.
+      loadout:
+        subclass: Any high-burst build; stand in the Well during the window
+        weapons: Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle for the shield-break
+          window
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Super
+        surges_mods: Heavy-weapon damage mods; super mods to chain the next phase
+  - name: Solo
+    learner_friendly: false
+    summary: 'All mechanics yourself. Expect 2-3 phases. Use Witherhoard for
+
+      Ecthar chip + sustain (Devour / Resto). Bring Heart of Inmost
+
+      Light / Phoenix Protocol for ability spam.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Oxygen management is the wall.
+      loadout:
+        subclass: Void (Devour) or Solar (Restoration) for sustain; expect 2-3 phases
+        weapons: Witherhoard for Ecthar chip + a burst heavy; oxygen management is the real wall
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+  cheese: []
+  common_mistakes:
+  - Diving to wrong underwater rune = death + reset.
+  - Lingering near oxygen pockets while teammates dive — share refresh.
+  - Wellkeeper not killed before Ecthar moves out of LoS = wasted shield-break window.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - No Survivors (SMG, Solar)
+    - 'Greasy Luck (glaive, Solar) — note: YAML labeled this ''sidearm''; blueberries confirms glaive'
+    - Cold Comfort (rocket launcher, Stasis)
+    - Taken King armor — Arms + Chest + Class Item (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: deepsight_caller (no diving stress).'
+  - '2nd: diver.'
+  - 'Solo: only after 3-player clear.'
+  plain_language_steps:
+  - 1. Place your rally banner at the underwater entry. Note the three Thrall statues (left/middle/right)
+    and the oxygen bubble pockets along the route. Do not touch the Acolytes yet — engaging them starts
+    the encounter.
+  - 2. Engage the Acolytes to begin. Clear the ambient Hive and the spawned Keeper of the Deep (an Ogre-class
+    enemy). When the Keeper dies it drops a Deepsight illusion.
+  - 3. Use Deepsight at the entry wall. It reveals three symbols. Call all three symbols out loud.
+  - 4. Dive underwater and find the Hive runes that match those three symbols. Activate the three matching
+    runes in any order. Activating a WRONG underwater rune kills you instantly.
+  - 5. Watch your oxygen/pressure gauge while diving. Oxygen bubbles are SHARED — one teammate hitting
+    a bubble refreshes all three of you. Ecthar's underwater attacks drain pressure fast, so surface or
+    refresh before it empties.
+  - 6. Once all three correct runes are active, three Lightbearer Wizards spawn above water. Kill each
+    Wizard and CRUSH its Ghost. That gives three Vestiges, one per player.
+  - 7. Deposit each Vestige at one of the three statues. Here any statue is valid until it is charged,
+    so call which statue (Left/Middle/Right) you are taking to avoid doubling up.
+  - 8. With all three statues charged, Ecthar arrives along with a Wellkeeper Knight.
+  - 9. Kill the Wellkeeper immediately. It drops a Piercing Light well on the ground.
+  - 10. Everyone stand in the Piercing Light well to break Ecthar's Void shield, opening roughly a 15-20
+    second damage window.
+  - 11. Burst Ecthar during that window. If he survives, he re-shields and the whole cycle repeats.
+  defense:
+    incoming_damage:
+      adds:
+      - Solar damage from Acolyte projectiles
+      - Arc damage from Lucent Hive Knights and Wellkeeper Knight melee/boomer
+      - Solar/Arc eye blast from the Keeper of the Deep (Ogre-class)
+      - Lightbearer Wizard poison/Arc bolts above water
+      boss:
+      - 'Void (Ecthar wields a Void shield and Void-aligned Hive Knight attacks: cleaver swings and ranged
+        boomer/blast)'
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Champion or elemental burn modifiers (no Master version).
+      - Ecthar deals heavy Void/melee damage — prioritize the Health stat and keep a class-ability heal
+        or overshield up; Void resist is the most relevant if running resist mods.
+      concussive:
+      - Concussive Dampener is useful against Ecthar's heavy melee/blast and the Keeper of the Deep's
+        eye blast during the shield-break stack.
+  damage:
+    surges:
+    - DPS phase is against Ecthar after his shield breaks. No forced element — match your strongest burst
+      weapon. Ecthar's own shield is Void, so a Void-shield-matching trace/special can speed the break,
+      but the actual shield break comes from standing in the Piercing Light well, not from a matched surge.
+    burst_windows: 'One ~15-20s window per cycle: kill the Wellkeeper, stack in the Piercing Light well
+      to drop the shield, then unload before Ecthar re-shields.'
+    recommended_dps:
+    - 'Heavy burst: Linear Fusion Rifle, Sleeper Simulant, or Whisper of the Worm (from a Well)'
+    - Witherhoard for chip and sustain pressure between windows
+    - Well of Radiance or a damage-boost super to maximize the short window
+  role_loadouts:
+  - role_id: deepsight_caller
+    subclass: Any survivable build (Void Devour or Solar Restoration); add-clear focused for the dive
+    weapons: Add-clear primary + a burst special/heavy for the Ecthar window (Linear or sniper)
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Survivability + ability-regen mods; bring heavy-weapon damage mods for the shield-break
+      window
+  - role_id: diver
+    subclass: Any; mobility/oxygen-friendly survivable build for underwater rune activation
+    weapons: Lightbearer-shredding primary (hand cannon or trace) + burst heavy for the DPS window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Survivability + ability-regen mods; heavy-damage mods for the window
+  - role_id: well_warlock
+    subclass: Solar Warlock (Well of Radiance) to drop the Well on the Piercing Light spot and hold it
+    weapons: Heavy burst from the Well (Whisper / Sleeper / Linear) + add-clear primary
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Super and heavy-weapon damage mods; keep Health high for the underwater phase
+  - role_id: dps
+    subclass: Any high-burst build; stand in the Well during the window
+    weapons: Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle for the shield-break window
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Heavy-weapon damage mods; super mods to chain the next phase
+  - role_id: solo
+    subclass: Void (Devour) or Solar (Restoration) for sustain; expect 2-3 phases
+    weapons: Witherhoard for Ecthar chip + a burst heavy; oxygen management is the real wall
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/ghosts-of-the-deep.yaml (encounter 2, ecthar)'
+    note: Primary source for setup, parallel_timeline, permutations (including Well/Whisper speed comp
+      and solo), enemies, and shield-break mechanic.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats; exotic/heavy DPS meta shifts seasonally. Confirm
+      current burst options and stat priorities in-game. Specific exotic armor left blank where it could
+      not be verified in the current meta.
+    date_checked: '2026-06-07'

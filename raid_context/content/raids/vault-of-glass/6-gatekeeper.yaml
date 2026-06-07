@@ -1,0 +1,265 @@
+# raid_context/content/raids/vault-of-glass/6-gatekeeper.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 6
+  slug: gatekeeper
+  name: Gatekeeper (Venus + Mars portals)
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Split 3/3 onto Venus + Mars plates. Kill the central Gatekeeper
+
+    Hydra. Portal teams enter their respective portals, kill the
+
+    planet''s Gatekeeper, grab Aegis Relic, return. Defenders hold
+
+    plates + Conflux. Praetorians try to capture plates → Oracle spawn
+
+    = wipe trigger.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Central arena with 3 plates: Venus (right), Mars (left), center plate (Gatekeeper).
+
+    - Central Gatekeeper Hydra (no shield).
+
+    - 2 portals above the L+R plates (open after central Gatekeeper dies).
+
+    - Inside each portal: planet-themed mini-arena with another Gatekeeper Hydra + Aegis Relic.
+
+
+    PLATFORM MECHANICS:
+
+    - Encounter starts when ANY player fires a gun.
+
+    - Kill central Gatekeeper Hydra → portals open.
+
+    - Split 3/3: 1 plate defender + 2 portal divers per side.
+
+    - Inside portal: kill the Gatekeeper Hydra, grab the Aegis Relic, return.
+
+    - Inside portal: "Marked by the Void" debuff applies — vision clouds. Aegis cleanse removes.
+
+    - Outside on plate: Praetorians try to capture. Capture = Oracle spawn above portal = wipe if not
+    destroyed.
+
+    - When Relic out: Conflux appears at center. Defend from sacrifices.
+
+    - Wave 3 done: Minotaurs from both portals + main room — clear.
+
+
+    START STATE: rally banner outside. Approach plates to load in. FIRST GUN SHOT = encounter starts.
+
+    '
+  callouts:
+  - when: Central Gatekeeper down
+    from: killer
+    to: team
+    say: '"GATE OPEN — splitting Venus/Mars."'
+    why: Cue split.
+  - when: Inside portal — Praetorian status
+    from: diver
+    to: team
+    say: '"[Venus/Mars] — Praetorian [yes/no]."'
+    why: Relic holder needs to know which planet to break shield.
+  - when: Praetorian on outside plate
+    from: defender
+    to: team
+    say: '"PRAETORIAN on [V/M] plate — burn!"'
+    why: Capture = Oracle wipe trigger.
+  - when: Relic out of portal
+    from: holder
+    to: team
+    say: '"RELIC OUT — Conflux center."'
+    why: Cue Conflux defense.
+  - when: Gatekeeper Hydra (additional waves)
+    from: spotter
+    to: team
+    say: '"NEW GATEKEEPER — burn ASAP."'
+    why: Locks portals if not killed.
+  wipe_triggers:
+  - Oracle above portal not killed in time.
+  - Praetorian captures plate.
+  - Vex sacrifices reach Conflux limit (4).
+  - Aegis dropped > 5s.
+  damage_phase_triggers:
+  - Both Relics out, central Conflux defended, final wave cleared → encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    all: Approach plates. Burst central Gatekeeper.
+  - phase: Split (~1:00)
+    venus_team: 1 defender + 2 divers.
+    mars_team: 1 defender + 2 divers.
+  - phase: Portal cycle (~2:00-4:00)
+    divers: Kill inner Gatekeeper, grab Relic, return.
+    defenders: Plate defense + Praetorian burst.
+  - phase: Conflux + final wave
+    all: Defend center Conflux. Burst Wyverns. Encounter ends.
+  permutations:
+  - name: Standard 3 Venus / 3 Mars
+    learner_friendly: true
+    summary: 1 plate defender + 1 Relic holder + 1 add-clear per side.
+    roles:
+    - id: plate_defender
+      count: 2
+      does: Stay on plate. Burst Praetorians.
+      loadout:
+        subclass: Survivable subclass with strong add-clear to solo-hold a plate against Praetorians
+        weapons: Add-clear primary plus an anti-major special/heavy (sniper or GL) to delete Praetorians
+          before capture
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: On Master carry an anti-Champion verb (Anti-Barrier / Anti-Overload); otherwise minor/major
+          spec for add-clear
+    - id: relic_diver
+      count: 2
+      does: Enter portal, grab Relic on cycle.
+      loadout:
+        subclass: Survivable, mobile subclass for entering the portal and surviving the inner Gatekeeper
+        weapons: Burst special/heavy to drop the inner Gatekeeper Hydra fast; lightweight since the Aegis
+          is the key tool once grabbed
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Prioritize survivability; remember the Aegis cleanse (grenade) clears the inside-portal
+          Void blindness
+    - id: add_diver
+      count: 2
+      does: Support Relic diver inside portal.
+      loadout:
+        subclass: Any subclass with strong add-clear and burst to support the relic diver inside the portal
+        weapons: Burst special/heavy for the inner Gatekeeper, plus a precision primary for adds and Praetorians
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: Match heavy to the weekly surge on Master; carry an anti-Champion verb on Master
+  - name: Solo flawless (challenge mode)
+    learner_friendly: false
+    summary: Not common, but emperor-tier teams have solo'd via specific exotic combos.
+    best_for: Endgame challenge.
+  cheese: []
+  common_mistakes:
+  - All 6 fire on central Gatekeeper before splits ready — encounter starts unprepared.
+  - Relic diver forgets cleanse — vision blacks out, can't aim.
+  - Plate defender chases adds off plate — Praetorian captures.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Fatebringer (hand cannon, Kinetic)
+    - Hezen Vengeance (rocket launcher, Solar)
+    - Found Verdict (shotgun, Arc)
+    - Vault of Glass armor (random slot)
+  master_challenge:
+    name: Strangers in Time
+    requirement: 'The Wyvern and Minotaurs that spawn simultaneously must die
+
+      within 5 seconds of each other. Forces coordinated cross-
+
+      portal damage timing — the Mars and Venus teams have to
+
+      sync their kills against the wave timer.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: plate_defender.'
+  - '2nd: add_diver.'
+  - '3rd: relic_diver.'
+  plain_language_steps:
+  - '1. Enter the central arena with three plates: Venus on the right, Mars on the left, and a center
+    plate near the Gatekeeper. Rally at the banner first.'
+  - 2. The encounter starts the moment any player fires a gun, so coordinate before opening fire.
+  - 3. Burst down the central Gatekeeper Hydra (it has no shield). Killing it opens the two portals above
+    the left and right plates.
+  - '4. Split three and three: one plate defender plus two portal divers per side (Venus and Mars).'
+  - 5. Divers enter their portal, kill the inner Gatekeeper Hydra, grab the Aegis relic, and return. Inside,
+    the 'Marked by the Void' debuff clouds vision; the Aegis cleanse (grenade button) removes it.
+  - 6. Plate defenders hold their plate against Praetorians. If a Praetorian captures a plate, an Oracle
+    spawns above the portal and becomes a wipe trigger if not destroyed.
+  - 7. When a relic comes out of a portal, a Conflux appears at the center. Defend it from Vex sacrifices
+    (four sacrifices is a wipe).
+  - 8. Never let the Aegis sit dropped for more than 5 seconds, or 'Curse of the Aegis' wipes the team.
+  - 9. After the relic cycles, clear the Minotaurs that pour from both portals and the main room.
+  - 10. With both relics out, the center Conflux defended, and the final wave cleared, the encounter ends.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Praetorian Minotaurs): heavy melee and Void slap-rifle fire; capture plates to trigger Oracle
+        wipes'
+      - 'Vex (Gatekeeper Hydras): Void torch-hammer / eye fire from the central and inner-portal bosses'
+      - 'Vex (Wyverns): Arc pressure during the Conflux/final wave'
+      - 'Vex (Minotaurs): Void fire during the final clearing wave'
+      boss:
+      - Void (Gatekeeper Hydras' torch-hammer / eye fire, central and inside each portal)
+    champions:
+    - Barrier Hydra -> Anti-Barrier (Master only)
+    - Overload Minotaur -> Anti-Overload (Master only)
+    recommended_defensive_mods:
+      elemental:
+      - Void resist for Hydra fire and Minotaur/Praetorian adds; Arc resist helps vs Wyverns; the inside-portal
+        'Marked by the Void' debuff is cleansed by the Aegis, not by resist mods
+      concussive:
+      - Concussive Dampener can soften Hydra eye-blast and Praetorian burst when holding plates or diving
+        portals on Master
+  damage:
+    surges:
+    - No dedicated boss DPS phase; the Gatekeeper Hydras are burst-killed on contact rather than in a
+      timed window, so element surge is not the focus. On Master, match the weekly surge to your burst
+      weapon for the Hydra kills
+    burst_windows: No sustained boss window; instead, burst each Gatekeeper Hydra (central and inner-portal)
+      quickly to open/clear portals, and delete Praetorians before they capture plates.
+    recommended_dps:
+    - Burst heavy or special (LMG, sniper, GL, rocket) to drop Gatekeeper Hydras fast
+    - Anti-major weapons to delete Praetorians on plates
+    - Champion-stun options on Master (Anti-Barrier / Anti-Overload)
+  role_loadouts:
+  - role_id: plate_defender
+    subclass: Survivable subclass with strong add-clear to solo-hold a plate against Praetorians
+    weapons: Add-clear primary plus an anti-major special/heavy (sniper or GL) to delete Praetorians before
+      capture
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: On Master carry an anti-Champion verb (Anti-Barrier / Anti-Overload); otherwise minor/major
+      spec for add-clear
+  - role_id: relic_diver
+    subclass: Survivable, mobile subclass for entering the portal and surviving the inner Gatekeeper
+    weapons: Burst special/heavy to drop the inner Gatekeeper Hydra fast; lightweight since the Aegis
+      is the key tool once grabbed
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Prioritize survivability; remember the Aegis cleanse (grenade) clears the inside-portal
+      Void blindness
+  - role_id: add_diver
+    subclass: Any subclass with strong add-clear and burst to support the relic diver inside the portal
+    weapons: Burst special/heavy for the inner Gatekeeper, plus a precision primary for adds and Praetorians
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match heavy to the weekly surge on Master; carry an anti-Champion verb on Master
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: gatekeeper)'
+    note: Primary source for the 3/3 split, portal Gatekeepers, relic cycle, plate/Conflux defense, and
+      'Marked by the Void.'
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Master Champion types and surge rotators change with the sandbox; confirm the current week's
+      modifiers and meta burst weapons before committing.
+    date_checked: '2026-06-07'

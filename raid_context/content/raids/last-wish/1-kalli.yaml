@@ -1,0 +1,216 @@
+# raid_context/content/raids/last-wish/1-kalli.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: kalli
+  name: Kalli, the Corrupted
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: '6 symbol plates around the arena. 6 of 9 symbols shown via center
+
+    icons. Cleanse 2 of each shown symbol (so 6 plates total). Each
+
+    plate has 3 sections — stand on EMPTY section. Kill Ravenous Knight
+
+    spawn = plate complete. DPS phase: dodge Obliterate by diving
+
+    into doors tied to killed Knights.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Round arena similar to Blind Well.
+
+    - 6 symbol plates around perimeter, each with 3 sections.
+
+    - 2 Taken Blight bombs above 2 sections per plate.
+
+    - Center: 6 of 9 symbol icons shown (Heads/Smile/Eight/Infinite + 2 more).
+
+    - Doors below Kalli''s center pit (open after Ravenous Knight kills).
+
+
+    PLATFORM MECHANICS:
+
+    - Identify 6 shown symbols at center → find matching plates around arena.
+
+    - 2 plates per symbol type. Total 6 cleanses.
+
+    - Stand on EMPTY (no blight) section of plate.
+
+    - Hold plate → Ravenous Taken Knight spawns. Kill = plate complete.
+
+    - Kalli warps to a random plate — shoot her to teleport away (or dodge her blasts).
+
+    - After all 6 plates: DPS phase starts. Kalli moves to center pit.
+
+    - During DPS she casts wipe spell. Each Guardian must DIVE into an open door (tied to killed Ravenous
+    Knights).
+
+    - Failure to find door = wipe.
+
+
+    START STATE: rally banner outside arena. Pull = start.
+
+    '
+  callouts:
+  - when: Symbols ID'd at center
+    from: caller
+    to: team
+    say: '"Symbols: [Heads, Smile, Eight, Infinite, X, Y]"'
+    why: All know what to cleanse.
+  - when: Plate started
+    from: stander
+    to: team
+    say: '"[symbol] PLATE — Knight incoming."'
+    why: Coordinates kill priority.
+  - when: Knight down
+    from: killer
+    to: team
+    say: '"[symbol] DONE — [N/6]."'
+    why: Progress.
+  - when: DPS phase starting
+    from: any
+    to: team
+    say: '"DPS — dive doors at Obliterate!"'
+    why: Reminder.
+  wipe_triggers:
+  - Failure to dive into a door during Obliterate = wipe.
+  - Insufficient killed Knights = doors closed = wipe.
+  damage_phase_triggers:
+  - All 6 plates cleansed → DPS phase begins.
+  parallel_timeline:
+  - phase: Pull
+    all: Drop in, identify 6 symbols.
+  - phase: Plate cycle
+    plate_stander: Stand empty section, kill spawned Knight.
+    floaters: Burst Kalli when she warps in, suppress.
+  - phase: DPS
+    all: Burst Kalli (small head — use Divinity or non-precision).
+  - phase: Obliterate
+    all: Dive into open door.
+  permutations:
+  - name: Standard 6-plate split
+    learner_friendly: true
+    summary: 1 player per plate type. Cover both plates of that symbol.
+    roles:
+    - id: plate_runner
+      count: 6
+      does: Stand plate, kill Knight, dive door.
+      loadout:
+        subclass: Any (no element enforced); a survivable build for Knight melee
+        weapons: Add-clear primary plus a burst heavy (Linear Fusion or Rocket) for the center DPS; Divinity
+          optional to ease hitting her small head
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match weapon surge mods to your heavy element; Health (Resilience) focus for Knight
+          melee survivability
+  - name: 'Challenge: All 9 plates'
+    learner_friendly: false
+    summary: Cleanse all 9 plates (including 3 not in shown symbols). Each WRONG plate spawns an Ogre.
+  cheese: []
+  common_mistakes:
+  - Standing on a section with a blight = damage.
+  - Forgetting to kill Knight = plate doesn't complete.
+  - Failing to dive door during Obliterate.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - 'Note: Last Wish encounters 1-4 share a SINGLE drop pool (per blueberries ''Any Encounter'' column).
+      Each encounter rolls from the same 8 weapons + Great Hunt armor.'
+    - 'Pool: Chattering Bone (lightweight pulse, Kinetic), The Supremacy (rapid-fire sniper, Kinetic),
+      Transfiguration (high-impact scout, Kinetic), Apex Predator (adaptive RL, Solar), Age-Old Bond (high-impact
+      auto, Void), Nation of Beasts (adaptive HC, Arc), Techeun Force (adaptive fusion, Arc), Tyranny
+      of Heaven (lightweight bow, Solar).'
+    - 'Armor: Helm + Gauntlets + Plate + Greaves + Mark of the Great Hunt (drops randomly from any of
+      E1-E4).'
+  master_challenge:
+    name: Summoning Ritual
+    requirement: 'Activate AND cleanse all 9 plates around the arena, then kill
+
+      all 9 Knights AND all 9 Ogres before damaging Kalli at all.
+
+      DPS only starts after every cleanse + kill is done.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: plate_runner with sherpa support.'
+  plain_language_steps:
+  - 1. Rally at the banner outside, then drop into the round arena (it looks like a Blind Well). Six symbol
+    plates sit around the perimeter.
+  - '2. Look at the center: 6 of the 9 possible symbols are shown there. Your caller reads them out so
+    everyone knows what to cleanse.'
+  - 3. Find the plates around the arena that match those 6 shown symbols. There are two plates per symbol
+    type, so you will cleanse 6 plates total.
+  - 4. Each plate has 3 sections. Stand only on the EMPTY section (the ones without a Taken Blight bomb
+    above them) or you take damage.
+  - 5. Holding a plate spawns a Ravenous Taken Knight. Kill it to complete that plate, and call out your
+    progress (for example, 'Smile DONE, 3 of 6').
+  - 6. Kalli randomly warps to a plate. Shoot her to teleport her away, and dodge her blasts while you
+    keep cleansing.
+  - 7. Once all 6 plates are cleansed, the DPS phase begins and Kalli moves to the center pit.
+  - 8. Burst her down. Her head is small, so use Divinity or non-precision damage to hit reliably.
+  - 9. When she casts her Obliterate wipe spell, every Guardian must DIVE into one of the open doors beneath
+    her (the doors that opened from your killed Ravenous Knights).
+  - 10. If even one person fails to reach a door, the team wipes. Survive the Obliterate, then continue
+    DPS until she dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken (Ravenous Taken Knights deal Taken melee/cleaver damage; standing on a blighted plate section
+        also deals damage)
+      boss:
+      - Taken (Kalli's blasts and the Obliterate wipe spell)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - 'No Master version exists, so no enforced elemental burn. Survivability over resist: build for
+        Health (Resilience) against Knight melee.'
+      concussive:
+      - Not required; no boss attack here is specifically mitigated by Concussive Dampener in the authored
+        guide.
+  damage:
+    surges:
+    - No fixed DPS-phase element is enforced (no Master burn). Use your strongest burst element; any surge
+      works.
+    burst_windows: Single DPS window opens after all 6 plates are cleansed; survive each Obliterate by
+      diving a door, then resume burst.
+    recommended_dps:
+    - High-burst boss damage (Linear Fusion Rifle or Rocket Launcher)
+    - Divinity to aid hitting Kalli's small head
+    - Well of Radiance / damage super for the center burst
+  role_loadouts:
+  - role_id: plate_runner
+    subclass: Any (no element enforced); a survivable build for Knight melee
+    weapons: Add-clear primary plus a burst heavy (Linear Fusion or Rocket) for the center DPS; Divinity
+      optional to ease hitting her small head
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match weapon surge mods to your heavy element; Health (Resilience) focus for Knight melee
+      survivability
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/last-wish.yaml (encounter: kalli)'
+    note: Mechanics, roles, and enemy types derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Loadout names use current Edge of Fate stat names (Weapons/Health/Class/Grenade/Super/Melee).
+      Verify specific exotics/weapons against the live sandbox, as the meta shifts each season.
+    date_checked: '2026-06-07'

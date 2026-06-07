@@ -1,0 +1,257 @@
+# raid_context/content/dungeons/equilibrium/1-temple-grounds-harvester.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: temple-grounds-harvester
+  name: Temple Grounds → Harvester
+  difficulty: medium
+  estimated_time: 15-25 min
+  abstract: 'Opening clear + first proper encounter. Clear Temple Grounds Cabal
+
+    → boarded a Harvester ship → first Gathering Shadow encounter:
+
+    bait Nameless Apprentices onto Arc arrays, let them explode to
+
+    break red barriers, build Shadow Novice, defeat Behemoth Walkers,
+
+    board the ship for next area.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Open Praxic Temple grounds, Cabal patrols, drop pod landing zones.
+
+    - Waterfall + tunnel transition.
+
+    - Harvester ship in arena center (interact to begin).
+
+    - Red Nameless Apprentices wandering arena.
+
+    - Taken wells (Darkness pools) for Shadow energy.
+
+    - Arc arrays at side positions.
+
+    - Red barrier doors blocking forward progress.
+
+
+    PLATFORM MECHANICS:
+
+    - Interact with Harvester ship in center = encounter starts.
+
+    - Cabal drop pods land in marked zones (instant kill — leave the zones).
+
+    - Step in Taken well = Gathering Shadow stack. Build to Shadow Novice (45s timer).
+
+    - Bait Nameless Apprentice onto an Arc array. The Apprentice charges and detonates ON the array.
+
+    - Activate the array AS the Apprentice explodes = array destroyed + red barrier door opens.
+
+    - 6 Apprentices spawn through the fight (≈3 array activations).
+
+    - Side rooms have sparrows for fast Shadow well farming.
+
+    - Use Renegade ability when Shadow Novice → deploys Shadow form (~15s) for shield-breaks.
+
+    - Defeat Behemoth Walkers (Cabal mech enemies) to complete the phase.
+
+    - Board the ship via interact to advance.
+
+
+    START STATE: rally banner near arena entry. Walk to Harvester ship.
+
+    '
+  callouts:
+  - when: Drop pod incoming
+    from: spotter
+    to: team
+    say: '"POD [direction] — move!"'
+    why: Insta-kill landing zone.
+  - when: Nameless Apprentice baiting array
+    from: baiter
+    to: team
+    say: '"[N/S/E/W] array — Apprentice committed."'
+    why: Activate array on detonation.
+  - when: Shadow Novice ready
+    from: self
+    to: team
+    say: '"NOVICE — Renegade up."'
+    why: Cue for shield-break / panel activation.
+  - when: Behemoth Walker down
+    from: killer
+    to: team
+    say: '"Walker [N] down — [N] to go."'
+    why: Progress.
+  wipe_triggers:
+  - Standing in drop pod landing zone.
+  - Behemoth Walker explosion at point-blank.
+  - Nameless Apprentice detonation away from array (chained damage).
+  damage_phase_triggers:
+  - All Behemoth Walkers defeated → phase ends → board ship.
+  parallel_timeline:
+  - phase: Pull
+    all: Interact with Harvester. First Apprentice + drop pods.
+  - phase: Shadow build (~0:30)
+    runners_3: All 3 hit Taken wells. Build to Novice.
+  - phase: Array cycle (×3-6)
+    baiter: Lead Apprentice onto array.
+    activator: Activate array on detonation.
+    novice_user: Use Renegade ability for shield-breaks on Cabal.
+  - phase: Walker DPS
+    all: Burst Behemoth Walkers.
+  - phase: Board
+    all: Interact with ship.
+  permutations:
+  - name: Standard 1-baiter / 2-clear
+    learner_friendly: true
+    summary: One bait runner; two add-clear + Shadow build.
+    roles:
+    - id: baiter
+      count: 1
+      does: Owns Apprentice routing + array activation.
+      loadout:
+        subclass: ''
+        weapons: Mid-range primary (auto/pulse/scout) to herd Nameless Apprentices onto arrays without
+          killing them; a special for Behemoth Walker burst. Eager Edge sword for fast repositioning between
+          arrays.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Weapons
+        surges_mods: Survivability and movement mods; Arc surge optional given the Arc-array theme but
+          not required.
+    - id: shadow_clear
+      count: 2
+      does: Build Shadow + Renegade-shred Cabal.
+      loadout:
+        subclass: ''
+        weapons: High-uptime primary for ambient Renegade Cabal clear plus a special (shotgun/fusion)
+          for Behemoth Walkers. Grapple class ability or Eager Edge sword for quick well-to-well Shadow
+          farming.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Ability-regen and resist mods to maintain add-clear; element-agnostic surges.
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Use sparrow for well-farming speed.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Apprentice bait then sprint to array.
+      loadout:
+        subclass: ''
+        weapons: 'Self-sufficient kit: primary for add-clear and Apprentice baiting, special for Behemoth
+          Walkers, and an Eager Edge sword for traversal and quick array repositioning.'
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Prioritize survivability and ability regen; surges element-agnostic.
+  cheese: []
+  common_mistakes:
+  - Killing Apprentice with gunfire instead of array-baiting — array stays up, barrier locked.
+  - Wasting Renegade ability on trash adds — save for shielded enemies / panels.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Zealous Ideal (auto rifle, Solar)
+    - Voltaic Shade (scout rifle, Arc)
+    - Equilibrium / Sage Protector armor — Legs + Arms + Chest
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: shadow_clear (lowest cognitive load).'
+  - '2nd: baiter.'
+  plain_language_steps:
+  - 1. Place the rally banner near the arena entry, then fight through the open Praxic Temple grounds,
+    clearing the Renegade Cabal patrols. Watch the marked drop pod landing zones — standing in one when
+    a pod lands is an instant kill.
+  - 2. Pass through the waterfall and tunnel transition, then walk up to the Harvester ship in the center
+    of the arena and interact with it to begin the encounter.
+  - 3. As the fight starts, all three players step into the Taken wells (the Darkness pools on the ground)
+    to build the Gathering Shadow resource. Keep stacking until you reach Shadow Novice — a 45-second
+    timer appears.
+  - 4. Find the red Nameless Apprentices wandering the arena. Do NOT shoot them down — instead lead (bait)
+    one toward an Arc array at a side position so it charges and detonates ON the array.
+  - 5. The moment the Apprentice explodes on the array, activate that array. A correct activation destroys
+    the array and opens the red barrier door blocking progress.
+  - 6. Repeat the bait-and-activate cycle for the other arrays. Six Apprentices spawn over the fight,
+    which works out to roughly three array activations.
+  - 7. When you reach Shadow Novice, press the Renegade ability to deploy your Shadow form (about 15 seconds).
+    Use it to break enemy shields rather than wasting it on basic trash.
+  - 8. Use the sparrows in the side rooms to farm Taken wells quickly if your Shadow meter runs low.
+  - 9. Once the barriers are open, defeat the Behemoth Walkers (the large Cabal mech enemies). Burst them
+    down and avoid being point-blank when they explode.
+  - 10. With all Behemoth Walkers down, the phase ends. Interact with the ship again to board it and advance
+    to the next area.
+  defense:
+    incoming_damage:
+      adds:
+      - Renegade Cabal small-arms (Solar/kinetic slug fire) from patrols and ambient adds
+      - Behemoth Walker (Cabal mech) heavy fire and a lethal point-blank explosion on death
+      - Nameless Apprentice detonation — chained damage if it explodes near you instead of on an array
+      - Cabal drop pods — instant-kill on landing in the marked zone
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No boss attack element to resist here; general damage reduction (Resist mods / class DR) helps
+        against dense Renegade Cabal and Behemoth Walker fire
+      concussive:
+      - Concussive Dampener is reasonable to soften Behemoth Walker explosions and grouped Cabal AoE,
+        though no source-confirmed concussive threat is called out for this encounter
+  damage:
+    surges:
+    - No dedicated boss DPS phase. Damage is spent bursting Behemoth Walkers; any surge works. Their associated
+      Arc array/fuse theme means Arc weapons are convenient but not required.
+    burst_windows: Short add-burst windows on each Behemoth Walker as barriers open — no extended damage
+      gate.
+    recommended_dps:
+    - High-uptime primary or special for add-clear
+    - Burst special weapon (shotgun / fusion) for fast Behemoth Walker kills
+    - Any reliable kinetic/energy primary for Nameless Apprentice baiting and trash
+  role_loadouts:
+  - role_id: baiter
+    subclass: ''
+    weapons: Mid-range primary (auto/pulse/scout) to herd Nameless Apprentices onto arrays without killing
+      them; a special for Behemoth Walker burst. Eager Edge sword for fast repositioning between arrays.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Survivability and movement mods; Arc surge optional given the Arc-array theme but not
+      required.
+  - role_id: shadow_clear
+    subclass: ''
+    weapons: High-uptime primary for ambient Renegade Cabal clear plus a special (shotgun/fusion) for
+      Behemoth Walkers. Grapple class ability or Eager Edge sword for quick well-to-well Shadow farming.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Ability-regen and resist mods to maintain add-clear; element-agnostic surges.
+  - role_id: solo
+    subclass: ''
+    weapons: 'Self-sufficient kit: primary for add-clear and Apprentice baiting, special for Behemoth
+      Walkers, and an Eager Edge sword for traversal and quick array repositioning.'
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Prioritize survivability and ability regen; surges element-agnostic.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/equilibrium.yaml (encounter 1: Temple Grounds → Harvester)'
+    note: Primary source for mechanics, enemies, roles, and parallel timeline.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (Renegades, Dec 2025 release)
+    note: Equilibrium is newly released; exact champion lists, drop pools, and Master modifiers are still
+      settling. Verify champions and surges against current in-game state and patch notes before a run.
+    date_checked: '2026-06-07'

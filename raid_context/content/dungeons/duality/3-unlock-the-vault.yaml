@@ -1,0 +1,210 @@
+# raid_context/content/dungeons/duality/3-unlock-the-vault.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: unlock-the-vault
+  name: Unlock the Vault (3 Nightmares)
+  difficulty: medium
+  estimated_time: 15-25 min
+  abstract: 'Three sequential mini-bosses (Emonut, Ka''hok, Uroa). Same Standard-
+
+    deposit loop as Gahlran but condensed: deposit 2 Standards per
+
+    Nightmare → it becomes vulnerable → kill → next Nightmare spawns.
+
+    '
+  setup: "WHAT YOU SEE:\n- Wide circular room. 6 Standard deposit points (circular dais).\n- 2 bells (upper,\
+    \ lower). Each side has 2 deposit points around it.\n- Symbol layout per Standard:\n  • Lower bell:\
+    \ Sun (left) + Chalice (right)\n  • Upper bell: War Beast (left) + Axe (right)\n- Bellkeeper spawn\
+    \ ledges just below each bell.\n- Wall reliefs in each corner indicate symbol-to-location pairing.\n\
+    \nPLATFORM MECHANICS:\n- Step off dais = encounter begins.\n- Projections at center indicate the 2\
+    \ Standard targets per cycle.\n- Bell can ONLY be used once until \"The Waking Bells may ring once\
+    \ more…\" text shows.\n\nSTART STATE: rally near lower bell. Step off dais to start.\n"
+  callouts:
+  - when: Target symbols projected
+    from: spotter
+    to: team
+    say: '"Need [Sun + Axe], [Chalice + War Beast], etc."'
+    why: Coordinates parallel runs to 2 different rooms.
+  - when: Bellkeeper down
+    from: killer
+    to: team
+    say: '"[upper/lower] bell open."'
+    why: Bell ready to ring.
+  - when: Standards deposited
+    from: depositor
+    to: team
+    say: '"2 in — Nightmare vulnerable."'
+    why: DPS call on mini-boss.
+  wipe_triggers:
+  - Nightmare Collapse timer to 0.
+  - Bellkeepers ignored — soft-lock on the cycle.
+  - Mini-Nightmare attacks (each one varies).
+  damage_phase_triggers:
+  - 2 Standards deposited per cycle → current Nightmare vulnerable.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Identify first 2 Standards. Plan routes.
+  - phase: Cycle 1 (Emonut)
+    runners_2: Hunt 2 Standards (different rooms in Nightmare).
+    bellkeeper: Cleanup.
+  - phase: Deposit + DPS Emonut
+    all: Drop Standards, burst Emonut.
+  - phase: Cycle 2 + 3 (Ka'hok, Uroa)
+    all: Repeat with rotating Standard targets.
+  permutations:
+  - name: Standard 2-runner / 1-bellkeeper
+    learner_friendly: true
+    summary: Two runners take parallel Standard rooms in Nightmare.
+    roles:
+    - id: standard_runner
+      count: 2
+      does: Parallel runs in Nightmare. Each grabs one Standard per cycle.
+      loadout:
+        subclass: Void Hunter (invisibility for parallel Nightmare runs) or any high-mobility subclass
+        weapons: Ad-clear primary for Cabal plus a heavy/Special burst for the mini-Nightmare windows
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+    - id: bellkeeper_killer
+      count: 1
+      does: Bellkeeper cleanup + add support.
+      loadout:
+        subclass: Any survivable add-clear subclass (Void or Solar)
+        weapons: Reliable add-clear primary for Bellkeepers and Cabal; heavy for DPS assist
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Solar resist for Cabal fire; Concussive Dampener; match surge to DPS element
+  - name: Solo
+    learner_friendly: false
+    summary: Sequential. 2 Standards per cycle, sometimes 1 per shift.
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical Standard hunt.
+      loadout:
+        subclass: Void Hunter for self-pace and safe sequential Standard hunting
+        weapons: Self-sufficient ad-clear plus a strong burst heavy; Heartshadow if obtained
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Solar resist for Cabal fire; match surge to DPS element
+  cheese: []
+  common_mistakes:
+  - Both runners going to the SAME Standard room — second arrives empty.
+  - Missing a Bellkeeper spawn — bell locks, team trapped.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'HIDDEN CHEST 2: After Vault unlocks, descend to the long room
+
+        with the shrouded central object. The chest is in a CRAMPED
+
+        PASSAGEWAY directly BELOW the shrouded object — drop down + crawl.
+
+        '
+      rewards:
+      - Random roll of already-obtained dungeon weapon
+      - Calus Memory collectable (lore)
+    potential_drops:
+    - Stormchaser (linear fusion rifle, Arc)
+    - Unforgiven (SMG, Void)
+    - Calus-themed armor (random slot)
+  images:
+    overview: ''
+    setup: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: bellkeeper_killer.'
+  - '2nd: standard_runner.'
+  plain_language_steps:
+  - 1. Rally near the lower bell. Note the wide circular room with six Standard deposit points on a central
+    dais, two bells (upper and lower), and wall reliefs in each corner showing the symbol-to-location
+    pairing.
+  - '2. Confirm the symbol layout: Lower bell has Sun (left) and Chalice (right); upper bell has War Beast
+    (left) and Axe (right).'
+  - 3. Step off the dais to begin. Center projections show the two Standard targets needed for this cycle.
+  - 4. Two runners shoot a bell to enter the Nightmare and split to two different Standard rooms; read
+    symbols and kill the correct Standard Bearer Psions (+15 seconds each) to drop two Standards. Do not
+    both go to the same room.
+  - 5. The bellkeeper player kills the two Bellkeepers at the spawn ledges so the bell can be rung again,
+    and calls 'bell open.'
+  - 6. Shift back to the Waking realm (stay inside the bell circle) and deposit both Standards at their
+    matching points around the dais.
+  - 7. With two Standards deposited, the current Nightmare (Emonut first) becomes vulnerable. Burst it
+    down.
+  - 8. When it dies, the next Nightmare spawns. Repeat the loop with the next rotating pair of Standard
+    targets for Ka'hok, then Uroa.
+  - 9. Track the Nightmare collapse timer loudly each cycle and never ignore Bellkeeper spawns or the
+    bell soft-locks.
+  - '10. After the Vault unlocks, grab Hidden Chest 2: descend to the long room with the shrouded central
+    object and drop into the cramped passageway directly below it.'
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal (Standard Bearer Psions, Bellkeepers, supporting Cabal) — primarily Solar fire from Cabal
+        slug weapons, Psion scatter, plus melee adds
+      boss:
+      - Solar/melee — each mini-Nightmare (Emonut, Ka'hok, Uroa) has its own varying attacks; treat as
+        Cabal Solar/melee threat at close range
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist recommended for Cabal fire during the Standard runs and deposits
+      - On Master, expect Barrier Colossus champions in this activity — bring matching survivability
+      concussive:
+      - Concussive Dampener helps against Cabal slug/AoE blast knockback while depositing on the open
+        dais
+  damage:
+    surges:
+    - No fixed elemental surge is dictated; each Nightmare is burned with any DPS loadout. Match surge
+      to your weapon element. Stormchaser (Arc Linear Fusion) farms here — pair with Arc surge if used.
+    burst_windows: Each Nightmare becomes vulnerable the moment its two Standards are deposited — burst
+      immediately before the next cycle and before the collapse timer expires.
+    recommended_dps:
+    - Linear Fusion Rifle (Stormchaser drops here)
+    - Burst heavy (rocket launcher or sword)
+    - Damage-buff Super for the short per-cycle window
+  role_loadouts:
+  - role_id: standard_runner
+    subclass: Void Hunter (invisibility for parallel Nightmare runs) or any high-mobility subclass
+    weapons: Ad-clear primary for Cabal plus a heavy/Special burst for the mini-Nightmare windows
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+  - role_id: bellkeeper_killer
+    subclass: Any survivable add-clear subclass (Void or Solar)
+    weapons: Reliable add-clear primary for Bellkeepers and Cabal; heavy for DPS assist
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Solar resist for Cabal fire; Concussive Dampener; match surge to DPS element
+  - role_id: solo
+    subclass: Void Hunter for self-pace and safe sequential Standard hunting
+    weapons: Self-sufficient ad-clear plus a strong burst heavy; Heartshadow if obtained
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Solar resist for Cabal fire; match surge to DPS element
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/duality.yaml (encounter 3: unlock-the-vault)'
+    note: Mini-boss sequence, Standard symbol layout, roles, and hidden chest taken directly from the
+      authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the armor stats and the DPS meta shifts seasonally; Stormchaser remains
+      a strong farm target but verify current rolls and top heavies before a run.
+    date_checked: '2026-06-07'

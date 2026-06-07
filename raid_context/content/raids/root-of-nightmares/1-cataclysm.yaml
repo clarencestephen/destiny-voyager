@@ -1,0 +1,309 @@
+# raid_context/content/raids/root-of-nightmares/1-cataclysm.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: cataclysm
+  name: Cataclysm
+  ingame_name: Survive the Onslaught
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'Build 4 Field of Light chains around the arena. Kill the Cavum of
+
+    Nezarec when it spawns to reset the Sweeping Terror wipe timer.
+
+    '
+  setup: "WHAT YOU SEE\n- Centre: a floating SARCOPHAGUS (it holds Nezarec's head).\n  Don't shoot it.\
+    \ It's the wipe-pulse source.\n- Perimeter: 6-8 patches of WHITE-RIPPLED FLOOR. Above each\n  patch\
+    \ floats a small WHITE SEED — these are Nodes of\n  Splendor. One starts ACTIVE (visible aura ring);\
+    \ the rest are\n  INACTIVE (seed only).\n- Side stairs and elevated platforms ring the arena. Safe\
+    \ to\n  post up on.\n\nPLATFORM MECHANICS\n- To gain Field of Light: walk INTO the aura ring of an\
+    \ active\n  node, then shoot the seed. You do NOT need to stay inside\n  afterward — the 20-second\
+    \ buff is on you regardless of\n  position. Just leave the aura and run to the next node.\n- To LINK:\
+    \ aim at the next inactive seed (look for the faint\n  white trail from the last lit one) and shoot\
+    \ it. You can\n  shoot from any distance — no need to walk to it. The buff\n  drops when you successfully\
+    \ link.\n- Multiple players can ALL gain Field of Light from the same\n  node-shot if they're inside\
+    \ the aura ring at the same time.\n  Useful when ferrying buff to add-clear for buffed-add cleanup\n\
+    \  (Cataclysm has no buffed adds; relevant in Scission).\n\nSTART STATE\n- Encounter does NOT begin\
+    \ until the first active node is shot.\n  Use this to set positions and confirm roles before pulling.\n"
+  callouts:
+  - when: About to shoot the first active node
+    from: runner-1
+    to: team
+    say: '"Pulling — first node going up."'
+    why: Encounter starts the moment that node is shot; everyone wants to be in position.
+  - when: Two Aspirants of Nezarec (bubble Psions) spawn
+    from: add-clear
+    to: team
+    say: '"Aspirants up — left and right!"'
+    why: Tells runners that a Cavum + Barrier Colossus is coming. Refresh buff now so add-clear can grab
+      Field of Light to assist if needed.
+  - when: Cavum of Nezarec (Tormentor) appears
+    from: any
+    to: team
+    say: '"Cavum spawned — drop it!"'
+    why: Top priority kill. Resets Sweeping Terror. Everyone else can pause add-clear briefly to help.
+  - when: Cavum dies
+    from: any
+    to: team
+    say: '"Cavum down — timer reset."'
+    why: Tells runners they can continue the chain at pace, not rush.
+  - when: A Field of Light chain completes
+    from: runner who completed it
+    to: team
+    say: '"Chain 1 done. 3 to go."'
+    why: Keeps everyone aware of progress. After chain 4, encounter ends.
+  wipe_triggers:
+  - Sweeping Terror timer expires → sarcophagus pulse kills team.
+  - Standing in front of Cavum of Nezarec's grab attack.
+  damage_phase_triggers:
+  - Completing the 4th chain ends the encounter. No separate damage phase.
+  parallel_timeline:
+  - phase: Pull (0:00)
+    runner_1: Walk to first active node's aura ring → shoot seed → get Field of Light → look for the faint
+      white trail → run toward the next inactive node.
+    runner_2: Same. Pick the second active node, opposite side of the room from runner_1.
+    add_clear_4: Hold centre. Kill Legionaries and Phalanxes as they spawn from the perimeter doors.
+  - phase: First Aspirant wave (~0:45)
+    runner_1: Link the inactive node you've been running to → buff drops → refresh from the newly-lit
+      node → move on.
+    runner_2: Same.
+    add_clear_4: Two BUBBLE-SHIELDED PSIONS (Aspirants of Nezarec) spawn at the perimeter. Kill BOTH —
+      a Cavum + Barrier Colossus then spawn together.
+  - phase: Cavum spawn (~1:15)
+    runner_1: Keep chaining. Don't engage Cavum unless you're already buff-less and nearby.
+    runner_2: Same.
+    add_clear_4: '**Drop the Cavum FIRST** (resets the timer). Then the Barrier Colossus. Then back to
+      ads.'
+  - phase: Chains complete (varies)
+    all: Sarcophagus opens. Loot chest. Walk toward the next area (Scission).
+  permutations:
+  - name: Standard 2 Runners / 4 Add-Clear
+    learner_friendly: true
+    summary: Default split. Two runners share node load; four hold centre + drop Cavum + Colossi.
+    roles:
+    - id: runner
+      count: 2
+      does: Pick up Field of Light, link next inactive node, refresh, repeat. Split arena front/back or
+        left/right with the other runner so you don't double up.
+      loadout:
+        subclass: Any movement-focused subclass (Hunter/Warlock/Titan with a strong traversal exotic)
+        weapons: Add-clear primary plus any one-shot seed weapon; Anti-Barrier source carried for Colossus
+          backup
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Health
+        surges_mods: No DPS surge needed; prioritize Anti-Barrier on the artifact and movement
+    - id: add-clear
+      count: 4
+      does: 'Hold centre. Kill ads. Priority chain when Aspirants appear: Aspirants → Cavum → Barrier
+        Colossus → back to ads.'
+      loadout:
+        subclass: Any ad-clear subclass with good area damage
+        weapons: Add-clear primary (wave-frame GL, trace rifle, or Witherhoard) plus Anti-Barrier weapon
+          for the Colossus
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Anti-Barrier mandatory; Concussive Dampener optional for the Cavum
+  - name: 4 Runners / 2 Add-Clear (Mechanics-Heavy)
+    summary: Each runner handles 1-2 links per chain. Two players are dedicated Cavum killers. Slower
+      DPS but lighter individual mechanic load.
+    best_for: Master / Contest, low-power teams.
+    roles:
+    - id: runner
+      count: 4
+      does: Zone-assigned (front-left / front-right / back-left / back-right). Take only your zone's links.
+      loadout:
+        subclass: Any movement-focused subclass (Hunter/Warlock/Titan with a strong traversal exotic)
+        weapons: Add-clear primary plus any one-shot seed weapon; Anti-Barrier source carried for Colossus
+          backup
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: No DPS surge needed; prioritize Anti-Barrier on the artifact and movement
+    - id: cavum-killer
+      count: 2
+      does: Aspirants → Cavum → Barrier Colossus. Nothing else.
+      loadout:
+        subclass: Any subclass with strong single-target burst
+        weapons: Burst special/heavy for the Cavum plus an Anti-Barrier weapon for the Colossus
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Anti-Barrier mandatory; burst-damage focus for fast Tormentor kills
+  - name: Jump-Minimizer (fixed-path runners)
+    summary: Each runner pre-walks a fixed 3-4 node loop. Less platforming. Lower mobility builds welcome.
+    roles:
+    - id: fixed-path-runner
+      count: 2
+      does: Stay on your pre-walked path. Team coordinates chain order to match your route.
+      loadout:
+        subclass: Any subclass (lower-mobility builds welcome on a fixed loop)
+        weapons: Any seed weapon plus an add-clear primary; Anti-Barrier carried as backup
+        exotic_armor: ''
+        armor_stats: &id004
+        - Class
+        - Health
+        surges_mods: No DPS surge needed; Anti-Barrier on artifact
+    - id: add-clear
+      count: 4
+      does: Same as Standard.
+      loadout:
+        subclass: Any ad-clear subclass with good area damage
+        weapons: Add-clear primary (wave-frame GL, trace rifle, or Witherhoard) plus Anti-Barrier weapon
+          for the Colossus
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: Anti-Barrier mandatory; Concussive Dampener optional for the Cavum
+  cheese:
+  - title: Side-perch holdout for add-clear
+    detail: 'Add-clear can post up on the side stairs / elevated perches
+
+      around the arena perimeter. Most ads path to the centre, so
+
+      a high side position avoids melee/grab range. Cost: slightly
+
+      worse line of sight on the Cavum spawn — designate one
+
+      player to call its spawn position out loud.
+
+      '
+  common_mistakes:
+  - Killing one Aspirant of Nezarec but not the other → Cavum doesn't spawn → Sweeping Terror expires.
+  - Range-killing Aspirants — they split into 2 weaker Psions if shot at range; close-range or melee kills
+    don't split.
+  - Runner shoots the WRONG seed → the trail breaks → chain has to be restarted from the last lit node.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon (encounter-specific drop pool).
+    hidden_chest: null
+    potential_drops:
+    - Briar's Contempt (linear fusion rifle, Solar)
+    - Koraxis's Distress (heavy grenade launcher, Strand)
+    - Nessa's Oblation (shotgun, Void)
+  master_challenge:
+    name: Illuminated Torment
+    requirement: 'All Tormentors (Cavum of Nezarec) must be killed by a player
+
+      currently holding the Field of Light buff. If anyone without
+
+      the buff lands the killing blow, the challenge fails for the
+
+      run.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: add-clear. Just kill stuff and watch the buff flow.'
+  - '2nd: runner.'
+  - '3rd+: Jump-Minimizer fixed-path runner, or move on.'
+  plain_language_steps:
+  - '1. Before pulling, name every role out loud: 2 runners and 4 add-clear (or your chosen split). The
+    encounter does NOT start until the first active node is shot, so set positions first.'
+  - '2. Look around the perimeter: you will see 6-8 patches of white-rippled floor, each with a small
+    white seed (Node of Splendor) floating above it. One node already has a glowing aura ring (it is ACTIVE);
+    the rest are inactive (seed only). Do NOT shoot the central sarcophagus - it is the wipe-pulse source
+    holding Nezarec''s head.'
+  - 3. A runner walks INTO the active node's aura ring and shoots the seed to gain Field of Light (20
+    seconds). You can leave the aura immediately - the buff stays on you.
+  - 4. Follow the faint white trail from the node you just lit to the next INACTIVE seed. Shoot that inactive
+    seed from anywhere to link it - your buff drops when the link succeeds. Refresh Field of Light from
+    the newly-lit node and continue down the chain.
+  - 5. Add-clear holds the centre and kills incoming Cabal (Legionaries and Phalanxes) coming from the
+    perimeter doors.
+  - 6. When two bubble-shielded Psions (Aspirants of Nezarec) spawn left and right, call them out and
+    kill BOTH. Killing only one means the Cavum will not spawn and your wipe timer (Sweeping Terror) runs
+    out.
+  - 7. Kill Aspirants up close or with melee - shooting them at range makes them split into two weaker
+    Psions.
+  - 8. When the Cavum of Nezarec (a Tormentor) appears, drop everything and kill it FIRST. Its death resets
+    the Sweeping Terror wipe timer. Then kill the Barrier Colossus that spawned with it (you need an Anti-Barrier
+    source).
+  - 9. Avoid standing directly in front of the Cavum - its grab attack is lethal.
+  - 10. Keep building chains. Each completed Field of Light chain is one of four. Call out progress (Chain
+    1 done, 3 to go).
+  - 11. After the 4th chain completes, the encounter ends - there is no separate damage phase. The sarcophagus
+    opens.
+  - 12. Loot the chest and move toward the next area (Scission).
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal Legionaries and Phalanxes deal Solar damage
+      - Aspirants of Nezarec (bubble-shielded Psions) deal Void damage and split into weaker Psions if
+        killed at range
+      - Barrier Colossus deals Solar (slug-rifle) damage
+      boss:
+      - 'Cavum of Nezarec (Tormentor mini-boss): suppressing grab and Void slam attacks'
+    champions:
+    - Barrier Colossus -> Anti-Barrier (artifact mod or intrinsic weapon perk; mandatory this encounter)
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist helps against Legionaries, Phalanxes and the Barrier Colossus slug rifle
+      - Void resist helps against Aspirant Psion fire and the Cavum's slam
+      concussive:
+      - Concussive Dampener can soften the Cavum of Nezarec's grab/slam and grouped Cabal explosive fire
+        if add-clear gets overwhelmed on the centre
+  damage:
+    surges:
+    - No dedicated DPS phase - completing the 4th Field of Light chain ends the encounter, so no DPS surge
+      applies
+    - For the Cavum of Nezarec priority kill, no surge requirement - any Anti-Barrier-free burst weapon
+      works
+    burst_windows: No boss damage phase; the only burst priority is dropping the Cavum of Nezarec fast
+      to reset the Sweeping Terror timer.
+    recommended_dps:
+    - Burst heavy or special for the Cavum (sniper, linear fusion, or rocket)
+    - Add-clear primary that prevents Aspirant splits (close-range shotgun, SMG, or melee)
+  role_loadouts:
+  - role_id: runner
+    subclass: Any movement-focused subclass (Hunter/Warlock/Titan with a strong traversal exotic)
+    weapons: Add-clear primary plus any one-shot seed weapon; Anti-Barrier source carried for Colossus
+      backup
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surge needed; prioritize Anti-Barrier on the artifact and movement
+  - role_id: add-clear
+    subclass: Any ad-clear subclass with good area damage
+    weapons: Add-clear primary (wave-frame GL, trace rifle, or Witherhoard) plus Anti-Barrier weapon for
+      the Colossus
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Anti-Barrier mandatory; Concussive Dampener optional for the Cavum
+  - role_id: cavum-killer
+    subclass: Any subclass with strong single-target burst
+    weapons: Burst special/heavy for the Cavum plus an Anti-Barrier weapon for the Colossus
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Anti-Barrier mandatory; burst-damage focus for fast Tormentor kills
+  - role_id: fixed-path-runner
+    subclass: Any subclass (lower-mobility builds welcome on a fixed loop)
+    weapons: Any seed weapon plus an add-clear primary; Anti-Barrier carried as backup
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No DPS surge needed; Anti-Barrier on artifact
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/root-of-nightmares.yaml (encounter: cataclysm)'
+    note: Primary source - mechanics, enemies, roles and permutations authored from destinypedia + blueberries.gg
+      loot tables (Pass 2, 2026-05-25).
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Exotic/weapon and artifact specifics shift each Episode; verify current Anti-Barrier sources
+      and meta exotics before a run. Edge of Fate stat names applied (Class/Health).
+    date_checked: '2026-06-07'

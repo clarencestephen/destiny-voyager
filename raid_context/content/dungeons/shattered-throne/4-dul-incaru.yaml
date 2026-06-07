@@ -1,0 +1,287 @@
+# raid_context/content/dungeons/shattered-throne/4-dul-incaru.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: shattered-throne
+  name: The Shattered Throne
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: dul-incaru
+  name: Dûl Incaru, the Eternal Return
+  difficulty: hard
+  estimated_time: 10-15 min
+  abstract: 'Final boss. Hive Wizard with 3 Darkblade Knights as the damage gate.
+
+    Drop all 3 Knights → grab orbs (45s DPS window) → burst Dûl Incaru.
+
+    Knights have a crystal-shield mechanic — destroy crystals BUT crystals
+
+    also revive dead Knights.
+
+    '
+  setup: "WHAT YOU SEE:\n- Round chamber, Dûl Incaru floating center.\n- 3 Darkblade Knight spawn alcoves\
+    \ (cardinal points).\n- 2 Taken Psion groups spawn left + right at pull.\n- Purple cleanse pedestal\
+    \ at the entry.\n- Crystal shields may appear mid-encounter — large jagged structures.\n\nPLATFORM\
+    \ MECHANICS:\n- Kill the 2 Psion groups first (they'll murder you mid-orb-run otherwise).\n- 3 Darkblade\
+    \ Knights spawn. Each kill drops an orb.\n- Picking up orb = 45s damage-phase buff stacks (more buffs\
+    \ = more DPS).\n- Dûl Incaru summons a crystal that makes living Knights IMMUNE.\n  Destroying crystal\
+    \ REVIVES dead Knights at full HP.\n- Optimal: drop ALL 3 Knights low + simultaneously kill → grab\
+    \ all 3 orbs → max DPS.\n\nSTART STATE: rally banner outside. Walk to crystal to engage.\n"
+  callouts:
+  - when: Psion group spotted
+    from: spotter
+    to: team
+    say: '"[L/R] Psions — burn."'
+    why: Focus fire. Psion blast + adds = death.
+  - when: Knights spawned
+    from: first to see
+    to: team
+    say: '"3 Knights — pair up [N/S/E]."'
+    why: Assigns one Knight per player.
+  - when: Knight low (~20% HP)
+    from: self
+    to: team
+    say: '"My Knight LOW — holding."'
+    why: Sync the simultaneous kill.
+  - when: Crystal summoned (Knights immune)
+    from: any
+    to: team
+    say: '"CRYSTAL — break it now."'
+    why: Living Knights immune until crystal dies.
+  - when: Sync kill
+    from: leader
+    to: team
+    say: '"3, 2, 1, KILL."'
+    why: Synchronizes kill = 3 orbs in fast succession = max buff stacks.
+  - when: Buffs stacked + ready
+    from: any
+    to: team
+    say: '"DPS — supers."'
+    why: Coordinated Super dump.
+  wipe_triggers:
+  - Psion blast at point-blank.
+  - Crystal-shield resurrect cycle — if you never break the crystal, Knights stay immune indefinitely.
+  - Standing on cleanse pedestal too long (loses positioning).
+  - Holding 4 stacks of buff past expiry without DPS — wasted phase, encounter drags.
+  damage_phase_triggers:
+  - 3 Darkblade orbs picked up → 45s DPS window. Stacking 3 buffs = max damage multiplier.
+  parallel_timeline:
+  - phase: Pull
+    all: Walk to crystal. Engage. Psion groups spawn L+R.
+  - phase: Psion clear (~0:15)
+    all: Burst both Psion groups quickly.
+  - phase: Knight chase (~0:30-1:30)
+    all: Assigned Knight per player. Burn to ~20%.
+  - phase: Sync kill
+    all: Leader counts down. All 3 die together. Grab orbs in sequence.
+  - phase: DPS (~1:35-2:20)
+    all: Drop Super (Thundercrash/Golden Gun + exotic for one-shot setup).
+  - phase: Reset
+    all: Psions + Knights respawn. Cycle.
+  permutations:
+  - name: Standard 3-Knight 1-shot setup
+    learner_friendly: true
+    summary: Each player owns 1 Knight. Synchronize kill for orb stacks. Burst with Supers.
+    roles:
+    - id: knight_owner
+      count: 3
+      does: Pre-assigned Knight. Burn to low, hold, sync kill.
+      loadout:
+        subclass: Single-target Super subclass (Hunter Golden Gun or Titan Thundercrash for the synchronized
+          burst)
+        weapons: Precision primary or special to burn a Knight to low, plus a high single-target heavy
+          for the window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Super
+        - Health
+        surges_mods: Match surge mods to your DPS weapon's element; run Super/ability mods to have your
+          Super ready each cycle
+  - name: 'Speed: Thundercrash / Celestial one-shot'
+    learner_friendly: false
+    summary: 'Build for max single-target damage: Titan (Thundercrash + Cuirass
+
+      of the Falling Star) OR Hunter (Golden Gun + Celestial Nighthawk
+
+      + Star-Eater Scales). 3 stacks of orb buff → Super into Dûl
+
+      Incaru''s face → one-shot kill.
+
+      '
+    best_for: Fast farming.
+    roles:
+    - id: one_shot_dps
+      count: 1
+      does: Stays uninvolved in Knight kills; lines up Super for crystal phase.
+      loadout:
+        subclass: Single-target Super subclass (Hunter Golden Gun + Celestial Nighthawk, or Titan Thundercrash
+          + Cuirass of the Falling Star)
+        weapons: Single-target heavy held in reserve for backup; primary used only to stay alive while
+          lining up the Super
+        exotic_armor: Celestial Nighthawk (Hunter Golden Gun one-shot) or Cuirass of the Falling Star
+          (Titan Thundercrash one-shot)
+        armor_stats: &id002
+        - Super
+        - Health
+        surges_mods: Match surge mods to your DPS weapon's element; prioritize Super stat and ability-energy
+          mods so your one-shot Super is up at the crystal phase
+    - id: knight_killer
+      count: 2
+      does: Drop all 3 Knights. Hand orbs to one_shot_dps.
+      loadout:
+        subclass: Any subclass with strong single-target burst to drop Knights quickly (Solar or Void)
+        weapons: Precision primary or special to burst Knights, plus a heavy to help finish them and hand
+          orbs to the one-shot DPS
+        exotic_armor: ''
+        armor_stats: &id003
+        - Weapons
+        - Health
+        surges_mods: Match surge mods to your weapon's element; run targeting/loader mods for fast Knight
+          kills
+  - name: Solo
+    learner_friendly: false
+    summary: 'Take Knights one at a time. Use Devour/Resto sustain. Multiple
+
+      DPS phases. Bring Lament or Whisper/Sleeper for boss damage.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: All mechanics in sequence. Patient.
+      loadout:
+        subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple DPS phases alone
+        weapons: Add-clear primary plus a high single-target heavy (Sword such as Lament, or a Whisper/Sleeper-type
+          Linear Fusion) for several phases
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Match surge mods to your heavy's element; run survivability and ability-regen mods
+          for the extended solo fight
+  cheese: []
+  common_mistakes:
+  - Killing one Knight then chasing the others 'while orb is active' — Knight respawns via crystal, you
+    waste buff.
+  - Ignoring the crystal — Knights stay immune, no orbs.
+  - Stepping on cleanse pedestal preemptively — only needed if you're carrying a Burden-style debuff (not
+    standard here).
+  - Spreading Supers across phases instead of synchronizing — kills DPS efficiency.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (Dreaming City roll)
+    hidden_chest: null
+    potential_drops:
+    - 'Final chest: roll from the shared ''Any Encounter'' pool + Dreaming City reward (Pinnacle gear
+      at endgame).'
+    - '**Wish-Ender** (exotic combat bow, Kinetic) is the ''Hunter''s Remembrance'' secret quest reward,
+      not a random drop.'
+    - Waking Vigil (HC)
+    - Reverie Dawn armor
+    - Dreaming City Ship (Cursebreaker seal)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: knight_owner with simple kit.'
+  - '2nd: build for Super one-shot.'
+  - 'Solo: viable; expect 2-3 phases.'
+  plain_language_steps:
+  - 1. Place the rally banner outside, then walk to the central crystal to engage Dûl Incaru, the Eternal
+    Return (a Hive Wizard floating in the center).
+  - 2. At the pull, two Taken Psion groups spawn on the left and right. Burst both groups down first;
+    they will kill you mid-orb-run otherwise.
+  - 3. Note the purple cleanse pedestal at the entry and the three Darkblade Knight alcoves at the cardinal
+    points.
+  - 4. Three Darkblade Knights spawn. Assign one Knight per player and burn each down to about 20 percent
+    HP.
+  - 5. Call out when your Knight is low and hold; you want all three to die together so their orbs drop
+    in quick succession.
+  - 6. If Dûl Incaru summons a crystal, any living Knight becomes immune. Break the crystal to drop the
+    immunity, but be aware breaking it also revives any dead Knight at full HP, so time it with your kills.
+  - 7. On a leader's countdown, kill all three Knights simultaneously, then grab all three orbs in sequence.
+    Each orb stacks a 45-second damage buff; three stacks is the max multiplier.
+  - 8. With three stacks up, dump coordinated Supers into Dûl Incaru's face for maximum burst.
+  - 9. If she survives, the Psions and Knights respawn; repeat the cycle.
+  - '10. Avoid the common traps: do not kill one Knight then chase the others (it respawns via crystal),
+    and do not ignore the crystal or the Knights stay immune with no orbs.'
+  - 11. The final chest spawns on her death for the Dreaming City roll.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken Psions deal Void blast and split into more Psions
+      - Darkblade Knights deal Void slam/projectile and gate the damage phase
+      boss:
+      - Dûl Incaru (Hive Wizard) deals Void caster bolts and poison clouds
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resist helps against Psion blasts, Knight fire, and Dûl Incaru's Void damage on Master-tier
+        difficulty
+      concussive:
+      - No mandatory Concussive Dampener use; the chamber is enclosed with low ledge-death risk
+  damage:
+    surges:
+    - DPS phase opens after picking up all 3 Darkblade orbs; Dûl Incaru is a Hive Wizard with no fixed
+      elemental shield, so no specific surge element is required (bring your strongest single-target burst)
+    burst_windows: One ~45-second damage window after grabbing all 3 orbs (3 stacks = max multiplier);
+      dump coordinated Supers into her face for a potential one-shot.
+    recommended_dps:
+    - Single-target Super setups (Golden Gun with Celestial Nighthawk plus Star-Eater Scales, or Thundercrash
+      with Cuirass of the Falling Star) for a one-shot
+    - High single-target heavies (Sword such as Lament, or Whisper/Sleeper-type Linear Fusion) for solo
+      or backup DPS
+  role_loadouts:
+  - role_id: knight_owner
+    subclass: Single-target Super subclass (Hunter Golden Gun or Titan Thundercrash for the synchronized
+      burst)
+    weapons: Precision primary or special to burn a Knight to low, plus a high single-target heavy for
+      the window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your DPS weapon's element; run Super/ability mods to have your Super
+      ready each cycle
+  - role_id: one_shot_dps
+    subclass: Single-target Super subclass (Hunter Golden Gun + Celestial Nighthawk, or Titan Thundercrash
+      + Cuirass of the Falling Star)
+    weapons: Single-target heavy held in reserve for backup; primary used only to stay alive while lining
+      up the Super
+    exotic_armor: Celestial Nighthawk (Hunter Golden Gun one-shot) or Cuirass of the Falling Star (Titan
+      Thundercrash one-shot)
+    armor_stats: *id002
+    surges_mods: Match surge mods to your DPS weapon's element; prioritize Super stat and ability-energy
+      mods so your one-shot Super is up at the crystal phase
+  - role_id: knight_killer
+    subclass: Any subclass with strong single-target burst to drop Knights quickly (Solar or Void)
+    weapons: Precision primary or special to burst Knights, plus a heavy to help finish them and hand
+      orbs to the one-shot DPS
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Match surge mods to your weapon's element; run targeting/loader mods for fast Knight
+      kills
+  - role_id: solo
+    subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple DPS phases alone
+    weapons: Add-clear primary plus a high single-target heavy (Sword such as Lament, or a Whisper/Sleeper-type
+      Linear Fusion) for several phases
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Match surge mods to your heavy's element; run survivability and ability-regen mods for
+      the extended solo fight
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/shattered-throne.yaml (encounter 4, dul-incaru)'
+    note: Primary source; Darkblade Knight orb gate, crystal-shield revive mechanic, Psion threats, and
+      one-shot Super strategy derived directly from the authored v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (e.g. Intellect->Super, Strength->Melee). Verify Celestial
+      Nighthawk, Star-Eater Scales, and Cuirass of the Falling Star are still meta in-game; no Master
+      version exists so champion mods are not mandatory.
+    date_checked: '2026-06-07'

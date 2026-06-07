@@ -1,0 +1,225 @@
+# raid_context/content/dungeons/grasp-of-avarice/4-shield-shutdown.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: shield-shutdown
+  name: Shield Shutdown (Fallen Shield / Servitor cannon)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'No boss health bar — puzzle encounter. Deposit 20 engrams to break
+
+    a Servitor''s shield → kill the Servitor → use a Scorch Cannon to
+
+    launch its body into a "shield core." 4 cores = shield down → final
+
+    boss room access.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Flooded cavern with the Great Sphere suspended in the center.
+
+    - 4 shield cores around the perimeter — each is a section of the sphere''s barrier.
+
+    - Multiple platforms with Fallen, shielded white Servitors, and gravity cannons.
+
+    - Icons of Excess on the platforms.
+
+
+    PLATFORM MECHANICS:
+
+    - Gravity cannons: stand in front of one → press interact → launched to next platform. Some are aim-able
+    (turn-able cannons).
+
+    - Servitor shields (white sphere protection): drop ONLY by depositing 20 Burdened stacks at the local
+    Icon.
+
+    - Killed Servitor leaves a body — push it into a cannon → aim at a shield core → fire → 1/4 shield
+    down.
+
+
+    START STATE: drop into cavern. 4 separate sub-rooms, can do in any order.
+
+    '
+  callouts:
+  - when: Servitor shield drops
+    from: depositor
+    to: team
+    say: '"[N] servitor down — body for cannon."'
+    why: Tells cannoneer to position.
+  - when: Cannon aimed + ready
+    from: cannoneer
+    to: team
+    say: '"Firing on [N/S/E/W] core."'
+    why: Confirms which core is being broken; team rotates.
+  - when: All 4 cores broken
+    from: any
+    to: team
+    say: '"Shield down — center cannon up."'
+    why: Cue to converge on center launcher for final boss room entry.
+  wipe_triggers:
+  - Burdened timer = 0 (timer pressure is real here — fewer engram drops than earlier encounters).
+  - Failure to break all 4 cores in time → encounter resets (some sources say no time limit, but slow
+    runs face escalating add density).
+  - Falling into the water below the platforms = death.
+  damage_phase_triggers:
+  - All 4 shield cores broken via launched-Servitor cannons → progress.
+  parallel_timeline:
+  - phase: Pull
+    all: Drop into cavern. Split L/R to nearest platforms.
+  - phase: Per-platform loop
+    gatherers: Kill Fallen, gather engrams, deposit at Icon → Servitor shield drops.
+    cannoneer: Hold Scorch Cannon. Position behind Servitor body for cannon shot.
+  - phase: Core break
+    cannoneer: Aim launched-Servitor at the assigned shield core, fire.
+  - phase: Rotate
+    all: Move to next platform via gravity cannon. Repeat.
+  permutations:
+  - name: Round-robin 1-platform-per-player
+    learner_friendly: true
+    summary: Each player owns one platform. Coordinate cannon usage.
+    roles:
+    - id: platform_owner
+      count: 3
+      does: 'Own platform: gather, deposit, kill Servitor, launch body.'
+      loadout:
+        subclass: Self-sustaining add-clear subclass so you can hold a platform solo through Fallen and
+          Servitor fire.
+        weapons: Add-clear primary plus a reliable special to drop the Servitor once its shield is down;
+          keep a Scorch Cannon for the body launch.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge requirement; prioritize resilience and ability mods for the platform grind.
+  - name: Solo
+    learner_friendly: false
+    summary: All 4 platforms yourself, sequentially. Bring sustain.
+    roles:
+    - id: solo
+      count: 1
+      does: Cycle each platform. ~3-5 min per platform.
+      loadout:
+        subclass: High-sustain or Stasis subclass for crowd control while cycling all 4 platforms alone
+          (about 3-5 minutes each).
+        weapons: Add-clear primary plus sustain options; bring Witherhoard-style chip and a Scorch Cannon
+          for body launches.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No surge requirement; favor survivability and ability-uptime mods for the solo cycle.
+  cheese: []
+  common_mistakes:
+  - Killing the Servitor BEFORE depositing 20 (kills don't count — shield won't drop).
+  - Cannon misaim — launched Servitor body has falloff; aim for the core CENTER, not perimeter.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'GJALLARHORN catalyst chest 3 (final): After encounter completes,
+
+        go to CENTER turnable cannon. Aim at the waterfall area. Launch.
+
+        Land near the Reaver Vandal in that side cavern. Kill Vandal,
+
+        quickly run to top room near the Cannon. Open chest = Gjallarhorn
+
+        Catalyst complete. REQUIRES previous 2 chests this run (no
+
+        checkpoint loading) — otherwise Vandal won''t spawn.
+
+        '
+      rewards:
+      - Gjallarhorn Catalyst (last fragment)
+    potential_drops:
+    - Dungeon weapons
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: gather + deposit on assigned platform.'
+  - '2nd: cannoneer for launch aim practice.'
+  plain_language_steps:
+  - 1. Drop into the flooded cavern with the Great Sphere suspended in the center; 4 shield cores sit
+    around the perimeter, each protecting a section of the sphere's barrier.
+  - 2. There is no boss health bar. This is a puzzle encounter, and you can tackle the 4 sub-rooms in
+    any order.
+  - 3. Split toward the nearest platforms; each platform has Fallen, a shielded white Servitor, gravity
+    cannons, and an Icon of Excess.
+  - 4. Avoid falling into the water below the platforms, which is an instant death.
+  - 5. Kill the Fallen on a platform and gather the Cursed Engrams they drop, managing your Burdened timer
+    carefully (engram drops are sparser here than earlier encounters).
+  - 6. Deposit 20 Burdened stacks at the local Icon of Excess to drop that Servitor's white shield. Do
+    not kill the Servitor first; kills before the deposit do not count.
+  - 7. Once its shield is down, kill the Servitor; it leaves a body.
+  - 8. Pick up a Scorch Cannon, push the Servitor body to a gravity cannon, and aim at an assigned shield
+    core.
+  - 9. Fire to launch the body into the core center (the body has falloff, so aim at the center, not the
+    perimeter) to break 1 of 4 cores.
+  - 10. Use gravity cannons to rotate to the next platform and repeat the deposit-kill-launch loop until
+    all 4 cores are broken.
+  - 11. With all 4 cores down, the sphere's shield drops; converge on the center cannon to enter the final
+    boss room.
+  - '12. Optional (Gjallarhorn Catalyst final fragment): after the encounter, take the center turnable
+    cannon, aim at the waterfall area, launch, land near the Reaver Vandal in that side cavern, kill it,
+    then rush to the top room near the cannon to open the chest (requires the previous 2 chests this run,
+    no checkpoint).'
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Fallen Dreg/Vandal/Marauder fire)
+      - Void (Servitor bolts)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Optional Arc resistance for dense Fallen platforms; Void resistance helps against Servitor bolts.
+        No mandatory resist is confirmed.
+      concussive: []
+  damage:
+    surges:
+    - No traditional DPS phase against a boss. The only damage that matters is launching Servitor bodies
+      into the 4 shield cores via gravity cannons.
+    burst_windows: No boss burst window; progress is gated by depositing 20 per Servitor and breaking
+      all 4 cores with launched bodies.
+    recommended_dps:
+    - Add-clear primary to clear Fallen quickly and a way to drop the unshielded Servitor fast; no heavy
+      boss-DPS weapon is required.
+  role_loadouts:
+  - role_id: platform_owner
+    subclass: Self-sustaining add-clear subclass so you can hold a platform solo through Fallen and Servitor
+      fire.
+    weapons: Add-clear primary plus a reliable special to drop the Servitor once its shield is down; keep
+      a Scorch Cannon for the body launch.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge requirement; prioritize resilience and ability mods for the platform grind.
+  - role_id: solo
+    subclass: High-sustain or Stasis subclass for crowd control while cycling all 4 platforms alone (about
+      3-5 minutes each).
+    weapons: Add-clear primary plus sustain options; bring Witherhoard-style chip and a Scorch Cannon
+      for body launches.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge requirement; favor survivability and ability-uptime mods for the solo cycle.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: shield-shutdown)'
+    note: Primary source for the 20-deposit Servitor-shield mechanic, gravity cannons, 4 shield cores,
+      body-launch aiming, and the final Catalyst chest path.
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Servitor bolt element treated as Void per Fallen Servitor convention; verify current exotic/weapon
+      meta before finalizing.
+    date_checked: '2026-06-07'

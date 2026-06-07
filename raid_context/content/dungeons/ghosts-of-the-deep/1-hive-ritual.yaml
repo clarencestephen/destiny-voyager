@@ -1,0 +1,218 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/1-hive-ritual.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: hive-ritual
+  name: Hive Ritual (break the seal)
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: 'First encounter. Forest area with a sealed Hive ritual circle.
+
+    4 cycles: kill a Soulfire Binder Ogre → follow glowing path to
+
+    Hive squad → kill them → next path → final cycle has a Lightbearer
+
+    → crush Ghost → carry Vestige back to a rune statue at the ritual.
+
+    4 cycles = 4 statues = seal breaks.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Forested area at the Arcology edge, hive ritual circle at center.
+
+    - 4 Thrall statues around the ritual (await charging).
+
+    - Soulfire Binder Ogre wandering near the ritual site.
+
+    - Reddened pockets indicating Hive activity.
+
+
+    PLATFORM MECHANICS:
+
+    - Kill Ogre → glow trail appears → follow to Hive squad → kill them → glow trail again.
+
+    - Final wave (3rd group) has a Lightbearer. Crush its Ghost = Vestige + rune marker overhead.
+
+    - Return to ritual: Veilweaver Wizard now spawns near ritual.
+
+    - Kill Veilweaver → drops Deepsight illusion → use Deepsight → reveals runes on the 4 Thrall statues.
+
+    - Deposit Vestige at the statue matching the rune you saw with the Lightbearer.
+
+    - Repeat 4 cycles total = all statues charged = seal opens.
+
+
+    START STATE: rally banner. Walk in to start. Ogre spawns ambient.
+
+    '
+  callouts:
+  - when: Ogre down + trail revealed
+    from: killer
+    to: team
+    say: '"TRAIL [direction]."'
+    why: Whole team follows.
+  - when: Lightbearer down + Ghost crushed
+    from: crusher
+    to: team
+    say: '"Vestige — rune [shape]."'
+    why: Carrier announces target rune for deposit-side teammates.
+  - when: Veilweaver dropped + Deepsight ready
+    from: any
+    to: team
+    say: '"DEEPSIGHT at ritual — runes reveal."'
+    why: Cues confirmation of rune match.
+  - when: Deposited
+    from: carrier
+    to: team
+    say: '"1/4 statues."'
+    why: Progress.
+  wipe_triggers:
+  - Wrong-rune deposit = death.
+  - Soulfire Binder Ogre + Knight reinforcements overwhelming a kited carrier.
+  - Dying with Vestige = no death of teammate, but Vestige resets (need new Lightbearer).
+  damage_phase_triggers:
+  - All 4 statues charged = seal breaks → next area.
+  parallel_timeline:
+  - phase: Per cycle (×4)
+    ogre_killer: Drop Ogre.
+    trail_follower: Follow trail, kill squads.
+    crusher: Final squad has Lightbearer — crush Ghost for Vestige.
+    veilweaver_killer: Back at ritual, drop Veilweaver.
+    deepsight_user: Trigger Deepsight, ID runes.
+    depositor: Match Vestige rune to statue, deposit.
+  permutations:
+  - name: Standard rotating
+    learner_friendly: true
+    summary: All 3 rotate roles. Communicate rune + deposit explicitly.
+    roles:
+    - id: cycle_runner
+      count: 3
+      does: Follow trail, crush Ghost, deposit.
+      loadout:
+        subclass: Any (Void Devour Warlock/Hunter or Solar Restoration for self-sustain between runs)
+        weapons: Long-range primary for above-water Lightbearers (scout or pulse) + add-clear special;
+          sustained-fire or auto-loading option for chaining squads
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No DPS surges needed; run add-clear and survivability mods (resist mods vs Arc/Solar,
+          ability-regen mods)
+  - name: Solo
+    learner_friendly: false
+    summary: All cycles yourself. ~12-15 min per cycle.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Bring sustained sustain (Devour / Resto).
+      loadout:
+        subclass: Void (Devour) or Solar (Restoration) for constant self-healing across the long ~12-15
+          min per cycle
+        weapons: Reliable add-clear primary + special; bring sustained sustain rather than burst since
+          there is no boss here
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Survivability and ability-regen mods; no DPS surges
+  cheese: []
+  common_mistakes:
+  - Forgetting to crush Ghost — no Vestige, restart cycle.
+  - Wrong statue deposit — instant death.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - No Survivors (SMG, Solar)
+    - New Pacific Epitaph (grenade launcher, Stasis)
+    - Cold Comfort (rocket launcher, Stasis)
+    - Taken King armor — Arms + Legs + Helm (encounter-specific slots; armor brand is 'Taken King', not
+      'Titan')
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: cycle_runner. Watch the trail follow + Vestige flow.'
+  plain_language_steps:
+  - 1. Drop your rally banner and walk into the forested Arcology-edge area to start. A Soulfire Binder
+    Ogre is wandering near the central Hive ritual circle with its four Thrall statues.
+  - 2. Kill the Soulfire Binder Ogre. When it dies, a glowing trail appears on the ground. Call the trail
+    direction and have the whole team follow it.
+  - 3. Follow the glow trail to a Hive squad and wipe them out. A new trail appears each time, so keep
+    following the chain.
+  - 4. On the final wave of the cycle a Lightbearer Hive enemy spawns. Kill it, then walk up to its dropped
+    Ghost and interact to CRUSH it. The crusher gets a Vestige of Light and a rune marker over their head.
+  - 5. Carry the Vestige back to the ritual circle. A Veilweaver Wizard now spawns near the ritual.
+  - 6. Kill the Veilweaver Wizard. It drops a Deepsight illusion at a fixed spot. Interact with it to
+    use Deepsight, which reveals the runes on the four Thrall statues.
+  - 7. Match the rune you saw on your Vestige marker to the correct statue and deposit there. Depositing
+    at the WRONG statue kills you instantly, so confirm the match out loud first.
+  - 8. That charges one statue. Call out your progress (for example '1 of 4 statues').
+  - '9. Repeat the full cycle three more times: Ogre, trail, squads, Lightbearer, crush Ghost, carry Vestige,
+    Deepsight, deposit at the matching statue.'
+  - 10. When all four statues are charged, the Hive seal breaks and the path to the next area opens.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc damage from Lucent Hive Knights (boomer/cleaver melee)
+      - Solar damage from Acolyte projectiles and Acolyte Eyes
+      - Solar/Arc area damage from the Soulfire Binder Ogre's eye blast
+      - Hive Wizard (Veilweaver) poison/Arc bolt damage
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Champion or burn modifiers on this dungeon (no Master version), so no mandatory resist mods.
+      - General Arc/Solar incoming from Hive adds — Resilience-style survivability (now Health stat) and
+        a class-ability heal/overshield are the main mitigation.
+      concussive:
+      - 'Optional: Concussive Dampener helps against the Soulfire Binder Ogre''s eye blast and Hive boomer
+        splash if a carrier keeps dying while kited.'
+  damage:
+    surges:
+    - No boss DPS phase in this encounter — it is purely a mechanics/seal-breaking encounter, so no DPS-phase
+      surge applies.
+    burst_windows: No burst window; clear the Soulfire Binder Ogre, squads, Lightbearer, and Veilweaver
+      efficiently each cycle instead.
+    recommended_dps:
+    - Add-clear primary (auto rifle, pulse, or SMG)
+    - A precision option to quickly drop the per-cycle Lightbearer (hand cannon or scout)
+    - Ability-spam or sustain build to stay alive between Vestige runs
+  role_loadouts:
+  - role_id: cycle_runner
+    subclass: Any (Void Devour Warlock/Hunter or Solar Restoration for self-sustain between runs)
+    weapons: Long-range primary for above-water Lightbearers (scout or pulse) + add-clear special; sustained-fire
+      or auto-loading option for chaining squads
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surges needed; run add-clear and survivability mods (resist mods vs Arc/Solar,
+      ability-regen mods)
+  - role_id: solo
+    subclass: Void (Devour) or Solar (Restoration) for constant self-healing across the long ~12-15 min
+      per cycle
+    weapons: Reliable add-clear primary + special; bring sustained sustain rather than burst since there
+      is no boss here
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Survivability and ability-regen mods; no DPS surges
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/ghosts-of-the-deep.yaml (encounter 1, hive-ritual)'
+    note: Primary source for setup, parallel_timeline, permutations, enemies, and rewards.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (Resilience->Health, Recovery->Class, etc.); exotic/weapon
+      meta shifts each season. Verify current loadouts in-game before a run. Fields left blank where a
+      specific exotic could not be verified.
+    date_checked: '2026-06-07'

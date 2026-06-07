@@ -1,0 +1,257 @@
+# raid_context/content/dungeons/pit-of-heresy/5-cradle-of-damnation.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 5
+  slug: cradle-of-damnation
+  name: Cradle of Damnation (Zulmak, Instrument of Torment)
+  difficulty: hard
+  estimated_time: 10-20 min
+  abstract: 'Final boss. Same Cleaver + Disciple loop, then dunk 3 Void Orbs at
+
+    central crystal → DPS phase in a green aura. Zulmak''s charged slam
+
+    one-shots the aura — GTFO when he kneels.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Round arena. Central crystal (large jagged Hive structure).
+
+    - 3 alcoves around the perimeter, each housing a Disciple of the Broken Blade.
+
+    - Zulmak (Hive Knight, oversized) kneeling at the crystal on pull.
+
+    - Accursed Swordbearers spawn for each Disciple cycle.
+
+
+    PLATFORM MECHANICS:
+
+    - Get a Cleaver → execute correct input per Disciple → orb drops → dunk at central crystal.
+
+    - 3 orbs dunked = Zulmak vulnerable + green aura appears around crystal.
+
+    - STAND IN green aura to deal damage to Zulmak.
+
+    - When Zulmak KNEELS (charging) → instant exit aura. Slam = one-shot.
+
+
+    START STATE: rally banner at the entry. Walk to crystal to engage.
+
+    '
+  callouts:
+  - when: Disciple identified
+    from: spotter
+    to: team
+    say: '"[direction] alcove = [Might/Omen/Oracle]."'
+    why: Tells swordbearer input order.
+  - when: Disciple down + orb in hand
+    from: killer
+    to: team
+    say: '"Got orb, dunking."'
+    why: Tells team to converge on crystal for incoming DPS aura.
+  - when: Third orb dunked
+    from: self
+    to: team
+    say: '"AURA UP — damage."'
+    why: Signal to drop Well/Bubble + open fire.
+  - when: Zulmak kneels (charging slam)
+    from: first to see
+    to: team
+    say: '"KNEEL — OUT OUT OUT."'
+    why: Aura-stand = one-shot. Hard exit required.
+  wipe_triggers:
+  - Standing in aura when Zulmak's slam fires = one-shot.
+  - Brute-forcing Might without blocking = sword broken, you die.
+  - Disciples cleaning you up in alcoves — bring add-clear backup.
+  damage_phase_triggers:
+  - 3 Void Orbs dunked at the central crystal → green aura + Zulmak vulnerable.
+  parallel_timeline:
+  - phase: Pull
+    all: Walk to crystal. Disciples + Swordbearers spawn.
+  - phase: Sword cycle 1 (Omen first — hardest)
+    swordbearer: Get cleaver, kill Omen (Heavy attack). Take orb.
+    add_clear_2: Hold Zulmak's attention. Kill ambient Hive.
+  - phase: Dunk 1 + cycle 2 (Might)
+    swordbearer: Dunk orb at crystal. Next cleaver → Might (Light, block-swing rhythm).
+  - phase: Dunk 2 + cycle 3 (Oracle)
+    swordbearer: Block-deflect Oracle. Take orb.
+  - phase: DPS (~3rd dunk → 20s window)
+    all: Stack in aura. Well/Bubble. Burst Zulmak. WATCH for kneel.
+  - phase: Reset
+    all: Aura ends. Disciples respawn. Cycle.
+  permutations:
+  - name: Standard 1-sword / 2-clear
+    learner_friendly: true
+    summary: One dedicated swordbearer all 3 Disciples; others clear adds + cover.
+    roles:
+    - id: swordbearer
+      count: 1
+      does: Owns all 3 Disciple kills. Memorize input order.
+      loadout:
+        subclass: Any; ability-uptime/survivability kit to weather Disciple alcoves
+        weapons: Relic Hive Cleaver for Disciple kills; a burst DPS sword (Lament or Falling Guillotine)
+          for the aura window; strong primary for adds
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Arc weapon surge optional for the DPS window; no surge is mandatory
+    - id: add_clear
+      count: 2
+      does: Lock down ambient adds + keep Zulmak's aggro off swordbearer.
+      loadout:
+        subclass: Any; strong add-clear and survivability kit (Well of Radiance on Warlock helps the DPS
+          window)
+        weapons: Strong primary and long-range option to lock down ambient Hive and Boomers; a burst DPS
+          weapon for the aura
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: Arc weapon surge optional; favor Health and Super for the DPS window
+  - name: 'Speed: 3-sword (parallel)'
+    learner_friendly: false
+    summary: Each player takes a Disciple simultaneously. All 3 swords pulled at once.
+    best_for: Experienced teams, 1-phase attempts.
+    roles:
+    - id: swordbearer
+      count: 3
+      does: Each owns one Disciple. Sync dunks at crystal.
+      loadout:
+        subclass: Any; ability-uptime/survivability kit to weather Disciple alcoves
+        weapons: Relic Hive Cleaver for Disciple kills; a burst DPS sword (Lament or Falling Guillotine)
+          for the aura window; strong primary for adds
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Arc weapon surge optional for the DPS window; no surge is mandatory
+  - name: Solo
+    learner_friendly: false
+    summary: All 3 Disciples + DPS yourself. Bring sword for DPS (Lament / Falling Guillotine).
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical. Don't rush input order. Witherhoard the Disciples for chip.
+      loadout:
+        subclass: Any; survivable kit; Well of Radiance is popular for the DPS window
+        weapons: Relic Hive Cleaver for Disciples; a burst DPS sword (Lament or Falling Guillotine) for
+          the aura; Witherhoard for chip on the Disciples
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Arc weapon surge optional; no surge is mandatory
+  cheese: []
+  common_mistakes:
+  - Standing in aura when Zulmak kneels = instant death.
+  - Wrong input on a Disciple = wasted cycle, more adds spawn.
+  - Not getting clear of the central crystal between phases — Zulmak's basic attacks still hit.
+  - Trying to DPS from OUTSIDE the aura — damage doesn't register.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    - Final chest (Dreambane high-stat armor)
+    hidden_chest: null
+    potential_drops:
+    - 'Final chest: Dreambane high-stat armor (any slot). Same shared ''Any Encounter'' weapon pool as
+      prior encounters.'
+    - 'Note: **Xenophage** (exotic LMG) is the SEPARATE ''The Journey'' quest, NOT a final-chest RNG drop
+      here.'
+    - Hymn of Desecration quest weapons (Apostate / Blasphemer / Heretic) drop here only after the quest
+      is complete.
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: add_clear (study the swordbearer + aura rhythm).'
+  - '2nd: swordbearer (input mastery).'
+  - 'Solo: viable but requires confident sword discipline.'
+  plain_language_steps:
+  - 1. Place the rally banner at the entry, then walk to the central crystal to engage Zulmak, Instrument
+    of Torment.
+  - 2. Disciples of the Broken Blade spawn in the 3 perimeter alcoves, and Accursed Swordbearers spawn
+    for each cycle.
+  - 3. Have a spotter call out which alcove holds which Disciple (Might, Omen, or Oracle) so the swordbearer
+    knows the input order.
+  - '4. Kill an Accursed Swordbearer to get a relic Hive Cleaver, then kill a Disciple with the correct
+    input: Light for Might (Knight), Heavy for Omen (Wizard), Block/deflect for Oracle (Shrieker).'
+  - 5. Each killed Disciple drops a Void Orb; carry it and dunk it at the central crystal.
+  - 6. Keep your add-clear players holding Zulmak's attention and killing ambient Hive while the swordbearer
+    works the Disciples.
+  - 7. Dunk all 3 Void Orbs at the crystal to make Zulmak vulnerable and spawn a green damage aura around
+    the crystal.
+  - 8. Stand inside the green aura to deal damage to Zulmak; damage does not register if you fire from
+    outside it.
+  - 9. Drop your Well or Bubble and burst Zulmak, but watch him closely.
+  - 10. The instant Zulmak kneels to charge his slam, leave the aura immediately; standing in it during
+    the slam is a one-shot.
+  - 11. When the aura ends, the Disciples respawn; repeat the sword cycle and dunk to open the next damage
+    window.
+  - 12. Continue cycling damage windows until Zulmak is defeated, then open the final chest.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Hive Knight melee, including Might Disciple)
+      - Arc (Hive Wizard projectiles, Omen Disciple)
+      - Arc (ambient Hive and Boomer fire)
+      boss:
+      - Arc (Zulmak melee and charged ground slam; the slam one-shots anyone in the green aura)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resist is the primary pick against Zulmak and the Hive adds
+      - Stack Health-affecting resist for the DPS aura window where Zulmak's basic attacks still hit
+      concussive:
+      - Concussive Dampener can reduce knockback from Zulmak's slam splash and Boomer fire near the crystal
+  damage:
+    surges:
+    - Arc helps for Zulmak burst if you bring Arc weapons, but no specific elemental burn is required.
+      The kill happens in the green aura damage window after 3 Void Orbs are dunked.
+    burst_windows: Roughly a 20-second damage window opens each time the third Void Orb is dunked and
+      the green aura appears; burst Zulmak hard, then exit the aura the instant he kneels.
+    recommended_dps:
+    - Burst-damage swords such as Lament or Falling Guillotine
+    - Well of Radiance or a damage-boosting Super to maximize the aura window
+    - Heavy burst options (linear fusion or rocket) that can be fired from inside the aura
+  role_loadouts:
+  - role_id: swordbearer
+    subclass: Any; ability-uptime/survivability kit to weather Disciple alcoves
+    weapons: Relic Hive Cleaver for Disciple kills; a burst DPS sword (Lament or Falling Guillotine) for
+      the aura window; strong primary for adds
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Arc weapon surge optional for the DPS window; no surge is mandatory
+  - role_id: add_clear
+    subclass: Any; strong add-clear and survivability kit (Well of Radiance on Warlock helps the DPS window)
+    weapons: Strong primary and long-range option to lock down ambient Hive and Boomers; a burst DPS weapon
+      for the aura
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Arc weapon surge optional; favor Health and Super for the DPS window
+  - role_id: solo
+    subclass: Any; survivable kit; Well of Radiance is popular for the DPS window
+    weapons: Relic Hive Cleaver for Disciples; a burst DPS sword (Lament or Falling Guillotine) for the
+      aura; Witherhoard for chip on the Disciples
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Arc weapon surge optional; no surge is mandatory
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/pit-of-heresy.yaml (encounter: cradle-of-damnation)'
+    note: Primary source for the Zulmak fight, the Disciple sword loop, Void Orb dunks, and the green-aura
+      DPS window.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (e.g., Intellect->Super, Recovery->Class); verify
+      current DPS swords/supers (Lament, Falling Guillotine, Well of Radiance) in-game as the meta shifts
+      each season.
+    date_checked: '2026-06-07'

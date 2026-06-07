@@ -1,0 +1,277 @@
+# raid_context/content/dungeons/sundered-doctrine/1-solve-the-riddle.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: solve-the-riddle
+  name: Solve the Riddle
+  difficulty: medium
+  estimated_time: 15-20 min
+  abstract: 'Tutorial puzzle. A central wheel shows 3 symbols (then later 2, then
+
+    1). To match: kill a Truthspeaker to reveal the missing symbol. Find
+
+    a side wheel with that symbol → route a light beam to it through
+
+    lenses. Get a lens from killing a Lens Bearer. Wrong routing breaks
+
+    lenses + spawns a Tormentor.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Central pedestal with a wheel showing 2-3 symbols.
+
+    - Side wheels around the perimeter, each with their own symbol.
+
+    - Pedestal pillars between wheels (for lens placement).
+
+    - Pyramid switches floating above (shoot to redirect beams).
+
+    - Truthspeaker Grim wandering / spawning.
+
+    - Lens Bearer Subjugator wandering / spawning.
+
+
+    PLATFORM MECHANICS:
+
+    - Look at center wheel — note the displayed symbols. The MISSING one is what you need to add.
+
+    - Kill Truthspeaker → reveals missing symbol identity.
+
+    - Find side wheel that displays that symbol.
+
+    - Kill Lens Bearer → grab lens → place on pedestal between center + that side wheel.
+
+    - Placement RESPAWNS Lens Bearer. Continue lensing as needed.
+
+    - Shoot Pyramid switches to route light beam to your target wheel.
+
+    - Correct routing = encounter advances. Wrong = lenses break + Tormentor spawns.
+
+
+    START STATE: rally banner at entry. Interact with the LIGHT BEAM PEDESTAL → point at wheel → encounter
+    starts.
+
+    '
+  callouts:
+  - when: Truthspeaker down + symbol revealed
+    from: killer
+    to: team
+    say: '"Symbol: [name]."'
+    why: Whole team needs the target name.
+  - when: Side wheel ID'd
+    from: spotter
+    to: team
+    say: '"[direction] wheel has [symbol]."'
+    why: Routing target.
+  - when: Lens placed
+    from: placer
+    to: team
+    say: '"Lens on [position]."'
+    why: Coordinates pyramid switch order.
+  - when: Pyramid switch shot, beam redirected
+    from: shooter
+    to: team
+    say: '"Beam to [direction]."'
+    why: Confirms routing in real-time.
+  - when: Wrong target = Tormentor incoming
+    from: any
+    to: team
+    say: '"TORMENTOR — break it."'
+    why: Drop everything, burst Tormentor or wipe.
+  wipe_triggers:
+  - Wrong-wheel routing → Tormentor + ongoing pressure.
+  - Tormentor melee = death.
+  - Subjugator / Lens Bearer overlap on a lens runner.
+  damage_phase_triggers:
+  - Correct symbol + routing = encounter clears (no boss DPS in this one — puzzle encounter).
+  parallel_timeline:
+  - phase: Per riddle (progressively harder, ~3 rounds)
+    symbol_caller: Kill Truthspeaker, name target symbol.
+    lens_handler: Kill Lens Bearer, place lens at correct pedestal.
+    beam_shooter: Shoot Pyramid switch to redirect beam to target wheel.
+  permutations:
+  - name: Standard role split
+    learner_friendly: true
+    summary: One Truthspeaker hunter, one Lens Bearer hunter, one routing caller.
+    roles:
+    - id: symbol_caller
+      count: 1
+      does: Hunts Truthspeakers + names targets.
+      loadout:
+        subclass: Any subclass with strong add-clear and range; Void for invisibility/survivability on
+          lens runs is a safe pick
+        weapons: Long-range primary (scout rifle or high-range pulse) to snipe Truthspeakers from across
+          the room, plus a reliable add-clear special and a heavy for Tormentor punishment
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No surge needed (no DPS phase). Run anti-Champion mods only on Master; prioritize
+          survivability and ability regen mods.
+    - id: lens_handler
+      count: 1
+      does: Hunts Lens Bearers + places lenses.
+      loadout:
+        subclass: A mobile/survivable subclass for fast lens runs; Void for invisibility or a movement-focused
+          class helps reposition safely
+        weapons: Close-to-mid add-clear primary plus a special to quickly drop Lens Bearers; keep a heavy
+          ready for a punishment Tormentor
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Class
+        surges_mods: No surge needed. Movement/Lift and jump-aid mods help cross the room between pedestals;
+          survivability mods for Subjugator overlap.
+    - id: beam_shooter
+      count: 1
+      does: Shoots Pyramid switches to route.
+      loadout:
+        subclass: Any reliable add-clear subclass; pick whatever keeps you alive while you focus on the
+          Pyramid switches
+        weapons: Accurate primary to hit Pyramid switches quickly plus add-clear; heavy in reserve for
+          Tormentor punishment
+        exotic_armor: ''
+        armor_stats: &id003
+        - Weapons
+        - Health
+        surges_mods: No surge needed. Targeting/handling and survivability mods; anti-Champion only on
+          Master.
+  - name: Solo
+    learner_friendly: false
+    summary: All roles sequentially. Slower but doable.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Bring add-clear primary.
+      loadout:
+        subclass: A self-sufficient survivable subclass (Void invisibility or a healing/Solar build) to
+          handle all tasks sequentially
+        weapons: Add-clear primary, long-range option for Truthspeakers/Lens Bearers, and a heavy to delete
+          any punishment Tormentor
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No surge needed. Survivability and ability-regen mods; patience over speed.
+  cheese: []
+  common_mistakes:
+  - Calling symbol by description ('the spiral') instead of name ('Worm') — slows team. Use symbol names.
+  - Triggering Pyramid switch BEFORE lenses are placed — beam routes through empty pedestal, breaks.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Unworthy (scout rifle, Arc)
+    - Unloved (hand cannon, Strand)
+    - Unsworn (trace rifle, Strand)
+    - Talons of the Flain (Legs) + Reach of the Flain (Arms)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: lens_handler. Direct feedback loop.'
+  - '2nd: symbol_caller.'
+  plain_language_steps:
+  - 1. Drop your rally banner at the entry, then interact with the LIGHT BEAM PEDESTAL and point it at
+    the central wheel to start the encounter.
+  - '2. Look at the central pedestal wheel: it shows 2-3 symbols. The symbol that is MISSING is the one
+    you need to add.'
+  - 3. Hunt down and kill a wandering Truthspeaker (Grim). Killing it reveals the identity of the missing
+    target symbol.
+  - 4. The killer calls out the symbol by its proper name (for example 'Hive', 'Worm', 'Stop') so the
+    whole team knows the target.
+  - 5. Search the perimeter side wheels and find the one displaying that exact target symbol; call its
+    direction (for example 'left wheel has Worm').
+  - 6. Kill a Lens Bearer (Subjugator) to make it drop a lens. Note that placing a lens RESPAWNS the Lens
+    Bearer, so you can keep getting more.
+  - 7. Carry the lens and place it on the pedestal pillar between the center and your target side wheel,
+    then call out 'Lens on [position]'.
+  - 8. Shoot the floating Pyramid switches above the center to redirect the light beam toward your target
+    wheel, calling 'Beam to [direction]'.
+  - 9. If routing is correct the puzzle round advances; if you route the beam to the wrong wheel the lenses
+    break and a Tormentor spawns.
+  - 10. If a Tormentor appears, drop everything and burst it down before it reaches melee range, or you
+    risk a wipe.
+  - 11. Repeat for roughly three progressively harder rounds (the wheel shows fewer symbols each time,
+    making the missing one harder to deduce).
+  - 12. Solve the final round correctly to clear the encounter and open the loot chest. There is no boss
+    damage phase here, it is a pure puzzle.
+  defense:
+    incoming_damage:
+      adds:
+      - Lucent Hive / Hive adds (Arc and Solar pressure from Truthspeaker Grim and surrounding Hive)
+      - Dread Subjugator (Lens Bearer) melee and ranged pressure
+      - Tormentor (Dread) spawns on a wrong-wheel routing mistake - heavy melee and suppression
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Resist Arc/Solar against Hive adds if running Master tier; otherwise general add-clear survivability
+        is enough for Normal
+      concussive:
+      - Concussive Dampener helps against Tormentor slam and Subjugator burst if you are caught on a lens
+        run
+  damage:
+    surges:
+    - No DPS phase in this encounter - it is a puzzle round with no boss to burst. Surge mods are irrelevant
+      here; bring add-clear instead.
+    burst_windows: No boss damage window; the only burst need is melting a punishment Tormentor if you
+      misroute a beam.
+    recommended_dps:
+    - Long-range primary for Truthspeakers and Lens Bearers (scout or pulse)
+    - Reliable add-clear and a heavy/Super held in reserve to instantly delete a punishment Tormentor
+  role_loadouts:
+  - role_id: symbol_caller
+    subclass: Any subclass with strong add-clear and range; Void for invisibility/survivability on lens
+      runs is a safe pick
+    weapons: Long-range primary (scout rifle or high-range pulse) to snipe Truthspeakers from across the
+      room, plus a reliable add-clear special and a heavy for Tormentor punishment
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge needed (no DPS phase). Run anti-Champion mods only on Master; prioritize survivability
+      and ability regen mods.
+  - role_id: lens_handler
+    subclass: A mobile/survivable subclass for fast lens runs; Void for invisibility or a movement-focused
+      class helps reposition safely
+    weapons: Close-to-mid add-clear primary plus a special to quickly drop Lens Bearers; keep a heavy
+      ready for a punishment Tormentor
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge needed. Movement/Lift and jump-aid mods help cross the room between pedestals;
+      survivability mods for Subjugator overlap.
+  - role_id: beam_shooter
+    subclass: Any reliable add-clear subclass; pick whatever keeps you alive while you focus on the Pyramid
+      switches
+    weapons: Accurate primary to hit Pyramid switches quickly plus add-clear; heavy in reserve for Tormentor
+      punishment
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge needed. Targeting/handling and survivability mods; anti-Champion only on Master.
+  - role_id: solo
+    subclass: A self-sufficient survivable subclass (Void invisibility or a healing/Solar build) to handle
+      all tasks sequentially
+    weapons: Add-clear primary, long-range option for Truthspeakers/Lens Bearers, and a heavy to delete
+      any punishment Tormentor
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No surge needed. Survivability and ability-regen mods; patience over speed.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/sundered-doctrine.yaml (encounter: solve-the-riddle)'
+    note: Tier-1 authored v2 guide for this dungeon; all mechanics derived from it.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: 'Sundered Doctrine released in Episode: Heresy (2025); verify Master-tier modifiers, Champion
+      types, and current loot/exotic framing against live Bungie data before relying on specifics.'
+    date_checked: '2026-06-07'

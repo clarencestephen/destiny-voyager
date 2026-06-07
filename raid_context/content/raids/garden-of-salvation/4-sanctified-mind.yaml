@@ -1,0 +1,268 @@
+# raid_context/content/raids/garden-of-salvation/4-sanctified-mind.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: garden-of-salvation
+  name: Garden of Salvation
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: sanctified-mind
+  name: Conquer The Sanctified Mind (final boss)
+  difficulty: hard
+  estimated_time: 30-40 min
+  abstract: 'Final boss. Split 3 teams of 2. Shoot boss''s LEFT SHOULDER for
+
+    RED portal, RIGHT KNEE for BLUE portal. Team enters portal, kills
+
+    Vex (Goblin/Harpy/Minotaur) for Tainted (red) or normal (blue)
+
+    Voltaic Motes. 15 per zone (max 10/player). Call non-portal team
+
+    to shoot SAME body part = teleport back. Bank red motes at red
+
+    conflux, blue at blue. Both banks full → tether chain on boss''s
+
+    glowing cross → DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Sanctified Mind (large Vex Mind) center of large arena.
+
+    - 2 Vex Confluxes ("banks"): blue (L) + red (R).
+
+    - Boss''s body: left shoulder (red portal trigger), right knee (blue portal trigger).
+
+    - Portals open via shooting → teleport to Tainted (red) or normal (blue) zone.
+
+    - Cyclopses on pillars (one-shot if not killed).
+
+
+    PLATFORM MECHANICS:
+
+    - Split 3 teams of 2.
+
+    - Team A: shoot left shoulder → red portal opens. Team A jumps in → red zone.
+
+    - In red zone: kill Vex → Tainted Voltaic Motes (15 total, max 10/player).
+
+    - Team B at start: shoots left shoulder AGAIN to teleport Team A back.
+
+    - Team A banks Tainted motes at RED conflux. Gets Enlightenment.
+
+    - Same flow for blue (right knee, blue zone, blue conflux). Team B goes.
+
+    - Both banks full → boss spawns a giant CROSS in the arena. Angelic spawns.
+
+    - Kill Angelic → start tether chain (color of cross) from a bank to the cross.
+
+    - Tether chain links 3-4 players from bank to cross = boss''s core vulnerable.
+
+    - DPS phase. Boss core shootable.
+
+    - Cycle.
+
+
+    START STATE: rally banner. Tether starts encounter.
+
+    '
+  callouts:
+  - when: Color zone target
+    from: caller
+    to: team
+    say: '"Team [A/B/C] — [RED/BLUE] zone."'
+    why: Pre-portal assignment.
+  - when: Portal needs opening
+    from: ground team
+    to: team
+    say: '"[Shoulder/Knee] — portal!"'
+    why: Triggers portal shot.
+  - when: Mote collection done
+    from: in-zone team
+    to: team
+    say: '"15 — teleport us back!"'
+    why: Ground team shoots same body part.
+  - when: Banked at conflux
+    from: banker
+    to: team
+    say: '"[RED/BLUE] BANKED — Enlightened."'
+    why: Defend confluxes.
+  - when: Cross spawned + Angelic
+    from: any
+    to: team
+    say: '"CROSS — Angelic up, then tether!"'
+    why: Tether chain prep.
+  - when: Tether chain to cross
+    from: lead
+    to: team
+    say: '"CHAIN — line up on cross!"'
+    why: Players align to form chain.
+  - when: Core vulnerable
+    from: any
+    to: team
+    say: '"DPS!"'
+    why: Burst core.
+  wipe_triggers:
+  - Cyclops one-shot from pillar.
+  - Sacrifices at unguarded conflux.
+  - Failure to form tether chain in time.
+  - Mixing red + blue motes incorrectly.
+  damage_phase_triggers:
+  - Both banks full + Angelic killed + tether chain on cross → core vulnerable → DPS.
+  parallel_timeline:
+  - phase: Pull
+    all: Tether to start. Split 3 teams of 2.
+  - phase: Portal 1 (red)
+    team_a_2: Enter red zone, collect 15 Tainted motes.
+    ground_team_4: Shoot shoulder twice to portal A in + out.
+  - phase: Bank + portal 2 (blue)
+    team_a: Bank red at red conflux.
+    team_b_2: Enter blue zone (knee portal), collect 15 motes.
+  - phase: Second cycle
+    team_a_or_c: Returns to red zone for 2nd 15.
+    team_b_or_c: Returns to blue zone for 2nd 15.
+  - phase: Cross + tether + DPS
+    all: Kill Angelic, tether chain to cross, burst core.
+  - phase: Reset
+    all: Cycle.
+  permutations:
+  - name: Standard 2+2+2 portal rotation
+    learner_friendly: true
+    summary: 3 teams of 2. Each handles a portal entry per phase. Refresh confluxes between.
+    roles:
+    - id: portal_team
+      count: 2
+      does: Enter zone, collect 15 motes, bank.
+      loadout:
+        subclass: ''
+        weapons: Fast add-clear primary plus a special to quickly clear zone Vex for the 15 motes; mobility
+          to split the 10-per-player mote cap
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Arc and Void resist for zone Vex fire; Concussive Dampener for close-range mote farming
+    - id: ground_support
+      count: 4
+      does: Shoot portals, defend confluxes, kill Cyclopses.
+      loadout:
+        subclass: ''
+        weapons: Accurate primary to hit the shoulder/knee portal triggers and pillar Cyclopses, plus
+          high-burst heavy (Linear Fusion or Rocket) for the DPS window; Divinity on a teammate to lock
+          the core
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: Void resist for Cyclops blasts plus Arc resist for Vex fire; Concussive Dampener
+          for Conflux defense
+  - name: 'Speed: Divinity-locked core'
+    learner_friendly: false
+    summary: Divinity locks the core during DPS. All burst weapons fire same spot.
+  cheese: []
+  common_mistakes:
+  - Banking RED motes at BLUE conflux = wasted.
+  - Cyclops on pillar one-shots you = forgotten target.
+  - Missing the tether chain = no DPS phase.
+  - Standing in cross color wrong = no chain.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    - Final boss chest
+    hidden_chest: null
+    potential_drops:
+    - Omniscient Eye (rapid-fire sniper rifle, Solar)
+    - Helm of Righteousness (Helm)
+    - Temptation's Mark (Class Item)
+    - 'Note: **Divinity** (exotic trace rifle) comes from the quest ''What''s This, What''s This?'' (intra-raid
+      puzzle), NOT the final-chest RNG pool.'
+    - Omniscient Eye (sniper)
+    - Zealot's Reward (fusion)
+    - Garden armor (full set)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: ground_support.'
+  - '2nd: portal_team.'
+  plain_language_steps:
+  - 1. Drop your rally banner and tether to start the encounter. The Sanctified Mind sits in the center
+    of a large arena.
+  - '2. Note the two Confluxes (banks): a BLUE one on the left and a RED one on the right. Watch for Cyclopses
+    on the pillars — they one-shot if you ignore them.'
+  - 3. Split into three teams of two. The boss's LEFT SHOULDER opens the RED portal; its RIGHT KNEE opens
+    the BLUE portal.
+  - '4. Team A: have a teammate shoot the left shoulder to open the red portal, then jump in to reach
+    the red (Tainted) zone.'
+  - 5. In the zone, kill Vex (Goblins, Harpies, Minotaurs) to drop Voltaic Motes — 15 total per zone,
+    with a cap of 10 per player, so split the pickup across the pair.
+  - 6. When the in-zone team has 15, the ground team shoots the SAME body part again to teleport them
+    back out.
+  - 7. Team A banks the Tainted motes at the RED Conflux and gains Enlightenment. Never bank red motes
+    at the blue bank — they are wasted.
+  - '8. Run the same flow for blue: shoot the right knee, send a team into the blue zone, collect 15,
+    teleport them out, and bank at the BLUE Conflux.'
+  - 9. Throughout, ground players defend both Confluxes from sacrifices and keep killing the pillar Cyclopses.
+  - 10. When both banks are full, the boss spawns a giant glowing CROSS in the arena and an Angelic appears.
+  - 11. Kill the Angelic, then form a tether chain (matching the cross's color) from a bank to the cross,
+    linking three to four players. This exposes the boss's core.
+  - 12. Burst the core during the DPS phase. If the boss survives, the cycle repeats.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex adds (Goblins, Harpies, Minotaurs, the Angelic Hydra) deal Arc and Void slap-rifle damage
+      - Cyclopses fire Void eye-blasts that one-shot from the pillars
+      boss:
+      - Arc
+      - Void
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void resist is especially valuable against Cyclops eye-blasts; Arc and Void resist help against
+        Vex slap-rifle fire and the boss
+      concussive:
+      - Concussive Dampener helps reduce Cyclops blast and Vex slap-rifle damage while defending the Confluxes
+  damage:
+    surges:
+    - No single fixed DPS element is dictated; bring your highest-burst element. Pair Divinity to lock
+      the boss's core so all burst weapons hit the same spot
+    burst_windows: Once both banks are full, the Angelic is dead, and the color-matched tether chain links
+      the bank to the cross, the boss's core becomes vulnerable for a burst window.
+    recommended_dps:
+    - Divinity to lock the core
+    - Heavy burst options such as Linear Fusion Rifles, Rocket Launchers, or precision Snipers into the
+      locked core
+    - A Super-amp support like Well of Radiance placed on the Divinity-debuffed boss
+  role_loadouts:
+  - role_id: portal_team
+    subclass: ''
+    weapons: Fast add-clear primary plus a special to quickly clear zone Vex for the 15 motes; mobility
+      to split the 10-per-player mote cap
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Arc and Void resist for zone Vex fire; Concussive Dampener for close-range mote farming
+  - role_id: ground_support
+    subclass: ''
+    weapons: Accurate primary to hit the shoulder/knee portal triggers and pillar Cyclopses, plus high-burst
+      heavy (Linear Fusion or Rocket) for the DPS window; Divinity on a teammate to lock the core
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Void resist for Cyclops blasts plus Arc resist for Vex fire; Concussive Dampener for
+      Conflux defense
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/garden-of-salvation.yaml (encounter sanctified-mind)'
+    note: Primary source for portal/zone mechanics, mote banking colors, Cyclops threat, cross tether,
+      and DPS trigger.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Subclass and exact heavy/exotic picks left general where the current Edge of Fate meta could
+      not be verified; confirm best burst options in-game. Divinity comes from a separate quest, not the
+      final-chest pool.
+    date_checked: '2026-06-07'

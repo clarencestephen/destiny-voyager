@@ -1,0 +1,235 @@
+# raid_context/content/raids/crotas-end/3-ir-yut.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: ir-yut
+  name: Ir Yût, the Deathsinger
+  difficulty: medium
+  estimated_time: 15-20 min
+  abstract: 'Sub-boss. 3 phases of Wizard kills (3/4/5 hidden Shield Singer
+
+    Wizards). Pass Chalice for Enlightened buffs equal to wizard count.
+
+    Walk through green barriers (require Enlightened) to find + kill
+
+    Wizards SIMULTANEOUSLY. Shield drops → DPS Ir Yût before her death
+
+    song (Dark Liturgy) wipes the team.
+
+    '
+  setup: "WHAT YOU SEE:\n- Central chamber with Ir Yût in a crystal room.\n- 6 yellow-bar Knights guarding\
+    \ initially (left/right paths).\n- 2 Shriekers (one each side) protecting middle access.\n- Around\
+    \ the crystal: 7 possible Wizard spawn spots (hidden — need Truesight or scout).\n- Green-wall barriers\
+    \ (Enlightened pass through).\n\nPLATFORM MECHANICS:\n- Split L/R 3-3. Path up + around to center.\n\
+    - Kill 6 yellow Knights → 2 Shriekers open (one each side) → kill → green barrier drops → meet center.\n\
+    - 3 phases:\n  • Phase 1: 3 Wizards\n  • Phase 2: 4 Wizards\n  • Phase 3: 5 Wizards\n- Get Enlightened\
+    \ count equal to Wizard count (via Chalice cycle).\n- Designate Enlightened 6 as scout (Wish-Ender\
+    \ Truesight ideal).\n- Walk through green barrier (Enlightened consumed) → kill Wizard.\n- SIMULTANEOUS\
+    \ finish across all Wizards — otherwise 45s wipe timer starts.\n- Shield drops → DPS Ir Yût. Must\
+    \ remove HIGHLIGHTED SECTION of her HP per phase or wipe by Dark Procession.\n- Spare Enlightened?\
+    \ Use Expunge interaction = significant damage + damage-amp buff during DPS.\n- \"The Deathsinger's\
+    \ Liturgy ebbs away...\" = phase survived.\n\nSTART STATE: rally banner. Fire at any enemy to start.\
+    \ 3-min timer begins.\n"
+  callouts:
+  - when: Knights phase done
+    from: any
+    to: team
+    say: '"Knights down — Shriekers open."'
+    why: Phase transition.
+  - when: Wizard spotted
+    from: scout
+    to: team
+    say: '"Wizard [position 1-7]."'
+    why: Coordinated barrier-walk.
+  - when: Enlightened ready
+    from: self
+    to: team
+    say: '"[name] ENL — Wizard [position]."'
+    why: Assignment per Wizard.
+  - when: All in position
+    from: any
+    to: team
+    say: '"3, 2, 1 — KILL."'
+    why: Simultaneous Wizard kill.
+  - when: Shield down (DPS)
+    from: any
+    to: team
+    say: '"DPS — Expunge first."'
+    why: Spare Enlightened uses Expunge first for damage amp.
+  wipe_triggers:
+  - 3-min Dark Liturgy timer.
+  - 45s timer after killing first Wizard (not all dead).
+  - Wizard solo'd too early — others not ready, cascading wipe risk.
+  - Chalice death.
+  damage_phase_triggers:
+  - All Wizards dead simultaneously → Ir Yût Shield drops → DPS window (~30-45s, varies).
+  parallel_timeline:
+  - phase: Pull
+    teams_3x2: Split L+R. Push up + around to center.
+  - phase: Wizard hunt (~1:00-2:00)
+    scout: Locate hidden Wizards. Truesight ideal.
+    chalice_cycle: Get N Enlightened where N = Wizard count.
+  - phase: Simultaneous kill
+    all: Walk barriers, kill Wizards in unison.
+  - phase: DPS (~30-45s)
+    expunger: Expunge first.
+    all: Burst Ir Yût. Remove highlighted HP section.
+  - phase: Phase 2 / 3
+    all: Repeat with 4 → 5 Wizards.
+  permutations:
+  - name: Standard 1-scout / 5-Wizard
+    learner_friendly: true
+    summary: 1 scout calls Wizards; 5 Enlightened on Wizards (Phase 3).
+    roles:
+    - id: scout
+      count: 1
+      does: Wish-Ender Truesight. Calls Wizard positions.
+      loadout:
+        subclass: Any subclass with good survivability while scouting (Void for invis utility is helpful)
+        weapons: Wish-Ender (exotic bow) for Truesight to reveal hidden Wizards, plus a burst-DPS heavy
+          for the damage window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Super
+        surges_mods: DPS surge matching your burst weapon; on Master add Anti-Overload and Anti-Barrier
+          Champion mods
+    - id: wizard_killer
+      count: 5
+      does: Walk barriers, simultaneous Wizard kill.
+      loadout:
+        subclass: Any subclass that can quickly finish a Wizard on call (precision-friendly setup)
+        weapons: Reliable precision primary to finish assigned Wizard, plus burst-DPS heavy for Ir Yut
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Super
+        surges_mods: DPS surge matching your burst weapon; on Master add Anti-Overload / Anti-Barrier
+          as assigned
+  - name: 'Master: Equal Vessels'
+    learner_friendly: false
+    summary: Every player must receive Chalice before same person can hold again. Rotate.
+  - name: 'Master: Communal Rites'
+    learner_friendly: false
+    summary: Every DPS phase requires 1 Expunge per phase.
+  cheese: []
+  common_mistakes:
+  - Killing Wizard before others ready — 45s timer.
+  - Not bringing Wish-Ender / Truesight = scout can't find hidden Wizards.
+  - Wasting all Enlightened on Wizards — leave 1 for Expunge.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Word of Crota (hand cannon, Void)
+    - Song of Ir Yût (machine gun, Arc)
+    - Oversoul Edict (pulse rifle, Arc)
+    - Willbreaker's armor — Chest + Legs (encounter-specific slots)
+    - Mark of the Pit (Class Item)
+  master_challenge:
+    name: Equal Vessels
+    requirement: 'All six players must rotate the Chalice of Light buff in the
+
+      same order throughout the entire encounter. A player cannot
+
+      hold the Chalice again until all five other players have held
+
+      it. Forces a strict 6-slot round-robin.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: wizard_killer.'
+  - '2nd: scout (Wish-Ender required).'
+  plain_language_steps:
+  - 1. Rally, then fire at any enemy to start. A 3-minute Dark Liturgy wipe timer begins immediately —
+    this is the master clock for the whole encounter.
+  - 2. Split the team 3-Left and 3-Right. Each side pushes up and around toward the central crystal room
+    where Ir Yut, the Deathsinger sits.
+  - 3. Kill the 6 yellow-bar guardian Knights (left and right paths). This opens the two Shriekers, one
+    on each side.
+  - 4. Destroy both Shriekers to drop the green-wall barriers, then meet up at center.
+  - 5. The encounter has 3 phases needing 3, then 4, then 5 hidden Shield Singer Wizards killed. Cycle
+    the Chalice to get a number of Enlightened players equal to the Wizard count for that phase.
+  - 6. Assign an Enlightened scout (Wish-Ender's Truesight is ideal) to find the hidden Wizards among
+    the 7 possible spawn spots and call their positions.
+  - 7. Each Enlightened player walks through a green barrier (which consumes Enlightened) to reach their
+    assigned Wizard.
+  - 8. Kill all Wizards SIMULTANEOUSLY. Killing one too early starts a 45-second wipe timer before the
+    rest are down.
+  - 9. When all Wizards die together, Ir Yut's shield drops and a DPS window opens (about 30-45 seconds).
+    If you have a spare Enlightened, use the Expunge interaction first for big damage and a damage-amp
+    buff.
+  - 10. Burn down the highlighted section of her HP for that phase. Hearing 'The Deathsinger's Liturgy
+    ebbs away' means the phase is survived.
+  - 11. Repeat the process for Phase 2 (4 Wizards) and Phase 3 (5 Wizards) until Ir Yut is defeated.
+  defense:
+    incoming_damage:
+      adds:
+      - Shield Singer Wizards deal Arc damage and poison/Arc bolts
+      - Yellow-bar Hive Knights deal Solar boomer blasts
+      - Shriekers fire Void blasts
+      boss:
+      - Ir Yut's Dark Liturgy / death song is a timed wipe mechanic rather than an elemental hit — survive
+        by killing Wizards and DPSing in time
+    champions:
+    - 'Master only: Overload Wizard -> Anti-Overload'
+    - 'Master only: Overload Hobgoblin -> Anti-Overload'
+    - 'Master only: Barrier Knight -> Anti-Barrier'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist for Wizard bolts
+      - Void resist for Shrieker blasts
+      - Solar resist for Knight boomers
+      concussive:
+      - Concussive Dampener helps against Shrieker Void blasts and Wizard splash while pushing through
+        barriers
+  damage:
+    surges:
+    - Match the DPS surge to your chosen burst weapon's element. Ir Yut has no fixed elemental shield,
+      so pick the element your team's burst loadout uses and run matching surge mods.
+    burst_windows: Short window (~30-45s) opens after all Wizards die simultaneously; use a spare Enlightened's
+      Expunge first for a damage-amp before bursting.
+    recommended_dps:
+    - Burst-damage heavy (linear fusion rifle or rocket launcher) to clear her highlighted HP section
+      fast
+    - High-DPS Special (precision shotgun or grenade launcher) as backup
+    - Well-style support for the cramped DPS window
+  role_loadouts:
+  - role_id: scout
+    subclass: Any subclass with good survivability while scouting (Void for invis utility is helpful)
+    weapons: Wish-Ender (exotic bow) for Truesight to reveal hidden Wizards, plus a burst-DPS heavy for
+      the damage window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: DPS surge matching your burst weapon; on Master add Anti-Overload and Anti-Barrier Champion
+      mods
+  - role_id: wizard_killer
+    subclass: Any subclass that can quickly finish a Wizard on call (precision-friendly setup)
+    weapons: Reliable precision primary to finish assigned Wizard, plus burst-DPS heavy for Ir Yut
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: DPS surge matching your burst weapon; on Master add Anti-Overload / Anti-Barrier as assigned
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/crotas-end.yaml (encounter: ir-yut)'
+    note: Primary source — mechanics, permutations, roles, and enemies authored in the repo's v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats; burst-DPS and exotic meta shifts each season. Verify
+      Wish-Ender and heavy choices against the current in-game sandbox before a run.
+    date_checked: '2026-06-07'

@@ -1,0 +1,256 @@
+# raid_context/content/raids/kings-fall/3-basilica.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: basilica
+  name: Basilica (Annihilator Totems)
+  difficulty: medium
+  estimated_time: 15-25 min
+  abstract: 'Two side rooms with Annihilator Totems (deplete Light if unattended).
+
+    Two Brand-holders pick up Brand of the Weaver (L) + Brand of the
+
+    Unraveler (R). Build Deathsinger''s Power stacks (10) via kills, deposit
+
+    at center plate. D2: Brand Claimer mechanic — kill Wizard + Blightguard
+
+    to relieve the Brand holder. 10 power required per side.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - 3 rooms: L (Weaver), Center (deposit plate + door), R (Unraveler).
+
+    - Annihilator Totem in each side room.
+
+    - Brand pickup at L + R Brand spawn points.
+
+    - Hive Wizards + Blightguard Taken Knights on side balconies (Brand Claimer drops).
+
+    - Unstoppable Ogre spawns from pool in front of center deposit plate.
+
+
+    PLATFORM MECHANICS:
+
+    - Brand of the Weaver (L) + Brand of the Unraveler (R) picked up.
+
+    - Brand holder MUST stand under Totem (or it depletes → wipe).
+
+    - Kills while Branded = Deathsinger''s Power stacks (Minor=1, Elite=2).
+
+    - 10 stacks → deposit at center plate. (Can''t pickup Brand Claimer while holding stacks.)
+
+    - To transfer Brand: kill Wizard → kill Blightguard → grab Brand Claimer buff (30s timer) → return
+    to Brand holder → interact = steal.
+
+    - Brand holder dies if timer expires without transfer (loses all stacks).
+
+
+    START STATE: rally banner. Split L/M/R 2-2-2.
+
+    '
+  callouts:
+  - when: Brand picked up
+    from: holder
+    to: team
+    say: '"BRANDED [L/R] — totem."'
+    why: Holder commits to totem position.
+  - when: Wizard down
+    from: killer
+    to: team
+    say: '"Wizard down — Blightguard up."'
+    why: Cue Claimer pipeline.
+  - when: Blightguard down + Claimer in hand
+    from: claimer
+    to: team
+    say: '"CLAIMER [L/R] — relieving."'
+    why: Brand holder prepares for swap.
+  - when: Stacks transferred + deposited
+    from: self
+    to: team
+    say: '"10 in — [L/R] door progress."'
+    why: Progress check.
+  - when: Brand timer low
+    from: holder
+    to: team
+    say: '"TIMER LOW — relieve!"'
+    why: Urgent swap needed.
+  wipe_triggers:
+  - Annihilator Totem unattended too long = Light drained = wipe.
+  - Brand holder dies (timer or damage) = wipe risk.
+  - Failure to deposit 10 power each side.
+  damage_phase_triggers:
+  - 10 Deathsinger's Power deposited at both L + R doors → Warpriest deems team worthy = encounter ends.
+  parallel_timeline:
+  - phase: Pull
+    all: Split L/M/R.
+  - phase: Per side
+    brand_holder: Stand totem, kill for stacks.
+    claimer: Kill Wizard + Blightguard, get Claimer.
+    depositor: Carry stacks to center plate, deposit.
+  - phase: 10 power per side
+    all: Cycle until both sides complete.
+  permutations:
+  - name: Standard 2 per side
+    learner_friendly: true
+    summary: '2 per side: 1 totem, 1 claimer. M is shared between L+R as depositors.'
+    roles:
+    - id: brand_holder
+      count: 2
+      does: Stand totem, build stacks, deposit.
+      loadout:
+        subclass: Any subclass with strong survivability and add-clear; a healing or barricade/over-shield
+          option helps while locked under the totem.
+        weapons: Fast-killing primary (auto rifle / SMG) to rack Deathsinger's Power stacks; reliable
+          special for elites.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Match surge mods to your add-clear element; survivability and resist mods prioritized
+          since the holder cannot leave the totem.
+    - id: brand_claimer
+      count: 2
+      does: Hunt Wizard + Blightguard, get Claimer, relieve holder.
+      loadout:
+        subclass: Any subclass with quick add-clear and mobility to chase the Wizard then Blightguard.
+        weapons: Precision primary (scout / pulse / hand cannon) for the Wizard and Blightguard; a special
+          for fast confirms.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Grenade
+        surges_mods: Match surge mods to your weapon element; ability-regen mods for repeated kills.
+    - id: center_clear
+      count: 2
+      does: Suppress Unstoppable Ogre + center adds; backup roles.
+      loadout:
+        subclass: Any subclass with strong single-target tools to suppress the Unstoppable Ogre.
+        weapons: Anti-Unstoppable primary plus a hard-hitting heavy/special for the center Ogre and adds.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Super
+        surges_mods: Run Anti-Unstoppable (Unstoppable Ogre); match surges to your heavy element.
+  - name: 'Master: Devious Thievery'
+    learner_friendly: false
+    summary: Holder cannot hold Brand > 5s during transfer. Coordinate tight.
+  cheese: []
+  common_mistakes:
+  - Forgetting to KILL Wizard BEFORE Blightguard — Claimer doesn't spawn.
+  - Holding stacks while trying to Claimer-pickup — 'Brand Denied'.
+  - Totem unattended during transfer chaos.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Doom of Chelchis (scout rifle, Void)
+    - Qullim's Terminus (machine gun, Stasis)
+    - King's Fall armor (random slot)
+  master_challenge:
+    name: The Grass is Always Greener
+    requirement: 'Players cannot take the same Brand type twice in a row.
+
+      Forces deliberate Brand rotation between Annihilator Totems
+
+      — no one player chain-cleansing the same totem repeatedly.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: center_clear.'
+  - '2nd: brand_holder.'
+  - '3rd: brand_claimer.'
+  plain_language_steps:
+  - 1. Place the rally banner and split the fireteam 2-2-2 across the Left room, Center, and Right room.
+  - '2. One player on each side picks up the Brand: Brand of the Weaver on the Left, Brand of the Unraveler
+    on the Right.'
+  - 3. The Brand holder MUST stand under their side's Annihilator Totem, or the totem drains your team's
+    Light and wipes the run.
+  - 4. While Branded, get kills to build Deathsinger's Power stacks (minor enemy = 1, elite = 2) up to
+    10 stacks per side.
+  - 5. To relieve the holder, the claimer kills a Hive Wizard FIRST, then a Blightguard Taken Knight,
+    which drops the Brand Claimer buff.
+  - 6. Grab the Brand Claimer (30-second timer) and return to the Brand holder, then interact to steal
+    the Brand and reset its timer.
+  - 7. Note you cannot pick up a Brand Claimer while you are holding stacks, and you get 'Brand Denied'
+    if you try.
+  - 8. Carry 10 stacks of Deathsinger's Power to the center deposit plate and deposit them.
+  - 9. Watch for the Unstoppable Ogre that spawns from the pool in front of the center plate and suppress
+    it.
+  - 10. Call 'TIMER LOW' if the Brand is about to expire so a claimer relieves you before you lose all
+    stacks.
+  - 11. Repeat the cycle until 10 power is deposited on BOTH the Left and Right doors; this ends the encounter.
+  defense:
+    incoming_damage:
+      adds:
+      - Hive Wizards (Hive faction, kill first to start the Claimer pipeline)
+      - Blightguard Taken Knights (Taken faction, kill second for the Brand Claimer)
+      - Center add waves
+      boss: []
+    champions:
+    - Unstoppable Ogre -> Anti-Unstoppable (spawns at center deposit plate); on Master also Barrier Knights
+      -> Anti-Barrier and Overload Hobgoblins -> Anti-Overload per raid notes
+    recommended_defensive_mods:
+      elemental:
+      - Hive Wizard and Taken Knight attacks; run Health stat for survivability under totems. No single
+        resist element forced by the guide.
+      concussive:
+      - Concussive Dampener helps against Wizard/Ogre ranged blasts while the Brand holder is locked under
+        the totem.
+  damage:
+    surges:
+    - No boss DPS phase. Progress is gated by depositing 10 Deathsinger's Power per side, not by burst
+      damage.
+    burst_windows: No boss burst window; the encounter ends when both Left and Right doors receive 10
+      power.
+    recommended_dps:
+    - Add-clear weapons (auto rifle / SMG / pulse) to build stacks fast; an Anti-Unstoppable heavy or
+      special to handle the center Ogre.
+  role_loadouts:
+  - role_id: brand_holder
+    subclass: Any subclass with strong survivability and add-clear; a healing or barricade/over-shield
+      option helps while locked under the totem.
+    weapons: Fast-killing primary (auto rifle / SMG) to rack Deathsinger's Power stacks; reliable special
+      for elites.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your add-clear element; survivability and resist mods prioritized
+      since the holder cannot leave the totem.
+  - role_id: brand_claimer
+    subclass: Any subclass with quick add-clear and mobility to chase the Wizard then Blightguard.
+    weapons: Precision primary (scout / pulse / hand cannon) for the Wizard and Blightguard; a special
+      for fast confirms.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your weapon element; ability-regen mods for repeated kills.
+  - role_id: center_clear
+    subclass: Any subclass with strong single-target tools to suppress the Unstoppable Ogre.
+    weapons: Anti-Unstoppable primary plus a hard-hitting heavy/special for the center Ogre and adds.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Run Anti-Unstoppable (Unstoppable Ogre); match surges to your heavy element.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Basilica / Annihilator Totems encounter block
+      + Master notes)'
+    note: Tier-1 primary source. Brand/Claimer pipeline, totem rules, Unstoppable Ogre, and Master challenge
+      derived directly from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Champion list confirmed from the guide's overall_notes; verify which Anti-Champion mods are
+      surge-active in the current Edge of Fate seasonal artifact before a Master run.
+    date_checked: '2026-06-07'

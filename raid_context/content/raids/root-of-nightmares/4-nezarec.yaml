@@ -1,0 +1,461 @@
+# raid_context/content/raids/root-of-nightmares/4-nezarec.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: nezarec
+  name: Nezarec, Final God of Pain
+  difficulty: hard
+  estimated_time: 15-25 min
+  abstract: 'Two-side arena. Build a Field of Light chain on one side AND a
+
+    Flux of Darkness chain on the other. Survive Overwhelming Energy
+
+    wipes with Light''s Refuge or Darkness''s Refuge (cued by Nezarec''s
+
+    shoulder-break tattoo). One player breaks his chest to absorb
+
+    aggro. Both chains complete → DPS phase. Loop until Final Stand.
+
+    '
+  setup: "WHAT YOU SEE\n- Arena is split into two halves by Nezarec's central perch.\n  LEFT SIDE has\
+    \ Nodes of Splendor (white). RIGHT SIDE has Nodes\n  of Decay (dark). (Or reversed — confirm with\
+    \ team's callout\n  convention at pull.)\n- Nezarec stands on a central RAISED PLATFORM. He starts\
+    \ in his\n  sarcophagus; approaching it triggers him to break out and\n  start the encounter.\n- Final\
+    \ seed spots are at the FAR END of each side. These are\n  the \"stack here for DPS\" locations.\n\
+    \nPLATFORM MECHANICS\n- Refuge bubbles spawn AT YOUR FEET when you successfully create\n  one. Stand\
+    \ IN the bubble to survive the wipe. The bubble\n  persists; the buff on you lasts 14s. Re-approaching\
+    \ the\n  bubble re-applies the buff.\n- During DPS phase, do NOT stand on the central raised platform.\n\
+    \  Nezarec teleport-slams there. Move to the final seed spot of\n  whichever chain side completed\
+    \ last and stack.\n- Hunted's chest break works at any range — line of sight is\n  what matters. Aggro\
+    \ pulls instantly once chest breaks.\n\nSTART STATE\n- Encounter doesn't start until anyone approaches\
+    \ Nezarec's\n  sarcophagus. Use the buffer time to confirm role assignments,\n  side conventions,\
+    \ and refuge-side responsibility.\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"Hunted = [name]. Light runner = [name] on LEFT. Dark runner = [name] on RIGHT. Refuge-makers:
+      left = [name], right = [name]. Floater = [name]. Side names: LEFT is LIGHT, RIGHT is DARK."'
+    why: Locks side conventions so future callouts (Refuge LEFT, Chain RIGHT, etc.) are unambiguous. Side
+      mixing is a wipe.
+  - when: Hunted breaks Nezarec's chest for first time
+    from: hunted
+    to: team
+    say: '"Aggroed — chest broken."'
+    why: Tells refuge-makers and runners that Nezarec is focused on hunted, so they're safer to mechanic.
+  - when: Nezarec begins Overwhelming Energy windup (back glows)
+    from: any
+    to: team
+    say: '"Windup — shoulders coming."'
+    why: Refuge-makers prep to read the tattoo. Runners pause to refresh buffs that may convert to refuge.
+  - when: Both Nezarec shoulders broken; tattoo appears
+    from: shoulder-breaker (usually hunted or designated)
+    to: refuge-makers
+    say: '"[LIGHT|DARK] tattoo — need [DARK|LIGHT] refuge!"'
+    why: 'Tattoo colour tells refuge-makers which refuge to build. NOTE: Light tattoo means Overwhelming
+      Light is coming, so you need DARKNESS''''s Refuge. Always opposite.'
+  - when: Refuge created on a side
+    from: refuge-maker
+    to: team
+    say: '"[LEFT|RIGHT] refuge up."'
+    why: Tells teammates where to run for safety. If only one side gets a refuge, everyone collapses there.
+  - when: Nezarec's Hatred targets a player (psionic blast under feet)
+    from: targeted player
+    to: team
+    say: '"Hatred on me — moving!"'
+    why: Targeted player must move; hunted re-breaks chest to pull aggro back.
+  - when: Light chain complete
+    from: light-runner
+    to: team
+    say: '"Light done. Stacking final seed left."'
+    why: Confirms one chain is done; tells team where to stack for DPS.
+  - when: Dark chain complete
+    from: dark-runner
+    to: team
+    say: '"Dark done. Vulnerable incoming."'
+    why: Both chains complete → orange beam → Nezarec vulnerable. Everyone collapses to final seed spot
+      of last-completed side.
+  - when: Damage phase ending (Nezarec preparing suppression slam)
+    from: any
+    to: team
+    say: '"Re-immune incoming — return to start positions."'
+    why: Loop reset. Reposition before the suppression slam catches anyone.
+  wipe_triggers:
+  - Caught without correct refuge when Overwhelming Light or Overwhelming Darkness fires.
+  - Final Stand timer expires.
+  - Nezarec's Hatred psionic blast launches you off the map (rare, but possible from bad spawn).
+  damage_phase_triggers:
+  - Both Light + Dark chains completed → orange beam from sarcophagus → Nezarec vulnerable for ~15s.
+  parallel_timeline:
+  - phase: Pull (encounter triggers when sarcophagus approached)
+    hunted: Walk into Nezarec's view → break his chest weak point → aggro pulls onto you.
+    light_runner: Move to LEFT side's first active Node of Splendor. Start chain.
+    dark_runner: Move to RIGHT side's first active Node of Decay. Start chain.
+    refuge_makers_2: Stay loose. Position near INACTIVE nodes on your assigned side.
+    floater: Add-clear. Colossi, War Beasts, Legionaries spawning.
+  - phase: First Nezarec's Hatred + add wave (~0:30)
+    hunted: Keep breaking chest. If aggro drops to another player (Hatred psionic blast under their feet),
+      re-break to pull back.
+    light_runner: Continue Light chain.
+    dark_runner: Continue Dark chain.
+    refuge_makers_2: Pre-position by inactive nodes. Watch Nezarec's back for glow.
+    floater: Continuous add-clear.
+  - phase: Overwhelming Energy windup (Nezarec's back glows white)
+    hunted: Stay aggroed; break shoulders WHEN runners give the signal — too early hides the tattoo.
+    light_runner: Pause chain at next refresh; your active buff can convert to a refuge.
+    dark_runner: Same.
+    refuge_makers_2: Move to your inactive node. Wait for tattoo read.
+  - phase: Shoulders broken — tattoo visible
+    all: Read the tattoo colour. LIGHT tattoo → make DARKNESS's Refuge. DARK tattoo → make LIGHT's Refuge.
+      Refuge-makers shoot inactive node with OPPOSITE buff in hand.
+  - phase: Refuge created; wipe fires; survived
+    all: Stand in refuge bubble. Re-approach the refuge seed if buff expires before wipe.
+  - phase: Both chains complete → vulnerability
+    all: Orange beam from sarcophagus. Stack on final seed spot of the LAST-completed side. Nezarec can't
+      teleport behind you there. DPS for ~15s.
+  - phase: Loop / Final Stand
+    all: 'Nezarec re-immunes with a suppression slam → return to start positions. Final Stand: Nezarec
+      turns black with Resonant energy; race his timer.'
+  permutations:
+  - name: Standard 1 Hunted / 2 Runners / 2 Refuge / 1 Floater
+    learner_friendly: false
+    summary: Default. One chest-breaker; two side-runners; two refuge-makers (one per side); one floater
+      for ads + backup.
+    roles:
+    - id: hunted
+      count: 1
+      does: Break Nezarec's chest. Take aggro. Stay alive. Re-break if Nezarec retargets.
+      loadout:
+        subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail all viable)
+        weapons: Self-sustain primary plus a burst heavy for the DPS window; Anti-Barrier carried for
+          Colossi
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability mods plus Anti-Barrier and burst-damage
+    - id: light-runner
+      count: 1
+      does: Left side. Build Field of Light chain.
+      loadout:
+        subclass: Movement-focused subclass with a strong traversal exotic
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Health
+        surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+    - id: dark-runner
+      count: 1
+      does: Right side. Build Flux of Darkness chain.
+      loadout:
+        subclass: Movement-focused subclass with a strong traversal exotic
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id002
+        - Class
+        - Health
+        surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+    - id: refuge-maker
+      count: 2
+      does: One per side. Read shoulder-break tattoo. Make matching refuge with OPPOSITE buff + INACTIVE
+        node.
+      loadout:
+        subclass: Any subclass with good survivability; grenade-leaning build helps emergency add-clear
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+    - id: floater
+      count: 1
+      does: Ad-clear. Refuge backup if a refuge-maker dies before wipe.
+      loadout:
+        subclass: Any subclass with strong continuous add-clear
+        weapons: Add-clear primary plus Anti-Barrier weapon for Colossi and a burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: Anti-Barrier mandatory; add-clear plus burst-damage focus
+  - name: 2 Hunted Tag-Team
+    summary: Two players alternate chest-breaks so aggro never fully drops. Lighter individual mechanic
+      load.
+    best_for: Master / Contest where Nezarec's Hatred is more punishing.
+    roles:
+    - id: primary-hunted
+      count: 1
+      loadout:
+        subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail)
+        weapons: Self-sustain primary plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id006
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+    - id: secondary-hunted
+      count: 1
+      does: Break chest when primary dies or disengages.
+      loadout:
+        subclass: Survivability-focused subclass to take over chest-breaks when the primary disengages
+        weapons: Self-sustain primary plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id007
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+    - id: light-runner
+      count: 1
+      loadout:
+        subclass: Movement-focused subclass with a strong traversal exotic
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+    - id: dark-runner
+      count: 1
+      loadout:
+        subclass: Movement-focused subclass with a strong traversal exotic
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+    - id: refuge-maker
+      count: 2
+      loadout:
+        subclass: Any subclass with good survivability; grenade-leaning build helps emergency add-clear
+        weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: *id003
+        surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+  - name: Stack-DPS Variant
+    summary: All 6 collapse onto final seed spot of last-completed chain side during vulnerability. Removes
+      Nezarec's teleport-behind threat.
+    best_for: Faster damage phases, fewer cycles.
+    roles:
+    - id: standard-positions
+      count: 6
+      does: Standard mechanics during chain-building. All collapse to final seed location for DPS.
+      loadout:
+        subclass: Any subclass matching the standard mechanic role you are filling
+        weapons: Role-appropriate seed/add-clear weapons plus a burst heavy; Anti-Barrier carried
+        exotic_armor: ''
+        armor_stats: &id008
+        - Health
+        - Class
+        surges_mods: No fixed surge; Anti-Barrier on artifact and burst-damage for the collapse DPS
+  cheese:
+  - title: Back-wall corner DPS
+    detail: 'During the vulnerability window, hide against the FAR WALL
+
+      off the main platform Nezarec stands on. At that range he''s
+
+      limited to projectile attacks — all dodgeable, and the wall
+
+      / terrain blocks most of them. Spam DPS from cover. Trades
+
+      some uptime for near-zero death risk. Best with linear
+
+      fusions, Sleeper, 1000 Voices, or a sword swap.
+
+      '
+  - title: Refuge buff stacking
+    detail: 'Approach your refuge seed BEFORE the wipe pulse fires to
+
+      extend the 14s buff. You can re-tap the refuge bubble
+
+      multiple times before the pulse arrives if you started
+
+      early enough.
+
+      '
+  common_mistakes:
+  - '**Shooting an active node for refuge** — biggest wipe cause. Refuge requires INACTIVE node + OPPOSITE
+    buff in hand. Active node = regular buff only.'
+  - '**Terminology trap**: some guides say ''completed node'' (= already chained, now INACTIVE). Other
+    guides say ''inactive node''. Same thing. Active node = has visible aura RING; inactive node = no
+    ring. Refuge needs the NO-RING one.'
+  - Hunted disengaging without warning — refuge-makers get hit by Nezarec's Hatred.
+  - Breaking shoulders BEFORE Overwhelming Energy windup — refuge-makers don't see the tattoo.
+  - Standing on the central platform during DPS — Nezarec teleport-slams there.
+  - Side confusion (left = light or right = light). Lock convention at pull and stick to it.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    - Final-encounter chest (separate from per-encounter drops).
+    hidden_chest:
+      location: 'Found by following a root BELOW the one leading to the final
+
+        encounter. The root leads into a floating Pyramid TURBINE.
+
+        Jump onto the open trapdoor above it. Contains the 3rd of 3
+
+        Deepsight puzzle seeds. If all 3 puzzle seeds were connected
+
+        correctly across the raid (see overall_notes), a separate
+
+        reward chest with guaranteed Deepsight Resonance weapon
+
+        spawns at the encounter end.
+
+        '
+      rewards:
+      - Spoils of Conquest (×1)
+      - Final Deepsight puzzle seed
+    potential_drops:
+    - '**Conditional Finality** (exotic kinetic shotgun — Stasis + Solar barrels). Most-chased loot from
+      this raid. RNG from final chest.'
+    - Any weapon from prior encounters (Briar's Contempt, Koraxis's Distress, Nessa's Oblation, Mykel's
+      Reverence, Acasia's Dejection, Rufus's Fury).
+  master_challenge:
+    name: All Hands
+    requirement: 'For each refuge-cycle, the Light-side node AND the Dark-side
+
+      node must be completed within ~the same beat — both sides
+
+      finishing together, not one cleaning up after the other. Forces
+
+      balanced runner load on both refuges.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: floater. Lowest mechanic load.'
+  - '2nd: refuge-maker. Practice reading shoulder-break tattoos.'
+  - '3rd: light-runner or dark-runner.'
+  - '4th+: hunted (the chest-aggro specialist).'
+  plain_language_steps:
+  - '1. Before pulling, lock roles and side conventions out loud: 1 Hunted (chest-breaker), a Light runner
+    on one side, a Dark runner on the other, two Refuge-makers (one per side), and a Floater. Decide which
+    side is Light and which is Dark - side mixing is a wipe. The encounter starts only when someone approaches
+    Nezarec''s sarcophagus.'
+  - 2. The arena is split into two halves by Nezarec's central raised platform. One side has Nodes of
+    Splendor (white), the other has Nodes of Decay (dark).
+  - 3. The Hunted walks into Nezarec's view and breaks his chest weak point to pull aggro onto themselves,
+    calling Aggroed - chest broken.
+  - 4. The Light runner builds a Field of Light chain on their side (shoot active white node, follow trail,
+    link inactive white node, refresh). The Dark runner builds a Flux of Darkness chain on the other side
+    the same way.
+  - 5. The Floater clears adds - Colossi, War Beasts, and Legionaries - throughout.
+  - 6. When Nezarec begins his Overwhelming Energy windup (his back glows white), refuge-makers pre-position
+    by an INACTIVE node on their side and runners pause to refresh a buff that can convert to a refuge.
+  - 7. The Hunted (or designated shoulder-breaker) breaks BOTH of Nezarec's shoulders only AFTER the windup
+    begins. A tattoo then appears on his back. Breaking shoulders too early hides the tattoo.
+  - '8. Read the tattoo colour and remember it is ALWAYS opposite: a LIGHT tattoo means Overwhelming Light
+    is coming, so make a DARKNESS''s Refuge; a DARK tattoo means make a LIGHT''s Refuge.'
+  - 9. To make a refuge, a refuge-maker holds the OPPOSITE buff and shoots an INACTIVE node (Darkness's
+    Refuge = hold Field of Light, shoot inactive Node of Decay; Light's Refuge = hold Flux of Darkness,
+    shoot inactive Node of Splendor). A bubble spawns at your feet - stand in it to survive the wipe pulse.
+  - 10. If Nezarec's Hatred targets a player (a psionic blast appears under their feet), they call it
+    and move; the Hunted re-breaks the chest to pull aggro back.
+  - 11. When BOTH chains complete, an orange beam fires from the sarcophagus and Nezarec becomes vulnerable
+    for about 15 seconds. Everyone collapses to the final seed spot of the last-completed side and burns
+    him - do NOT stand on the central platform, he teleport-slams there.
+  - 12. After the window he re-immunes with a suppression slam; return to start positions and loop. During
+    Final Stand he turns black with Resonant energy - race his timer to finish.
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal Legionaries deal Solar damage
+      - War Beasts deal close-range physical/melee damage
+      - Cabal Colossi deal Solar (slug-rifle) damage
+      boss:
+      - 'Nezarec, Final God of Pain: Overwhelming Light / Overwhelming Darkness wipe pulses (Light and
+        Dark paracausal), Nezarec''s Hatred psionic blast under a targeted player, and a suppression teleport-slam'
+    champions:
+    - Barrier Colossus -> Anti-Barrier (artifact mod or intrinsic weapon perk; mandatory this encounter)
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist helps against Legionaries and the Colossi slug rifles
+      - There is no single resist that blocks Overwhelming Light/Darkness - the refuge bubble is the only
+        protection from the wipe pulse
+      concussive:
+      - Concussive Dampener can soften Nezarec's Hatred psionic blast and clustered add fire while runners
+        and refuge-makers work
+  damage:
+    surges:
+    - No fixed elemental surge requirement - damage opens via the orange-beam vulnerability after both
+      chains complete, not by weapon element
+    - 'There IS a DPS phase: Nezarec is vulnerable for roughly 15 seconds after both Light and Dark chains
+      finish'
+    burst_windows: Roughly 15 seconds of vulnerability per cycle after both chains complete; stack on
+      the last-completed side's final seed spot and burst hard before he re-immunes.
+    recommended_dps:
+    - 'Burst heavy: linear fusion rifles, Sleeper Simulant, rockets, or a sword swap'
+    - Exotic heavy with high single-target burst for the short window
+  role_loadouts:
+  - role_id: hunted
+    subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail all viable)
+    weapons: Self-sustain primary plus a burst heavy for the DPS window; Anti-Barrier carried for Colossi
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No fixed surge; survivability mods plus Anti-Barrier and burst-damage
+  - role_id: light-runner
+    subclass: Movement-focused subclass with a strong traversal exotic
+    weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+  - role_id: dark-runner
+    subclass: Movement-focused subclass with a strong traversal exotic
+    weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No fixed surge; Anti-Barrier on artifact, movement and burst-damage
+  - role_id: refuge-maker
+    subclass: Any subclass with good survivability; grenade-leaning build helps emergency add-clear
+    weapons: Seed weapon plus burst heavy for DPS; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+  - role_id: floater
+    subclass: Any subclass with strong continuous add-clear
+    weapons: Add-clear primary plus Anti-Barrier weapon for Colossi and a burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: Anti-Barrier mandatory; add-clear plus burst-damage focus
+  - role_id: primary-hunted
+    subclass: Survivability-focused subclass (Restoration, Devour, or Woven Mail)
+    weapons: Self-sustain primary plus burst heavy for DPS; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+  - role_id: secondary-hunted
+    subclass: Survivability-focused subclass to take over chest-breaks when the primary disengages
+    weapons: Self-sustain primary plus burst heavy for DPS; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id007
+    surges_mods: No fixed surge; survivability plus Anti-Barrier and burst-damage
+  - role_id: standard-positions
+    subclass: Any subclass matching the standard mechanic role you are filling
+    weapons: Role-appropriate seed/add-clear weapons plus a burst heavy; Anti-Barrier carried
+    exotic_armor: ''
+    armor_stats: *id008
+    surges_mods: No fixed surge; Anti-Barrier on artifact and burst-damage for the collapse DPS
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/root-of-nightmares.yaml (encounter: nezarec)'
+    note: Primary source - refuge mechanic, shoulder-tattoo read, chest-aggro and permutations authored
+      from destinypedia + blueberries.gg loot tables; hidden-chest/Deepsight from r/raidsecrets + Skarrow9
+      (Pass 2, 2026-05-25).
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Burst-DPS and survivability meta shift each Episode; verify top heavy options (linear fusions,
+      Sleeper, swords) and current Anti-Barrier sources before a run. Edge of Fate stat names applied
+      (Health/Class/Grenade).
+    date_checked: '2026-06-07'

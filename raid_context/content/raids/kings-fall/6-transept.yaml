@@ -1,0 +1,125 @@
+# raid_context/content/raids/kings-fall/6-transept.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 6
+  slug: transept
+  name: Transept (Jumping Puzzle 2 + Exotic Chest)
+  difficulty: medium
+  estimated_time: 5-15 min
+  abstract: 'Vertical jumping puzzle with wall-pillars that push you off ledges.
+
+    End: 3 plates stood on simultaneously = invisible platforms become
+
+    permanent → door opens to Threshold. Exotic Chest hidden in upper
+
+    area.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Tall chamber, ledges and platforms upward.
+
+    - Wall pillars that periodically extend, pushing players off.
+
+    - 3 plates at top.
+
+
+    PLATFORM MECHANICS:
+
+    - Jump platform → platform, dodging extending wall pillars.
+
+    - 3 plates at top must be stood on SIMULTANEOUSLY → invisible platforms become permanent.
+
+
+    EXOTIC CHEST: Turn RIGHT after entering area, jump onto a side pillar
+
+    platform, continue up to a large doorway → loop around → exotic chest.
+
+    '
+  callouts: []
+  wipe_triggers:
+  - Wall pillar push = fall = death.
+  damage_phase_triggers:
+  - 3 plates simultaneously stood = door opens.
+  parallel_timeline: []
+  permutations:
+  - name: Standard ascent
+    learner_friendly: true
+    summary: Take turns. Lead player calls pillar timing.
+  cheese: []
+  common_mistakes:
+  - Standing too close to wall when pillar fires.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'EXOTIC CHEST (Transept): On entering, turn RIGHT. Jump onto a
+
+        side-pillar platform. Continue upward. Find a large doorway,
+
+        loop around to chest. Last jump has a delayed pillar — watch
+
+        for it.
+
+        '
+      rewards:
+      - Random exotic engram chance + raid loot
+    potential_drops: []
+  images:
+    overview: ''
+    hidden_chest: ''
+  learner_path:
+  - Follow + learn.
+  plain_language_steps:
+  - '1. This is the second jumping puzzle: a tall chamber with ledges and platforms leading upward.'
+  - 2. Jump from platform to platform while dodging the wall pillars that periodically extend and push
+    players off ledges.
+  - 3. Do not stand too close to a wall when a pillar is about to fire, since the push means a fatal fall.
+  - 4. Have the lead player call pillar timing so the team can take turns ascending safely.
+  - '5. For the Exotic Chest: on entering the area, turn RIGHT and jump onto a side-pillar platform.'
+  - 6. Continue upward to a large doorway, then loop around to reach the exotic chest; watch for a delayed
+    pillar on the last jump.
+  - 7. At the top, three plates must be stood on SIMULTANEOUSLY so the invisible platforms become permanent.
+  - 8. With all three plates held, the door opens to the Threshold and the section is complete.
+  defense:
+    incoming_damage:
+      adds: []
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No combat in this section; environmental fall/push damage only.
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase. This is a jumping puzzle with no boss and no damage check.
+    burst_windows: No boss burst window; the door opens when all three top plates are stood on simultaneously.
+    recommended_dps:
+    - None required; bring vertical movement tools rather than DPS weapons.
+  role_loadouts:
+  - role_id: standard
+    subclass: Any subclass with strong vertical movement (high Lift / Glide / Strafe Jump or Heat Rises)
+      for the wall-pillar ascent.
+    weapons: No combat loadout needed; any setup works for the jumping puzzle.
+    exotic_armor: ''
+    armor_stats:
+    - Weapons
+    - Class
+    surges_mods: No surge requirement; mobility-focused stats (Weapons/Class) help the platforming.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/kings-fall.yaml (Transept encounter block + Exotic Chest route)'
+    note: Tier-1 primary source. Wall-pillar ascent, three-plate door, and Exotic Chest path derived directly
+      from the v2 guide.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat (as of 2026-06-07)
+    note: Edge of Fate renamed the six stats; movement exotic choices left blank. Verify the current jump-mod
+      meta if relevant.
+    date_checked: '2026-06-07'

@@ -1,0 +1,267 @@
+# raid_context/content/raids/desert-perpetual/3-iatros.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: iatros
+  name: Iatros, Inward-Turned
+  difficulty: hard
+  estimated_time: 25-35 min
+  abstract: 'Vex Hobgoblin. Climber ascends 3 levels via Diastole-timed cube
+
+    breaks (Builders shoot cubes on Diastole pulse). Hourglass filled
+
+    with Cinnabar/Antimony Chronons from 6 Time''s Burdens — diamond
+
+    Oracle shot to start. Add-clear team kills extra Time''s Burdens to
+
+    refill Hourglass.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Iatros in central area.
+
+    - Hoop with hourglass + spherical receptacle in front of Iatros.
+
+    - 3 pillars (one per area: spawn, middle, boss spawn) with 3 cubes each.
+
+    - 6 Time''s Burden Minotaurs at start; more spawn periodically.
+
+
+    PLATFORM MECHANICS:
+
+    - Engage Iatros + 6 Time''s Burdens.
+
+    - Each player kills 1 Minotaur, picks Chronon (Cinnabar = Red, Antimony = White), jumps through hoop,
+    deposits.
+
+    - 6 Chronons in hoop → Diamond Oracle visible → shoot to start prep phase.
+
+    - All players get Diastole buff (pulse counter, fires on 4th cube break).
+
+    - Climber: needs Absolute Temporality from a plate. Builders mark 3 areas (spawn / middle / boss-spawn).
+
+    - 3 cubes per pillar. Builders shoot BOTTOM cube exactly when Diastole pulse hits the 4th sequence
+    pip.
+
+    - Climber jumps onto freshly-created platforms, ascending.
+
+    - Climber interacts with first cube → MIDDLE cube unlocks. Builders shoot MIDDLE cube on Diastole.
+
+    - Bottom platforms VANISH when middle ones spawn → time jumps.
+
+    - Climber interacts with second cube → TOP cube unlocks. Same Diastole timing.
+
+    - Climber interacts with THIRD cube → DPS phase.
+
+    - During this, 2 floaters hunt randomly-spawning Time''s Burdens + dunk Chronons into Hourglass to
+    prevent Neomutation wipe (12s timer when Hourglass empties).
+
+    - DPS phase: Iatros vulnerable. Warp Lance + Ground Slam are dangerous.
+
+    - Repeat 3 phases.
+
+
+    START STATE: rally banner. Engage.
+
+    '
+  callouts:
+  - when: Chronon collected
+    from: self
+    to: team
+    say: '"Chronon — dunking."'
+    why: Hoop refill.
+  - when: Diamond Oracle shot
+    from: shooter
+    to: team
+    say: '"ORACLE — Diastole active."'
+    why: Cue Climber + Builders to position.
+  - when: Climber position
+    from: climber
+    to: team
+    say: '"Bottom cube — shoot on 4th!"'
+    why: Builder coordination.
+  - when: Builder shoots
+    from: builder
+    to: team
+    say: '"Cube DOWN — platforms!"'
+    why: Climber jumps.
+  - when: Hourglass low
+    from: watcher
+    to: team
+    say: '"HOURGLASS 3s — Chronon!"'
+    why: Refill priority.
+  - when: DPS open
+    from: any
+    to: team
+    say: '"DPS — to Climber!"'
+    why: Converge top.
+  wipe_triggers:
+  - Diastole mistimed = platforms collapse + Climber falls.
+  - Hourglass empties + 12s Neomutation = wipe.
+  - Warp Lance one-shot at exposed sightline.
+  damage_phase_triggers:
+  - Climber interacts third cube → Iatros vulnerable → DPS until Iatros teleports or Hourglass empties.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage. 6 Minotaurs → Chronons → Hoop.
+  - phase: Prep phase
+    builders_3: Position at each pillar.
+    climber: Get Absolute, find first platform.
+    floaters_2: Watch + Time's Burden hunt.
+  - phase: Cube cycle (×3 levels)
+    all: Diastole-time cube breaks. Climber ascends.
+  - phase: DPS
+    all: Burst Iatros at top.
+  permutations:
+  - name: Standard 1-Climber / 3-Builders / 2-Floaters
+    learner_friendly: true
+    summary: 1 Climber, 3 Builders (one per pillar), 2 Hourglass-refillers.
+    roles:
+    - id: climber
+      count: 1
+      does: Solo ascent + cube interactions.
+      loadout:
+        subclass: ''
+        weapons: Light, mobility-focused kit; keep a burst heavy for the top DPS window. Survivability
+          matters since taking damage during a cube interaction resets progress.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Surges matched to your heavy; verticality jump mods/loadout (lift/heat-rises-style)
+          aid the ascent per the guide.
+    - id: builder
+      count: 3
+      does: Diastole-time cube destruction.
+      loadout:
+        subclass: ''
+        weapons: Accurate hitscan primary (scout/hand cannon) for precise Diastole-timed cube shots; burst
+          heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy weapon element.
+    - id: floater
+      count: 2
+      does: Add-clear + Hourglass refill.
+      loadout:
+        subclass: ''
+        weapons: Add-clear primary/special to hunt Time's Burdens fast, plus burst heavy for DPS.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Surges matched to your heavy; ammo-finder/reserves to sustain Time's Burden clears
+          and Hourglass refills.
+  - name: 'Challenge: 3 Climbers'
+    learner_friendly: false
+    summary: Each pillar gets a Climber instead of 1.
+  cheese: []
+  common_mistakes:
+  - Diastole mistiming — Climber falls.
+  - Forgetting to refill Hourglass during DPS = Neomutation mid-burst.
+  - Climber damaged during cube interaction = progress reset.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Finite Maybe (fusion rifle, Solar)
+    - The When and Where (rocket launcher, Stasis)
+    - Collective Psyche armor — Chest + Helmet (encounter-specific slots)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st: floater.'
+  - '2nd: builder.'
+  - '3rd: climber.'
+  plain_language_steps:
+  - 1. After the banner, engage Iatros (a Vex Hobgoblin) along with the six Time's Burden Minotaurs present
+    at the start.
+  - 2. Each player kills one Minotaur, picks up its Chronon (Cinnabar = red, Antimony = white), jumps
+    through the hoop in front of Iatros, and deposits it.
+  - 3. With six Chronons in the hoop, the Diamond Oracle beneath it becomes visible — shoot it to start
+    the prep phase.
+  - 4. Everyone gains the Diastole buff (a pulse counter that fires on the fourth cube break); the Climber
+    needs Absolute Temporality from a plate, and the three Builders position at the three pillars (spawn,
+    middle, boss-spawn).
+  - 5. Each pillar has three cubes; a Builder shoots the BOTTOM cube exactly when the Diastole pulse hits
+    the fourth sequence pip to create platforms.
+  - 6. The Climber jumps onto the freshly created platforms and interacts with the first cube, which unlocks
+    the MIDDLE cube for the Builder to shoot on the next Diastole pulse.
+  - 7. Bottom platforms vanish as the middle ones spawn (time jumps) — the Climber keeps ascending and
+    interacts with the second cube to unlock the TOP cube, shot on the same Diastole timing.
+  - 8. The Climber interacts with the third cube to open the DPS phase.
+  - 9. Throughout, two floaters hunt the randomly spawning Time's Burdens and dunk Chronons into the Hourglass;
+    if it empties, a 12-second Neomutation wipe timer begins.
+  - 10. In the DPS phase Iatros is vulnerable — burst it down while dodging the dangerous Warp Lance and
+    Ground Slam attacks.
+  - 11. Repeat the three ascent-and-DPS phases until Iatros dies.
+  defense:
+    incoming_damage:
+      adds:
+      - Time's Burden Minotaurs (Vex)
+      - Ambient Vex
+      boss:
+      - Warp Lance (high one-shot damage at an exposed sightline)
+      - Ground Slam (close-range area damage)
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive:
+      - Concussive Dampener can help survive Iatros' Ground Slam area damage if your build is taking heavy
+        knock/burst from it (verify damage type in-game).
+  damage:
+    surges:
+    - DPS-phase damage element is not specified in the source; set surges to match your burst heavy.
+    burst_windows: The Climber interacting with the third cube exposes Iatros; DPS lasts until Iatros
+      teleports away or the Hourglass empties.
+    recommended_dps:
+    - Burst heavy (Linear Fusion Rifle or heavy GL)
+    - Solar fusion option (Finite Maybe is an in-raid drop) if it suits the window
+    - Rockets for the short exposed window
+  role_loadouts:
+  - role_id: climber
+    subclass: ''
+    weapons: Light, mobility-focused kit; keep a burst heavy for the top DPS window. Survivability matters
+      since taking damage during a cube interaction resets progress.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Surges matched to your heavy; verticality jump mods/loadout (lift/heat-rises-style) aid
+      the ascent per the guide.
+  - role_id: builder
+    subclass: ''
+    weapons: Accurate hitscan primary (scout/hand cannon) for precise Diastole-timed cube shots; burst
+      heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Surges matched to your heavy weapon element.
+  - role_id: floater
+    subclass: ''
+    weapons: Add-clear primary/special to hunt Time's Burdens fast, plus burst heavy for DPS.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surges matched to your heavy; ammo-finder/reserves to sustain Time's Burden clears and
+      Hourglass refills.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/desert-perpetual.yaml (encounter: iatros)'
+    note: Mechanics, roles, and enemies derived directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: New raid (July 2025); boss attack damage types and meta loadouts unconfirmed in source — verify
+      in-game before committing resist mods/surges.
+    date_checked: '2026-06-07'

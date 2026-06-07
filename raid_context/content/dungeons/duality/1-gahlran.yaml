@@ -1,0 +1,234 @@
+# raid_context/content/dungeons/duality/1-gahlran.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: gahlran
+  name: Nightmare of Gahlran, Sorrow Bearer
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: 'First boss. Symmetrical arena, bell at each end. Shift to Nightmare
+
+    → hunt Standard Bearer Psion in one of 4 rooms → return + deposit →
+
+    room in Waking opens with Visions of Gahlran → re-enter Nightmare,
+
+    kill Visions → DPS Gahlran in Nightmare.
+
+    '
+  setup: "WHAT YOU SEE:\n- Symmetrical arena, bell + closed doorway at each end.\n- Leviathan symbol projections\
+    \ in front of each door (Sun, Chalice\n  near lower bell; War Beast, Axe near upper bell).\n- Banners\
+    \ on walls = symbol identification (visible in both realms).\n- Rally flag spot at center.\n\nPLATFORM\
+    \ MECHANICS:\n- Shoot bell to enter Nightmare. Gahlran becomes visible + immune; he chases.\n- In\
+    \ Nightmare: locate Standard Bearer Psion (use radar; 1 of 4 rooms).\n  Kill = +15s + Standard drops.\n\
+    - Carry Standard, kill Bellkeepers at OPPOSITE bell, re-shift Waking.\n- Deposit Standard at matching\
+    \ projection → Cabal Colossus + War Beasts spawn in newly opened room → kill them.\n- From inside\
+    \ the opened Waking room, shoot bell → in Nightmare you're now in that previously inaccessible room\
+    \ → kill all Visions of Gahlran (+5s each) → drop Nightmare Essence.\n- With Nightmare Essence: damage\
+    \ Gahlran in Nightmare realm.\n\nSTART STATE: rally banner, land in arena. Bell + adds present.\n"
+  callouts:
+  - when: Standard Bearer spotted
+    from: spotter
+    to: team
+    say: '"Bearer in [Sun/Chalice/War Beast/Axe] room."'
+    why: Tells runner where to go. Saves 30s of searching.
+  - when: Bell rung
+    from: ringer
+    to: team
+    say: '"BELL — Nightmare."'
+    why: Cues team to either enter or be ready for shift.
+  - when: Nightmare timer ≤ 15s
+    from: any
+    to: team
+    say: '"15 seconds — BELL CHECK."'
+    why: Triggers Bellkeeper sweep + bell prep.
+  - when: DPS open (Nightmare Essence acquired, Gahlran damageable)
+    from: any
+    to: team
+    say: '"DAMAGE — Gahlran."'
+    why: Coordinated burst; window expires with collapse timer.
+  wipe_triggers:
+  - Nightmare Collapse timer = 0 in Nightmare = team death.
+  - Standing outside bell circle on Waking shift = solo death.
+  - Gahlran melee at close range.
+  damage_phase_triggers:
+  - Visions of Gahlran killed in Nightmare → Nightmare Essence picked up → Gahlran vulnerable in Nightmare.
+  parallel_timeline:
+  - phase: Pull
+    all: Engage. Identify which Standard symbol the room wants first.
+  - phase: Nightmare entry
+    runner: Hunt Standard Bearer. Read symbols.
+    bellkeeper: Stay near OPPOSITE bell, kill Bellkeepers when they spawn.
+    add_clear: Suppress Cabal.
+  - phase: Deposit + room opens
+    runner: Return Waking, deposit Standard.
+    all: Clear Colossus + War Beasts inside opened room.
+  - phase: Visions in Nightmare
+    all: Re-enter Nightmare from opened room. Kill Visions of Gahlran. Grab Essence.
+  - phase: DPS
+    all: Damage Gahlran. Watch collapse timer.
+  permutations:
+  - name: Standard 1-runner / 1-bellkeeper / 1-add-clear
+    learner_friendly: true
+    summary: Specialized roles. Reduces calls, communication-light.
+    roles:
+    - id: standard_runner
+      count: 1
+      does: Owns Standard pipeline.
+      loadout:
+        subclass: Void Hunter (invisibility for safe Nightmare traversal) or any high-mobility subclass
+        weapons: Strong ad-clear primary for Bellkeepers and Cabal; a heavy burst weapon for the Gahlran
+          window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: Match surge mods to your heavy DPS element; add Cabal-relevant survivability mods
+    - id: bellkeeper_killer
+      count: 1
+      does: Always near opposite bell. Kills Bellkeepers.
+      loadout:
+        subclass: Any survivable subclass with good add-clear (Void or Solar)
+        weapons: Reliable add-clear primary (auto/pulse/SMG) for Bellkeepers and Cabal; heavy for DPS
+          assist
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surge to DPS element; consider Concussive Dampener for Cabal blast
+    - id: add_clear
+      count: 1
+      does: Cabal + Vision support.
+      loadout:
+        subclass: Any subclass with strong ability-based add-clear (Void or Solar)
+        weapons: Wave-clear primary and a Special for Cabal Colossus/Visions support; heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: Solar resist for Cabal fire; match surge to DPS weapon element
+  - name: Solo
+    learner_friendly: false
+    summary: Self-pace. 2-3 cycles per side typically.
+    roles:
+    - id: solo
+      count: 1
+      does: All roles. Heartshadow itself trivializes this when acquired.
+      loadout:
+        subclass: Void Hunter (Gyrfalcon/invis style) for self-pace and safe Nightmare hunting
+        weapons: Self-sufficient ad-clear primary plus heavy burst; Heartshadow if obtained
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Solar resist for Cabal fire; match surge to DPS element
+  cheese: []
+  common_mistakes:
+  - Picking up 2 Standards then dying = drop both. Don't carry 2 if you're not safe.
+  - Killing wrong Bearer Psion = -15s. Identify before pulling trigger.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Lingering Dread (grenade launcher, Stasis)
+    - The Epicurean (fusion rifle, Void)
+    - Calus-themed armor (random slot)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: bellkeeper_killer.'
+  - '2nd: standard_runner.'
+  plain_language_steps:
+  - 1. Rally at the banner in the center of the symmetrical arena. Note the bell and closed doorway at
+    each end, and the Leviathan symbol projections in front of each door (Sun and Chalice near the lower
+    bell, War Beast and Axe near the upper bell).
+  - 2. Shoot a bell to shift into the Nightmare realm. Gahlran becomes visible, immune, and chases you.
+    A 60-second collapse timer starts the moment you enter the Nightmare.
+  - 3. Use your radar to find the Standard Bearer Psion hiding in one of the four rooms. Read the wall
+    banners to confirm which symbol that room belongs to before you shoot.
+  - 4. Kill the correct Standard Bearer Psion to add +15 seconds to the timer and drop the matching Standard.
+    Pick it up (you can carry up to 2, but do not carry 2 if you are in danger).
+  - 5. Go to the OPPOSITE bell from the one you rang, kill the two Bellkeepers that spawn there, then
+    shoot that bell to shift back to the Waking realm. Make sure you are standing inside the bell circle
+    on the shift or you die.
+  - 6. Deposit the Standard at its matching symbol projection in the Waking realm. The matching doorway
+    opens and a Cabal Colossus plus War Beasts spawn inside.
+  - 7. Clear the Colossus and War Beasts inside the newly opened room.
+  - 8. From inside that opened Waking room, shoot the bell again. You are now standing in the previously
+    sealed room in the Nightmare.
+  - 9. Kill all the Visions of Gahlran in that room. Each one adds +5 seconds. When the last dies it drops
+    Nightmare Essence.
+  - 10. Pick up the Nightmare Essence. Gahlran is now damageable in the Nightmare realm.
+  - 11. Burst Gahlran during this window. Watch the collapse timer loudly and stay near a bell so you
+    can escape before it hits zero.
+  - 12. Repeat the Standard cycle as needed until Gahlran is dead.
+  defense:
+    incoming_damage:
+      adds:
+      - Cabal (Standard Bearer Psions, Bellkeepers, Cabal Colossus, War Beasts) — primarily Solar slug/fire
+        from Cabal units; Psion scatter and War Beast melee
+      - Visions of Gahlran (Nightmare adds) in the opened room
+      boss:
+      - Solar (Gahlran melee/close-range Nightmare attacks)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist recommended for Cabal Colossus slug fire and Cabal weapon fire in both realms
+      - On Master, prioritize survivability mods for the heavier Cabal fire
+      concussive:
+      - Concussive Dampener helps against Cabal slug/AoE blast knockback (Colossus and Legionary fire)
+        when pushing the opened room
+  damage:
+    surges:
+    - No fixed elemental surge is dictated by the encounter; Gahlran is damaged in the Nightmare with
+      any burst loadout. Match your surge to your DPS weapon element.
+    burst_windows: Damage window opens the moment Nightmare Essence is picked up and lasts until the collapse
+      timer expires — burst Gahlran immediately and disengage to a bell before time runs out.
+    recommended_dps:
+    - Heavy burst options (rocket launcher, Linear Fusion Rifle, or sword)
+    - Heartshadow once acquired (Void sword, invisibility + self-cleave)
+    - Well of Radiance or a damage-buff Super for the short window
+  role_loadouts:
+  - role_id: standard_runner
+    subclass: Void Hunter (invisibility for safe Nightmare traversal) or any high-mobility subclass
+    weapons: Strong ad-clear primary for Bellkeepers and Cabal; a heavy burst weapon for the Gahlran window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Match surge mods to your heavy DPS element; add Cabal-relevant survivability mods
+  - role_id: bellkeeper_killer
+    subclass: Any survivable subclass with good add-clear (Void or Solar)
+    weapons: Reliable add-clear primary (auto/pulse/SMG) for Bellkeepers and Cabal; heavy for DPS assist
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge to DPS element; consider Concussive Dampener for Cabal blast
+  - role_id: add_clear
+    subclass: Any subclass with strong ability-based add-clear (Void or Solar)
+    weapons: Wave-clear primary and a Special for Cabal Colossus/Visions support; heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Solar resist for Cabal fire; match surge to DPS weapon element
+  - role_id: solo
+    subclass: Void Hunter (Gyrfalcon/invis style) for self-pace and safe Nightmare hunting
+    weapons: Self-sufficient ad-clear primary plus heavy burst; Heartshadow if obtained
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Solar resist for Cabal fire; match surge to DPS element
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/duality.yaml (encounter 1: gahlran)'
+    note: Mechanics, enemies, roles, and parallel timeline taken directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats and the live DPS/exotic meta shifts each season — verify
+      current top weapons and exotics before a run.
+    date_checked: '2026-06-07'

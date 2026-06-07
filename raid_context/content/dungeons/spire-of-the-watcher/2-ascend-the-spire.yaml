@@ -1,0 +1,236 @@
+# raid_context/content/dungeons/spire-of-the-watcher/2-ascend-the-spire.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: ascend-the-spire
+  name: Ascend the Spire (3 levels of circuits)
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'First proper loot encounter. 3 levels, each with Arc circuits +
+
+    Goblins + Hydras + Conduit Minotaurs. Complete circuits per level
+
+    to power the next grav lift. Levels 2-3 introduce Arc gates (avoid
+
+    LoS damage) and parallel circuits.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Multi-level vertical structure (3 floors).
+
+    - Grav lifts between floors (need power = circuit completion).
+
+    - Arc gates (shocking energy barriers) on floor 2.
+
+    - Hidden chest 1 is in this section (before encounter properly starts).
+
+
+    PLATFORM MECHANICS:
+
+    - Per floor: identify start node (chevrons), trace circuit, activate end node.
+
+    - 2 circuits per floor (sometimes parallel).
+
+    - Conduit Minotaur respawns if Arctrician expires.
+
+
+    HIDDEN CHEST 1:
+
+    Reach the SECOND high catwalk after jumping between crane-suspended
+
+    objects. Jump around the back of pillars to the other catwalk. A
+
+    small ledge between them. Chest is on another ledge behind the
+
+    last pillar.
+
+
+    START STATE: rally banner near entry, then start circuit.
+
+    '
+  callouts:
+  - when: Arctrician expiring
+    from: self
+    to: team
+    say: '"Need Minotaur — 10s."'
+    why: Teammate spawns/drops one for the pool.
+  - when: Circuit complete
+    from: runner
+    to: team
+    say: '"Circuit [N] done."'
+    why: Progress.
+  wipe_triggers:
+  - Arc gate LoS damage at exposed sightline.
+  - Hydra/Hobgoblin from elevation.
+  - Falling between floors.
+  damage_phase_triggers:
+  - All Arc circuits done per floor → grav lift powers up.
+  parallel_timeline:
+  - phase: Per floor
+    runner: Identify start node, trace, complete.
+    add_clear_2: Suppress Goblins + Hydras.
+  permutations:
+  - name: Standard 1-runner / 2-clear
+    learner_friendly: true
+    summary: One runner manages Arctrician + circuits; two clear adds.
+    roles:
+    - id: runner
+      count: 1
+      does: Sole circuit responsibility.
+      loadout:
+        subclass: Any subclass with good vertical mobility for the multi-floor climb (Solar Heat Rises
+          or Arc movement options work well).
+        weapons: A precision Primary for tagging hidden nodes (Long Arm or other scout). Keep a fast add-clear
+          secondary. On Master, slot an Anti-Barrier / Anti-Unstoppable option.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No DPS surge needed. On Master, run the matching Champion mods; otherwise ammo/finder
+          and resistance mods.
+    - id: add_clear
+      count: 2
+      does: Suppress Hydras + Hobgoblins.
+      loadout:
+        subclass: Any subclass that can suppress Hydras and Hobgoblins from range (Void for suppression/volatile,
+          or Arc for chaining adds).
+        weapons: Mid-to-long-range Primary plus a Special for tougher Hydras. Heavy for tanky adds on
+          Master. Add Anti-Barrier on Master to break Barrier Hydra shields.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No DPS surge needed. On Master, Anti-Barrier / Anti-Unstoppable plus resilience mods.
+  - name: Solo
+    learner_friendly: false
+    summary: Self-pace per floor.
+    roles:
+    - id: solo
+      count: 1
+      does: Both roles in sequence.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for healing or Void for invis/overshield)
+          to handle both circuits and adds alone.
+        weapons: Precision Primary for nodes + a reliable add-clear Special. On Master, bring Anti-Barrier
+          and Anti-Unstoppable options.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: No DPS surge needed; prioritize survivability and (on Master) Champion mods.
+  cheese: []
+  common_mistakes:
+  - Following yellow cable visually under a catwalk and missing the node — check catwalk UNDERSIDES.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'HIDDEN CHEST 1: Second high catwalk after the crane-jumps in
+
+        ''Begin the Ascent'' platforming section. Jump behind the pillars
+
+        to find a ledge bridging to another catwalk. Chest is behind
+
+        the last pillar.
+
+        '
+      rewards:
+      - Random roll of an already-obtained dungeon weapon
+    potential_drops:
+    - Terminus Horizon (machine gun, Arc)
+    - Long Arm (scout rifle, Arc)
+    - Seventh Seraph Carbine (auto rifle, Kinetic)
+    - TM Cogburn armor — Gauntlets + Legguards + Cover
+  images:
+    overview: ''
+    setup: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: add_clear.'
+  - '2nd: runner.'
+  plain_language_steps:
+  - 1. Place the rally banner near the entry, then enter the multi-level vertical structure (3 floors).
+  - 2. On each floor, kill a Conduit Minotaur and step in its pool to get the Arctrician buff.
+  - 3. Identify each floor's circuit start node by its chevron arrows, then trace and shoot the nodes
+    in order to the end node.
+  - 4. There are 2 circuits per floor (sometimes parallel). One player can run circuits while the other
+    two suppress adds.
+  - 5. Watch for nodes hidden under catwalks - check the UNDERSIDES of walkways if a yellow cable seems
+    to dead-end.
+  - 6. Clear Goblins, Hydras, and Hobgoblins that shoot from elevation while the runner focuses on nodes.
+  - 7. If your Arctrician is about to expire mid-circuit, call 'Need Minotaur - 10s' so a teammate drops
+    a fresh pool.
+  - 8. On floor 2, avoid the Arc gates (shocking energy barriers) - do not stand in an exposed sightline
+    or you take line-of-sight Arc damage.
+  - 9. Completing all circuits on a floor powers that floor's grav lift; ride it up to the next floor.
+  - '10. OPTIONAL: grab Hidden Chest 1 - in the crane-jump platforming section, reach the second high
+    catwalk, jump behind the pillars to a ledge that bridges to another catwalk, and find the chest behind
+    the last pillar.'
+  - 11. Repeat per floor until you reach the top and the encounter completes.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Vex line/slap-rifle fire from Goblins, Hobgoblins, and Hydras)
+      - Arc gate barriers deal contact/line-of-sight Arc damage if you cross their sightline
+      boss: []
+    champions:
+    - 'Master only: Barrier Hydra -> Anti-Barrier'
+    - 'Master only: Unstoppable Minotaur -> Anti-Unstoppable (the Conduit Minotaurs become Unstoppable
+      on Master)'
+    recommended_defensive_mods:
+      elemental:
+      - Arc resist helps against the Vex line-rifle volleys and the Arc gates; not mandatory on Normal.
+      concussive:
+      - Not particularly needed here - incoming damage is projectile/line-rifle, not blast-based.
+  damage:
+    surges:
+    - No boss / no DPS phase - this is a traversal-and-circuits floor climb, so there are no surges to
+      set.
+    burst_windows: No damage phase; pace is gated by circuit completion powering each grav lift.
+    recommended_dps:
+    - Not applicable (no boss). Prioritize ranged add-clear that can hit elevated Hydras and Hobgoblins.
+  role_loadouts:
+  - role_id: runner
+    subclass: Any subclass with good vertical mobility for the multi-floor climb (Solar Heat Rises or
+      Arc movement options work well).
+    weapons: A precision Primary for tagging hidden nodes (Long Arm or other scout). Keep a fast add-clear
+      secondary. On Master, slot an Anti-Barrier / Anti-Unstoppable option.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No DPS surge needed. On Master, run the matching Champion mods; otherwise ammo/finder
+      and resistance mods.
+  - role_id: add_clear
+    subclass: Any subclass that can suppress Hydras and Hobgoblins from range (Void for suppression/volatile,
+      or Arc for chaining adds).
+    weapons: Mid-to-long-range Primary plus a Special for tougher Hydras. Heavy for tanky adds on Master.
+      Add Anti-Barrier on Master to break Barrier Hydra shields.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No DPS surge needed. On Master, Anti-Barrier / Anti-Unstoppable plus resilience mods.
+  - role_id: solo
+    subclass: Self-sufficient survivable subclass (Solar for healing or Void for invis/overshield) to
+      handle both circuits and adds alone.
+    weapons: Precision Primary for nodes + a reliable add-clear Special. On Master, bring Anti-Barrier
+      and Anti-Unstoppable options.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No DPS surge needed; prioritize survivability and (on Master) Champion mods.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/spire-of-the-watcher.yaml (encounter 2: ascend-the-spire)'
+    note: Primary source for floor circuits, adds, Hidden Chest 1, and roles. Master Champion types from
+      the guide's overall_notes.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Confirm Master Champion assignments and any mod/stat renames against the live build; Edge of
+      Fate renamed the six stats and some mods. Loot pool may rotate.
+    date_checked: '2026-06-07'

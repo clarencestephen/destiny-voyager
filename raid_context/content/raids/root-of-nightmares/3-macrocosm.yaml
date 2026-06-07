@@ -1,0 +1,410 @@
+# raid_context/content/raids/root-of-nightmares/3-macrocosm.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: macrocosm
+  name: Macrocosm
+  ingame_name: Zo'aurc, Explicator of Planets
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: 'Fight Zo''aurc by aligning planets. Three phases: (1) swap
+
+    mismatched planets between paired triangular platforms; (2) move
+
+    correct-coloured planets to 3 central plates; (3) damage Zo''aurc
+
+    by touching the plate matching his shield aura. Loop until dead.
+
+    '
+  setup: "WHAT YOU SEE\n- Large planetarium room. Floating planet models hang around the\n  perimeter\
+    \ and in the centre.\n- 4 large TRIANGULAR PLATFORMS — two UPPER (left + right), two\n  LOWER (left\
+    \ + right). Each platform has a few planet models\n  suspended above it.\n- On each triangular platform:\
+    \ a TERRESTRIAL LIEUTENANT (Cabal\n  Colossus) spawns when the encounter triggers.\n- Centre of the\
+    \ room: a raised pedestal where Zo'aurc, Explicator\n  of Planets, stands.\n- Lower floor centre:\
+    \ 3 PLATES that will reveal themselves during\n  the central alignment phase.\n- Near each planet\
+    \ model: a small ORB on the platform's floor\n  beneath it (interaction point for swapping).\n\nPLATFORM\
+    \ MECHANICS\n- Triangular platforms: stand ON them to access their planets and\n  the Lieutenant kill.\
+    \ You don't have to stay — once you have\n  Planetary Insight and Planetary Affinity from the Lieutenant\n\
+    \  kill, the buffs travel with you for ~30s.\n- Damage plates (centre): you only need to TOUCH a plate\
+    \ once to\n  get the matching buff (Field of Light or Flux of Darkness).\n  You do NOT need to stand\
+    \ on it during DPS — move freely.\n- When you INTERACT with a planet's orb, a Planetary Shift timer\n\
+    \  appears on your HUD. The planet moves when the timer expires.\n  Both halves of a mutual swap must\
+    \ interact within their\n  respective Planetary Shift windows; otherwise the planet\n  returns to\
+    \ its original spot.\n\nSTART STATE\n- Two Solar-shielded Centurions spawn near Zo'aurc at the encounter\n\
+    \  start. Killing both triggers the rest of the encounter (Lieutenant\n  spawns).\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"Corners: upper-left = [name], upper-right = [name], lower-left = [name], lower-right = [name].
+      Floaters = [names]."'
+    why: 'Each triangular platform needs a designated caller. Pair structure is fixed: upper-left coordinates
+      with upper-right ONLY; lower-left with lower-right ONLY. Don''t mix.'
+  - when: Encounter starts (Centurions spawn near Zo'aurc)
+    from: any
+    to: team
+    say: '"Centurions up — burn them."'
+    why: Killing both spawns the four Terrestrial Lieutenants.
+  - when: Terrestrial Lieutenants spawn on the 4 triangular platforms
+    from: each corner-caller
+    to: their pair partner
+    say: '"Lieutenant down [position] — Insight up."'
+    why: Confirms you have Planetary Insight and can read planet colours on your platform.
+  - when: Caller identifies a mismatched planet
+    from: corner-caller (e.g. upper-left)
+    to: pair partner ONLY (upper-right)
+    say: '"Upper-left — third planet from the front, LIGHT. Swap with you."'
+    why: Tells partner to look for THEIR third-from-front planet (or whichever needs to swap). Both partners
+      must interact with their respective orbs within Planetary Shift.
+  - when: Pair partner confirms swap
+    from: pair partner (e.g. upper-right)
+    to: the original caller
+    say: '"Got it — interacting now."'
+    why: Confirms the mutual swap is happening. Both planets move when both timers expire.
+  - when: Side alignment complete (all swaps done)
+    from: lead
+    to: team
+    say: '"Side phase clear — central plates revealing."'
+    why: Re-kill respawning Lieutenants for fresh Planetary Insight. Phase 2 begins.
+  - when: Central plates revealed
+    from: any with Planetary Insight
+    to: swappers
+    say: '"Left plate = LIGHT, middle = DARK, right = LIGHT."'
+    why: Tells swappers which colour of planet to move to which central plate. Mismatched colour = planetary
+      collision wipe.
+  - when: Zo'aurc drops to lower level with Light or Dark aura
+    from: any
+    to: team
+    say: '"Zo''aurc down — LIGHT aura. Touch left plate."'
+    why: Everyone needs to know which damage plate to touch to enable damage on Zo'aurc.
+  - when: Flame twister telegraph (Zo'aurc winds up the aura flip)
+    from: any
+    to: team
+    say: '"Flip incoming — switch to DARK plate."'
+    why: Pre-empt the flip so DPS doesn't drop during the transition.
+  - when: Damage phase ending / Zo'aurc re-immunes
+    from: any
+    to: team
+    say: '"Re-immune. Back to corners."'
+    why: Loop reset. Lieutenants will respawn.
+  wipe_triggers:
+  - Side alignment too slow → Zo'aurc mis-aligns planets → planetary collision wipes team.
+  - Wrong-coloured planet placed on a centre plate → planetary collision wipe.
+  - Final Stand timer expires.
+  damage_phase_triggers:
+  - Both side AND central alignments complete → Zo'aurc drops to lower level with a Light or Dark aura
+    → damage opens.
+  parallel_timeline:
+  - phase: Pull
+    all: Two Solar-shielded Centurions spawn near Zo'aurc. Floaters burn them.
+  - phase: Lieutenants spawn (~0:15)
+    upper_callers_2: Kill Terrestrial Lieutenant on your platform → Planetary Insight + Planetary Affinity.
+    lower_callers_2: Same on your platform.
+    floaters_2: Add-clear (Psions everywhere; bubble Aspirants split if shot at range).
+  - phase: Phase 1 — side alignment
+    upper_callers_2: Compare upper-left vs upper-right ONLY. Call out mismatched planet positions to your
+      pair partner. Interact with your orb within Planetary Shift; partner does the same.
+    lower_callers_2: Same — lower pair only coordinates with the other lower platform, NOT with upper.
+    floaters_2: Continue add-clear. Prep for phase 2.
+  - phase: Phase 2 — central alignment
+    all: Centre plates appear. Re-kill respawning Lieutenants for fresh Insight + Affinity. Move correct-coloured
+      planets to matching plates. WRONG colour = wipe.
+  - phase: Damage phase
+    all: Zo'aurc drops with aura. Touch matching plate → buff → damage Zo'aurc. Aura FLIPS mid-DPS (flame
+      twister telegraph) → switch to opposite plate.
+  - phase: Cycle
+    all: After 3 plate-cycles he re-immunes. Loop back to Lieutenants.
+  - phase: Final Stand
+    all: Nonstop damage with rotating shield matching. Race the planet-collision timer.
+  permutations:
+  - name: Standard 4-Corners + 2 Floaters
+    learner_friendly: true
+    summary: One player on each of the 4 triangular platforms. Top pair coordinates, bottom pair coordinates.
+      Two floaters for Centurions + adds + DPS.
+    roles:
+    - id: corner-caller
+      count: 4
+      does: Lieutenant kill → Planetary Insight → callout to pair partner ONLY → swap planets via your
+        orb within Planetary Shift.
+      loadout:
+        subclass: Any subclass with reliable add-clear and survivability on a platform
+        weapons: Add-clear primary to drop the Lieutenant fast plus a burst heavy for the matched-plate
+          DPS window
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: No fixed surge (aura-gated damage); prioritize burst-damage and survivability mods
+    - id: floater
+      count: 2
+      does: Burn Centurions at start. Continuous add-clear. During DPS, touch matching plate and damage.
+      loadout:
+        subclass: Any subclass with strong continuous add-clear
+        weapons: Add-clear primary for Centurions/Psions plus a burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No fixed surge; add-clear plus burst-damage focus
+  - name: 2-Caller (only 2 read planets)
+    summary: Just upper-caller + lower-caller take Planetary Insight. The other 4 swap on command — anyone
+      with Planetary Affinity can swap, so the callers grant Affinity by hitting the Lieutenants but call
+      from a single platform per tier.
+    best_for: Mixed-experience teams, teaching first-timers.
+    roles:
+    - id: upper-caller
+      count: 1
+      does: Take both upper Terrestrial Lieutenants. Read upper planet colours. Call upper-pair swaps.
+      loadout:
+        subclass: Any subclass with good survivability while reading planets
+        weapons: Add-clear primary for both upper Lieutenants plus burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability and burst-damage mods
+    - id: lower-caller
+      count: 1
+      does: Take both lower Terrestrial Lieutenants. Read lower planet colours. Call lower-pair swaps.
+      loadout:
+        subclass: Any subclass with good survivability while reading planets
+        weapons: Add-clear primary for both lower Lieutenants plus burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability and burst-damage mods
+    - id: swapper
+      count: 2
+      does: Listen for callout. Sprint to named platform. Interact with orb within Planetary Shift window.
+      loadout:
+        subclass: Any mobility-leaning subclass to sprint between platforms
+        weapons: Add-clear primary plus burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id005
+        - Class
+        - Health
+        surges_mods: No fixed surge; movement and burst-damage focus
+    - id: floater
+      count: 2
+      does: Centurions + add-clear + DPS.
+      loadout:
+        subclass: Any subclass with strong continuous add-clear
+        weapons: Add-clear primary for Centurions/Psions plus a burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: No fixed surge; add-clear plus burst-damage focus
+  - name: Paired-Side Permanent
+    summary: Each player owns one platform for the whole encounter. Two central DPS handle Centurions,
+      ads, central-phase planet moves, and damage phase.
+    roles:
+    - id: platform-permanent
+      count: 4
+      does: Stay on your assigned triangular platform. Lieutenant + Insight + swap on call from your pair
+        partner.
+      loadout:
+        subclass: Any subclass with strong platform survivability and add-clear
+        weapons: Add-clear primary for the Lieutenant plus burst heavy for DPS
+        exotic_armor: ''
+        armor_stats: &id006
+        - Health
+        - Class
+        surges_mods: No fixed surge; survivability and burst-damage mods
+    - id: central-dps
+      count: 2
+      does: Centurions, ads, central-phase planet moves, damage phase.
+      loadout:
+        subclass: Any subclass with strong burst and add-clear
+        weapons: Burst heavy (linear fusion, Sleeper, Two-Tailed Fox) plus add-clear primary for Centurions
+          and Psions
+        exotic_armor: ''
+        armor_stats: &id007
+        - Health
+        - Class
+        surges_mods: No fixed surge (aura-gated); maximize burst-damage for the short plate windows
+  cheese:
+  - title: Burst-DPS over sustained
+    detail: 'Damage windows are short (~10-15s per plate before the
+
+      aura flip). Burst-heavy loadouts hit harder than sustained
+
+      DPS. Two-Tailed Fox + heavy ammo, Sleeper Simulant, linear
+
+      fusion rifles all top the charts here. Be ready to burst,
+
+      reposition for the flip, burst again.
+
+      '
+  common_mistakes:
+  - 'Upper player calling out to a lower player (or vice versa). Pair structure is strict: upper-left
+    ↔ upper-right ONLY; lower-left ↔ lower-right ONLY.'
+  - Interacting with an orb that has no mutual swap partner → planet returns → wasted Planetary Shift.
+  - Standing on the damage plate trying to maintain the buff. You only need to TOUCH once; then move freely.
+  - Not communicating planet POSITION specifically. 'The light one' isn't enough — say 'third from front,
+    light'.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest:
+      location: 'During post-Scission traversal (the section with Darkness''s
+
+        Refuge wipes). Instead of turning RIGHT into the temple-like
+
+        complex, turn LEFT toward a floating platform. The chest sits
+
+        on the floating platform. Contains the 2nd of 3 Deepsight
+
+        puzzle seeds (see overall_notes).
+
+        '
+      rewards:
+      - Spoils of Conquest (×1)
+      - Second of 3 Deepsight puzzle seeds
+    potential_drops:
+    - Mykel's Reverence (sidearm, Strand)
+    - Rufus's Fury (auto rifle, Strand)
+    - Acasia's Dejection (trace rifle, Solar)
+    - Koraxis's Distress (heavy grenade launcher, Strand)
+  master_challenge:
+    name: Cosmic Equilibrium
+    requirement: 'Every Dark-aura planet must end up on the LEFT side, every
+
+      Light-aura planet on the RIGHT (or whatever side convention
+
+      the team locked at pull). No mixed-polarity sides — pure
+
+      separation by the end of the encounter.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: floater in Standard. No Planetary Insight pressure.'
+  - '2nd: swapper in 2-Caller. Learn the swap timing without callouts.'
+  - '3rd+: corner-caller in Standard.'
+  plain_language_steps:
+  - '1. Before pulling, assign the 4 triangular platforms: upper-left, upper-right, lower-left, lower-right,
+    each with a designated corner-caller, plus floaters in the middle. The pair structure is strict -
+    upper-left coordinates with upper-right ONLY, lower-left with lower-right ONLY.'
+  - 2. The encounter starts when two Solar-shielded Centurions spawn near Zo'aurc, Explicator of Planets.
+    Floaters burn both Centurions to trigger the rest of the encounter.
+  - 3. A Terrestrial Lieutenant (Cabal Colossus) spawns on each of the 4 triangular platforms. Each corner-caller
+    kills their Lieutenant to gain Planetary Insight and Planetary Affinity (these buffs travel with you
+    for about 30 seconds).
+  - '4. Phase 1 - side alignment: with Planetary Insight you can read planet colours on your platform.
+    Identify mismatched planets and call them to your pair partner specifically by POSITION (e.g. third
+    from front, Light). Do not say just the colour.'
+  - 5. To swap a planet, interact with the orb on the floor beneath it - this starts a Planetary Shift
+    timer. BOTH halves of a mutual swap must interact within their Planetary Shift windows, or the planet
+    returns to its original spot.
+  - 6. Once all side swaps are done, respawning Lieutenants must be re-killed for fresh Planetary Insight,
+    and the 3 central plates reveal themselves.
+  - '7. Phase 2 - central alignment: read which colour each central plate needs (e.g. left = Light, middle
+    = Dark, right = Light) and move the correct-coloured planets onto the matching plates. A wrong-coloured
+    planet causes a planetary collision wipe.'
+  - 8. When both side and central alignments are complete, Zo'aurc drops to the lower level wearing a
+    Light or Dark aura. Call the aura colour.
+  - 9. To damage Zo'aurc, TOUCH the plate matching his aura once (left = Light, etc.) to gain the matching
+    buff. You only need to touch it once - then move freely and shoot him.
+  - 10. Mid-damage, Zo'aurc winds up a flame-twister telegraph and flips his aura. Switch to the opposite
+    plate to keep damage flowing.
+  - 11. After the damage window he re-immunes; return to your corners and re-kill the respawning Lieutenants
+    to loop the mechanic.
+  - 12. Repeat until Final Stand, then race his planet-collision timer with continuous matched-plate damage
+    to finish him.
+  defense:
+    incoming_damage:
+      adds:
+      - Solar-shielded Centurions deal Solar damage at the start
+      - Psions deal Arc/Void damage and are everywhere; bubble Aspirants split if shot at range
+      - Terrestrial Lieutenants (Cabal Colossus) deal Solar (slug-rifle) damage on the platforms
+      boss:
+      - 'Zo''aurc, Explicator of Planets: planetary-collision/alignment wipe pressure plus a flame-twister
+        aura-flip telegraph during damage'
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar resist helps against the opening Solar-shielded Centurions and the Terrestrial Lieutenant
+        slug rifles
+      concussive:
+      - Concussive Dampener can soften clustered Cabal and Lieutenant AoE on the triangular platforms
+        where space is tight
+  damage:
+    surges:
+    - No fixed elemental surge requirement - damage is gated by touching the plate matching Zo'aurc's
+      Light or Dark aura, not by a weapon element
+    - 'There IS a DPS phase: Zo''aurc becomes damageable after both alignments complete and he drops with
+      an aura'
+    burst_windows: Short windows (roughly 10-15 seconds per plate before the aura flips); burst Zo'aurc,
+      reposition for the flip to the opposite plate, then burst again.
+    recommended_dps:
+    - 'Burst heavy: linear fusion rifles, Sleeper Simulant, Two-Tailed Fox with heavy ammo'
+    - Sword-swap or rocket burst for the short matched-plate windows
+  role_loadouts:
+  - role_id: corner-caller
+    subclass: Any subclass with reliable add-clear and survivability on a platform
+    weapons: Add-clear primary to drop the Lieutenant fast plus a burst heavy for the matched-plate DPS
+      window
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No fixed surge (aura-gated damage); prioritize burst-damage and survivability mods
+  - role_id: floater
+    subclass: Any subclass with strong continuous add-clear
+    weapons: Add-clear primary for Centurions/Psions plus a burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No fixed surge; add-clear plus burst-damage focus
+  - role_id: upper-caller
+    subclass: Any subclass with good survivability while reading planets
+    weapons: Add-clear primary for both upper Lieutenants plus burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No fixed surge; survivability and burst-damage mods
+  - role_id: lower-caller
+    subclass: Any subclass with good survivability while reading planets
+    weapons: Add-clear primary for both lower Lieutenants plus burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No fixed surge; survivability and burst-damage mods
+  - role_id: swapper
+    subclass: Any mobility-leaning subclass to sprint between platforms
+    weapons: Add-clear primary plus burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: No fixed surge; movement and burst-damage focus
+  - role_id: platform-permanent
+    subclass: Any subclass with strong platform survivability and add-clear
+    weapons: Add-clear primary for the Lieutenant plus burst heavy for DPS
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: No fixed surge; survivability and burst-damage mods
+  - role_id: central-dps
+    subclass: Any subclass with strong burst and add-clear
+    weapons: Burst heavy (linear fusion, Sleeper, Two-Tailed Fox) plus add-clear primary for Centurions
+      and Psions
+    exotic_armor: ''
+    armor_stats: *id007
+    surges_mods: No fixed surge (aura-gated); maximize burst-damage for the short plate windows
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/root-of-nightmares.yaml (encounter: macrocosm)'
+    note: Primary source - Zo'aurc mechanics, planet-swap pair structure, plate damage and permutations
+      authored from destinypedia + blueberries.gg loot tables (Pass 2, 2026-05-25).
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Burst-DPS meta shifts each Episode; verify top heavy options (linear fusions, Sleeper, Two-Tailed
+      Fox) before a run. Edge of Fate stat names applied.
+    date_checked: '2026-06-07'

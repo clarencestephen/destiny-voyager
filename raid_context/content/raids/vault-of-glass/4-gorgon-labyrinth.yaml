@@ -1,0 +1,182 @@
+# raid_context/content/raids/vault-of-glass/4-gorgon-labyrinth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: gorgon-labyrinth
+  name: Gorgon Labyrinth (stealth section)
+  difficulty: medium
+  estimated_time: 5-15 min
+  abstract: 'Stealth maze with 9 patrolling Gorgon Harpies. If a Gorgon SEES you,
+
+    team wipes in 5 seconds. Navigate the maze unspotted. Smoke Bomb
+
+    (Nightstalker) disguises. Two hidden chests in here.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Huge cavern with a large drop on entry (double-jump to negate fall damage).
+
+    - 9 glowing silver-white Harpies patrolling assigned routes.
+
+    - Rocks + alcoves provide concealment.
+
+
+    PLATFORM MECHANICS:
+
+    - Stealth: stay out of Gorgon LoS.
+
+    - Smoke Bomb (Hunter Nightstalker) provides disguise.
+
+    - Killing a Gorgon is hard — requires rockets, sword Supers, Melting Point. "The Gorgons grow stronger"
+    message after each kill.
+
+
+    ROUTE:
+
+    - Drop in. From large rock, move LEFT.
+
+    - Find large hall on left, enter.
+
+    - Climb middle rock. Wait for the 2 Gorgons to clear right.
+
+    - Drop down, run to small right-side alcove.
+
+    - Hug right wall to find hole in wall → exit.
+
+    '
+  callouts:
+  - when: Gorgon spotted ahead
+    from: spotter
+    to: team
+    say: '"Hold — Gorgon [direction]."'
+    why: Stop the chain.
+  - when: Clear to proceed
+    from: spotter
+    to: team
+    say: '"CLEAR — go."'
+    why: Movement window.
+  wipe_triggers:
+  - Gorgon LoS for 5s = team wipe.
+  damage_phase_triggers: []
+  parallel_timeline:
+  - phase: Per stealth segment
+    leader: Calls hold/go.
+    followers_5: Match leader's pace.
+  permutations:
+  - name: Single-leader stealth
+    learner_friendly: true
+    summary: Most-experienced player leads. Others follow exactly.
+    roles:
+    - id: leader
+      count: 1
+      does: Calls every movement.
+      loadout:
+        subclass: Hunter Nightstalker is ideal (Smoke Bomb grants team invis for risky crossings); any
+          subclass works for pure stealth
+        weapons: A ranged precision weapon (scout or sniper) only if going for the 3-Oracle hidden chest;
+          otherwise weapons are unused
+        exotic_armor: ''
+        armor_stats: &id001
+        - Class
+        - Weapons
+        surges_mods: No surge needed; prioritize movement and ability regen for Smoke Bomb invis crossings
+  cheese:
+  - title: Smoke bomb invis
+    detail: 'Hunter Nightstalker Smoke Bomb gives the team brief invis. Use
+
+      to cross open areas where waiting isn''t an option.
+
+      '
+  common_mistakes:
+  - Trying to fight Gorgons — they're spongy + alert the rest.
+  - Sprinting blind — Gorgon LoS instant.
+  rewards:
+    guaranteed: []
+    hidden_chest:
+      location: 'GORGON CHEST 1 (right entry): Hug the right wall on entry to
+
+        the labyrinth. Find an alcove, follow it to a chest room. Rally
+
+        flag available inside for ammo.
+
+
+        GORGON CHEST 2 (the Oracle one): The chest room near the entry
+
+        is OPENED only by destroying 3 hidden Oracles around the Gorgon
+
+        area. Tough — need ranged precision.
+
+        '
+      rewards:
+      - Random raid loot drops × 2
+    potential_drops: []
+  images:
+    overview: ''
+    setup: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st: follow leader, don''t lead until you''ve crossed twice.'
+  plain_language_steps:
+  - 1. You drop into a huge cavern. Use a double-jump on the way down to negate fall damage.
+  - '2. Nine glowing silver-white Gorgon Harpies patrol fixed routes. This is a stealth section: if a
+    Gorgon sees you, the whole team wipes in about 5 seconds.'
+  - 3. Pick one experienced player as the leader. Everyone else follows the leader's exact pace and only
+    moves on the call.
+  - 4. From the large rock at the drop point, move LEFT toward the large hall on the left side.
+  - 5. Climb the middle rock and wait for the two Gorgons to clear to the right before moving.
+  - 6. Drop down and run to the small right-side alcove when the leader calls 'CLEAR.'
+  - 7. Hug the right wall to find the hole in the wall, which is the exit.
+  - 8. Do not try to fight the Gorgons; they are extremely tanky (require rockets, Sword supers, or Melting
+    Point) and killing one strengthens the rest. Stealth past instead.
+  - '9. Optional: grab the two hidden chests. One is reached by hugging the right wall on entry into an
+    alcove; the other chest room opens only by destroying three hidden Oracles around the Gorgon area
+    with ranged precision.'
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Gorgon Harpies): do not engage; line of sight for 5 seconds is an instant team wipe, not
+        a damage threat'
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No resist guidance applies; survival here is stealth, not damage mitigation
+      concussive:
+      - Not applicable; this is a stealth traversal with no incoming damage to dampen
+  damage:
+    surges:
+    - No DPS phase; this is a stealth maze. Gorgons should be avoided, not damaged, so element surge is
+      irrelevant
+    burst_windows: No damage window; the goal is to cross unseen, not to fight.
+    recommended_dps:
+    - No DPS loadout needed; bring a ranged precision weapon only for the optional 3 hidden Oracles for
+      chest 2
+    - Hunter Nightstalker Smoke Bomb is useful to grant brief invisibility for crossing open gaps
+  role_loadouts:
+  - role_id: leader
+    subclass: Hunter Nightstalker is ideal (Smoke Bomb grants team invis for risky crossings); any subclass
+      works for pure stealth
+    weapons: A ranged precision weapon (scout or sniper) only if going for the 3-Oracle hidden chest;
+      otherwise weapons are unused
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge needed; prioritize movement and ability regen for Smoke Bomb invis crossings
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: gorgon-labyrinth)'
+    note: Primary source for the stealth route, Gorgon line-of-sight wipe, Smoke Bomb tactic, and hidden
+      chests.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Smoke Bomb invisibility behavior and exotic interactions can change with subclass tuning; verify
+      the current Nightstalker invis kit before relying on it.
+    date_checked: '2026-06-07'

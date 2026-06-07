@@ -1,0 +1,94 @@
+# raid_context/content/raids/desert-perpetual/0-nursery.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 0
+  slug: nursery
+  name: The Nursery (Opener + boss select)
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Opening lobby. Clear central Vex platform → ascend main spire →
+
+    pick boss to face first (Epoptes left, Agraios middle behind pillar,
+
+    Iatros right). Koregos forward (locked until other 3 down).
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Central platform with Vex waves.
+
+    - Main purple spire ascending to a selection altar.
+
+    - 4 lesser spires marking each boss arena entrance.
+
+
+    PLATFORM MECHANICS:
+
+    - Clear central platform Vex.
+
+    - Ascend spire. Interact with selection device to teleport to chosen boss.
+
+    - Order: any of (Epoptes/Agraios/Iatros) first. Koregos last.
+
+    '
+  callouts: []
+  wipe_triggers: []
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Standard pick
+    learner_friendly: true
+    summary: Pick Epoptes first to learn Lens mechanics (it teaches the 2-Temporality system).
+  cheese: []
+  common_mistakes: []
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+  learner_path:
+  - Just play.
+  plain_language_steps:
+  - 1. Place your rally banner, then drop onto the central Vex platform and clear the incoming Vex waves.
+  - 2. With the platform clear, head to the main purple spire that rises toward the selection altar.
+  - 3. Ascend the spire, dealing with any Vex that path your route up.
+  - '4. At the top, note the four lesser spires marking each boss arena: Epoptes (left), Agraios (middle,
+    behind the pillar), Iatros (right), and Koregos (forward, locked until the other three are down).'
+  - 5. Interact with the selection device on the altar to teleport the fireteam to your chosen boss.
+  - 6. On a first run, pick Epoptes first to learn the two-Temporality (Constant/Cyclical) Lens system
+    before tackling the others.
+  - 7. You must clear any of Epoptes, Agraios, and Iatros (in any order) before Koregos unlocks; choose
+    your next boss whenever you return here.
+  defense:
+    incoming_damage:
+      adds:
+      - Vex platform-wave adds (Goblins/Harpies) — element not specified in source
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase in this encounter (opener and boss-select lobby only).
+    burst_windows: No damage phase; this is the opener and boss-selection room.
+    recommended_dps: []
+  role_loadouts: []
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/desert-perpetual.yaml (encounter: nursery)'
+    note: Authored v2 guide is the primary source for this enrichment.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: The Desert Perpetual is a new (July 2025) raid; mechanics and loadout meta may shift. Verify
+      against current in-game state before a run.
+    date_checked: '2026-06-07'

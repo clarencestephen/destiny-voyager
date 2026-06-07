@@ -1,0 +1,303 @@
+# raid_context/content/dungeons/warlords-ruin/3-wailing-tempest.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: wailing-tempest
+  name: Wailing Tempest (Locus of Wailing Grief)
+  difficulty: medium
+  estimated_time: 12-18 min
+  abstract: 'Taken Ogre that''s shielded until you cleanse totems through a
+
+    snowstorm. Adds Biting Cold weather mechanic — manage stacks at
+
+    Shelter From The Storm torches in back, or freeze + die.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Castle bailey arena. Locus (massive Taken Ogre) at the far end.
+
+    - 4 unlit pillars in a square in the center. Each holds a Solar Charge brazier on top.
+
+    - Lit torches along the BACK wall (away from boss) — these are Shelter From The Storm.
+
+    - Broken Knights spawn at left + right ends of the arena once Imminent Wish triggers.
+
+
+    PLATFORM MECHANICS:
+
+    - Pillars: carry a Solar Charge (drops from arena center after totems cleansed) → walk to pillar →
+    press hold to ignite. Each lit pillar = 1 of 4 needed for DPS.
+
+    - Shelter torches: stand within ~3m → "Shelter From The Storm" buff applies → all Biting Cold stacks
+    clear in 5s.
+
+    - DPS pillars: stand on the LAST-LIT pillar at damage start to get both Shelter + Naeem''s Wish. Burns
+    the pillar — don''t waste them.
+
+
+    START STATE: pull = shoot the central blight to engage Locus. Imminent Wish + first Broken Knight
+    wave begin.
+
+    '
+  callouts:
+  - when: Imminent Wish starts
+    from: first to see
+    to: team
+    say: '"Wish up — knights spawning [L/R]."'
+    why: Cues add-clear to position before the Broken Knights drop their totems.
+  - when: Broken Knight summons a totem (visible blight at their feet)
+    from: killer
+    to: team
+    say: '"Totem [L/R] — DOWN."'
+    why: Confirms where to cleanse. Don't kill the Knight BEFORE the totem spawns.
+  - when: Biting Cold ≥ 7 stacks
+    from: self
+    to: team
+    say: '"I''m on shelter, [back-left/back-right]."'
+    why: Lets teammates ride your cleared zone if they're also high stacks.
+  - when: Solar Charges drop (center of arena, after cleanse)
+    from: carrier
+    to: team
+    say: '"Got charge, lighting pillar [N/S/E/W]."'
+    why: Avoids 2 carriers racing to the same pillar.
+  - when: Fourth pillar lit
+    from: last carrier
+    to: team
+    say: '"FOURTH LIT — stack on me!"'
+    why: Team must stand by the last-lit pillar for both Shelter + Naeem's Wish during DPS.
+  - when: Naeem's Wish duration < 5s
+    from: any
+    to: team
+    say: '"Move next pillar, [direction]."'
+    why: Sets the next pillar everyone runs to when shelter drops.
+  wipe_triggers:
+  - 10 stacks Biting Cold = frozen → death (no revive window — others also freezing).
+  - Stepping on an unused pillar by accident = pillar is burnt for this phase, may not reach 4.
+  - Locus melee at point-blank one-shots most builds.
+  damage_phase_triggers:
+  - All 4 pillars lit → Locus shield drops + Naeem's Wish Empowerment grants.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    all: Shoot center blight to engage. Locus summons Blighted Eyes for shield.
+  - phase: Eye-pop + Knight spawn (~0:20)
+    eye_shooters: Drop all Blighted Eyes ASAP.
+    add_clear: Engage Broken Knights at L+R spawns. Wait for swing animation = totem drops.
+  - phase: Cleanse + cold management (~0:30-1:30)
+    cleansers_2: Cleanse totems as they spawn (4-6 over the window).
+    torch_runner: When stacks ≥7, sprint back-wall torch. Return.
+    carrier: Pick up Solar Charges from arena center → ignite pillars.
+  - phase: Final pillar + DPS (~1:35)
+    all: Stack on last-lit pillar. Burst Locus with Naeem's Wish + Shelter.
+  - phase: Reset (if not 1-phased)
+    all: Locus reshields. Cycle repeats from eye-pop.
+  permutations:
+  - name: Standard 1/1/1 (cleanser / carrier / add-clear)
+    learner_friendly: true
+    summary: Roles rotate fluidly. One player owns cold management as priority.
+    best_for: First clears.
+    roles:
+    - id: cleanser
+      count: 1
+      does: Owns totem cleanses. Calls cold stacks loud.
+      loadout:
+        subclass: ''
+        weapons: Add-clearing Primary/Special for Broken Knights + burst Heavy for the pillar-down window
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist
+          for Broken Knights
+    - id: carrier
+      count: 1
+      does: Owns Solar Charge → pillar pipeline.
+      loadout:
+        subclass: ''
+        weapons: Mobile add-clear Primary + burst Heavy ready for when the fourth pillar lights
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Match surge mods to your DPS Heavy; sprint/mobility-friendly mods for the Solar Charge
+          to pillar pipeline
+    - id: add_clear
+      count: 1
+      does: Locks down Broken Knights + shoots eyes. Backup cleanse.
+      loadout:
+        subclass: ''
+        weapons: Strong ad-clear Primary (for Broken Knights and Blighted Eyes) + burst Heavy as backup
+          DPS
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Surge mods matched to your Heavy element; Void/Solar resist to survive Knights and
+          the Locus
+  - name: 'Speed: stacked DPS'
+    learner_friendly: false
+    summary: 'All 3 cleanse simultaneously through 1-2 cycles → ignite all 4
+
+      pillars before Locus reshields → maximum-duration buff → 1-phase.
+
+      '
+    best_for: Experienced teams with burst DPS.
+    roles:
+    - id: cleanser
+      count: 3
+      does: Each owns 1-2 totems per cycle. Self-manage cold.
+      loadout:
+        subclass: ''
+        weapons: Add-clearing Primary/Special for Broken Knights + burst Heavy for the pillar-down window
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist
+          for Broken Knights
+  - name: Solo
+    learner_friendly: false
+    summary: 'Slow + methodical. Cleanse one totem at a time, return to back-wall
+
+      torch between each. Light 1-2 pillars per Imminent Wish window.
+
+      Expect 3-4 cycles to DPS.
+
+      '
+    best_for: Soloists.
+    roles:
+    - id: cleanser
+      count: 1
+      does: All mechanics yourself. Bring sustained DPS (Whisper, Sleeper).
+      notes:
+      - Witherhoard for damage-over-time during cold-recovery sprints.
+      loadout:
+        subclass: ''
+        weapons: Add-clearing Primary/Special for Broken Knights + burst Heavy for the pillar-down window
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist
+          for Broken Knights
+  cheese: []
+  common_mistakes:
+  - Killing Broken Knights too fast — totem only drops on their swing OR on death. Wait for the swing.
+  - Running to find Shelter From The Storm in the FRONT of the arena — torches are all on the back wall.
+  - Burning a pillar by accident during the cleanse phase (walking through it on the way to a totem) —
+    only step on pillars when you're carrying a charge.
+  - Doing DPS away from the lit pillar = no Shelter = freeze mid-DPS.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest:
+      location: 'BURIED BLOODLINE secret chest 2: After defeating Locus, before
+
+        dropping into the climb to Vengeful Peak, scan the back-left
+
+        corner of the bailey arena — there''s a wooden balcony with a
+
+        chest tucked behind a banner.
+
+        '
+      rewards:
+      - 'Hidden quest item: Bone Fragment 2'
+      - Spoils of Conquest
+    potential_drops:
+    - Vengeful Whisper (combat bow, Kinetic)
+    - Naeem's Lance (sniper rifle, Strand)
+    - Indebted Kindness (sidearm, Arc)
+    - Dark Age armor — Fists + Harness + Bond
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: cleanser. Most-instructive role — touches every mechanic.'
+  - '2nd: carrier — practice pillar pathing without burning unused ones.'
+  - '3rd: solo to internalize cold-recovery timing.'
+  plain_language_steps:
+  - 1. Enter the castle bailey and shoot the central Taken blight to engage the Locus of Wailing Grief,
+    the massive Taken Ogre at the far end.
+  - 2. Imminent Wish starts and Broken Knights begin spawning at the left and right ends of the arena.
+  - 3. Drop the Locus's shield by shooting the Blighted Eyes it summons as fast as possible.
+  - 4. Engage the Broken Knights but WAIT for their swing animation (or kill) — the corrupted totem only
+    drops when they swing or die, not before.
+  - 5. Stand in each dropped totem ~5 seconds to cleanse it (blight vanishes + blue glow = done), calling
+    left or right so cleansers do not overlap.
+  - 6. Watch your Biting Cold stacks from the snowstorm — at 10 stacks you freeze and die.
+  - 7. When your stacks hit ~7, sprint to a lit Shelter From The Storm torch on the BACK wall (away from
+    the boss) to clear all stacks in 5 seconds, then return.
+  - 8. Pick up Solar Charges that drop in the center of the arena after cleansing and carry each to one
+    of the 4 center pillars; hold to ignite it.
+  - 9. Call out which pillar you are lighting (N/S/E/W) so two carriers do not race the same one, and
+    never step on an unused pillar — it burns for the phase.
+  - 10. When the FOURTH pillar is lit, the Locus's shield drops and Naeem's Wish Empowerment grants —
+    everyone stack on that last-lit pillar for both Shelter and the buff.
+  - 11. Burst the Locus during the window while staying on the pillar to avoid freezing mid-DPS; avoid
+    its point-blank melee which one-shots.
+  - 12. If you do not finish it, the Locus reshields and the cycle repeats from the eye-pop step.
+  defense:
+    incoming_damage:
+      adds:
+      - Solar (Scorn Broken Knights wield fire scepters)
+      - Kinetic/physical (Scorn add fire)
+      boss:
+      - Void (Locus is a Taken Ogre — its eye beam and slam are Void)
+      - 'Note: Biting Cold is an environmental freeze (snowstorm), not a weapon element'
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void resist mods help against the Locus Ogre's beam/slam
+      - Solar resist helps against the Broken Knights' fire scepters
+      - There is no in-game Stasis/freeze resist mod — manage Biting Cold via Shelter torches, not mods
+      concussive:
+      - Concussive Dampener helps mitigate the Locus Ogre's blast/slam knockback at mid range if you keep
+        getting pushed off position
+  damage:
+    surges:
+    - No fixed DPS-phase element is enforced — bring your strongest burst Heavy regardless of element
+      and match surge mods to it
+    burst_windows: Naeem's Wish Empowerment + Shelter window opens when all 4 pillars are lit and the
+      Locus shield drops; stack on the last-lit pillar and burst before it reshields.
+    recommended_dps:
+    - High-burst Heavy (rocket / Heavy GL / Linear Fusion)
+    - Sustained-DPS Heavy (e.g. Sleeper-style Linear) for solo multi-cycle
+    - Damage-over-time Special to chip during cold-recovery sprints
+  role_loadouts:
+  - role_id: cleanser
+    subclass: ''
+    weapons: Add-clearing Primary/Special for Broken Knights + burst Heavy for the pillar-down window
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist for
+      Broken Knights
+  - role_id: carrier
+    subclass: ''
+    weapons: Mobile add-clear Primary + burst Heavy ready for when the fourth pillar lights
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match surge mods to your DPS Heavy; sprint/mobility-friendly mods for the Solar Charge
+      to pillar pipeline
+  - role_id: add_clear
+    subclass: ''
+    weapons: Strong ad-clear Primary (for Broken Knights and Blighted Eyes) + burst Heavy as backup DPS
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Surge mods matched to your Heavy element; Void/Solar resist to survive Knights and the
+      Locus
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/warlords-ruin.yaml (encounter 3, Wailing Tempest / Locus
+      of Wailing Grief)'
+    note: Primary source for totem/pillar/Solar-Charge loop, Biting Cold management, and permutation roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Element/surge meta and exotic picks shift seasonally; loadout slots left blank where not verifiable
+      in the current (Edge of Fate) sandbox. Verify before a run.
+    date_checked: '2026-06-07'

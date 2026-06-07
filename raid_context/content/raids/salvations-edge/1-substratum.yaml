@@ -1,0 +1,395 @@
+# raid_context/content/raids/salvations-edge/1-substratum.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: substratum
+  name: Substratum
+  difficulty: medium
+  estimated_time: 10-15 min
+  abstract: 'First encounter. Two teams of three clear side rooms of Sol
+
+    Divisive Vex + Dread. After two waves, find circuit plates +
+
+    conductors and bounce charges between them while picking up
+
+    Pyramidal Resonance. Lock down both conductors → deposit
+
+    resonance in central chest → repeat 2 more times.
+
+    '
+  setup: "WHAT YOU SEE\n- Large central room with a chest spawn in the middle.\n- Two doors on opposite\
+    \ sides leading to peripheral rooms.\n- Inside peripheral rooms (after they open): glowing floor\n\
+    \  plates and a Resonant Conductor (obelisk with glowing core).\n- Above the central area: a fluxing\
+    \ **WITNESS HAND** (orange-\n  triangular). It casts Resonant Outburst — a triangular AoE\n  on the\
+    \ floor that will kill low-Health players.\n- Top of screen: **Final Shape Looming** wipe timer.\n\
+    \nPLATFORM MECHANICS\n- Plates: stand on them only when a charge enters (visible\n  shrinking circular\
+    \ aura). Step off after the charge bounces.\n- Conductors: stand a few steps AWAY, shoot the centre\
+    \ once\n  to ARM. Then the next charge that arrives at YOUR plate while\n  you stand on it will lock\
+    \ down the conductor — consumes 1\n  resonance stack.\n- Resonance stacks: pick up shapes by walking\
+    \ onto them. Max 3.\n  Each has a timer; expiring = death.\n\nSTART STATE\n- Encounter starts when\
+    \ one player picks up the central\n  Pyramidal Resonance and DUNKS it into the central chest.\n  Two\
+    \ side doors open + Final Shape Looming starts.\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"3-3 split. Left team = [names], right team = [names]. Conductor player = [name] per side. Plate
+      player = [name] per side. Add-clear = third on each side."'
+    why: Salvation's Edge has more comms than any other raid; lock roles before pulling.
+  - when: Doors open after dunk
+    from: any
+    to: team
+    say: '"Doors open — go go go."'
+    why: Supplicants spawn at the rear of each peripheral room when doors open; rushing in dies. Walk
+      forward, take cover.
+  - when: Keeper of the Monolith (Hydra) appears
+    from: any
+    to: team
+    say: '"Keeper [side]!"'
+    why: Killing each Keeper opens the next sub-room. Top priority.
+  - when: Devotee of the Witness (Overload Minotaur) appears
+    from: any
+    to: team
+    say: '"Overload [side]!"'
+    why: Overload mod requires Anti-Overload — make sure someone on that side has it.
+  - when: Threshold Sentinel (Tormentor) spawns in centre
+    from: any
+    to: team
+    say: '"Tormentor mid — converge!"'
+    why: Side doors close while Tormentor is alive — anyone caught inside or in the doorway dies. Move
+      to centre fast.
+  - when: Plates + conductors located
+    from: plate-runner
+    to: conductor
+    say: '"Plate [side] — connecting now."'
+    why: Confirms which conductor each side is wired to so callouts are unambiguous.
+  - when: Charge bounce missed
+    from: any
+    to: team
+    say: '"Lost charge [side]."'
+    why: First miss = grace period (no penalty). Second miss → Subjugator spawns and locks plates. Tells
+      team to stay calm or prep for Subjugator.
+  - when: Conductor armed, ready for lockdown
+    from: conductor
+    to: plate-runner
+    say: '"Conductor up — send the next charge."'
+    why: Next charge into the conductor's connected plate will lock it down. Plate-runner needs to know
+      to step on at the right moment.
+  - when: Conductor locked
+    from: conductor
+    to: team
+    say: '"Conductor [side] LOCKED."'
+    why: One half done. Other side knows their conductor still needs locking.
+  - when: Both conductors locked, central chest spawning
+    from: any
+    to: team
+    say: '"Both locked. Chest mid — dump resonance!"'
+    why: Chest is proximity-activated; everyone must converge to deposit. Wipe timer extends after all
+      resonance is dumped.
+  wipe_triggers:
+  - Final Shape Looming timer hits 0 → wipe.
+  - Holding 4+ resonance stacks → instant death.
+  - Resonance stack timer expires on you → death.
+  - Standing in Resonant Outburst (triangular floor AoE) at low Health.
+  - Caught in a closing side door when the Threshold Sentinel spawns.
+  damage_phase_triggers:
+  - No boss DPS in this encounter — completion = depositing all resonance into the central chest 3 times
+    in a row.
+  parallel_timeline:
+  - phase: Pull
+    all: Walk into centre. One player picks up the central Pyramidal Resonance + dunks into the chest.
+      Doors open + Final Shape Looming starts.
+  - phase: Side-room clear (rounds 1-2)
+    left_team_3: 'Enter left side. Kill Sol Divisive Vex + Dread. Priority: Hydra (Keeper) → Overload
+      Minotaur (Devotee).'
+    right_team_3: Mirror on right.
+    all_periodically: Don't stand under the Witness Hand (triangular AoE on floor). Avoid the swirling
+      indicator.
+  - phase: Threshold Sentinel in centre
+    all: Side doors close. Converge to centre fast (caught in doors = death). Burn the Tormentor.
+  - phase: Plates + conductors discovered
+    left_team_3: Conductor player arms the conductor. Plate player bounces charges. Third player handles
+      ads + picks up resonance shapes spawning in the side room.
+    right_team_3: Mirror.
+  - phase: Charges bouncing, resonance collecting
+    all: Each plate-runner steps on at the visible aura shrink. Each conductor player picks up max 3 Pyramidal
+      Resonance. Subjugator spawns on 2nd missed bounce — kill it immediately.
+  - phase: Lock both conductors
+    conductor_each_side: Stand on plate when the charge arrives WHILE conductor is armed → 1 stack consumed,
+      conductor locks.
+  - phase: Deposit at central chest
+    all: Converge to chest. Anyone with resonance interacts to dump. Final Shape Looming extends back
+      up. Avoid the Witness's Resonant Gaze attack while dumping.
+  - phase: Repeat 2 more times
+    all: Same flow. After 3rd successful round, encounter ends and stairs unfurl into the next area.
+  permutations:
+  - name: Standard 3-3 Split, 1 Conductor + 1 Plate + 1 Add-Clear per side
+    learner_friendly: true
+    summary: 'Default. Two teams of three. Each side: one player owns the conductor, one owns the plate,
+      one handles ads + collects shapes.'
+    roles:
+    - id: conductor
+      count: 2
+      does: Arm the conductor. Step on plate when charge arrives WHILE armed. Holds max 3 Pyramidal Resonance
+        stacks. Locks down conductor.
+      loadout:
+        subclass: ''
+        weapons: Anti-Overload primary for the Devotee Minotaur; reliable add-clear special; a heavy for
+          the Tormentor
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: Run Anti-Overload; Concussive Dampener and a resist mod help survive the Tormentor
+          and Witness Hand
+    - id: plate-runner
+      count: 2
+      does: Step on the connecting plate the moment the charge enters (shrinking aura visible). Step off
+        after bounce.
+      loadout:
+        subclass: ''
+        weapons: Mobile add-clear loadout (SMG/auto + special); nothing mechanic-specific required
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Class
+        surges_mods: Resist mod for the Resonant Outburst floor AoE; Concussive Dampener for the Tormentor
+    - id: add-clear
+      count: 2
+      does: Hold the side room. Kill Keepers (Hydra), Devotees (Overload Minotaur), Weavers (disrupt plates),
+        Goblins, Subjugator. Pick up resonance shapes in centre when not engaged.
+      loadout:
+        subclass: ''
+        weapons: Anti-Overload option for the Devotee Minotaur; strong add-clear primary plus heavy for
+          the Tormentor and Subjugator
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Anti-Overload; resist mod and Concussive Dampener
+  - name: 4-2 with Designated Sentinel Killers
+    summary: Two players are dedicated Threshold Sentinel killers — they don't do plate/conductor work,
+      only converge mid for Tormentor + run resonance. Other 4 split 2-2 across sides.
+    best_for: Teams that struggle with the Tormentor timing on hard difficulties.
+    roles:
+    - id: side-pair
+      count: 4
+      does: 2 per side. Conductor + plate handled between the pair. Light add-clear.
+      loadout:
+        subclass: ''
+        weapons: Anti-Overload primary plus add-clear special, shared conductor and plate duty between
+          the two
+        exotic_armor: ''
+        armor_stats: &id005
+        - Health
+        - Class
+        surges_mods: Anti-Overload; Concussive Dampener and a resist mod
+    - id: tormentor-killer
+      count: 2
+      does: Hover mid. Kill Tormentor instantly when it spawns. Carry resonance to chest.
+      loadout:
+        subclass: ''
+        weapons: Burst-heavy or special (sniper/rocket/sword) to delete the Threshold Sentinel instantly
+          when it spawns mid
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: Concussive Dampener for the Tormentor slam; resist mod for the Witness Hand
+  - name: Resonance-Heavy (collect overflow for wipe-timer extension)
+    summary: Instead of dumping 1-2 resonance per round, aggressively collect 3 stacks per player BEFORE
+      locking conductors. Maximum wipe-timer extension.
+    best_for: Master / Contest where Final Shape Looming runs hot.
+    roles:
+    - id: conductor
+      count: 2
+      does: Same, but holds onto 3 stacks until lockdown moment.
+      loadout:
+        subclass: ''
+        weapons: Anti-Overload primary for the Devotee Minotaur; reliable add-clear special; a heavy for
+          the Tormentor
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: Run Anti-Overload; Concussive Dampener and a resist mod help survive the Tormentor
+          and Witness Hand
+    - id: plate-runner
+      count: 2
+      does: Same.
+      loadout:
+        subclass: ''
+        weapons: Mobile add-clear loadout (SMG/auto + special); nothing mechanic-specific required
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: Resist mod for the Resonant Outburst floor AoE; Concussive Dampener for the Tormentor
+    - id: resonance-collector
+      count: 2
+      does: Run between sides + centre, collecting every spawned shape before timers expire.
+      loadout:
+        subclass: ''
+        weapons: Light, mobile add-clear loadout for running between sides and centre collecting shapes
+        exotic_armor: ''
+        armor_stats: &id006
+        - Health
+        - Class
+        surges_mods: Resist mod for the Resonant Outburst; Concussive Dampener for the Tormentor
+  cheese: []
+  common_mistakes:
+  - Plate-runner stepping on the plate too early → charge passes without registering.
+  - Conductor not armed before charge arrives → lockdown fails, must rebound.
+  - Holding 3 stacks and accidentally walking onto a 4th shape → instant death.
+  - Caught in closing side door during Threshold Sentinel — leave the side room IMMEDIATELY when the Tormentor
+    message appears.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest:
+      location: 'During the traversal to encounter 1. Detail in overall_notes
+
+        (Secret Deepsight Puzzle).
+
+        '
+      rewards:
+      - First of 3 hidden conductors for the Deepsight puzzle.
+    potential_drops:
+    - Nullify (pulse rifle, Solar)
+    - Non-Denouement (combat bow, Arc)
+    - Imminence (SMG, Strand)
+  master_challenge:
+    name: Scenic Route
+    requirement: 'Only kill the Overload Minotaur on the LONGER of the two paths
+
+      (the one with the Overload spawn in the 4th room, not the 3rd).
+
+      Read which path is yours by checking the majors in the first
+
+      rooms: Hobgoblins = your path will kill, Attendants = ignore.
+
+      Master adds no Champion spawns beyond the existing path
+
+      Minotaurs.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: add-clear. Learn resonance shapes without conductor/plate pressure.'
+  - '2nd clear: plate-runner.'
+  - '3rd+: conductor.'
+  plain_language_steps:
+  - 1. Pre-pull, split into two teams of three. On each side assign one Conductor player, one Plate-runner,
+    and one Add-clear. Lock these roles out loud before pulling.
+  - 2. Everyone walks into the large central room. One player picks up the central Pyramidal Resonance
+    (triangle) and dunks it into the central chest. This opens the two side doors and starts the Final
+    Shape Looming wipe timer.
+  - 3. Push into your assigned peripheral room. Walk forward slowly and take cover. Supplicants spawn
+    at the back of each room, so rushing in dies.
+  - '4. Clear the Sol Divisive Vex and Dread waves. Priority kills: the Keeper of the Monolith (Hydra),
+    which opens the next sub-room, then the Devotee of the Witness (Overload Minotaur), which needs Anti-Overload.'
+  - 5. When the Threshold Sentinel (Tormentor) spawns in the centre, the side doors close. Leave the side
+    room immediately and converge to the centre, then burn the Tormentor down. Anyone caught in a closing
+    door dies.
+  - 6. Once you find the glowing circuit plates and the Resonant Conductor obelisk, the Conductor player
+    stands a few steps away and shoots the conductor's core once to arm it.
+  - 7. The Plate-runner steps onto the connected plate at the exact moment the charge enters (look for
+    the shrinking circular aura), then steps off after it bounces. Repeat to keep charges flowing.
+  - 8. While bouncing charges, pick up Pyramidal Resonance shapes by walking onto them. Never hold more
+    than 3 stacks, and don't let a stack's timer expire on you.
+  - 9. With the conductor armed, the Conductor player stands on the plate when the next charge arrives
+    to lock it down, consuming one resonance stack. Do this on both sides.
+  - 10. With both conductors locked, everyone converges on the central chest and deposits their resonance.
+    This extends the Final Shape Looming timer.
+  - 11. Avoid standing under the Witness Hand's Resonant Outburst (triangular floor AoE) the whole time,
+    especially at low Health.
+  - 12. Repeat the full loop two more times. After the third successful deposit, the stairs to the next
+    area unfurl.
+  defense:
+    incoming_damage:
+      adds:
+      - Sol Divisive Vex (Hydras as Keeper of the Monolith, Minotaurs as Devotee of the Witness, Goblins,
+        Supplicants) deal Void/Vex bolt damage
+      - Dread faction enemies (Weavers, Subjugator)
+      boss: []
+    champions:
+    - Overload Minotaur (Devotee of the Witness) -> Anti-Overload
+    recommended_defensive_mods:
+      elemental:
+      - Resist Void from Sol Divisive Vex projectiles; prioritize Health for the Witness Hand's Resonant
+        Outburst (triangular floor AoE)
+      concussive:
+      - Concussive Dampener helps against the Threshold Sentinel (Tormentor) suppression slam and heavy
+        melee in the converged centre fight
+  damage:
+    surges:
+    - No boss DPS phase in Substratum. Completion is depositing all resonance into the central chest three
+      times in a row, not a damage check.
+    burst_windows: No damage phase; the only burst priority is deleting the Threshold Sentinel (Tormentor)
+      fast when it spawns mid so the side doors reopen.
+    recommended_dps:
+    - Anti-Overload primary or special for the Devotee Minotaur
+    - High-uptime add-clear (auto/SMG/wave-frame GL) plus a heavy or special burst for the Tormentor
+  role_loadouts:
+  - role_id: conductor
+    subclass: ''
+    weapons: Anti-Overload primary for the Devotee Minotaur; reliable add-clear special; a heavy for the
+      Tormentor
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: Run Anti-Overload; Concussive Dampener and a resist mod help survive the Tormentor and
+      Witness Hand
+  - role_id: plate-runner
+    subclass: ''
+    weapons: Mobile add-clear loadout (SMG/auto + special); nothing mechanic-specific required
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Resist mod for the Resonant Outburst floor AoE; Concussive Dampener for the Tormentor
+  - role_id: add-clear
+    subclass: ''
+    weapons: Anti-Overload option for the Devotee Minotaur; strong add-clear primary plus heavy for the
+      Tormentor and Subjugator
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Anti-Overload; resist mod and Concussive Dampener
+  - role_id: tormentor-killer
+    subclass: ''
+    weapons: Burst-heavy or special (sniper/rocket/sword) to delete the Threshold Sentinel instantly when
+      it spawns mid
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: Concussive Dampener for the Tormentor slam; resist mod for the Witness Hand
+  - role_id: side-pair
+    subclass: ''
+    weapons: Anti-Overload primary plus add-clear special, shared conductor and plate duty between the
+      two
+    exotic_armor: ''
+    armor_stats: *id005
+    surges_mods: Anti-Overload; Concussive Dampener and a resist mod
+  - role_id: resonance-collector
+    subclass: ''
+    weapons: Light, mobile add-clear loadout for running between sides and centre collecting shapes
+    exotic_armor: ''
+    armor_stats: *id006
+    surges_mods: Resist mod for the Resonant Outburst; Concussive Dampener for the Tormentor
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/salvations-edge.yaml (encounter: substratum)'
+    note: Primary source; mechanics, enemies, roles, and permutations derived directly from the authored
+      v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six armor stats (Health/Class used here). Verify exotics, weapons,
+      and Champion mod availability against the current season before a run; specific loadout picks left
+      blank where unverifiable.
+    date_checked: '2026-06-07'

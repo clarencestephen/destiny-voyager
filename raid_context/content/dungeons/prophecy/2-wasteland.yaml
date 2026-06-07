@@ -1,0 +1,126 @@
+# raid_context/content/dungeons/prophecy/2-wasteland.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: wasteland
+  name: Wasteland (transition — sparrow + blights)
+  difficulty: easy
+  estimated_time: 5-10 min
+  abstract: 'Sparrow across a wasteland made of Io, Titan, Mercury, Mars fragments.
+
+    Destroy 3 Blight clusters, each guarded by Taken. Follow the probe
+
+    between clusters. Avoid patrolling Ultra Taken Minotaurs.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Open dunes with fragmented planet terrain.
+
+    - 3 Blight clusters (distinct orbs in flat areas).
+
+    - Patrolling Ultra Taken Minotaurs (huge, easy to spot — RUN past).
+
+    - A Taken probe that leads between Blight clusters.
+
+
+    PLATFORM MECHANICS:
+
+    - Destroy all Blights in cluster → probe spawns + dashes to next cluster.
+
+    - Follow probe via sparrow.
+
+    - 3rd cluster done → "The Way is Open" → next area opens.
+
+    '
+  callouts: []
+  wipe_triggers:
+  - Ultra Minotaur melee/slam = sparrow + Guardian dead.
+  damage_phase_triggers: []
+  parallel_timeline: []
+  permutations:
+  - name: Standard sparrow
+    learner_friendly: true
+    summary: Group up, destroy clusters together, follow probe.
+    roles:
+    - id: all
+      count: 3
+      does: Burst Blights, follow probe.
+      loadout:
+        subclass: Any mobility-friendly subclass (Solar Hunter, Heat Rises Warlock, or any with strong
+          air/movement) for the sparrow traversal
+        weapons: An add-clear primary or special to burst Blight clusters quickly
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Class
+        surges_mods: No surge required (no DPS phase); mobility and ammo-finder mods only
+  cheese: []
+  common_mistakes:
+  - Engaging Minotaurs — just ride past.
+  rewards:
+    guaranteed: []
+    hidden_chest: null
+    potential_drops: []
+  images:
+    overview: ''
+  learner_path:
+  - Just play.
+  plain_language_steps:
+  - 1. This is a sparrow transition section across a wasteland built from fragments of Io, Titan, Mercury,
+    and Mars; summon your sparrow.
+  - 2. Find the first Blight cluster (a group of distinct dark orbs sitting in a flat area), guarded by
+    Taken.
+  - 3. Group up and burst all the Blights in the cluster; clearing the whole cluster spawns a Taken probe.
+  - 4. The probe dashes toward the next cluster; follow it on your sparrow.
+  - 5. Watch for patrolling Ultra Taken Minotaurs; they are huge and easy to see, so just ride past them
+    and do not engage.
+  - 6. Destroy the second Blight cluster the same way and follow the new probe.
+  - 7. Destroy the third Blight cluster to trigger 'The Way is Open' and unlock the next area.
+  - 8. Regroup at the opened path and continue into the Hexahedron.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Taken faction: Ultra Taken Minotaurs (melee/slam, can one-shot a sparrow-riding Guardian) plus
+        Taken guarding each Blight cluster'
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No specific resist needed; the main danger is the Minotaur slam, which is avoided by riding past
+        rather than tanked
+      concussive: []
+  damage:
+    surges:
+    - No DPS phase in this section; it is a sparrow traversal with Blight clusters, so no surge element
+      matters.
+    burst_windows: No boss damage window; the only 'damage' is quickly bursting each of the 3 Blight clusters.
+    recommended_dps:
+    - Any add-clear primary or special to pop Blights fast
+    - Mobility-focused setup so you can keep moving and not get caught by Minotaurs
+  role_loadouts:
+  - role_id: all
+    subclass: Any mobility-friendly subclass (Solar Hunter, Heat Rises Warlock, or any with strong air/movement)
+      for the sparrow traversal
+    weapons: An add-clear primary or special to burst Blight clusters quickly
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge required (no DPS phase); mobility and ammo-finder mods only
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/prophecy.yaml (encounter: wasteland)'
+    note: Primary source; this transition is a sparrow + Blight section with patrolling Ultra Minotaurs
+      per the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Sparrow speed exotics and stat names may have shifted post-Edge of Fate (Mobility->Weapons).
+      Confirm in-game; no specific gear is hard-required here.
+    date_checked: '2026-06-07'

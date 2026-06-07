@@ -1,0 +1,279 @@
+# raid_context/content/dungeons/grasp-of-avarice/2-phryzhia.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: phryzhia
+  name: Phry'zhia, the Insatiable
+  difficulty: easy
+  estimated_time: 8-12 min
+  abstract: 'First boss. Phry''zhia stands invincible mid-arena. Use Scorch Cannons
+
+    from Fallen to blow open side rooms, gather engrams from Hive inside,
+
+    deposit 40 at the central Icon → DPS phase opens.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Rectangular arena, Phry''zhia (Hive Ogre) center.
+
+    - Icon of Excess near the spawn-side gap.
+
+    - Two side rooms (L/R) sealed behind Fallen-battery doors.
+
+    - Fallen units periodically spawn with Scorch Cannons.
+
+    - Elevated ledge on the right side (safe DPS perch).
+
+
+    PLATFORM MECHANICS:
+
+    - Scorch Cannon: take from killed Fallen → aim at door battery → hold trigger to charge → release
+    at full charge = door opens.
+
+    - Doors stay open for ~30s. Side rooms have Hive that drop engrams when killed.
+
+    - Icon of Excess: deposit Burdened stacks. 40 cumulative triggers DPS.
+
+
+    START STATE: rally banner on spawn-side ledge. Drop down to engage = Phry''zhia activates eye laser.
+
+    '
+  callouts:
+  - when: Scorch Cannon picked up
+    from: self
+    to: team
+    say: '"Cannon — opening [L/R]."'
+    why: Tells gatherers which side room to push next.
+  - when: Door opened, engrams flowing
+    from: self
+    to: team
+    say: '"[L/R] open."'
+    why: Gatherers swap rooms. Cannoneer holds for next door.
+  - when: Deposit count milestone
+    from: any
+    to: team
+    say: '"20 deposited."'
+    why: Pace check — informs whether to push more rooms or sprint to 40.
+  - when: Phry'zhia succumbs (DPS phase opens)
+    from: any
+    to: team
+    say: '"DAMAGE — well at the icon."'
+    why: Triggers stack on the Icon spot (best Well/Bubble placement).
+  wipe_triggers:
+  - Burdened timer to 0.
+  - Phry'zhia eye laser at exposed sightline (hides behind cover when not depositing/damaging).
+  - Thrall waves overwhelming a solo cannoneer.
+  damage_phase_triggers:
+  - 40 stacks deposited at the Icon → 'succumbs to temptation' = ~20-25s damage window.
+  parallel_timeline:
+  - phase: Pull (~0:00)
+    cannoneer: Kill nearest Scorch-Cannon Vandal, take cannon.
+    gatherers_2: Add-clear, prep for engram intake.
+  - phase: First door + gather (~0:30-1:30)
+    cannoneer: Charge battery, open L room.
+    gatherers_2: Push L room, kill Hive, gather engrams, deposit.
+    cannoneer_followup: Hold cannon, open R room next.
+  - phase: DPS window (~1:30-2:00)
+    all: Stack at the Icon. Pop Well/Bubble. Burst Phry'zhia.
+  - phase: Reset (if not 1-phased)
+    all: Phry'zhia resumes invincibility. Cycle.
+  permutations:
+  - name: Standard 1-cannon / 2-gather
+    learner_friendly: true
+    summary: One dedicated cannoneer; two gatherers split L/R rooms.
+    roles:
+    - id: cannoneer
+      count: 1
+      does: Hold cannon ALL phases. Open doors, charge batteries.
+      loadout:
+        subclass: Survivable subclass with good self-sustain so you can hold the Scorch Cannon through
+          Thrall waves; ability-uptime focus.
+        weapons: Primary for clearing Cannon-carrying Vandals; keep the Scorch Cannon in hand for doors.
+          Switching weapons drops the cannon but preserves ammo for re-pickup.
+        exotic_armor: ''
+        armor_stats: &id001
+        - Health
+        - Class
+        surges_mods: No mandatory surge; prioritize ability-uptime and resilience mods over weapon surges
+          in this role.
+    - id: gatherer
+      count: 2
+      does: Push side rooms, gather engrams, deposit.
+      loadout:
+        subclass: Add-clear subclass; an ability loop that benefits from the every-10-stacks instant Super
+          recharge is strong here.
+        weapons: Add-clear primary plus a burst heavy for the damage window; Witherhoard is excellent
+          for chipping the Ogre during deposit runs.
+        exotic_armor: ''
+        armor_stats: &id002
+        - Health
+        - Grenade
+        surges_mods: Match heavy surges to your burst weapon's element; otherwise run ability and resist
+          mods.
+  - name: 'Speed: 2-cannon / 1-gather'
+    learner_friendly: false
+    summary: Two cannoneers prep both doors simultaneously; one gatherer farms whichever opens first.
+    best_for: 1-phase attempts.
+    roles:
+    - id: cannoneer
+      count: 2
+      does: Open both side rooms at the same time.
+      loadout:
+        subclass: Survivable subclass with good self-sustain so you can hold the Scorch Cannon through
+          Thrall waves; ability-uptime focus.
+        weapons: Primary for clearing Cannon-carrying Vandals; keep the Scorch Cannon in hand for doors.
+          Switching weapons drops the cannon but preserves ammo for re-pickup.
+        exotic_armor: ''
+        armor_stats: *id001
+        surges_mods: No mandatory surge; prioritize ability-uptime and resilience mods over weapon surges
+          in this role.
+    - id: gatherer
+      count: 1
+      does: Sprint into whichever room opened first, gather, deposit.
+      loadout:
+        subclass: Add-clear subclass; an ability loop that benefits from the every-10-stacks instant Super
+          recharge is strong here.
+        weapons: Add-clear primary plus a burst heavy for the damage window; Witherhoard is excellent
+          for chipping the Ogre during deposit runs.
+        exotic_armor: ''
+        armor_stats: *id002
+        surges_mods: Match heavy surges to your burst weapon's element; otherwise run ability and resist
+          mods.
+  - name: Solo
+    learner_friendly: false
+    summary: You do everything. Cannon → door → gather → deposit. 2-3 phases typical.
+    roles:
+    - id: solo
+      count: 1
+      does: Full loop. Don't bother with 2 doors — use one, deposit, swap sides next phase.
+      notes:
+      - Witherhoard the Ogre during deposit runs for free chip.
+      loadout:
+        subclass: Self-sufficient survival kit (strong healing or Stasis crowd-control) so you can cannon,
+          gather, and deposit alone across 2-3 phases.
+        weapons: Witherhoard to chip the Ogre during deposit runs, plus a burst heavy for the short damage
+          window.
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Class
+        surges_mods: Heavy surge matched to your burst weapon; lean on resilience and ability mods for
+          the solo grind.
+  cheese:
+  - title: Ledge DPS perch
+    detail: 'Right-side elevated ledge has line-of-sight on Phry''zhia + cover
+
+      from eye laser. Drop a Well there, damage from the perch. Less
+
+      risky than the Icon-spot but tighter LoS.
+
+      '
+  common_mistakes:
+  - Using the cannon to KILL the Hive instead of OPEN the door — wastes ammo, cannon despawns.
+  - Depositing one stack at a time — slow. Bank 8-10, then deposit.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Matador 64 (shotgun, Arc)
+    - Hero of Ages (sword, Arc)
+    - Descending Echo armor — Greaves + Mark (Class Item)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+  learner_path:
+  - '1st clear: gatherer (Hive room dive).'
+  - '2nd: cannoneer.'
+  plain_language_steps:
+  - 1. Place the rally banner on the spawn-side ledge and gear up; Phry'zhia (a Hive Ogre) sits invincible
+    in the center of the rectangular arena.
+  - 2. Drop down to engage. Phry'zhia activates an eye laser, so use cover and avoid standing in her exposed
+    sightline.
+  - 3. Kill the Fallen that spawn carrying Scorch Cannons and pick up a cannon.
+  - 4. Aim the Scorch Cannon at a side-room door battery, hold the trigger to charge fully, then release
+    to open the door (it stays open about 30 seconds).
+  - 5. Push into the opened side room (Left or Right), kill the Hive inside, and gather the Cursed Engrams
+    they drop.
+  - '6. Manage your Burdened timer: bank around 8-10 stacks, then deposit at the Icon of Excess near the
+    spawn-side gap.'
+  - 7. The cannoneer holds the cannon and opens the other side room next while gatherers swap rooms.
+  - 8. Keep gathering and depositing until the team reaches 40 cumulative deposited stacks.
+  - 9. At 40, Phry'zhia 'succumbs to temptation' and becomes damageable for roughly 20-25 seconds.
+  - 10. Stack on the Icon spot (or the right-side elevated ledge for safer line-of-sight), drop a Well
+    or Bubble, and burst her down.
+  - 11. If she survives, she returns to invincibility; reset the gather-deposit loop and repeat the damage
+    phase.
+  defense:
+    incoming_damage:
+      adds:
+      - Arc (Hive Thrall waves and Acolyte fire)
+      - Void (Hive Knight boomers/projectiles)
+      - Arc (Fallen Vandal/Dreg shots and Scorch Cannon Fallen)
+      boss:
+      - Void (Phry'zhia Hive Ogre eye-laser blast)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Consider Void resistance for the Ogre eye laser; break line of sight rather than tanking it. Arc
+        resistance helps against dense Thrall and Fallen add fire.
+      concussive:
+      - 'Optional: Concussive Dampener can soften the Ogre''s eye-laser splash if you are caught in the
+        open, but breaking sightline is the primary defense.'
+  damage:
+    surges:
+    - No fixed elemental requirement; Phry'zhia takes increased damage while vulnerable. Match surges
+      to your strongest burst weapon.
+    burst_windows: About a 20-25 second window after 40 stacks are deposited; she returns to invincibility
+      if not defeated.
+    recommended_dps:
+    - 'Burst DPS (the window is short): heavy Grenade Launcher or Rocket, Linear Fusion Rifle, or Sword
+      for an aggressive close perch; Witherhoard for sustained chip during deposit runs.'
+  role_loadouts:
+  - role_id: cannoneer
+    subclass: Survivable subclass with good self-sustain so you can hold the Scorch Cannon through Thrall
+      waves; ability-uptime focus.
+    weapons: Primary for clearing Cannon-carrying Vandals; keep the Scorch Cannon in hand for doors. Switching
+      weapons drops the cannon but preserves ammo for re-pickup.
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No mandatory surge; prioritize ability-uptime and resilience mods over weapon surges
+      in this role.
+  - role_id: gatherer
+    subclass: Add-clear subclass; an ability loop that benefits from the every-10-stacks instant Super
+      recharge is strong here.
+    weapons: Add-clear primary plus a burst heavy for the damage window; Witherhoard is excellent for
+      chipping the Ogre during deposit runs.
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: Match heavy surges to your burst weapon's element; otherwise run ability and resist mods.
+  - role_id: solo
+    subclass: Self-sufficient survival kit (strong healing or Stasis crowd-control) so you can cannon,
+      gather, and deposit alone across 2-3 phases.
+    weapons: Witherhoard to chip the Ogre during deposit runs, plus a burst heavy for the short damage
+      window.
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: Heavy surge matched to your burst weapon; lean on resilience and ability mods for the
+      solo grind.
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/grasp-of-avarice.yaml (encounter: phryzhia)'
+    note: Primary source for the Scorch Cannon door mechanic, side-room Hive, 40-deposit DPS trigger,
+      ledge perch, and permutations (cannoneer/gatherer/solo).
+    date_checked: '2026-06-07'
+  - tier: 3
+    name: Recency caveat
+    note: Ogre eye-laser element treated as Void per Hive Ogre convention; verify and confirm current
+      exotic/weapon meta before finalizing loadouts.
+    date_checked: '2026-06-07'

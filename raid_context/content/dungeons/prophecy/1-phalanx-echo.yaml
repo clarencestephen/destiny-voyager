@@ -1,0 +1,249 @@
+# raid_context/content/dungeons/prophecy/1-phalanx-echo.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: phalanx-echo
+  name: Phalanx Echo
+  difficulty: easy
+  estimated_time: 10-15 min
+  abstract: 'Tutorial fight. Tunnel section teaches the motes mechanic, then a
+
+    bowl arena: kill Knights in light/shadow → 5 motes → carry to
+
+    matching pillar → 2 pillars per side → Phalanx exposed → DPS.
+
+    '
+  setup: 'WHAT YOU SEE:
+
+    - Half-spherical arena, Phalanx Echo center with shield.
+
+    - 2 white pillars (left side) + 2 black pillars (right side) — vary placement per cycle.
+
+    - Light zones (sunbeams) + shadow zones in arena.
+
+    - Knight Echo spawns alternate per zone.
+
+
+    PLATFORM MECHANICS:
+
+    - Stand IN sunbeam to make a Knight Echo drop Light Motes.
+
+    - Stand IN shadow to make a Knight Echo drop Dark Motes.
+
+    - 5 motes = carry mode (third-person, 30s timer, no weapons).
+
+    - Walk to matching pillar → shoot to disperse.
+
+    - All 4 pillars dispersed → Phalanx shield down → 50s DPS window.
+
+
+    START STATE: tunnel approach (mote tutorial). Phalanx engages after walking past the probe.
+
+    '
+  callouts:
+  - when: Knight Echo spotted in [light/shadow]
+    from: spotter
+    to: team
+    say: '"[Light/Dark] Knight [direction]."'
+    why: Coordinates light/dark carrier.
+  - when: 5 motes, carrying
+    from: carrier
+    to: team
+    say: '"5 [Light/Dark] — pillar [N/S/E/W]."'
+    why: Tells team to stop spawning more motes of that type.
+  - when: Pillar dispersed
+    from: carrier
+    to: team
+    say: '"Pillar [type] DOWN — [N/N more] to go."'
+    why: Progress check.
+  - when: Phalanx shield down (DPS)
+    from: any
+    to: team
+    say: '"DPS — burn."'
+    why: 50s window. Stack + Super.
+  wipe_triggers:
+  - Phalanx shield blast at point-blank.
+  - Knight Echo Slug Rifle from elevation.
+  - Mote carry timer to 0 = mote lost (waste, not wipe).
+  damage_phase_triggers:
+  - All 4 pillars dispersed (2 Light + 2 Dark) → Phalanx exposed for 50s.
+  parallel_timeline:
+  - phase: Pull
+    all: Approach probe, Phalanx + reinforcements spawn.
+  - phase: Cycle 1 (~0:30-1:30)
+    light_carrier: Stand sunbeam, kill Knight, 5 motes, deposit white pillar.
+    dark_carrier: Stand shadow, kill Knight, 5 motes, deposit black pillar.
+    add_clear: Suppress Psions, distract Phalanx.
+  - phase: Cycle 2 — alternate pair
+    all: Pillars relocate. Repeat with second white + second black.
+  - phase: DPS (~50s window)
+    all: Stack center. Super dump. Kill the Ravenous Goblin spawns.
+  - phase: Reset (if not 1-phased)
+    all: Pillars respawn, cycle resumes.
+  permutations:
+  - name: Standard 1L / 1D / 1 add-clear
+    learner_friendly: true
+    summary: Pre-assigned carriers; one floater for adds.
+    roles:
+    - id: light_carrier
+      count: 1
+      does: Stand light, drop Knights for Light Motes, deposit white pillars.
+      loadout:
+        subclass: Any; a survivable subclass with movement (Solar Warlock/Hunter or Arc for mobility)
+          to reach white pillars quickly
+        weapons: Long-range primary for distant/elevated Knight Echoes; a backup special for adds
+        exotic_armor: ''
+        armor_stats: &id001
+        - Weapons
+        - Health
+        surges_mods: No surge required (no fixed DPS element); run add-clear and survivability mods
+    - id: dark_carrier
+      count: 1
+      does: Stand shadow, drop Knights for Dark Motes, deposit black pillars.
+      loadout:
+        subclass: Any survivable subclass with good mobility to reach black pillars; easier zone-reads
+          make this the recommended first-timer carrier
+        weapons: Long-range primary for Knight Echoes in shadow; special for adds
+        exotic_armor: ''
+        armor_stats: &id002
+        - Weapons
+        - Health
+        surges_mods: No surge required; prioritize survivability and ammo mods
+    - id: add_clear
+      count: 1
+      does: Psions + cover. Backup carrier if one dies.
+      loadout:
+        subclass: Any add-clear subclass; ability-spam build to lock down Psions and cover the Phalanx
+        weapons: Add-clear primary plus a heavy or burst option as backup carrier/DPS
+        exotic_armor: ''
+        armor_stats: &id003
+        - Health
+        - Grenade
+        surges_mods: No surge required; grenade/ability uptime mods for suppressing Psions
+  - name: Solo
+    learner_friendly: false
+    summary: Sequential. Light → deposit → switch shadow → deposit.
+    roles:
+    - id: solo
+      count: 1
+      does: Alternate light/shadow. Witherhoard Phalanx during runs.
+      loadout:
+        subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive while alternating
+          light/shadow runs
+        weapons: Witherhoard to chip the Phalanx during runs, plus a long-range primary for Knights
+        exotic_armor: ''
+        armor_stats: &id004
+        - Health
+        - Class
+        surges_mods: No surge required; survivability and ability-regen mods
+  cheese: []
+  common_mistakes:
+  - Crossing zones with motes in your inventory — picking up opposite type WIPES current.
+  - Killing the wrong Knight (one not in your zone) — drops opposite motes you wanted.
+  - Phalanx shield bash at close range — keep distance.
+  rewards:
+    guaranteed:
+    - 1× dungeon armor or weapon
+    hidden_chest: null
+    potential_drops:
+    - Relentless (pulse rifle, Strand)
+    - Prosecutor (auto rifle, Arc)
+    - Crushing armor — Greaves + Mark Judgment (Class Item)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: add_clear. Watch the carrier loop.'
+  - '2nd: dark_carrier (easier zone-reads).'
+  plain_language_steps:
+  - 1. Walk the tunnel approach past the Taken probe to trigger the fight; the Phalanx Echo spawns in
+    the center of the half-spherical bowl arena with a shield up.
+  - 2. Look around the arena for the light zones (sunbeams) and shadow zones, plus the 2 white pillars
+    on the left and 2 black pillars on the right.
+  - '3. To make Light Motes: stand IN a sunbeam and kill a Taken Knight Echo. To make Dark Motes: stand
+    IN shadow and kill a Knight Echo.'
+  - 4. Pick up exactly 5 motes of one type to enter carry mode (third person, no weapons, 30-second timer).
+  - 5. While carrying, run to the matching pillar (Light to a white pillar, Dark to a black pillar) and
+    press fire to disperse it.
+  - '6. Keep your motes pure: do not cross into the opposite zone and grab the wrong type, or your current
+    motes get wiped and replaced.'
+  - 7. Have one player suppress the Taken Psions and distract the Phalanx so the carriers can deposit
+    safely.
+  - 8. Disperse all 4 pillars (2 white + 2 black) to drop the Phalanx Echo's shield and open a roughly
+    50-second damage window.
+  - 9. Stack near the center, dump Supers and burst damage onto the Phalanx, and clean up the Ravenous
+    Goblin spawns.
+  - 10. If you do not finish it in one window, the pillars respawn and the cycle repeats until the Phalanx
+    Echo dies.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Taken faction: Knight Echoes (boomer/slug-rifle fire from elevation), Taken Psions, Ravenous
+        Goblins'
+      - Knight Echo slug-rifle shots are the main ranged threat from elevation
+      boss:
+      - Taken Phalanx shield bash / shield blast at point-blank (knockback + heavy damage)
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - No Master version exists, so resist needs are light; general damage resistance and keeping distance
+        from the Phalanx blast matter more than a specific element
+      concussive:
+      - Optional Concussive Dampener to soften the Phalanx shield-blast knockback if you keep getting
+        bashed at close range
+  damage:
+    surges:
+    - No fixed DPS element required; any high-burst element works during the ~50s shield-down window.
+      Stasis/Solar/Void all viable since enemies are Taken, not shielded.
+    burst_windows: Roughly a 50-second window opens after all 4 pillars are dispersed and the Phalanx
+      shield drops.
+    recommended_dps:
+    - Burst-damage Super (e.g., a roaming or one-shot Super)
+    - Rocket launcher or grenade launcher for the stacked burst window
+    - Witherhoard or similar damage-over-time to chip the Phalanx between mote runs (solo)
+  role_loadouts:
+  - role_id: light_carrier
+    subclass: Any; a survivable subclass with movement (Solar Warlock/Hunter or Arc for mobility) to reach
+      white pillars quickly
+    weapons: Long-range primary for distant/elevated Knight Echoes; a backup special for adds
+    exotic_armor: ''
+    armor_stats: *id001
+    surges_mods: No surge required (no fixed DPS element); run add-clear and survivability mods
+  - role_id: dark_carrier
+    subclass: Any survivable subclass with good mobility to reach black pillars; easier zone-reads make
+      this the recommended first-timer carrier
+    weapons: Long-range primary for Knight Echoes in shadow; special for adds
+    exotic_armor: ''
+    armor_stats: *id002
+    surges_mods: No surge required; prioritize survivability and ammo mods
+  - role_id: add_clear
+    subclass: Any add-clear subclass; ability-spam build to lock down Psions and cover the Phalanx
+    weapons: Add-clear primary plus a heavy or burst option as backup carrier/DPS
+    exotic_armor: ''
+    armor_stats: *id003
+    surges_mods: No surge required; grenade/ability uptime mods for suppressing Psions
+  - role_id: solo
+    subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive while alternating light/shadow
+      runs
+    weapons: Witherhoard to chip the Phalanx during runs, plus a long-range primary for Knights
+    exotic_armor: ''
+    armor_stats: *id004
+    surges_mods: No surge required; survivability and ability-regen mods
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/dungeons/prophecy.yaml (encounter: phalanx-echo)'
+    note: Primary source; mechanics, roles, and enemy list taken directly from the authored v2 block.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Edge of Fate renamed the six character stats (e.g., Resilience->Health, Recovery->Class). Verify
+      current exotics/weapons in-game before committing; specifics left blank where unverifiable.
+    date_checked: '2026-06-07'
