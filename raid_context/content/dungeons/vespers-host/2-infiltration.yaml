@@ -1,0 +1,104 @@
+# dungeons/vespers-host/2-infiltration.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 2
+  slug: infiltration
+  name: Infiltration (Nuclear Core Traversal)
+  abstract: 'A traversal puzzle through powered hallways while avoiding the giant Servitor Raneiks Unified.
+    You gather nuclear cores from Fallen Captains and deposit them into numbered bins (1 through 5/6)
+    in order. Doors are unpowered: you gain Power Reserves by deactivating forcefields/consoles and closing
+    doors, and spend them to open doors. The video notes this section gives no rewards on its own; it
+    sets up the Raneiks fight.'
+  setup: You load in with your route blocked by a barrier. Toggling a Fallen console/power off lets you
+    through and grants Power Reserves (shown left of screen). Raneiks floats around the hallways. The
+    first bin (No. 1) is through the door to your right when you first see Raneiks.
+  plain_language_steps:
+  - 1. Toggle off the first barrier/console to pass through; this gives your team a tick of Power Reserves
+    (shown on the left of your screen).
+  - '2. Manage Power Reserves: deactivating a forcefield or closing a door behind you adds a point; opening
+    a door spends one. Close doors behind you so you have power to open the next ones, and you can bank
+    multiple points to open several doors at once.'
+  - 3. Avoid Raneiks Unified, the giant Servitor floating the halls. Its standard fire hits hard, but
+    the real threat is the purple Integration beam that tethers you and starts a death timer; break line
+    of sight (keep cover between you and Raneiks) to interrupt it.
+  - 4. Kill the Fallen Captains that spawn (usually near the bins) to get nuclear cores. Captains respawn,
+    so you're not rushed — play safe.
+  - 5. Deposit cores into the numbered bins in order. The No. 1 bin is through the door to your right
+    when you first see Raneiks; deactivate the nearby forcefield for the power to open it. Filling the
+    first three bins opens a large metal door near the No. 3 bin into the second half.
+  - 6. Repeat with bins 4 and 5 to complete the puzzle. (One source counts bins 1 through 6.)
+  - 7. After dunking the fifth core, run down the last hallway to a big hole in the floor that drops you
+    away from the boss and toward the Raneiks fight.
+  mechanics:
+  - 'Power Reserves: deactivate forcefields/consoles or close doors to gain points; opening doors spends
+    points. You must power-down somewhere to power-up elsewhere. Banking points lets you open several
+    doors at once and circle back through reopened paths.'
+  - 'Raneiks Unified roams the halls. Integration: a purple tether beam that starts a death timer; interrupt
+    by breaking line of sight.'
+  - Nuclear cores drop from Fallen Captains (which respawn near the bins) and carry their own timers;
+    deposit them into numbered bins in order (1 through 5/6).
+  - Route is non-fixed and changes based on where Raneiks is — take back routes through extra doors to
+    avoid the boss when it blocks the direct path.
+  - Filling the first three bins opens a large metal door near the No. 3 bin to the second half of the
+    puzzle.
+  defense:
+    incoming_damage:
+      adds:
+      - Fallen enemies throughout the hallways
+      - Fallen Captains (drop the nuclear cores)
+      boss:
+      - Raneiks Unified (giant roaming Servitor) — standard weapons fire, plus the Void/purple Integration
+        tether beam that starts a death timer
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: No DPS phase. This is a traversal/puzzle section; you avoid Raneiks rather than damage
+      it, and only fight Captains and trash for cores.
+    recommended_dps: []
+  roles:
+  - id: power-router
+    does: Manages Power Reserves for the team — deactivates forcefields/consoles and closes doors to bank
+      power, then opens the doors needed to reach the next bin while avoiding Raneiks.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: core-carrier
+    does: Kills the Fallen Captains, grabs the nuclear cores, and deposits them into the numbered bins
+      in order while keeping cover between themselves and Raneiks to avoid the Integration tether.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  rewards:
+  - No reward for this section per the KackisHD video ('you actually don't get any rewards for that encounter')
+  common_mistakes:
+  - Running out of Power Reserves by opening doors without first closing/deactivating others to bank power.
+  - Taking the direct route straight into Raneiks instead of routing around it when it blocks the path.
+  - Standing in line of sight of Raneiks and letting the Integration tether timer run to zero instead
+    of breaking LoS with cover.
+  - Depositing cores in the wrong order instead of 1, 2, 3, then 4 and 5.
+  - Rushing — Captains respawn, so panicking over core timers is unnecessary; play safe.
+  sources:
+  - tier: 1
+    name: GameSpot — Destiny 2 Vesper's Host Dungeon Guide (Phil Hornshaw)
+    note: Encounter named 'Infiltration'; Power Reserves mechanic, numbered bins 1-6 in order, Captains
+      drop cores, Raneiks Integration purple tether beam, hole in floor to escape.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: KackisHD — Vesper's Host Dungeon For Dummies (YouTube, 2024-10-12)
+    note: Traversal section walkthrough; toggling power on/off, numbered deposits 1-5, route changes around
+      the boss, states this section gives no rewards.
+    date_checked: '2026-06-07'

@@ -1,0 +1,133 @@
+# raids/desert-perpetual-epic/2-agraios-hobgoblin.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: desert-perpetual-epic
+  name: The Desert Perpetual (Epic)
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: agraios-hobgoblin
+  name: Agraios (Hobgoblin)
+  abstract: 'Second suggested encounter, located South/Behind. Directive: Seek & Grasp. The EPIC mod added
+    here is the Elimination laser (Variable Elimination from the Hobgoblin). The end goal is the same
+    as the base mechanic but with extra steps: additional key sets of eyes appear outside (one on the
+    building, one on a pillar before the building), cyclops sit in side rooms, and both inside and outside
+    teams must step on plates together. The DPS phase is significantly longer and the boss now has four
+    shields instead of two, with two guardians teleported to left/right rooms to shoot eyes on the shields.'
+  setup: This is the second boss-order pick; its Elimination-laser EPIC mechanic and main mechanic add
+    onto the encounters chosen after it. Because the Hobgoblin's Variable Elimination laser is dangerous,
+    use cover. The general round flow (align capsule, Banishment, rooms) repeats from the previous area.
+    Damage is not hard to achieve here.
+  plain_language_steps:
+  - 1. Align to the matching capsule and run the same round setup as before (Banishment order and rooms
+    stay the same).
+  - '2. Work both the inside room and the outside eyes: step on the plate together on both sides now.
+    There are additional key sets of eyes outside — right on the building, left on the pillar before reaching
+    the building — and cyclops sit in the side rooms.'
+  - 3. On each side, the inside player calls out the two eyes lit up on the key; the outside player shoots
+    both; one comes back glowing to the inside player, who calls it out to the inside player on the other
+    side.
+  - 4. That inside player shoots the called eye, and vice versa for the other side.
+  - 5. Both inside guardians shoot at the same time (count 3, 2, 1, shoot), because the Hydra releases
+    a containment field inside that can't be shot out of — both add-clear go into the rooms to shoot them
+    out. Sometimes the field misses and travels outside.
+  - 6. Shoot the triangle the same as in the base mechanic.
+  - '7. Damage phase: it is significantly longer here. The boss now has four shields instead of two, and
+    damage can be done continuously through the breaks between shields.'
+  - 8. During DPS, two randomly chosen guardians get teleported to the left/right rooms; while in the
+    beam, shoot all six eyes plus the center on the shield (just like you would have done outside), then
+    get teleported back to damage.
+  - 9. Back at damage, the boss has two shields with a beam — shoot the center eye on both while in their
+    respective beams to take away all shields.
+  - 10. There are a lot of adds in the boss/DPS rooms, but they don't seem to respawn; the first two to
+    teleport can focus solely on adds if wanted.
+  mechanics:
+  - 'Directive: Seek & Grasp.'
+  - 'EPIC mod: Elimination laser / Variable Elimination from the Hobgoblin — use cover.'
+  - 'Extra eye sets: additional key eyes outside, right on the building and left on the pillar before
+    the building; cyclops in side rooms.'
+  - 'Plates: step on the plate together on both sides (inside room and outside eyes).'
+  - 'Eye relay: inside calls lit eyes on the key, outside shoots them, one returns glowing to inside,
+    who calls it across; inside players shoot, then both inside shoot simultaneously (3,2,1) because the
+    Hydra releases a containment field inside that can''t be shot out of (add-clear go into the rooms
+    to clear it; it can sometimes travel outside).'
+  - Triangle shot is the same as the base mechanic.
+  - 'Four shields: boss has four shields instead of two; DPS can continue through the breaks between shields.'
+  - 'Shield eye mechanic: two random guardians teleported to L/R rooms shoot all six eyes plus center
+    on the shield, return to damage, then shoot the center eye on both remaining shielded beams to strip
+    all shields.'
+  defense:
+    incoming_damage:
+      adds:
+      - Cyclops (side rooms)
+      - Many adds in boss/DPS rooms (do not appear to respawn)
+      boss:
+      - Variable Elimination laser (use cover)
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: The damage phase is significantly longer than the base encounter; damage can be done
+      continuously through the breaks between the boss's four shields. Source says damage here is not
+      hard to achieve.
+    recommended_dps:
+    - Finality's Auger + Mint Retrograde + SMG swapping (Antedate with Reconstruction/Target Lock, or
+      Yeartide Apex with Attrition Orbs/Closing Round, or MIDA Mini-Tool with Attrition Orbs/Air Control)
+    - 'Alt: Anarchy + Sniper or Thunderlord'
+    - 2 Wells if possible + Tractor
+  roles:
+  - id: inside-eye caller/shooter
+    does: Inside the room, steps on the plate, calls out lit eyes on the key, shoots returned glowing
+      eyes, and shoots simultaneously with the other inside guardian (3,2,1) to manage the containment
+      field.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: 'DPS: 2 Wells if possible + Tractor. Use cover vs the Variable Elimination laser.'
+  - id: outside-eye shooter
+    does: Outside, steps on the plate, shoots the called eyes on the building/pillar key sets so one returns
+      glowing to the inside guardian.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Use cover vs the Variable Elimination laser.
+  - id: add clear / containment field
+    does: Clears the heavy add population and goes into the rooms to shoot out the containment field the
+      Hydra releases (which can't be shot from inside the room).
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: shield-room shooter (DPS)
+    does: When teleported to the L/R rooms during damage, shoots all six eyes plus the center on the shield,
+      returns to damage, then shoots the center eye on the remaining shielded beams to strip all shields.
+    loadout:
+      subclass: ''
+      weapons: 'Finality''s Auger + Mint Retrograde + SMG swapping (Antedate, Yeartide Apex, or MIDA Mini-Tool);
+        Alt: Anarchy + Sniper or Thunderlord'
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: DPS phase is significantly longer; damage continuously through shield breaks.
+  rewards: []
+  common_mistakes:
+  - Standing in the Variable Elimination laser instead of using cover.
+  - Failing to shoot the containment field out from inside the room — it can't be shot out from there,
+    so add-clear must enter the rooms; it can also miss and travel outside.
+  - Not shooting simultaneously (3,2,1) on the two inside eyes when the containment field releases.
+  - Stopping damage between shield breaks instead of continuing through them.
+  sources:
+  - tier: 2
+    name: desert-perpetual-epic-source.md (community Epic sherpa notes, video https://youtu.be/fI_rdYPhAgs)
+    note: 'Epic-variant sherpa notes; Agraios section (Directive: Seek & Grasp, Elimination laser / Variable
+      Elimination mod) including the extra outside eye sets, dual-plate eye relay, containment field,
+      four-shield DPS, and recommended DPS loadouts.'
+    date_checked: '2026-06-07'

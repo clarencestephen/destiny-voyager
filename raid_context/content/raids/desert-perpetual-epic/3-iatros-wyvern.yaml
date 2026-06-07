@@ -1,0 +1,116 @@
+# raids/desert-perpetual-epic/3-iatros-wyvern.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: desert-perpetual-epic
+  name: The Desert Perpetual (Epic)
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: iatros-wyvern
+  name: Iatros (Wyvern)
+  abstract: 'Third suggested encounter, located East/Right. Directive: Evolve & Judge. The EPIC mod added
+    here is Diastole + Suspend. The boss comes down at the beginning of the damage phase and chooses various
+    (sometimes the same) perches, so long-range weapons are required and a runner runs the ring almost
+    the whole DPS. The final stand uses six guardians on three plates and ''Temporality Fractures'' damage
+    buff: the center boss is immune while low-HP headless copies appear in the arena corners, each assigned
+    to a plate pair, and only after the copies die can the center boss be damaged.'
+  setup: This is the third boss-order pick; its Diastole + Suspend EPIC mechanic stacks onto Koregos.
+    Because Suspend removes abilities, the ring runner must make sure they don't get suspended (don't
+    use a grenade to create a detain bubble while suspended). Toward the end of DPS, save supers for the
+    final stand. Fanatics spawn just before and during damage.
+  plain_language_steps:
+  - 1. Run the usual ring/sand and eye mechanics for this encounter.
+  - '2. Watch chat: ''Looses track of variables'' means the boss is coming down soon.'
+  - 3. The boss comes down at the beginning of the damage phase, so long-range weapons are required. It
+    chooses various (and sometimes the same) perch to hang out on; the runner is basically running the
+    whole DPS and Tractor is only useful for a short time.
+  - 4. The ring runner must make sure they don't get suspended if that mod is on — Suspend removes abilities,
+    so don't use a grenade (to create a detain bubble) at that time.
+  - 5. Fanatics spawn just before and during damage; deal with them while damaging.
+  - 6. Toward the end of DPS, save supers for the final stand.
+  - 7. As soon as the boss goes into final stand, two guardians stand on each of the three plates.
+  - 8. Chat reads 'Temporality Fractures', giving a damage buff. The boss in the center is immune. In
+    the arena corners, copies of the boss appear at ground level — all low HP (but the amount is deceiving)
+    and headless/named.
+  - 9. Each plate pair kills the copy they are assigned. If you take too long, a copy might go temporarily
+    immune and be coy.
+  - 10. Once all copies are dead, chat reads 'Agraios final script activates' — now damage the center
+    boss and kill it. There are 4 bosses plus 1 unnamed copy, which is the one to shoot during damage;
+    watch for the orange teleport dust.
+  mechanics:
+  - 'Directive: Evolve & Judge.'
+  - 'EPIC mod: Diastole + Suspend. Suspend removes abilities; the ring runner must avoid being suspended
+    (don''t use a grenade for a detain bubble while suspended).'
+  - 'Boss descent: ''Looses track of variables'' in chat means the boss is coming down soon; it comes
+    down at the start of DPS and perches at various (sometimes repeated) spots, so long-range weapons
+    are needed.'
+  - 'Runner: a runner runs the ring almost the entire DPS; Tractor is only useful for a short time.'
+  - Fanatics spawn just before and during damage.
+  - 'Final stand: two guardians on each of three plates; ''Temporality Fractures'' gives a damage buff;
+    the center boss is immune while low-HP headless/named copies appear in the corners. Each plate pair
+    kills its assigned copy; copies can go temporarily immune if you take too long.'
+  - '''Agraios final script activates'' in chat means the center boss can now be damaged. There are 4
+    bosses plus 1 unnamed copy (the one to shoot during damage) — watch for the orange teleport dust.'
+  defense:
+    incoming_damage:
+      adds:
+      - Fanatics (just before and during damage)
+      boss:
+      - Suspend (Diastole + Suspend EPIC mod — removes abilities)
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: 'Boss comes down at the beginning of the damage phase and chooses various perches,
+      requiring long-range weapons; a runner runs the ring almost the whole DPS and Tractor is only briefly
+      useful. The final stand is a separate phase: kill the corner copies first, then ''Agraios final
+      script activates'' lets you damage the immune center boss.'
+    recommended_dps:
+    - Grand Overture or Finality's Auger
+  roles:
+  - id: ring runner
+    does: Runs the ring almost the entire DPS phase. Must avoid being suspended (Diastole + Suspend removes
+      abilities) — don't use a grenade to make a detain bubble while suspended.
+    loadout:
+      subclass: ''
+      weapons: Grand Overture or Finality's Auger
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Avoid Suspend; save super for final stand.
+  - id: long-range damage
+    does: Uses long-range weapons to hit the boss as it descends and perches at various spots during DPS;
+      Tractor is only useful briefly.
+    loadout:
+      subclass: ''
+      weapons: Grand Overture or Finality's Auger
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Save supers for the final stand.
+  - id: final-stand plate pair
+    does: In the final stand, two guardians stand on each of the three plates, gain the 'Temporality Fractures'
+      damage buff, and kill their assigned corner copy of the boss; then all damage the center boss once
+      'Agraios final script activates'.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Save supers for the final stand.
+  rewards: []
+  common_mistakes:
+  - Using short-range weapons when the boss perches far away during DPS — long-range is required.
+  - Getting suspended as the ring runner and losing abilities; using a grenade for a detain bubble while
+    suspended.
+  - Taking too long on the final-stand copies, letting them go temporarily immune and coy.
+  - Damaging the immune center boss before 'Agraios final script activates'.
+  - Spending supers during DPS instead of saving them for the final stand.
+  sources:
+  - tier: 2
+    name: desert-perpetual-epic-source.md (community Epic sherpa notes, video https://youtu.be/fI_rdYPhAgs)
+    note: 'Epic-variant sherpa notes; Iatros section (Directive: Evolve & Judge, Diastole + Suspend mod)
+      including the boss descent, ring runner, Fanatics, and the ''Temporality Fractures'' final stand
+      with corner copies.'
+    date_checked: '2026-06-07'

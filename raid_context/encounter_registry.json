@@ -762,5 +762,73 @@
         "ingame_name": ""
       }
     ]
+  },
+  "vespers-host": {
+    "slug": "vespers-host",
+    "name": "Vesper's Host",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raid_context/content/dungeons/vespers-host/",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "activation",
+        "name": "Activation (Vesper Station Awoken)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "infiltration",
+        "name": "Infiltration (Nuclear Core Traversal)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "raneiks-unified",
+        "name": "Raneiks Unified (Boss Fight)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "corrupted-puppeteer",
+        "name": "Corrupted Puppeteer (Final Boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "desert-perpetual-epic": {
+    "slug": "desert-perpetual-epic",
+    "name": "The Desert Perpetual (Epic)",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raid_context/content/raids/desert-perpetual-epic/",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "epoptes-hydra",
+        "name": "Epoptes (Hydra)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "agraios-hobgoblin",
+        "name": "Agraios (Hobgoblin)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "iatros-wyvern",
+        "name": "Iatros (Wyvern)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "koregos-final-boss",
+        "name": "Koregos (Final Boss)",
+        "ingame_name": ""
+      }
+    ]
   }
 }

@@ -1,0 +1,131 @@
+# dungeons/vespers-host/1-activation.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 1
+  slug: activation
+  name: Activation (Vesper Station Awoken)
+  abstract: The first encounter takes place in a large room with a big AI sphere in the center. You power
+    up the AI system by finding three nuclear cores in three side rooms (marked brain, lungs, and heart)
+    and dunking them into three bins behind the sphere. Each side room is reached with the Scanner/Operator
+    panel mechanic, and every trip back into the main room spawns a Brig you must destroy to advance.
+    An enrage timer runs throughout.
+  setup: A starting area with a rally flag and three off-shooting rooms, each marked with a symbol (brain
+    at front-left, lungs at back-left, heart at back-right). Symbols are just for team communication.
+    You interact with the central AI sphere to reboot the system and begin. Before entering this encounter
+    you already used Scanner+Operator on four panels at the airlock door to get in.
+  plain_language_steps:
+  - 1. Interact with the central AI sphere to reboot the system and start the encounter; this drops a
+    Brig and spawns Fallen enemies.
+  - 2. Destroy the Brig in the center first, then clear the other enemies until an enemy carrying the
+    Scanner augment spawns. Kill it and pick up Scanner.
+  - 3. Pick any side room with spinning red lights above its door (brain, lungs, or heart) and head in
+    as a team, clearing tough enemies including Machine Priest's Assistants.
+  - 4. At the end of the room the Scanner player runs to the panels and checks the radar; icons that turn
+    white are correct, icons that disappear are wrong. There are usually four correct panels (commonly
+    two bad ones, rest good).
+  - 5. The Operator player shoots only the correct panels. Shooting a wrong panel kills the Operator instantly.
+    When the right panels are shot, a bin opens with a nuclear core.
+  - 6. Carry the nuclear core back to the main room. Carrying it removes your double-jump, slows you,
+    and stacks Radiation; at Radiation x10 you die, so hand it off or drop it briefly to reset (Radiation
+    falls quickly). Don't leave it on the ground too long or it disappears.
+  - 7. Back in the main room a new Brig has spawned. Kill the Brig to drop the shield over the three bins
+    behind the sphere, then dunk the core into any bin.
+  - '8. Tip: before leaving a side room, deposit Scanner and Operator into the deposit stations so they''re
+    waiting for you in the next room''s stations.'
+  - 9. Repeat for the other two rooms. The final core trip back spawns a larger Brig boss; make sure you
+    have the damage to take it down. Once all three cores are dunked, the encounter ends.
+  - 10. Beat the enrage timer (shown top-left) by completing all three rooms quickly; you can split the
+    team so a core carrier transports while another player clears the next route.
+  mechanics:
+  - 'Augment system: kill the marked enemy (Viral Carrier message) to grab Scanner (yellow) or Operator
+    (red). One augment per person; ~1-minute kill-timer; deposit in wall stations to reset; passing an
+    augment into a station makes it available in the linked station in another room.'
+  - 'Scanner: panels show as yellow icons on the radar; getting close turns the correct ones white (good
+    ''Bing'' sound) and makes wrong ones disappear (bad sound).'
+  - 'Operator: shoots the panels Scanner identified. Shooting a wrong panel kills the Operator instantly.'
+  - 'Brig: a Brig drops when you activate the sphere and a new one spawns each time you return to the
+    center room; you must destroy it before you can dunk a core (it shields the bins). The final core
+    return spawns a larger Brig boss.'
+  - 'Nuclear core: removes double-jump, slows you, and stacks Radiation to a max of 10 (which kills you);
+    drop briefly to clear Radiation; core disappears if left on the ground too long.'
+  - Three side rooms marked brain/lungs/heart with spinning red lights above the door that turn off once
+    that room's core is taken, marking which rooms are still active.
+  - Enrage timer shown in the top-left; all three cores must be returned and dunked before it expires.
+  defense:
+    incoming_damage:
+      adds:
+      - Fallen enemies stream in when the sphere is activated
+      - Machine Priest's Assistants (elite Fallen) inside the side rooms and on the route back
+      boss:
+      - Brig (central, respawns each return to main room; final return spawns a larger Brig boss)
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: No dedicated boss DPS phase. The damage demand is killing each Brig quickly (the central
+      Brig and the larger final Brig boss) and clearing dense add waves under the enrage timer.
+    recommended_dps:
+    - Heavy grenade launchers — described as fantastic for nuking the Brigs
+    - Special weapon that deals damage — suggested as helpful for the Brig
+    - Super such as Twilight Arsenal — named as an option for the larger Brig boss
+    - Indebted Kindness (rocket-assisted frame sidearm) with Voltshot — named as clutch for decimating
+      tightly packed add groups
+  roles:
+  - id: scanner
+    does: Holds the Scanner augment, runs the panels in each side room and watches the radar to identify
+      which panels are correct (turn white) versus wrong (disappear), then calls them out for the Operator.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: operator
+    does: Holds the Operator augment and shoots only the correct panels the Scanner identifies to open
+      the core bin; must avoid wrong panels (instant death).
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: core-carrier
+    does: Transports the nuclear core back to the main room; on long routes (especially the top-left/back
+      room) hands off to a teammate to avoid hitting Radiation x10. The third player can return to the
+      center to start clearing the next route while the core is being carried.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  rewards:
+  - Encounter reward chest (specific loot not detailed in source)
+  common_mistakes:
+  - Operator shooting a wrong panel, which causes instant death.
+  - Letting the augment kill-timer run out instead of depositing it in a station.
+  - Trying to dunk a core before destroying the newly-spawned Brig, which still shields the bins.
+  - Carrying a nuclear core too long and dying at Radiation x10 instead of handing off or dropping it
+    briefly.
+  - Leaving a dropped core on the ground too long so it disappears and must be re-fetched.
+  - Not depositing Scanner/Operator before leaving a room, forcing you to re-acquire augments from enemies
+    later.
+  - Lacking the damage to drop the larger final Brig boss in time.
+  sources:
+  - tier: 1
+    name: GameSpot — Destiny 2 Vesper's Host Dungeon Guide (Phil Hornshaw)
+    note: Encounter named 'Activation'; AI sphere, three brain/lungs/heart rooms, three nuclear cores
+      into three bins, Brig respawn, Scanner/Operator panel mechanic, Radiation core debuff.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: KackisHD — Vesper's Host Dungeon For Dummies (YouTube, 2024-10-12)
+    note: First encounter walkthrough; enrage timer, larger final Brig boss, deposit-station augment passing
+      tip, heavy GL / Twilight Arsenal / Indebted Kindness w/ Voltshot loadout notes.
+    date_checked: '2026-06-07'

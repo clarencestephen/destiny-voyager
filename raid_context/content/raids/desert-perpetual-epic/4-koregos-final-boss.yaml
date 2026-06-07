@@ -1,0 +1,214 @@
+# raids/desert-perpetual-epic/4-koregos-final-boss.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: desert-perpetual-epic
+  name: The Desert Perpetual (Epic)
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: koregos-final-boss
+  name: Koregos (Final Boss)
+  abstract: 'Final encounter, located North/Forward. The whole fight is about time travel: a constantly
+    spinning deposit ring shows no color without a buff, color-coded Chronon sand must be aligned to capsules,
+    and CAC Temporality buffs (Cyclical, Absolute, Constant) are pulled from Vex plates to break crystals.
+    The fight runs through a series of ''Undoing'' rounds (Round Orientation, then Rounds 1, 2, 3 and
+    a Final stand), each adding the undoing of a previous boss (Epoptes, Agraios, Iatros). Diastole now
+    bounces and suspends, Banishment recurs every round, and the ''Worldline Stability'' buff lasts about
+    five minutes (wipe mechanic if it runs out). The Final Stand has three guardians with Absolute Temporality
+    destroy three crystals so the boss becomes damageable, then everyone jumps off and goes through the
+    portal ring for loot.'
+  setup: 'Be on damage loadouts but survivability is key. The deposit ring is now constantly spinning
+    and shows no color without a buff; picking up sand over a different color simply overwrites it. Each
+    area has a Vex pool that grants ''Temporal Occulus'' for ~9 seconds to see the ring briefly (possibly
+    one use per pool). Diastole now bounces and suspends — if a guardian is already in the air it won''t
+    suspend, so just hop at the end of the third beat. The ''Worldline Stability'' buff in chat lasts
+    ~5 minutes; wipe the mechanic if it runs out. Portal rooms are based on the order the previous bosses
+    were killed. If enough damage is dealt you may skip rounds. General area colors: Top = White, Middle
+    = Blue, Bottom = Red. Tower color/buff order is always: 1. Blue [Top, tallest] Cyclical, 2. White
+    [Mid, middle] Absolute, 3. Red [Bottom, shortest] Constant.'
+  plain_language_steps:
+  - '1. Round Orientation — Banishment: two guardians are selected at top center for ~29 seconds (all
+    six eventually chosen). Clear it by entering a triangular portal and doing mechanics, or by picking
+    up one of only four Oracles in the center. First two selected go through open (clear) portals (checkered
+    = closed); enter at the same time. Cyclops spawn in/outside and lock the exit — kill all and leave;
+    Banishment then clears and two new guardians are selected. Banishment happens every round and during
+    final stand in a different way.'
+  - '2. Determine the Chronon color required: of three tree-like structures, one has a crystal tethered
+    to the triangular portal you need. One or two guardians enter (killing the cyclops inside and outside
+    first), stand on the Vex plate for the CAC Temporality buff, and leave. Look for one of the three
+    same-colored capsules in the arena — that''s the sand color for the next part.'
+  - 3. Anyone can align the map capsule after the boss starts choosing guardians; once aligned, the next
+    mini boss to spawn drops that color Chronon. Don't align until you read the capsules. Use the area
+    Vex pool ('Temporal Occulus', ~9s) to see the ring color briefly.
+  - '4. Round 1 — Align to the matching capsule (color obtained in the previous area), then repeat the
+    area steps; Banishment order/rooms are the same. This time both guardians in the room do the mechs.
+    Kill imps to spawn a Wyvern; on death it drops 4 Chronon (the aligned color). Pick up and deposit
+    in the ring — 4 fills the hourglass. Shoot the crystal below, allowing the two in the room to do the
+    mechs. (Chat: ''The burden of time seeps through reality'' / ''The memory of a failed experiment revives
+    itself''.)'
+  - '5. Round 1 room mechs: kill inside/outside cyclops, then guardian 1 steps on the Vex plate for the
+    CAC Temporality buff and does the Hydra mech (shoot all outer eyes in light), then calls out the two
+    inactive (calm) portals — only one is the SAME for both. Guardian 2 interacts with the matching portal''s
+    top mini box (or all three boxes). Guardian 1 stands in light and shoots the middle eye; both kill
+    the Hydra to earn ''Undoing of Epoptes''. Leave the portal. Don''t kill imps first round — imp death
+    spawns the Wyvern in the main room; only kill imps when sand is needed (imps respawn as needed).'
+  - '6. The CAC-buffed guardian destroys the tethered crystal/Temporal Locus via line of sight (be on
+    roughly the same level, not lower), dropping the Worldline Stability bar. Note the color of the three
+    same-colored capsules for the next sand. Chat: ''Worldlines Fracture Around You'' / ''Koregos returns
+    to the experiment''s inception...'' teleports the team to a new rally flag.'
+  - 7. Round 2 — Align to the matching capsule and repeat.
+  - '8. Round 3 — Align to the matching capsule and break the two crystals as before (earning ''Undoing
+    of Epoptes'' and ''Undoing of Agraios''). Banishment/rooms are the same. At the portal there are two
+    Vex boxes in the air; no plate Temporality is required, and you can bring a 3rd in for add clear as
+    needed. Notify your partner which box each will shoot; both shoot on the 4th Diastole beat. Success
+    chat: ''Iatros looses control of phase space''. Each box shot releases security containment fields
+    (easily shot out of). Do this THREE times, then kill the Wyvern to get ''Undoing of Iatros''.'
+  - '9. After breaking the crystal you lose Temporality and Worldline buffs and Koregos flees (chat: ''Koregos
+    is weakened by the failure of its mechanism'' / ''The memory of a failed experiment revives itself''
+    / ''Koregos flees its mechanism''s failure''). The DPS phase is located just behind the white capsule.'
+  - '10. Round 3 DPS: three guardians step on plates for buffs and three without — all are Absolute. Group
+    up in the middle and DPS the boss. During DPS, crystals spawn — buffed guardians shoot the outer crystal,
+    non-buffed shoot the inner, otherwise the damage phase ends immediately.'
+  - 11. After DPS, chat 'Koregos ponders an unexpected variable' teleports the team to a new rally. There
+    are two crystals. The two guardians with the alignment buff ('Undoing of Epoptes') can kill the Hydra
+    again in the center, etc. The final hit on each mini boss must be from three separate guardians, as
+    it overwrites the current buff. Run into the room / step on the plate to recover and gain the corresponding
+    alignment buff, which lets you break the outside Hydra crystal while the team breaks the inner crystal
+    (removing the Temporality buffs). Doing it this way is better than overwriting, which can cause issues.
+  - 12. Final Round — kill the triple-yellow-bar Harpy ('Undoing of Epoptes' / 'Undoing of Agraios' /
+    'Undoing of Iatros'); line up behind it near the portal so entry is quick after the kill. Enter the
+    portal carefully (not too fast or you might walk off).
+  - '13. In the portal: all guardians are Banished for ~39 seconds — each activates one Oracle (by roster)
+    to recover. Platforms disappear quickly; if you fall, the lift brings you back.'
+  - '14. The final platform is the Final Stand: three guardians get the Absolute Temporality buff to destroy
+    the three crystals (non-buffed guardians shatter the inside). After the three crystals are gone, the
+    boss is damageable; if needed, you can re-break crystals to extend the phase. At the end, jump off
+    or you''ll die. Go through the portal ring for loot outside.'
+  mechanics:
+  - 'Spinning deposit ring: constantly spinning, shows no color without a buff; picking up sand over a
+    different color overwrites it.'
+  - 'Temporal Occulus: each area''s Vex pool grants ''Temporal Occulus'' for ~9 seconds to see the ring
+    briefly (possibly one use per pool).'
+  - Diastole now bounces and suspends; if already in the air it won't suspend, so hop at the end of the
+    third beat.
+  - 'Cube towers / CAC buffs: cube towers have their own {CAC} buffs obtained from Vex plates before shooting.'
+  - 'Tower color/buff order is always: 1. Blue [Top, tallest] Cyclical, 2. White [Mid, middle] Absolute,
+    3. Red [Bottom, shortest] Constant. General areas: Top White, Middle Blue, Bottom Red.'
+  - 'Climb: three different-height box pillars spawn in each area; only use the set at the climb area.
+    Climber calls color order from shortest to tallest each phase (colors can repeat).'
+  - 'Minotaur sand: Minotaur sets spawn each area, each set dropping one Chronon color; step in the Vex
+    pool one at a time to see ring color; two guardians with the selected color pick up/deposit together
+    within 3 seconds. Color changes after 3 seconds or after 2 consecutive dunks. Do all three colors,
+    last by process of elimination; color order stays the same for the round unless you wipe.'
+  - 'Capsule alignment: align Chronon sand to the matching capsule (it reads ''locked''); the next mini
+    boss drops that color. Don''t align until you read the capsules.'
+  - 'Banishment: two guardians selected for ~29-39 seconds (in the final portal, all six are Banished
+    ~39s and each activates an Oracle to recover); clear via triangular portals + mechs or by picking
+    up the four center Oracles. Recurs every round and during final stand.'
+  - 'Undoing rounds: each round adds the undoing of a previous boss — ''Undoing of Epoptes'', ''Undoing
+    of Agraios'', ''Undoing of Iatros'' — via repeating each boss''s mechanic (Hydra eyes, the two air
+    Vex boxes shot on the 4th Diastole beat, killing the Wyvern).'
+  - 'Crystals: CAC/Absolute Temporality-buffed guardians break outer crystals via line of sight; non-buffed
+    break inner crystals. During Round 3 DPS, buffed shoot outer, non-buffed shoot inner, or the phase
+    ends immediately.'
+  - 'Worldline Stability: buff lasts ~5 minutes; wipe the mechanic if it runs out. More time on the timer
+    means more DPS time.'
+  - 'Final-hit overwrite: the final hit on each mini boss must come from three separate guardians because
+    it overwrites the current alignment buff; recovering via the room/plate to gain the corresponding
+    alignment buff is preferred over overwriting.'
+  - 'Final Stand: three guardians with Absolute Temporality destroy three crystals (non-buffed shatter
+    inside); after all three are gone the boss is damageable and crystals can be re-broken to extend the
+    phase; jump off at the end or you die.'
+  defense:
+    incoming_damage:
+      adds:
+      - Cyclops (in and outside portals)
+      - Imps (spawn the Wyvern on death)
+      - Wyvern (drops 4 aligned-color Chronon on death)
+      - Minotaurs (drop Chronon colors)
+      - Harpy (triple yellow bar, final round)
+      boss:
+      - Diastole (now bounces and suspends)
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: 'Round 3 DPS is located just behind the white capsule: three guardians on plates (Absolute
+      buff) and three without group in the middle and DPS, while buffed guardians shoot outer crystals
+      and non-buffed shoot inner crystals or the phase ends immediately. The more time left on the ''Worldline
+      Stability'' timer, the more DPS time. In the Final Stand, the boss becomes damageable after the
+      three crystals are destroyed, and crystals can be re-broken to extend the phase.'
+    recommended_dps:
+    - Finality's Auger + Mint Retrograde
+  roles:
+  - id: ring runner / sand dunker
+    does: Steps in the Vex pool (Temporal Occulus) to read the ring color, then with a partner picks up
+      and deposits the matching-color Chronon together within 3 seconds; cycles through all three colors.
+      Continues depositing in the same rotation order through the round. Must hop on the 3rd Diastole
+      beat to avoid being detained/suspended.
+    loadout:
+      subclass: ''
+      weapons: Finality's Auger + Mint Retrograde
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Survivability is key; hop on the 3rd Diastole beat to prevent detain.
+  - id: climber
+    does: Uses the set of three different-height box pillars at the climb area, shooting three rounds
+      to build platforms, and calls out the color order from shortest to tallest each phase (colors can
+      repeat). Note the buff can change after each set of boxes is shot — watch for it as there is no
+      cue.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Watch for the buff changing after each set of boxes — no cue.
+  - id: shooter / CAC buff holder
+    does: Stands on the Vex plate to obtain the CAC Temporality buff before shooting the cube towers,
+      then shoots three rounds to build platforms. During Round 3 DPS, the Absolute-buffed shooters break
+      outer crystals while non-buffed break inner. In the Final Stand, the three Absolute-Temporality
+      holders destroy the three crystals.
+    loadout:
+      subclass: ''
+      weapons: Finality's Auger + Mint Retrograde
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Survivability is key; watch for the buff changing after each set of boxes.
+  - id: banishment / oracle recovery
+    does: Handles Banishment by going through the triangular portals to do mechs or by picking up the
+      four center Oracles; in the final portal all six are Banished and each activates an Oracle (by roster)
+      to recover.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: If you fall in the final portal, the lift brings you back.
+  rewards:
+  - After raid completion, a statue drops the Atlas & Almanac quest
+  common_mistakes:
+  - Aligning a capsule too early before reading the capsules, wasting ammo and time.
+  - Letting the 'Worldline Stability' timer (~5 min) run out, which is a wipe.
+  - Killing imps in the first round when you shouldn't — imp death spawns the Wyvern in the main room;
+    only kill imps when sand is needed.
+  - Using a grenade for a detain bubble while suspended, or not hopping on the 3rd Diastole beat and getting
+    detained/suspended.
+  - Letting the final hit on a mini boss come from the same guardian — it must be three separate guardians
+    as it overwrites the current alignment buff; prefer recovering via the room/plate.
+  - During Round 3 DPS, buffed shooting the inner crystal or non-buffed shooting the outer — the phase
+    ends immediately if the crystal pairing is wrong.
+  - Walking off when entering the final portal by going too fast.
+  - Using Phoenix Dive when the floor disappears at the end of the DPS phase.
+  - Not jumping off at the end of the Final Stand, which kills you.
+  sources:
+  - tier: 2
+    name: desert-perpetual-epic-source.md (community Epic sherpa notes, video https://youtu.be/fI_rdYPhAgs)
+    note: Epic-variant sherpa notes; Koregos final-encounter section covering the spinning ring, Temporal
+      Occulus pools, CAC tower/buff order, Minotaur sand dunking, the Undoing rounds (Orientation, 1,
+      2, 3, Final), Banishment/Oracle recovery, crystals/Absolute Temporality, Worldline Stability, Diastole
+      bounce+suspend, the recommended Finality's Auger + Mint Retrograde DPS, and the Atlas & Almanac
+      quest reward.
+    date_checked: '2026-06-07'

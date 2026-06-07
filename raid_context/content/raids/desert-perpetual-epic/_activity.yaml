@@ -1,0 +1,18 @@
+# desert-perpetual-epic — activity header (authored from scratch, isolated source)
+
+activity:
+  slug: desert-perpetual-epic
+  name: The Desert Perpetual (Epic)
+  activity_type: raid
+  fireteam_size: 6
+overview:
+  abstract: 'The Epic variant of The Desert Perpetual keeps the same four bosses — Epoptes (Hydra), Agraios
+    (Hobgoblin), Iatros (Wyvern), and Koregos (final boss) — but layers an extra EPIC mechanic onto each,
+    and those added mechanics stack onto every subsequently selected encounter, so the order you pick
+    the first three bosses in matters. Suggested order from the source: Epoptes (West) with the Detain-traps
+    mod, then Agraios (South) with the Elimination laser / Variable Elimination mod, then Iatros (East)
+    with the Diastole + Suspend mod, and finally Koregos (North). The whole raid is built around time
+    travel: rotating Ring and Hourglass deposit mechanics, colour-coded Chronon ''sand'' you align to
+    capsules, and a CAC Temporality buff (Cyclical, Absolute, Constant) obtained from Vex plates and used
+    to break crystals via line of sight. Bring damage loadouts but prioritise survivability. Completing
+    the raid drops a statue that gives the Atlas & Almanac quest.'

@@ -1,0 +1,152 @@
+# dungeons/vespers-host/3-raneiks-unified.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 3
+  slug: raneiks-unified
+  name: Raneiks Unified (Boss Fight)
+  abstract: A Servitor boss fight where Raneiks Unified is actually many small Servitors fused into one.
+    You use the Suppressor augment to break it apart twice to read four glowing Servitor numbers (0-9),
+    shoot the matching numbered panels with Operator, then Suppress Raneiks a third time to expose the
+    small Servitors for a very short AoE damage window. This is add-heavy boss damage — you damage many
+    small targets, not one big one.
+  setup: A large room with numbered panels (0-9) in the wall and a station in the center. Raneiks sits
+    in a big hole at the top of the room, periodically dropping small explosive Servitor shells. The Operator
+    augment appears early (deposit it in the center station for later). Killing a Machine Priest's Assistant
+    ('Raneiks defends itself') teleports you to an outside arena behind Raneiks where the Suppressor (blue)
+    augment appears on a Tracer Shank.
+  plain_language_steps:
+  - 1. Clear the room of Fallen (Vandals, Dregs, Captains) while avoiding the explosive Servitor shells
+    Raneiks drops (shoot them to destroy them). Grab the Operator augment when it appears and deposit
+    it in the center station for later.
+  - 2. Keep killing until an elite Machine Priest's Assistant appears; focus it down. When it dies ('Raneiks
+    defends itself') you teleport to the outside arena.
+  - 3. In the outside arena, prioritize the seeking Exploder Shanks, then clear the rest while using cover
+    against Raneiks' explosives. When all Shanks die, a Tracer Shank with the Suppressor augment appears
+    near Raneiks.
+  - 4. Kill the Tracer Shank, grab Suppressor, and from behind cover plant the hologram (feet planted)
+    near Raneiks, then shoot it to explode it. You can be further back than you think — getting too close
+    lets Raneiks nuke you. Watch for the close-range eye beam and the Integration tether.
+  - 5. The blast breaks Raneiks into 10 small numbered Servitors (0-9). Two of them glow slightly brighter
+    than the rest. Note their two numbers (write them in chat).
+  - 6. Run back through the passageway (or the safer hallway to its left) before the Servitors reconstitute.
+    The forcefield strips Suppressor, which you don't need right now.
+  - 7. Repeat the whole loop a second time to get two MORE numbers. The second pair must be different
+    from the first — you need four unique numbers total.
+  - 8. With all four numbers, grab Operator and shoot the four matching numbered panels while the team
+    clears adds.
+  - 9. With four panels shot, Raneiks comes down to fight you (other enemies vanish) and a Tracer Shank
+    with Suppressor spawns in the center. Kill it, grab Suppressor, and use cover (the big glass panels)
+    to plant and explode the hologram on Raneiks.
+  - 10. Raneiks breaks into the small Servitors, now vulnerable — dump fast AoE damage for the short window
+    (about 10-15 seconds) before it reconstitutes and goes immune.
+  - 11. Each damage phase resets the panel numbers, so repeated numbers between phases are fine. After
+    three or four rounds Raneiks goes down, leaving a reward chest in the center. The very final phase
+    takes longer because the Servitors split into more Servitors as they die.
+  mechanics:
+  - 'Suppressor augment (blue): pick up from a Tracer Shank; hit grenade with feet planted to spawn a
+    blue hologram, then shoot it (you, teammates, enemies, or a timer can trigger it) for a radius explosion.
+    Catching Raneiks in it causes its cohesion to fail and it splits into smaller Servitors.'
+  - Raneiks is composed of ~10 small Servitors. When suppressed and split, two glow slightly brighter
+    than the rest; read their numbers (0-9). The glow is very subtle — wrong Servitors firing Void attacks
+    can look like they're glowing.
+  - You must read two phases (four total unique numbers) before the damage phase; second-round numbers
+    must differ from the first.
+  - Operator shoots the four numbered panels matching the four glowing-Servitor numbers to set up the
+    damage phase.
+  - During damage, suppress Raneiks one more time to expose the small Servitors; they are then vulnerable
+    to AoE. No single Servitor takes enough damage to die individually — you damage the group.
+  - 'Raneiks threats: explosive Servitor shells dropped into the room, explosives in the outside arena,
+    a close-range eye beam doing massive sustained damage, and the Integration tether that starts a death
+    timer.'
+  - Machine Priest's Assistant is the elite that, when killed, teleports the team to the outside arena
+    ('Raneiks defends itself').
+  - Damage window is only about 10-15 seconds; the final phase is longer because dying Servitors split
+    into more Servitors.
+  defense:
+    incoming_damage:
+      adds:
+      - Vandals, Dregs, Captains (Fallen)
+      - Machine Priest's Assistant (elite)
+      - Exploder Shanks / seeking Exploder Shanks (outside arena)
+      - Tracer Shank (carries Suppressor)
+      - Explosive Servitor shells dropped by Raneiks
+      boss:
+      - Raneiks Unified — explosive Servitor shells and arena explosives, a close-range eye beam (massive
+        sustained damage), the Void/purple Integration tether (death timer), and Void attacks fired by
+        its small Servitors
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: Very short damage phase — about 10-15 seconds after suppressing the split Raneiks.
+      The final phase runs longer because the dying Servitors split into more Servitors.
+    recommended_dps:
+    - Heavy grenade launchers / explosive weapons — AoE to hit multiple Servitors at once; accuracy doesn't
+      matter, dump damage fast
+    - Hunter Supers that hit several enemies at once — Storm and Squall named
+    - Thundercrash — named as high, fast burst damage
+    - Nova Bomb — named for fast AoE damage
+    - Parasite (Exotic grenade launcher) — named for fast high damage
+    - Powerful swords — swings hit multiple Servitors and you don't need to target a specific one
+    - Avoid precision/single-target weapons and anything with a long reload (reloading wastes the short
+      window)
+  roles:
+  - id: suppressor
+    does: Picks up the Suppressor augment from the Tracer Shank and plants/explodes the hologram on Raneiks
+      from cover to split it, while avoiding the eye beam, explosives, and Integration tether.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: operator
+    does: Holds the Operator augment and shoots the four numbered panels that match the four glowing-Servitor
+      numbers read across the two suppression rounds.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: caller-add-clear
+    does: Reads and records the glowing Servitor numbers (writes them in chat), clears adds (especially
+      seeking Exploder Shanks) and the Machine Priest's Assistant to drive the loop forward, and contributes
+      AoE during the short damage window.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  rewards:
+  - Reward chest in the center of the room after Raneiks is defeated (specific loot not detailed in source)
+  common_mistakes:
+  - Getting too close when planting the Suppressor hologram and getting nuked by Raneiks instead of staying
+    behind cover.
+  - Misreading the very subtle glow — confusing a Servitor firing Void attacks for a glowing one.
+  - Recording duplicate numbers across the two rounds instead of four unique numbers.
+  - Using precision/single-target weapons or long-reload guns and wasting the short damage window.
+  - Reloading during the brief damage phase instead of dumping AoE continuously.
+  - Failing to prioritize the seeking Exploder Shanks, which rush in and kill the team.
+  - Carrying the Operator augment around early and dying to its timer instead of depositing it in the
+    center station.
+  sources:
+  - tier: 1
+    name: GameSpot — Destiny 2 Vesper's Host Dungeon Guide (Phil Hornshaw)
+    note: Encounter 3 'Raneiks Unified'; Suppressor augment, 10 numbered Servitors with two glowing per
+      round, four unique numbers, Operator panels, ~10-15s AoE window, sword/explosive/AoE-super loadout
+      guidance.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: KackisHD — Vesper's Host Dungeon For Dummies (YouTube, 2024-10-12)
+    note: Raneiks Unified walkthrough; suppress-from-cover tip, subtle glow detection, write numbers in
+      chat, Thundercrash/Parasite/Nova Bomb DPS, final phase splitting into more Servitors.
+    date_checked: '2026-06-07'

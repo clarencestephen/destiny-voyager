@@ -1,0 +1,21 @@
+# vespers-host — activity header (authored from scratch, isolated source)
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  fireteam_size: 3
+overview:
+  abstract: 'Vesper''s Host is a three-player dungeon set aboard a BrayTech orbital facility in Europa''s
+    orbit, taken over by the Fallen. Its signature mechanic is the augment system: enemies marked with
+    icons ("Viral Carrier" message) drop the Operator (red), Scanner (yellow), and Suppressor (blue) augments.
+    Only one augment can be held per person, each carries a roughly one-minute kill-timer that resets
+    by depositing it into a wall station, and certain forcefields strip augments automatically. Scanner
+    reveals which targets (panels, columns, or boss copies) are correct by watching the radar for icons
+    that turn white versus disappear, with audio cues; Operator shoots the correct red panels; Suppressor
+    plants a hologram that, when shot, explodes to make the Servitor boss or radioactive puppets vulnerable.
+    Recurring elements across the dungeon include nuclear cores (carrying them removes your double-jump,
+    slows you, and stacks Radiation up to 10 which kills you), Brigs, Machine Priest''s Assistants, blinking
+    lights that mark the correct route, and irradiated enemies. To unlock it, talk to Spider in the Last
+    City for the Rogue Network quest; the dungeon appears on the Europa map. Beating it has a chance to
+    award the Ice Breaker Exotic Solar sniper rifle.'

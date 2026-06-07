@@ -1,0 +1,131 @@
+# raids/desert-perpetual-epic/1-epoptes-hydra.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: desert-perpetual-epic
+  name: The Desert Perpetual (Epic)
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: epoptes-hydra
+  name: Epoptes (Hydra)
+  abstract: 'First suggested encounter, located West/Left. Directive: Observe & Influence. The EPIC mod
+    added here is Detain traps. You align Chronon sand to a capsule, manage Banishment, enter a triangular
+    portal to obtain a CAC Temporality buff from a Vex plate, complete the Hydra eye/portal mechanic to
+    earn the ''Undoing of Epoptes'' buff, then destroy a tethered crystal (Temporal Locus) via line of
+    sight to make the boss damageable. Because this is the first boss, its main mechanic plus the Detain-traps
+    EPIC mechanic carry forward into the later encounters.'
+  setup: Be on damage loadouts but treat survivability as key. Note this is the first of three boss-order
+    picks — whatever mechanic this encounter adds (Detain traps) will be added on top of subsequent encounters,
+    so choose the order deliberately. Soon after the rally, one guardian aligns the arena's capsule/lantern
+    to the color obtained in the previous area; after aligning it displays 'locked'. Don't align until
+    you've read the capsules, otherwise you waste ammo and time.
+  plain_language_steps:
+  - 1. After the rally, one guardian goes to the corresponding-color capsule/lantern and interacts to
+    align it; it will display 'locked'.
+  - '2. Handle Banishment: two guardians are selected at the top center of the screen (Koregos excludes
+    them from its reality) for about 29 seconds, and all six will eventually be chosen. Clear it either
+    by going into a triangular portal and doing the mechanics, or by picking up one of the four Oracles
+    in the center main room.'
+  - 3. If you take a portal, the first two selected go through open (clear) portals — checkered means
+    closed; enter at the same time because they can lock out. Cyclops spawn in and outside each portal
+    and lock the exit; kill them all and leave. Banishment then clears and two new guardians are selected
+    immediately.
+  - '4. Determine the Chronon color needed: of the three tree-like structures in the main room, one has
+    a crystal that looks tethered to the triangular portal you need to enter.'
+  - 5. One or two guardians enter that portal, killing the cyclops inside and outside first, then stand
+    on the Vex plate for the CAC Temporality buff (Cyclical, Absolute, or Constant depending on the order
+    bosses were killed). Leave the portal.
+  - '6. Inside the room, one guardian steps on the Vex plate for the CAC Temporality buff and does the
+    Hydra mechanic: stand in the light and shoot all the outer eyes.'
+  - 7. That guardian then calls out the two portals that are NOT active (calm). Both players see two inactive
+    portals, but only one is the SAME between them.
+  - 8. The second guardian interacts with the matching/same portal's top mini box (or potentially interacts
+    with all three boxes on top of the portals instead).
+  - 9. The first guardian stands in the light and shoots the middle eye. Both guardians kill the Hydra.
+  - 10. Chat reads 'Fading memory leaves a temporal locus unprotected' and you earn the 'Undoing of Epoptes'
+    buff. Leave the portal.
+  - 11. The guardian with the CAC buff views the tethered crystal via line of sight (try to be on roughly
+    the same level, not lower), which gives the 'Destroy Temporal Locus' prompt at lower-mid screen; interacting
+    destroys the crystal and the 'Worldline Stability' bar drops quickly.
+  - 12. Look for one of the three same-colored capsules in the arena — this is the sand color needed for
+    the next part.
+  - 13. Chat reads 'Worldlines Fracture Around You' / 'Koregos returns to the experiment's inception...'
+    and the team is teleported to an alternate reality / rally flag.
+  mechanics:
+  - 'Directive: Observe & Influence.'
+  - 'EPIC mod: Detain traps (carries forward to subsequent encounters).'
+  - 'Capsule alignment: align Chronon sand to the matching-color capsule/lantern; once aligned it reads
+    ''locked''. Once aligned, the next mini boss to spawn drops that color Chronon. Don''t align until
+    you''ve read the capsules.'
+  - 'Banishment: two guardians selected at top center of screen for ~29 seconds; all six eventually chosen.
+    Clear by entering a triangular portal and doing mechanics, or by picking up one of only four Oracles
+    in the center main room.'
+  - 'Portal entry: open (clear) portals are usable, checkered means closed; enter at the same time as
+    they can lock out. Cyclops spawn in and outside each portal and lock the exit — kill all and leave.'
+  - CAC Temporality buff (Cyclical, Absolute, Constant) is obtained by standing on a Vex plate inside
+    the portal room; which one you get depends on the order bosses were killed.
+  - 'Hydra eye mechanic: stand in light, shoot all outer eyes; call out the two inactive (calm) portals,
+    the second guardian interacts with the one matching portal''s top box, first guardian shoots the middle
+    eye, both kill the Hydra to earn ''Undoing of Epoptes''.'
+  - 'Crystal / Temporal Locus: the CAC-buffed guardian destroys the tethered crystal via line of sight
+    using the ''Destroy Temporal Locus'' prompt, dropping the ''Worldline Stability'' bar.'
+  defense:
+    incoming_damage:
+      adds:
+      - Cyclops (spawn in and outside portals)
+      boss: []
+    champions: []
+    recommended_defensive_mods:
+      elemental: []
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: The boss becomes damageable after the tethered crystal (Temporal Locus) is destroyed
+      via line of sight, which drops the Worldline Stability bar. The source does not specify damage-phase
+      duration or a dedicated DPS weapon set for this encounter.
+    recommended_dps: []
+  roles:
+  - id: buff-holder / crystal-breaker
+    does: Enters the portal tethered to the needed crystal, kills the cyclops, stands on the Vex plate
+      for the CAC Temporality buff, does the in-light Hydra eye work (outer eyes then middle eye), then
+      destroys the tethered crystal/Temporal Locus via line of sight.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Be on a damage loadout but prioritize survivability.
+  - id: portal-box / second guardian
+    does: Inside the room with the buff-holder, calls out and interacts with the matching/same inactive
+      portal's top mini box (or all three boxes), then helps kill the Hydra.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Be on a damage loadout but prioritize survivability.
+  - id: banishment / add clear
+    does: Handles Banishment by going through portals to clear it or picking up center-room Oracles, and
+      clears cyclops/adds.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: Be on a damage loadout but prioritize survivability.
+  rewards: []
+  common_mistakes:
+  - Aligning the capsule too early before reading the capsules, which wastes ammo and time.
+  - Not entering portals at the same time during Banishment — they can lock out.
+  - Trying to break the crystal from below the line-of-sight level instead of on roughly the same level,
+    losing the 'Destroy Temporal Locus' prompt.
+  - Picking the wrong encounter order — this boss's main mechanic plus the Detain-traps EPIC mechanic
+    stack onto later encounters.
+  sources:
+  - tier: 2
+    name: desert-perpetual-epic-source.md (community Epic sherpa notes, video https://youtu.be/fI_rdYPhAgs)
+    note: 'Epic-variant sherpa notes; Epoptes section (Directive: Observe & Influence, Detain traps mod)
+      plus Round 1 mechanics for capsule alignment, Banishment, CAC Temporality buff, Hydra eye mechanic,
+      and Temporal Locus crystal.'
+    date_checked: '2026-06-07'

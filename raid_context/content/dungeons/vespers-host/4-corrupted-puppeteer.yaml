@@ -1,0 +1,205 @@
+# dungeons/vespers-host/4-corrupted-puppeteer.yaml — schema v3, authored from scratch (isolated). No guessing.
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  fireteam_size: 3
+encounter:
+  order: 4
+  slug: corrupted-puppeteer
+  name: Corrupted Puppeteer (Final Boss)
+  abstract: The final boss fight combines all three augments (Operator, Scanner, Suppressor) across multiple
+    stages. In the upper arena you use Suppressor on radioactive puppets and Scanner+Operator on a blue-numbered
+    column and matching red panels, then drop into the Lower Stacks. There you run two purge rooms, shooting
+    four Operator panels, scanning the four boss copies to find and kill the correct one for a nuclear
+    core, and dunking it in a bunker to fire the quarantine purge and remove half the shield each time.
+    With the shield down you return outside to damage the Corrupted Puppeteer through a lightning-filled,
+    wave-mechanic DPS phase. Repeat the whole cycle until the boss dies.
+  setup: After Raneiks, traverse a lightning jumping puzzle across debris to the outer hull where the
+    Corrupted Puppeteer waits facing a big orange ring anomaly. Approaching it starts the fight; it fires
+    a flare that creates an orange energy wave — jump through the circular floor door that opens to drop
+    inside into the upper arena. The upper arena has four central columns with blue numbers and red numbered
+    panels scattered around; all three augments appear on enemies here.
+  plain_language_steps:
+  - 1. Cross the lightning jumping puzzle (avoid telegraphed orange ground circles), reach the Corrupted
+    Puppeteer on the outer hull. When it fires a flare and the orange energy wave comes, drop through
+    the circular floor door to enter the upper arena.
+  - 2. In the upper arena, survive while gathering all three augments. Grab Suppressor when it appears
+    and use the hologram on the radioactive puppets (sword-wielding copies with radiation fields that
+    are invulnerable until suppressed) to make them killable and clear them.
+  - 3. Grab Scanner and check the four central columns (each has a blue number). On your radar, three
+    column icons disappear and one turns white — that white column's blue number is the active one.
+  - 4. Grab Operator and shoot all four red panels that match the active blue number. Panels can be high
+    up or behind objects; there's no timer beyond the augment, so take your time.
+  - 5. When all four panels are shot, doors open on the sides (two per side). One set has flashing lights
+    — that's the correct set. Deposit your augments in the room's stations, then drop through the lit
+    doors into the Lower Stacks.
+  - 6. In the Lower Stacks, follow flashing lights to the first purge room (avoid tripmine traps and irradiated
+    puppets). Pick up the augments you left in the stations (or re-grab them from enemies in the entry
+    room on the same side if a forcefield stripped them).
+  - 7. Operator shoots four panels in the purge room (all active, no timer — you can hold the fourth until
+    everyone is ready). Use Suppressor to keep clearing irradiated puppets.
+  - '8. After the panels, the boss spawns four rifle-carrying copies (two on the floor, two on catwalks)
+    with no radiation fields. Scanner gets close to each: three radar icons disappear, one turns white
+    (high-pitched sound = correct, low-pitched = wrong).'
+  - 9. Only the Scanner player kills the correct copy (killing the wrong one drops the purge timer to
+    ~5 seconds and almost guarantees a wipe). It drops a nuclear core (about a 30-second timer; also stacks
+    Radiation). Deposit Scanner and especially Suppressor in stations to save them.
+  - 10. Bring the core to the central bunker; the whole team goes inside and dunks it. The doors seal
+    and the quarantine purge cooks the room, removing half the boss's shield.
+  - 11. Cross to the other half of the Lower Stacks through the tunnels under the central glass wall (use
+    the staircase-icon lower door for a direct route; beware mines and tripwires; use saved Suppressor
+    on puppets). Repeat the purge process in the second purge room to remove the rest of the shield.
+  - 12. After the second purge, the boss retreats outside. Take the upper door out, reach the central
+    chamber, ride the orange light column back up to the panel room, then drop through the floor hole
+    to launch back into the outdoor arena.
+  - 13. Damage the Corrupted Puppeteer (long but dangerous DPS). It mostly stands on a central platform
+    but occasionally teleports to side platforms. Constantly avoid the orange lightning strikes (telegraphed
+    by ground glows; they hit hard and linger) — stay mobile.
+  - 14. After a few seconds it spawns rifle copies and sword puppets (both killable without penalty).
+    Then it spawns a couple of puppets in the center; one glows whiter than the rest — kill the glowing
+    puppet to drop a nuclear core.
+  - 15. When the boss fires its flare (orange wave), grab the core, run everyone into the left-side bunker,
+    and dunk it to seal the doors and survive the wave. The door reopens for more DPS.
+  - 16. On the next wave you CAN'T use the bunker — instead jump into the round floor doors to dive back
+    inside and survive, ending the damage phase / cycle.
+  - 17. Repeat the entire cycle (gather augments, run the purge rooms, break the shield, return outside
+    to DPS) until the Corrupted Puppeteer dies, ending the dungeon. Before leaving, grab loot from the
+    chest and pick up the strange message screen to the left of the chest to advance the Rogue Network
+    quest.
+  mechanics:
+  - 'All three augments are required: Suppressor (clear radioactive puppets and expose them), Scanner
+    (find the correct column in the upper arena and the correct boss copy in the purge rooms), Operator
+    (shoot matching numbered red panels).'
+  - 'Radioactive/irradiated puppets: sword copies of the boss with radiation fields; invulnerable while
+    emitting radiation and they stack your Radiation toward 10 (death). Suppress them to strip the field
+    and kill them.'
+  - 'Upper arena: four central columns each with a blue number; Scanner identifies the one that turns
+    white on radar; Operator shoots the four red panels matching that blue number.'
+  - Correct exit doors are marked by flashing lights (one set of two per side); choosing the wrong side
+    is incorrect.
+  - 'Lower Stacks purge rooms: shoot four Operator panels (all active, no timer), then the boss spawns
+    four rifle copies (two floor, two catwalk). Scanner finds the correct one (white radar icon, high-pitched
+    sound). Kill only that copy for a nuclear core; killing a wrong copy drops the purge timer to ~5 seconds
+    (near-certain wipe).'
+  - Nuclear core here has about a 30-second timer and stacks Radiation; dunk it in the central bunker
+    with the whole team inside to fire the quarantine purge, which removes half the boss's shield each
+    time (two purges total).
+  - Forcefields strip augments; deposit them in stations before dropping/crossing, or re-acquire from
+    enemies in the entry room on the active purge side.
+  - Lower Stacks is split by a central glass wall; cross via tunnels using the staircase-icon door; path
+    is littered with Fallen mines and tripwires.
+  - 'Outdoor damage phase: frequent orange lightning strikes (telegraphed ground glows, lingering damage)
+    and the boss spawning rifle copies plus sword puppets; a glowing puppet drops a nuclear core.'
+  - 'Boss wipe mechanic: a flare triggers an orange energy wave from the ring anomaly. First time, dunk
+    the core in the left-side bunker to survive; second time you cannot use the bunker and must jump into
+    the round floor doors to dive inside, ending the phase.'
+  defense:
+    incoming_damage:
+      adds:
+      - Fallen enemies fill the arena
+      - Irradiated/radioactive puppets (sword copies with radiation fields; stack Radiation; invulnerable
+        until suppressed)
+      - Rifle-carrying boss copies (purge rooms and outdoor phase)
+      - Fallen tripmine traps and mines in the Lower Stacks pathways
+      boss:
+      - Corrupted Puppeteer — long-range gunfire from the boss; orange lightning strikes (telegraphed,
+        lingering); orange energy-wave wipe mechanic from the ring anomaly. Source suggests Arc damage
+        resist for this fight.
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resist — source suggests putting on Arc damage resist for the boss's sniper-rifle damage
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: A fairly long but high-risk outdoor damage phase, broken up by the orange-wave wipe
+      mechanic (survive via bunker, then via the floor doors). You must keep moving to dodge lightning,
+      so damage comes in bursts between repositions. The shield must first be removed by two Lower Stacks
+      purges before any boss damage is possible.
+    recommended_dps:
+    - Burst Supers — Hunter Golden Gun and Titan Thundercrash named for fast high damage
+    - Explosives you don't need to aim precisely — rockets and grenade launchers, best used close-ish
+      to limit misses (closer = more risk)
+    - Machine guns — Fixed Odds and Xenophage named for landing precision damage without committing to
+      many shots and for clearing puppets
+    - Rocket sidearms — Aberrant Action named (kills puppets in 4-5 shots, still damages the boss, pairs
+      with Heal Clip for survival)
+    - Sniper rifles — Supremacy and Cloud Strike named as god-tier; bring your best sniper
+    - Anarchy — named for ticking the boss and copies simultaneously
+    - 'Prioritize survivability: weapons/abilities usable in brief bursts or fire-and-forget so you can
+      keep moving'
+  roles:
+  - id: scanner
+    does: 'Holds Scanner: in the upper arena identifies the correct blue-numbered column (white radar
+      icon); in the purge rooms scans the four boss copies and is the only one to kill the correct copy
+      (white icon, high-pitched sound) to drop the nuclear core, avoiding a wrong kill that crashes the
+      purge timer.'
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: operator
+    does: 'Holds Operator: in the upper arena shoots the four red panels matching the active blue column
+      number; in each purge room shoots the four active panels (can hold the last one until the team is
+      ready).'
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: suppressor
+    does: 'Holds Suppressor: clears the irradiated/radioactive puppets by planting and exploding the hologram
+      near them to strip their radiation fields; this augment is worth saving in stations between sections.'
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  - id: core-carrier
+    does: Carries the nuclear core (from the correct copy in purge rooms, and from the glowing puppet
+      outside) to the bunker/bin and dunks it with the whole team inside to fire the purge / survive the
+      wave, watching the ~30-second core timer and Radiation stacks.
+    loadout:
+      subclass: ''
+      weapons: ''
+      exotic_armor: ''
+      armor_stats: []
+      surges_mods: ''
+  rewards:
+  - Final reward chest
+  - Chance at the Ice Breaker Exotic Solar sniper rifle (guaranteed on a Contest-mode clear per the video)
+  - Strange message collectible by the chest that advances the Rogue Network quest
+  common_mistakes:
+  - Killing the wrong boss copy in a purge room, which drops the purge timer to ~5 seconds and almost
+    always wipes the team — let only the Scanner player kill the correct copy.
+  - Standing still to aim during the outdoor phase and getting killed by lightning instead of staying
+    mobile.
+  - Crossing forcefields with augments equipped and losing them, then not knowing to re-grab them in the
+    entry room on the active purge side.
+  - Dunking the purge core without the whole team inside the bunker.
+  - 'Forgetting the wipe-mechanic difference: first wave is survived in the bunker, the second wave must
+    be survived by jumping into the floor doors.'
+  - Trying to kill radioactive puppets while their radiation fields are up (they're invulnerable) instead
+    of suppressing them first.
+  - Rushing the Lower Stacks pathways and dying to mines/tripmines.
+  - Not depositing/saving Suppressor between sections when it's the augment most worth keeping.
+  sources:
+  - tier: 1
+    name: GameSpot — Destiny 2 Vesper's Host Dungeon Guide (Phil Hornshaw)
+    note: Encounter 4 'Corrupted Puppeteer'; full multi-stage flow — upper arena columns/panels, Lower
+      Stacks two purge rooms, scan/kill correct copy, bunker purge halves shield, outdoor lightning DPS,
+      dual wipe mechanic, Fixed Odds/Xenophage/Aberrant Action loadouts, Ice Breaker, strange-message
+      collectible.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: KackisHD — Vesper's Host Dungeon For Dummies (YouTube, 2024-10-12)
+    note: Corrupted Puppeteer walkthrough; suppressor on radiation clones, scanner pillars vs keypads,
+      blinking-light route, bunker shield-halving, Arc resist suggestion, Supremacy/Cloud Strike snipers
+      and Anarchy DPS, floor-hole escape.
+    date_checked: '2026-06-07'

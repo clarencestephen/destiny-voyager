@@ -68,13 +68,14 @@ def identify_activity(query: str) -> dict:
         return _hit(reg[qslug], 1.0)
     if q in ACTIVITY_ALIASES:
         return _hit(reg[ACTIVITY_ALIASES[q]], 0.97)
-    # 2. alias substring
+    # 2. alias as a whole word (multi-word aliases match as a phrase) —
+    #    prevents short aliases like "st" matching inside "ho-st".
+    qtokens = set(q.split())
     for alias, slug in ACTIVITY_ALIASES.items():
-        if alias in q:
+        if (alias in q) if " " in alias else (alias in qtokens):
             return _hit(reg[slug], 0.9)
     # 3. display-name / slug token overlap
     best, score = None, 0.0
-    qtokens = set(q.split())
     for slug, a in reg.items():
         name_tokens = set(_norm(a["name"]).split()) | set(slug.split("-"))
         overlap = len(qtokens & name_tokens)
