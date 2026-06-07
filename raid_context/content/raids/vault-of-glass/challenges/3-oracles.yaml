@@ -1,0 +1,23 @@
+# raid_context/content/raids/vault-of-glass/3-oracles.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: oracles
+  name: Templar's Well — Oracles (kill in order)
+  abstract: Five waves of Vex Oracles. Kill them strictly in spawn order — wrong order Marks the whole
+    team for Negation. Cleanse Marks at the center pool. Clear all five waves for loot.
+  master_challenge:
+    name: The Only Oracle for You
+    requirement: Each Oracle may only be destroyed ONCE across the encounter — no player may shoot a repeated
+      Oracle position, so kills must be distributed across the fireteam.
+    enforced_on: Master (always) / weekly rotator
+differs_from_base: 'Adds the ''The Only Oracle for You'' constraint: each Oracle may only be destroyed
+  once, forcing the team to spread Oracle kills. On Master every challenge is active plus Champions (Barrier
+  Hydra / Overload Minotaur) and Adept loot.'

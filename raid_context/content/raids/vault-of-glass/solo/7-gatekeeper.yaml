@@ -1,6 +1,6 @@
-# raid_context/content/raids/vault-of-glass/6-gatekeeper.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/raids/vault-of-glass/7-gatekeeper.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -8,7 +8,7 @@ activity:
   fireteam_size: 6
   category: solo
 encounter:
-  order: 6
+  order: 7
   slug: gatekeeper
   name: Gatekeeper (Venus + Mars portals)
   abstract: 'Split 3/3 onto Venus + Mars plates. Kill the central Gatekeeper

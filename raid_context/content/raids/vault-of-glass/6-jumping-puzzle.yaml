@@ -1,13 +1,13 @@
-# raid_context/content/raids/vault-of-glass/5-jumping-puzzle.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/raids/vault-of-glass/6-jumping-puzzle.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
 activity:
   slug: vault-of-glass
   name: Vault of Glass
   activity_type: raid
   fireteam_size: 6
 encounter:
-  order: 5
+  order: 6
   slug: jumping-puzzle
   name: Jumping Puzzle
   difficulty: easy
@@ -113,3 +113,4 @@ encounter:
     note: Movement tools and glide/dodge behavior can shift with subclass tuning; verify your current
       traversal kit before the run.
     date_checked: '2026-06-07'
+  kind: jumping-puzzle

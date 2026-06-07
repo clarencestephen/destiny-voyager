@@ -347,7 +347,7 @@
     "activity_type": "raid",
     "fireteam_size": 6,
     "yaml": "raids/vault-of-glass.yaml",
-    "encounter_count": 7,
+    "encounter_count": 8,
     "encounters": [
       {
         "order": 1,
@@ -363,30 +363,36 @@
       },
       {
         "order": 3,
+        "slug": "oracles",
+        "name": "Templar's Well \u2014 Oracles (kill in order)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
         "slug": "templar",
         "name": "The Templar",
         "ingame_name": ""
       },
       {
-        "order": 4,
+        "order": 5,
         "slug": "gorgon-labyrinth",
-        "name": "Gorgon Labyrinth (stealth section)",
+        "name": "Gorgon Labyrinth (stealth traversal)",
         "ingame_name": ""
       },
       {
-        "order": 5,
+        "order": 6,
         "slug": "jumping-puzzle",
         "name": "Jumping Puzzle",
         "ingame_name": ""
       },
       {
-        "order": 6,
+        "order": 7,
         "slug": "gatekeeper",
         "name": "Gatekeeper (Venus + Mars portals)",
         "ingame_name": ""
       },
       {
-        "order": 7,
+        "order": 8,
         "slug": "atheon",
         "name": "Atheon, Time's Conflux (final boss)",
         "ingame_name": ""

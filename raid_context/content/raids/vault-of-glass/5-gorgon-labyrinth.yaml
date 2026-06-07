@@ -1,13 +1,13 @@
-# raid_context/content/raids/vault-of-glass/4-gorgon-labyrinth.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/raids/vault-of-glass/5-gorgon-labyrinth.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
 activity:
   slug: vault-of-glass
   name: Vault of Glass
   activity_type: raid
   fireteam_size: 6
 encounter:
-  order: 4
+  order: 5
   slug: gorgon-labyrinth
   name: Gorgon Labyrinth (stealth section)
   difficulty: medium
@@ -188,3 +188,4 @@ encounter:
   - 'Optional: switch to your Void subclass and run bottom tree so you can use the Smoke Bomb to make
     your whole team invisible (as long as you''re grouped up) while crossing the Gorgon maze. Otherwise
     no specific loadout is needed — you can go through normally.'
+  kind: traversal

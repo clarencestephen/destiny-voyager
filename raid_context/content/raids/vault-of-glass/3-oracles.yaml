@@ -1,0 +1,147 @@
+# raid_context/content/raids/vault-of-glass/3-oracles.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: oracles
+  name: Templar's Well — Oracles (kill in order)
+  difficulty: medium
+  estimated_time: 5-8 min
+  abstract: Five waves of Vex Oracles. Kill them strictly in spawn order — wrong order Marks the whole
+    team for Negation. Cleanse Marks at the center pool. Clear all five waves for loot.
+  setup: 'WHAT YOU SEE:
+
+    - The same Templar''s Well arena, center cleanse pool still active.
+
+    - 7 Oracle spawn positions (map markers): mid, L1, R1, L2, R2, L3, R3.
+
+
+    ORACLE MECHANICS:
+
+    - 5 waves. Each Oracle spawn signals with a musical chime and a glowing Vex projection.
+
+    - Kill in SPAWN ORDER (Destiny 2 rule). Wrong order = team-wide Marked for Negation.
+
+    - Cleanse Marks in the center pool. Fanatics still leave negation pools — kill at range.
+
+    '
+  callouts:
+  - when: Marked for Negation
+    from: self
+    to: team
+    say: '"MARKED — pool now."'
+    why: Cleanse + don't double-stack pool usage.
+  - when: Oracle spawned
+    from: spotter
+    to: team
+    say: '"Oracle [position] — KILL."'
+    why: Order matters. Caller names sequence.
+  wipe_triggers:
+  - Wrong-order Oracle kills = team-wide Mark + death.
+  - All cleanse-pool charges exhausted with Marks active.
+  damage_phase_triggers:
+  - All 5 Oracle waves cleared → the Templar's Well section completes.
+  parallel_timeline:
+  - phase: Oracle Phase (5 waves)
+    spotters: Call spawn order each wave.
+    killers: Kill strictly in order; an Aegis relic-carry (if held) can one-shot Oracles.
+  permutations:
+  - name: Standard caller + killers
+    learner_friendly: true
+    summary: One caller names the spawn order; the rest kill in that order.
+    roles:
+    - id: oracle_caller
+      count: 1
+      does: Track and call the spawn order out loud.
+    - id: oracle_killer
+      count: 5
+      does: Destroy Oracles in the called order; cleanse Marks at the pool.
+  cheese: []
+  common_mistakes:
+  - Forgetting the spawn order — call positions LOUDLY before shooting.
+  - Killing Fanatics where you need to stand to cleanse.
+  rewards:
+    guaranteed:
+    - 1× raid weapon or armor
+    hidden_chest: null
+    potential_drops:
+    - Vision of Confluence (scout rifle, Solar)
+    - Found Verdict (shotgun, Arc)
+    - Praedyth's Revenge (sniper rifle, Kinetic)
+    - Corrective Measure (machine gun, Void)
+    - Vault of Glass armor (random slot)
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+  learner_path:
+  - '1st: oracle_killer.'
+  - '2nd: oracle_caller.'
+  plain_language_steps:
+  - 1. After the Confluxes are held, five waves of glowing Vex Oracles spawn, each signaled by a musical
+    chime.
+  - 2. Kill the Oracles strictly in the order they spawned. Out of order Marks the whole team for Negation.
+    Assign one caller to name positions (mid, L1, R1, L2, R2, L3, R3).
+  - 3. Anyone Marked steps into the center cleanse pool. Clear all five waves to finish Templar's Well
+    and earn the loot drop.
+  defense:
+    incoming_damage:
+      adds:
+      - 'Vex (Wyverns): Arc-heavy melee and ranged pressure as they march to sacrifice'
+      - 'Vex (Overload-style Minotaurs): Void slap-rifle fire and heavy melee'
+      - 'Vex (Hobgoblins): precision Solar snipers from distant platforms'
+      - 'Vex (Fanatics, headless Goblins): leave green negation pools on death that apply Marked for Negation'
+      boss: []
+    champions:
+    - Overload Minotaur -> Anti-Overload (Master only)
+    - Barrier Hydra -> Anti-Barrier (Master only)
+    recommended_defensive_mods:
+      elemental:
+      - Void resist helps vs Minotaur fire; Solar resist helps vs Hobgoblin snipers; Arc resist helps
+        vs Wyverns
+      concussive:
+      - Concussive Dampener helps reduce Wyvern and Minotaur burst when defending a Conflux up close on
+        Master
+      - Concussive Dampener carried over on the Hunter chest during the complexes loadout
+  damage:
+    surges:
+    - No surge — Oracles are destroyed by precision/heavy, not a boss DPS phase.
+    burst_windows: No boss window; the demand is fast, in-order Oracle destruction each wave.
+    recommended_dps:
+    - Xenophage (one-shots Oracles)
+    - Precision scout/pulse for ranged Oracles + Hobgoblins
+    - Anti-Barrier scout on Master to shoot Hobgoblins through immunity
+  role_loadouts:
+  - role_id: oracle_killer
+    subclass: Any; precision-weapon focused
+    weapons: Xenophage or a heavy that one-shots Oracles + a precision primary (Hung Jury scout) for ranged
+      Oracles/Hobgoblins
+    exotic_armor: ''
+    armor_stats:
+    - Health
+    - Class
+    surges_mods: Anti-Barrier Scout on Master; Machine Gun reserves/finder when running Xenophage
+  sources:
+  - tier: 1
+    name: 'In-repo authored guide: raids/vault-of-glass.yaml (encounter: confluxes)'
+    note: Primary source for Conflux defense, Fanatic pools, Oracle in-order rule, and roles.
+    date_checked: '2026-06-07'
+  - tier: 2
+    name: Recency caveat
+    note: Master Champion types (Barrier Hydra / Overload Minotaur) and surge rotators can change with
+      the sandbox; confirm against the current week before committing loadouts.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: 'Destiny 2: Vault of Glass Raid Loadouts for All Classes - Weapons + Subclass for Each Encounter'
+    url: https://www.youtube.com/watch?v=s0cUSgIIhtw
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - 'Oracles (this encounter): swap to Xenophage (one-shots Oracles) as heavy, keep an Ikelos SMG, and
+    add a scout rifle (Hung Jury) for the Hobgoblins. Mod changes: Anti-Barrier Scout Rifle on arms (to
+    shoot Hobgoblins through immunity), Machine Gun Ammo Finder, and a Machine Gun Reserves chest.'

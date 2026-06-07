@@ -1,6 +1,6 @@
-# raid_context/content/raids/vault-of-glass/7-atheon.yaml
-# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
-# Blank loadout fields = unverified (no guessing).
+# raid_context/content/raids/vault-of-glass/8-atheon.yaml — schema v3.
+# Vault of Glass: Confluxes and Oracles are SEPARATE encounters (split 2026-06-07).
+
 activity:
   slug: vault-of-glass
   name: Vault of Glass
@@ -8,7 +8,7 @@ activity:
   fireteam_size: 6
   category: challenge
 encounter:
-  order: 7
+  order: 8
   slug: atheon
   name: Atheon, Time's Conflux (final boss)
   abstract: 'Final boss. Atheon randomly teleports 3 players to PAST (Mars) or
