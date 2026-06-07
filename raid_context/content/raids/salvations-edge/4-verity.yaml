@@ -1,0 +1,427 @@
+# raid_context/content/raids/salvations-edge/4-verity.yaml
+# Encounter schema v3 (atomic). v2 mechanics merged from raids/salvations-edge.yaml
+# + verified v3 additions from the Verity vertical-slice pipeline (brief->author->verify).
+# Blank loadout fields = UNVERIFIED, not guessed. EoF stat names (Health/Class/...).
+# Verifier note: removed an incorrect 'Witness one-shot' threat (Witness = encounter 5).
+
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: verity
+  name: Verity
+  difficulty: hard
+  estimated_time: '30-60 min (first clears: 1-2 hours)'
+  abstract: 'The infamous shape-puzzle encounter. Team splits into INSIDE (3
+
+    trapped in alternate realm) and OUTSIDE (3 in main realm).
+
+    Inside reads 2D shapes (their statue holds one) and passes
+
+    shapes between Inside teammates to escape with a 3D KEY that
+
+    does NOT contain their own shape. Outside swaps 3D shapes
+
+    between Inside teammates'' statues so the final shapes match.
+
+    One full round = both teams done correctly. 3 rounds = win.
+
+    '
+  setup: "WHAT YOU SEE\n- 6 STATUES of each player at the entrance — exact loadouts and\n  Ghosts. **This\
+    \ is why teams must be visually distinct.**\n- 3 GLOWING STATUES deeper in the room (these are the\
+    \ inside\n  statues that hold shapes).\n- A PROJECTOR SCREEN behind the glowing statues, fluxing between\n\
+    \  2D shapes: circle, square, triangle.\n- **Imminent End** wipe timer (3:30).\n\nPLATFORM MECHANICS\n\
+    - There is NO platform stepping in Verity. Movement is about\n  positioning for the Inside/Outside\
+    \ split.\n- **Selection trick:** standing in the half of the room CLOSER\n  to the wall of shattered\
+    \ glass before the encounter starts =\n  guaranteed Inside. The other 4 stand near the 6 statues;\
+    \ one\n  gets randomly picked Inside.\n- Inside team: trapped in their own bubble realm. Each player\n\
+    \  sees their own statue + 2 teammates' statues from inside.\n  They can ONLY interact with their\
+    \ own realm's knights and\n  shapes.\n- Shapes you HOLD persist on your character until you deposit\n\
+    \  them on another Guardian's statue (Inside) or swap them\n  between statues (Outside).\n- **Catatonic\
+    \ Decimation freeze:** when one Inside team escapes,\n  the others are frozen. Outside team must retrieve\
+    \ their\n  Ghosts and deposit on the correct frozen statue to revive.\n\nSTART STATE\n- Encounter\
+    \ starts when 3 players interact with the glowing\n  statues. RNG (or selection-trick) decides Inside/Outside.\n"
+  callouts:
+  - when: Pre-pull
+    from: lead
+    to: team
+    say: '"Inside picks: [name1], [name2], [name3]. Outside: [name4], [name5], [name6]. All ensure distinct
+      visual identity — change shaders + ornaments if needed."'
+    why: Verity REQUIRES visual distinction. Same-class same-shader teams have wiped repeatedly because
+      they can't read each other's statues.
+  - when: Inside team reads their statue shapes
+    from: inside-team
+    to: outside-team
+    say: '"Inside order LEFT to RIGHT facing the projector: [shape], [shape], [shape]."'
+    why: Outside team needs the Inside statues' held shapes to compute the swaps.
+  - when: Inside player ready to pass a shape
+    from: inside-player
+    to: target inside teammate
+    say: '"[Name] — passing you a [shape]."'
+    why: Inside players can only give shapes to OTHER Inside players' statues (never their own). Clear
+      targeting prevents duplicate or missed handoffs.
+  - when: Inside player ready to escape (holds 2 shapes ≠ their statue's shape)
+    from: inside-player
+    to: team
+    say: '"[Name] escaping — got [shape1] + [shape2]."'
+    why: When all 3 Inside escape, the Catatonic Decimation freeze hits everyone but one. Team needs to
+      be ready to revive.
+  - when: Outside dissection plan
+    from: outside-lead
+    to: outside-team
+    say: '"Swap plan: take a [shape] from statue [X] to statue [Y]; take a [shape] from statue [Z] to
+      statue [W]."'
+    why: Outside team operates by SWAPPING shapes between statues — every move affects two. Plan before
+      acting.
+  - when: Catatonic Decimation freeze
+    from: outside-lead
+    to: outside-team
+    say: '"Ghosts up — [name1] needs ghost back to [position1], [name2] to [position2]..."'
+    why: Frozen players spectate. Outside collects 3 Ghosts and deposits each to the correct statue. WRONG
+      statue = instant death for the depositor.
+  - when: All 3 inside teams escaped + frozen players revived
+    from: any
+    to: team
+    say: '"Round [N] done. Reset, fight ads, prep for round [N+1]."'
+    why: Imminent End pauses. Wave of Grim/Thrall/Unstoppable Ogres incoming.
+  - when: Final round wave of Ogres
+    from: any
+    to: team
+    say: '"Unstop Ogres — Anti-Stun!"'
+    why: Two Unstoppable Ogres per round. Anti-Unstoppable required.
+  - when: Final ascension
+    from: any
+    to: team
+    say: '"Lift up — heading to Witness."'
+    why: After 3 successful rounds, the lift to the next encounter activates.
+  wipe_triggers:
+  - Imminent End timer expires.
+  - Inside player forms a 3D key containing their statue's shape → escape impossible → must die + respawn.
+  - Outside player deposits a Ghost onto the WRONG Guardian's statue → instant death + cascading failure.
+  - All Inside players Catatonically Decimated + no Outside survivor → wipe.
+  damage_phase_triggers:
+  - No boss DPS. Completion = 3 rounds of correct shape dissection + Catatonic revival.
+  parallel_timeline:
+  - phase: Pull
+    all: Activate the 3 glowing statues. RNG (or selection-trick) splits Inside (3) and Outside (3).
+  - phase: Inside team reads
+    inside_team: Read your own statue + 2 teammate statues. Call out the order left-to-right.
+    outside_team: Listen. Note the Inside shapes.
+  - phase: Inside shape collection (round 1)
+    inside_team: Kill Splintered Curator Knights to drop the projector-screen shape. Pick up shape. Deposit
+      on an Inside teammate's statue (NEVER your own, NEVER already-served).
+    outside_team: Kill 3 Knights on your side to access all 3 shapes. Begin dissection — swap shapes between
+      Inside statues. Plan ahead.
+  - phase: Inside escape with 3D key
+    inside_team: Once you hold 2 shapes that are NOT your statue's shape, form a 3D key. Walk through
+      the glass wall.
+    outside_team: Continue dissection until Inside statues reflect the correct outside shape compositions.
+  - phase: Catatonic Decimation freeze
+    all: When Inside escapes, all but one player freezes. Three Ghosts appear on the Outside. Survivor
+      + frozen-spectators coordinate Ghost-to-statue.
+  - phase: Revival
+    frozen_players: Spectate, guide survivor to correct statues.
+    survivor: Pick up each Ghost, deposit on the correct statue. WRONG statue = death.
+  - phase: Add wave between rounds
+    all: Grim, Thrall, 2× Unstoppable Ogres. Anti-Unstoppable mandatory.
+  - phase: Repeat rounds 2 + 3
+    all: Same flow. After round 3 — lift to Witness encounter activates.
+  permutations:
+  - name: Standard Inside/Outside 3-3
+    learner_friendly: false
+    summary: Default. RNG splits the team. Pre-coordinated callouts handle dissection.
+    roles:
+    - id: inside
+      count: 3
+      does: Trapped in alt realm. Read statues. Collect shapes from Splintered Curator knights. Pass shapes
+        to teammates' statues (NEVER own). Form 3D key ≠ your own shape. Escape.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Anti-Unstoppable for the solo-room Ogre; Concussive
+          Dampener vs Ogre splash.
+    - id: outside
+      count: 3
+      does: Stay in main realm. Kill outside Splintered Curators. Swap 3D shapes between Inside statues.
+        Free Catatonically Decimated allies with Ghosts.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Reliable Anti-Unstoppable for the two Ogres each
+          round; Concussive Dampener vs Ogre splash.
+  - name: Selection Trick (guarantee specific Inside/Outside)
+    summary: Position 2 players against the shattered-glass wall before pulling — they are GUARANTEED
+      Inside. The 4 statue-side players have 1 chosen at random for Inside. Lets you pre-assign mechanic-heavy
+      players to roles.
+    best_for: Teams who have a clear weak link on Verity — pin them to Outside (or Inside, whichever they're
+      better at).
+    roles:
+    - id: pinned-inside
+      count: 2
+      does: Stand against shattered-glass wall before pull. Guaranteed Inside.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Anti-Unstoppable for the solo-room Ogre; Concussive
+          Dampener vs Ogre splash.
+    - id: pinned-outside
+      count: 3
+      does: Stand near 6 statues. One of you will be Inside randomly; rest are Outside.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Reliable Anti-Unstoppable for the two Ogres each
+          round; Concussive Dampener vs Ogre splash.
+    - id: floater
+      count: 1
+      does: Stand near 6 statues OR shattered glass per team plan.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Anti-Unstoppable for the solo-room Ogre; Concussive
+          Dampener vs Ogre splash.
+  - name: Single-Dissection Speedrun
+    summary: Outside team aims to finish dissection in ONE pass — only possible if Inside statues' starting
+      3D shapes contain all 3 shapes once each (cone + cylinder + prism, e.g.). Saves a full round.
+    best_for: Experienced Verity teams.
+    roles:
+    - id: inside
+      count: 3
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Anti-Unstoppable for the solo-room Ogre; Concussive
+          Dampener vs Ogre splash.
+    - id: outside
+      count: 3
+      does: Compute the single-pass dissection at start. Move only the necessary 2 swaps. Verify before
+        completion.
+      loadout:
+        subclass: Healing — Solar (restoration) or Prismatic w/ a healing class ability (survival-first;
+          Verity has no boss DPS)
+        weapons:
+          primary: Add-clear primary with a sustain perk (e.g. Heal Clip + Incandescent)
+          special: ''
+          heavy: ''
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge applies (no DPS phase). Reliable Anti-Unstoppable for the two Ogres each
+          round; Concussive Dampener vs Ogre splash.
+  cheese:
+  - title: Visual distinction = encounter clarity
+    detail: 'Force all 6 to wear different shaders. Change Ghost shells.
+
+      Same-class fireteams are the #1 cause of Verity wipes — you
+
+      literally can''t tell which statue is which. Spend 60 seconds
+
+      on this before pulling, not 60 minutes wiping.
+
+      '
+  common_mistakes:
+  - Inside player picks up >2 shapes WITHOUT being ready to escape → forms a 3D key containing their own
+    statue's shape → escape impossible.
+  - Inside player deposits a shape on their OWN statue → can't progress.
+  - Outside player deposits a Ghost on the wrong frozen statue → instant death + must restart Ghost collection.
+  - Outside team operating without a plan — every swap affects 2 statues. Plan before acting.
+  - Same-class same-shader fireteam — visually indistinguishable statues = chaos.
+  rewards:
+    guaranteed:
+    - 1× raid armor or weapon.
+    hidden_chest:
+      location: 'After completing Repository (encounter 3). Trigger the dialogue
+
+        where the Witness reveals itself to be the Winnower''s first
+
+        knife, then jump up the RED-coloured blocks. Contains the 3rd
+
+        and final hidden conductor for the Deepsight puzzle.
+
+        '
+      rewards:
+      - Third of 3 hidden conductors for the Deepsight puzzle.
+    potential_drops:
+    - Summum Bonum (sword, Arc)
+    - Non-Denouement (combat bow, Arc)
+    - Imminence (SMG, Strand)
+  master_challenge:
+    name: Varied Geometry
+    requirement: 'Cannot use the same 3D shape to escape the solo realm until
+
+      all six 3D shapes (sphere, cube, pyramid + prism, cone,
+
+      cylinder) have been used across phases. Phase 1: dissect
+
+      composite shapes (prism/cone/cylinder). Phase 2: dissect
+
+      pure shapes (sphere/cube/pyramid) — coordinate with solo
+
+      players since the lock-and-key rule still applies. Phase 3:
+
+      revert to composites. Master adds Unstoppable Ogres in solo
+
+      rooms.
+
+      '
+    enforced_on: Master only
+  images:
+    overview: ''
+    setup: ''
+    callouts: ''
+    damage_phase: ''
+    hidden_chest: ''
+  learner_path:
+  - '1st clear: Outside (no time pressure, more logical work).'
+  - '2nd: Inside, but ONLY after coaching on the ''don''t form your own shape'' rule.'
+  - '3rd+: try the Selection Trick to pre-pin yourself into your strongest role.'
+  plain_language_steps:
+  - '1. SPLIT. Three players get trapped INSIDE solo Verity rooms; three stay OUTSIDE in the main realm.
+    (Use the selection trick if you want to pick: standing against the shattered-glass wall before the
+    pull guarantees Inside.)'
+  - 2. INSIDE — OBSERVE. Look at the 2D shape YOUR statue is holding (circle, square, or triangle). That
+    is the ONE shape you must NEVER give yourself. Then read the two shapes on your backboard. Call your
+    statue's shape out loud, left-to-right, so Outside can plan.
+  - 3. INSIDE — get your shapes. Kill the Splintered Curator Knights in your room to drop the projector's
+    2D shapes. You are building a 3D escape KEY from the two shapes your statue is NOT holding.
+  - '4. INSIDE — PAIR, then SHARE. Deposit any shape onto a TEAMMATE''S statue (never your own). Per the
+    infographic: first PAIR mismatched backboard shapes to their statue, then once at least two of you
+    have matching shapes, SHARE them around left-to-right so everyone ends up holding the two shapes their
+    statue does NOT hold.'
+  - '5. INSIDE — COMBINE and escape. When you hold the two shapes that are NOT your statue''s shape, they
+    fuse into your 3D escape key. Walk out through the shattered-glass wall. WARNING: if your key ever
+    contains your own statue''s shape you cannot escape and must die and respawn.'
+  - 6. OUTSIDE — dissect. Kill the three outside Knights to access all three 3D shapes, then SWAP 3D shapes
+    between the three inside statues so each statue's 3D composition matches what its inside player needs.
+    Every swap touches TWO statues — plan the whole sequence before you move anything.
+  - 7. FREEZE (Catatonic Decimation). The moment all Inside players escape, everyone but one survivor
+    is frozen solid and drops a Ghost in the main realm.
+  - 8. OUTSIDE — revive. The survivor picks up each Ghost and deposits it on the CORRECT frozen statue
+    to revive that player. Depositing on the WRONG statue is instant death — let the frozen spectators
+    call their own positions.
+  - 9. RESET. Clear the add wave between rounds — Grim, Thrall, Dread Husks, and two Unstoppable Ogres
+    (use Anti-Unstoppable). Killing Knights/Ogres respawns the Knights for the next round.
+  - 10. REPEAT. Complete three correct rounds. After round 3 the lift to the Witness encounter activates.
+  defense:
+    incoming_damage:
+      adds:
+      - Taken / mixed — Splintered Curator Knights + Dread adds; no single damage element
+      boss:
+      - None — Verity has no boss and no DPS phase
+    champions:
+    - Unstoppable Ogre (Taken) -> Anti-Unstoppable (EoF artifact Unstoppable weapon mods). Two spawn outside
+      per round; one can spawn in the inside room. Splintered Curator Knights are normal adds, not champions.
+    recommended_defensive_mods:
+      elemental:
+      - No fixed element to resist (Taken adds) — invest Health/Class + self-healing (Heal Clip/Incandescent,
+        Solar restoration, or Recuperation) rather than an elemental resist mod
+      concussive:
+      - Concussive Dampener — vs Unstoppable Ogre eye-beam splash and add explosions
+  damage:
+    surges:
+    - None — Verity has no DPS phase, so no damage surge applies
+    burst_windows: No boss damage window. Completion = 3 rounds of correct shape dissection + Catatonic-Decimation
+      Ghost revival.
+    recommended_dps:
+    - Bring heavy/DPS only to clear the Unstoppable Ogres between rounds — not for a boss
+  sources:
+  - tier: 1
+    name: Authored mechanics — destiny2-loadout-toolkit/raids/salvations-edge.yaml (Verity block + overview)
+    url: file:///home/cs/workspace/Destiny%202/destiny2-loadout-toolkit/raids/salvations-edge.yaml
+    date_checked: '2026-06-07'
+    recency_note: Primary in-repo canon for mechanics, callouts, champions, and raid-wide loadout; overview
+      loadout exotics predate EoF Armor 3.0 and were translated to current stat names.
+  - tier: 1
+    name: Sherpa infographic — Encounter 4 Verity image0.jpg (FearlessNurseJa)
+    url: file:///home/cs/workspace/Destiny%202/Raid%20resources/%23salvations-edge/Encounter%204%20-%20Verity/image0.jpg
+    date_checked: '2026-06-07'
+    recency_note: Confirms the inside-room 'make your escape key from the 2 shapes your statue is NOT
+      holding' 4-step flow (Observe/Pair/Share/Combine) and Witness-notices test.
+  - tier: 1
+    name: Destructoid — Salvation's Edge fourth encounter raid guide, Verity
+    url: https://www.destructoid.com/destiny-2-salvations-edge-fourth-encounter-raid-guide-verity/
+    date_checked: '2026-06-07'
+    recency_note: Confirms inside/outside roles, escape-key rule, ghost revive, Unstoppable Champions,
+      and healing-loadout advice. Pre-Edge of Fate; uses no specific current build.
+  - tier: 1
+    name: Mobalytics — Salvation's Edge Raid Guide
+    url: https://mobalytics.gg/blog/destiny-2/salvations-edge-raid-guide/
+    date_checked: '2026-06-07'
+    recency_note: Confirms inside/outside split and shape-matching; full page 403'd on direct fetch but
+      mechanics corroborated via search snippet. Pre-EoF.
+  - tier: 1
+    name: Shacknews — Salvation's Edge raid guide
+    url: https://www.shacknews.com/article/140025/salvations-edge-raid-guide-destiny-2
+    date_checked: '2026-06-07'
+    recency_note: Confirms Unstoppable Ogres after solo players freed, Knights/Ogres adds, inside/outside
+      roles. No encounter-specific loadout. Pre-EoF.
+  - tier: 1
+    name: Grindout — Salvation's Edge in-depth walkthrough
+    url: https://grindout.com/destiny-2/guides/salvations-edge
+    date_checked: '2026-06-07'
+    recency_note: Confirms 'two shapes that are not their own' escape key, dissection, 'wrong dunk = instant
+      death' ghost rule. Pre-EoF; no Verity-specific loadout.
+  - tier: 2
+    name: TheGamer — How Armor 3.0 Works in Edge of Fate
+    url: https://www.thegamer.com/destiny-2-edge-of-fate-armor-rework-guide/
+    date_checked: '2026-06-07'
+    recency_note: Current stat rename mapping (Weapons/Health/Class/Grenade/Super/Melee), 0-200 scaling,
+      archetypes (Gunner/Paragon/Bulwark/etc.), set bonuses. Used to translate legacy loadouts.
+  - tier: 2
+    name: GameRant — Best Artifact Mods in The Edge of Fate / GamePost champion stun chart
+    url: https://gamerant.com/destiny-2-edge-of-fate-best-artifact-build-perks-mods/
+    date_checked: '2026-06-07'
+    recency_note: Confirms anti-Unstoppable in EoF comes from artifact 'Implement of Curiosity' weapon
+      mods (Unstoppable HC/Sidearm/Sniper) loading a stun payload on ADS; archetypes rotate seasonally.

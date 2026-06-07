@@ -1,0 +1,766 @@
+{
+  "crotas-end": {
+    "slug": "crotas-end",
+    "name": "Crota's End",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/crotas-end.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "abyss",
+        "name": "Enter the Abyss (Hellmouth maze)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "bridge",
+        "name": "Cross the Bridge",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "ir-yut",
+        "name": "Ir Y\u00fbt, the Deathsinger",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "crota",
+        "name": "Crota, Son of Oryx (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "deep-stone-crypt": {
+    "slug": "deep-stone-crypt",
+    "name": "Deep Stone Crypt",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/deep-stone-crypt.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "surviving-blizzard",
+        "name": "Surviving the Blizzard (Desolation)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "crypt-security",
+        "name": "Crypt Security",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "atraks-1",
+        "name": "Atraks-1, Fallen Exo",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "descent",
+        "name": "Surviving the Descent (Rapture)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "taniks-abomination",
+        "name": "Taniks, the Abomination (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "desert-perpetual": {
+    "slug": "desert-perpetual",
+    "name": "The Desert Perpetual",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/desert-perpetual.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 0,
+        "slug": "nursery",
+        "name": "The Nursery (Opener + boss select)",
+        "ingame_name": ""
+      },
+      {
+        "order": 1,
+        "slug": "epoptes",
+        "name": "Epoptes, Lord of Quanta",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "agraios",
+        "name": "Agraios, Inherent",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "iatros",
+        "name": "Iatros, Inward-Turned",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "koregos",
+        "name": "Koregos, the Worldline (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "garden-of-salvation": {
+    "slug": "garden-of-salvation",
+    "name": "Garden of Salvation",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/garden-of-salvation.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "evade-consecrated",
+        "name": "Evade The Consecrated Mind (Embrace)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "summon-consecrated",
+        "name": "Summon The Consecrated Mind (Undergrowth \u2014 5 relays)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "consecrated-mind",
+        "name": "Defeat The Consecrated Mind",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "sanctified-mind",
+        "name": "Conquer The Sanctified Mind (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "kings-fall": {
+    "slug": "kings-fall",
+    "name": "King's Fall",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/kings-fall.yaml",
+    "encounter_count": 8,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "hall-of-souls",
+        "name": "Hall of Souls (Opener)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "portico-jumping",
+        "name": "Crux & Portico (Jumping Puzzle 1)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "basilica",
+        "name": "Basilica (Annihilator Totems)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "warpriest",
+        "name": "Warpriest",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "golgoroth",
+        "name": "Golgoroth",
+        "ingame_name": ""
+      },
+      {
+        "order": 6,
+        "slug": "transept",
+        "name": "Transept (Jumping Puzzle 2 + Exotic Chest)",
+        "ingame_name": ""
+      },
+      {
+        "order": 7,
+        "slug": "daughters-of-oryx",
+        "name": "Daughters of Oryx (Ir An\u00fbk + Ir Halak)",
+        "ingame_name": ""
+      },
+      {
+        "order": 8,
+        "slug": "oryx",
+        "name": "Oryx, the Taken King (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "last-wish": {
+    "slug": "last-wish",
+    "name": "Last Wish",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/last-wish.yaml",
+    "encounter_count": 6,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "kalli",
+        "name": "Kalli, the Corrupted",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "shuro-chi",
+        "name": "Shuro Chi, the Corrupted",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "morgeth",
+        "name": "Morgeth, the Spirekeeper",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "vault",
+        "name": "The Vault (Symbol Puzzle)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "riven",
+        "name": "Riven of a Thousand Voices (final boss)",
+        "ingame_name": ""
+      },
+      {
+        "order": 6,
+        "slug": "heart-escape",
+        "name": "The Heart of Riven (Fate's Chosen escape)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "root-of-nightmares": {
+    "slug": "root-of-nightmares",
+    "name": "Root of Nightmares",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/root-of-nightmares.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "cataclysm",
+        "name": "Cataclysm",
+        "ingame_name": "Survive the Onslaught"
+      },
+      {
+        "order": 2,
+        "slug": "scission",
+        "name": "Scission",
+        "ingame_name": "Enter the Root"
+      },
+      {
+        "order": 3,
+        "slug": "macrocosm",
+        "name": "Macrocosm",
+        "ingame_name": "Zo'aurc, Explicator of Planets"
+      },
+      {
+        "order": 4,
+        "slug": "nezarec",
+        "name": "Nezarec, Final God of Pain",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "salvations-edge": {
+    "slug": "salvations-edge",
+    "name": "Salvation's Edge",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/salvations-edge.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "substratum",
+        "name": "Substratum",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "herald-of-finality",
+        "name": "Herald of Finality",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "repository",
+        "name": "Repository",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "verity",
+        "name": "Verity",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "the-witness",
+        "name": "The Witness",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "vault-of-glass": {
+    "slug": "vault-of-glass",
+    "name": "Vault of Glass",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/vault-of-glass.yaml",
+    "encounter_count": 7,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "opening-spire",
+        "name": "Opening \u2014 Waking Ruins (Spire)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "confluxes",
+        "name": "Templar's Well \u2014 Confluxes (1st loot)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "templar",
+        "name": "The Templar",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "gorgon-labyrinth",
+        "name": "Gorgon Labyrinth (stealth section)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "jumping-puzzle",
+        "name": "Jumping Puzzle",
+        "ingame_name": ""
+      },
+      {
+        "order": 6,
+        "slug": "gatekeeper",
+        "name": "Gatekeeper (Venus + Mars portals)",
+        "ingame_name": ""
+      },
+      {
+        "order": 7,
+        "slug": "atheon",
+        "name": "Atheon, Time's Conflux (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "vow-of-the-disciple": {
+    "slug": "vow-of-the-disciple",
+    "name": "Vow of the Disciple",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raids/vow-of-the-disciple.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "bog-payload",
+        "name": "Disciple's Bog (Payload)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "acquisition",
+        "name": "Acquisition (3 obelisks)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "caretaker",
+        "name": "The Caretaker",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "exhibition",
+        "name": "Exhibition (relics race)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "rhulk",
+        "name": "Rhulk, Disciple of the Witness (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "duality": {
+    "slug": "duality",
+    "name": "Duality",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/duality.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "gahlran",
+        "name": "Nightmare of Gahlran, Sorrow Bearer",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "statue-puzzle",
+        "name": "Statue Puzzle (4 gladiator statues)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "unlock-the-vault",
+        "name": "Unlock the Vault (3 Nightmares)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "caiatl",
+        "name": "Nightmare of Caiatl (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "equilibrium": {
+    "slug": "equilibrium",
+    "name": "Equilibrium",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/equilibrium.yaml",
+    "encounter_count": 3,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "temple-grounds-harvester",
+        "name": "Temple Grounds \u2192 Harvester",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "harrow",
+        "name": "Harrow, Dredgen-Apprentice",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "dredgen-sere",
+        "name": "Dredgen Sere (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "ghosts-of-the-deep": {
+    "slug": "ghosts-of-the-deep",
+    "name": "Ghosts of the Deep",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/ghosts-of-the-deep.yaml",
+    "encounter_count": 3,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "hive-ritual",
+        "name": "Hive Ritual (break the seal)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "ecthar",
+        "name": "Ecthar, the Shield of Savath\u00fbn",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "simmumah",
+        "name": "\u0160immumah ur-Nokru, Lucent Necromancer",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "grasp-of-avarice": {
+    "slug": "grasp-of-avarice",
+    "name": "Grasp of Avarice",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/grasp-of-avarice.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "skywatch",
+        "name": "Skywatch (Loot Cave intro)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "phryzhia",
+        "name": "Phry'zhia, the Insatiable",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "rusted-gangplank",
+        "name": "Rusted Gangplank \u2192 Sparrow Mines (jumping puzzle + race)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "shield-shutdown",
+        "name": "Shield Shutdown (Fallen Shield / Servitor cannon)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "avarokk",
+        "name": "Wilhelm's Hoard (Captain Avarokk, the Covetous)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "pit-of-heresy": {
+    "slug": "pit-of-heresy",
+    "name": "Pit of Heresy",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/pit-of-heresy.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "necropolis",
+        "name": "Necropolis (Disciples of the Broken Blade)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "tunnels-of-despair",
+        "name": "Tunnels of Despair",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "chamber-of-suffering",
+        "name": "Chamber of Suffering",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "harrow",
+        "name": "The Harrow (jumping puzzle + Wizard runes)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "cradle-of-damnation",
+        "name": "Cradle of Damnation (Zulmak, Instrument of Torment)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "prophecy": {
+    "slug": "prophecy",
+    "name": "Prophecy",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/prophecy.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "phalanx-echo",
+        "name": "Phalanx Echo",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "wasteland",
+        "name": "Wasteland (transition \u2014 sparrow + blights)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "hexahedron",
+        "name": "Hexahedron",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "singularity",
+        "name": "Singularity (sparrow race)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "kell-echo",
+        "name": "Kell Echo (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "shattered-throne": {
+    "slug": "shattered-throne",
+    "name": "The Shattered Throne",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/shattered-throne.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "erebus",
+        "name": "Erebus (Labyrinth)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "descent",
+        "name": "The Descent (catwalks + jumping puzzle)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "vorgeth",
+        "name": "Vorgeth, the Boundless Hunger",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "dul-incaru",
+        "name": "D\u00fbl Incaru, the Eternal Return",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "spire-of-the-watcher": {
+    "slug": "spire-of-the-watcher",
+    "name": "Spire of the Watcher",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/spire-of-the-watcher.yaml",
+    "encounter_count": 5,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "reestablish-power",
+        "name": "Reestablish Power (intro outpost \u2014 4 circuits)",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "ascend-the-spire",
+        "name": "Ascend the Spire (3 levels of circuits)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "silence-the-siren",
+        "name": "Silence the Siren (Akelous, the Siren's Current)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "descend",
+        "name": "Descend (Pillory cell stacks \u2014 red circuits + reactor descent)",
+        "ingame_name": ""
+      },
+      {
+        "order": 5,
+        "slug": "prompt-critical",
+        "name": "Prompt Critical (Persys, Primordial Ruin)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "sundered-doctrine": {
+    "slug": "sundered-doctrine",
+    "name": "Sundered Doctrine",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/sundered-doctrine.yaml",
+    "encounter_count": 3,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "solve-the-riddle",
+        "name": "Solve the Riddle",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "open-the-locks",
+        "name": "Open the Locks (Zoetic Lockset)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "kerrev-the-erased",
+        "name": "Kerrev, the Erased (final boss)",
+        "ingame_name": ""
+      }
+    ]
+  },
+  "warlords-ruin": {
+    "slug": "warlords-ruin",
+    "name": "Warlord's Ruin",
+    "activity_type": "dungeon",
+    "fireteam_size": 3,
+    "yaml": "raids/dungeons/warlords-ruin.yaml",
+    "encounter_count": 4,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "rathil",
+        "name": "Rathil, First Broken Knight of Fikrul",
+        "ingame_name": ""
+      },
+      {
+        "order": 2,
+        "slug": "imprisoned-and-climb",
+        "name": "Imprisoned! \u2192 Venture Deeper (jumping puzzle)",
+        "ingame_name": ""
+      },
+      {
+        "order": 3,
+        "slug": "wailing-tempest",
+        "name": "Wailing Tempest (Locus of Wailing Grief)",
+        "ingame_name": ""
+      },
+      {
+        "order": 4,
+        "slug": "quell-the-corruption",
+        "name": "Quell the Corruption (Hefnd's Vengeance, Blighted Chimaera)",
+        "ingame_name": ""
+      }
+    ]
+  }
+}

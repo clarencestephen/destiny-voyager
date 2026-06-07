@@ -411,7 +411,7 @@ encounters:
       - when: "Holding 2 Strength"
         from: "self"
         to:   "team"
-        say:  '"I'M AT 2 — no more!"'
+        say:  '"I''M AT 2 — no more!"'
         why:  "Warn rescuers."
       - when: "Umbral Enervation"
         from: "trapped"
@@ -818,8 +818,6 @@ encounters:
         player per phase — call-outs lock who has which eye before
         DPS opens. Repeated eye = fail.
       enforced_on: "Master only"
-        - "Age-Old Bond (auto)"
-        - "Last Wish armor"
 
     images:
       overview: ""

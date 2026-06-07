@@ -1,0 +1,557 @@
+{
+  "Raid resources/#crotas-end": {
+    "resource_folder": "Raid resources/#crotas-end",
+    "normalized_slug": "crotas-end",
+    "matched_registry": "crotas-end",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365051652226158653_2026-05-22_16-48"
+      ],
+      "json_exports": [
+        "Discord_1365051652226158653_2026-05-22_16-49.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Enter the Abyss (Hellmouth maze)",
+      "Encounter 2 - Cross the Bridge",
+      "Encounter 3 - Ir Y\u00fbt, the Deathsinger",
+      "Encounter 4 - Crota, Son of Oryx (final boss)"
+    ]
+  },
+  "Raid resources/#deep-stone-crypt": {
+    "resource_folder": "Raid resources/#deep-stone-crypt",
+    "normalized_slug": "deep-stone-crypt",
+    "matched_registry": "deep-stone-crypt",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052036844093441_2026-05-22_16-50"
+      ],
+      "json_exports": [
+        "Discord_1365052036844093441_2026-05-22_16-51.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Surviving the Blizzard (Desolation)",
+      "Encounter 2 - Crypt Security",
+      "Encounter 3 - Atraks-1, Fallen Exo",
+      "Encounter 4 - Surviving the Descent (Rapture)",
+      "Encounter 5 - Taniks, the Abomination (final boss)"
+    ]
+  },
+  "Raid resources/#desert-perpetual": {
+    "resource_folder": "Raid resources/#desert-perpetual",
+    "normalized_slug": "desert-perpetual",
+    "matched_registry": "desert-perpetual",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1395772895065804800_2026-05-22_16-51"
+      ],
+      "json_exports": [
+        "Discord_1395772895065804800_2026-05-22_16-54.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 0 - The Nursery (Opener + boss select)",
+      "Encounter 1 - Epoptes, Lord of Quanta",
+      "Encounter 2 - Agraios, Inherent",
+      "Encounter 3 - Iatros, Inward-Turned",
+      "Encounter 4 - Koregos, the Worldline (final boss)"
+    ]
+  },
+  "Raid resources/#desert-perpetual-epic": {
+    "resource_folder": "Raid resources/#desert-perpetual-epic",
+    "normalized_slug": "desert-perpetual-epic",
+    "matched_registry": null,
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1422689628095385680_2026-05-22_22-30"
+      ],
+      "json_exports": [
+        "Discord_1422689628095385680_2026-05-23_05-01.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "EDGE_CASE",
+    "note": "variant of desert-perpetual \u2014 confirm if separate encounter set"
+  },
+  "Raid resources/#garden-of-salvation": {
+    "resource_folder": "Raid resources/#garden-of-salvation",
+    "normalized_slug": "garden-of-salvation",
+    "matched_registry": "garden-of-salvation",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052094570299442_2026-05-23_05-02"
+      ],
+      "json_exports": [
+        "Discord_1365052094570299442_2026-05-23_05-05.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Evade The Consecrated Mind (Embrace)",
+      "Encounter 2 - Summon The Consecrated Mind (Undergrowth \u2014 5 relays)",
+      "Encounter 3 - Defeat The Consecrated Mind",
+      "Encounter 4 - Conquer The Sanctified Mind (final boss)"
+    ]
+  },
+  "Raid resources/#get-ready-to-raid": {
+    "resource_folder": "Raid resources/#get-ready-to-raid",
+    "normalized_slug": "get-ready-to-raid",
+    "matched_registry": null,
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [],
+      "json_exports": [
+        "Are you raid ready yet.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 0,
+    "status": "EDGE_CASE",
+    "note": "meta folder (raid-readiness checklist) \u2014 no encounters"
+  },
+  "Raid resources/#kings-fall": {
+    "resource_folder": "Raid resources/#kings-fall",
+    "normalized_slug": "kings-fall",
+    "matched_registry": "kings-fall",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365051799274389545_2026-05-23_05-05"
+      ],
+      "json_exports": [
+        "Discord_1365051799274389545_2026-05-23_05-06.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Hall of Souls (Opener)",
+      "Encounter 2 - Crux & Portico (Jumping Puzzle 1)",
+      "Encounter 3 - Basilica (Annihilator Totems)",
+      "Encounter 4 - Warpriest",
+      "Encounter 5 - Golgoroth",
+      "Encounter 6 - Transept (Jumping Puzzle 2 + Exotic Chest)",
+      "Encounter 7 - Daughters of Oryx (Ir An\u00fbk + Ir Halak)",
+      "Encounter 8 - Oryx, the Taken King (final boss)"
+    ]
+  },
+  "Raid resources/#last-wish": {
+    "resource_folder": "Raid resources/#last-wish",
+    "normalized_slug": "last-wish",
+    "matched_registry": "last-wish",
+    "assets": {
+      "top_level_images": [
+        "Dreaming City Glyphs.jpg"
+      ],
+      "message_id_folders": [
+        "Discord_1365052146961092682_2026-05-23_05-36"
+      ],
+      "json_exports": [
+        "Discord_1365052146961092682_2026-05-23_05-38.json"
+      ],
+      "other": []
+    },
+    "image_count": 1,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Kalli, the Corrupted",
+      "Encounter 2 - Shuro Chi, the Corrupted",
+      "Encounter 3 - Morgeth, the Spirekeeper",
+      "Encounter 4 - The Vault (Symbol Puzzle)",
+      "Encounter 5 - Riven of a Thousand Voices (final boss)",
+      "Encounter 6 - The Heart of Riven (Fate's Chosen escape)"
+    ]
+  },
+  "Raid resources/#root-of-nightmares": {
+    "resource_folder": "Raid resources/#root-of-nightmares",
+    "normalized_slug": "root-of-nightmares",
+    "matched_registry": "root-of-nightmares",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365051735974088915_2026-05-23_05-38"
+      ],
+      "json_exports": [
+        "Discord_1365051735974088915_2026-05-23_05-39.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Cataclysm",
+      "Encounter 2 - Scission",
+      "Encounter 3 - Macrocosm",
+      "Encounter 4 - Nezarec, Final God of Pain"
+    ]
+  },
+  "Raid resources/#salvations-edge": {
+    "resource_folder": "Raid resources/#salvations-edge",
+    "normalized_slug": "salvations-edge",
+    "matched_registry": "salvations-edge",
+    "assets": {
+      "top_level_images": [
+        "SE Raid - CST CC SS TT CS CT ST.jpg"
+      ],
+      "message_id_folders": [
+        "Discord_1365051511624699935_2026-05-26_04-48"
+      ],
+      "json_exports": [
+        "Discord_1365051511624699935_2026-05-26_04-51.json"
+      ],
+      "other": []
+    },
+    "image_count": 1,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Substratum",
+      "Encounter 2 - Herald of Finality",
+      "Encounter 3 - Repository",
+      "Encounter 4 - Verity",
+      "Encounter 5 - The Witness"
+    ]
+  },
+  "Raid resources/#vault-of-glass": {
+    "resource_folder": "Raid resources/#vault-of-glass",
+    "normalized_slug": "vault-of-glass",
+    "matched_registry": "vault-of-glass",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365051972285235411_2026-05-26_04-51"
+      ],
+      "json_exports": [
+        "Discord_1365051972285235411_2026-05-26_04-52.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Opening \u2014 Waking Ruins (Spire)",
+      "Encounter 2 - Templar's Well \u2014 Confluxes (1st loot)",
+      "Encounter 3 - The Templar",
+      "Encounter 4 - Gorgon Labyrinth (stealth section)",
+      "Encounter 5 - Jumping Puzzle",
+      "Encounter 6 - Gatekeeper (Venus + Mars portals)",
+      "Encounter 7 - Atheon, Time's Conflux (final boss)"
+    ]
+  },
+  "Raid resources/#vow-of-the-disciple": {
+    "resource_folder": "Raid resources/#vow-of-the-disciple",
+    "normalized_slug": "vow-of-the-disciple",
+    "matched_registry": "vow-of-the-disciple",
+    "assets": {
+      "top_level_images": [
+        "Dreaming City - Copy.jpg"
+      ],
+      "message_id_folders": [
+        "Discord_1365051909756682443_2026-05-26_04-52"
+      ],
+      "json_exports": [
+        "Discord_1365051909756682443_2026-05-26_04-54.json"
+      ],
+      "other": []
+    },
+    "image_count": 1,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Disciple's Bog (Payload)",
+      "Encounter 2 - Acquisition (3 obelisks)",
+      "Encounter 3 - The Caretaker",
+      "Encounter 4 - Exhibition (relics race)",
+      "Encounter 5 - Rhulk, Disciple of the Witness (final boss)"
+    ]
+  },
+  "dungeon resources/#  equilibrium": {
+    "resource_folder": "dungeon resources/#  equilibrium",
+    "normalized_slug": "equilibrium",
+    "matched_registry": "equilibrium",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1450217120859422801_2026-05-26_04-58"
+      ],
+      "json_exports": [
+        "Discord_1450217120859422801_2026-05-26_05-01.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Temple Grounds \u2192 Harvester",
+      "Encounter 2 - Harrow, Dredgen-Apprentice",
+      "Encounter 3 - Dredgen Sere (final boss)"
+    ]
+  },
+  "dungeon resources/# duality": {
+    "resource_folder": "dungeon resources/# duality",
+    "normalized_slug": "duality",
+    "matched_registry": "duality",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052991979393186_2026-05-26_04-57"
+      ],
+      "json_exports": [
+        "Discord_1365052991979393186_2026-05-26_04-58.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Nightmare of Gahlran, Sorrow Bearer",
+      "Encounter 2 - Statue Puzzle (4 gladiator statues)",
+      "Encounter 3 - Unlock the Vault (3 Nightmares)",
+      "Encounter 4 - Nightmare of Caiatl (final boss)"
+    ]
+  },
+  "dungeon resources/# ghosts-of-the-deep": {
+    "resource_folder": "dungeon resources/# ghosts-of-the-deep",
+    "normalized_slug": "ghosts-of-the-deep",
+    "matched_registry": "ghosts-of-the-deep",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052858428559533_2026-05-26_05-01"
+      ],
+      "json_exports": [
+        "Discord_1365052858428559533_2026-05-26_05-03.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Hive Ritual (break the seal)",
+      "Encounter 2 - Ecthar, the Shield of Savath\u00fbn",
+      "Encounter 3 - \u0160immumah ur-Nokru, Lucent Necromancer"
+    ]
+  },
+  "dungeon resources/# grasp-of-avarice": {
+    "resource_folder": "dungeon resources/# grasp-of-avarice",
+    "normalized_slug": "grasp-of-avarice",
+    "matched_registry": "grasp-of-avarice",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365053048690446518_2026-05-26_05-03"
+      ],
+      "json_exports": [
+        "Discord_1365053048690446518_2026-05-26_05-03.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Skywatch (Loot Cave intro)",
+      "Encounter 2 - Phry'zhia, the Insatiable",
+      "Encounter 3 - Rusted Gangplank \u2192 Sparrow Mines (jumping puzzle + race)",
+      "Encounter 4 - Shield Shutdown (Fallen Shield - Servitor cannon)",
+      "Encounter 5 - Wilhelm's Hoard (Captain Avarokk, the Covetous)"
+    ]
+  },
+  "dungeon resources/# pit-of-heresy": {
+    "resource_folder": "dungeon resources/# pit-of-heresy",
+    "normalized_slug": "pit-of-heresy",
+    "matched_registry": "pit-of-heresy",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365053142697377793_2026-05-26_05-04"
+      ],
+      "json_exports": [
+        "Discord_1365053142697377793_2026-05-26_05-04.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Necropolis (Disciples of the Broken Blade)",
+      "Encounter 2 - Tunnels of Despair",
+      "Encounter 3 - Chamber of Suffering",
+      "Encounter 4 - The Harrow (jumping puzzle + Wizard runes)",
+      "Encounter 5 - Cradle of Damnation (Zulmak, Instrument of Torment)"
+    ]
+  },
+  "dungeon resources/# prophecy": {
+    "resource_folder": "dungeon resources/# prophecy",
+    "normalized_slug": "prophecy",
+    "matched_registry": "prophecy",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365053094722801705_2026-05-26_05-04"
+      ],
+      "json_exports": [
+        "Discord_1365053094722801705_2026-05-26_05-05.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Phalanx Echo",
+      "Encounter 2 - Wasteland (transition \u2014 sparrow + blights)",
+      "Encounter 3 - Hexahedron",
+      "Encounter 4 - Singularity (sparrow race)",
+      "Encounter 5 - Kell Echo (final boss)"
+    ]
+  },
+  "dungeon resources/# shattered-throne": {
+    "resource_folder": "dungeon resources/# shattered-throne",
+    "normalized_slug": "shattered-throne",
+    "matched_registry": "shattered-throne",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365053190344671293_2026-05-26_05-06"
+      ],
+      "json_exports": [
+        "Discord_1365053190344671293_2026-05-26_05-09.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Erebus (Labyrinth)",
+      "Encounter 2 - The Descent (catwalks + jumping puzzle)",
+      "Encounter 3 - Vorgeth, the Boundless Hunger",
+      "Encounter 4 - D\u00fbl Incaru, the Eternal Return"
+    ]
+  },
+  "dungeon resources/# spire-of-the-watcher": {
+    "resource_folder": "dungeon resources/# spire-of-the-watcher",
+    "normalized_slug": "spire-of-the-watcher",
+    "matched_registry": "spire-of-the-watcher",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052940016156672_2026-05-26_05-10"
+      ],
+      "json_exports": [
+        "Discord_1365052940016156672_2026-05-26_05-11.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Reestablish Power (intro outpost \u2014 4 circuits)",
+      "Encounter 2 - Ascend the Spire (3 levels of circuits)",
+      "Encounter 3 - Silence the Siren (Akelous, the Siren's Current)",
+      "Encounter 4 - Descend (Pillory cell stacks \u2014 red circuits + reactor descent)",
+      "Encounter 5 - Prompt Critical (Persys, Primordial Ruin)"
+    ]
+  },
+  "dungeon resources/# sundred-doctrine": {
+    "resource_folder": "dungeon resources/# sundred-doctrine",
+    "normalized_slug": "sundered-doctrine",
+    "matched_registry": "sundered-doctrine",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052624591655145_2026-05-26_05-11"
+      ],
+      "json_exports": [
+        "Discord_1365052624591655145_2026-05-26_05-19.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Solve the Riddle",
+      "Encounter 2 - Open the Locks (Zoetic Lockset)",
+      "Encounter 3 - Kerrev, the Erased (final boss)"
+    ]
+  },
+  "dungeon resources/# vespers-host": {
+    "resource_folder": "dungeon resources/# vespers-host",
+    "normalized_slug": "vespers-host",
+    "matched_registry": null,
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052716698697838_2026-05-26_05-19"
+      ],
+      "json_exports": [
+        "Discord_1365052716698697838_2026-05-26_05-37.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "EDGE_CASE",
+    "note": "NO authored YAML guide exists \u2014 needs a from-scratch guide"
+  },
+  "dungeon resources/# warlords-ruins": {
+    "resource_folder": "dungeon resources/# warlords-ruins",
+    "normalized_slug": "warlords-ruin",
+    "matched_registry": "warlords-ruin",
+    "assets": {
+      "top_level_images": [],
+      "message_id_folders": [
+        "Discord_1365052784977772554_2026-05-26_05-38"
+      ],
+      "json_exports": [
+        "Discord_1365052784977772554_2026-05-26_05-40.json"
+      ],
+      "other": []
+    },
+    "image_count": 0,
+    "msgid_folder_count": 1,
+    "status": "MATCHED",
+    "encounter_folders": [
+      "Encounter 1 - Rathil, First Broken Knight of Fikrul",
+      "Encounter 2 - Imprisoned! \u2192 Venture Deeper (jumping puzzle)",
+      "Encounter 3 - Wailing Tempest (Locus of Wailing Grief)",
+      "Encounter 4 - Quell the Corruption (Hefnd's Vengeance, Blighted Chimaera)"
+    ]
+  }
+}

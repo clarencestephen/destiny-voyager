@@ -349,7 +349,7 @@ encounters:
       - when: "Biting Cold ≥ 7 stacks"
         from: "self"
         to:   "team"
-        say:  '"I'm on shelter, [back-left/back-right]."'
+        say:  '"I''m on shelter, [back-left/back-right]."'
         why:  "Lets teammates ride your cleared zone if they're also high stacks."
       - when: "Solar Charges drop (center of arena, after cleanse)"
         from: "carrier"
