@@ -528,26 +528,12 @@ async def answer(question: str) -> str:
             manifest=manifest_ctx_str,
         )
 
-    # Fix 3: post-hoc fact check — scan response for title-case item
-    # phrases that don't match the manifest. Append a soft caveat
-    # rather than rewriting, so the user sees what's suspect.
-    try:
-        from kb.manifest import verify_names
-        check = verify_names(response)
-        # The activity / proper-noun allowlist lives in kb/manifest.py
-        # (KNOWN_ACTIVITIES, KNOWN_PROPER_NOUNS) so verify_names handles
-        # most filtering. Anything that slips through still has to clear
-        # the 2-4 word length guard before being flagged.
-        suspects = [s for s in check["unverified_candidates"]
-                    if 2 <= len(s.split()) <= 4]
-        if suspects:
-            response += (
-                "\n\n_⚠ Possibly invented names (not found in manifest): "
-                + ", ".join(f"`{s}`" for s in suspects[:5])
-                + ". Verify on light.gg/db before relying on these._"
-            )
-    except Exception as e:
-        print(f"[router] verify_names error: {e}")
+    # NOTE: the old manifest-based "possibly invented names" post-check was
+    # REMOVED. The Bungie manifest is an ITEM database — it has no entries for
+    # raid geography / encounter terms ("Outside Room", "Inside Rooms",
+    # "Verity Encounter Diagram"), so it falsely flagged legitimate content and
+    # undercut user confidence. The manifest is NOT a source of truth for
+    # mechanics; the keyed encounter content + web guides are. No post-check.
 
     # If we had a clarifier AND useful context, prepend the question
     if plan.ask_clarifying and (inventory_ctx or knowledge_ctx or search_ctx):
