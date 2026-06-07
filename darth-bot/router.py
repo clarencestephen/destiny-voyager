@@ -24,9 +24,18 @@ Tested against the canonical question set:
 
 from __future__ import annotations
 
+import os
 import re
+import sys
 from dataclasses import dataclass, field
 from typing import Set
+
+# Make the sibling `raid_context` package importable in BOTH runtimes (the
+# Discord bot runs from darth-bot/; the FastAPI backend puts darth-bot/ on
+# sys.path). Neither puts the repo root on the path, so add it here.
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
 
 
 @dataclass
@@ -121,7 +130,9 @@ def classify(question: str) -> Plan:
 
     # Raid encounter — mechanics are stable but availability, reprise
     # status, and seasonal modifiers shift. Search supplements the KB.
-    if _KW["raid_name"].search(q) or _KW["encounter"].search(q):
+    # The keyed store is also consulted so a bare encounter name ("how do
+    # I do verity") routes to the isolated walkthrough path, not "mechanic".
+    if _KW["raid_name"].search(q) or _KW["encounter"].search(q) or _store_raid_match(q):
         plan = Plan(
             category="raid",
             use_kb=True,
@@ -188,6 +199,245 @@ def classify(question: str) -> Plan:
 
 
 # ============================================================
+# Raid/dungeon context — KEYED, isolated (raid_context.store)
+# ============================================================
+
+
+def _store_raid_match(q: str) -> bool:
+    """True if the keyed store confidently recognizes a raid/dungeon activity
+    OR a specific encounter in the query. Lets bare encounter names (e.g.
+    'how do I do verity') route to the isolated walkthrough path. Never raises."""
+    try:
+        from raid_context.store import identify_activity, identify_encounter
+    except Exception:
+        return False
+    try:
+        if identify_activity(q).get("confidence", 0) >= 0.6:
+            return True
+    except Exception:
+        pass
+    try:
+        if identify_encounter(q).get("confidence", 0) >= 0.7:
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _collect_loadouts(enc: dict) -> list[str]:
+    """Per-role loadout lines from any of the v3 shapes (role_loadouts /
+    roles[] / permutations[].roles[].loadout). Skips blank fields."""
+    def fmt(rid, lo):
+        parts = []
+        if lo.get("subclass"):
+            parts.append(f"subclass {lo['subclass']}")
+        w = lo.get("weapons")
+        if isinstance(w, dict):
+            w = "; ".join(f"{k}: {v}" for k, v in w.items() if v)
+        if w:
+            parts.append(f"weapons {w}")
+        if lo.get("exotic_armor"):
+            parts.append(f"exotic {lo['exotic_armor']}")
+        if lo.get("armor_stats"):
+            parts.append("stats " + "/".join(lo["armor_stats"]))
+        if lo.get("surges_mods"):
+            parts.append(str(lo["surges_mods"]))
+        return f"- {rid}: " + "; ".join(parts) if parts else ""
+
+    lines: list[str] = []
+    for r in (enc.get("role_loadouts") or []):
+        ln = fmt(r.get("role_id", "role"), r)
+        if ln:
+            lines.append(ln)
+    if not lines:
+        for r in (enc.get("roles") or []):
+            ln = fmt(r.get("id") or r.get("role_id", "role"), r.get("loadout") or r)
+            if ln:
+                lines.append(ln)
+    if not lines:
+        for perm in (enc.get("permutations") or []):
+            for r in (perm.get("roles") or []):
+                if r.get("loadout"):
+                    ln = fmt(r.get("id", "role"), r["loadout"])
+                    if ln:
+                        lines.append(ln)
+    return lines
+
+
+def _fmt_encounter_doc(doc: dict) -> str:
+    """Render ONE store encounter doc into ORGANIZED, ATTRIBUTED plaintext —
+    consistent labeled blocks + a SOURCES section so the model can cite."""
+    enc = doc.get("encounter", {})
+    out: list[str] = []
+    if enc.get("abstract"):
+        out.append(str(enc["abstract"]).strip())
+    if enc.get("plain_language_steps"):
+        out.append("STEPS:\n" + "\n".join(f"- {s}" for s in enc["plain_language_steps"]))
+    if enc.get("mechanics"):
+        out.append("MECHANICS:\n" + "\n".join(f"- {m}" for m in enc["mechanics"]))
+    cl = [f"- {(c.get('say') or '').strip()}" + (f" — {c['why'].strip()}" if c.get("why") else "")
+          for c in (enc.get("callouts") or []) if isinstance(c, dict) and c.get("say")]
+    if cl:
+        out.append("CALLOUTS:\n" + "\n".join(cl))
+    if enc.get("wipe_triggers"):
+        out.append("WIPE TRIGGERS:\n" + "\n".join(f"- {w}" for w in enc["wipe_triggers"]))
+    loadouts = _collect_loadouts(enc)
+    if loadouts:
+        out.append("LOADOUTS BY ROLE:\n" + "\n".join(loadouts))
+    dfn = enc.get("defense") or {}
+    if dfn.get("champions"):
+        out.append("CHAMPIONS:\n" + "\n".join(f"- {c}" for c in dfn["champions"]))
+    mods = (dfn.get("recommended_defensive_mods") or {})
+    dmod = [f"- {m}" for m in (mods.get("elemental") or [])] + [f"- {m}" for m in (mods.get("concussive") or [])]
+    if dmod:
+        out.append("DEFENSIVE MODS:\n" + "\n".join(dmod))
+    dmg = enc.get("damage") or {}
+    dl = []
+    if dmg.get("surges"):
+        dl.append("Surges: " + "; ".join(dmg["surges"]))
+    if dmg.get("burst_windows"):
+        dl.append("Window: " + str(dmg["burst_windows"]))
+    if dmg.get("recommended_dps"):
+        dl.append("DPS: " + "; ".join(dmg["recommended_dps"]))
+    if dl:
+        out.append("DAMAGE:\n" + "\n".join(f"- {x}" for x in dl))
+    rw = enc.get("rewards")
+    if isinstance(rw, dict):
+        rw = rw.get("guaranteed") or []
+    if rw:
+        out.append("REWARDS:\n" + "\n".join(f"- {r}" for r in rw))
+    srcs = [f"- [tier {s.get('tier', '?')}] {s.get('name', '')}" + (f" — {s['note']}" if s.get("note") else "")
+            for s in (enc.get("sources") or []) if isinstance(s, dict)]
+    if srcs:
+        out.append("SOURCES (attribution — cite these, credit the author):\n" + "\n".join(srcs))
+    return "\n\n".join(out).strip()
+
+
+def raid_context_from_store(question: str):
+    """Deterministic, KEYED raid/dungeon context. Returns a formatted
+    per-encounter walkthrough (one activity only, isolation enforced by the
+    store's _assert_isolation) or None so the caller falls back. Never raises."""
+    try:
+        from raid_context.store import (
+            identify_activity, identify_encounter, list_encounters, get_encounter,
+        )
+    except Exception as e:
+        print(f"[router] raid_context import failed: {e}")
+        return None
+
+    def _encounter_block(slug, enc_slug, order, name, header):
+        try:
+            body = _fmt_encounter_doc(get_encounter(slug, enc_slug))
+        except Exception as e:
+            print(f"[router] get_encounter({slug}/{enc_slug}): {e}")
+            return None
+        return f"{header}\n\n## ENCOUNTER {order} — {name}\n{body}" if body else None
+
+    # Resolve the activity. If the query names ONLY an encounter (no raid
+    # title, e.g. "how do I do verity"), find its activity via the encounter
+    # and serve just that one — still keyed and isolated.
+    slug = act_name = act_type = None
+    try:
+        a = identify_activity(question)
+        if a.get("confidence", 0) >= 0.6:
+            slug, act_name, act_type = a["slug"], a["name"], a["activity_type"]
+    except Exception:
+        pass
+
+    if slug is None:
+        try:
+            ie = identify_encounter(question)
+        except Exception:
+            return None
+        if ie.get("confidence", 0) < 0.7:
+            return None
+        try:
+            am = get_encounter(ie["activity_slug"], ie["encounter_slug"]).get("activity", {})
+        except Exception:
+            return None
+        header = (f"## ACTIVITY — {am.get('name', ie['activity_slug'])} "
+                  f"({am.get('activity_type', '')}) [keyed · isolated · single-activity]")
+        return _encounter_block(ie["activity_slug"], ie["encounter_slug"], ie["order"], ie["name"], header)
+
+    header = (f"## ACTIVITY — {act_name} ({act_type}) "
+              f"[keyed · isolated · single-activity]")
+
+    # If the query names a SPECIFIC encounter within the activity, serve ONLY
+    # that one — people ask per-encounter ("verity"), not for the whole raid.
+    try:
+        ie = identify_encounter(question, slug)
+    except Exception:
+        ie = None
+    if ie and ie.get("confidence", 0) >= 0.7:
+        block = _encounter_block(slug, ie["encounter_slug"], ie["order"], ie["name"], header)
+        if block:
+            return block
+
+    # Otherwise serve every encounter of the (single) activity.
+    try:
+        encs = list_encounters(slug)
+    except Exception:
+        return None
+    sections = []
+    for enc in encs:
+        block_body = None
+        try:
+            block_body = _fmt_encounter_doc(get_encounter(slug, enc["name"]))
+        except Exception as e:
+            print(f"[router] get_encounter({slug}/{enc['name']}): {e}")
+            continue
+        if block_body:
+            sections.append(f"## ENCOUNTER {enc['order']} — {enc['name']}\n{block_body}")
+    if not sections:
+        return None
+    return f"{header}\n\n" + "\n\n".join(sections)
+
+
+def _legacy_raid_context(question: str) -> str:
+    """Legacy ChromaDB per-encounter fan-out — fallback ONLY when the keyed
+    store can't serve the query. Behavior preserved from the original inline
+    block (meta_state match + curated overrides + vector fan-out)."""
+    from kb.retrieve import format_for_context
+    from meta_state import current_state
+    matched = None
+    for r in (current_state.get("raids") or {}).get("playable") or []:
+        if r["name"].lower() in question.lower():
+            matched = r
+            break
+    if matched and matched.get("encounters"):
+        sections: list[str] = []
+        curated_map = matched.get("encounter_mechanics") or {}
+        curated_count = sum(
+            1 for enc in matched["encounters"]
+            if curated_map.get(enc) and not curated_map[enc].startswith("_")
+        )
+        if curated_count < len(matched["encounters"]):
+            overview = format_for_context(f"{matched['name']} raid overview", top_k=2)
+            if overview:
+                sections.append(f"## OVERVIEW — {matched['name']}\n{overview}")
+        for enc in matched["encounters"]:
+            curated = curated_map.get(enc)
+            if curated and not curated.startswith("_"):
+                sections.append(
+                    f"## ENCOUNTER — {enc}\n"
+                    f"[curated authoritative mechanics — quote these verbatim]\n"
+                    f"{curated}"
+                )
+                continue
+            enc_tokens = [t for t in enc.replace(",", "").split()
+                          if len(t) > 3 and t[0].isupper()]
+            enc_keyword = enc_tokens[0] if enc_tokens else enc.split()[0]
+            chunks = format_for_context(
+                f"{matched['name']} {enc} encounter mechanics callouts strategy",
+                top_k=3, must_contain=enc_keyword,
+            )
+            if chunks:
+                sections.append(f"## ENCOUNTER — {enc}\n{chunks}")
+        return "\n\n".join(sections)
+    return format_for_context(question, top_k=12)
+
+
+# ============================================================
 # Orchestrator — wires everything together
 # ============================================================
 
@@ -220,60 +470,11 @@ async def answer(question: str) -> str:
         try:
             from kb.retrieve import format_for_context
             if "raid_walkthrough" in plan.notes:
-                # Build a STRUCTURED per-encounter context. Token-overlap
-                # retrieval biases everything toward the final-boss name
-                # (the question contains the raid title), so we fan out
-                # one sub-query per encounter and label each section.
-                from meta_state import current_state
-                matched = None
-                for r in (current_state.get("raids") or {}).get("playable") or []:
-                    if r["name"].lower() in question.lower():
-                        matched = r
-                        break
-                if matched and matched.get("encounters"):
-                    sections: list[str] = []
-                    curated_map = matched.get("encounter_mechanics") or {}
-                    # Count encounters with curated content (ignoring _-prefixed keys)
-                    curated_count = sum(
-                        1 for enc in matched["encounters"]
-                        if curated_map.get(enc) and not curated_map[enc].startswith("_")
-                    )
-                    # Only include the OVERVIEW chunk pull when NOT all
-                    # encounters are curated — otherwise the overview can
-                    # surface a competing encounter list from a different
-                    # walkthrough source and confuse the model.
-                    if curated_count < len(matched["encounters"]):
-                        overview = format_for_context(
-                            f"{matched['name']} raid overview", top_k=2,
-                        )
-                        if overview:
-                            sections.append(f"## OVERVIEW — {matched['name']}\n{overview}")
-                    for enc in matched["encounters"]:
-                        # Hand-curated mechanics (when present) override
-                        # KB retrieval — used for encounters where the
-                        # vector search leaks content from other raids
-                        # (e.g. Ir Yût pulling King's Fall Deathsinger
-                        # material via the shared "Deathsinger" token).
-                        curated = curated_map.get(enc)
-                        if curated and not curated.startswith("_"):
-                            sections.append(
-                                f"## ENCOUNTER — {enc}\n"
-                                f"[curated authoritative mechanics — quote these verbatim]\n"
-                                f"{curated}"
-                            )
-                            continue
-                        enc_tokens = [t for t in enc.replace(",", "").split()
-                                      if len(t) > 3 and t[0].isupper()]
-                        enc_keyword = enc_tokens[0] if enc_tokens else enc.split()[0]
-                        chunks = format_for_context(
-                            f"{matched['name']} {enc} encounter mechanics callouts strategy",
-                            top_k=3, must_contain=enc_keyword,
-                        )
-                        if chunks:
-                            sections.append(f"## ENCOUNTER — {enc}\n{chunks}")
-                    knowledge_ctx = "\n\n".join(sections)
-                else:
-                    knowledge_ctx = format_for_context(question, top_k=12)
+                # KEYED, context-isolated retrieval first (raid_context.store):
+                # returns exactly the matched activity's encounters by key, so
+                # cross-raid contamination is structurally impossible. Falls back
+                # to the legacy ChromaDB fan-out only if the store can't serve it.
+                knowledge_ctx = raid_context_from_store(question) or _legacy_raid_context(question)
             else:
                 knowledge_ctx = format_for_context(question)
         except Exception as e:

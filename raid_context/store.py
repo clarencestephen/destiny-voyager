@@ -57,6 +57,11 @@ class NotFound(Exception):
     pass
 
 
+# articles/possessives that appear in activity display names but are not
+# distinctive ("The Desert Perpetual", "King's Fall" -> "kings")
+_ACT_STOP = {"the", "of", "and", "a", "an", "s"}
+
+
 # ----------------------------------------------------------------- identify
 def identify_activity(query: str) -> dict:
     """Map a free-text query to ONE activity. Deterministic; no LLM."""
@@ -74,11 +79,14 @@ def identify_activity(query: str) -> dict:
     for alias, slug in ACTIVITY_ALIASES.items():
         if (alias in q) if " " in alias else (alias in qtokens):
             return _hit(reg[slug], 0.9)
-    # 3. display-name / slug token overlap
+    # 3. display-name / slug token overlap on DISTINCTIVE tokens only —
+    #    articles like "the"/"of" in names ("The Desert Perpetual") must not
+    #    match generic queries ("the best exotic hand cannon").
+    qd = qtokens - _ACT_STOP
     best, score = None, 0.0
     for slug, a in reg.items():
-        name_tokens = set(_norm(a["name"]).split()) | set(slug.split("-"))
-        overlap = len(qtokens & name_tokens)
+        name_tokens = (set(_norm(a["name"]).split()) | set(slug.split("-"))) - _ACT_STOP
+        overlap = len(qd & name_tokens)
         if overlap > score:
             best, score = a, overlap
     if best and score > 0:
@@ -92,10 +100,22 @@ def _hit(a: dict, conf: float) -> dict:
             "confidence": round(conf, 2)}
 
 
+# generic words that appear in encounter names but must NOT drive a match
+# (else "exotic hand cannon" hits a "... Exotic Chest" encounter)
+_ENC_STOP = {
+    "the", "of", "and", "a", "an", "boss", "final", "exotic", "chest", "puzzle",
+    "jumping", "jump", "traversal", "opener", "opening", "secret", "loot", "intro",
+    "transition", "section", "race", "stand", "first", "second", "encounter",
+    "door", "room", "wall", "cross", "enter", "survive", "solve", "open", "unlock",
+}
+
+
 def identify_encounter(query: str, slug: str | None = None) -> dict:
-    """Find ONE encounter, optionally scoped to an activity slug."""
+    """Find ONE encounter, optionally scoped to an activity slug. Distinctive
+    tokens (and exact slug phrases) drive matches; generic words are ignored."""
     reg = registry()
     q = _norm(query)
+    qtokens = set(q.split()) - _ENC_STOP
     scopes = [reg[slug]] if slug and slug in reg else reg.values()
     best, score = None, 0
     for a in scopes:
@@ -103,8 +123,9 @@ def identify_encounter(query: str, slug: str | None = None) -> dict:
             cand = set(_norm(e.get("name", "")).split()) | set((e.get("slug") or "").split("-"))
             if e.get("ingame_name"):
                 cand |= set(_norm(e["ingame_name"]).split())
-            ov = len(set(q.split()) & cand)
-            # also direct slug containment
+            cand -= _ENC_STOP
+            ov = len(qtokens & cand)
+            # exact slug phrase appearing verbatim is a strong, distinctive signal
             if e.get("slug") and e["slug"].replace("-", " ") in q:
                 ov += 3
             if ov > score:
