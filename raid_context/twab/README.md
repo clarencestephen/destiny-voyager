@@ -1,15 +1,19 @@
-# #TWAB — future-meta knowledge (sequential, recent-weighted)
+# #TWAB — future-meta knowledge (Aztecross = source of truth)
 
-Bungie's weekly "This Week in Destiny" + dev previews + creator breakdowns of the
-**6/9/2026 sandbox overhaul** (Pantheon 2.0, weapon-tier T5, new catalysts incl.
-Anarchy, artifact/focusing changes). The future meta is LARGELY UNKNOWN and is MORE
-important than the current one — build/loadout advice must look FORWARD to post-6/9,
-not freeze today's meta.
+The 6/9/2026 update is **MONUMENT OF TRIUMPH** — a huge sandbox overhaul (new
+subclass abilities, ability reworks + balance, Armor 3.0 updates, exotic-armor
+rebalance, new catalysts incl. Anarchy, Pantheon 2.0, weapon tier T5).
 
-Priority: most-recent first. Loadout enrichment should flag current picks as
-"verify for the new meta" and, where the dev previews are explicit, recommend the
-forward-looking option. Mechanics are meta-independent and unaffected.
+**Source of truth:** `AZTECROSS_TWAB_latest.md` — Aztecross's "NEW Abilities,
+EXOTIC Reworks & More (Final Balance Patch) | Monument of Triumph" (2026-06-04,
+full transcript of Bungie's 3rd/final Dev Insight). Other files = supporting
+Bungie TWIDs + creator breakdowns.
 
-Sources scraped 2026-06-07 (see *.md here). TODO: pull the full last-6 TWIDs in
-order; author `future-meta-summary.md` distilling confirmed post-6/9 changes that
-affect raid/dungeon DPS + survivability.
+**Policy:** the FUTURE meta (post-6/9) is largely unknown and MORE important than
+the current one. Loadout/build advice must look FORWARD — flag current picks as
+"verify for Monument of Triumph" and prefer forward-looking options where the Dev
+Insights are explicit. Mechanics are meta-independent and unaffected.
+
+TODO: distill `future-meta-summary.md` from the Aztecross TWAB (the ability/armor/
+exotic changes that move raid+dungeon DPS + survivability), then thread it into the
+loadout-enrichment pass.
