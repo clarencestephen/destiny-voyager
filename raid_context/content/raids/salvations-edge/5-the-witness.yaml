@@ -43,70 +43,46 @@ encounter:
     \ the moment players approach the Witness's\n  platform.\n"
   callouts:
   - when: Pre-pull
-    from: lead
-    to: team
-    say: '"Glyphbreakers = [3 names]. Add-clear = [3 names]. Glyphbreakers take HAND assignments: [name1]
-      sky, [name2] floor, [name3] side."'
-    why: Each Glyphbreaker permanently owns one of the 3 hand types. Reduces confusion about who's reading
-      what.
-  - when: Sky hand armband read
-    from: glyphbreaker-sky
-    to: team
-    say: '"Sky hand: [GREEN | YELLOW | RED] — need [Pyramidal | Spherical | Hexahedral]."'
-    why: Tells team which resonance type needs gathering for this hand.
-  - when: Floor hand armband read
-    from: glyphbreaker-floor
-    to: team
-    say: '"Floor hand: [colour] — need [shape]."'
-    why: Same.
-  - when: Side hand armband read
-    from: glyphbreaker-side
-    to: team
-    say: '"Side hand: [colour] — need [shape]."'
-    why: Same.
-  - when: Glyphbreaker collecting wrong-shape resonance
-    from: any
-    to: that glyphbreaker
-    say: '"[Name] — you''ve got [wrong shape], need [right shape]!"'
-    why: Wrong shape can't break the matched hand. Player must cleanse via central glyph and start over.
+    say: '"Runners = [2 names]. Add-clear = [4 names], two each side." (or for the 3-Glyphbreaker split:
+      "[name] sky, [name] floor, [name] side; rest add-clear.")'
+    why: Locks who reads hands vs who holds the arena so nobody doubles up or leaves a hand unread.
+  - when: Armband read on a hand
+    say: '"[Sky/Floor/Side] hand: GREEN/YELLOW/RED — need [triangle/circle/square]."'
+    why: Tells the team which resonance the Runner is going to gather, and confirms the same-color-trap
+      (you go to a different zone).
+  - when: A Runner is gathering the wrong shape
+    say: '"[Name] — that''s [wrong shape], you need [right shape]!"'
+    why: Wrong shape can't break the matched hand; the player would have to cleanse and start over, wasting
+      a rotation and risking the death timer.
   - when: Hand broken
-    from: glyphbreaker
-    to: team
-    say: '"[Sky | Floor | Side] hand DOWN — Glyphbreaker active."'
-    why: Tells team one hand attack is now offline + this player will cleanse at central glyph.
-  - when: Spike test triggered
-    from: any
-    to: team
-    say: '"SPIKES — need [TRIANGLE | CIRCLE | SQUARE]!"'
-    why: Witness winds up a spike test; correct-shape pattern dissolves the spikes; failure = ground-energy
-      wave.
-  - when: 5th glyph being broken (last glyph imminent)
-    from: lead
-    to: team
-    say: '"5th glyph — converge to central plate."'
-    why: Once 6th glyph breaks, central plate rises and damage phase starts. Be on the plate already.
+    say: '"[Sky/Floor/Side] hand DOWN — Glyphbreaker, going to plate."'
+    why: Signals that hand's attack is offline and the Runner is about to cleanse and break a chest glyph.
+  - when: Holding resonance with a low timer
+    say: '"Careful stasis / cleanse now — it one-shots."'
+    why: Carrying resonance too long is an instant kill (the Aztecross team repeats this warning); forces
+      an immediate cleanse on a chest glyph.
+  - when: Shape test ('The Witness tests you')
+    say: '"TEST — [TRIANGLE/CIRCLE/SQUARE]!" then "JUMP!" on the wave.'
+    why: The last-broken hand's shape sets the spike pattern; failing the pattern or not being airborne
+      on the ground-energy wave wipes the team.
+  - when: 5th glyph breaking
+    say: '"5th glyph — everyone to the central plate."'
+    why: The 6th break raises the plate and opens DPS instantly; the team needs to already be converged.
   - when: Damage phase open
-    from: any
-    to: team
-    say: '"VULNERABLE — burst him."'
-    why: Central organic plate up + Witness's heart open. All DPS in.
-  - when: Witness wind-back during DPS (combined attack telegraph)
-    from: any
-    to: team
-    say: '"BACK LEFT, FRONT RIGHT, JUMP."'
-    why: Combined Wrathful Disarray + ground-energy attack. Standard callout format. Tells team which
-      direction to move + when to jump.
-  - when: Damage phase ending (Witness slamming central plate)
-    from: any
-    to: team
+    say: '"VULNERABLE — burst him, stay grounded."'
+    why: Plate up + chest open; all DPS in while moving to dodge the floor AoE and beam.
+  - when: Mid-DPS combined telegraph
+    say: '"BACK LEFT, FRONT RIGHT — JUMP."'
+    why: Standard directional format for the combined beam + ground-energy attack; tells the team where
+      to move and when to leave the ground.
+  - when: Phase ending (chest glows white / Witness pulls back)
     say: '"OUT — he''s slamming!"'
-    why: Witness ends the phase by slamming the central plate, killing or launching anyone still on it.
-      Get off.
+    why: The Witness ends the phase by slamming the central plate, killing or launching anyone still on
+      it.
   - when: Final Stand
-    from: lead
-    to: team
-    say: '"FINAL STAND — supers + heavies NOW. He has one phase."'
-    why: Final Stand window is tight; team gets one DPS rotation. Pre-save burst-DPS for this moment.
+    say: '"FINAL STAND — supers + heavies NOW, one phase."'
+    why: The Final Stand window is a single tight DPS rotation with no second chance; pre-saved Golden
+      Gun / Nighthawk / Still Hunt and heavy must all go now.
   wipe_triggers:
   - Holding resonance too long → death.
   - Spike test failed → ground-energy wave kills anyone not airborne.
@@ -297,34 +273,37 @@ encounter:
   - '2nd: glyphbreaker-side (Wrathful Disarray is the easiest beam to dodge).'
   - '3rd: glyphbreaker-sky or glyphbreaker-floor.'
   plain_language_steps:
-  - '1. Pre-pull, assign 3 Glyphbreakers and 3 Add-clear. Give each Glyphbreaker a permanent hand: one
-    owns the SKY hand, one the FLOOR hand, one the SIDE hand.'
-  - '2. Approach the Witness''s platform to start the encounter. The Final Shape Looming timer begins
-    and the Witness opens its three hand attacks: Resonant Outburst (sky, triangle floor AoE), Resonant
-    Seekers (floor, circle swarm), and Wrathful Disarray (side, horizontal beam).'
-  - '3. Each Glyphbreaker reads their hand''s armband colour: green needs Pyramidal, yellow needs Spherical,
-    red needs Hexahedral. Call it out so the team knows what to gather.'
-  - '4. Critical rule: a hand''s armband never matches the resonance it spawns itself. To break a hand
-    you must collect resonance by standing in a DIFFERENT hand''s attack zone for about 2 seconds, never
-    the one in front of you.'
-  - 5. With the matching resonance, return to your hand's attack zone and shoot its armband. The hand
-    explodes and you gain the Glyphbreaker buff.
-  - 6. Take that buff to the central organic platform and shoot one of the Witness's six chest glyphs.
-    This cleanses your resonance and removes a glyph. Cleanse before your resonance timer kills you.
-  - 7. Add-clear players hold the arena against the Scorn the whole time and keep Glyphbreakers alive
-    while they stand in attack zones collecting resonance.
-  - 8. When a Spike test triggers ('The Witness tests you...' appears), read the LAST destroyed hand's
-    shape and destroy the pyramid spikes in the matching pattern (triangle, circle, or square). On failure,
-    jump to avoid the ground-energy wave.
-  - 9. Repeat the read-collect-break-cleanse loop across multiple rotations until five glyphs are broken.
-    The whole team should pre-converge to the central platform.
-  - 10. When the sixth glyph breaks, the central organic platform rises and the Witness's heart opens.
-    Burst-DPS while constantly moving to dodge Resonant Outburst and Wrathful Disarray; use the directional
-    callouts and jump on cue.
-  - 11. When the Witness slams the central plate to end the phase, get off the plate immediately or you
-    die.
-  - 12. Repeat until Final Stand. There is only one tight DPS window left, so dump supers and heavies
-    the moment it opens, or wipe.
+  - '1. Before pulling, split the 6 players. The two most-used setups are: 2 Runners + 4 add-clear (lowest
+    chaos), or 3 Glyphbreakers (one per hand) + 3 add-clear (faster). Add-clear takes a side of the arena
+    each.'
+  - '2. Approach the Witness''s platform to start. The Final Shape timer begins and the Witness opens
+    its three hands: SKY = triangle floor traps (Pyramidal), FLOOR = circular ''bees'' swarm (Spherical),
+    SIDE = horizontal beam (Hexahedral/square).'
+  - '3. A Runner dips into a hand''s attack zone and shoots its wrist ARMBAND to read the color: GREEN
+    = need triangle, YELLOW/orange = need circle, RED = need square. Call the color out loud.'
+  - '4. Critical rule: a hand''s armband never matches its own shape. Go stand in a DIFFERENT hand''s
+    zone (the one whose shape matches the color you read) for about 2-3 seconds until you hear the loud
+    drone — that gives you the resonance.'
+  - 5. Carry the resonance back to the first hand, dip into its telegraph again, and shoot the armband.
+    The hand explodes and you gain the Glyphbreaker buff.
+  - 6. Take Glyphbreaker to the central plate and shoot one of the Witness's six chest glyphs. The glyph
+    disappears and your resonance is cleansed. Cleanse BEFORE the resonance timer kills you — holding
+    it too long is a one-shot.
+  - 7. Add-clear players hold both sides of the arena the whole time, kill the Scorn and the Subjugators
+    (which bow on spawn = free damage), and keep the Runners alive while they stand in zones.
+  - 8. When 'The Witness tests you...' appears (gold-glowing hand / scream), the player who last broke
+    a hand calls the shape; the team destroys the pyramid spikes in that matching pattern (triangle /
+    circle / square). Then when the Witness's eyes flash and it pushes its hands forward, EVERYONE jumps
+    to survive the ground wave.
+  - 9. Repeat the read-collect-break-cleanse loop. Vary which hands you break and break glyphs roughly
+    two-at-a-time to limit extra spawns. On the 5th glyph, the whole team pre-converges to the central
+    plate.
+  - 10. When the 6th glyph breaks, the central plate rises and the Witness becomes vulnerable. Burst it
+    down while moving to dodge the floor AoE and beam; jump on the ground-slam tell.
+  - 11. The Witness ends the phase by slamming the central plate (chest glows white, pulls back) — get
+    OFF the plate immediately or it kills/launches you.
+  - 12. Repeat until Final Stand. There is only one last short window — dump all supers and heavy ammo
+    (save Golden Gun / Celestial Nighthawk / Still Hunt for this) or you wipe.
   defense:
     incoming_damage:
       adds:
@@ -371,6 +350,27 @@ encounter:
       cage, good ammo economy, and add-clear utility; have one teammate run it to boost the whole team's
       DPS into the chest. A weaken via Deterministic Chaos was also used effectively by True Vanguard
       during Final Stand.
+    - Verify for the new meta (6/9 sandbox change incoming) — all loadouts below are current-meta as of
+      the sources.
+    - Still Hunt (exotic Solar sniper) + Celestial Nighthawk — top-recommended single-hit option. Nighthawk
+      supercharges both Golden Gun and Still Hunt's Nighthawk shot for huge burst while letting you keep
+      moving to dodge plate attacks. Cross-confirmed by Shadow Destiny ('very clearly the top damage option');
+      pairs with Hunter Golden Gun. Aztecross explicitly saves Celestial Nighthawks / Still Hunt for Final
+      Stand. Pre-save super + special ammo for the final window.
+    - Triple Tap / Fourth Times the Charm heavy sniper + Rockets — sustained burst that works on any class
+      and frees a super slot. Shadow Destiny recommends a 4TTC sniper alongside rockets. Good for teams
+      without Still Hunt.
+    - 'Burst-heavy generics: Two-Tailed Fox (Aztecross took ''crossbolt''/Two-Tailed Fox as his Exotic),
+      Sleeper, Apex Predator, or a rocket-and-sword swap.'
+    - 'Titan: Twilight Arsenal super + sniper/rockets (Shadow Destiny''s Titan setup — Twilight Arsenal
+      axes for burst plus a 4TTC sniper and rockets). Banner Shield is also called out as the best damage-phase
+      shot-caller since it tanks everything except the ground slam.'
+    - 'Warlock: Song of Flame (radiance) + same sniper/rocket burst — Shadow Destiny notes Well isn''t
+      really needed here, so radiance is favored for damage resistance and ability uptime.'
+    - Divinity (exotic Trace Rifle) on one player — opens a large crit cage, good ammo economy and add-clear
+      utility; one teammate running it boosts whole-team DPS into the chest. A weaken via Deterministic
+      Chaos was also used effectively by True Vanguard during Final Stand.
+    - Pre-save supers and heavy ammo for the single Final Stand window across every loadout.
   role_loadouts:
   - role_id: glyphbreaker-sky
     subclass: ''
@@ -435,6 +435,11 @@ encounter:
     name: 'Boss-strategy cross-reference: In-repo authored guide: content/raids/salvations-edge/5-the-
       | Firecrawl bundle salvations-edge__the-witness.json web[3] — '
     note: Multiple cross-referenced strategies + per-role; REGULAR mode. needs_clarification tracked separately.
+    date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross (source of truth) — per-encounter video, cross-referenced
+    note: 'Mechanics / steps / strategies / 6-player roles authored from Aztecross''s encounter video
+      + cross-referenced sources. REGULAR mode. Loadouts: verify for the 6/9 Monument of Triumph sandbox.'
     date_checked: '2026-06-07'
   boss_strategies:
   - name: Standard 4 Add-Clear / 2 Runners (split-side arena hold)
@@ -560,3 +565,179 @@ encounter:
       and the jump on the ground-slam tell (eyes flash, hands push forward). A Banner Shield Titan works
       well here because it survives everything except the ground wave. In the 3-Glyphbreaker plan this
       slot is folded into add-clear; in the 4/2 plan this is the 4th add-clear and primary caller.
+  mechanics:
+  - 'Arena and target: a wide circular/V-shaped arena. The Witness stands at the back wall with 6 GLYPHS
+    arranged across its chest. A central organic plate in the middle rises during damage phase.'
+  - 'Three HANDS are active at once, each a distinct attack you read by its motion: SKY hand = Resonant
+    Outburst (triangle-shaped floor AoE traps), FLOOR/ground hand = Resonant Seekers (circular ''bees''
+    swarm/mortar), SIDE hand = Wrathful Disarray (horizontal beam/laser). In the Aztecross run these are
+    called out as ''walls,'' ''bombs,'' and ''pyramids'' by their on-screen color.'
+  - 'Each hand has a glowing ARMBAND that lights one of two colors (never its own shape''s color): GREEN
+    = need Pyramidal/triangle resonance, YELLOW(orange) = need Spherical/circle resonance, RED = need
+    Hexahedral/square resonance.'
+  - 'Same-color trap: a hand''s armband NEVER matches the resonance that hand itself spawns. The SKY hand
+    (spawns Pyramidal/triangle) won''t show green; the FLOOR hand (spawns Spherical/circle) won''t show
+    yellow; the SIDE hand (spawns Hexahedral/square) won''t show red. So to break a hand you must always
+    grab resonance from a DIFFERENT hand''s zone.'
+  - 'Collect resonance: stand in a hand''s telegraphed attack zone for about 2-3 seconds until you hear
+    a loud drone, then you hold that resonance/essence. Carrying resonance has a timer that KILLS you
+    if you don''t cleanse it (the Aztecross team repeatedly warns ''careful stasis, it will one-shot you'').'
+  - 'Break a hand: with the matching resonance, return to the target hand''s attack zone and shoot its
+    armband. The hand explodes and you gain the GLYPHBREAKER buff.'
+  - 'Cleanse + remove a glyph: carry Glyphbreaker to the central plate and shoot one of the Witness''s
+    6 chest glyphs. The glyph disappears AND your resonance is cleansed (also cleanses essence on anyone
+    near the plate). All 6 glyphs must be broken.'
+  - 'Spike/shape test (''The Witness tests you...'' / gold-glowing hand + high-pitch scream): pyramid
+    spikes spawn and the team must destroy them in a pattern matching the LAST destroyed hand''s shape
+    (triangle / circle / square). The Aztecross team notes ''it does the thing the same way every time.''
+    On the follow-up ground-energy wave (Witness eyes flash, hands push forward) EVERYONE must jump or
+    be killed — Aztecross repeatedly calls ''jump'' and ''everyone can dodge.'''
+  - Breaking the same hand repeatedly, or breaking glyphs too far apart, spawns extra hands / extra Subjugators
+    (Tormentor-like enemies). Stagger glyph breaks (roughly two at a time) to keep spawns down.
+  - 'Damage phase: all 6 glyphs broken -> central plate rises -> Witness''s heart/chest opens and it becomes
+    vulnerable. You get roughly three hand-attack pairs of DPS while constantly moving to dodge Resonant
+    Outburst + Wrathful Disarray, then the Witness slams the central plate (chest glows white, pulls back)
+    to end the phase — get OFF the plate or die.'
+  - 'Final Stand: after enough damage phases the Witness goes briefly immune, then opens for ONE last
+    tight DPS window. There is no second window — dump supers and heavy here (Aztecross saves Celestial
+    Nighthawk / Still Hunt specifically for final). The story ''final mission'' that plays after is a
+    cinematic encore, not part of the regular raid boss fight.'
+  strategies:
+  - name: 4 Add-Clear / 2 Runners (split-side arena hold)
+    summary: 'The most-recommended normal split: 4 players clear adds (two per side of the V-shaped arena)
+      and 2 dedicated Runners do the entire read-collect-break-cleanse loop on the hands and chest glyphs.
+      Lowest-chaos setup for a typical 6-stack.'
+    steps:
+    - Pre-pull, assign 2 Runners and 4 add-clear (two on each side of the V arena).
+    - 'Approach the Witness platform to start. Three hands open: SKY (triangle floor traps / Pyramidal),
+      FLOOR (circular ''bees'' mortar / Spherical), SIDE (horizontal laser / Hexahedral-square).'
+    - 'Runner reads a hand: dip into its telegraph, shoot the wrist ARMBAND — GREEN = need Pyramidal/triangle,
+      YELLOW(orange) = Spherical/circle, RED = Hexahedral/square (never its own shape).'
+    - 'Runner grabs resonance: stand in the DIFFERENT hand''s zone whose shape matches the color until
+      the loud drone (~2-3s). For the triangle/sky zone stand in a corner, never the center.'
+    - Runner returns, dips into the first hand's telegraph again, shoots the armband to break it and gain
+      Glyphbreaker.
+    - Carry Glyphbreaker to the central plate and shoot a chest glyph — removes a glyph AND cleanses resonance
+      on/near the plate.
+    - Runners alternate which hand types they break (don't repeat the same hand or extra hands spawn)
+      and break two glyphs at nearly the same time to limit Subjugators to one or two.
+    - Add-clear hold both sides, kill Screebs/Weavers and especially Subjugators on their spawn-bow (free
+      big damage), and protect Runners. Anyone who grabs essence by accident drops to the plate to cleanse
+      on a glyph break.
+    - On 'The Witness tests you' (gold hand / scream), the Runner who last broke a hand calls the shape;
+      team destroys spikes in that pattern, then EVERYONE jumps when the eyes flash and hands push forward.
+    - On the 5th glyph the whole team pre-converges to the central plate; 6th glyph break raises the plate
+      and starts damage phase.
+    - 'Damage phase: feet on the ground, move diagonally against each telegraph, jump only on the ground
+      slam. When the chest glows WHITE and the Witness pulls back, squeeze a couple shots then get OFF
+      the plate before the slam.'
+    - Repeat until Final Stand; dump supers + heavy in the one short window.
+    best_for: Most normal 6-player teams, first clears, and teams whose add-clear is shaky — minimizes
+      mob chaos and keeps Runner positioning predictable.
+    source_support: 'Cross-confirmed: True Vanguard transcript runs 4 add-clear (2 per side) + 2 Runners;
+      Shadow Destiny runs the same hand/glyph loop; authored YAML describes the identical read-collect-break-cleanse
+      loop, same-color-trap rule, Spike test, and Final Stand. Color->shape mapping (green=triangle, yellow=circle,
+      red=square) confirmed by both videos. The Aztecross run shows the same ''wall/bomb/pyramid'' color
+      reads, the resonance one-shot timer (''careful stasis''), the jump-the-wave test, and saving Nighthawk/Still
+      Hunt for Final.'
+  - name: 3 Glyphbreakers / 3 Add-Clear (fixed hand ownership)
+    summary: 'Faster glyph progress: three players are permanent Glyphbreakers, each owning one hand type
+      (sky / floor / side); the other three hold the arena. Each Glyphbreaker reads only their own hand,
+      so callouts are clean and the team breaks glyphs quickly toward a 2-phase.'
+    steps:
+    - Pre-pull, assign Glyphbreaker-sky, Glyphbreaker-floor, Glyphbreaker-side, and 3 add-clear. Each
+      Glyphbreaker permanently owns one hand.
+    - Pull. Each Glyphbreaker reads their hand's armband and calls its color/needed shape (green=Pyramidal,
+      yellow=Spherical, red=Hexahedral).
+    - Each Glyphbreaker dips into a DIFFERENT hand's zone to grab the matching resonance (armband never
+      matches its own shape), returns, shoots their armband to break the hand, and gains Glyphbreaker.
+    - All three take their buffs to the central plate and break chest glyphs; stagger two-at-a-time to
+      limit Subjugators. Cleanse happens at the plate.
+    - Add-clear (3) hold the arena, kill Subjugators on their spawn-bow, and keep the three Glyphbreakers
+      alive while they stand in zones.
+    - Handle the shape test and ground-wave jump exactly as in the standard plan, then converge for damage
+      phase and Final Stand.
+    - Watch essence stacks tightly with three people breaking glyphs — cleanse early and often; never
+      sit at high stacks with a low timer.
+    best_for: Coordinated teams with solid comms that want quicker glyph progress and a cleaner 2-phase;
+      experienced 6-stacks.
+    source_support: Authored YAML 'Standard 3 Glyphbreakers + 3 Add-Clear' permutation is the primary
+      source; the mechanically identical loop is corroborated by both video transcripts (which use 2 free
+      Runners but the same per-hand read/collect/break logic). The fixed per-hand ownership is YAML-specific
+      (videos use 2 free Runners), so this is YAML-backed and video-compatible rather than fully cross-confirmed
+      on the role count.
+  - name: 2 Glyphbreakers / 4 Add-Clear (slower, safer)
+    summary: Reduces Glyphbreaker load to two players who split the three hands (one handles two hand
+      types, the other handles one). Four add-clear gives maximum arena stability at the cost of slower
+      glyph progress.
+    steps:
+    - Assign Glyphbreaker-double (owns 2 hand types), Glyphbreaker-single (owns the remaining hand), and
+      4 add-clear split two per side.
+    - Pull and run the same read-armband -> grab matching resonance from a different zone -> return and
+      break -> Glyphbreaker -> break a chest glyph -> cleanse loop, with only two players carrying it.
+    - Four add-clear blanket both sides, prioritize Subjugators on their bow, and protect the two Glyphbreakers.
+    - Glyphbreakers vary which hands they break so the Witness doesn't flood extra hands, and break glyphs
+      in pairs when possible to keep Subjugator spawns low.
+    - Same shape test, ground-wave jump, damage-phase movement, and Final Stand; expect more glyph rotations
+      (likely a 3-phase) because only two players progress glyphs.
+    best_for: Teams with thin add-clear capability or carrying a learner — trades speed for survivability;
+      aligns with True Vanguard's note to fall back to a 3-phase rather than force a risky push.
+    source_support: Authored YAML '2 Glyphbreakers + 4 Add-Clear (Slower, Safer)' permutation. The 4-person
+      add-clear emphasis matches True Vanguard's transcript (4 on adds), and 'don't be afraid to go to
+      a 3-phase' is directly from the True Vanguard transcript. Cross-confirmed on add-clear weighting;
+      the 2-Glyphbreaker count is YAML-specific.
+  role_breakdown:
+  - role: Runner / Glyphbreaker A
+    count: 1
+    does: First of the two dedicated Runners (covers the sky and one other hand in the 2-Runner split,
+      or owns the SKY hand in the 3-Glyphbreaker split). Dips into a hand's telegraph, shoots the armband
+      to read its color, grabs the matching resonance from a DIFFERENT hand's zone (for the triangle/sky
+      zone stand in a corner, never the center — center one-shots), returns to break the hand for Glyphbreaker,
+      then shoots a chest glyph at the central plate to cleanse and remove a glyph. Mixes up which hands
+      get broken and cleanses before the resonance timer kills them.
+  - role: Runner / Glyphbreaker B
+    count: 1
+    does: Second Runner (covers floor and side in the 2-Runner split, or owns the FLOOR hand in the 3-Glyphbreaker
+      split). Same read-collect-break-cleanse flow. Tries to break a chest glyph at nearly the same time
+      as Runner A so only one or two Subjugators spawn instead of four. Often the one who last broke a
+      hand, so calls the shape on the test.
+  - role: Add-clear (Light side)
+    count: 1
+    does: Holds one side of the arena. Kills Scorn, Screebs and Weavers, and one-shots Subjugators during
+      their spawn-in bow (free damage). Keeps Runners alive while they stand in attack zones. Drops to
+      the plate to cleanse if they accidentally grab essence.
+  - role: Add-clear (Darkness side)
+    count: 1
+    does: Mirror of the other add-clear on the opposite side. Suppresses Subjugators, clears Weavers/Screebs,
+      and keeps the side clear so Runners aren't yanked or blasted while collecting resonance.
+  - role: Add-clear / shot-caller (flex)
+    count: 1
+    does: Floating add-clear who doubles as the damage-phase shot-caller — calls the diagonal dodge direction
+      and the jump on the ground-slam tell (eyes flash, hands push forward). A Banner Shield Titan works
+      well here since it survives everything except the ground wave.
+  - role: Add-clear / 6th player (or 3rd Glyphbreaker)
+    count: 1
+    does: In the 2-Runner / 4-add-clear split this is the 4th add-clear, reinforcing whichever side is
+      heavier and helping suppress Subjugators. In the 3-Glyphbreaker split this player instead owns the
+      SIDE hand (Wrathful Disarray beam — easiest to dodge, recommended learner Glyphbreaker role) and
+      runs the full read-collect-break-cleanse loop.
+  needs_clarification:
+  - The Witness's damage-phase element is not specified in any source, so DPS Surge is recommended generically
+    (match to your strongest burst weapon) rather than a confirmed element.
+  - Exact resonance/essence timer duration and max stack count before death are not given numerically
+    — sources only confirm it is a hard timer that one-shots and that you cleanse at a chest glyph.
+  - Exact number of damage phases to reach Final Stand on regular difficulty isn't fixed in the sources
+    (depends on DPS; teams report ~2-3 phases). The Aztecross run pushed for quick phases but the precise
+    breakpoint isn't stated.
+  - Whether the spike/shape test always matches the LAST destroyed hand vs the current attacking hand
+    is described slightly differently across sources (authored YAML says last-destroyed hand; Aztecross
+    only notes 'it does the thing the same way every time'). Treat 'shape of the most recent hand' as
+    the working rule and confirm in-run.
+  - Subjugator/Tormentor spawn rules tied to breaking the same hand repeatedly or spacing glyph breaks
+    are described qualitatively (stagger ~two glyphs at a time) but exact spawn thresholds are not pinned
+    down.
+  - All DPS loadouts are current-meta only — a 6/9 sandbox change is coming, so exotics and burst weapons
+    (Still Hunt, Celestial Nighthawk, Two-Tailed Fox, Divinity, Twilight Arsenal, etc.) must be re-verified
+    for the new meta before a serious run.
+  - Master/contest modifiers (e.g., the Dread Subjugator pairing) are only lightly referenced; this guide
+    targets the REGULAR 6-player version, so Master-specific add composition should be verified separately.

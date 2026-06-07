@@ -44,58 +44,34 @@ encounter:
     \ their\n  Ghosts and deposit on the correct frozen statue to revive.\n\nSTART STATE\n- Encounter\
     \ starts when 3 players interact with the glowing\n  statues. RNG (or selection-trick) decides Inside/Outside.\n"
   callouts:
-  - when: Pre-pull
-    from: lead
-    to: team
-    say: '"Inside picks: [name1], [name2], [name3]. Outside: [name4], [name5], [name6]. All ensure distinct
-      visual identity — change shaders + ornaments if needed."'
-    why: Verity REQUIRES visual distinction. Same-class same-shader teams have wiped repeatedly because
-      they can't read each other's statues.
-  - when: Inside team reads their statue shapes
-    from: inside-team
-    to: outside-team
-    say: '"Inside order LEFT to RIGHT facing the projector: [shape], [shape], [shape]."'
-    why: Outside team needs the Inside statues' held shapes to compute the swaps.
-  - when: Inside player ready to pass a shape
-    from: inside-player
-    to: target inside teammate
-    say: '"[Name] — passing you a [shape]."'
-    why: Inside players can only give shapes to OTHER Inside players' statues (never their own). Clear
-      targeting prevents duplicate or missed handoffs.
-  - when: Inside player ready to escape (holds 2 shapes ≠ their statue's shape)
-    from: inside-player
-    to: team
-    say: '"[Name] escaping — got [shape1] + [shape2]."'
-    why: When all 3 Inside escape, the Catatonic Decimation freeze hits everyone but one. Team needs to
-      be ready to revive.
-  - when: Outside dissection plan
-    from: outside-lead
-    to: outside-team
-    say: '"Swap plan: take a [shape] from statue [X] to statue [Y]; take a [shape] from statue [Z] to
-      statue [W]."'
-    why: Outside team operates by SWAPPING shapes between statues — every move affects two. Plan before
-      acting.
-  - when: Catatonic Decimation freeze
-    from: outside-lead
-    to: outside-team
-    say: '"Ghosts up — [name1] needs ghost back to [position1], [name2] to [position2]..."'
-    why: Frozen players spectate. Outside collects 3 Ghosts and deposits each to the correct statue. WRONG
-      statue = instant death for the depositor.
-  - when: All 3 inside teams escaped + frozen players revived
-    from: any
-    to: team
-    say: '"Round [N] done. Reset, fight ads, prep for round [N+1]."'
-    why: Imminent End pauses. Wave of Grim/Thrall/Unstoppable Ogres incoming.
-  - when: Final round wave of Ogres
-    from: any
-    to: team
-    say: '"Unstop Ogres — Anti-Stun!"'
-    why: Two Unstoppable Ogres per round. Anti-Unstoppable required.
-  - when: Final ascension
-    from: any
-    to: team
-    say: '"Lift up — heading to Witness."'
-    why: After 3 successful rounds, the lift to the next encounter activates.
+  - when: Before pulling
+    say: '''Confirm everyone has a distinct helmet/shader/cloak and a unique ghost shell.'''
+    why: Both the ghost-revive phases require telling Guardians apart from their look; same-class same-shader
+      teams cannot read who is on which pedestal.
+  - when: Inside players just teleported in
+    say: '''Inside order left-to-right: [shape], [shape], [shape]'' (e.g. ''triangle, circle, square'').'
+    why: 'Both sources: the outside team cannot compute its dissection targets without the inside statues''
+      shapes, and any inside player can make the call since all see the same order.'
+  - when: Inside player sends a shape
+    say: '''[Name], sending you a [shape].'''
+    why: Inside players can only deposit onto teammates' statues; clear targeting prevents duplicate or
+      missed handoffs, and the receiver knows an Ogre is about to spawn in their room to kill.
+  - when: Inside player is ready to leave
+    say: '''[Name] has [shape]+[shape], walking out'' - but only after sending everyone else what they
+      need.'
+    why: Building your final key before you've finished distributing forces messy re-trades; and you must
+      confirm your outside statue matches before stepping through the glass.
+  - when: Witness wipes the inside team (ghost phase)
+    say: 'Dead players: ''[Name] (the [distinctive look]) is on pedestal [N].'''
+    why: Only the dead can see teammates' correct spots in the inverted view; the living place ghosts
+      off these calls, and a wrong pedestal instantly kills the placer.
+  - when: Between rounds at the rally banner
+    say: '''Two Unstoppable Ogres incoming - stun them.'''
+    why: Both sources flag the two Unstoppable Ogres; without an anti-Unstoppable option they cannot be
+      efficiently killed to progress the add wave.
+  - when: After the third full round
+    say: '''Third round done - chest is up, we''re clear.'''
+    why: The encounter ends after three rotations with no boss; the chest spawning confirms completion.
   wipe_triggers:
   - Imminent End timer expires.
   - Inside player forms a 3D key containing their statue's shape → escape impossible → must die + respawn.
@@ -307,32 +283,39 @@ encounter:
   - '2nd: Inside, but ONLY after coaching on the ''don''t form your own shape'' rule.'
   - '3rd+: try the Selection Trick to pre-pin yourself into your strongest role.'
   plain_language_steps:
-  - '1. SPLIT. Three players get trapped INSIDE solo Verity rooms; three stay OUTSIDE in the main realm.
-    (Use the selection trick if you want to pick: standing against the shattered-glass wall before the
-    pull guarantees Inside.)'
-  - 2. INSIDE — OBSERVE. Look at the 2D shape YOUR statue is holding (circle, square, or triangle). That
-    is the ONE shape you must NEVER give yourself. Then read the two shapes on your backboard. Call your
-    statue's shape out loud, left-to-right, so Outside can plan.
-  - 3. INSIDE — get your shapes. Kill the Splintered Curator Knights in your room to drop the projector's
-    2D shapes. You are building a 3D escape KEY from the two shapes your statue is NOT holding.
-  - '4. INSIDE — PAIR, then SHARE. Deposit any shape onto a TEAMMATE''S statue (never your own). Per the
-    infographic: first PAIR mismatched backboard shapes to their statue, then once at least two of you
-    have matching shapes, SHARE them around left-to-right so everyone ends up holding the two shapes their
-    statue does NOT hold.'
-  - '5. INSIDE — COMBINE and escape. When you hold the two shapes that are NOT your statue''s shape, they
-    fuse into your 3D escape key. Walk out through the shattered-glass wall. WARNING: if your key ever
-    contains your own statue''s shape you cannot escape and must die and respawn.'
-  - 6. OUTSIDE — dissect. Kill the three outside Knights to access all three 3D shapes, then SWAP 3D shapes
-    between the three inside statues so each statue's 3D composition matches what its inside player needs.
-    Every swap touches TWO statues — plan the whole sequence before you move anything.
-  - 7. FREEZE (Catatonic Decimation). The moment all Inside players escape, everyone but one survivor
-    is frozen solid and drops a Ghost in the main realm.
-  - 8. OUTSIDE — revive. The survivor picks up each Ghost and deposits it on the CORRECT frozen statue
-    to revive that player. Depositing on the WRONG statue is instant death — let the frozen spectators
-    call their own positions.
-  - 9. RESET. Clear the add wave between rounds — Grim, Thrall, Dread Husks, and two Unstoppable Ogres
-    (use Anti-Unstoppable). Killing Knights/Ogres respawns the Knights for the next round.
-  - 10. REPEAT. Complete three correct rounds. After round 3 the lift to the Witness encounter activates.
+  - 1. SPLIT. One person interacts with a statue at the back of the room to start it. Three random players
+    are pulled INSIDE into their own private rooms; the other three stay OUTSIDE in the main room. Everyone
+    must know both jobs because the split is random.
+  - 2. INSIDE - READ AND CALL. Look at the three statues in your room, each holding a flat shape (circle,
+    triangle, or square). Read them left-to-right and call that out (e.g. 'triangle, circle, square')
+    so the outside team can start. Note which statue is YOURS - that shape is the one you must never end
+    up holding.
+  - 3. INSIDE - KNOW YOUR TARGET. Your escape key is the 3D shape made from the TWO shapes your statue
+    does NOT hold. (If your statue holds a triangle, you need circle + square = cylinder.)
+  - '4. INSIDE - TRADE SHAPES. Kill the Splintered Curator Knights to drop shapes. Easiest method: first
+    collect two copies of your OWN statue''s shape, then gift one of each to your two teammates (deposit
+    onto THEIR statue, never your own). Then your teammates send you back the two shapes you actually
+    need.'
+  - 5. INSIDE - COMBINE AND LEAVE. When you hold the two shapes that are NOT your statue's shape, they
+    fuse into your 3D key. Only build this final key AFTER you have finished sending everyone else what
+    they need. Then walk out through the glass wall - but only once the outside statue for you shows the
+    same 3D shape.
+  - 6. OUTSIDE - LISTEN AND PLAN. Take the left-to-right call from inside. Each back statue must be made
+    to hold the two shapes its inside statue does NOT hold. Plan all the swaps before touching anything.
+  - 7. OUTSIDE - DISSECT. Kill the outside Knights for the three shapes. Put a shape into a statue to
+    mark it to give that shape up; put another shape into a second statue, and the two statues swap. Keep
+    swapping until every statue shows the correct 3D shape. Two players clear ads and stun Ogres while
+    you work.
+  - 8. GHOST PHASE 1. The Witness wipes the inside team on purpose. Dead players see an inverted room
+    and can see one teammate in their correct spot - call it out by their look. Living players carry each
+    ghost to the matching empty pedestal at the entrance. Wrong pedestal = instant death, so trust the
+    dead players' calls.
+  - 9. REGROUP AND FIGHT. After inside players walk back out and everyone reunites at the rally banner,
+    kill the add wave including two Unstoppable Ogres (bring an anti-Unstoppable option). The Witness
+    then wipes five players, leaving one, for a second ghost-placement sequence - take your time, you
+    have about a minute.
+  - 10. REPEAT. Do the full cycle three times. After the third successful round the chest spawns and you
+    are finished. There is no boss.
   defense:
     incoming_damage:
       adds:
@@ -355,6 +338,20 @@ encounter:
       Ghost revival.
     recommended_dps:
     - Bring heavy/DPS only to clear the Unstoppable Ogres between rounds — not for a boss
+    - 'VERIFY FOR THE NEW META (6/9 sandbox change coming): Verity has NO boss and NO DPS phase, so there
+      is no burst-damage loadout to optimize. Bring add-clear and survivability, not boss DPS.'
+    - 'Ad-clear / turret builds (current meta - verify for new meta): True Vanguard ran a Warlock with
+      the Helion solar turret plus Getaway Artist (Arc Buddy) so two turrets cleared adds automatically
+      while he focused on outside statue swaps. Strong pick for the designated swapper who needs hands-free
+      ad clear.'
+    - 'Anti-Unstoppable is the one hard loadout requirement (verify for new meta): two Unstoppable Ogres
+      spawn each round, so at least the two outside ad-clearers should carry a reliable anti-Unstoppable
+      option (in Edge of Fate this comes from artifact weapon mods that load a stun payload on ADS; the
+      exact archetypes rotate seasonally - confirm against the live artifact).'
+    - 'Survivability over damage: a self-sustain primary (e.g. Heal Clip + Incandescent), a healing class
+      ability or Solar restoration, and stacking Health/Class is more valuable than any heavy DPS weapon
+      here, per the survival-first nature of the encounter. (Current-meta guidance - verify for the new
+      meta.)'
   sources:
   - tier: 1
     name: Authored mechanics — destiny2-loadout-toolkit/raids/salvations-edge.yaml (Verity block + overview)
@@ -404,3 +401,147 @@ encounter:
     date_checked: '2026-06-07'
     recency_note: Confirms anti-Unstoppable in EoF comes from artifact 'Implement of Curiosity' weapon
       mods (Unstoppable HC/Sidearm/Sniper) loading a stun payload on ADS; archetypes rotate seasonally.
+  - tier: 1
+    name: Aztecross (source of truth) — per-encounter video, cross-referenced
+    note: 'Mechanics / steps / strategies / 6-player roles authored from Aztecross''s encounter video
+      + cross-referenced sources. REGULAR mode. Loadouts: verify for the 6/9 Monument of Triumph sandbox.'
+    date_checked: '2026-06-07'
+  mechanics:
+  - 'THE SPLIT: The encounter starts when players interact with one of the three statues at the far (back)
+    end of the room. Three random fireteam members are teleported into their own private mirror-image
+    rooms (the INSIDE team); the other three remain in the main room (the OUTSIDE team). At the entrance
+    there are six statues (one per Guardian); at the back there are three statues that shift between Guardians,
+    plus a back wall projecting rotating 2D shapes (circle, triangle, square).'
+  - 'TWO 2D-SHAPE ALPHABET AND ONE 3D ALPHABET: There are three flat shapes - circle, triangle, square.
+    When two shapes are fused on a statue they become a 3D solid. Two of the same: two circles = sphere,
+    two triangles = pyramid/D4, two squares = cube. Two different: circle+triangle = cone, circle+square
+    = cylinder, triangle+square = (triangular) prism. Reading 3D shapes back into their two component
+    2D shapes is the core literacy the OUTSIDE team needs.'
+  - 'INSIDE GOAL (escape key): Each inside player has their own statue holding ONE 2D shape. Inside players
+    must end up holding the TWO shapes their own statue does NOT hold, which fuse into a 3D escape key.
+    They must NEVER build a key that contains their own statue''s shape - that makes escape impossible.
+    When all three inside statues are read left-to-right, that order is called out so OUTSIDE can work
+    (both sources: call left-to-right, e.g. ''TCS'').'
+  - 'INSIDE SHAPE TRADING: Knights named Splintered Curators spawn inside and drop 2D shapes (only the
+    shapes currently projected on your back wall drop). Inside players cannot interact with anything but
+    their own room. To move a shape to a teammate you deposit it onto that TEAMMATE''s statue (never your
+    own). Both videos describe a ''collect-then-distribute'' method: first gather two copies of your OWN
+    statue''s shape, then gift one of each of those to your two teammates, leaving you needing the two
+    shapes you don''t have, which the teammates send back to you.'
+  - 'INSIDE ADS: Gifting a shape to an inside player spawns an Ogre in that player''s room; you must kill
+    the Ogre before more Knights (and thus shapes) will spawn. Flying Dread (zoomed ''zubat'') adds and
+    additional Knight waves also appear and must be cleared.'
+  - 'OUTSIDE GOAL (dissection): The three back statues each start holding a doubled 3D shape. The OUTSIDE
+    team must make each statue hold the TWO shapes that its matching inside statue does NOT hold - i.e.
+    the exact 3D shape that inside player needs to escape. Example (call TCS): left (triangle inside)
+    must become circle+square = cylinder; middle (circle inside) must become triangle+square = prism;
+    right (square inside) must become triangle+circle = cone.'
+  - 'OUTSIDE DISSECTION MECHANIC (swap/subtract): Knights drop the three 2D shapes outside. Depositing
+    a 2D shape into a statue primes that statue to give up (subtract) that shape - it glows. Priming a
+    SECOND statue with another shape causes the two primed statues to swap those two shapes. So every
+    dissection move affects two statues at once. Think of depositing a shape as ''subtract this shape
+    from this statue.'''
+  - 'GHOST / ''DROWN IN THE DRIP'' WIPE: At a scripted point after the first set of inside swaps, the
+    Witness wipes the INSIDE team (intentional, by design). Their ghosts appear in the main room near
+    the original six entrance statues; three of those pedestals go empty and glow. Dead players see an
+    inverted/upside-down version of the room and can each see ONE other dead Guardian in their correct
+    spot - they call that Guardian out by their distinctive look/ghost. The living outside players carry
+    each ghost to the correct pedestal. Placing a ghost on the WRONG pedestal kills the placer. Correct
+    placement revives that player back into their room to continue.'
+  - 'SECOND ADD/GHOST PHASE: Once both teams'' shapes match and inside players walk back out through the
+    glass wall, the timer pauses and everyone regroups at the rally banner. A wave of ads including two
+    Unstoppable Ogres spawns; clear them. The Witness then performs a second intentional wipe, killing
+    five and leaving one alive, triggering another ghost-placement sequence (timer ~1 minute) to revive
+    everyone.'
+  - 'WIN CONDITION: Complete this full cycle three times (three rotations of inside-escape + ghost revives).
+    There is no boss and no DPS phase. After three successful rounds the chest appears and the path forward
+    opens. Visual distinction between all six Guardians (unique helmets, shaders, cloaks, ghost shells)
+    is effectively a mechanic because the ghost phase depends on telling Guardians apart.'
+  strategies:
+  - name: Standard 3 Inside / 3 Outside with single dedicated swapper
+    summary: The split is random, so all six learn both jobs. Inside players use the collect-your-own-shape-then-distribute
+      method; outside designates ONE person to do all statue swaps while the other two clear ads and stun
+      Ogres. This is True Vanguard's explicitly recommended setup.
+    steps:
+    - 'Decide visual identity first: every Guardian wears distinct helmet/shader/cloak and a recognizable
+      ghost shell so the ghost phase is readable.'
+    - Start the encounter; accept the random 3/3 split.
+    - 'Inside: immediately read statues left-to-right and call the order so outside can begin.'
+    - 'Inside: collect two copies of your own statue''s shape, gift one of each to your two teammates
+      (onto their statues), then take back the two shapes you need; kill the Ogre that spawns on each
+      gift before more Knights appear.'
+    - 'Outside: one designated swapper computes the targets (each statue gets the two shapes its inside
+      statue lacks) and performs all dissection swaps; the other two clear ads and stun the Unstoppable
+      Ogres.'
+    - 'Inside: build your escape key only after sending teammates what they need, then leave through the
+      glass wall once your outside statue matches.'
+    - On each Witness wipe, dead players call the teammate they can see (by look) and the living place
+      ghosts on the matching pedestals - never guess.
+    - Clear the between-round Ogre wave and repeat for three total rounds.
+    best_for: Most fireteams, especially first-timers and teams where outside swapping has caused confusion.
+    source_support: True Vanguard (s_j6-UvFMH4) explicitly recommends one person doing all outside swaps
+      with two on ad clear, and teaches the inside collect-then-distribute method. Cross-confirmed by
+      the existing authored 4-verity.yaml and the Destructoid/Shacknews/Grindout tier-1 sources cited
+      there.
+  - name: Ascendant Nomad two-step inside trade (no dedicated ad-clear)
+    summary: Same objectives, but Nomad frames inside trading as two clean passes (PAIR your own shapes,
+      then SHARE one of each out) and stresses there is NO ad-clear-only role inside - everyone juggles
+      ads while trading because both operations must run simultaneously inside a ~3-minute window.
+    steps:
+    - 'Inside: read and call the three statues left-to-right (e.g. ''TCS'').'
+    - 'Inside: kill Splintered Curators to gather two copies of your own statue''s shape, ignoring shapes
+      you don''t want; if you already spawned with two of your own shape, skip ahead.'
+    - 'Inside: deposit one of each of your own shape into your two teammates'' statues; they do the same,
+      leaving everyone with one shape on their statue and the other two arriving.'
+    - 'Inside: pick up the two incoming shapes; they combine into your 3D escape key (e.g. square+circle
+      = cylinder).'
+    - 'Outside: read each back statue''s 3D shape into its two components, then swap shapes between statues
+      until each holds the two shapes its inside statue does NOT have; solve one statue fully first, then
+      the last two resolve with a single swap.'
+    - Handle both Witness ghost phases by reading the inverted death view and calling Guardians by their
+      drip; place ghosts only on confirmed pedestals.
+    - Repeat the full cycle three times.
+    best_for: Teams comfortable multitasking inside, or who prefer a crisp two-pass mental model for the
+      trade.
+    source_support: Ascendant Nomad (ukEp_O74KEM) - the PAIR-then-SHARE two-pass inside method, 'no ad
+      clear role,' the 3-minute window, and the 'solve one statue first' outside tip. Matches the Observe/Pair/Share/Combine
+      flow noted in the authored file's sherpa-infographic source.
+  role_breakdown:
+  - role: Inside (solo room)
+    count: 3
+    does: 'Teleported into a private mirror room. Read the three statues left-to-right and call them out.
+      Identify your own statue''s shape (the one you must never hold). Kill Splintered Curator Knights
+      and kill the Ogre that spawns when a shape is gifted to you. Trade shapes with the other two inside
+      players by depositing onto THEIR statues (never your own): collect two of your own statue''s shape,
+      gift one of each to your teammates, then receive the two shapes you need. Build your 3D escape key
+      (the two shapes your statue does NOT hold) only after you''ve sent teammates everything they need,
+      then walk out through the glass wall once the outside statue matches. After a Witness wipe, spectate
+      from the inverted death view and call the one teammate you can see, by their distinctive look, to
+      whichever pedestal they''re on.'
+  - role: Outside (main room)
+    count: 3
+    does: 'Stay in the main room. Take the inside left-to-right call. Make each back statue hold the two
+      shapes its inside statue does NOT hold by ''dissecting'' (deposit a shape into a statue to mark
+      it, deposit another into a second statue to swap them). True Vanguard''s method: have ONE designated
+      swapper do all the statue work while the other two clear ads (Knights, flying Dread, and the two
+      Unstoppable Ogres) and keep the swapper alive. When the Witness wipes the inside team, collect the
+      three ghosts and place each on the correct entrance pedestal as called by the dead players - wrong
+      pedestal kills you, so go only on confirmed calls.'
+  needs_clarification:
+  - 'Exact wipe-timer length: Ascendant Nomad states ''3 minutes'' for the combined inside/outside operation;
+    the existing authored file lists an ''Imminent End'' timer of 3:30. The video transcripts do not pin
+    the precise value - verify in-game.'
+  - 'Dedicated ad-clear vs everyone-juggles: True Vanguard recommends ONE outside swapper with two on
+    pure ad clear; Ascendant Nomad says there is ''no ad clear role'' and everyone multitasks. Both are
+    viable; the right choice depends on team skill. Sources genuinely differ rather than contradicting
+    facts.'
+  - 'Whether an Ogre can spawn inside the solo room vs only outside: True Vanguard says ad clear ''includes
+    killing Unstoppable Ogres'' generally and notes Ogres spawn inside when a shape is gifted; the authored
+    file says one Unstoppable Ogre can spawn inside while two spawn outside per round. The transcripts
+    don''t cleanly confirm the inside Ogre is a champion vs a normal Ogre - verify.'
+  - The 'selection trick' (standing against the shattered-glass wall to guarantee going Inside) appears
+    in the existing authored file but is NOT mentioned in either video transcript in this bundle - flagged
+    as unverified by the provided Aztecross/this-encounter sources.
+  - Current-meta loadouts (Helion, Getaway Artist, specific anti-Unstoppable artifact mods) reflect the
+    pre-6/9 sandbox. A sandbox change is coming - all weapon/build specifics should be re-verified for
+    the new meta before relying on them.

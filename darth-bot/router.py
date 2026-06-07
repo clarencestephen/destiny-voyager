@@ -275,6 +275,22 @@ def _fmt_encounter_doc(doc: dict) -> str:
         out.append("STEPS:\n" + "\n".join(f"- {s}" for s in enc["plain_language_steps"]))
     if enc.get("mechanics"):
         out.append("MECHANICS:\n" + "\n".join(f"- {m}" for m in enc["mechanics"]))
+    strategies = enc.get("strategies") or enc.get("boss_strategies") or []
+    if strategies:
+        slines = []
+        for s in strategies:
+            if isinstance(s, dict):
+                slines.append(f"• {s.get('name', '')}: {s.get('summary', '')}")
+                for st in (s.get("steps") or []):
+                    slines.append(f"    - {st}")
+        if slines:
+            out.append("STRATEGIES (more than one valid solution):\n" + "\n".join(slines))
+    roles_bd = enc.get("role_breakdown") or enc.get("boss_roles") or []
+    if roles_bd:
+        rl = [f"- {r.get('role', '')} (x{r.get('count', '')}): {r.get('does', '')}"
+              for r in roles_bd if isinstance(r, dict)]
+        if rl:
+            out.append("ROLE BREAKDOWN (per player):\n" + "\n".join(rl))
     cl = [f"- {(c.get('say') or '').strip()}" + (f" — {c['why'].strip()}" if c.get("why") else "")
           for c in (enc.get("callouts") or []) if isinstance(c, dict) and c.get("say")]
     if cl:

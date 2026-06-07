@@ -37,61 +37,45 @@ encounter:
     \ side doors open + Final Shape Looming starts.\n"
   callouts:
   - when: Pre-pull
-    from: lead
-    to: team
-    say: '"3-3 split. Left team = [names], right team = [names]. Conductor player = [name] per side. Plate
-      player = [name] per side. Add-clear = third on each side."'
-    why: Salvation's Edge has more comms than any other raid; lock roles before pulling.
-  - when: Doors open after dunk
-    from: any
-    to: team
-    say: '"Doors open — go go go."'
-    why: Supplicants spawn at the rear of each peripheral room when doors open; rushing in dies. Walk
-      forward, take cover.
-  - when: Keeper of the Monolith (Hydra) appears
-    from: any
-    to: team
-    say: '"Keeper [side]!"'
-    why: Killing each Keeper opens the next sub-room. Top priority.
-  - when: Devotee of the Witness (Overload Minotaur) appears
-    from: any
-    to: team
-    say: '"Overload [side]!"'
-    why: Overload mod requires Anti-Overload — make sure someone on that side has it.
-  - when: Threshold Sentinel (Tormentor) spawns in centre
-    from: any
-    to: team
-    say: '"Tormentor mid — converge!"'
-    why: Side doors close while Tormentor is alive — anyone caught inside or in the doorway dies. Move
-      to centre fast.
-  - when: Plates + conductors located
-    from: plate-runner
-    to: conductor
-    say: '"Plate [side] — connecting now."'
-    why: Confirms which conductor each side is wired to so callouts are unambiguous.
-  - when: Charge bounce missed
-    from: any
-    to: team
-    say: '"Lost charge [side]."'
-    why: First miss = grace period (no penalty). Second miss → Subjugator spawns and locks plates. Tells
-      team to stay calm or prep for Subjugator.
-  - when: Conductor armed, ready for lockdown
-    from: conductor
-    to: plate-runner
-    say: '"Conductor up — send the next charge."'
-    why: Next charge into the conductor's connected plate will lock it down. Plate-runner needs to know
-      to step on at the right moment.
-  - when: Conductor locked
-    from: conductor
-    to: team
-    say: '"Conductor [side] LOCKED."'
-    why: One half done. Other side knows their conductor still needs locking.
-  - when: Both conductors locked, central chest spawning
-    from: any
-    to: team
-    say: '"Both locked. Chest mid — dump resonance!"'
-    why: Chest is proximity-activated; everyone must converge to deposit. Wipe timer extends after all
-      resonance is dumped.
+    say: '3-3 split. Left team = [names], right team = [names]. Per side: Conductor = [name], Plate =
+      [name], Add-clear = [name].'
+    why: Salvation's Edge is the most comms-heavy raid; locking roles before pulling prevents chaos once
+      the timer starts.
+  - when: Right after the central resonance is dunked
+    say: Doors open — go go go, walk in and cover.
+    why: Doors open and the wipe timer starts; enemies spawn toward the back of each room, so rushing
+      in dies.
+  - when: Gatekeeper Hydra appears
+    say: Gatekeeper [side] — killing now / door's open.
+    why: Killing the Gatekeeper opens the next room. Top priority; the VOD repeatedly calls 'gatekeeper
+      dead, door's open, we're good.'
+  - when: A new sub-room opens
+    say: Room open [top / window / basement / right side].
+    why: The open room's position varies each time; the team wastes time if nobody calls where it is ('it
+      open top, I found it').
+  - when: Overload Minotaur spawns
+    say: Overload [side] — on me.
+    why: Needs Anti-Overload; make sure the player with the anti-champ mod is on it ('overload on me,
+      stay up').
+  - when: Threshold Sentinel (Tormentor) spawns mid
+    say: Tormentor mid — everyone middle, nuke.
+    why: The whole team converges to delete it fast (Tractor + Supers in the VOD); side doors close, so
+      don't get caught in a doorway.
+  - when: Bouncing charges between plates
+    say: Sending / sending back — kill on the way.
+    why: This is the core send loop; the plate-runner and conductor coordinate each bounce and announce
+      when the cycle is ready to complete ('send back to me one more time, then we kill').
+  - when: Picking up / managing stacks
+    say: Refresh — I need one, I'm at [N]x.
+    why: Players hold max 3; they call their current count so collectors top them off without anyone exceeding
+      3 (which kills you) or letting a timer expire.
+  - when: Both conductors locked
+    say: Both locked — chest mid, deposit, make sure it goes in.
+    why: Everyone converges to dump resonance and refresh the timer; confirm it registers by watching
+      the buff bar ('make sure it actually goes in').
+  - when: Standing under the Witness Hand
+    say: Careful — don't be under the hands.
+    why: The Resonant Outburst triangular floor AoE kills low-Health players (direct VOD line).
   wipe_triggers:
   - Final Shape Looming timer hits 0 → wipe.
   - Holding 4+ resonance stacks → instant death.
@@ -271,32 +255,34 @@ encounter:
   - '2nd clear: plate-runner.'
   - '3rd+: conductor.'
   plain_language_steps:
-  - 1. Pre-pull, split into two teams of three. On each side assign one Conductor player, one Plate-runner,
-    and one Add-clear. Lock these roles out loud before pulling.
-  - 2. Everyone walks into the large central room. One player picks up the central Pyramidal Resonance
-    (triangle) and dunks it into the central chest. This opens the two side doors and starts the Final
-    Shape Looming wipe timer.
-  - 3. Push into your assigned peripheral room. Walk forward slowly and take cover. Supplicants spawn
-    at the back of each room, so rushing in dies.
-  - '4. Clear the Sol Divisive Vex and Dread waves. Priority kills: the Keeper of the Monolith (Hydra),
-    which opens the next sub-room, then the Devotee of the Witness (Overload Minotaur), which needs Anti-Overload.'
-  - 5. When the Threshold Sentinel (Tormentor) spawns in the centre, the side doors close. Leave the side
-    room immediately and converge to the centre, then burn the Tormentor down. Anyone caught in a closing
-    door dies.
-  - 6. Once you find the glowing circuit plates and the Resonant Conductor obelisk, the Conductor player
-    stands a few steps away and shoots the conductor's core once to arm it.
-  - 7. The Plate-runner steps onto the connected plate at the exact moment the charge enters (look for
-    the shrinking circular aura), then steps off after it bounces. Repeat to keep charges flowing.
-  - 8. While bouncing charges, pick up Pyramidal Resonance shapes by walking onto them. Never hold more
-    than 3 stacks, and don't let a stack's timer expire on you.
-  - 9. With the conductor armed, the Conductor player stands on the plate when the next charge arrives
-    to lock it down, consuming one resonance stack. Do this on both sides.
-  - 10. With both conductors locked, everyone converges on the central chest and deposits their resonance.
-    This extends the Final Shape Looming timer.
-  - 11. Avoid standing under the Witness Hand's Resonant Outburst (triangular floor AoE) the whole time,
-    especially at low Health.
-  - 12. Repeat the full loop two more times. After the third successful deposit, the stairs to the next
-    area unfurl.
+  - Before pulling, split into two teams of three, one for each side door. On each side, assign a Conductor
+    player, a Plate-runner, and an Add-clear player. Salvation's Edge is comms-heavy, so say roles out
+    loud and lock them in.
+  - Everyone walks into the large central room. One player grabs the central Pyramidal Resonance (triangle)
+    and dunks it into the central chest. This opens both side doors and starts the Final Shape Looming
+    wipe timer.
+  - Push into your assigned side room. Walk in carefully and take cover — enemies spawn toward the back,
+    so rushing in gets you killed.
+  - 'Clear the Sol Divisive Vex and Dread. Priority targets: the Gatekeeper Hydra (its death opens the
+    next room — in the VOD ''door''s open, we''re good''), then the Overload Minotaur (Devotee of the
+    Witness), which needs Anti-Overload.'
+  - After a room is cleared, a new sub-room opens somewhere — its position varies (top, window, basement,
+    or to one side). Call out where it opened so your team finds it fast.
+  - When the Threshold Sentinel (Tormentor) spawns in the centre, everyone converges mid and burns it
+    down fast ('everyone middle, nuke Tormentor'). Don't get caught in a closing side door.
+  - Find the glowing circuit plates and the Resonant Conductor obelisk. The Conductor player stands a
+    few steps back and shoots the conductor's core once to arm it.
+  - The Plate-runner steps onto the connected plate the instant the charge arrives (watch for the shrinking
+    aura), then steps off after it bounces. Keep bouncing the charge between plates — this is the 'sending'
+    you hear in comms.
+  - While the charge bounces, pick up Pyramidal Resonance stacks by walking onto them. Never hold more
+    than 3 (3x), and don't let a stack's timer run out on you. Grab fresh ones to refresh.
+  - With the conductor armed, lock it down (in the VOD this is the 'kill' / 'send back, then we kill'
+    moment). Do this on both sides so both conductors are locked.
+  - Everyone converges on the central chest and deposits resonance. Confirm it actually goes in (watch
+    your buff bar). This refreshes/extends the wipe timer.
+  - Repeat the whole loop two more times. The whole fight, stay out of the Witness Hand's triangular floor
+    AoE, especially at low Health. After the third successful deposit, the stairs to the next area open.
   defense:
     incoming_damage:
       adds:
@@ -322,6 +308,17 @@ encounter:
     recommended_dps:
     - Anti-Overload primary or special for the Devotee Minotaur
     - High-uptime add-clear (auto/SMG/wave-frame GL) plus a heavy or special burst for the Tormentor
+    - No boss DPS phase exists — the only burst priority is deleting the Threshold Sentinel (Tormentor)
+      fast when it spawns mid. (verify for the new meta)
+    - Tractor Cannon on the Tormentor plus Supers to nuke it, as the Aztecross team did ('I super here
+      to nuke this guy', 'going to go tractor him'). (verify for the new meta)
+    - Anti-Overload primary or special for the Overload Minotaur (Devotee of the Witness) — make sure
+      at least one player per side carries it. (verify for the new meta — confirm which anti-champ mods
+      are in the current artifact)
+    - 'High-uptime add-clear for the side rooms: SMG / auto rifle / wave-frame GL, paired with a heavy
+      or special burst for the Tormentor and Subjugator. (verify for the new meta)'
+    - 'NOTE: a 6/9 sandbox change is coming; treat all of the above as current-meta and re-verify loadouts,
+      exotics, and anti-champ mod availability for the new meta before a run.'
   role_loadouts:
   - role_id: conductor
     subclass: ''
@@ -376,3 +373,130 @@ encounter:
       and Champion mod availability against the current season before a run; specific loadout picks left
       blank where unverifiable.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross (source of truth) — per-encounter video, cross-referenced
+    note: 'Mechanics / steps / strategies / 6-player roles authored from Aztecross''s encounter video
+      + cross-referenced sources. REGULAR mode. Loadouts: verify for the 6/9 Monument of Triumph sandbox.'
+    date_checked: '2026-06-07'
+  mechanics:
+  - Substratum is the first encounter of Salvation's Edge (a 6-player raid). There is NO boss DPS phase
+    — you win by depositing Pyramidal Resonance into the central chest across three successive rounds
+    before the 'Final Shape Looming' wipe timer expires.
+  - 'Layout: a large central room with a chest in the middle, flanked by two opposing side doors that
+    lead into peripheral rooms. As rooms are cleared, new sub-rooms open in varying locations the team
+    must locate (callouts in the Aztecross VOD reference ''top'', ''window'', ''basement'', and ''right
+    side'' rooms — the open room''s position changes, so someone has to find it each time).'
+  - 'Pull/start: one player picks up the central Pyramidal Resonance and dunks it into the central chest.
+    This opens both side doors and starts the Final Shape Looming wipe timer.'
+  - 'Enemy waves are Sol Divisive Vex plus Dread. Key priority enemies appear repeatedly: a ''Gatekeeper''
+    Hydra (authored file calls it Keeper of the Monolith) whose death opens the next room/door (''door''s
+    open, we''re good''); an Overload Minotaur (Devotee of the Witness) that needs Anti-Overload; later
+    a Subjugator (Dread) spawns in a room.'
+  - Threshold Sentinel (Tormentor) periodically spawns in the centre. When it does, the team converges
+    mid and nukes it ('everyone middle, nuke Tormentor'). The Aztecross team used Tractor Cannon plus
+    Supers to delete it. The authored file notes side doors close while the Tormentor is up, so don't
+    get caught in a doorway.
+  - Pyramidal Resonance 'stacks' (called 'stacks' / a buff on your buff bar in the VOD) form in the middle
+    and in rooms. Each player can hold up to 3 (3x). Stacks have a timer; holding too many or letting
+    a stack expire kills you. The team continually picks up fresh stacks to 'refresh' and extend their
+    hold.
+  - 'The ''send / kill'' loop is the core mechanic: players bounce a charge (referred to as ''sending'')
+    between plates/rooms and call ''kill'' when the cycle is ready to be completed (''sending'', ''kill
+    on the way'', ''send back to me one more time, then we kill''). The authored file frames this as:
+    arm a Resonant Conductor obelisk by shooting its core, then step on the connected plate when the charge
+    arrives to lock the conductor (consuming a resonance stack). Both conductors must be locked.'
+  - 'On a missed bounce there is a grace window; a repeated miss escalates (authored file: a Subjugator
+    spawns and locks plates). The VOD confirms a Subjugator appears and must be killed.'
+  - When both conductors are locked / the cycle completes, everyone converges on the central chest and
+    deposits resonance, which refreshes/extends the Final Shape Looming timer ('make sure it actually
+    goes in, keep an eye on your buff meter'). Repeat the full loop a total of three times to finish;
+    stairs to the next area then unfurl.
+  - 'Hazard: a Witness Hand above the arena casts Resonant Outburst — a triangular floor AoE that kills
+    low-Health players (''careful, don''t be under the hands''). Stay out of it, especially at low Health.'
+  strategies:
+  - name: Standard 3-3 split (Conductor / Plate-runner / Add-clear per side)
+    summary: Two teams of three, one per side door. Each side runs one Conductor, one Plate-runner, and
+      one Add-clear. Both conductors get locked each round, then everyone dumps resonance at the central
+      chest. Repeat three times.
+    steps:
+    - Split 3-3, lock roles out loud before pulling.
+    - Dunk the central resonance to open doors and start the timer.
+    - 'Each team clears its side: Gatekeeper Hydra first (opens next room), then Overload Minotaur.'
+    - Converge mid to nuke the Threshold Sentinel (Tormentor) whenever it spawns.
+    - Arm the conductor (shoot its core), bounce charges via plates, collect up to 3 resonance stacks
+      each.
+    - Lock both conductors, converge on the chest, deposit resonance, confirm it registers.
+    - Repeat the full loop until three successful deposits.
+    best_for: First-timers and general/normal clears; the default and most-documented approach.
+    source_support: 'Cross-referenced: this is the structure in the authored Substratum YAML, and the
+      Aztecross VOD matches it — a dedicated ad-clear pair, plate players, gatekeeper opening rooms, overload
+      kills, Tormentor nuked mid, 3x stacks, and depositing/refreshing.'
+  - name: Resonance-heavy / overflow hold for timer extension
+    summary: Rather than depositing the minimum, players aggressively top off to 3 stacks each before
+      locking, maximizing the wipe-timer extension when everything is deposited. Useful when the Final
+      Shape Looming timer runs hot.
+    steps:
+    - Run the standard 3-3 split.
+    - Before locking conductors, have collectors top everyone toward 3x stacks (without exceeding 3, which
+      kills you).
+    - Lock both conductors, then deposit the larger resonance pool at the chest for a bigger timer refresh.
+    - Repeat, banking time each round.
+    best_for: Harder difficulties (Master/Contest) or any run where the wipe timer is tight.
+    source_support: Authored YAML lists this as a permutation. The VOD partially supports it ('we're going
+      to have Max time on this next phase', 'we don't know how many we might need... keep doing normal'),
+      but the Aztecross team explicitly chose NOT to over-collect on normal — so treat this as situational,
+      not default.
+  - name: 4-2 with designated Tormentor killers
+    summary: Two players sit mid as dedicated Threshold Sentinel killers and resonance runners; they don't
+      do plate/conductor work. The other four split 2-2 to handle conductors and plates.
+    steps:
+    - Assign 2 dedicated mid players (Tormentor killers / resonance runners) and 4 side players (2 per
+      side).
+    - Side pairs share conductor + plate duty on their side.
+    - Mid pair instantly deletes the Tormentor when it spawns and ferries resonance to the chest.
+    - Lock both conductors, deposit, repeat.
+    best_for: Teams that struggle with Tormentor timing or want a cleaner mid burn on harder difficulties.
+    source_support: Listed in the authored YAML as a permutation. NOT directly shown in the Aztecross
+      VOD (they ran the standard split), so verify before relying on it.
+  role_breakdown:
+  - role: Left-side Conductor
+    count: 1
+    does: 'Owns the left Resonant Conductor: shoots its core to arm it, then locks it down at the right
+      moment (the ''kill'' in comms). Holds up to 3 Pyramidal Resonance stacks. Run Anti-Overload for
+      the Devotee Minotaur.'
+  - role: Left-side Plate-runner
+    count: 1
+    does: Steps onto the left connecting plate exactly when the charge arrives (shrinking aura) and steps
+      off after it bounces. Keeps the 'send' cycle flowing between plates on the left side.
+  - role: Left-side Add-clear
+    count: 1
+    does: 'Holds the left room: kills the Gatekeeper Hydra (opens next room), Overload Minotaur, Subjugator,
+      and lesser Vex/Dread. Collects resonance stacks and calls out where the next room opens. In the
+      Aztecross run, the ad-clear pair freeing up the plate players was called ''massive''.'
+  - role: Right-side Conductor
+    count: 1
+    does: 'Mirror of the left Conductor: arms and locks the right Resonant Conductor, holds up to 3 resonance
+      stacks, runs Anti-Overload.'
+  - role: Right-side Plate-runner
+    count: 1
+    does: 'Mirror of the left Plate-runner: times steps on the right plate to keep the charge bouncing.'
+  - role: Right-side Add-clear
+    count: 1
+    does: 'Mirror of the left Add-clear: kills the Gatekeeper/Overload/Subjugator on the right, collects
+      stacks, locates the next room, and supports the Tormentor nuke mid.'
+  needs_clarification:
+  - 'Enemy terminology: the Aztecross VOD says ''Gatekeeper'' for the door-opening Hydra, while the authored
+    YAML calls it ''Keeper of the Monolith.'' These appear to be the same enemy but the exact in-game
+    name should be confirmed.'
+  - 'Exact resonance economy: how many resonance stacks are required per deposit, and exactly how much
+    the deposit extends the Final Shape Looming timer, is not settled. The VOD explicitly says ''we don''t
+    know how many we might need... we don''t really know'' — do not assume a fixed number.'
+  - 'Precise conductor/plate wiring: the authored YAML describes arming the conductor by shooting its
+    core and locking via a timed plate step, but the VOD''s ''sending / kill'' loop is described loosely.
+    The exact step-on timing and how a ''lock'' is registered should be verified against a dedicated mechanics
+    guide.'
+  - 'Subjugator trigger: the authored file says a repeated missed bounce spawns a Subjugator that locks
+    plates; the VOD confirms a Subjugator spawns but doesn''t clearly tie it to missed bounces. The spawn
+    condition is unconfirmed.'
+  - 'Specific loadouts (subclasses, exotic armor, exact weapons): left blank/generic in both sources and
+    a 6/9 sandbox change is pending, so these are flagged for verification rather than fabricated.'

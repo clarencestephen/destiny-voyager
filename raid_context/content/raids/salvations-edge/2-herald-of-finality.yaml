@@ -43,61 +43,45 @@ encounter:
     \ shape last. Earlier\n  wrong shapes are overridden.\n\nSTART STATE\n- Encounter starts when central\
     \ blight is destroyed → Herald\n  spawns → Final Shape Looming starts.\n"
   callouts:
-  - when: Pre-pull
-    from: lead
-    to: team
-    say: '"Left pair = [names], middle pair = [names], right pair = [names]. Best players to LEFT (harder
-      terrain)."'
-    why: Left side has the trickiest movement + Trammel of Demise; designate accordingly.
-  - when: Trammel killed on a side
-    from: any
-    to: team
-    say: '"Trammel [side] down."'
-    why: First Trammel kill triggers Herald to summon players to centre via Called to Reckoning.
-  - when: Player gets Called to Reckoning buff (pulled to centre)
-    from: called-guardian
-    to: team
-    say: '"Called — coming to centre."'
-    why: Tells the team that the called player is leaving their side; others on that side cover their
-      work.
-  - when: Blights spotted around arena edges
-    from: any
-    to: team
-    say: '"Blight [position] — break it!"'
-    why: Herald's head spot is shielded until all surrounding blights are destroyed. Calling locations
-      lets the team kill them fast.
-  - when: Called Guardians have Stolen Favor
-    from: called-guardian
-    to: side
-    say: '"Stolen Favor — reading conductor [side]."'
-    why: Tells the side that the called Guardian will now check the conductor's shape and call out what's
-      needed.
-  - when: Conductor shape requirement read
-    from: called-guardian-with-stolen-favor
-    to: side
-    say: '"Conductor [side] wants TRIANGLE."'
-    why: Tells the conductor + plate-runner pair which shape resonance to grab. WRONG shape = wipe.
-  - when: Shape mismatch noticed
-    from: any
-    to: team
-    say: '"WAIT — don''t dunk!"'
-    why: Last-chance call before a wipe. Player can override their last pickup by walking to the correct
-      shape spawn.
-  - when: All conductors locked
-    from: any
-    to: team
-    say: '"All locked — deposit at vista."'
-    why: Chest spawns at the vista under the Witness's hand. Converge, dump, wipe-timer extends.
-  - when: Damage phase open
-    from: any
-    to: team
-    say: '"Vulnerable — DPS!"'
-    why: Edges of the arena glow when Herald is damageable. Burst-DPS now.
-  - when: Final Stand
-    from: any
-    to: team
-    say: '"FINAL STAND — 30 SECONDS. Trammels everywhere. Focus Herald."'
-    why: Herald spawns all Trammels at once. Ignore them. 30s to delete Herald or wipe.
+  - when: Pre-pull, assigning sides
+    say: Left pair = [names], middle pair = [names], right pair = [names].
+    why: Locks in the 2-2-2 split before the fight; everyone knows their side and which major they own.
+  - when: Your side's major / Trammel dies
+    say: '[Side] major down.'
+    why: First major kill triggers Called to Reckoning; the team needs to know summons are incoming.
+  - when: You get Called to Reckoning (pulled to center)
+    say: Called - coming to center.
+    why: Tells your partner you're leaving the side so they cover the plate/add work.
+  - when: Blights appear around the arena edges
+    say: Blight [middle/left/right] - break it!
+    why: The Herald's head stays shielded until all surrounding blights die; calling positions kills them
+      fast. The video flags 'not knowing where blights are' as a top failure point.
+  - when: You earn Stolen Favor and read your conductor
+    say: '[Side] wants TRIANGLE / wants CIRCLE.'
+    why: Only the Stolen Favor holder can see the shape; the pair must grab the matching resonance. Wrong
+      shape = wipe.
+  - when: Splitting shape collection
+    say: I got circle, you grab triangles.
+    why: Keeps pickups organized; the locking player must ensure their LAST pickup is the correct shape
+      (override rule).
+  - when: Sending the first plate pulse
+    say: Sending it down - be in place.
+    why: The video notes the FIRST pulse reaches the plate faster than later ones; the catcher must already
+      be positioned or it fizzles and spawns another major.
+  - when: About to lock a conductor with a suspect shape
+    say: WAIT - don't dunk!
+    why: Last-chance call before an instant-wipe wrong-shape lock; the player can walk to the correct
+      shape spawn to override.
+  - when: All three conductors locked
+    say: All locked - deposit at the back box.
+    why: Box spawns under the Witness's hands at the very back; everyone deposits to extend the timer
+      and clear leftover resonance.
+  - when: DPS window opens
+    say: Edges glowing - DPS, use supers.
+    why: Arena edges glow when the Herald is damageable; coordinate burst and debuffs.
+  - when: Herald hits Final Stand
+    say: FINAL STAND - ~30 seconds, ignore everything, dump on Herald.
+    why: He goes briefly immune then gives ~30s; the only goal is finishing him before the timer ends.
   wipe_triggers:
   - WRONG shape resonance in a conductor → instant wipe.
   - Final Shape Looming timer expires.
@@ -233,30 +217,31 @@ encounter:
   - '2nd: left side-pair (hardest terrain).'
   - '3rd+: Designated Caller — handle Stolen Favor for the team.'
   plain_language_steps:
-  - 1. Pre-pull, split into three pairs across LEFT, MIDDLE, and RIGHT sides. Put your best players on
-    LEFT (trickiest terrain and the Trammel of Demise).
-  - 2. Everyone moves to their assigned side and destroys the central blight. This spawns the Herald and
-    starts the Final Shape Looming timer.
-  - '3. On each side, clear the add wave (Ravenous Taken Knights, Attendants) and kill your side''s Trammel:
-    Demise on LEFT, Conflict in MIDDLE, Time on RIGHT.'
-  - 4. The first Trammel kill triggers Called to Reckoning. One player from each side is pulled to the
-    centre. Those players call 'Called' and head to the middle while their partner covers their side.
-  - 5. In the centre, the Called Guardians destroy the blights spawning around the arena edges to drop
-    the shield on the Herald's head spot.
-  - 6. With the head exposed, Called Guardians shoot the Herald's head spot to earn Stolen Favor. They
-    must not die in the centre, or it is a wipe.
-  - '7. Called Guardians return to their side and use Stolen Favor to read what shape their conductor
-    needs: a TRIANGLE wants Pyramidal Resonance, a CIRCLE wants Spherical Resonance. Call it out clearly.'
-  - 8. The plate partner bounces charges between plates while the pair collects the correct shape. Because
-    the last shape you pick up is the one you deposit, grab the correct shape LAST to override any wrong
-    picks.
-  - 9. Arm and lock all three conductors with the correct shapes. Putting the WRONG shape into a conductor
-    is an instant wipe, so confirm before dunking.
-  - 10. With all conductors locked, converge at the vista chest under the Witness's hand and dump remaining
-    resonance to extend the timer.
-  - 11. When the arena edges glow, the Herald is vulnerable. Burst-DPS it.
-  - '12. Repeat the loop until Final Stand: the timer drops to 30 seconds and every Trammel spawns at
-    once. Ignore the Trammels and delete the Herald.'
+  - '1. Before the pull, split into three pairs: LEFT, MIDDLE, and RIGHT (sides are named as you LOOK
+    at the Herald). Put your strongest/most mobile players on the trickier sides.'
+  - 2. Shoot the blight in the CENTER of the arena. This spawns the Herald and starts the Final Shape
+    Looming wipe timer.
+  - 3. On each side, clear the Taken adds and kill your side's big gold-bar major (MIDDLE = large Phalanx,
+    LEFT = Wizard, RIGHT = Ogre).
+  - '4. The first major kill triggers Called to Reckoning: one player from each side is yanked to the
+    CENTER. Call ''Called'' and go; your partner covers your side.'
+  - 5. In the center, destroy all the blights that spawn around the arena (usually two at a time) to drop
+    the shield over the Herald's head.
+  - '6. A Called player shoots the Herald''s head: a blight pops, shoot the head again and the head opens,
+    converting your buff to STOLEN FAVOR. Do NOT die in the center or it wipes the team.'
+  - '7. Return to your side. Use Stolen Favor to READ your conductor''s shape: TRIANGLE means you need
+    Pyramidal Resonance, CIRCLE/SPHERE means you need Spherical Resonance. Call it out clearly.'
+  - 8. The partner bounces (ping-pongs) the plate charge to generate resonance; aim for three. Collect
+    the CORRECT shape LAST, because the last shape you pick up is the one you deposit.
+  - '9. Lock all three conductors: while the plate is active and the resonance is travelling, shoot the
+    pillar with the correct shape, then step on the plate. It glows GOLD when correct. WRONG shape = instant
+    wipe, so confirm first.'
+  - 10. With all three locked, everyone converges and deposits resonance into the box at the very BACK
+    of the arena (under the Witness's hands). Clear ALL your resonance so a leftover doesn't kill you.
+    This extends the timer.
+  - 11. The arena edges glow and the Herald is damageable. Burst him down.
+  - 12. Repeat the loop. When the Herald reaches Final Stand he goes briefly immune, then you get about
+    30 seconds to finish him. Ignore everything else and delete him.
   defense:
     incoming_damage:
       adds:
@@ -282,6 +267,23 @@ encounter:
     recommended_dps:
     - 'Burst-heavy DPS: Two-Tailed Fox, Sleeper, rocket-and-sword swap, or a Special heavy'
     - Save supers and heavy for the Final Stand 30-second window
+    - 'VERIFY FOR THE NEW META (a 6/9 sandbox change is coming - confirm these before a run): the video
+      is current-meta as of the recording.'
+    - Sword DPS with Bait and Switch + Frenzy (legendary sword) on Prismatic - the video's main approach;
+      light-attack rotation interleaved with re-procs.
+    - 'Whirlwind Blade / spin-to-win swords: light-attack to build energy, then heavy spin, repeat.'
+    - Ergo Sum sword rolled with Wolfpack Rounds - grants Wolfpack Rounds to other legendary swords on
+      heavy attack, boosting whole-team sword DPS.
+    - 'Ranged headshot DPS as an alternative: one player anchors/holds the Herald in place while others
+      land precision hits.'
+    - Golden Gun (Hunter) for a chunk of burst when in the center - the video notes this was used on contest
+      mode and still works in normal.
+    - 'Damage supers for the window: Needlestorm (Strand), Nova Bomb (Void) - run whatever damage super
+      your subclass offers.'
+    - 'Team debuffs: void Titan suppressing axe super (also pick up the dropped axes to conserve heavy),
+      Hunter bow debuff, plus Transcendence (Prismatic) for the damage bonus.'
+    - 'Ad-clear builds for survival: the video used Felwinter''s Helm (Warlock) with Lightning Surge to
+      clear Attendants and weaken/stun the majors - useful for staying alive between damage phases.'
   role_loadouts:
   - role_id: side-pair
     subclass: ''
@@ -316,3 +318,167 @@ encounter:
     note: Edge of Fate stat renames applied (Health/Class). DPS Surge element not specified in the guide,
       so generic burst archetypes given; verify current-meta exotics and weapons before a run.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross (source of truth) — per-encounter video, cross-referenced
+    note: 'Mechanics / steps / strategies / 6-player roles authored from Aztecross''s encounter video
+      + cross-referenced sources. REGULAR mode. Loadouts: verify for the 6/9 Monument of Triumph sandbox.'
+    date_checked: '2026-06-07'
+  mechanics:
+  - '6-player fireteam splits into a 2-2-2: three pairs holding LEFT, MIDDLE, and RIGHT sides of a triangular
+    arena (sides named relative to looking AT the Herald boss). This is the second encounter (Dissipation)
+    of the Salvation''s Edge raid; the Herald of Finality is the boss.'
+  - 'The fight is a loop: mechanics phase -> deposit resonance -> boss damage phase -> repeat, until the
+    Herald is dead. Most teams average about 3 cycles.'
+  - 'Encounter start: shoot the blight in the CENTER of the arena. This spawns the Herald and starts the
+    Final Shape Looming countdown (a wipe timer that must be extended by depositing resonance).'
+  - 'Each side has its own elevated circuit plate + Resonant Conductor (pillar), same plate ping-pong
+    system as the first encounter: step on the active (upper) starting plate, WAIT for the resonance trace
+    to reach the second plate and the pool to start closing, then step to send the charge back. A correct
+    ping bounces the charge back and forth.'
+  - 'Each side is guarded by a unique large gold-bar Taken major that must be killed: the video describes
+    MIDDLE = large Taken Phalanx, LEFT = Taken Wizard, RIGHT = Taken Ogre. (The authored YAML labels these
+    side enemies Trammel of Conflict (MIDDLE), Trammel of Demise (LEFT), Trammel of Time (RIGHT).) Each
+    side also gets waves of Taken adds, including Stasis Attendants that can freeze you.'
+  - 'First major/Trammel kill triggers Called to Reckoning: the Herald summons ONE player from each side
+    (3 total) to the center. The other 3 stay and cover their side.'
+  - In the center, blights spawn around the arena (middle/left/right positions, usually two at a time).
+    All blights must be destroyed to drop the shield over the Herald's head spot.
+  - 'With the head exposed, a Called player shoots the Herald''s head: a blight pops (confirming blight
+    phase), then shooting the head again opens it with resonance shards and converts the Called to Reckoning
+    buff into STOLEN FAVOR. Stolen Favor lets that player SEE which shape the conductor on their side
+    needs.'
+  - 'NEW twist vs the first encounter: there are now TWO resonance shapes. Conductors require either a
+    TRIANGLE (Pyramidal Resonance) or a CIRCLE/SPHERE (Spherical Resonance). Resonances of each shape
+    spawn in fixed, trackable spots (in the middle area, triangles spawn toward the middle/right, circles
+    toward the middle-left up the stairs). Wrong shape locked into a conductor = instant wipe.'
+  - 'Resonance OVERRIDE rule: the LAST shape you pick up is the shape you carry/deposit. You can grab
+    the wrong shape and still be fine as long as your final pickup is the correct shape. Aim for 3 resonances
+    per person for timing.'
+  - 'To lock a conductor: while the plate is active and the resonance is travelling toward the pillar,
+    shoot the pillar with the correct shape in inventory, then step on the plate with correct timing.
+    The pillar/plate glows GOLD when done correctly.'
+  - Letting a plate fizzle (bad timing) spawns ANOTHER large gold-bar major that LOCKS your plate until
+    killed, costing time. Repeated mistakes stack more majors and can blow the wipe timer.
+  - 'After all three conductors are locked gold, all six converge and DEPOSIT resonance into a box that
+    spawns at the very back of the arena (under the Witness''s hands, where hands come out of the ground).
+    Depositing extends the Final Shape timer; more resonance deposited = more extension. IMPORTANT: deposits
+    sometimes leave 1 leftover resonance on you that will kill you later if not cleared.'
+  - 'Once resonance is deposited and conductors are locked, the arena edges glow and the Herald becomes
+    damageable: burst DPS window. Then the loop repeats.'
+  - 'Final Stand: when the Herald is pushed low he goes immune (~5 seconds), then gives roughly 30 seconds
+    to finish him. The video notes all the major add pressure during this; ignore distractions and dump
+    everything into the Herald.'
+  strategies:
+  - name: Easy LFG Strategy (resonance-first, recommended)
+    summary: Re-orders the cycle so plate/resonance work is done with NO add pressure, then the blight
+      phase, then closing the conductors. The video author's recommended strategy for LFG/uncoordinated
+      teams because it consistently gets you to damage.
+    steps:
+    - Shoot the central blight to start; on each side clear adds and kill your major.
+    - On the first Called to Reckoning, do NOT immediately fight the Herald. Instead, each side bounces
+      the plate three times (ping, send down = 1; ping, send down = 2; ping, send down = 3) to bank all
+      the resonance you need first. Let the third one fizzle on purpose so the major spawns when YOU expect
+      it.
+    - Each pair then crosses to wherever their major spawned and kills it together (no soloing a floor).
+      Also kill the central Knight near the boss-mechanic pit on the way in.
+    - Now everyone goes into the center, shoots the Herald's head to start blight phase, kills the blights
+      fast (aim to do it within two blights), shoots the head again to get Stolen Favor.
+    - Return to sides. Caller (Stolen Favor holder) reads the conductor shape and calls it; partner grabs
+      the opposite shape if splitting, but the caller's LAST pickup must be the correct shape since they
+      lock.
+    - Lock all three conductors gold, converge, deposit at the back box (clear all resonance), then DPS.
+    - Repeat until Final Stand.
+    best_for: LFG / uncoordinated / first-time teams who want a calm, repeatable routine with minimal
+      add harassment.
+    source_support: 'Primary source: JRodPlays ''Dissipation Easy Strat LFG guide'' (this-encounter video
+      in the Aztecross bundle) - this is explicitly the strategy he recommends and demonstrates in the
+      full run.'
+  - name: Standard / Intended Strategy
+    summary: 'The ''supposed'' way: kill your major, the Called player goes to the center FIRST to fight
+      the Herald for Stolen Favor, then everyone does plates and resonance with adds spawning throughout.'
+    steps:
+    - Shoot central blight to start; clear adds, kill your major (gets you Called/Valor).
+    - The Called player goes straight into the center, kills the head's surrounding blights, shoots the
+      Herald's head to start blight phase, then shoots again to convert to Stolen Favor.
+    - Run back calling your shape ('I have circle / I have triangle'). One player grabs all circles, the
+      other all triangles to keep it simple.
+    - Bounce plates and generate resonance WHILE dealing with the constant add spawns (Taken Knights/Attendants
+      spawn each time you ping).
+    - Lock all three conductors with correct shapes, converge, deposit at the back box, then DPS.
+    - Repeat until Final Stand.
+    best_for: Coordinated teams comfortable surviving heavy add pressure while doing plate timing; slightly
+      faster since steps aren't reordered.
+    source_support: 'Same video describes this as how the fight is ''supposed'' to be done, but explicitly
+      flags the downsides: constant add spawns, Attendants that can wipe you, and tight plate timing under
+      fire.'
+  - name: Damage rotation (sword / bait-and-switch)
+    summary: How to maximize the boss damage window each cycle, targeting roughly half health per phase
+      for a comfortable 3-phase (2-phase is possible).
+    steps:
+    - Before DPS, CLEAR all leftover resonance so it doesn't kill you mid-phase.
+    - Pop Transcendence (Prismatic) and drop a grenade AoE on the Herald.
+    - Proc Bait and Switch by shooting primary then special, then swap to a Frenzy/Bait-and-Switch sword
+      and light-attack.
+    - Re-grenade and use your damage super, then re-proc Bait and Switch with remaining Transcendence.
+    - 'Stack team debuffs: a suppressing super (e.g. void Titan axe), Hunter bow debuff, Wolfpack Rounds
+      (Ergo Sum sword grants Wolfpack to other legendary swords on heavy). Pick up dropped axes to conserve
+      heavy.'
+    - 'For whirlwind/spin-to-win swords: light-attack to build energy, then heavy ''spin to win'', repeat.'
+    - Save super and heavy for the Final Stand 30-second window.
+    best_for: Any team; sword-heavy DPS was the video's approach but ranged headshot DPS (one player anchors
+      the boss) and Golden Gun also work.
+    source_support: 'Video damage section: Prismatic Warlock with Bait-and-Switch sword, Transcendence,
+      Needlestorm/Nova; team used void suppression and Wolfpack Rounds; got the Herald to ~half health
+      per phase.'
+  role_breakdown:
+  - role: LEFT pair - conductor/caller
+    count: 1
+    does: Holds the LEFT side. Kills the left major (Taken Wizard per the video) and adds. When Called
+      to Reckoning, goes to center, helps kill blights, shoots the Herald's head for Stolen Favor, then
+      returns and READS the left conductor's required shape and calls it. Locks the left conductor with
+      the correct shape.
+  - role: LEFT pair - plate-runner
+    count: 1
+    does: Holds the LEFT side with the caller. Bounces the plate charge to generate resonance (three pings),
+      kills adds (watch Stasis Attendants), and collects the called-out correct shape last. Covers the
+      side while the partner is Called to center.
+  - role: MIDDLE pair - conductor/caller
+    count: 1
+    does: Holds the MIDDLE side. Kills the middle major (large Taken Phalanx per the video) and adds.
+      When Called, goes center, helps clear blights, shoots the Herald's head for Stolen Favor, then reads
+      the middle conductor's shape and calls it. Locks the middle conductor.
+  - role: MIDDLE pair - plate-runner
+    count: 1
+    does: Holds MIDDLE with the caller. Ping-pongs the plate charge, kills adds, grabs the correct shape
+      last. Note the central Knight near the boss-mechanic descent - kill it so it doesn't harass Called
+      players. Covers the side while the partner is in center.
+  - role: RIGHT pair - conductor/caller
+    count: 1
+    does: Holds the RIGHT side. Kills the right major (Taken Ogre per the video - keep feet on the ground
+      so it can't push/launch you off the map) and adds. When Called, goes center, clears blights, shoots
+      the head for Stolen Favor, returns and reads the right conductor's shape and calls it. Locks the
+      right conductor.
+  - role: RIGHT pair - plate-runner
+    count: 1
+    does: Holds RIGHT with the caller. Ping-pongs the plate charge, kills adds, collects the correct shape
+      last, covers the side while the partner is Called. After all conductors lock, everyone deposits
+      at the back box and converges for DPS.
+  needs_clarification:
+  - 'Side enemy naming mismatch: the video calls the side majors a large Taken Phalanx (MIDDLE), Taken
+    Wizard (LEFT), and Taken Ogre (RIGHT); the authored YAML calls the side enemies Trammel of Conflict
+    (MIDDLE), Demise (LEFT), and Time (RIGHT). Whether these are the same entity under different names,
+    or distinct enemies, is not fully settled by the sources.'
+  - 'Exact DPS Surge / element: neither source pins the Herald to a single damage-type weakness; the video
+    matches Surge to your strongest burst weapon. Verify current-meta elemental Surge for normal mode.'
+  - Whether the LEFT side truly has the hardest terrain (the YAML claims this and recommends best players
+    left); the video frames the Ogre/RIGHT and off-map knockback hazards as the bigger positional risk.
+    Side-difficulty ranking is not definitively cross-confirmed.
+  - 'Precise number of cycles/phases: the video says ~3 phases is comfortable and a 2-phase is possible;
+    this depends on team DPS and is not a fixed value.'
+  - Whether a fixed 'Designated Caller' split (3 always-Called players) versus rotating Called players
+    is better - the YAML lists it as a permutation but the video shows the Called role effectively assigned
+    per side rather than rigidly fixed across rounds. Not settled.
+  - Exact in-game name of the deposit box and the central blight start object - the video describes them
+    by location/behavior rather than precise nomenclature.
+  - A 6/9 sandbox change is upcoming; all weapon/exotic/subclass recommendations above are current-meta
+    from the video and must be re-verified for the new meta.

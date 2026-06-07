@@ -36,44 +36,39 @@ encounter:
     \ STATE\n- Encounter starts when team deposits resonance into the first\n  room's chest after Substratum.\
     \ Threshold Sentinels then spawn.\n"
   callouts:
-  - when: Pre-pull (per room)
-    from: lead
-    to: team
-    say: '"Room [N] wiring: left→[X], mid→[Y], right→[Z]."'
-    why: Wire rotation changes per room. Lock it down out loud.
-  - when: Threshold Sentinel about to die — designate killer
-    from: lead
-    to: conductor-player-on-that-side
-    say: '"You take the killing blow [side]."'
-    why: Stolen Favor goes to the killer; you want it on the conductor player so they can read the shape
-      requirement.
-  - when: Stolen Favor acquired + conductor read
-    from: conductor-with-favor
-    to: their side
-    say: '"My conductor wants [TRIANGLE | CIRCLE | CUBE]."'
-    why: Spawn-location rule means shapes must be ferried between sides — left has no cube, right has
-      no triangle, etc.
-  - when: Shape ferry needed (conductor needs a shape not native to their side)
-    from: conductor
-    to: teammate on the matching-spawn side
-    say: '"Right needs CUBE — grab a triangle for me from left."'
-    why: Hexahedral only spawns right; Pyramidal only on left; Spherical only mid. Someone has to walk
-      the shape across.
-  - when: Honored Scorpius turrets active
-    from: any
-    to: team
-    say: '"Scorpii up — drop the [position] one."'
-    why: Constant hailstorm of bullets. Two-shot the turret platforms with a sniper / heavy.
-  - when: Unstoppable Incendior spawns after conductor lockdowns
-    from: any
-    to: team
-    say: '"Unstop Incendior — Anti-Stun!"'
-    why: Anti-Unstoppable required. Catches teams off-guard if not slotted.
-  - when: All 3 conductors locked
-    from: any
-    to: team
-    say: '"Locked — dump at chest, advance."'
-    why: Final Shape Looming extends after dump; door to next room opens.
+  - when: Starting a lane's symbol sequence
+    say: '''Initials in three, two, one'''
+    why: 'Synchronizes the initial dunk so all lanes start their charge/timer together (verbatim team
+      comm: ''initials in three two one'').'
+  - when: A conductor reads its required shape
+    say: '''[Left/Mid/Right] needs TRIANGLE / CIRCLE / SQUARE (cube)'''
+    why: Tells the team which shape to collect or ferry to that lane before time runs out.
+  - when: A lane needs a shape that isn't in that lane
+    say: '''Right needs cube, grab/ferry one to me'''
+    why: Shapes must be carried between lanes; the team constantly requests ferries ('if somebody sees
+      a cube call it out').
+  - when: Spotting a loose shape
+    say: '''Two cubes in the back, on top'' / ''triangle middle'''
+    why: Keeps everyone aware of where spare shapes are, including the extra (~7th) symbol used as backup.
+  - when: Scorpius turrets activate
+    say: '''Right side turrets, drop this one'''
+    why: Turrets fire constantly and chip the whole team; they must be killed immediately ('got to get
+      this turret down').
+  - when: Tormentor rotation
+    say: '''Get ready for next Tormentor, right side'''
+    why: Tracks the left-middle-right Tormentor rotation so each side is ready ('left middle right on
+      tormentors, that is how we get the rotation').
+  - when: Unstoppable champion appears
+    say: '''Unstoppable up, anti-stun it'''
+    why: An Anti-Unstoppable kill is required to keep the room flowing ('fast clear on the unstopped').
+  - when: A lane is locked
+    say: '''Left side complete'' / ''right side complete'''
+    why: 'Confirms progress so the team knows when all three lanes are locked and they can advance (verbatim:
+      ''left side complete'', ''right side complete'').'
+  - when: Someone goes down mid-sequence
+    say: '''I''m dead, somebody do the initial dunk / get your dunks on'''
+    why: 'The dunk sequence cannot stall on a death; a teammate must cover the dunk to avoid a timer wipe
+      (verbatim: ''somebody initial dunk... get your dunks on'').'
   wipe_triggers:
   - Wrong shape in conductor → wipe.
   - Final Shape Looming expires.
@@ -185,29 +180,27 @@ encounter:
   - '2nd: Shape Courier (mechanic-light, intent-heavy).'
   - '3rd+: conductor player in any side-pair.'
   plain_language_steps:
-  - 1. This encounter is three sequential rooms with overlapping circuit wiring. Keep the same three pairs
-    across all rooms and assign a conductor player per side.
-  - 2. At the start of each room, read the wire rotation out loud. Room 1 is straight (left to left, mid
-    to mid, right to right). Room 2 swaps left and mid. Room 3 rotates everything (left to mid, mid to
-    right, right to left).
-  - 3. Pull the room. Each pair burns their side's Threshold Sentinel (Tormentor). Pre-assign the conductor
-    player on each side to land the KILLING BLOW so they gain Stolen Favor.
-  - 4. After the Sentinel dies, Honored Scorpius turrets activate on elevated platforms. Drop them quickly
-    with a sniper or heavy, since they fire constantly.
-  - '5. The conductor player with Stolen Favor reads their conductor''s required shape and calls it out:
-    TRIANGLE (Pyramidal), CIRCLE (Spherical), or CUBE (Hexahedral).'
-  - '6. Remember the FIXED shape spawn rule: Hexahedral (cube) only spawns on the RIGHT, Spherical (circle)
-    only in the MIDDLE, Pyramidal (triangle) only on the LEFT.'
-  - 7. If a conductor needs a shape that doesn't spawn on its side, call a ferry, for example 'Right needs
-    cube, grab a triangle from left for me.' Someone walks the shape across.
-  - 8. Plate-runners bounce charges between the plates connected by that room's wire rotation. Step on
-    at the shrinking aura, step off after the bounce.
-  - 9. Collect the correct shape LAST to override any wrong pickups, then arm and lock all three conductors.
-    Wrong shape in a conductor is an instant wipe.
-  - 10. After the lockdowns, an Unstoppable Incendior spawns. Stun and burn it with Anti-Unstoppable.
-  - 11. Dump remaining resonance into the central chest to extend the Final Shape Looming timer and open
-    the door to the next room.
-  - 12. Repeat for rooms 2 and 3 with their new wire rotations. Clearing room 3 completes the encounter.
+  - '1. Know what you''re doing: this is the 3rd encounter of Salvation''s Edge. There is no boss and
+    no DPS phase. You clear a symbol-and-conductor puzzle in three rooms in a row to win.'
+  - '2. Split into three pairs: one pair per lane (LEFT, MIDDLE, RIGHT). Keep the same pairs across all
+    three rooms so callouts stay consistent.'
+  - '3. Start the room. Each pair handles its lane: kill that side''s Tormentor, drop the Honored Scorpius
+    turrets fast (they never stop shooting), and clear Subjugators as they appear.'
+  - 4. Begin the lane sequence with an 'initial' dunk, counted down out loud ('initials in three, two,
+    one'). This starts the timer/charge for that lane.
+  - '5. Read what shape your conductor needs: TRIANGLE, CIRCLE, or SQUARE (the square is also called ''cube''
+    or ''box'').'
+  - 6. Collect the matching shape and dunk it into your conductor. There are extra shapes available (the
+    team counts about seven symbols with 'always an extra dunk'), so if you lose your shape you can grab
+    a replacement.
+  - '7. If your lane needs a shape that isn''t sitting in your lane, call a ferry: someone carries the
+    right shape over to you. Constantly call out where cubes/triangles/circles are and who is holding
+    what.'
+  - 8. Grab and dunk your correct shape LAST so a wrong pickup gets overridden. Wrong shape into a conductor
+    is an instant wipe.
+  - 9. When the Unstoppable champion shows up, stun and kill it fast with your Anti-Unstoppable option.
+  - 10. Once all three lanes are locked, the room is cleared and you advance. Repeat the same loop for
+    rooms 2 and 3. Finishing room 3 completes the encounter.
   defense:
     incoming_damage:
       adds:
@@ -232,6 +225,18 @@ encounter:
     recommended_dps:
     - Anti-Unstoppable special or heavy for the Incendior
     - Sniper or heavy to drop Honored Scorpius turrets quickly; burst special for the Tormentors
+    - 'VERIFY FOR THE NEW META (a 6/9 sandbox change is imminent as of this date): the loadouts below
+      are current-meta only.'
+    - Anti-Unstoppable option on at least a couple of players for the Unstoppable champion ('fast clear
+      on the unstopped'). The in-repo guide notes the champion is an Unstoppable Incendior (Solar) — bring
+      an Anti-Unstoppable special or heavy, or an Unstoppable Hand Cannon/Pulse mod.
+    - A sniper rifle or heavy to drop the Honored Scorpius turrets fast and to burst Tormentors/Subjugators.
+    - Machine guns called out as wanted by the team for sustained add-clear ('I really feel like we need
+      machine guns'); good for keeping Subjugators and ads down across lanes.
+    - Mobile/ad-clear loadouts for the shooters so they can reposition and ferry shapes between lanes
+      quickly; the courier (if used) wants a light, fast kit with no mechanic-specific weapon needed.
+    - 'Note: this encounter has no boss DPS phase, so loadouts are built for add-clear, champion stun,
+      turret deletion, and survivability, not for a damage rotation.'
   role_loadouts:
   - role_id: side-pair
     subclass: ''
@@ -271,3 +276,137 @@ encounter:
     note: Edge of Fate stat renames applied (Health/Class). Confirm Champion mod sources and current-meta
       weapons before a run; specific exotics left blank where unverifiable.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: Aztecross (source of truth) — per-encounter video, cross-referenced
+    note: 'Mechanics / steps / strategies / 6-player roles authored from Aztecross''s encounter video
+      + cross-referenced sources. REGULAR mode. Loadouts: verify for the 6/9 Monument of Triumph sandbox.'
+    date_checked: '2026-06-07'
+  mechanics:
+  - 'Repository is the 3rd encounter of the Salvation''s Edge raid. There is NO boss and NO damage phase.
+    The encounter is three sequential rooms; you complete it by clearing the symbol/conductor mechanic
+    in all three rooms in a row (Aztecross team: ''we mastered the first two rooms 100%... we just need
+    room three'').'
+  - 'Each room is split into three lanes: LEFT, MIDDLE, RIGHT. Each lane has a plate and a conductor that
+    must be ''locked'' by depositing the correct resonance shape into it (the core loop the team calls
+    ''initials'' and ''dunks'').'
+  - 'There are three resonance SHAPES in play: TRIANGLE (Pyramidal), CIRCLE (Spherical), and SQUARE/CUBE
+    (Hexahedral, the new shape introduced in this encounter). In comms the square is called interchangeably
+    ''cube'' or ''box''. A conductor must receive its required shape; wrong shape into a conductor is
+    a wipe.'
+  - A symbol/charge sequence runs on a timer (the raid's 'looming' resonance timer). The team performs
+    an 'initial' dunk to begin a lane's sequence ('initials in three two one'), then ferries and dunks
+    the matching shapes to lock each conductor before time runs out. Depositing/locking buys back time;
+    failing the sequence or letting the timer expire wipes.
+  - 'The Aztecross team notes there are MORE shapes available than conductors need each cycle: ''I think
+    there''s seven symbols... there''s always an extra Dunk.'' The extra pickup gives flexibility so shooters/runners
+    who lose a held shape can grab a replacement.'
+  - 'Enemies per room: a TORMENTOR spawns per side and is killed in a rotation the team tracks (''left
+    middle right on tormentors... that is how we get the rotation''). SUBJUGATORS spawn and are priority
+    kills (''killing left subjugator... another subjugator''). HONORED SCORPIUS TURRETS activate and must
+    be dropped fast because they fire constantly (''right side turrets... got to get this turret down'').'
+  - At least one UNSTOPPABLE champion appears in the flow ('fast clear on the unstopped'), so an Anti-Unstoppable
+    option should be slotted. The in-repo authored guide identifies it specifically as an Unstoppable
+    Incendior (Solar), which the transcript does not name verbatim.
+  - Shapes must be moved between lanes ('ferried') when the lane that needs a shape doesn't have one available
+    right there. The team constantly calls cube/triangle/circle locations and who is carrying what ('if
+    somebody sees a cube call it out', 'two cubes in the back, on top').
+  - The wiring/connection between plates and conductors and the exact shape requirements change as you
+    progress, so the team re-confirms the plan each room and tracks a rotation; the in-repo authored guide
+    describes specific per-room wire rotations (Room 1 straight; Room 2 left/mid swap; Room 3 all rotated)
+    — this granularity is from the authored file, not stated verbatim in the Aztecross video.
+  strategies:
+  - name: Three lane pairs (standard)
+    summary: Split 6 into three pairs, one pair per lane. Each pair has one shooter (Tormentor, turret,
+      Subjugators) and one conductor/dunker who reads and locks that lane's shape. Pairs ferry shapes
+      to each other on call. This is the structure the Aztecross fireteam used to clear it.
+    steps:
+    - Assign LEFT, MIDDLE, RIGHT pairs and keep them across all three rooms for consistent callouts.
+    - Start the room; each shooter kills their Tormentor, immediately drops the Scorpius turret, and clears
+      Subjugators in the called rotation.
+    - Each conductor does the 'initial' dunk on a countdown to start their lane's sequence.
+    - Each conductor reads its required shape (triangle/circle/square) and calls it out.
+    - Collect matching shapes; if a lane needs a shape it doesn't have, a teammate ferries it across.
+      Use the extra (~7th) shape as a spare if someone loses theirs.
+    - Dunk the correct shape LAST into each conductor to override any wrong pickup, locking all three
+      lanes.
+    - Stun and kill the Unstoppable champion with Anti-Unstoppable.
+    - Advance and repeat for rooms 2 and 3; clearing room 3 ends the encounter.
+    best_for: Most six-player teams; this is the cross-referenced default that actually cleared the encounter
+      on video.
+    source_support: 'Aztecross video (lane callouts: ''left middle right on tormentors'', ''right side
+      turrets'', ''initials in three two one'', cube/triangle/circle ferrying) cross-referenced with the
+      in-repo authored 3-repository.yaml three-pairs permutation.'
+  - name: Three pairs + dedicated shape courier
+    summary: Same three lane pairs, but one player is freed from owning a conductor/plate and instead
+      acts as a dedicated shape courier who walks shapes between lanes all game. Reduces dropped-shape
+      and wrong-shape mistakes.
+    steps:
+    - Set up three lanes but designate one player as the courier who never locks a conductor.
+    - The other five handle Tormentors, turrets, Subjugators, initial dunks, and conductor reads.
+    - As each conductor calls its shape, the courier ferries the correct triangle/circle/square to whichever
+      lane lacks it.
+    - Conductors still dunk their own correct shape last to override mistakes.
+    - Courier also grabs the spare (~7th) shape so there is always a replacement on hand.
+    - Kill the Unstoppable champion, lock all three lanes, advance, repeat.
+    best_for: Teams that keep failing because the right shape isn't where it's needed, or that struggle
+      tracking which lane needs what.
+    source_support: In-repo authored 3-repository.yaml 'Shape Courier' permutation; consistent with the
+      Aztecross team's repeated 'someone grab/ferry a cube/triangle for me' and 'if somebody sees a cube
+      call it out' comms, though the video did not run a single fixed courier.
+  role_breakdown:
+  - role: Left lane - shooter/add-clear
+    count: 1
+    does: 'Owns the LEFT lane add control: kills the left Tormentor, drops the left Honored Scorpius turret
+      immediately, and clears Subjugators in the rotation the team calls. Supports left''s conductor dunks
+      and helps ferry shapes when left needs one it doesn''t have. Carries an Anti-Unstoppable option
+      for the champion.'
+  - role: Left lane - conductor/dunker
+    count: 1
+    does: Owns the LEFT conductor. Performs the initial dunk on the left lane ('initials' countdown),
+      reads the required shape, and dunks the correct triangle/circle/square last to lock the conductor.
+      Calls out what left needs and requests a ferry if the shape isn't in-lane.
+  - role: Middle lane - shooter/add-clear
+    count: 1
+    does: 'Owns MIDDLE add control: middle Tormentor, middle Scorpius turret, and Subjugators (the transcript
+      shows middle is a hot spot for Subjugators). Pushes up to spawn the Tormentor quickly when needed
+      (''go all the way up middle to spawn the Tormentor fast'') and supports middle dunks. Anti-Unstoppable
+      slotted.'
+  - role: Middle lane - conductor/dunker
+    count: 1
+    does: Owns the MIDDLE conductor. Does the middle initial dunk, reads the required shape, and locks
+      the middle conductor with the correct shape last. Middle is central, so this player often relays
+      shape calls and helps the ferry by grabbing extra shapes seen 'in the back/on top'.
+  - role: Right lane - shooter/add-clear
+    count: 1
+    does: 'Owns the RIGHT lane add control: right Tormentor, right Scorpius turret (called out repeatedly
+      as a priority), and Subjugators. Helps complete the right side dunks and ferries shapes across when
+      right needs a non-local shape. Anti-Unstoppable slotted.'
+  - role: Right lane - conductor/dunker
+    count: 1
+    does: Owns the RIGHT conductor. Performs the right initial dunk, reads the required shape, and dunks
+      the correct shape last to lock right. Coordinates with left/middle so the final shapes go to the
+      right conductors without anyone holding the wrong one.
+  needs_clarification:
+  - 'Shape naming conflict: the base authored file labels the third shape ''Hexahedral / cube''; the challenge
+    file and the Aztecross comms call it ''square'' (and players verbally say ''cube'' or ''box'' for
+    the same thing). They appear to be the same shape, but the exact in-game name should be confirmed.'
+  - 'Fixed vs scattered spawn locations: the authored file states shapes spawn in FIXED lanes (cube=right,
+    circle=mid, triangle=left). The Aztecross team instead treats shapes as scattered (''they''ll spawn
+    different spots... they''re scattered enough where it''s like don''t worry about it... whatever our
+    final symbols are in our lane that''s the symbol we''re picking up''). The sources disagree on whether
+    spawn lanes are strictly fixed — confirm before relying on the fixed rule.'
+  - Per-room wire rotations (Room 1 straight, Room 2 left/mid swap, Room 3 all rotated) come ONLY from
+    the authored file. The Aztecross video confirms the plan changes per room and that they track a rotation,
+    but does not state these exact mappings verbatim — confirm the precise wiring per room.
+  - Stolen Favor on the Sentinel killing blow is described in the authored file but is not clearly referenced
+    in the Aztecross transcript; confirm whether Stolen Favor is a real mechanic in Repository's normal
+    version.
+  - 'Exact champion type: the transcript only says ''the unstopped'' (Unstoppable). The ''Incendior (Solar)''
+    specificity is from the authored file — verify the exact champion subtype/element for resist-mod choices.'
+  - Exact count and timing of Subjugators per room and the precise 'initial dunk' rules (how many initials,
+    whether each lane needs its own) are not fully spelled out in the sources — confirm the exact dunk
+    count and sequence.
+  - All loadout recommendations are current-meta and a 6/9 sandbox change is imminent — re-verify weapons,
+    champion mods, and exotics against the new sandbox before a run.
+  - Exotic armor and subclass specifics were left blank in the authored file (no verified data) and are
+    not given in the transcript — do not assume; verify against an up-to-date guide.
