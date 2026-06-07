@@ -212,12 +212,18 @@ encounter:
     - DPS phase is against Šimmumah (a Hive Wizard) after the third deposit. No forced damage type — match
       your strongest burst. Her shield drops from the mechanic, not from a matched-element break, so pick
       the highest-damage option.
+    - Arc
     burst_windows: 'One ~20-25s window per cycle: after the third orb deposit, stack mid under Well/Bubble
       and unload immediately before she re-shields.'
     recommended_dps:
     - 'Heavy burst: Whisper of the Worm, Sleeper Simulant, or a Linear Fusion Rifle from a Well of Radiance'
     - A damage-boost super or Bubble (Ward of Dawn + Weapons of Light) to amplify the short window
     - Witherhoard for pre-stacked chip before the window opens
+    - Queenbreaker
+    - Thunderlord
+    - Golden Gun (Celestial Nighthawk)
+    - Thundercrash
+    - Divinity
   role_loadouts:
   - role_id: orb_owner
     subclass: Any survivable build; Void Devour or Solar Restoration to survive Vorlog and the methane-pocket
@@ -249,3 +255,14 @@ encounter:
       current loadouts and stat priorities in-game. Specific exotic armor left blank where it could not
       be verified.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Beating Ghosts Ultimatum FAST! | Destiny 2
+    url: https://www.youtube.com/watch?v=n8t9CyX6TzI
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Striker Titan (Storm's Keep) with Cuirass of the Falling Star
+  - Support Warlock (Song of Flame) with Speaker Sight / Cenotaph Mask
+  - Hunter (Golden Gun) with Celestial Nighthawk
+  - No Hesitation
+  - Tanasha's Mastery

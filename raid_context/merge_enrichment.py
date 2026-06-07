@@ -14,7 +14,7 @@ import json, os, sys, glob, re, yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[1]
 DATE = "2026-06-07"
-MAX_FLAGS = 2
+MAX_FLAGS = int(os.environ.get("MAX_FLAGS", "2"))
 raw = json.load(open(OUT))
 results = raw.get("result", raw)
 

@@ -200,3 +200,17 @@ encounter:
       meta shifts each season. Verify current loadouts in-game before a run. Fields left blank where a
       specific exotic could not be verified.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Beating Ghosts Ultimatum FAST! | Destiny 2
+    url: https://www.youtube.com/watch?v=n8t9CyX6TzI
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Prismatic Titan (Consecration) with Stoicism (Spirit of Inmost Light / Spirit of Synthesis / Spirit
+    of Assassin)
+  - Prismatic Warlock (Lightning Surge) with Solipsism (Spirit of Inmost Light) or Osmomancy Gloves
+  - Prismatic Hunter (Tether) with Relativism (Spirit of Inmost Light / Spirit of Star-Eater) or Orpheus
+    Rig
+  - Tanasha's Mastery
+  - No Hesitation
+  - The Slammer (Eager's Edge sword)

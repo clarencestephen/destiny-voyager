@@ -240,12 +240,18 @@ encounter:
     - DPS phase is against Ecthar after his shield breaks. No forced element — match your strongest burst
       weapon. Ecthar's own shield is Void, so a Void-shield-matching trace/special can speed the break,
       but the actual shield break comes from standing in the Piercing Light well, not from a matched surge.
+    - Solar
     burst_windows: 'One ~15-20s window per cycle: kill the Wellkeeper, stack in the Piercing Light well
       to drop the shield, then unload before Ecthar re-shields.'
     recommended_dps:
     - 'Heavy burst: Linear Fusion Rifle, Sleeper Simulant, or Whisper of the Worm (from a Well)'
     - Witherhoard for chip and sustain pressure between windows
     - Well of Radiance or a damage-boost super to maximize the short window
+    - Lord of Wolves
+    - Thunderlord
+    - Winterbite
+    - Thundercrash
+    - Tractor Cannon
   role_loadouts:
   - role_id: deepsight_caller
     subclass: Any survivable build (Void Devour or Solar Restoration); add-clear focused for the dive
@@ -292,3 +298,16 @@ encounter:
       current burst options and stat priorities in-game. Specific exotic armor left blank where it could
       not be verified in the current meta.
     date_checked: '2026-06-07'
+  - tier: 1
+    name: The Best Builds for Beating Ghosts Ultimatum FAST! | Destiny 2
+    url: https://www.youtube.com/watch?v=n8t9CyX6TzI
+    note: current loadout/build guide (Pass 2/3, firecrawl)
+    date_checked: '2026-06-07'
+  meta_loadout:
+  - Striker Titan (Storm's Keep) with Cuirass of the Falling Star
+  - Support Warlock (Song of Flame) with Speaker Sight
+  - Prismatic Hunter (Tether) with Relativism (Spirit of Inmost Light / Spirit of Star-Eater) or Orpheus
+    Rig
+  - Corrective Measure
+  - Multimach CC
+  - No Hesitation
