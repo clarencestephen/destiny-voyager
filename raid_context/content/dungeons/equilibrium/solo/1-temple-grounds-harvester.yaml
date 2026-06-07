@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/equilibrium/1-temple-grounds-harvester.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: temple-grounds-harvester
+  name: Temple Grounds → Harvester
+  abstract: 'Opening clear + first proper encounter. Clear Temple Grounds Cabal
+
+    → boarded a Harvester ship → first Gathering Shadow encounter:
+
+    bait Nameless Apprentices onto Arc arrays, let them explode to
+
+    break red barriers, build Shadow Novice, defeat Behemoth Walkers,
+
+    board the ship for next area.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Use sparrow for well-farming speed.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Apprentice bait then sprint to array.
+      loadout:
+        subclass: ''
+        weapons: 'Self-sufficient kit: primary for add-clear and Apprentice baiting, special for Behemoth
+          Walkers, and an Eager Edge sword for traversal and quick array repositioning.'
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Prioritize survivability and ability regen; surges element-agnostic.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

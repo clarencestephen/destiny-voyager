@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/spire-of-the-watcher/3-silence-the-siren.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: silence-the-siren
+  name: Silence the Siren (Akelous, the Siren's Current)
+  abstract: 'First boss. 4 numbered platforms extend from a central structure;
+
+    each has an Arc circuit ending at a fuel rod. Complete all 4 to
+
+    expose Akelous''s eyes → shoot eyes (Trace Rifle ideal) → core
+
+    exposed → DPS while it moves backward.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 4 circuits alone, eyes alone, DPS alone. 2-3 phases expected.
+    roles:
+    - id: solo
+      count: 1
+      does: Trace Rifle for eyes; rocket/sniper for core.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
+          handle circuits, eyes, and DPS alone over 2-3 phases.
+        weapons: Trace Rifle for eyes; a Rocket or Sniper for the core. Precision Primary for the circuit
+          nodes. Anti-Barrier / Anti-Unstoppable on Master.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge mods to your core-DPS element; prioritize survivability and (on Master)
+          Champion mods.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

@@ -1,0 +1,45 @@
+# raid_context/content/raids/vault-of-glass/2-confluxes.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: confluxes
+  name: Templar's Well — Confluxes (1st loot)
+  abstract: 'Defend 3 Confluxes from Vex sacrifices. 4 Vex sacrifices to a Conflux
+
+    = wipe. Phase 1 = 1 Conflux (center). Phase 2 = +2 Confluxes (L+R).
+
+    Final phase = all 3 active. Then Oracle wave (5 waves, kill IN ORDER).
+
+    '
+  master_challenge:
+    name: Wait for It…
+    requirement: 'Sacrificial Wyverns cannot die before they begin to sacrifice
+
+      themselves at the confluxes. Forces add-clear to LET the
+
+      Wyverns reach the plates before pile-on damage. Pairs with
+
+      Oracles'' "The Only Oracle for You" (each Oracle destroyed
+
+      only once across the encounter).
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Wait for It…'' constraint on top of the normal encounter: Sacrificial Wyverns
+  cannot die before they begin to sacrifice
+
+  themselves at the confluxes. Forces add-clear to LET the
+
+  Wyverns reach the plates before pile-on damage. Pairs with
+
+  Oracles'' "The Only Oracle for You" (each Oracle destroyed
+
+  only once across the encounter). On Master, every encounter''s challenge is active simultaneously, plus
+  Champions, surges/threat, and Adept loot.'

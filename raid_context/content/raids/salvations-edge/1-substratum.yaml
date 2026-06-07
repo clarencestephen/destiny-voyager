@@ -260,22 +260,6 @@ encounter:
     - Nullify (pulse rifle, Solar)
     - Non-Denouement (combat bow, Arc)
     - Imminence (SMG, Strand)
-  master_challenge:
-    name: Scenic Route
-    requirement: 'Only kill the Overload Minotaur on the LONGER of the two paths
-
-      (the one with the Overload spawn in the 4th room, not the 3rd).
-
-      Read which path is yours by checking the majors in the first
-
-      rooms: Hobgoblins = your path will kill, Attendants = ignore.
-
-      Master adds no Champion spawns beyond the existing path
-
-      Minotaurs.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

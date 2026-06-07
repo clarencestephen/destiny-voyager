@@ -1,0 +1,40 @@
+# raid_context/content/dungeons/pit-of-heresy/1-necropolis.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: necropolis
+  name: Necropolis (Disciples of the Broken Blade)
+  abstract: 'Cliffside arena with multiple Hive towers. Find the Accursed
+
+    Swordbearer in the first tower, read the 3 displayed runes, then
+
+    visit the matching 3 towers and kill the Disciple inside each
+
+    with the correct sword input.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Do everything sequentially. Take the picture, scout, sword, kill.
+    roles:
+    - id: solo
+      count: 1
+      does: Self-paced. Bring strong primary for ambient adds.
+      loadout:
+        subclass: Any; high survivability subclass
+        weapons: Strong primary for ambient adds; the relic Hive Cleaver for Disciples
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge requirement
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

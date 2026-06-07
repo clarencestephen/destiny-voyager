@@ -1,0 +1,10 @@
+# dungeons/spire-of-the-watcher/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

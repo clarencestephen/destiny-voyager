@@ -1,7 +1,6 @@
 # raid_context/content/raids/vow-of-the-disciple/4-exhibition.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vow-of-the-disciple
   name: Vow of the Disciple
@@ -29,17 +28,17 @@ encounter:
   setup: "WHAT YOU SEE:\n- 4 rooms, each progressively harder.\n- Resonant Shard in initial small room.\n\
     - Glyphkeepers spawn pairs (one Chieftain, one Phalanx).\n- Shielded Disciple's Hourglass Knights\
     \ (require Shard laser to break shield).\n- Aegis relic in Room 2 (VoG-style sword shield).\n- Taken\
-    \ Essence in Room 3 (blight cleanse).\n- 4 of 6 wall symbols around each locked door.\n\n\
-    PLATFORM MECHANICS:\n- Pick up Resonant Shard = encounter starts. Terminal Resonance timer = wipe\
-    \ at 0.\n- Per room:\n  • Kill 2 Glyphkeepers (left = Phalanx, right = Chieftain).\n  • Phalanx symbols\
-    \ (LEFT column) visible only to RELIC HOLDER.\n  • Chieftain symbols (RIGHT column) visible only to\
-    \ NON-RELIC HOLDERS.\n  • Identify SHARED symbol → shoot it on the door = door opens.\n- Disciple's\
-    \ Hourglass: Shard-laser to drop shield → kill = reset Terminal Resonance.\n- Room 2 onward: deposit\
-    \ Shard at deposit point, pickup Aegis + Shard (2 relic holders).\n  • Aegis cleanse on the team's\
-    \ Pervading Darkness.\n  • Curbed Resonance debuff on Shard-depositor (30s no-relic-pickup).\n- Room\
-    \ 3: add Taken Essence. Cleanse blights with grenade button.\n- Room 4: large abyss platforming +\
-    \ same mechanics. Drop relic into abyss = back to start.\n- All 3 relics deposited in Room 4 = encounter\
-    \ ends.\n\nSTART STATE: rally banner. Pick up Shard to start.\n"
+    \ Essence in Room 3 (blight cleanse).\n- 4 of 6 wall symbols around each locked door.\n\nPLATFORM\
+    \ MECHANICS:\n- Pick up Resonant Shard = encounter starts. Terminal Resonance timer = wipe at 0.\n\
+    - Per room:\n  • Kill 2 Glyphkeepers (left = Phalanx, right = Chieftain).\n  • Phalanx symbols (LEFT\
+    \ column) visible only to RELIC HOLDER.\n  • Chieftain symbols (RIGHT column) visible only to NON-RELIC\
+    \ HOLDERS.\n  • Identify SHARED symbol → shoot it on the door = door opens.\n- Disciple's Hourglass:\
+    \ Shard-laser to drop shield → kill = reset Terminal Resonance.\n- Room 2 onward: deposit Shard at\
+    \ deposit point, pickup Aegis + Shard (2 relic holders).\n  • Aegis cleanse on the team's Pervading\
+    \ Darkness.\n  • Curbed Resonance debuff on Shard-depositor (30s no-relic-pickup).\n- Room 3: add\
+    \ Taken Essence. Cleanse blights with grenade button.\n- Room 4: large abyss platforming + same mechanics.\
+    \ Drop relic into abyss = back to start.\n- All 3 relics deposited in Room 4 = encounter ends.\n\n\
+    START STATE: rally banner. Pick up Shard to start.\n"
   callouts:
   - when: Symbols read
     from: phalanx side
@@ -152,20 +151,6 @@ encounter:
     - Submission (SMG, Kinetic)
     - Deliverance (fusion rifle, Stasis)
     - Resonant Fury armor — Chest + Legs (encounter-specific slots)
-  master_challenge:
-    name: Defenses Down
-    requirement: 'Each player can kill no more than one Taken Knight throughout
-
-      the encounter. 7 knights total (one starting room + 2 per
-
-      chamber); skip the second knight in room 2 to land 6 unique
-
-      kills across 6 players. Requires deliberate relic-hand-off
-
-      choreography.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

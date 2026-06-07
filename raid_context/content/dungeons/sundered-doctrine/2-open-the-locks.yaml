@@ -130,24 +130,6 @@ encounter:
         - Health
         surges_mods: Surge mods matching your heavy's element (x3 if possible). Holds DPS only; does not
           deposit knowledge.
-  - name: Solo
-    learner_friendly: false
-    summary: All roles. Take Stop first. Expect 2-3 cycles.
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Witherhoard the Lockset during cycles.
-      loadout:
-        subclass: A self-sustaining subclass that can both clear adds and survive long cycles (healing
-          Solar or Void invisibility)
-        weapons: Witherhoard to chip the Lockset during cycles, plus an add-clear primary and a burst
-          heavy for the Kill phase
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: Match surge to your burst heavy. Survivability and recovery mods; take Stop first
-          and expect 2-3 cycles.
   cheese: []
   common_mistakes:
   - Depositing knowledge on the WRONG (unlit) wheel — wastes shard.
@@ -257,7 +239,9 @@ encounter:
     weapons: Witherhoard to chip the Lockset during cycles, plus an add-clear primary and a burst heavy
       for the Kill phase
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Match surge to your burst heavy. Survivability and recovery mods; take Stop first and
       expect 2-3 cycles.
   sources:

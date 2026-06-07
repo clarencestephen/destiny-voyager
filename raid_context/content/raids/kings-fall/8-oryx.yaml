@@ -1,7 +1,6 @@
 # raid_context/content/raids/kings-fall/8-oryx.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: kings-fall
   name: King's Fall
@@ -145,9 +144,6 @@ encounter:
 
       '
     best_for: Endgame teams + Touch of Malice farmers.
-  - name: 'Master: Hands Off'
-    learner_friendly: false
-    summary: Each Light-Eater Ogre/Knight can only be killed by a given player ONCE. Rotate killers.
   cheese: []
   common_mistakes:
   - Letting Light-Eater Knight eat Corrupted Light = detonation lost.
@@ -166,20 +162,6 @@ encounter:
     - 'Any Legendary weapon from previous encounters: Doom of Chelchis, Smite of Merain, Qullim''s Terminus,
       Defiance of Yasmin, Midha''s Reckoning, Zaouli''s Bane.'
     - King's Fall armor (random slot).
-  master_challenge:
-    name: Hands Off
-    requirement: 'Players must not kill the same Ogre or Light-Eater Knight
-
-      throughout the encounter. With 4 Ogres + 6 Light-Eater
-
-      Knights across 3 stand phases, the 6 players need to track
-
-      their own kills so no one duplicates. Add-clear assignments
-
-      rotate phase-to-phase.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

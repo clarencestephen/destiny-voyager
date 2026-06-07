@@ -1,7 +1,6 @@
 # raid_context/content/raids/vow-of-the-disciple/5-rhulk.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vow-of-the-disciple
   name: Vow of the Disciple
@@ -156,9 +155,6 @@ encounter:
   - name: 'Speed: double dunks per cycle'
     learner_friendly: false
     summary: 2 Dunkers + 2 Swappers run in parallel. Time dunks to not scramble pillars.
-  - name: Master (Chaff + Shielded)
-    learner_friendly: false
-    summary: No radar, Champions for Glyphkeepers, Solar/Void Wraiths.
   cheese: []
   common_mistakes:
   - Reader misreading pillar = Dunker dies.
@@ -177,18 +173,6 @@ encounter:
     - Lubrae's Ruin (glaive, Solar)
     - Forbearance (grenade launcher, Arc)
     - Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots).
-  master_challenge:
-    name: Looping Catalyst
-    requirement: 'Do not lose Leeching Force before the damage phase. Split:
-
-      one team focused on add-clear, the other on duplicating/
-
-      maintaining the buff chain until the barrier is fully covered
-
-      and the DPS window opens.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

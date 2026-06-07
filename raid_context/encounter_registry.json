@@ -31,7 +31,9 @@
         "name": "Crota, Son of Oryx (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/crotas-end/"
   },
   "deep-stone-crypt": {
     "slug": "deep-stone-crypt",
@@ -71,7 +73,9 @@
         "name": "Taniks, the Abomination (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/deep-stone-crypt/"
   },
   "desert-perpetual": {
     "slug": "desert-perpetual",
@@ -111,7 +115,9 @@
         "name": "Koregos, the Worldline (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/desert-perpetual/"
   },
   "garden-of-salvation": {
     "slug": "garden-of-salvation",
@@ -145,7 +151,9 @@
         "name": "Conquer The Sanctified Mind (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/garden-of-salvation/"
   },
   "kings-fall": {
     "slug": "kings-fall",
@@ -203,7 +211,9 @@
         "name": "Oryx, the Taken King (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/kings-fall/"
   },
   "last-wish": {
     "slug": "last-wish",
@@ -249,7 +259,9 @@
         "name": "The Heart of Riven (Fate's Chosen escape)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/last-wish/"
   },
   "root-of-nightmares": {
     "slug": "root-of-nightmares",
@@ -283,7 +295,9 @@
         "name": "Nezarec, Final God of Pain",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/root-of-nightmares/"
   },
   "salvations-edge": {
     "slug": "salvations-edge",
@@ -323,7 +337,9 @@
         "name": "The Witness",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/salvations-edge/"
   },
   "vault-of-glass": {
     "slug": "vault-of-glass",
@@ -375,7 +391,9 @@
         "name": "Atheon, Time's Conflux (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/vault-of-glass/"
   },
   "vow-of-the-disciple": {
     "slug": "vow-of-the-disciple",
@@ -415,7 +433,9 @@
         "name": "Rhulk, Disciple of the Witness (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/raids/vow-of-the-disciple/"
   },
   "duality": {
     "slug": "duality",
@@ -449,7 +469,9 @@
         "name": "Nightmare of Caiatl (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/duality/"
   },
   "equilibrium": {
     "slug": "equilibrium",
@@ -477,7 +499,9 @@
         "name": "Dredgen Sere (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/equilibrium/"
   },
   "ghosts-of-the-deep": {
     "slug": "ghosts-of-the-deep",
@@ -505,7 +529,9 @@
         "name": "\u0160immumah ur-Nokru, Lucent Necromancer",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/ghosts-of-the-deep/"
   },
   "grasp-of-avarice": {
     "slug": "grasp-of-avarice",
@@ -545,7 +571,9 @@
         "name": "Wilhelm's Hoard (Captain Avarokk, the Covetous)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/grasp-of-avarice/"
   },
   "pit-of-heresy": {
     "slug": "pit-of-heresy",
@@ -585,7 +613,9 @@
         "name": "Cradle of Damnation (Zulmak, Instrument of Torment)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/pit-of-heresy/"
   },
   "prophecy": {
     "slug": "prophecy",
@@ -625,7 +655,9 @@
         "name": "Kell Echo (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/prophecy/"
   },
   "shattered-throne": {
     "slug": "shattered-throne",
@@ -659,7 +691,9 @@
         "name": "D\u00fbl Incaru, the Eternal Return",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/shattered-throne/"
   },
   "spire-of-the-watcher": {
     "slug": "spire-of-the-watcher",
@@ -699,7 +733,9 @@
         "name": "Prompt Critical (Persys, Primordial Ruin)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/spire-of-the-watcher/"
   },
   "sundered-doctrine": {
     "slug": "sundered-doctrine",
@@ -727,7 +763,9 @@
         "name": "Kerrev, the Erased (final boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/sundered-doctrine/"
   },
   "warlords-ruin": {
     "slug": "warlords-ruin",
@@ -761,7 +799,9 @@
         "name": "Quell the Corruption (Hefnd's Vengeance, Blighted Chimaera)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/warlords-ruin/"
   },
   "vespers-host": {
     "slug": "vespers-host",
@@ -795,7 +835,9 @@
         "name": "Corrupted Puppeteer (Final Boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "base",
+    "content_path": "raid_context/content/dungeons/vespers-host/"
   },
   "desert-perpetual-epic": {
     "slug": "desert-perpetual-epic",
@@ -829,6 +871,9 @@
         "name": "Koregos (Final Boss)",
         "ingame_name": ""
       }
-    ]
+    ],
+    "category": "epic",
+    "variant_of": "desert-perpetual",
+    "content_path": "raid_context/content/raids/desert-perpetual/epic/"
   }
 }

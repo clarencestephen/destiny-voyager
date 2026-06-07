@@ -1,0 +1,42 @@
+# raid_context/content/dungeons/spire-of-the-watcher/2-ascend-the-spire.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: ascend-the-spire
+  name: Ascend the Spire (3 levels of circuits)
+  abstract: 'First proper loot encounter. 3 levels, each with Arc circuits +
+
+    Goblins + Hydras + Conduit Minotaurs. Complete circuits per level
+
+    to power the next grav lift. Levels 2-3 introduce Arc gates (avoid
+
+    LoS damage) and parallel circuits.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Self-pace per floor.
+    roles:
+    - id: solo
+      count: 1
+      does: Both roles in sequence.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for healing or Void for invis/overshield)
+          to handle both circuits and adds alone.
+        weapons: Precision Primary for nodes + a reliable add-clear Special. On Master, bring Anti-Barrier
+          and Anti-Unstoppable options.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No DPS surge needed; prioritize survivability and (on Master) Champion mods.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

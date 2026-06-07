@@ -111,20 +111,6 @@ encounter:
     - Praedyth's Revenge (sniper rifle, Kinetic)
     - Corrective Measure (machine gun, Void)
     - Vault of Glass armor (random slot)
-  master_challenge:
-    name: Wait for It…
-    requirement: 'Sacrificial Wyverns cannot die before they begin to sacrifice
-
-      themselves at the confluxes. Forces add-clear to LET the
-
-      Wyverns reach the plates before pile-on damage. Pairs with
-
-      Oracles'' "The Only Oracle for You" (each Oracle destroyed
-
-      only once across the encounter).
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

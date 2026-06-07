@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/equilibrium/3-dredgen-sere.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: equilibrium
   name: Equilibrium
@@ -151,29 +150,6 @@ encounter:
         - Weapons
         - Super
         surges_mods: Burst-DPS surge matched to your heavy; Arc resist for the lightning attack.
-  - name: Solo
-    learner_friendly: false
-    summary: 'All 5 Compels yourself. All 5 orbs yourself. Lure of the Dark
-
-      timer feels tight. Bring strong sustain + Heirloom if obtained.
-
-      Expect 4-6 phases.
-
-      '
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Don't engage Sere outside DPS windows.
-      loadout:
-        subclass: ''
-        weapons: 'Self-sufficient, sustain-heavy kit: primary for Apprentice clear, heavy burst for DPS,
-          and strong self-sustain. Bring the ''Heirloom'' Exotic Combat Bow if obtained to make the tight
-          Lure-of-the-Dark cycle manageable; expect 4-6 phases.'
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Prioritize survivability and Arc resist; reserve burst surge for the short DPS window.
   cheese: []
   common_mistakes:
   - Wasting Renegade ability on adds during setup — save for Master + Compel.
@@ -270,8 +246,8 @@ encounter:
   - role_id: dps_anchor
     subclass: ''
     weapons: Maximum burst loadout for the short window — heavy Linear Fusion / Rocket stack, plus the
-      'Heirloom' Exotic Combat Bow for stagger if obtained. Sync your Super (Thundercrash, Golden Gun, or
-      Needlestorm) to the hand-stun.
+      'Heirloom' Exotic Combat Bow for stagger if obtained. Sync your Super (Thundercrash, Golden Gun,
+      or Needlestorm) to the hand-stun.
     exotic_armor: ''
     armor_stats: *id002
     surges_mods: Burst-DPS surge matched to your heavy; Arc resist for the lightning attack.
@@ -281,7 +257,9 @@ encounter:
       strong self-sustain. Bring the ''Heirloom'' Exotic Combat Bow if obtained to make the tight Lure-of-the-Dark
       cycle manageable; expect 4-6 phases.'
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Prioritize survivability and Arc resist; reserve burst surge for the short DPS window.
   sources:
   - tier: 1

@@ -130,22 +130,6 @@ encounter:
         exotic_armor: ''
         armor_stats: *id001
         surges_mods: Arc weapon surge optional for the DPS window; no surge is mandatory
-  - name: Solo
-    learner_friendly: false
-    summary: All 3 Disciples + DPS yourself. Bring sword for DPS (Lament / Falling Guillotine).
-    roles:
-    - id: solo
-      count: 1
-      does: Methodical. Don't rush input order. Witherhoard the Disciples for chip.
-      loadout:
-        subclass: Any; survivable kit; Well of Radiance is popular for the DPS window
-        weapons: Relic Hive Cleaver for Disciples; a burst DPS sword (Lament or Falling Guillotine) for
-          the aura; Witherhoard for chip on the Disciples
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Arc weapon surge optional; no surge is mandatory
   cheese: []
   common_mistakes:
   - Standing in aura when Zulmak kneels = instant death.
@@ -246,7 +230,9 @@ encounter:
     weapons: Relic Hive Cleaver for Disciples; a burst DPS sword (Lament or Falling Guillotine) for the
       aura; Witherhoard for chip on the Disciples
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Arc weapon surge optional; no surge is mandatory
   sources:
   - tier: 1

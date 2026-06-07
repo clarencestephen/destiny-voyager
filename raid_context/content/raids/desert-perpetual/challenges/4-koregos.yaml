@@ -1,0 +1,34 @@
+# raid_context/content/raids/desert-perpetual/4-koregos.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: koregos
+  name: Koregos, the Worldline (final boss)
+  abstract: 'Final boss. Mega Hydra. 6-min Digitization wipe timer. Constant
+
+    stunners take down Koregos''s 4 arms (Arc beam interrupt). 3-team
+
+    Temporality cycle: Absolute sees Chronon color in Hoop, Constant
+
+    sees Mine colors, Cyclical sees TRUE mines (3 of 6 are real). Dunk
+
+    6 Chronons in Hoop → diamond → Koregos exposes head. 4-arm cube
+
+    puzzle (Constant+Cyclical see, Absolute interacts). Head DPS with
+
+    Arc beams + final stand with shrinking time + Decoherence wipe at
+
+    death.
+
+    '
+  permutations:
+  - name: 'Challenge: Every player dunks'
+    learner_friendly: false
+    summary: 3 teams of 2 cycle through Cyclical role so all 6 dunk a Chronon.

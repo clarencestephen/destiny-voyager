@@ -1,7 +1,6 @@
 # raid_context/content/raids/root-of-nightmares/2-scission.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: root-of-nightmares
   name: Root of Nightmares
@@ -197,21 +196,6 @@ encounter:
         exotic_armor: ''
         armor_stats: *id001
         surges_mods: Anti-Barrier mandatory; Concussive Dampener optional
-  - name: Underman (4-Person Variant)
-    summary: 'Doable with 2-4 players. With 4: one Light + one Dark runner per side, each also doing add-clear.'
-    best_for: Underman challenge runs, low-roster nights.
-    roles:
-    - id: hybrid-runner
-      count: 4
-      does: Build chain + clear ads between buff refreshes.
-      loadout:
-        subclass: Any subclass balancing movement and ad-clear (4-person underman use)
-        weapons: Seed weapon plus area-damage add-clear primary; Anti-Barrier source carried
-        exotic_armor: ''
-        armor_stats: &id006
-        - Class
-        - Health
-        surges_mods: No DPS surge; Anti-Barrier mandatory
   cheese:
   - title: Launcher pre-positioning
     detail: 'Sprint onto the launcher BEFORE the switch is shootable. The
@@ -261,18 +245,6 @@ encounter:
     - Koraxis's Distress (heavy grenade launcher, Strand)
     - Acasia's Dejection (trace rifle, Solar)
     - Nessa's Oblation (shotgun, Void)
-  master_challenge:
-    name: Crossfire
-    requirement: 'Players can only shoot the launcher-activation crystals on the
-
-      OPPOSITE side of the chasm from where they''re standing. Same-
-
-      side shots fail the challenge. Forces deliberate light/dark
-
-      side coordination.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''
@@ -373,7 +345,9 @@ encounter:
     subclass: Any subclass balancing movement and ad-clear (4-person underman use)
     weapons: Seed weapon plus area-damage add-clear primary; Anti-Barrier source carried
     exotic_armor: ''
-    armor_stats: *id006
+    armor_stats:
+    - Class
+    - Health
     surges_mods: No DPS surge; Anti-Barrier mandatory
   sources:
   - tier: 1

@@ -208,9 +208,6 @@ encounter:
         - Weapons
         surges_mods: Match weapon surge mods to your heavy element; Super (Intellect) and Weapons (Mobility)
           for repeated burst and the race-back movement
-  - name: 'Master: Each player different eye'
-    learner_friendly: false
-    summary: No player can shoot the same eye more than once.
   cheese:
   - title: Wall-hug method
     detail: 'The standard. See PLATFORM MECHANICS (cheese) above. Has
@@ -238,18 +235,6 @@ encounter:
     - Any Legendary weapon from the Last Wish pool (Chattering Bone, The Supremacy, Transfiguration, Apex
       Predator, Age-Old Bond, Nation of Beasts, Techeun Force, Tyranny of Heaven).
     - Any Great Hunt armor piece.
-  master_challenge:
-    name: Strength of Memory
-    requirement: 'Each fireteam must NEVER shoot the same Riven eye twice. With
-
-      6 eyes per phase and 6 players, this works out to one eye per
-
-      player per phase — call-outs lock who has which eye before
-
-      DPS opens. Repeated eye = fail.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

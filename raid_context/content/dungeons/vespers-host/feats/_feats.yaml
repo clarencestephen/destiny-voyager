@@ -1,0 +1,10 @@
+# dungeons/vespers-host/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: vespers-host
+  name: Vesper's Host
+  activity_type: dungeon
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

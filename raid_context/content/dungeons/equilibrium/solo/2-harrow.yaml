@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/equilibrium/2-harrow.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: harrow
+  name: Harrow, Dredgen-Apprentice
+  abstract: 'Mid-boss. U-shaped outer rooms around an insta-kill center. Build
+
+    to Shadow Apprentice (1 tier higher than encounter 1). Activate
+
+    Taken panels in each room. Center phase: shoot Arc fuses to open
+
+    holes → bait Harrow into holes to strip shield (1/3 per hole) →
+
+    Renegade-melee trick speeds shield breaks → DPS to Final Stand.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Patient outer-room rotation.
+    roles:
+    - id: solo
+      count: 1
+      does: Slow, methodical. Use sustain.
+      loadout:
+        subclass: ''
+        weapons: 'Self-reliant kit: primary for adds, burst special/heavy for shield-down DPS, and an
+          Eager Edge sword for safe, methodical outer-room rotation. Anti-Champion mods if running Master.'
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Prioritize sustain and Arc resist; reserve burst surge for the short DPS window.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

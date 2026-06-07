@@ -1,0 +1,44 @@
+# raid_context/content/dungeons/sundered-doctrine/1-solve-the-riddle.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: solve-the-riddle
+  name: Solve the Riddle
+  abstract: 'Tutorial puzzle. A central wheel shows 3 symbols (then later 2, then
+
+    1). To match: kill a Truthspeaker to reveal the missing symbol. Find
+
+    a side wheel with that symbol → route a light beam to it through
+
+    lenses. Get a lens from killing a Lens Bearer. Wrong routing breaks
+
+    lenses + spawns a Tormentor.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All roles sequentially. Slower but doable.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Bring add-clear primary.
+      loadout:
+        subclass: A self-sufficient survivable subclass (Void invisibility or a healing/Solar build) to
+          handle all tasks sequentially
+        weapons: Add-clear primary, long-range option for Truthspeakers/Lens Bearers, and a heavy to delete
+          any punishment Tormentor
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge needed. Survivability and ability-regen mods; patience over speed.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

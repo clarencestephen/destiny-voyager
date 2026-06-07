@@ -1,7 +1,6 @@
 # raid_context/content/raids/root-of-nightmares/3-macrocosm.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: root-of-nightmares
   name: Root of Nightmares
@@ -272,18 +271,6 @@ encounter:
     - Rufus's Fury (auto rifle, Strand)
     - Acasia's Dejection (trace rifle, Solar)
     - Koraxis's Distress (heavy grenade launcher, Strand)
-  master_challenge:
-    name: Cosmic Equilibrium
-    requirement: 'Every Dark-aura planet must end up on the LEFT side, every
-
-      Light-aura planet on the RIGHT (or whatever side convention
-
-      the team locked at pull). No mixed-polarity sides — pure
-
-      separation by the end of the encounter.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

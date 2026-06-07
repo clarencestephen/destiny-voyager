@@ -1,0 +1,30 @@
+# raid_context/content/raids/desert-perpetual/2-agraios.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: agraios
+  name: Agraios, Inherent
+  abstract: 'Vex Hobgoblin boss with 3 proxies (Made Constant/Cyclical/Absolute).
+
+    5 rings to charge with Cobalt Chronons (from Time''s Burden Minotaurs).
+
+    3 plates grant Temporality. Sniping proxy: matching-Temporality
+
+    player runs to proxy platform, interacts with Vex device → builds
+
+    Alignment Charge → ricochet detainment bubble to kill proxy →
+
+    Agraios exposed → DPS.
+
+    '
+  permutations:
+  - name: 'Challenge: All-Chronons collected'
+    learner_friendly: false
+    summary: No player picks Chronon until ALL have. Slow + coordinated.

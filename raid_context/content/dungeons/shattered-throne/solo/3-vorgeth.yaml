@@ -1,0 +1,40 @@
+# raid_context/content/dungeons/shattered-throne/3-vorgeth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: shattered-throne
+  name: The Shattered Throne
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: vorgeth
+  name: Vorgeth, the Boundless Hunger
+  abstract: 'Taken Ogre boss. Kill 4 Keeper of Petitions Wizards → grab their
+
+    orbs → deposit at central pillars. 4th orb = Petitioner''s Burden
+
+    (death timer). Deposit before timer ends → DPS window opens.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Wizards + orbs yourself. Take 2-3 cycles.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Use sustain (Devour, Restoration).
+      loadout:
+        subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple cycles alone
+        weapons: Add-clear primary plus a high-damage heavy (Sword, Linear Fusion, or rocket) for several
+          DPS phases
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge mods to your heavy's element; run survivability and ammo-finder mods
+          for the longer solo fight
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

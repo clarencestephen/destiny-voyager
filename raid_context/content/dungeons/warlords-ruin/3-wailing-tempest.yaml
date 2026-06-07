@@ -159,29 +159,6 @@ encounter:
         armor_stats: *id001
         surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist
           for Broken Knights
-  - name: Solo
-    learner_friendly: false
-    summary: 'Slow + methodical. Cleanse one totem at a time, return to back-wall
-
-      torch between each. Light 1-2 pillars per Imminent Wish window.
-
-      Expect 3-4 cycles to DPS.
-
-      '
-    best_for: Soloists.
-    roles:
-    - id: cleanser
-      count: 1
-      does: All mechanics yourself. Bring sustained DPS (Whisper, Sleeper).
-      notes:
-      - Witherhoard for damage-over-time during cold-recovery sprints.
-      loadout:
-        subclass: ''
-        weapons: Add-clearing Primary/Special for Broken Knights + burst Heavy for the pillar-down window
-        exotic_armor: ''
-        armor_stats: *id001
-        surges_mods: Surge mods matched to your Heavy element; Void resist for the Locus, Solar resist
-          for Broken Knights
   cheese: []
   common_mistakes:
   - Killing Broken Knights too fast — totem only drops on their swing OR on death. Wait for the swing.

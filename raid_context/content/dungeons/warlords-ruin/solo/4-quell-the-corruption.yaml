@@ -1,0 +1,48 @@
+# raid_context/content/dungeons/warlords-ruin/4-quell-the-corruption.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 4
+  slug: quell-the-corruption
+  name: Quell the Corruption (Hefnd's Vengeance, Blighted Chimaera)
+  abstract: 'Final boss. Same totem-cleanse + Naeem''s Wish loop as previous
+
+    encounters, plus the Hex of Vengeful Corruption (15s timer, pass via
+
+    melee to a Hex-Drinker Wraith). Boss teleports up 3 floors; each
+
+    floor repeats mechanics until the final stand grants infinite buff.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'Methodical: cleanse 1 totem, pass your own hex (drinkers spawn for
+
+      solo too), DPS what you can per phase. Expect 4-6 phases per floor.
+
+      '
+    best_for: Soloists.
+    roles:
+    - id: cleanser
+      count: 1
+      does: Full mechanics. Use stasis/strand crowd-control to manage knights.
+      notes:
+      - Buried Bloodline (this dungeon's exotic) is great for solo here — Devour-on-hit + decent damage.
+      loadout:
+        subclass: ''
+        weapons: Add-clear Primary for Broken Knights/eyes + high-burst Heavy for the Floor 1-2 windows
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera, Solar resist
+          for Broken Knights
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

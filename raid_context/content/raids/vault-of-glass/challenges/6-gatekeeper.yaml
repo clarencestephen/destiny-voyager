@@ -1,0 +1,45 @@
+# raid_context/content/raids/vault-of-glass/6-gatekeeper.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 6
+  slug: gatekeeper
+  name: Gatekeeper (Venus + Mars portals)
+  abstract: 'Split 3/3 onto Venus + Mars plates. Kill the central Gatekeeper
+
+    Hydra. Portal teams enter their respective portals, kill the
+
+    planet''s Gatekeeper, grab Aegis Relic, return. Defenders hold
+
+    plates + Conflux. Praetorians try to capture plates → Oracle spawn
+
+    = wipe trigger.
+
+    '
+  master_challenge:
+    name: Strangers in Time
+    requirement: 'The Wyvern and Minotaurs that spawn simultaneously must die
+
+      within 5 seconds of each other. Forces coordinated cross-
+
+      portal damage timing — the Mars and Venus teams have to
+
+      sync their kills against the wave timer.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Strangers in Time'' constraint on top of the normal encounter: The Wyvern
+  and Minotaurs that spawn simultaneously must die
+
+  within 5 seconds of each other. Forces coordinated cross-
+
+  portal damage timing — the Mars and Venus teams have to
+
+  sync their kills against the wave timer. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

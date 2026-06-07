@@ -1,0 +1,39 @@
+# raid_context/content/dungeons/prophecy/1-phalanx-echo.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: phalanx-echo
+  name: Phalanx Echo
+  abstract: 'Tutorial fight. Tunnel section teaches the motes mechanic, then a
+
+    bowl arena: kill Knights in light/shadow → 5 motes → carry to
+
+    matching pillar → 2 pillars per side → Phalanx exposed → DPS.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Sequential. Light → deposit → switch shadow → deposit.
+    roles:
+    - id: solo
+      count: 1
+      does: Alternate light/shadow. Witherhoard Phalanx during runs.
+      loadout:
+        subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive while alternating
+          light/shadow runs
+        weapons: Witherhoard to chip the Phalanx during runs, plus a long-range primary for Knights
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge required; survivability and ability-regen mods
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

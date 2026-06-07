@@ -1,0 +1,47 @@
+# raid_context/content/dungeons/prophecy/5-kell-echo.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: prophecy
+  name: Prophecy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 5
+  slug: kell-echo
+  name: Kell Echo (final boss)
+  abstract: 'Two-phase final boss. Phase 1: tetrahedral room with 3 Kell Echo
+
+    clones each in front of a pillar — disperse all 3 pillars to force
+
+    retreat. Phase 2: linear hallway DPS race with Dark Entropy debuff
+
+    (stay in boss aura or you stack to death).
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'Phase 1: 3 clones one-at-a-time, alternating light/shadow. Phase 2:
+
+      stay AGGRESSIVE — out of aura = death. Bring sustain (Devour /
+
+      Restoration). Multiple Phase 2 attempts expected.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: All cycles. Don't panic.
+      loadout:
+        subclass: Self-sustain subclass (Solar Restoration or Void Devour); aggression plus range for
+          Phase 2
+        weapons: Witherhoard plus a strong primary or linear for the Phase 2 chase
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge required; sustain and ability-regen mods; expect multiple Phase 2 attempts
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

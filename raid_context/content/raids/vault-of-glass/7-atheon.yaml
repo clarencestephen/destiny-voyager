@@ -177,20 +177,6 @@ encounter:
     - Hezen Vengeance (rocket launcher, Solar)
     - Vault of Glass armor (random slot).
     - Time-Worn Spire shader (raid completion reward)
-  master_challenge:
-    name: Ensemble's Refrain
-    requirement: 'Each player may only destroy one Oracle per wave (3 Oracles
-
-      appear per damage cycle while inside Atheon''s time portals).
-
-      Forces every fireteam member to engage in oracle clear — no
-
-      one player solo-cleaning a wave. Master adds a second pair
-
-      of Supplicants per wave.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

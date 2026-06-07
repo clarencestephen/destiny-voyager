@@ -1,0 +1,10 @@
+# raids/vault-of-glass/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

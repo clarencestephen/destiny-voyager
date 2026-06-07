@@ -1,0 +1,49 @@
+# raid_context/content/raids/last-wish/3-morgeth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: morgeth
+  name: Morgeth, the Spirekeeper
+  abstract: 'Taken Ogre boss. Collect 10 Taken Strength orbs (max 2 per player —
+
+    3rd kills you) to spawn final Strength → DPS Morgeth before his
+
+    wipe meter fills. Rescue Umbral Enervation players (trapped, 20s)
+
+    via Eye of Riven Essence + Grenade button. Rescuer absorbs Strength
+
+    — risk of 3-stack death.
+
+    '
+  master_challenge:
+    name: Forever Fight
+    requirement: 'Do not kill the smaller Ogres that spawn during the
+
+      encounter. Only Morgeth''s Strength orbs may be picked up
+
+      and absorbed; let the Ogres live for the duration. Forces
+
+      runners to focus on positioning instead of add-clear.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Challenge: Keep Ogres alive'
+    learner_friendly: false
+    summary: 4 front Ogres must NOT be killed. Maneuver around their LoS.
+differs_from_base: 'Adds the ''Forever Fight'' constraint on top of the normal encounter: Do not kill
+  the smaller Ogres that spawn during the
+
+  encounter. Only Morgeth''s Strength orbs may be picked up
+
+  and absorbed; let the Ogres live for the duration. Forces
+
+  runners to focus on positioning instead of add-clear. On Master, every encounter''s challenge is active
+  simultaneously, plus Champions, surges/threat, and Adept loot.'

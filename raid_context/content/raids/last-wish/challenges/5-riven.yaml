@@ -1,0 +1,56 @@
+# raid_context/content/raids/last-wish/5-riven.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 5
+  slug: riven
+  name: Riven of a Thousand Voices (final boss)
+  abstract: 'Most communication-heavy boss in Destiny. Split into 2 rooms (Crystal
+
+    + Tree). Riven appears in one, Eye of Riven in other. Stagger Riven
+
+    via tentacle attack or fire attack → 2 of her 10 eyes glow → call
+
+    to other team. Other team shoots called eyes when Riven swaps rooms.
+
+    6 eyes total over phase 1. Then skydive DPS on her chest sores +
+
+    Axion Darts. Final stand = Ascendant Plane race + chest blight inside
+
+    her mouth. POST-KILL: Heart of Riven Fate''s Chosen escape run.
+
+
+    MOST GROUPS use the WALL-HUG CHEESE that skips eyes entirely.
+
+    '
+  master_challenge:
+    name: Strength of Memory
+    requirement: 'Each fireteam must NEVER shoot the same Riven eye twice. With
+
+      6 eyes per phase and 6 players, this works out to one eye per
+
+      player per phase — call-outs lock who has which eye before
+
+      DPS opens. Repeated eye = fail.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Each player different eye'
+    learner_friendly: false
+    summary: No player can shoot the same eye more than once.
+differs_from_base: 'Adds the ''Strength of Memory'' constraint on top of the normal encounter: Each fireteam
+  must NEVER shoot the same Riven eye twice. With
+
+  6 eyes per phase and 6 players, this works out to one eye per
+
+  player per phase — call-outs lock who has which eye before
+
+  DPS opens. Repeated eye = fail. On Master, every encounter''s challenge is active simultaneously, plus
+  Champions, surges/threat, and Adept loot.'

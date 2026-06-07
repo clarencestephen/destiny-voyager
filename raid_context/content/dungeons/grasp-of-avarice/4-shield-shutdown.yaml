@@ -98,23 +98,6 @@ encounter:
         - Health
         - Class
         surges_mods: No surge requirement; prioritize resilience and ability mods for the platform grind.
-  - name: Solo
-    learner_friendly: false
-    summary: All 4 platforms yourself, sequentially. Bring sustain.
-    roles:
-    - id: solo
-      count: 1
-      does: Cycle each platform. ~3-5 min per platform.
-      loadout:
-        subclass: High-sustain or Stasis subclass for crowd control while cycling all 4 platforms alone
-          (about 3-5 minutes each).
-        weapons: Add-clear primary plus sustain options; bring Witherhoard-style chip and a Scorch Cannon
-          for body launches.
-        exotic_armor: ''
-        armor_stats: &id002
-        - Health
-        - Class
-        surges_mods: No surge requirement; favor survivability and ability-uptime mods for the solo cycle.
   cheese: []
   common_mistakes:
   - Killing the Servitor BEFORE depositing 20 (kills don't count — shield won't drop).
@@ -209,7 +192,9 @@ encounter:
     weapons: Add-clear primary plus sustain options; bring Witherhoard-style chip and a Scorch Cannon
       for body launches.
     exotic_armor: ''
-    armor_stats: *id002
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge requirement; favor survivability and ability-uptime mods for the solo cycle.
   sources:
   - tier: 1

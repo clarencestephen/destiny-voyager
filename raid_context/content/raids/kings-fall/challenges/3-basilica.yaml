@@ -1,0 +1,45 @@
+# raid_context/content/raids/kings-fall/3-basilica.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: basilica
+  name: Basilica (Annihilator Totems)
+  abstract: 'Two side rooms with Annihilator Totems (deplete Light if unattended).
+
+    Two Brand-holders pick up Brand of the Weaver (L) + Brand of the
+
+    Unraveler (R). Build Deathsinger''s Power stacks (10) via kills, deposit
+
+    at center plate. D2: Brand Claimer mechanic — kill Wizard + Blightguard
+
+    to relieve the Brand holder. 10 power required per side.
+
+    '
+  master_challenge:
+    name: The Grass is Always Greener
+    requirement: 'Players cannot take the same Brand type twice in a row.
+
+      Forces deliberate Brand rotation between Annihilator Totems
+
+      — no one player chain-cleansing the same totem repeatedly.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: The Grass is Always Greener'
+    learner_friendly: false
+    summary: Holder cannot hold Brand > 5s during transfer. Coordinate tight.
+differs_from_base: 'Adds the ''The Grass is Always Greener'' constraint on top of the normal encounter:
+  Players cannot take the same Brand type twice in a row.
+
+  Forces deliberate Brand rotation between Annihilator Totems
+
+  — no one player chain-cleansing the same totem repeatedly. On Master, every encounter''s challenge is
+  active simultaneously, plus Champions, surges/threat, and Adept loot.'

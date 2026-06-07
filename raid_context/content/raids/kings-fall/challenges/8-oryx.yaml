@@ -1,0 +1,55 @@
+# raid_context/content/raids/kings-fall/8-oryx.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 8
+  slug: oryx
+  name: Oryx, the Taken King (final boss)
+  abstract: 'Final boss. 5 platform rotations (Light-Eater Ogres spawn in spawn
+
+    order = platform order). Kill Ogres (+ Light-Eater Knights eat orbs
+
+    if alive!) → Vessel of Oryx with Aura of Immortality spawns. Torn
+
+    player gets Aura. Detonate Corrupted Light in Aura = stun Oryx +
+
+    chest weak point. 4 detonations = max stun. Then burst chest. Final
+
+    stand at low HP.
+
+    '
+  master_challenge:
+    name: Hands Off
+    requirement: 'Players must not kill the same Ogre or Light-Eater Knight
+
+      throughout the encounter. With 4 Ogres + 6 Light-Eater
+
+      Knights across 3 stand phases, the 6 players need to track
+
+      their own kills so no one duplicates. Add-clear assignments
+
+      rotate phase-to-phase.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Hands Off'
+    learner_friendly: false
+    summary: Each Light-Eater Ogre/Knight can only be killed by a given player ONCE. Rotate killers.
+differs_from_base: 'Adds the ''Hands Off'' constraint on top of the normal encounter: Players must not
+  kill the same Ogre or Light-Eater Knight
+
+  throughout the encounter. With 4 Ogres + 6 Light-Eater
+
+  Knights across 3 stand phases, the 6 players need to track
+
+  their own kills so no one duplicates. Add-clear assignments
+
+  rotate phase-to-phase. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

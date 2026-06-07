@@ -158,22 +158,6 @@ encounter:
     - Vision of Confluence (scout rifle, Solar)
     - Corrective Measure (machine gun, Void)
     - Vault of Glass armor (random slot)
-  master_challenge:
-    name: Out of Its Way
-    requirement: 'Defeat the Templar without letting him teleport. He teleports
-
-      each time his Ritual of Negation channel (the shield-down DPS
-
-      window) completes, OR when the Aegis-holder ejects the
-
-      relic''s blast. Counter: keep the Oracle waves clean so the
-
-      Aegis-holder doesn''t need to detonate, and push damage hard
-
-      enough to break shield + finish phase in a single Ritual.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

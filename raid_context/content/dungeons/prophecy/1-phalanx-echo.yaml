@@ -126,22 +126,6 @@ encounter:
         - Health
         - Grenade
         surges_mods: No surge required; grenade/ability uptime mods for suppressing Psions
-  - name: Solo
-    learner_friendly: false
-    summary: Sequential. Light → deposit → switch shadow → deposit.
-    roles:
-    - id: solo
-      count: 1
-      does: Alternate light/shadow. Witherhoard Phalanx during runs.
-      loadout:
-        subclass: Self-sustain subclass (Solar Restoration or Void Devour) to survive while alternating
-          light/shadow runs
-        weapons: Witherhoard to chip the Phalanx during runs, plus a long-range primary for Knights
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: No surge required; survivability and ability-regen mods
   cheese: []
   common_mistakes:
   - Crossing zones with motes in your inventory — picking up opposite type WIPES current.
@@ -249,7 +233,9 @@ encounter:
       runs
     weapons: Witherhoard to chip the Phalanx during runs, plus a long-range primary for Knights
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge required; survivability and ability-regen mods
   sources:
   - tier: 1

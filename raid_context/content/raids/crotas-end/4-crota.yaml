@@ -156,12 +156,6 @@ encounter:
     learner_friendly: false
     summary: Skip 3rd sword. Tractor Cannon doubles sword damage. Faster cycle.
     best_for: Experienced teams.
-  - name: 'Master: All For One'
-    learner_friendly: false
-    summary: Crota's shield must be FULLY broken within seconds of first damage. Sync sword swings precisely.
-  - name: 'Master: Singular Sensation'
-    learner_friendly: false
-    summary: Only 1 Enlightened at a time. Hot-potato strict.
   cheese: []
   common_mistakes:
   - Oversoul ignored = 20s wipe.
@@ -183,20 +177,6 @@ encounter:
     - 'Note: **Necrochasm** (exotic auto rifle, Kinetic) is NOT a final-chest RNG drop — it''s obtained
       via the ''Bottomless Pit'' exotic quest, spending Essence of the Oryx earned from Crota''s End Encounter
       Challenges. Adept (Enhanced) variants of the raid weapons also drop from Master mode.'
-  master_challenge:
-    name: All for One
-    requirement: 'Crota''s overshield must be destroyed in full within about
-
-      three seconds. Forces a coordinated burst — usually requires
-
-      all 6 players landing damage in the same window (linear
-
-      fusions, sniper crit lineups, Two-Tailed Fox + Wolfpack
-
-      Rounds, Touch of Malice synergy, etc.).
-
-      '
-    enforced_on: Master only (Normal grants double loot when active)
   images:
     overview: ''
     setup: ''

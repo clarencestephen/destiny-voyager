@@ -1,0 +1,47 @@
+# raid_context/content/dungeons/duality/4-caiatl.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 4
+  slug: caiatl
+  name: Nightmare of Caiatl (final boss)
+  abstract: 'Final boss. Standard mechanic + new bell-stun + Waking Resonance
+
+    DPS buff. 4 Standards (one per side) → chains glow → shoot to ring
+
+    the immense bell → drag into Nightmare → Caiatl heads to a bell to
+
+    escape → kill Bellkeepers + ring bell yourself → Caiatl stuns →
+
+    DPS with Waking Resonance buff. Repeat 3 bells.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: '4 Standards alone, 3 bell stuns alone. Bring Heartshadow (this
+
+      dungeon''s exotic) for self-cleave + invis. Expect 3-4 cycles.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Self-pace. Don't engage Caiatl outside bell stuns.
+      loadout:
+        subclass: Void Hunter for self-pace; invisibility to survive the long four-Standard cycles
+        weapons: Self-sufficient ad-clear plus a strong burst; Heartshadow strongly recommended for self-cleave
+          + invis
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge to DPS element; Solar resist for Cabal fire
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

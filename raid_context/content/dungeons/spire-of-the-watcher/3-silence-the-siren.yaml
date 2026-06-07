@@ -124,24 +124,6 @@ encounter:
         - Super
         surges_mods: Run surge mods matching your Linear/Whisper element. Damage-boosting class setups
           (e.g. Star-Eater on Hunter) help the one-phase.
-  - name: Solo
-    learner_friendly: false
-    summary: 4 circuits alone, eyes alone, DPS alone. 2-3 phases expected.
-    roles:
-    - id: solo
-      count: 1
-      does: Trace Rifle for eyes; rocket/sniper for core.
-      loadout:
-        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
-          handle circuits, eyes, and DPS alone over 2-3 phases.
-        weapons: Trace Rifle for eyes; a Rocket or Sniper for the core. Precision Primary for the circuit
-          nodes. Anti-Barrier / Anti-Unstoppable on Master.
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Match surge mods to your core-DPS element; prioritize survivability and (on Master)
-          Champion mods.
   cheese: []
   common_mistakes:
   - Trying to burst Akelous BEFORE killing all eyes — core is protected until eyes are clear.
@@ -243,7 +225,9 @@ encounter:
     weapons: Trace Rifle for eyes; a Rocket or Sniper for the core. Precision Primary for the circuit
       nodes. Anti-Barrier / Anti-Unstoppable on Master.
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Match surge mods to your core-DPS element; prioritize survivability and (on Master) Champion
       mods.
   sources:

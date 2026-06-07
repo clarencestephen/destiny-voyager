@@ -155,27 +155,6 @@ encounter:
         - Class
         surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera's Eversion
           while platform-hopping
-  - name: Solo
-    learner_friendly: false
-    summary: 'Methodical: cleanse 1 totem, pass your own hex (drinkers spawn for
-
-      solo too), DPS what you can per phase. Expect 4-6 phases per floor.
-
-      '
-    best_for: Soloists.
-    roles:
-    - id: cleanser
-      count: 1
-      does: Full mechanics. Use stasis/strand crowd-control to manage knights.
-      notes:
-      - Buried Bloodline (this dungeon's exotic) is great for solo here — Devour-on-hit + decent damage.
-      loadout:
-        subclass: ''
-        weapons: Add-clear Primary for Broken Knights/eyes + high-burst Heavy for the Floor 1-2 windows
-        exotic_armor: ''
-        armor_stats: *id001
-        surges_mods: Surge mods matched to your Heavy element; Void resist for the Chimaera, Solar resist
-          for Broken Knights
   cheese: []
   common_mistakes:
   - Two players hexed and going to the same Hex-Drinker — second player gets the hex re-applied AND now

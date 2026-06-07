@@ -1,0 +1,53 @@
+# raid_context/content/raids/salvations-edge/1-substratum.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 1
+  slug: substratum
+  name: Substratum
+  abstract: 'First encounter. Two teams of three clear side rooms of Sol
+
+    Divisive Vex + Dread. After two waves, find circuit plates +
+
+    conductors and bounce charges between them while picking up
+
+    Pyramidal Resonance. Lock down both conductors → deposit
+
+    resonance in central chest → repeat 2 more times.
+
+    '
+  master_challenge:
+    name: Scenic Route
+    requirement: 'Only kill the Overload Minotaur on the LONGER of the two paths
+
+      (the one with the Overload spawn in the 4th room, not the 3rd).
+
+      Read which path is yours by checking the majors in the first
+
+      rooms: Hobgoblins = your path will kill, Attendants = ignore.
+
+      Master adds no Champion spawns beyond the existing path
+
+      Minotaurs.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Scenic Route'' constraint on top of the normal encounter: Only kill the
+  Overload Minotaur on the LONGER of the two paths
+
+  (the one with the Overload spawn in the 4th room, not the 3rd).
+
+  Read which path is yours by checking the majors in the first
+
+  rooms: Hobgoblins = your path will kill, Attendants = ignore.
+
+  Master adds no Champion spawns beyond the existing path
+
+  Minotaurs. On Master, every encounter''s challenge is active simultaneously, plus Champions, surges/threat,
+  and Adept loot.'

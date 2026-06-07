@@ -79,9 +79,6 @@ encounter:
         - Class
         surges_mods: Match surge mods to your add-clear element; on Master add the relevant Champion-counter
           mods (Anti-Barrier / Anti-Unstoppable)
-  - name: 'Master: Conservation Of Energy'
-    learner_friendly: false
-    summary: Only 1 lamp per Chalice deposit. Must move tight, accept Weight stacks.
   cheese: []
   common_mistakes:
   - Holding Chalice too long — death timer.
@@ -105,20 +102,6 @@ encounter:
     - Fang of Ir Yût (scout rifle, Strand)
     - Abyss Defiant (auto rifle, Solar)
     - Willbreaker's armor — Chest + Arms + Helmet (encounter-specific slots)
-  master_challenge:
-    name: Conservation of Energy
-    requirement: 'Fireteam must alternate between depositing the Chalice of Light
-
-      in a podium AND Enlightening a lamp — only one lamp Enlightenment
-
-      per podium of Light used. Most of the encounter is spent with
-
-      10 stacks of Weight of Darkness, so the Engulfed-in-Darkness
-
-      timer matters a lot more than a regular run.
-
-      '
-    enforced_on: Master only (Normal grants double loot when active)
   images:
     overview: ''
     setup: ''

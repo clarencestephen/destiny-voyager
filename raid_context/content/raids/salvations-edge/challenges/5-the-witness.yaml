@@ -1,0 +1,59 @@
+# raid_context/content/raids/salvations-edge/5-the-witness.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 5
+  slug: the-witness
+  name: The Witness
+  abstract: 'Final encounter. Fight the Witness directly. Reads its hand
+
+    attacks to identify which resonance to collect, then break its
+
+    armband-colored arms. Each broken arm grants Glyphbreaker; with
+
+    that buff, shoot one of the Witness''s chest glyphs to cleanse
+
+    resonance + progress toward damage phase. All 6 glyphs broken =
+
+    central plate rises = DPS window.
+
+    '
+  master_challenge:
+    name: Coordinated Efforts
+    requirement: 'All 6 Witness glyphs must be broken within a few seconds of
+
+      each other. All 6 fireteam members need to obtain the
+
+      Glyphbreaker buff first (shoot an appendage with a buff that
+
+      matches its armband), then fire on glyphs simultaneously.
+
+      Side effect: makes Master easier — only 1 pair of Subjugators
+
+      per phase. Tradeoff: no opportunity to cleanse incorrect
+
+      Resonance before DPS opens.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Coordinated Efforts'' constraint on top of the normal encounter: All 6
+  Witness glyphs must be broken within a few seconds of
+
+  each other. All 6 fireteam members need to obtain the
+
+  Glyphbreaker buff first (shoot an appendage with a buff that
+
+  matches its armband), then fire on glyphs simultaneously.
+
+  Side effect: makes Master easier — only 1 pair of Subjugators
+
+  per phase. Tradeoff: no opportunity to cleanse incorrect
+
+  Resonance before DPS opens. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

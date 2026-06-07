@@ -222,22 +222,6 @@ encounter:
     - Non-Denouement (combat bow, Arc)
     - Forthcoming Deviance (glaive, Void)
     - Imminence (SMG, Strand)
-  master_challenge:
-    name: At Capacity
-    requirement: 'Only deposit Resonance in the conductor chest when holding
-
-      exactly 3 stacks. Forces a 4-person 3-stack rotation per
-
-      damage phase: starting-plate players pick up 3, conductor-
-
-      closers pick up 1 (matching the conductor''s shape) — except
-
-      right side, where both pick up 3 and one ferries an extra
-
-      from the middle ground stack.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

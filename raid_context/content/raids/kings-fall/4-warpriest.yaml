@@ -141,9 +141,6 @@ encounter:
         - Grenade
         surges_mods: Match surges to your DPS element; ability-regen mods for sustained add-clear and
           backup Claims.
-  - name: 'Master: Devious Thievery'
-    learner_friendly: false
-    summary: Brand Claimer cannot be held > 5s. Holder MOVES toward Claimer.
   cheese: []
   common_mistakes:
   - Middle stepper fails to identify glowing Monolith — sequence wrong.
@@ -157,18 +154,6 @@ encounter:
     - Smite of Merain (pulse rifle, Kinetic)
     - Defiance of Yasmin (sniper rifle, Kinetic)
     - King's Fall armor (random slot)
-  master_challenge:
-    name: Devious Thievery
-    requirement: 'Players must steal the Brand of the Initiate within a couple
-
-      of seconds of taking the Brand Claimer buff. Tight rotation
-
-      between the killer and the stealer; you cannot sit on the
-
-      Brand Claimer waiting for a safe steal.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

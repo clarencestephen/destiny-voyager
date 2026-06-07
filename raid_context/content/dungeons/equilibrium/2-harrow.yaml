@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/equilibrium/2-harrow.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: equilibrium
   name: Equilibrium
@@ -143,22 +142,6 @@ encounter:
         - Health
         - Class
         surges_mods: Ability-regen and Arc resist; burst-DPS surge for shield-down.
-  - name: Solo
-    learner_friendly: false
-    summary: All roles. Patient outer-room rotation.
-    roles:
-    - id: solo
-      count: 1
-      does: Slow, methodical. Use sustain.
-      loadout:
-        subclass: ''
-        weapons: 'Self-reliant kit: primary for adds, burst special/heavy for shield-down DPS, and an
-          Eager Edge sword for safe, methodical outer-room rotation. Anti-Champion mods if running Master.'
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Prioritize sustain and Arc resist; reserve burst surge for the short DPS window.
   cheese: []
   common_mistakes:
   - Sprinting through center mid-build = insta-death.
@@ -262,7 +245,9 @@ encounter:
     weapons: 'Self-reliant kit: primary for adds, burst special/heavy for shield-down DPS, and an Eager
       Edge sword for safe, methodical outer-room rotation. Anti-Champion mods if running Master.'
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Prioritize sustain and Arc resist; reserve burst surge for the short DPS window.
   sources:
   - tier: 1

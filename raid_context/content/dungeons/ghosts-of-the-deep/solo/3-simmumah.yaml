@@ -1,0 +1,53 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/3-simmumah.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: simmumah
+  name: Šimmumah ur-Nokru, Lucent Necromancer
+  abstract: 'Final boss. Open cove with Oryx''s half-buried corpse. Šimmumah floats
+
+    above. Crush an unclaimed Ghost to start. 3 cycles: Deepsight reveals
+
+    3 small orbs above Oryx body parts; kill Vorlog UNDER an orb to lure
+
+    Šimmumah; align ring + symbol when she lands; reveals rune; kill a
+
+    Lightbearer (knight/acolyte/wizard) in methane pocket → crush Ghost
+
+    → Vestige with that rune → deposit at matching orb. 3 done = Šimmumah
+
+    vulnerable → DPS.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'All 3 cycles + DPS yourself. 3-5 phases expected. Bring sustain
+
+      (Devour) + a Lightbearer-shredder primary (Hand Cannon + Lucky
+
+      Pants, or trace rifle).
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Don't rush the alignment.
+      loadout:
+        subclass: Void (Devour) for sustain; expect 3-5 phases
+        weapons: Lightbearer-shredder primary (Hand Cannon, or a trace rifle) for pocket fights + burst
+          heavy; take the alignment slowly
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

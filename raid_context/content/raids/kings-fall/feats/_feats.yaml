@@ -1,0 +1,10 @@
+# raids/kings-fall/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

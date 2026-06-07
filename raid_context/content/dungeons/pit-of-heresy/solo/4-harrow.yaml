@@ -1,0 +1,39 @@
+# raid_context/content/dungeons/pit-of-heresy/4-harrow.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 4
+  slug: harrow
+  name: The Harrow (jumping puzzle + Wizard runes)
+  abstract: 'Verticality test. Jump across ledges in a vast abyss. Find towers
+
+    with runes matching a sealed door. Each tower contains a Hive Wizard
+
+    + adds — kill them all → rune disappears. All 3 done → door opens.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Slower. Sword from Necropolis is gone — bring high-mobility kit.
+    roles:
+    - id: solo
+      count: 1
+      does: All scouts + clears. Bring Bottom-tree Dawnblade / Stompees.
+      loadout:
+        subclass: High-mobility traversal kit; the guide notes a Dawnblade-style glide build or a triple-jump
+          approach for skipping platforms
+        weapons: Strong primary for Wizards and adds; no DPS weapon required
+        exotic_armor: ''
+        armor_stats:
+        - Weapons
+        - Health
+        surges_mods: No surge requirement; prioritize jump height and mobility
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

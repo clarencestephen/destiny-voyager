@@ -90,22 +90,6 @@ encounter:
         - Health
         - Weapons
         surges_mods: No surge mods needed (no DPS phase); prioritize mobility and resilience mods
-  - name: Solo
-    learner_friendly: false
-    summary: Hold sniper. Take Ogres from cover, then move.
-    roles:
-    - id: solo
-      count: 1
-      does: Methodical. Orb route through barrier.
-      loadout:
-        subclass: Sustain subclass (Void for Devour or Solar for Restoration) to survive the barrier and
-          Ogres alone
-        weapons: Sniper rifle held for Ogres from cover, plus an add-clear primary
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: No surge mods needed (no DPS phase); run survivability, mobility, and ammo mods
   cheese: []
   common_mistakes:
   - Sprinting catwalks — Ogre eye blasts catch sprinters mid-jump.
@@ -195,7 +179,9 @@ encounter:
       alone
     weapons: Sniper rifle held for Ogres from cover, plus an add-clear primary
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge mods needed (no DPS phase); run survivability, mobility, and ammo mods
   sources:
   - tier: 1

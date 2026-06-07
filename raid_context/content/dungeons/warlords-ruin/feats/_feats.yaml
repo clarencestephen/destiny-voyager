@@ -1,0 +1,10 @@
+# dungeons/warlords-ruin/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: warlords-ruin
+  name: Warlord's Ruin
+  activity_type: dungeon
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

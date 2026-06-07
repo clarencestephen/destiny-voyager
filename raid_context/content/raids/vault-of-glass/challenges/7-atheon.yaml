@@ -1,0 +1,49 @@
+# raid_context/content/raids/vault-of-glass/7-atheon.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 7
+  slug: atheon
+  name: Atheon, Time's Conflux (final boss)
+  abstract: 'Final boss. Atheon randomly teleports 3 players to PAST (Mars) or
+
+    FUTURE (Venus). Inside team: 1 Relic holder + 2 Oracle killers (6
+
+    red/yellow Oracles to destroy in 30s). Outside team: 3 players hold
+
+    Atheon''s aggro + DPS. Inside team returns through correct portal.
+
+    DPS phase: 6 stack + Well + burst Atheon. Final stand at 30%.
+
+    '
+  master_challenge:
+    name: Ensemble's Refrain
+    requirement: 'Each player may only destroy one Oracle per wave (3 Oracles
+
+      appear per damage cycle while inside Atheon''s time portals).
+
+      Forces every fireteam member to engage in oracle clear — no
+
+      one player solo-cleaning a wave. Master adds a second pair
+
+      of Supplicants per wave.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Ensemble''s Refrain'' constraint on top of the normal encounter: Each player
+  may only destroy one Oracle per wave (3 Oracles
+
+  appear per damage cycle while inside Atheon''s time portals).
+
+  Forces every fireteam member to engage in oracle clear — no
+
+  one player solo-cleaning a wave. Master adds a second pair
+
+  of Supplicants per wave. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

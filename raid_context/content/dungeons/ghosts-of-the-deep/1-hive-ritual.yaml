@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/ghosts-of-the-deep/1-hive-ritual.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: ghosts-of-the-deep
   name: Ghosts of the Deep
@@ -106,23 +105,6 @@ encounter:
         - Class
         surges_mods: No DPS surges needed; run add-clear and survivability mods (resist mods vs Arc/Solar,
           ability-regen mods)
-  - name: Solo
-    learner_friendly: false
-    summary: All cycles yourself. ~12-15 min per cycle.
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Bring sustained sustain (Devour / Resto).
-      loadout:
-        subclass: Void (Devour) or Solar (Restoration) for constant self-healing across the long ~12-15
-          min per cycle
-        weapons: Reliable add-clear primary + special; bring sustained sustain rather than burst since
-          there is no boss here
-        exotic_armor: ''
-        armor_stats: &id002
-        - Health
-        - Class
-        surges_mods: Survivability and ability-regen mods; no DPS surges
   cheese: []
   common_mistakes:
   - Forgetting to crush Ghost — no Vestige, restart cycle.
@@ -203,7 +185,9 @@ encounter:
     weapons: Reliable add-clear primary + special; bring sustained sustain rather than burst since there
       is no boss here
     exotic_armor: ''
-    armor_stats: *id002
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Survivability and ability-regen mods; no DPS surges
   sources:
   - tier: 1

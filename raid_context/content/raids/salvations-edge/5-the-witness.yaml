@@ -287,24 +287,6 @@ encounter:
     - Summum Bonum (sword, Arc)
     - Nullify (pulse rifle, Solar)
     - Critical Anomaly (sniper rifle, Stasis)
-  master_challenge:
-    name: Coordinated Efforts
-    requirement: 'All 6 Witness glyphs must be broken within a few seconds of
-
-      each other. All 6 fireteam members need to obtain the
-
-      Glyphbreaker buff first (shoot an appendage with a buff that
-
-      matches its armband), then fire on glyphs simultaneously.
-
-      Side effect: makes Master easier — only 1 pair of Subjugators
-
-      per phase. Tradeoff: no opportunity to cleanse incorrect
-
-      Resonance before DPS opens.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

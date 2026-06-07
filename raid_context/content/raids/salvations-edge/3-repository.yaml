@@ -175,20 +175,6 @@ encounter:
     - Nullify (pulse rifle, Solar)
     - Critical Anomaly (sniper rifle, Stasis)
     - Forthcoming Deviance (glaive, Void)
-  master_challenge:
-    name: Balanced Diet
-    requirement: 'Individual Guardians cannot pick up the same Resonance type
-
-      twice in a row. If you grab a triangle, the next buff must
-
-      be a circle or square before another triangle. Doesn''t reset
-
-      between rooms — your final pickup in room 1 carries forward
-
-      as a constraint into room 2.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/equilibrium/1-temple-grounds-harvester.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: equilibrium
   name: Equilibrium
@@ -139,22 +138,6 @@ encounter:
         - Health
         - Class
         surges_mods: Ability-regen and resist mods to maintain add-clear; element-agnostic surges.
-  - name: Solo
-    learner_friendly: false
-    summary: All roles. Use sparrow for well-farming speed.
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Apprentice bait then sprint to array.
-      loadout:
-        subclass: ''
-        weapons: 'Self-sufficient kit: primary for add-clear and Apprentice baiting, special for Behemoth
-          Walkers, and an Eager Edge sword for traversal and quick array repositioning.'
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Prioritize survivability and ability regen; surges element-agnostic.
   cheese: []
   common_mistakes:
   - Killing Apprentice with gunfire instead of array-baiting — array stays up, barrier locked.
@@ -243,7 +226,9 @@ encounter:
     weapons: 'Self-sufficient kit: primary for add-clear and Apprentice baiting, special for Behemoth
       Walkers, and an Eager Edge sword for traversal and quick array repositioning.'
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Prioritize survivability and ability regen; surges element-agnostic.
   sources:
   - tier: 1

@@ -1,0 +1,47 @@
+# raid_context/content/raids/crotas-end/2-bridge.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: bridge
+  name: Cross the Bridge
+  abstract: 'Bridge requires sword + Chalice to cross. Swordbearer + Gatekeeper
+
+    mechanic. Annihilation Totems at sides — keep pacified or wipe. D2:
+
+    Chalice carrier can cross bridge safely (only exception). 5
+
+    Gatekeepers per side. Then 5 swords back for the side that crossed.
+
+    '
+  master_challenge:
+    name: Precarious Balance
+    requirement: 'Guardians cannot step on the bridge while it is fully built.
+
+      Once the final piece locks in, everyone must already be on the
+
+      opposite side (or step OFF before the last piece slots). Builders
+
+      especially have to clear the bridge BEFORE finishing it.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  permutations:
+  - name: 'Master: Precarious Balance'
+    learner_friendly: false
+    summary: Cross bridge with NO ONE on plate. Bridge deforms — jump small gap.
+differs_from_base: 'Adds the ''Precarious Balance'' constraint on top of the normal encounter: Guardians
+  cannot step on the bridge while it is fully built.
+
+  Once the final piece locks in, everyone must already be on the
+
+  opposite side (or step OFF before the last piece slots). Builders
+
+  especially have to clear the bridge BEFORE finishing it. On Master, every encounter''s challenge is
+  active simultaneously, plus Champions, surges/threat, and Adept loot.'

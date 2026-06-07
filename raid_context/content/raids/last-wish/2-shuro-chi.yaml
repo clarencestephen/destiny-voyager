@@ -139,9 +139,6 @@ encounter:
         - Grenade
         surges_mods: Grenade (Discipline) for repeated add-clear ability uptime; Health for Knight/Phalanx
           melee
-  - name: 'Master: No ranged blast damage'
-    learner_friendly: false
-    summary: Cannot take damage from Shuro Chi's ranged blast attack. Move actively.
   cheese:
   - title: Shuro Chi rally checkpoint
     detail: 'Shuro Chi is the easiest farm spot in the game. Rally flag near
@@ -159,18 +156,6 @@ encounter:
     hidden_chest: null
     potential_drops:
     - Shared pool with E1/E3/E4 — see kalli encounter for full weapon + armor list.
-  master_challenge:
-    name: Which Witch
-    requirement: 'No one in the fireteam may get hit by Shuro Chi''s Arc Blast
-
-      (her long-range AoE attack). Hard to dodge over a full
-
-      encounter; teams stack at long range and disperse the moment
-
-      wind-up animation begins.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

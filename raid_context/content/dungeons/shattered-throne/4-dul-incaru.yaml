@@ -140,27 +140,6 @@ encounter:
         - Health
         surges_mods: Match surge mods to your weapon's element; run targeting/loader mods for fast Knight
           kills
-  - name: Solo
-    learner_friendly: false
-    summary: 'Take Knights one at a time. Use Devour/Resto sustain. Multiple
-
-      DPS phases. Bring Lament or Whisper/Sleeper for boss damage.
-
-      '
-    roles:
-    - id: solo
-      count: 1
-      does: All mechanics in sequence. Patient.
-      loadout:
-        subclass: Sustain subclass (Void Devour or Solar Restoration) to survive multiple DPS phases alone
-        weapons: Add-clear primary plus a high single-target heavy (Sword such as Lament, or a Whisper/Sleeper-type
-          Linear Fusion) for several phases
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: Match surge mods to your heavy's element; run survivability and ability-regen mods
-          for the extended solo fight
   cheese: []
   common_mistakes:
   - Killing one Knight then chasing the others 'while orb is active' — Knight respawns via crystal, you
@@ -269,7 +248,9 @@ encounter:
     weapons: Add-clear primary plus a high single-target heavy (Sword such as Lament, or a Whisper/Sleeper-type
       Linear Fusion) for several phases
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Match surge mods to your heavy's element; run survivability and ability-regen mods for
       the extended solo fight
   sources:

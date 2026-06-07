@@ -1,0 +1,10 @@
+# raids/root-of-nightmares/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

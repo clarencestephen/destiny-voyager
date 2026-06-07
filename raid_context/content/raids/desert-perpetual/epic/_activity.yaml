@@ -1,10 +1,11 @@
 # desert-perpetual-epic — activity header (authored from scratch, isolated source)
-
 activity:
   slug: desert-perpetual-epic
   name: The Desert Perpetual (Epic)
   activity_type: raid
   fireteam_size: 6
+  category: epic
+  variant_of: desert-perpetual
 overview:
   abstract: 'The Epic variant of The Desert Perpetual keeps the same four bosses — Epoptes (Hydra), Agraios
     (Hobgoblin), Iatros (Wyvern), and Koregos (final boss) — but layers an extra EPIC mechanic onto each,
@@ -16,3 +17,8 @@ overview:
     capsules, and a CAC Temporality buff (Cyclical, Absolute, Constant) obtained from Vex plates and used
     to break crystals via line of sight. Bring damage loadouts but prioritise survivability. Completing
     the raid drops a statue that gives the Atlas & Almanac quest.'
+vs_base: Epic is a DISTINCT, harder version of The Desert Perpetual — NOT the normal raid. It runs an
+  'Undoing' final round that revisits all three mid-bosses, adds the Banished debuff (recover by activating
+  an Oracle within ~39s before platforms vanish), capsule/Chronon-colour alignment, destructible crystals
+  gated by the Absolute Temporality buff, and a Final-Stand DPS check. Same bosses, different mechanics
+  and loot.

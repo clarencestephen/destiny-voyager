@@ -1,0 +1,28 @@
+# raid_context/content/raids/desert-perpetual/3-iatros.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: iatros
+  name: Iatros, Inward-Turned
+  abstract: 'Vex Hobgoblin. Climber ascends 3 levels via Diastole-timed cube
+
+    breaks (Builders shoot cubes on Diastole pulse). Hourglass filled
+
+    with Cinnabar/Antimony Chronons from 6 Time''s Burdens — diamond
+
+    Oracle shot to start. Add-clear team kills extra Time''s Burdens to
+
+    refill Hourglass.
+
+    '
+  permutations:
+  - name: 'Challenge: 3 Climbers'
+    learner_friendly: false
+    summary: Each pillar gets a Climber instead of 1.

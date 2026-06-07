@@ -112,21 +112,6 @@ encounter:
         - Health
         - Grenade
         surges_mods: Solar resist for Cabal fire; match surge to DPS weapon element
-  - name: Solo
-    learner_friendly: false
-    summary: Self-pace. 2-3 cycles per side typically.
-    roles:
-    - id: solo
-      count: 1
-      does: All roles. Heartshadow itself trivializes this when acquired.
-      loadout:
-        subclass: Void Hunter (Gyrfalcon/invis style) for self-pace and safe Nightmare hunting
-        weapons: Self-sufficient ad-clear primary plus heavy burst; Heartshadow if obtained
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: Solar resist for Cabal fire; match surge to DPS element
   cheese: []
   common_mistakes:
   - Picking up 2 Standards then dying = drop both. Don't carry 2 if you're not safe.
@@ -219,7 +204,9 @@ encounter:
     subclass: Void Hunter (Gyrfalcon/invis style) for self-pace and safe Nightmare hunting
     weapons: Self-sufficient ad-clear primary plus heavy burst; Heartshadow if obtained
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Solar resist for Cabal fire; match surge to DPS element
   sources:
   - tier: 1

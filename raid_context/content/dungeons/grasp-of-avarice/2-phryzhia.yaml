@@ -146,26 +146,6 @@ encounter:
         armor_stats: *id002
         surges_mods: Match heavy surges to your burst weapon's element; otherwise run ability and resist
           mods.
-  - name: Solo
-    learner_friendly: false
-    summary: You do everything. Cannon → door → gather → deposit. 2-3 phases typical.
-    roles:
-    - id: solo
-      count: 1
-      does: Full loop. Don't bother with 2 doors — use one, deposit, swap sides next phase.
-      notes:
-      - Witherhoard the Ogre during deposit runs for free chip.
-      loadout:
-        subclass: Self-sufficient survival kit (strong healing or Stasis crowd-control) so you can cannon,
-          gather, and deposit alone across 2-3 phases.
-        weapons: Witherhoard to chip the Ogre during deposit runs, plus a burst heavy for the short damage
-          window.
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Heavy surge matched to your burst weapon; lean on resilience and ability mods for
-          the solo grind.
   cheese:
   - title: Ledge DPS perch
     detail: 'Right-side elevated ledge has line-of-sight on Phry''zhia + cover
@@ -270,7 +250,9 @@ encounter:
     weapons: Witherhoard to chip the Ogre during deposit runs, plus a burst heavy for the short damage
       window.
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Heavy surge matched to your burst weapon; lean on resilience and ability mods for the
       solo grind.
   sources:

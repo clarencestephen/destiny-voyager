@@ -147,9 +147,6 @@ encounter:
         - Super
         surges_mods: Match surges to your DPS element; ability-regen mods to keep waves suppressed and
           Supers ready for DPS.
-  - name: 'Master: Under Construction'
-    learner_friendly: false
-    summary: Plate cannot be stepped > 1× per Brand cycle. Use middle ledges instead.
   cheese: []
   common_mistakes:
   - Stealing wrong daughter's Brand — DPS wrong target = wipe.
@@ -164,20 +161,6 @@ encounter:
     - Defiance of Yasmin (sniper rifle, Kinetic)
     - Zaouli's Bane (hand cannon, Solar)
     - King's Fall armor (random slot)
-  master_challenge:
-    name: Under Construction
-    requirement: 'Players cannot stand on the same plate twice in a single
-
-      phase. With 4 plates and 6 players across multiple Daughter
-
-      kills, plate-rotation has to be deliberate — typically:
-
-      plate-holders for the first pair of Daughters swap to the
-
-      opposite pair of plates for the second.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

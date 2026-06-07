@@ -1,0 +1,54 @@
+# raid_context/content/raids/crotas-end/4-crota.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: crota
+  name: Crota, Son of Oryx (final boss)
+  abstract: 'Final boss. Crystal-entry chamber → split L+R, clear adds → 4 boomer
+
+    Knights + 2 Ogres + Swordbearer → sword pickup by Enlightened. 3
+
+    swords per DPS phase typically. Tractor Cannon for shield-amp. 1
+
+    Enlightened destroys Oversoul (DPS-end). Crota''s final stand at low HP.
+
+    '
+  master_challenge:
+    name: All for One
+    requirement: 'Crota''s overshield must be destroyed in full within about
+
+      three seconds. Forces a coordinated burst — usually requires
+
+      all 6 players landing damage in the same window (linear
+
+      fusions, sniper crit lineups, Two-Tailed Fox + Wolfpack
+
+      Rounds, Touch of Malice synergy, etc.).
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  permutations:
+  - name: 'Master: All For One'
+    learner_friendly: false
+    summary: Crota's shield must be FULLY broken within seconds of first damage. Sync sword swings precisely.
+  - name: 'Master: Singular Sensation'
+    learner_friendly: false
+    summary: Only 1 Enlightened at a time. Hot-potato strict.
+differs_from_base: 'Adds the ''All for One'' constraint on top of the normal encounter: Crota''s overshield
+  must be destroyed in full within about
+
+  three seconds. Forces a coordinated burst — usually requires
+
+  all 6 players landing damage in the same window (linear
+
+  fusions, sniper crit lineups, Two-Tailed Fox + Wolfpack
+
+  Rounds, Touch of Malice synergy, etc.). On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

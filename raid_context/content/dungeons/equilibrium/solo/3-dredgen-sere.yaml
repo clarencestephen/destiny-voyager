@@ -1,0 +1,50 @@
+# raid_context/content/dungeons/equilibrium/3-dredgen-sere.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: equilibrium
+  name: Equilibrium
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: dredgen-sere
+  name: Dredgen Sere (final boss)
+  abstract: 'Final boss. First HUMAN boss in any D2 dungeon. 45s Lure of the
+
+    Dark setup → pulled into Ascendant realm → Compel 5 Blistered
+
+    Shadows with Shadow Master → return to normal arena → destroy 5
+
+    Taken orbs → DPS. End-of-DPS hazard: Arc fills the center, sprint
+
+    to edges.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'All 5 Compels yourself. All 5 orbs yourself. Lure of the Dark
+
+      timer feels tight. Bring strong sustain + Heirloom if obtained.
+
+      Expect 4-6 phases.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Don't engage Sere outside DPS windows.
+      loadout:
+        subclass: ''
+        weapons: 'Self-sufficient, sustain-heavy kit: primary for Apprentice clear, heavy burst for DPS,
+          and strong self-sustain. Bring the ''Heirloom'' Exotic Combat Bow if obtained to make the tight
+          Lure-of-the-Dark cycle manageable; expect 4-6 phases.'
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Prioritize survivability and Arc resist; reserve burst surge for the short DPS window.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

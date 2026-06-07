@@ -85,21 +85,6 @@ encounter:
         - Health
         - Class
         surges_mods: Solar resist for Cabal fire; Concussive Dampener; match surge to DPS element
-  - name: Solo
-    learner_friendly: false
-    summary: Sequential. 2 Standards per cycle, sometimes 1 per shift.
-    roles:
-    - id: solo
-      count: 1
-      does: Methodical Standard hunt.
-      loadout:
-        subclass: Void Hunter for self-pace and safe sequential Standard hunting
-        weapons: Self-sufficient ad-clear plus a strong burst heavy; Heartshadow if obtained
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Solar resist for Cabal fire; match surge to DPS element
   cheese: []
   common_mistakes:
   - Both runners going to the SAME Standard room — second arrives empty.
@@ -194,7 +179,9 @@ encounter:
     subclass: Void Hunter for self-pace and safe sequential Standard hunting
     weapons: Self-sufficient ad-clear plus a strong burst heavy; Heartshadow if obtained
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Solar resist for Cabal fire; match surge to DPS element
   sources:
   - tier: 1

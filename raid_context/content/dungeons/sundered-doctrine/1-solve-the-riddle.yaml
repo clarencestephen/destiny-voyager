@@ -143,23 +143,6 @@ encounter:
         - Health
         surges_mods: No surge needed. Targeting/handling and survivability mods; anti-Champion only on
           Master.
-  - name: Solo
-    learner_friendly: false
-    summary: All roles sequentially. Slower but doable.
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Bring add-clear primary.
-      loadout:
-        subclass: A self-sufficient survivable subclass (Void invisibility or a healing/Solar build) to
-          handle all tasks sequentially
-        weapons: Add-clear primary, long-range option for Truthspeakers/Lens Bearers, and a heavy to delete
-          any punishment Tormentor
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: No surge needed. Survivability and ability-regen mods; patience over speed.
   cheese: []
   common_mistakes:
   - Calling symbol by description ('the spiral') instead of name ('Worm') — slows team. Use symbol names.
@@ -262,7 +245,9 @@ encounter:
     weapons: Add-clear primary, long-range option for Truthspeakers/Lens Bearers, and a heavy to delete
       any punishment Tormentor
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge needed. Survivability and ability-regen mods; patience over speed.
   sources:
   - tier: 1

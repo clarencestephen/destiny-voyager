@@ -1,0 +1,51 @@
+# raid_context/content/raids/last-wish/4-vault.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: vault
+  name: The Vault (Symbol Puzzle)
+  abstract: 'No boss. Symbol/Penumbra/Antumbra puzzle. 3 plates (Stairs, Tree,
+
+    Rocks). Each player sees 3 symbols (1 center, 2 sides). Identify
+
+    Penumbra (L) vs Antumbra (R) per plate via callouts. Run Eye of
+
+    Riven Essence to matching plate (grenade button cleanse). Kill
+
+    Mights of Riven before they slam plate. 3 cleanses per phase, 3
+
+    phases.
+
+    '
+  master_challenge:
+    name: Keep Out
+    requirement: 'No Might of Riven knights may reach the center chamber during
+
+      the Vault fight. Outside teams must kill every Might of Riven
+
+      before it gets through the door — failure (even one knight
+
+      entering) fails the challenge.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Mights stay in rooms'
+    learner_friendly: false
+    summary: Mights of Riven cannot cross room barrier — challenge fail if they do.
+differs_from_base: 'Adds the ''Keep Out'' constraint on top of the normal encounter: No Might of Riven
+  knights may reach the center chamber during
+
+  the Vault fight. Outside teams must kill every Might of Riven
+
+  before it gets through the door — failure (even one knight
+
+  entering) fails the challenge. On Master, every encounter''s challenge is active simultaneously, plus
+  Champions, surges/threat, and Adept loot.'

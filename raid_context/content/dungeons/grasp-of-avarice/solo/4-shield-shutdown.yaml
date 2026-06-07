@@ -1,0 +1,42 @@
+# raid_context/content/dungeons/grasp-of-avarice/4-shield-shutdown.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 4
+  slug: shield-shutdown
+  name: Shield Shutdown (Fallen Shield / Servitor cannon)
+  abstract: 'No boss health bar — puzzle encounter. Deposit 20 engrams to break
+
+    a Servitor''s shield → kill the Servitor → use a Scorch Cannon to
+
+    launch its body into a "shield core." 4 cores = shield down → final
+
+    boss room access.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All 4 platforms yourself, sequentially. Bring sustain.
+    roles:
+    - id: solo
+      count: 1
+      does: Cycle each platform. ~3-5 min per platform.
+      loadout:
+        subclass: High-sustain or Stasis subclass for crowd control while cycling all 4 platforms alone
+          (about 3-5 minutes each).
+        weapons: Add-clear primary plus sustain options; bring Witherhoard-style chip and a Scorch Cannon
+          for body launches.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge requirement; favor survivability and ability-uptime mods for the solo cycle.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

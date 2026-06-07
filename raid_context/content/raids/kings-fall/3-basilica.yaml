@@ -138,9 +138,6 @@ encounter:
         - Health
         - Super
         surges_mods: Run Anti-Unstoppable (Unstoppable Ogre); match surges to your heavy element.
-  - name: 'Master: Devious Thievery'
-    learner_friendly: false
-    summary: Holder cannot hold Brand > 5s during transfer. Coordinate tight.
   cheese: []
   common_mistakes:
   - Forgetting to KILL Wizard BEFORE Blightguard — Claimer doesn't spawn.
@@ -154,16 +151,6 @@ encounter:
     - Doom of Chelchis (scout rifle, Void)
     - Qullim's Terminus (machine gun, Stasis)
     - King's Fall armor (random slot)
-  master_challenge:
-    name: The Grass is Always Greener
-    requirement: 'Players cannot take the same Brand type twice in a row.
-
-      Forces deliberate Brand rotation between Annihilator Totems
-
-      — no one player chain-cleansing the same totem repeatedly.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

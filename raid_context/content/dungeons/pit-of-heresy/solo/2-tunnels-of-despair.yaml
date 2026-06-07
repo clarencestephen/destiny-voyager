@@ -1,0 +1,38 @@
+# raid_context/content/dungeons/pit-of-heresy/2-tunnels-of-despair.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: tunnels-of-despair
+  name: Tunnels of Despair
+  abstract: 'Maze of small tunnels + 3 unkillable Harrowing Pariah Ogres patrolling
+
+    wider tunnels. Kill 3 Heretical Knights for Void Orbs, dunk one at
+
+    each of 3 doors. Avoid Ogre line-of-sight.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All 3 yourself. Use cover and tunnel paths to avoid Ogres.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient routing.
+      loadout:
+        subclass: Any; mobility/invisibility kit for patient routing
+        weapons: Strong primary for Knights; rely on cover and tunnel paths to avoid Ogres
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Weapons
+        surges_mods: No surge requirement
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

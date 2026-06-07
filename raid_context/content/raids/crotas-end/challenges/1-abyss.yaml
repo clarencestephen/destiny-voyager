@@ -1,0 +1,51 @@
+# raid_context/content/raids/crotas-end/1-abyss.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 1
+  slug: abyss
+  name: Enter the Abyss (Hellmouth maze)
+  abstract: 'Pitch-black Hellmouth maze. Chalice tutorial. Weight of Darkness +
+
+    Engulfed in Darkness debuffs build. Light lamps via Enlightened to
+
+    preserve Chalice + cleanse stacks. Reach end plate, dunk Chalice
+
+    to form final bridge.
+
+    '
+  master_challenge:
+    name: Conservation of Energy
+    requirement: 'Fireteam must alternate between depositing the Chalice of Light
+
+      in a podium AND Enlightening a lamp — only one lamp Enlightenment
+
+      per podium of Light used. Most of the encounter is spent with
+
+      10 stacks of Weight of Darkness, so the Engulfed-in-Darkness
+
+      timer matters a lot more than a regular run.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  permutations:
+  - name: 'Master: Conservation Of Energy'
+    learner_friendly: false
+    summary: Only 1 lamp per Chalice deposit. Must move tight, accept Weight stacks.
+differs_from_base: 'Adds the ''Conservation of Energy'' constraint on top of the normal encounter: Fireteam
+  must alternate between depositing the Chalice of Light
+
+  in a podium AND Enlightening a lamp — only one lamp Enlightenment
+
+  per podium of Light used. Most of the encounter is spent with
+
+  10 stacks of Weight of Darkness, so the Engulfed-in-Darkness
+
+  timer matters a lot more than a regular run. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

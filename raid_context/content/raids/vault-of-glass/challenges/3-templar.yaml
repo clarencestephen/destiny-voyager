@@ -1,0 +1,51 @@
+# raid_context/content/raids/vault-of-glass/3-templar.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: templar
+  name: The Templar
+  abstract: 'First boss. Aegis relic appears at the cleanse pool. Holder uses
+
+    Super-smash to break Templar''s shield → ~30s DPS → Templar tries
+
+    to TELEPORT (red circle marks destination — stand in it to deny).
+
+    Cycle: shield + Oracles + teleport-deny + DPS. 7-8 min enrage timer.
+
+    '
+  master_challenge:
+    name: Out of Its Way
+    requirement: 'Defeat the Templar without letting him teleport. He teleports
+
+      each time his Ritual of Negation channel (the shield-down DPS
+
+      window) completes, OR when the Aegis-holder ejects the
+
+      relic''s blast. Counter: keep the Oracle waves clean so the
+
+      Aegis-holder doesn''t need to detonate, and push damage hard
+
+      enough to break shield + finish phase in a single Ritual.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Out of Its Way'' constraint on top of the normal encounter: Defeat the
+  Templar without letting him teleport. He teleports
+
+  each time his Ritual of Negation channel (the shield-down DPS
+
+  window) completes, OR when the Aegis-holder ejects the
+
+  relic''s blast. Counter: keep the Oracle waves clean so the
+
+  Aegis-holder doesn''t need to detonate, and push damage hard
+
+  enough to break shield + finish phase in a single Ritual. On Master, every encounter''s challenge is
+  active simultaneously, plus Champions, surges/threat, and Adept loot.'

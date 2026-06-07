@@ -1,7 +1,6 @@
 # raid_context/content/raids/vow-of-the-disciple/2-acquisition.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vow-of-the-disciple
   name: Vow of the Disciple
@@ -108,9 +107,6 @@ encounter:
         - Weapons
         - Class
         surges_mods: Mobility/uptime and anti-Champion (Master) mods; no DPS surge needed
-  - name: Master (Chaff + Shielded)
-    learner_friendly: false
-    summary: No radar. Glyphkeepers = Champions. Slow pace, callouts essential.
   cheese: []
   common_mistakes:
   - Missing the Light/Dark call = wrong Glyphkeeper = wasted.
@@ -125,22 +121,6 @@ encounter:
     - Deliverance (fusion rifle, Stasis)
     - Cataclysmic (linear fusion rifle, Solar)
     - Resonant Fury armor — Helmet + Chest + Legs (encounter-specific slots)
-  master_challenge:
-    name: Swift Destruction
-    requirement: 'Kill the three Unstoppable Champions that spawn in the arena
-
-      very quickly — all three down within 5 seconds of the first
-
-      kill. Failure flashes "Challenge Failed." Strategy: defenders
-
-      stun-lock the Unstoppables while symbol-finders complete the
-
-      obelisk reads, then everyone collapses to kill the champions
-
-      in a single window.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

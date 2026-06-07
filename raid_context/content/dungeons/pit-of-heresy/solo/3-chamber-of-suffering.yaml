@@ -1,0 +1,49 @@
+# raid_context/content/dungeons/pit-of-heresy/3-chamber-of-suffering.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: chamber-of-suffering
+  name: Chamber of Suffering
+  abstract: 'Wave defense + orb dunks under a Curse of Suffering debuff. 6 runes
+
+    on a central wall need destroying. Kill Knights for orbs, dunk to
+
+    clear YOUR debuff stacks. Someone MUST stand under the Annihilator
+
+    Totem to extinguish its fire or the team wipes.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'Long-range Knight kill (rocket / sniper) from totem position →
+
+      run to orb → dunk → back to totem. Loud Lullaby + Gjallarhorn
+
+      remain popular for this.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: All roles in sequence. Don't leave totem long.
+      notes:
+      - Use Witherhoard on far-spawn Knights — does work while you sprint.
+      loadout:
+        subclass: Any; survivable kit; ability uptime helps
+        weapons: Long-range Knight killer (rocket/sniper) from the totem position; Witherhoard for far-spawn
+          Knights; Loud Lullaby and Gjallarhorn remain popular here
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: No surge requirement; favor Health for the Curse window
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

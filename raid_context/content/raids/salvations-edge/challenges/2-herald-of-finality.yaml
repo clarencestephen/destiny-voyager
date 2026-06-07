@@ -1,0 +1,61 @@
+# raid_context/content/raids/salvations-edge/2-herald-of-finality.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: herald-of-finality
+  name: Herald of Finality
+  abstract: 'Boss fight in a triple-circuit arena. 3 teams of 2 across
+
+    left / middle / right sides. Each side has a Trammel
+
+    (Demise / Conflict / Time) — kill yours. Herald summons one
+
+    player from each side to centre via Called to Reckoning;
+
+    they get Stolen Favor from shooting Herald''s head spot
+
+    (after blights around the arena are destroyed). Locks
+
+    conductors with a NEW twist: triangle (Pyramidal) OR circle
+
+    (Spherical) — wrong shape = wipe. Deposit resonance → damage
+
+    phase → repeat.
+
+    '
+  master_challenge:
+    name: At Capacity
+    requirement: 'Only deposit Resonance in the conductor chest when holding
+
+      exactly 3 stacks. Forces a 4-person 3-stack rotation per
+
+      damage phase: starting-plate players pick up 3, conductor-
+
+      closers pick up 1 (matching the conductor''s shape) — except
+
+      right side, where both pick up 3 and one ferries an extra
+
+      from the middle ground stack.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''At Capacity'' constraint on top of the normal encounter: Only deposit Resonance
+  in the conductor chest when holding
+
+  exactly 3 stacks. Forces a 4-person 3-stack rotation per
+
+  damage phase: starting-plate players pick up 3, conductor-
+
+  closers pick up 1 (matching the conductor''s shape) — except
+
+  right side, where both pick up 3 and one ferries an extra
+
+  from the middle ground stack. On Master, every encounter''s challenge is active simultaneously, plus
+  Champions, surges/threat, and Adept loot.'

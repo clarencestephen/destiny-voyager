@@ -127,9 +127,6 @@ encounter:
         - Health
         - Class
         surges_mods: Match surge to add-clear element; on Master slot Champion-counter mods
-  - name: 'Master: Precarious Balance'
-    learner_friendly: false
-    summary: Cross bridge with NO ONE on plate. Bridge deforms — jump small gap.
   cheese: []
   common_mistakes:
   - Crossing without sword AND without Chalice = die.
@@ -157,18 +154,6 @@ encounter:
     - Fang of Ir Yût (scout rifle, Strand)
     - Oversoul Edict (pulse rifle, Arc)
     - Willbreaker's armor — Chest + Arms + Legs (encounter-specific slots)
-  master_challenge:
-    name: Precarious Balance
-    requirement: 'Guardians cannot step on the bridge while it is fully built.
-
-      Once the final piece locks in, everyone must already be on the
-
-      opposite side (or step OFF before the last piece slots). Builders
-
-      especially have to clear the bridge BEFORE finishing it.
-
-      '
-    enforced_on: Master only (Normal grants double loot when active)
   images:
     overview: ''
     setup: ''

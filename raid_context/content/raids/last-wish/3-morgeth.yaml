@@ -112,9 +112,6 @@ encounter:
         - Health
         surges_mods: Super (Intellect) to keep an Essence-reset Super ready; Health for survivability
           while clearing Eyes
-  - name: 'Challenge: Keep Ogres alive'
-    learner_friendly: false
-    summary: 4 front Ogres must NOT be killed. Maneuver around their LoS.
   cheese: []
   common_mistakes:
   - Picking 3rd Strength = instant death.
@@ -126,18 +123,6 @@ encounter:
     hidden_chest: null
     potential_drops:
     - Shared pool with E1/E2/E4 — see kalli encounter for full weapon + armor list.
-  master_challenge:
-    name: Forever Fight
-    requirement: 'Do not kill the smaller Ogres that spawn during the
-
-      encounter. Only Morgeth''s Strength orbs may be picked up
-
-      and absorbed; let the Ogres live for the duration. Forces
-
-      runners to focus on positioning instead of add-clear.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

@@ -81,22 +81,6 @@ encounter:
         - Weapons
         - Health
         surges_mods: No surge requirement; prioritize movement and survivability
-  - name: Solo
-    learner_friendly: false
-    summary: Slower. Sword from Necropolis is gone — bring high-mobility kit.
-    roles:
-    - id: solo
-      count: 1
-      does: All scouts + clears. Bring Bottom-tree Dawnblade / Stompees.
-      loadout:
-        subclass: High-mobility traversal kit; the guide notes a Dawnblade-style glide build or a triple-jump
-          approach for skipping platforms
-        weapons: Strong primary for Wizards and adds; no DPS weapon required
-        exotic_armor: ''
-        armor_stats: &id002
-        - Weapons
-        - Health
-        surges_mods: No surge requirement; prioritize jump height and mobility
   cheese:
   - title: Stompees + Hunter triple-jump
     detail: 'Long Hunter triple-jumps skip several intended platforms entirely.
@@ -168,7 +152,9 @@ encounter:
       approach for skipping platforms
     weapons: Strong primary for Wizards and adds; no DPS weapon required
     exotic_armor: ''
-    armor_stats: *id002
+    armor_stats:
+    - Weapons
+    - Health
     surges_mods: No surge requirement; prioritize jump height and mobility
   sources:
   - tier: 1

@@ -129,9 +129,6 @@ encounter:
         - Health
         surges_mods: Surges matched to your heavy; movement-focused (run speed) helps the Chronon ring
           runs.
-  - name: 'Challenge: All-Chronons collected'
-    learner_friendly: false
-    summary: No player picks Chronon until ALL have. Slow + coordinated.
   cheese: []
   common_mistakes:
   - Charging the wrong-color ring.

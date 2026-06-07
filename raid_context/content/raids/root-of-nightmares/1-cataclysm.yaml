@@ -1,7 +1,6 @@
 # raid_context/content/raids/root-of-nightmares/1-cataclysm.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: root-of-nightmares
   name: Root of Nightmares
@@ -190,18 +189,6 @@ encounter:
     - Briar's Contempt (linear fusion rifle, Solar)
     - Koraxis's Distress (heavy grenade launcher, Strand)
     - Nessa's Oblation (shotgun, Void)
-  master_challenge:
-    name: Illuminated Torment
-    requirement: 'All Tormentors (Cavum of Nezarec) must be killed by a player
-
-      currently holding the Field of Light buff. If anyone without
-
-      the buff lands the killing blow, the challenge fails for the
-
-      run.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/sundered-doctrine/2-open-the-locks.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: open-the-locks
+  name: Open the Locks (Zoetic Lockset)
+  abstract: 'Mid-boss. Rotating-light wheels with knowledge-stack rotations.
+
+    The Zoetic Lockset shines on wheels left→right (tracked via
+
+    Lockout Progression buff); when right wheel locks, its current
+
+    symbol triggers an effect. Goal: get KILL locked in for DPS.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All roles. Take Stop first. Expect 2-3 cycles.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Witherhoard the Lockset during cycles.
+      loadout:
+        subclass: A self-sustaining subclass that can both clear adds and survive long cycles (healing
+          Solar or Void invisibility)
+        weapons: Witherhoard to chip the Lockset during cycles, plus an add-clear primary and a burst
+          heavy for the Kill phase
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge to your burst heavy. Survivability and recovery mods; take Stop first
+          and expect 2-3 cycles.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

@@ -137,24 +137,6 @@ encounter:
         - Class
         surges_mods: Match surge mods to your DPS element for the burst window. On Master add Anti-Barrier
           / Anti-Unstoppable.
-  - name: Solo
-    learner_friendly: false
-    summary: All mechanics in sequence. Expect 3+ phases.
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Witherhoard Persys during circuit-running.
-      loadout:
-        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
-          run every mechanic alone over 3+ phases.
-        weapons: Witherhoard to chip Persys while running circuits, plus Whisper / Linear / Sniper for
-          the core window. Precision Primary for nodes. Anti-Barrier / Anti-Unstoppable on Master.
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Match surge mods to your burst-DPS element; prioritize survivability and (on Master)
-          Champion mods.
   cheese: []
   common_mistakes:
   - Finishing last yellow circuit BEFORE Persys is in core — soft-resets mechanic. ALWAYS check.
@@ -269,7 +251,9 @@ encounter:
     weapons: Witherhoard to chip Persys while running circuits, plus Whisper / Linear / Sniper for the
       core window. Precision Primary for nodes. Anti-Barrier / Anti-Unstoppable on Master.
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Match surge mods to your burst-DPS element; prioritize survivability and (on Master)
       Champion mods.
   sources:

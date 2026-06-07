@@ -105,9 +105,6 @@ encounter:
         - Super
         surges_mods: Match surge mods to your heavy DPS element; ability-regen mods to keep Supers up
           for pool DPS.
-  - name: 'Master: Gaze Amaze'
-    learner_friendly: false
-    summary: Current gaze holder must be IN the pool when partner relieves.
   cheese: []
   common_mistakes:
   - Standing in pool when gaze swap happens — Unstable Light wipes team.
@@ -122,16 +119,6 @@ encounter:
     - Midha's Reckoning (fusion rifle, Arc)
     - Zaouli's Bane (hand cannon, Solar)
     - King's Fall armor (random slot)
-  master_challenge:
-    name: Gaze Amaze
-    requirement: 'The gaze holder must stand IN the Pool of Unclaimed Light
-
-      when swapping the gaze to the next player. No mid-room
-
-      handoffs — every swap happens at the central pool.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

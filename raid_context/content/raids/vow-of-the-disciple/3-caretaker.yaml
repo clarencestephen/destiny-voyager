@@ -1,7 +1,6 @@
 # raid_context/content/raids/vow-of-the-disciple/3-caretaker.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: vow-of-the-disciple
   name: Vow of the Disciple
@@ -133,9 +132,6 @@ encounter:
 
       '
     best_for: Optimized teams.
-  - name: Master (Chaff)
-    learner_friendly: false
-    summary: No radar. Stun team blind to drones. Slower.
   cheese: []
   common_mistakes:
   - Stun team forgets to bait stomp = face won't glow = no stun.
@@ -162,20 +158,6 @@ encounter:
     - Cataclysmic (linear fusion rifle, Solar)
     - Forbearance (grenade launcher, Arc)
     - Resonant Fury armor — Helmet + Arms + Class Item (encounter-specific slots)
-  master_challenge:
-    name: Base Information
-    requirement: 'Each runner entering the Dark Room collects only a SINGLE
-
-      symbol per trip (not all 3). Forces a 2-team split: 3 stun
-
-      the boss, 3 take one glyph each. Wait for the obelisk to
-
-      request its offering (player-name message appears in the
-
-      feed) before depositing.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

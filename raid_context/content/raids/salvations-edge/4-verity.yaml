@@ -296,26 +296,6 @@ encounter:
     - Summum Bonum (sword, Arc)
     - Non-Denouement (combat bow, Arc)
     - Imminence (SMG, Strand)
-  master_challenge:
-    name: Varied Geometry
-    requirement: 'Cannot use the same 3D shape to escape the solo realm until
-
-      all six 3D shapes (sphere, cube, pyramid + prism, cone,
-
-      cylinder) have been used across phases. Phase 1: dissect
-
-      composite shapes (prism/cone/cylinder). Phase 2: dissect
-
-      pure shapes (sphere/cube/pyramid) — coordinate with solo
-
-      players since the lock-and-key rule still applies. Phase 3:
-
-      revert to composites. Master adds Unstoppable Ogres in solo
-
-      rooms.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

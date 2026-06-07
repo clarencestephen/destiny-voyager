@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/grasp-of-avarice/2-phryzhia.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: phryzhia
+  name: Phry'zhia, the Insatiable
+  abstract: 'First boss. Phry''zhia stands invincible mid-arena. Use Scorch Cannons
+
+    from Fallen to blow open side rooms, gather engrams from Hive inside,
+
+    deposit 40 at the central Icon → DPS phase opens.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: You do everything. Cannon → door → gather → deposit. 2-3 phases typical.
+    roles:
+    - id: solo
+      count: 1
+      does: Full loop. Don't bother with 2 doors — use one, deposit, swap sides next phase.
+      notes:
+      - Witherhoard the Ogre during deposit runs for free chip.
+      loadout:
+        subclass: Self-sufficient survival kit (strong healing or Stasis crowd-control) so you can cannon,
+          gather, and deposit alone across 2-3 phases.
+        weapons: Witherhoard to chip the Ogre during deposit runs, plus a burst heavy for the short damage
+          window.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Heavy surge matched to your burst weapon; lean on resilience and ability mods for
+          the solo grind.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

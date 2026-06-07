@@ -1,0 +1,51 @@
+# raid_context/content/raids/kings-fall/4-warpriest.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: warpriest
+  name: Warpriest
+  abstract: 'First major boss. 3 plates (L/M/R). After clearing adds + Hallowed
+
+    Knights, a GLYPH SEQUENCE starts (which plate first → glow on
+
+    Monolith back). Step plates in sequence → last stepper gets Brand
+
+    of the Initiate (DPS aura). DPS Warpriest. Brand expires after 5
+
+    stacks → Brand Claimer swap. End-of-DPS: hide behind a Monolith
+
+    from Oculus or die.
+
+    '
+  master_challenge:
+    name: Devious Thievery
+    requirement: 'Players must steal the Brand of the Initiate within a couple
+
+      of seconds of taking the Brand Claimer buff. Tight rotation
+
+      between the killer and the stealer; you cannot sit on the
+
+      Brand Claimer waiting for a safe steal.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Devious Thievery'
+    learner_friendly: false
+    summary: Brand Claimer cannot be held > 5s. Holder MOVES toward Claimer.
+differs_from_base: 'Adds the ''Devious Thievery'' constraint on top of the normal encounter: Players must
+  steal the Brand of the Initiate within a couple
+
+  of seconds of taking the Brand Claimer buff. Tight rotation
+
+  between the killer and the stealer; you cannot sit on the
+
+  Brand Claimer waiting for a safe steal. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

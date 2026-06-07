@@ -98,21 +98,6 @@ encounter:
         - Health
         - Class
         surges_mods: No surge mods needed (no DPS phase); prioritize ammo finder and resilience mods
-  - name: Solo
-    learner_friendly: false
-    summary: Take it slow. Read every symbol before moving.
-    roles:
-    - id: solo
-      count: 1
-      does: All roles. Watch for Hobgoblins on elevation.
-      loadout:
-        subclass: Sustain-focused subclass (Void for Devour or Solar for Restoration to survive alone)
-        weapons: Long-range scout or sniper for Hobgoblins plus an add-clear primary
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: No surge mods needed (no DPS phase); run survivability and ammo mods
   cheese:
   - title: Snipe Hobgoblins from start
     detail: 'Many Hobgoblins spawn on visible elevation from initial chambers.
@@ -211,7 +196,9 @@ encounter:
     subclass: Sustain-focused subclass (Void for Devour or Solar for Restoration to survive alone)
     weapons: Long-range scout or sniper for Hobgoblins plus an add-clear primary
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge mods needed (no DPS phase); run survivability and ammo mods
   sources:
   - tier: 1

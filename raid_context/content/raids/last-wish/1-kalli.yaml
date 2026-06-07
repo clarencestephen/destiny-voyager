@@ -113,9 +113,6 @@ encounter:
         - Class
         surges_mods: Match weapon surge mods to your heavy element; Health (Resilience) focus for Knight
           melee survivability
-  - name: 'Challenge: All 9 plates'
-    learner_friendly: false
-    summary: Cleanse all 9 plates (including 3 not in shown symbols). Each WRONG plate spawns an Ogre.
   cheese: []
   common_mistakes:
   - Standing on a section with a blight = damage.
@@ -134,16 +131,6 @@ encounter:
       of Heaven (lightweight bow, Solar).'
     - 'Armor: Helm + Gauntlets + Plate + Greaves + Mark of the Great Hunt (drops randomly from any of
       E1-E4).'
-  master_challenge:
-    name: Summoning Ritual
-    requirement: 'Activate AND cleanse all 9 plates around the arena, then kill
-
-      all 9 Knights AND all 9 Ogres before damaging Kalli at all.
-
-      DPS only starts after every cleanse + kill is done.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

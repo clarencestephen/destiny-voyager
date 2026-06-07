@@ -161,9 +161,6 @@ encounter:
         - Class
         surges_mods: Surges matched to your heavy; ammo-finder/reserves to sustain Time's Burden clears
           and Hourglass refills.
-  - name: 'Challenge: 3 Climbers'
-    learner_friendly: false
-    summary: Each pillar gets a Climber instead of 1.
   cheese: []
   common_mistakes:
   - Diastole mistiming — Climber falls.

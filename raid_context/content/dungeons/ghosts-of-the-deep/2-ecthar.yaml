@@ -1,7 +1,6 @@
 # raid_context/content/dungeons/ghosts-of-the-deep/2-ecthar.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: ghosts-of-the-deep
   name: Ghosts of the Deep
@@ -173,27 +172,6 @@ encounter:
         - Health
         - Super
         surges_mods: Heavy-weapon damage mods; super mods to chain the next phase
-  - name: Solo
-    learner_friendly: false
-    summary: 'All mechanics yourself. Expect 2-3 phases. Use Witherhoard for
-
-      Ecthar chip + sustain (Devour / Resto). Bring Heart of Inmost
-
-      Light / Phoenix Protocol for ability spam.
-
-      '
-    roles:
-    - id: solo
-      count: 1
-      does: Patient. Oxygen management is the wall.
-      loadout:
-        subclass: Void (Devour) or Solar (Restoration) for sustain; expect 2-3 phases
-        weapons: Witherhoard for Ecthar chip + a burst heavy; oxygen management is the real wall
-        exotic_armor: ''
-        armor_stats: &id005
-        - Health
-        - Class
-        surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
   cheese: []
   common_mistakes:
   - Diving to wrong underwater rune = death + reset.
@@ -298,7 +276,9 @@ encounter:
     subclass: Void (Devour) or Solar (Restoration) for sustain; expect 2-3 phases
     weapons: Witherhoard for Ecthar chip + a burst heavy; oxygen management is the real wall
     exotic_armor: ''
-    armor_stats: *id005
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
   sources:
   - tier: 1

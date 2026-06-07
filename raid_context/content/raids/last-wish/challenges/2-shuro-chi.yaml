@@ -1,0 +1,49 @@
+# raid_context/content/raids/last-wish/2-shuro-chi.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: shuro-chi
+  name: Shuro Chi, the Corrupted
+  abstract: '3 floors. Per floor: clear adds → 3 crystals on 3 plates → shoot
+
+    crystals in triangle pattern to break Shuro Chi''s shield → burst
+
+    1/6 HP bar. If wipe-attack starts: use Eye of Riven Taken Essence
+
+    super to cancel. Then symbol image puzzle (3 wall images, 9 plates)
+
+    to ascend.
+
+    '
+  master_challenge:
+    name: Which Witch
+    requirement: 'No one in the fireteam may get hit by Shuro Chi''s Arc Blast
+
+      (her long-range AoE attack). Hard to dodge over a full
+
+      encounter; teams stack at long range and disperse the moment
+
+      wind-up animation begins.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: No ranged blast damage'
+    learner_friendly: false
+    summary: Cannot take damage from Shuro Chi's ranged blast attack. Move actively.
+differs_from_base: 'Adds the ''Which Witch'' constraint on top of the normal encounter: No one in the
+  fireteam may get hit by Shuro Chi''s Arc Blast
+
+  (her long-range AoE attack). Hard to dodge over a full
+
+  encounter; teams stack at long range and disperse the moment
+
+  wind-up animation begins. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

@@ -1,0 +1,43 @@
+# raid_context/content/raids/kings-fall/5-golgoroth.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 5
+  slug: golgoroth
+  name: Golgoroth
+  abstract: 'Hive Ogre boss in a cellar. Mechanics: capture Gaze (shoot back),
+
+    shoot down Pool of Reclaimed Light orbs from ceiling, stand in pool
+
+    while another player captures Gaze, burst Golgoroth''s chest. Unstable
+
+    Light explosions detonate near Golgoroth for huge damage. 6 orbs total.
+
+    '
+  master_challenge:
+    name: Gaze Amaze
+    requirement: 'The gaze holder must stand IN the Pool of Unclaimed Light
+
+      when swapping the gaze to the next player. No mid-room
+
+      handoffs — every swap happens at the central pool.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Gaze Amaze'
+    learner_friendly: false
+    summary: Current gaze holder must be IN the pool when partner relieves.
+differs_from_base: 'Adds the ''Gaze Amaze'' constraint on top of the normal encounter: The gaze holder
+  must stand IN the Pool of Unclaimed Light
+
+  when swapping the gaze to the next player. No mid-room
+
+  handoffs — every swap happens at the central pool. On Master, every encounter''s challenge is active
+  simultaneously, plus Champions, surges/threat, and Adept loot.'

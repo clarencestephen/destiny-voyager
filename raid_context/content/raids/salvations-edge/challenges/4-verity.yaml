@@ -1,0 +1,67 @@
+# raid_context/content/raids/salvations-edge/4-verity.yaml
+# Encounter schema v3 (atomic). v2 mechanics merged from raids/salvations-edge.yaml
+# + verified v3 additions from the Verity vertical-slice pipeline (brief->author->verify).
+# Blank loadout fields = UNVERIFIED, not guessed. EoF stat names (Health/Class/...).
+# Verifier note: removed an incorrect 'Witness one-shot' threat (Witness = encounter 5).
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: verity
+  name: Verity
+  abstract: 'The infamous shape-puzzle encounter. Team splits into INSIDE (3
+
+    trapped in alternate realm) and OUTSIDE (3 in main realm).
+
+    Inside reads 2D shapes (their statue holds one) and passes
+
+    shapes between Inside teammates to escape with a 3D KEY that
+
+    does NOT contain their own shape. Outside swaps 3D shapes
+
+    between Inside teammates'' statues so the final shapes match.
+
+    One full round = both teams done correctly. 3 rounds = win.
+
+    '
+  master_challenge:
+    name: Varied Geometry
+    requirement: 'Cannot use the same 3D shape to escape the solo realm until
+
+      all six 3D shapes (sphere, cube, pyramid + prism, cone,
+
+      cylinder) have been used across phases. Phase 1: dissect
+
+      composite shapes (prism/cone/cylinder). Phase 2: dissect
+
+      pure shapes (sphere/cube/pyramid) — coordinate with solo
+
+      players since the lock-and-key rule still applies. Phase 3:
+
+      revert to composites. Master adds Unstoppable Ogres in solo
+
+      rooms.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Varied Geometry'' constraint on top of the normal encounter: Cannot use
+  the same 3D shape to escape the solo realm until
+
+  all six 3D shapes (sphere, cube, pyramid + prism, cone,
+
+  cylinder) have been used across phases. Phase 1: dissect
+
+  composite shapes (prism/cone/cylinder). Phase 2: dissect
+
+  pure shapes (sphere/cube/pyramid) — coordinate with solo
+
+  players since the lock-and-key rule still applies. Phase 3:
+
+  revert to composites. Master adds Unstoppable Ogres in solo
+
+  rooms. On Master, every encounter''s challenge is active simultaneously, plus Champions, surges/threat,
+  and Adept loot.'

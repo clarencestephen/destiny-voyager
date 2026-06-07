@@ -1,0 +1,43 @@
+# raid_context/content/raids/root-of-nightmares/2-scission.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: scission
+  name: Scission
+  abstract: 'Climb 3 vertical floors split by an un-jumpable chasm. Per floor:
+
+    complete one Field of Light chain AND one Flux of Darkness chain
+
+    before Imminent Expulsion expires. Use launchers to cross the
+
+    chasm and ascend. Floor 3 chains complete = encounter done.
+
+    '
+  master_challenge:
+    name: Crossfire
+    requirement: 'Players can only shoot the launcher-activation crystals on the
+
+      OPPOSITE side of the chasm from where they''re standing. Same-
+
+      side shots fail the challenge. Forces deliberate light/dark
+
+      side coordination.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Crossfire'' constraint on top of the normal encounter: Players can only
+  shoot the launcher-activation crystals on the
+
+  OPPOSITE side of the chasm from where they''re standing. Same-
+
+  side shots fail the challenge. Forces deliberate light/dark
+
+  side coordination. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

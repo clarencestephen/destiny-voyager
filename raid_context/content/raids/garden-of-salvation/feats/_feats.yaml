@@ -1,0 +1,10 @@
+# raids/garden-of-salvation/feats/_feats.yaml — feats/triumphs (separate category)
+
+activity:
+  slug: garden-of-salvation
+  name: Garden of Salvation
+  activity_type: raid
+  category: feats
+feats: []
+note: Triumphs / special accomplishments (flawless, solo-flawless, day-one, secret triumphs, collectibles).
+  To be populated.

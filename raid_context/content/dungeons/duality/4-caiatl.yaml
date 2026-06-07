@@ -146,26 +146,6 @@ encounter:
         - Health
         - Super
         surges_mods: Match surge to your LFR/heavy element (Arc if using Stormchaser)
-  - name: Solo
-    learner_friendly: false
-    summary: '4 Standards alone, 3 bell stuns alone. Bring Heartshadow (this
-
-      dungeon''s exotic) for self-cleave + invis. Expect 3-4 cycles.
-
-      '
-    roles:
-    - id: solo
-      count: 1
-      does: Self-pace. Don't engage Caiatl outside bell stuns.
-      loadout:
-        subclass: Void Hunter for self-pace; invisibility to survive the long four-Standard cycles
-        weapons: Self-sufficient ad-clear plus a strong burst; Heartshadow strongly recommended for self-cleave
-          + invis
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: Match surge to DPS element; Solar resist for Cabal fire
   cheese: []
   common_mistakes:
   - Ringing bell when Caiatl is FAR from it = stun without Waking Resonance = minimal damage.
@@ -276,7 +256,9 @@ encounter:
     weapons: Self-sufficient ad-clear plus a strong burst; Heartshadow strongly recommended for self-cleave
       + invis
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Match surge to DPS element; Solar resist for Cabal fire
   sources:
   - tier: 1

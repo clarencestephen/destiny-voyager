@@ -1,0 +1,43 @@
+# raid_context/content/dungeons/grasp-of-avarice/5-avarokk.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: grasp-of-avarice
+  name: Grasp of Avarice
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 5
+  slug: avarokk
+  name: Wilhelm's Hoard (Captain Avarokk, the Covetous)
+  abstract: 'Final boss. Avarokk + 2 lieutenants (R-M80, Grisprax). Charge Fallen
+
+    batteries with Scorch Cannons → engrams rain from ceiling → deposit
+
+    60 at Icon → DPS phase. Lieutenants drop ~10 engrams each on death.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Cannon → battery → gather → deposit, alone. Expect 4-6 phases.
+    roles:
+    - id: solo
+      count: 1
+      does: Cannon for 1 battery per cycle. Witherhoard Avarokk during deposit runs.
+      notes:
+      - Stasis crowd-control on lieutenants helps survive while cannoneering.
+      loadout:
+        subclass: Stasis or other crowd-control subclass to freeze/control lieutenants while you cannoneer;
+          high sustain for the 4-6 phase grind.
+        weapons: Witherhoard to chip Avarokk during deposit runs, plus a burst heavy for the window; add-clear
+          primary for lieutenants and Vandals.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Heavy surge matched to your burst weapon; lean on survivability and ability mods
+          for the solo attempt.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

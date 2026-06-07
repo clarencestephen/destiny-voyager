@@ -1,0 +1,57 @@
+# raid_context/content/raids/vow-of-the-disciple/2-acquisition.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 2
+  slug: acquisition
+  name: Acquisition (3 obelisks)
+  abstract: 'Defend 3 obelisks from Abated Adherent lurkers (fill obelisks =
+
+    wipe). Reveal 3 symbols per obelisk via Disciple''s Compass (Taken
+
+    Knight) → 9 rooms → kill Glyphkeeper (Light or Dark side per call).
+
+    Shoot 3 correct symbols on obelisk within timeframe. Repeat 3
+
+    obelisks × 3 symbols each.
+
+    '
+  master_challenge:
+    name: Swift Destruction
+    requirement: 'Kill the three Unstoppable Champions that spawn in the arena
+
+      very quickly — all three down within 5 seconds of the first
+
+      kill. Failure flashes "Challenge Failed." Strategy: defenders
+
+      stun-lock the Unstoppables while symbol-finders complete the
+
+      obelisk reads, then everyone collapses to kill the champions
+
+      in a single window.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: Master (Chaff + Shielded)
+    learner_friendly: false
+    summary: No radar. Glyphkeepers = Champions. Slow pace, callouts essential.
+differs_from_base: 'Adds the ''Swift Destruction'' constraint on top of the normal encounter: Kill the
+  three Unstoppable Champions that spawn in the arena
+
+  very quickly — all three down within 5 seconds of the first
+
+  kill. Failure flashes "Challenge Failed." Strategy: defenders
+
+  stun-lock the Unstoppables while symbol-finders complete the
+
+  obelisk reads, then everyone collapses to kill the champions
+
+  in a single window. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

@@ -1,0 +1,51 @@
+# raid_context/content/raids/vow-of-the-disciple/4-exhibition.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: exhibition
+  name: Exhibition (relics race)
+  abstract: '4-room race against Terminal Resonance timer. Pick up Resonant
+
+    Shard → enter room → kill Glyphkeepers → identify SHARED symbol
+
+    → shoot door symbol → advance. Room 2 adds Aegis (VoG) for Pervading
+
+    Darkness cleanse. Room 3 adds Taken Essence for blight
+
+    cleanse. Disciple''s Hourglass Taken Knight = reset Terminal
+
+    Resonance timer.
+
+    '
+  master_challenge:
+    name: Defenses Down
+    requirement: 'Each player can kill no more than one Taken Knight throughout
+
+      the encounter. 7 knights total (one starting room + 2 per
+
+      chamber); skip the second knight in room 2 to land 6 unique
+
+      kills across 6 players. Requires deliberate relic-hand-off
+
+      choreography.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Defenses Down'' constraint on top of the normal encounter: Each player
+  can kill no more than one Taken Knight throughout
+
+  the encounter. 7 knights total (one starting room + 2 per
+
+  chamber); skip the second knight in room 2 to land 6 unique
+
+  kills across 6 players. Requires deliberate relic-hand-off
+
+  choreography. On Master, every encounter''s challenge is active simultaneously, plus Champions, surges/threat,
+  and Adept loot.'

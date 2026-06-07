@@ -1,0 +1,39 @@
+# raid_context/content/dungeons/pit-of-heresy/5-cradle-of-damnation.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: pit-of-heresy
+  name: Pit of Heresy
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 5
+  slug: cradle-of-damnation
+  name: Cradle of Damnation (Zulmak, Instrument of Torment)
+  abstract: 'Final boss. Same Cleaver + Disciple loop, then dunk 3 Void Orbs at
+
+    central crystal → DPS phase in a green aura. Zulmak''s charged slam
+
+    one-shots the aura — GTFO when he kneels.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All 3 Disciples + DPS yourself. Bring sword for DPS (Lament / Falling Guillotine).
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical. Don't rush input order. Witherhoard the Disciples for chip.
+      loadout:
+        subclass: Any; survivable kit; Well of Radiance is popular for the DPS window
+        weapons: Relic Hive Cleaver for Disciples; a burst DPS sword (Lament or Falling Guillotine) for
+          the aura; Witherhoard for chip on the Disciples
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Arc weapon surge optional; no surge is mandatory
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

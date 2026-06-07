@@ -1,0 +1,30 @@
+# raid_context/content/raids/desert-perpetual/1-epoptes.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: desert-perpetual
+  name: The Desert Perpetual
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 1
+  slug: epoptes
+  name: Epoptes, Lord of Quanta
+  abstract: 'Vex Hydra trio: Epoptes + Particle Lens + Wave Lens. Lenses
+
+    protected by 6-eye shields (visible via shield-of-light cones).
+
+    Constant + Cyclical Temporality players see eye positions on
+
+    pillars → call out cross-team → destroy 3 eyes per side → break
+
+    shields → kill Lenses → Epoptes DPS phase with sub-phase eye
+
+    mechanic.
+
+    '
+  permutations:
+  - name: 'Challenge: No sequential eye'
+    learner_friendly: false
+    summary: Cannot destroy same Lens' eye twice in a row. 2 players per side swap eye-destruction roles.

@@ -1,0 +1,44 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/1-hive-ritual.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: hive-ritual
+  name: Hive Ritual (break the seal)
+  abstract: 'First encounter. Forest area with a sealed Hive ritual circle.
+
+    4 cycles: kill a Soulfire Binder Ogre → follow glowing path to
+
+    Hive squad → kill them → next path → final cycle has a Lightbearer
+
+    → crush Ghost → carry Vestige back to a rune statue at the ritual.
+
+    4 cycles = 4 statues = seal breaks.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All cycles yourself. ~12-15 min per cycle.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Bring sustained sustain (Devour / Resto).
+      loadout:
+        subclass: Void (Devour) or Solar (Restoration) for constant self-healing across the long ~12-15
+          min per cycle
+        weapons: Reliable add-clear primary + special; bring sustained sustain rather than burst since
+          there is no boss here
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Survivability and ability-regen mods; no DPS surges
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

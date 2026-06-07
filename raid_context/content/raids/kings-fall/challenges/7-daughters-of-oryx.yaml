@@ -1,0 +1,55 @@
+# raid_context/content/raids/kings-fall/7-daughters-of-oryx.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: kings-fall
+  name: King's Fall
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 7
+  slug: daughters-of-oryx
+  name: Daughters of Oryx (Ir Anûk + Ir Halak)
+  abstract: 'Two Wizard sisters. One sings deathsong (wipe in ~2 min), other
+
+    actively shoots. Plate sequence + Torn Between Dimensions player
+
+    collects Blightguard pieces via jumping platforms only they see.
+
+    3 cycles → Brand Claimer steals the active daughter''s Brand → DPS
+
+    that daughter. Once one daughter dies, MUST kill the other in next
+
+    phase or wipe.
+
+    '
+  master_challenge:
+    name: Under Construction
+    requirement: 'Players cannot stand on the same plate twice in a single
+
+      phase. With 4 plates and 6 players across multiple Daughter
+
+      kills, plate-rotation has to be deliberate — typically:
+
+      plate-holders for the first pair of Daughters swap to the
+
+      opposite pair of plates for the second.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Master: Under Construction'
+    learner_friendly: false
+    summary: Plate cannot be stepped > 1× per Brand cycle. Use middle ledges instead.
+differs_from_base: 'Adds the ''Under Construction'' constraint on top of the normal encounter: Players
+  cannot stand on the same plate twice in a single
+
+  phase. With 4 plates and 6 players across multiple Daughter
+
+  kills, plate-rotation has to be deliberate — typically:
+
+  plate-holders for the first pair of Daughters swap to the
+
+  opposite pair of plates for the second. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

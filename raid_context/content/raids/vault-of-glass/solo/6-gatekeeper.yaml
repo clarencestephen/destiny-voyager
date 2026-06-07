@@ -1,0 +1,31 @@
+# raid_context/content/raids/vault-of-glass/6-gatekeeper.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vault-of-glass
+  name: Vault of Glass
+  activity_type: raid
+  fireteam_size: 6
+  category: solo
+encounter:
+  order: 6
+  slug: gatekeeper
+  name: Gatekeeper (Venus + Mars portals)
+  abstract: 'Split 3/3 onto Venus + Mars plates. Kill the central Gatekeeper
+
+    Hydra. Portal teams enter their respective portals, kill the
+
+    planet''s Gatekeeper, grab Aegis Relic, return. Defenders hold
+
+    plates + Conflux. Praetorians try to capture plates → Oracle spawn
+
+    = wipe trigger.
+
+    '
+  permutations:
+  - name: Solo flawless (challenge mode)
+    learner_friendly: false
+    summary: Not common, but emperor-tier teams have solo'd via specific exotic combos.
+    best_for: Endgame challenge.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

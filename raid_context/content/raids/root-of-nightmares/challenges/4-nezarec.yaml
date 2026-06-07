@@ -1,0 +1,45 @@
+# raid_context/content/raids/root-of-nightmares/4-nezarec.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 4
+  slug: nezarec
+  name: Nezarec, Final God of Pain
+  abstract: 'Two-side arena. Build a Field of Light chain on one side AND a
+
+    Flux of Darkness chain on the other. Survive Overwhelming Energy
+
+    wipes with Light''s Refuge or Darkness''s Refuge (cued by Nezarec''s
+
+    shoulder-break tattoo). One player breaks his chest to absorb
+
+    aggro. Both chains complete → DPS phase. Loop until Final Stand.
+
+    '
+  master_challenge:
+    name: All Hands
+    requirement: 'For each refuge-cycle, the Light-side node AND the Dark-side
+
+      node must be completed within ~the same beat — both sides
+
+      finishing together, not one cleaning up after the other. Forces
+
+      balanced runner load on both refuges.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''All Hands'' constraint on top of the normal encounter: For each refuge-cycle,
+  the Light-side node AND the Dark-side
+
+  node must be completed within ~the same beat — both sides
+
+  finishing together, not one cleaning up after the other. Forces
+
+  balanced runner load on both refuges. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

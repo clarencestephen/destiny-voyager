@@ -106,9 +106,6 @@ encounter:
     learner_friendly: false
     summary: Tractor Cannon pushes Eye of Riven near center room — no tunnel travel.
     best_for: Speed clears.
-  - name: 'Master: Mights stay in rooms'
-    learner_friendly: false
-    summary: Mights of Riven cannot cross room barrier — challenge fail if they do.
   cheese:
   - title: Tractor Cannon push
     detail: 'Tractor Cannon shoots Eye of Riven Captain across the room.
@@ -128,18 +125,6 @@ encounter:
     hidden_chest: null
     potential_drops:
     - Shared pool with E1/E2/E3 — see kalli encounter for full weapon + armor list.
-  master_challenge:
-    name: Keep Out
-    requirement: 'No Might of Riven knights may reach the center chamber during
-
-      the Vault fight. Outside teams must kill every Might of Riven
-
-      before it gets through the door — failure (even one knight
-
-      entering) fails the challenge.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''

@@ -124,30 +124,6 @@ encounter:
         - Health
         - Weapons
         surges_mods: No surge requirement
-  - name: Solo
-    learner_friendly: false
-    summary: 'Long-range Knight kill (rocket / sniper) from totem position →
-
-      run to orb → dunk → back to totem. Loud Lullaby + Gjallarhorn
-
-      remain popular for this.
-
-      '
-    roles:
-    - id: solo
-      count: 1
-      does: All roles in sequence. Don't leave totem long.
-      notes:
-      - Use Witherhoard on far-spawn Knights — does work while you sprint.
-      loadout:
-        subclass: Any; survivable kit; ability uptime helps
-        weapons: Long-range Knight killer (rocket/sniper) from the totem position; Witherhoard for far-spawn
-          Knights; Loud Lullaby and Gjallarhorn remain popular here
-        exotic_armor: ''
-        armor_stats: &id004
-        - Health
-        - Class
-        surges_mods: No surge requirement; favor Health for the Curse window
   cheese: []
   common_mistakes:
   - All 3 going for orbs simultaneously → totem fires → wipe.
@@ -236,7 +212,9 @@ encounter:
     weapons: Long-range Knight killer (rocket/sniper) from the totem position; Witherhoard for far-spawn
       Knights; Loud Lullaby and Gjallarhorn remain popular here
     exotic_armor: ''
-    armor_stats: *id004
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge requirement; favor Health for the Curse window
   sources:
   - tier: 1

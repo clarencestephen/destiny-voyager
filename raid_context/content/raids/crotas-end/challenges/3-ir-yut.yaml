@@ -1,0 +1,52 @@
+# raid_context/content/raids/crotas-end/3-ir-yut.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: crotas-end
+  name: Crota's End
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: ir-yut
+  name: Ir Yût, the Deathsinger
+  abstract: 'Sub-boss. 3 phases of Wizard kills (3/4/5 hidden Shield Singer
+
+    Wizards). Pass Chalice for Enlightened buffs equal to wizard count.
+
+    Walk through green barriers (require Enlightened) to find + kill
+
+    Wizards SIMULTANEOUSLY. Shield drops → DPS Ir Yût before her death
+
+    song (Dark Liturgy) wipes the team.
+
+    '
+  master_challenge:
+    name: Equal Vessels
+    requirement: 'All six players must rotate the Chalice of Light buff in the
+
+      same order throughout the entire encounter. A player cannot
+
+      hold the Chalice again until all five other players have held
+
+      it. Forces a strict 6-slot round-robin.
+
+      '
+    enforced_on: Master only (Normal grants double loot when active)
+  permutations:
+  - name: 'Master: Equal Vessels'
+    learner_friendly: false
+    summary: Every player must receive Chalice before same person can hold again. Rotate.
+  - name: 'Master: Communal Rites'
+    learner_friendly: false
+    summary: Every DPS phase requires 1 Expunge per phase.
+differs_from_base: 'Adds the ''Equal Vessels'' constraint on top of the normal encounter: All six players
+  must rotate the Chalice of Light buff in the
+
+  same order throughout the entire encounter. A player cannot
+
+  hold the Chalice again until all five other players have held
+
+  it. Forces a strict 6-slot round-robin. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

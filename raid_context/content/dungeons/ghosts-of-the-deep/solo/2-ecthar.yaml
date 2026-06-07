@@ -1,0 +1,50 @@
+# raid_context/content/dungeons/ghosts-of-the-deep/2-ecthar.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: ghosts-of-the-deep
+  name: Ghosts of the Deep
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 2
+  slug: ecthar
+  name: Ecthar, the Shield of Savathûn
+  abstract: 'First boss. Underwater. 3 cycles: kill Hive → Keeper of the Deep
+
+    → Deepsight reveals 3 symbols on wall → dive underwater + activate
+
+    3 matching runes (pursued by Ecthar) → above-water Lightbearer
+
+    Wizards spawn → kill 3 + crush Ghosts → 3 Vestiges deposit into any
+
+    statue → Ecthar + Wellkeeper Knight spawn → kill Wellkeeper for
+
+    Piercing Light → break Ecthar''s shield → DPS.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'All mechanics yourself. Expect 2-3 phases. Use Witherhoard for
+
+      Ecthar chip + sustain (Devour / Resto). Bring Heart of Inmost
+
+      Light / Phoenix Protocol for ability spam.
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Oxygen management is the wall.
+      loadout:
+        subclass: Void (Devour) or Solar (Restoration) for sustain; expect 2-3 phases
+        weapons: Witherhoard for Ecthar chip + a burst heavy; oxygen management is the real wall
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Survivability + ability-regen mods; heavy-damage mods for each short window
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

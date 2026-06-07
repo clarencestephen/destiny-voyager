@@ -156,20 +156,61 @@ def _resolve_encounter(slug: str, encounter: str) -> dict:
     raise NotFound(f"'{encounter}' is not an encounter of '{slug}'")
 
 
-def _v3_path(slug: str, activity_type: str, order, enc_slug: str) -> str:
-    sub = "raids" if activity_type == "raid" else "dungeons"
-    return os.path.join(CONTENT, sub, slug, f"{order}-{enc_slug}.yaml")
+def _content_dir(a: dict) -> str:
+    """Directory holding this activity's NORMAL encounter files. Uses the
+    registry content_path (so epic variants resolve to <parent>/epic/)."""
+    cp = a.get("content_path")
+    if cp:
+        return os.path.join(TK, cp)
+    sub = "raids" if a["activity_type"] == "raid" else "dungeons"
+    return os.path.join(CONTENT, sub, a["slug"])
+
+
+def _v3_path(a: dict, order, enc_slug: str) -> str:
+    return os.path.join(_content_dir(a), f"{order}-{enc_slug}.yaml")
+
+
+# category subfolders split out of the normal base encounters
+CATEGORIES = ("challenges", "solo", "feats")
+
+
+def get_variant(slug: str, encounter: str, category: str) -> dict:
+    """Serve modifier-only content (challenges | solo) for ONE encounter from its
+    category subfolder. Base encounter files hold NORMAL content only."""
+    if category not in ("challenges", "solo"):
+        raise NotFound(f"unknown category '{category}'")
+    reg = registry()
+    if slug not in reg:
+        raise NotFound(f"unknown activity '{slug}'")
+    a = reg[slug]
+    e = _resolve_encounter(slug, encounter)
+    path = os.path.join(_content_dir(a), category, f"{e['order']}-{e['slug']}.yaml")
+    if not os.path.exists(path):
+        raise NotFound(f"no {category} content for {slug}/{e['slug']}")
+    doc = yaml.safe_load(open(path))
+    _assert_isolation(doc, slug, e["slug"])
+    return doc
+
+
+def get_feats(slug: str) -> dict:
+    reg = registry()
+    if slug not in reg:
+        raise NotFound(f"unknown activity '{slug}'")
+    path = os.path.join(_content_dir(reg[slug]), "feats", "_feats.yaml")
+    if not os.path.exists(path):
+        raise NotFound(f"no feats for {slug}")
+    return yaml.safe_load(open(path))
 
 
 def get_encounter(slug: str, encounter: str) -> dict:
-    """Return EXACTLY ONE encounter. Prefers the authored v3 file; falls back to
-    the v2 monolith, extracting only this encounter's block. Guaranteed single."""
+    """Return EXACTLY ONE NORMAL encounter. Prefers the authored v3 file; falls
+    back to the v2 monolith, extracting only this encounter's block. Single."""
     reg = registry()
     a = reg[slug] if slug in reg else None
     if not a:
         raise NotFound(f"unknown activity '{slug}'")
     e = _resolve_encounter(slug, encounter)
-    p = _v3_path(slug, a["activity_type"], e["order"], e["slug"])
+    p = _v3_path(a, e["order"], e["slug"])
     if os.path.exists(p):
         with open(p) as f:
             doc = yaml.safe_load(f)
@@ -212,7 +253,7 @@ def get_overview(slug: str) -> dict:
     if slug not in reg:
         raise NotFound(f"unknown activity '{slug}'")
     a = reg[slug]
-    actpath = os.path.join(CONTENT, "raids" if a["activity_type"] == "raid" else "dungeons", slug, "_activity.yaml")
+    actpath = os.path.join(_content_dir(a), "_activity.yaml")
     if os.path.exists(actpath):
         with open(actpath) as f:
             return yaml.safe_load(f)

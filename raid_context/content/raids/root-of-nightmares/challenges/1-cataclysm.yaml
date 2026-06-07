@@ -1,0 +1,39 @@
+# raid_context/content/raids/root-of-nightmares/1-cataclysm.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 1
+  slug: cataclysm
+  name: Cataclysm
+  abstract: 'Build 4 Field of Light chains around the arena. Kill the Cavum of
+
+    Nezarec when it spawns to reset the Sweeping Terror wipe timer.
+
+    '
+  master_challenge:
+    name: Illuminated Torment
+    requirement: 'All Tormentors (Cavum of Nezarec) must be killed by a player
+
+      currently holding the Field of Light buff. If anyone without
+
+      the buff lands the killing blow, the challenge fails for the
+
+      run.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Illuminated Torment'' constraint on top of the normal encounter: All Tormentors
+  (Cavum of Nezarec) must be killed by a player
+
+  currently holding the Field of Light buff. If anyone without
+
+  the buff lands the killing blow, the challenge fails for the
+
+  run. On Master, every encounter''s challenge is active simultaneously, plus Champions, surges/threat,
+  and Adept loot.'

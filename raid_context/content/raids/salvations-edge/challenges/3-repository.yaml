@@ -1,0 +1,49 @@
+# raid_context/content/raids/salvations-edge/3-repository.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: salvations-edge
+  name: Salvation's Edge
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: repository
+  name: Repository
+  abstract: 'Series of 3 rooms with overlapping circuit wiring. NEW resonance
+
+    shape introduced: **Hexahedral Resonance** (cube). Each room
+
+    has a Threshold Sentinel + Honored Scorpius turrets to clear.
+
+    Shape spawn assignment is FIXED: Hexahedral on RIGHT, Spherical
+
+    in MIDDLE, Pyramidal on LEFT. Lock conductors + deposit + advance.
+
+    '
+  master_challenge:
+    name: Balanced Diet
+    requirement: 'Individual Guardians cannot pick up the same Resonance type
+
+      twice in a row. If you grab a triangle, the next buff must
+
+      be a circle or square before another triangle. Doesn''t reset
+
+      between rooms — your final pickup in room 1 carries forward
+
+      as a constraint into room 2.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Balanced Diet'' constraint on top of the normal encounter: Individual Guardians
+  cannot pick up the same Resonance type
+
+  twice in a row. If you grab a triangle, the next buff must
+
+  be a circle or square before another triangle. Doesn''t reset
+
+  between rooms — your final pickup in room 1 carries forward
+
+  as a constraint into room 2. On Master, every encounter''s challenge is active simultaneously, plus
+  Champions, surges/threat, and Adept loot.'

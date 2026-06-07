@@ -1,0 +1,45 @@
+# raid_context/content/raids/last-wish/1-kalli.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: last-wish
+  name: Last Wish
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 1
+  slug: kalli
+  name: Kalli, the Corrupted
+  abstract: '6 symbol plates around the arena. 6 of 9 symbols shown via center
+
+    icons. Cleanse 2 of each shown symbol (so 6 plates total). Each
+
+    plate has 3 sections — stand on EMPTY section. Kill Ravenous Knight
+
+    spawn = plate complete. DPS phase: dodge Obliterate by diving
+
+    into doors tied to killed Knights.
+
+    '
+  master_challenge:
+    name: Summoning Ritual
+    requirement: 'Activate AND cleanse all 9 plates around the arena, then kill
+
+      all 9 Knights AND all 9 Ogres before damaging Kalli at all.
+
+      DPS only starts after every cleanse + kill is done.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: 'Challenge: All 9 plates'
+    learner_friendly: false
+    summary: Cleanse all 9 plates (including 3 not in shown symbols). Each WRONG plate spawns an Ogre.
+differs_from_base: 'Adds the ''Summoning Ritual'' constraint on top of the normal encounter: Activate
+  AND cleanse all 9 plates around the arena, then kill
+
+  all 9 Knights AND all 9 Ogres before damaging Kalli at all.
+
+  DPS only starts after every cleanse + kill is done. On Master, every encounter''s challenge is active
+  simultaneously, plus Champions, surges/threat, and Adept loot.'

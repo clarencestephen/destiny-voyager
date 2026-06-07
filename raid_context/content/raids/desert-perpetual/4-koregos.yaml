@@ -185,9 +185,6 @@ encounter:
   - name: 'Speed: Double-dunk (2 Cyclical)'
     learner_friendly: false
     summary: '2 Cyclicals dunk near-simultaneously. Faster phase. Risk: Hoop color changes after first.'
-  - name: 'Challenge: Every player dunks'
-    learner_friendly: false
-    summary: 3 teams of 2 cycle through Cyclical role so all 6 dunk a Chronon.
   cheese: []
   common_mistakes:
   - Constant misreading Koregos-POV vs entrance-POV = wrong cube call.

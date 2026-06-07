@@ -105,21 +105,6 @@ encounter:
         - Health
         - Weapons
         surges_mods: No surge requirement
-  - name: Solo
-    learner_friendly: false
-    summary: Do everything sequentially. Take the picture, scout, sword, kill.
-    roles:
-    - id: solo
-      count: 1
-      does: Self-paced. Bring strong primary for ambient adds.
-      loadout:
-        subclass: Any; high survivability subclass
-        weapons: Strong primary for ambient adds; the relic Hive Cleaver for Disciples
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: No surge requirement
   cheese: []
   common_mistakes:
   - Forgetting which rune matched which Disciple type — screenshot the rune room AND each tower top.
@@ -209,7 +194,9 @@ encounter:
     subclass: Any; high survivability subclass
     weapons: Strong primary for ambient adds; the relic Hive Cleaver for Disciples
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: No surge requirement
   sources:
   - tier: 1

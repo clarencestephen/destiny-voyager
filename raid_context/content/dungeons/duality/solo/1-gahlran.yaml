@@ -1,0 +1,40 @@
+# raid_context/content/dungeons/duality/1-gahlran.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: duality
+  name: Duality
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 1
+  slug: gahlran
+  name: Nightmare of Gahlran, Sorrow Bearer
+  abstract: 'First boss. Symmetrical arena, bell at each end. Shift to Nightmare
+
+    → hunt Standard Bearer Psion in one of 4 rooms → return + deposit →
+
+    room in Waking opens with Visions of Gahlran → re-enter Nightmare,
+
+    kill Visions → DPS Gahlran in Nightmare.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: Self-pace. 2-3 cycles per side typically.
+    roles:
+    - id: solo
+      count: 1
+      does: All roles. Heartshadow itself trivializes this when acquired.
+      loadout:
+        subclass: Void Hunter (Gyrfalcon/invis style) for self-pace and safe Nightmare hunting
+        weapons: Self-sufficient ad-clear primary plus heavy burst; Heartshadow if obtained
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Solar resist for Cabal fire; match surge to DPS element
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

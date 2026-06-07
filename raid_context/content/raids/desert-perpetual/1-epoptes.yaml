@@ -135,9 +135,6 @@ encounter:
         - Health
         - Class
         surges_mods: Surges matched to your heavy; ammo-finder and reserves mods for sustained add-clear.
-  - name: 'Challenge: No sequential eye'
-    learner_friendly: false
-    summary: Cannot destroy same Lens' eye twice in a row. 2 players per side swap eye-destruction roles.
   cheese: []
   common_mistakes:
   - Misreading 6-eye position (top/middle/bottom × L/R/center).

@@ -1,0 +1,45 @@
+# raid_context/content/dungeons/spire-of-the-watcher/5-prompt-critical.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: spire-of-the-watcher
+  name: Spire of the Watcher
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 5
+  slug: prompt-critical
+  name: Prompt Critical (Persys, Primordial Ruin)
+  abstract: 'Final boss. Persys is a Vex Wyvern. Mechanic: activate yellow Arc
+
+    circuits leading INTO the reactor core. Then trigger red circuits
+
+    OUTSIDE for reactor purge → core opens → Persys exits → DPS its
+
+    small radiolarian core. CRITICAL: lure Persys INTO the core BEFORE
+
+    completing the last yellow circuit, or fight resets.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: All mechanics in sequence. Expect 3+ phases.
+    roles:
+    - id: solo
+      count: 1
+      does: Patient. Witherhoard Persys during circuit-running.
+      loadout:
+        subclass: Self-sufficient survivable subclass (Solar for self-heal or Void for invis) since you
+          run every mechanic alone over 3+ phases.
+        weapons: Witherhoard to chip Persys while running circuits, plus Whisper / Linear / Sniper for
+          the core window. Precision Primary for nodes. Anti-Barrier / Anti-Unstoppable on Master.
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge mods to your burst-DPS element; prioritize survivability and (on Master)
+          Champion mods.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

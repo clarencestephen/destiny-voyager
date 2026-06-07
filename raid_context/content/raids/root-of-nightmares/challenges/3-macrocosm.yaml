@@ -1,0 +1,43 @@
+# raid_context/content/raids/root-of-nightmares/3-macrocosm.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 3
+  slug: macrocosm
+  name: Macrocosm
+  abstract: 'Fight Zo''aurc by aligning planets. Three phases: (1) swap
+
+    mismatched planets between paired triangular platforms; (2) move
+
+    correct-coloured planets to 3 central plates; (3) damage Zo''aurc
+
+    by touching the plate matching his shield aura. Loop until dead.
+
+    '
+  master_challenge:
+    name: Cosmic Equilibrium
+    requirement: 'Every Dark-aura planet must end up on the LEFT side, every
+
+      Light-aura planet on the RIGHT (or whatever side convention
+
+      the team locked at pull). No mixed-polarity sides — pure
+
+      separation by the end of the encounter.
+
+      '
+    enforced_on: Master only
+differs_from_base: 'Adds the ''Cosmic Equilibrium'' constraint on top of the normal encounter: Every Dark-aura
+  planet must end up on the LEFT side, every
+
+  Light-aura planet on the RIGHT (or whatever side convention
+
+  the team locked at pull). No mixed-polarity sides — pure
+
+  separation by the end of the encounter. On Master, every encounter''s challenge is active simultaneously,
+  plus Champions, surges/threat, and Adept loot.'

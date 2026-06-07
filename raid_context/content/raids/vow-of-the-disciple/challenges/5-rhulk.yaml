@@ -1,0 +1,49 @@
+# raid_context/content/raids/vow-of-the-disciple/5-rhulk.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: vow-of-the-disciple
+  name: Vow of the Disciple
+  activity_type: raid
+  fireteam_size: 6
+  category: challenge
+encounter:
+  order: 5
+  slug: rhulk
+  name: Rhulk, Disciple of the Witness (final boss)
+  abstract: 'Final boss. Pyramid Disciple. Two phases:
+
+    Phase 1: Glaive break → Leeching Force → 6 Emanating Force dunks
+
+    to push force field back. Phase 2: Glaive break + dunk on correct
+
+    symbol pillar → stun + weak point burst (×4) → DPS chase phase.
+
+    3 damage phases until forced final stand. Most complex final boss.
+
+    '
+  master_challenge:
+    name: Looping Catalyst
+    requirement: 'Do not lose Leeching Force before the damage phase. Split:
+
+      one team focused on add-clear, the other on duplicating/
+
+      maintaining the buff chain until the barrier is fully covered
+
+      and the DPS window opens.
+
+      '
+    enforced_on: Master only
+  permutations:
+  - name: Master (Chaff + Shielded)
+    learner_friendly: false
+    summary: No radar, Champions for Glyphkeepers, Solar/Void Wraiths.
+differs_from_base: 'Adds the ''Looping Catalyst'' constraint on top of the normal encounter: Do not lose
+  Leeching Force before the damage phase. Split:
+
+  one team focused on add-clear, the other on duplicating/
+
+  maintaining the buff chain until the barrier is fully covered
+
+  and the DPS window opens. On Master, every encounter''s challenge is active simultaneously, plus Champions,
+  surges/threat, and Adept loot.'

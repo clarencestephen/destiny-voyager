@@ -151,26 +151,6 @@ encounter:
         armor_stats: *id002
         surges_mods: Heavy surge matched to your burst weapon's element; otherwise resilience and ability
           mods.
-  - name: Solo
-    learner_friendly: false
-    summary: Cannon → battery → gather → deposit, alone. Expect 4-6 phases.
-    roles:
-    - id: solo
-      count: 1
-      does: Cannon for 1 battery per cycle. Witherhoard Avarokk during deposit runs.
-      notes:
-      - Stasis crowd-control on lieutenants helps survive while cannoneering.
-      loadout:
-        subclass: Stasis or other crowd-control subclass to freeze/control lieutenants while you cannoneer;
-          high sustain for the 4-6 phase grind.
-        weapons: Witherhoard to chip Avarokk during deposit runs, plus a burst heavy for the window; add-clear
-          primary for lieutenants and Vandals.
-        exotic_armor: ''
-        armor_stats: &id003
-        - Health
-        - Class
-        surges_mods: Heavy surge matched to your burst weapon; lean on survivability and ability mods
-          for the solo attempt.
   cheese: []
   common_mistakes:
   - Picking engrams BEFORE killing lieutenants — lieutenants kill you while you're on a timer.
@@ -274,7 +254,9 @@ encounter:
     weapons: Witherhoard to chip Avarokk during deposit runs, plus a burst heavy for the window; add-clear
       primary for lieutenants and Vandals.
     exotic_armor: ''
-    armor_stats: *id003
+    armor_stats:
+    - Health
+    - Class
     surges_mods: Heavy surge matched to your burst weapon; lean on survivability and ability mods for
       the solo attempt.
   sources:

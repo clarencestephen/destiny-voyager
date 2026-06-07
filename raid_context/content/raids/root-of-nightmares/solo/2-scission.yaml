@@ -1,0 +1,40 @@
+# raid_context/content/raids/root-of-nightmares/2-scission.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: root-of-nightmares
+  name: Root of Nightmares
+  activity_type: raid
+  fireteam_size: 6
+  category: solo
+encounter:
+  order: 2
+  slug: scission
+  name: Scission
+  abstract: 'Climb 3 vertical floors split by an un-jumpable chasm. Per floor:
+
+    complete one Field of Light chain AND one Flux of Darkness chain
+
+    before Imminent Expulsion expires. Use launchers to cross the
+
+    chasm and ascend. Floor 3 chains complete = encounter done.
+
+    '
+  permutations:
+  - name: Underman (4-Person Variant)
+    summary: 'Doable with 2-4 players. With 4: one Light + one Dark runner per side, each also doing add-clear.'
+    best_for: Underman challenge runs, low-roster nights.
+    roles:
+    - id: hybrid-runner
+      count: 4
+      does: Build chain + clear ads between buff refreshes.
+      loadout:
+        subclass: Any subclass balancing movement and ad-clear (4-person underman use)
+        weapons: Seed weapon plus area-damage add-clear primary; Anti-Barrier source carried
+        exotic_armor: ''
+        armor_stats:
+        - Class
+        - Health
+        surges_mods: No DPS surge; Anti-Barrier mandatory
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

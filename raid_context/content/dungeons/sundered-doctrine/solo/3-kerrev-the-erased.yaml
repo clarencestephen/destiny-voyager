@@ -1,0 +1,51 @@
+# raid_context/content/dungeons/sundered-doctrine/3-kerrev-the-erased.yaml
+# Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
+# Blank loadout fields = unverified (no guessing).
+activity:
+  slug: sundered-doctrine
+  name: Sundered Doctrine
+  activity_type: dungeon
+  fireteam_size: 3
+  category: solo
+encounter:
+  order: 3
+  slug: kerrev-the-erased
+  name: Kerrev, the Erased (final boss)
+  abstract: 'Final boss. Subjugator Dread leader. Tethers pedestals with Strand
+
+    that you can only break under Unwritten Empowerment (7s from kill).
+
+    A central dial has TRUTH side + LIE side. Choose which side to light
+
+    via lensed beams. Truthspeakers only drop TRUTH symbols.
+
+    Enough symbols lit → interact with pillar → fire trap → shield drops
+
+    → DPS.
+
+    '
+  permutations:
+  - name: Solo
+    learner_friendly: false
+    summary: 'All roles. Expect 4-5 phases. Bring sustain + a wide-mag DPS
+
+      option (Finality''s Auger if obtained — it''s a beast for this).
+
+      '
+    roles:
+    - id: solo
+      count: 1
+      does: Methodical. Don't engage tethers without Empowerment.
+      loadout:
+        subclass: A self-sustaining subclass with strong survivability and add-clear (healing Solar or
+          Void invisibility) for methodical multi-phase play
+        weapons: Wide-magazine burst DPS - Finality's Auger if obtained - plus sustain weapons and an
+          add-clear primary
+        exotic_armor: ''
+        armor_stats:
+        - Health
+        - Class
+        surges_mods: Match surge to your DPS option (Solar for Finality's Auger). Strand and Solar resist
+          plus recovery mods; never touch tethers without Empowerment.
+differs_from_base: Solo / low-man approach to this encounter — different role split and survival demands
+  than the normal full-fireteam version. See the base encounter for standard mechanics.

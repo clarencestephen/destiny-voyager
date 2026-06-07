@@ -112,12 +112,6 @@ encounter:
         - Super
         surges_mods: DPS surge matching your burst weapon; on Master add Anti-Overload / Anti-Barrier
           as assigned
-  - name: 'Master: Equal Vessels'
-    learner_friendly: false
-    summary: Every player must receive Chalice before same person can hold again. Rotate.
-  - name: 'Master: Communal Rites'
-    learner_friendly: false
-    summary: Every DPS phase requires 1 Expunge per phase.
   cheese: []
   common_mistakes:
   - Killing Wizard before others ready — 45s timer.
@@ -133,18 +127,6 @@ encounter:
     - Oversoul Edict (pulse rifle, Arc)
     - Willbreaker's armor — Chest + Legs (encounter-specific slots)
     - Mark of the Pit (Class Item)
-  master_challenge:
-    name: Equal Vessels
-    requirement: 'All six players must rotate the Chalice of Light buff in the
-
-      same order throughout the entire encounter. A player cannot
-
-      hold the Chalice again until all five other players have held
-
-      it. Forces a strict 6-slot round-robin.
-
-      '
-    enforced_on: Master only (Normal grants double loot when active)
   images:
     overview: ''
     setup: ''

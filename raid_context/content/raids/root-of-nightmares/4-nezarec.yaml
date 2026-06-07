@@ -1,7 +1,6 @@
 # raid_context/content/raids/root-of-nightmares/4-nezarec.yaml
 # Schema v3 (atomic). v2 mechanics + Phase-2 verified additions. EoF stat names.
 # Blank loadout fields = unverified (no guessing).
-
 activity:
   slug: root-of-nightmares
   name: Root of Nightmares
@@ -315,18 +314,6 @@ encounter:
       this raid. RNG from final chest.'
     - Any weapon from prior encounters (Briar's Contempt, Koraxis's Distress, Nessa's Oblation, Mykel's
       Reverence, Acasia's Dejection, Rufus's Fury).
-  master_challenge:
-    name: All Hands
-    requirement: 'For each refuge-cycle, the Light-side node AND the Dark-side
-
-      node must be completed within ~the same beat — both sides
-
-      finishing together, not one cleaning up after the other. Forces
-
-      balanced runner load on both refuges.
-
-      '
-    enforced_on: Master only
   images:
     overview: ''
     setup: ''
