@@ -12,7 +12,7 @@ encounter:
   name: Iatros, Inward-Turned
   difficulty: hard
   estimated_time: 25-35 min
-  abstract: 'Vex Hobgoblin. Climber ascends 3 levels via Diastole-timed cube
+  abstract: 'Vex Wyvern. Climber ascends 3 levels via Diastole-timed cube
 
     breaks (Builders shoot cubes on Diastole pulse). Hourglass filled
 
@@ -184,7 +184,7 @@ encounter:
   - '2nd: builder.'
   - '3rd: climber.'
   plain_language_steps:
-  - 1. After the banner, engage Iatros (a Vex Hobgoblin) along with the six Time's Burden Minotaurs present
+  - 1. After the banner, engage Iatros (a Vex Wyvern) along with the six Time's Burden Minotaurs present
     at the start.
   - 2. Each player kills one Minotaur, picks up its Chronon (Cinnabar = red, Antimony = white), jumps
     through the hoop in front of Iatros, and deposits it.
