@@ -461,8 +461,9 @@ def _legacy_raid_context(question: str) -> str:
 # ============================================================
 
 
-async def answer(question: str) -> str:
-    """End-to-end: classify, gather context, call LLM, return response."""
+async def answer(question: str, history: list | None = None) -> str:
+    """End-to-end: classify, gather context, call LLM, return response.
+    `history` (optional) carries prior conversation turns for context."""
     # Normalize typographic apostrophes so substring matches against
     # meta_state raid names work regardless of which apostrophe the
     # user typed. classify() does the same normalization internally.
@@ -542,6 +543,7 @@ async def answer(question: str) -> str:
             knowledge=knowledge_ctx,
             search=search_ctx,
             manifest=manifest_ctx_str,
+            history=history,
         )
 
     # NOTE: the old manifest-based "possibly invented names" post-check was

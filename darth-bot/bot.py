@@ -25,12 +25,14 @@ import asyncio
 import io
 import logging
 import os
+import tempfile
 from pathlib import Path
 
 import discord
 from discord import app_commands
 
 import config
+import memory
 import voice
 from config import (ALLOWED_CHANNEL_NAMES, DISCORD_BOT_TOKEN, DISCORD_GUILD_ID,
                      MODEL)
@@ -51,6 +53,7 @@ intents.message_content = True
 intents.guilds = True
 intents.members = True
 intents.reactions = True
+intents.voice_states = True   # to see which VC the asker is in (for spoken replies)
 
 
 class DarthBot(discord.Client):
@@ -150,7 +153,11 @@ async def cmd_ask(interaction: discord.Interaction, question: str):
 
     # ── LLM-orchestrated path ───────────────────────────────────
     try:
-        text = await answer(question)
+        key = memory.conv_key(interaction.channel_id, interaction.guild_id, interaction.user.id)
+        text = await answer(question, history=memory.history(key))
+        memory.remember(key, "user", question)
+        if not text.startswith("⚠️"):
+            memory.remember(key, "assistant", text)
         log.info(f"/ask reply ({len(text)} chars): {text[:100]}")
     except Exception as e:
         log.exception("ask failed")
@@ -899,6 +906,71 @@ def _is_voice_channel(channel) -> bool:
     return getattr(channel, "name", None) in config.VOICE_CHANNEL_NAMES
 
 
+async def _speak_in_voice(channel, audio: bytes):
+    """Join `channel`, play the reply aloud (music-bot style), then leave.
+    Best-effort: needs Connect+Speak perms + ffmpeg. Failures are logged — the
+    text reply has already been sent regardless."""
+    tmp = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False)
+    tmp.write(audio)
+    tmp.close()
+    try:
+        vc = channel.guild.voice_client
+        if vc and vc.is_connected():
+            if vc.channel != channel:
+                await vc.move_to(channel)
+        else:
+            vc = await channel.connect()
+        if vc.is_playing():
+            vc.stop()
+        done = asyncio.Event()
+        vc.play(
+            discord.FFmpegPCMAudio(tmp.name),
+            after=lambda err: bot.loop.call_soon_threadsafe(done.set),
+        )
+        try:
+            await asyncio.wait_for(done.wait(), timeout=180)
+        except asyncio.TimeoutError:
+            pass
+    finally:
+        # Persist in the channel (music-bot style) — do NOT disconnect here.
+        # Darth Bot stays until /leave or until the channel empties
+        # (see on_voice_state_update). Follow-up clips reuse this connection.
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
+
+@bot.tree.command(name="leave", description="Dismiss Darth Bot from the voice channel")
+async def cmd_leave(interaction: discord.Interaction):
+    vc = interaction.guild.voice_client if interaction.guild else None
+    if vc and vc.is_connected():
+        await vc.disconnect(force=True)
+        await interaction.response.send_message("🔇 Leaving the voice channel.", ephemeral=True)
+    else:
+        await interaction.response.send_message("I'm not in a voice channel.", ephemeral=True)
+
+
+@bot.tree.command(name="forget", description="Clear Darth Bot's conversation memory for this channel")
+async def cmd_forget(interaction: discord.Interaction):
+    key = memory.conv_key(interaction.channel_id, interaction.guild_id, interaction.user.id)
+    memory.clear(key)
+    await interaction.response.send_message("🧠 Conversation memory cleared.", ephemeral=True)
+
+
+@bot.event
+async def on_voice_state_update(member: discord.Member, before, after):
+    """Auto-leave once the last human leaves the channel — so Darth Bot doesn't
+    sit alone in an empty VC forever (same courtesy as a music bot)."""
+    if member.bot:
+        return
+    vc = member.guild.voice_client if member.guild else None
+    if vc and vc.is_connected():
+        humans = [m for m in vc.channel.members if not m.bot]
+        if not humans:
+            await vc.disconnect(force=True)
+
+
 async def _handle_voice_message(message: discord.Message, attachment: discord.Attachment):
     """Voice-message path: transcribe → brain → reply with text + spoken audio."""
     async with message.channel.typing():
@@ -913,10 +985,14 @@ async def _handle_voice_message(message: discord.Message, attachment: discord.At
             await message.reply("🎙️ I couldn't make out any words in that one — try again?",
                                 mention_author=False)
             return
+        key = memory.conv_key(message.channel.id, message.guild.id if message.guild else None, message.author.id)
         try:
-            text = await answer(transcript)
+            text = await answer(transcript, history=memory.history(key))
         except Exception as e:  # noqa: BLE001
             text = f"⚠️  {e}"
+        memory.remember(key, "user", transcript)
+        if not text.startswith("⚠️"):
+            memory.remember(key, "assistant", text)
         audio = await voice.synthesize(text)
 
     body = f"🎙️ **heard:** {transcript}\n\n{text}"
@@ -926,6 +1002,16 @@ async def _handle_voice_message(message: discord.Message, attachment: discord.At
     while body:
         chunk, body = body[:1900], body[1900:].lstrip()
         await message.reply(chunk, mention_author=False)
+
+    # If the asker is in a voice channel, also SPEAK the reply aloud there —
+    # Darth Bot joins the VC like a music bot, plays the clip in the Sith voice,
+    # then leaves. Falls back silently to the text+mp3 reply already sent.
+    member_vc = getattr(getattr(message.author, "voice", None), "channel", None)
+    if audio and member_vc is not None:
+        try:
+            await _speak_in_voice(member_vc, audio)
+        except Exception as e:  # noqa: BLE001
+            log.warning("VC playback failed (Connect/Speak perms? ffmpeg?): %s", e)
 
 
 @bot.event
@@ -956,11 +1042,15 @@ async def on_message(message: discord.Message):
     if not content:
         return
 
+    key = memory.conv_key(message.channel.id, message.guild.id if message.guild else None, message.author.id)
     async with message.channel.typing():
         try:
-            text = await answer(content)
+            text = await answer(content, history=memory.history(key))
         except Exception as e:
             text = f"⚠️  {e}"
+    memory.remember(key, "user", content)
+    if not text.startswith("⚠️"):
+        memory.remember(key, "assistant", text)
 
     # Reply, chunked
     while text:

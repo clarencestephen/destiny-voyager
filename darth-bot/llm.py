@@ -56,18 +56,34 @@ async def chat(
     search: str = "",
     manifest: str = "",
     temperature: float = 0.15,
+    history: list | None = None,
 ) -> str:
-    """Single-shot chat. Returns the full assistant message."""
+    """Chat with optional prior-turn history. Returns the full assistant message."""
     context = _format_context(inventory=inventory, knowledge=knowledge, search=search, manifest=manifest)
     user_block = f"{context}\n\nUser question:\n{user_message}"
+    messages = [{"role": "system", "content": _system_prompt()}]
+    if history:
+        # Include the most-recent turns within a char budget so a long
+        # conversation can't overflow the model context (oldest get dropped).
+        budget = 10_000
+        kept: list[dict] = []
+        for turn in reversed(history):
+            c = (turn.get("content") or "")[:2000]
+            role = turn.get("role", "user")
+            if role not in ("user", "assistant") or not c:
+                continue
+            if budget - len(c) < 0:
+                break
+            budget -= len(c)
+            kept.append({"role": role, "content": c})
+        messages.extend(reversed(kept))
+    messages.append({"role": "user", "content": user_block})
     payload = {
         "model": MODEL,
-        "messages": [
-            {"role": "system", "content": _system_prompt()},
-            {"role": "user",   "content": user_block},
-        ],
+        "messages": messages,
         "stream": False,
-        "options": {"temperature": temperature},
+        # num_ctx bumped so the included history actually fits the window.
+        "options": {"temperature": temperature, "num_ctx": 8192},
     }
     async with httpx.AsyncClient(timeout=180, headers=_AUTH_HEADERS) as client:
         r = await client.post(f"{OLLAMA_HOST}/api/chat", json=payload)

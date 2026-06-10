@@ -24,3 +24,6 @@ trafilatura>=1.12            # clean article extraction
 # Utilities
 python-dotenv>=1.0
 pydantic>=2.0
+faster-whisper  # local Whisper STT for voice messages (voice.py)
+PyNaCl  # discord.py voice (encryption)
+davey  # discord.py 2.7+ native voice backend (join VC + play audio)
