@@ -899,9 +899,16 @@ async def cmd_equip(interaction: discord.Interaction, build_id: str, character: 
 # ============================================================
 
 
+# Channels activated at runtime via /join — voice-note listening can be turned
+# on for ANY channel (text or voice), beyond the pre-configured ones.
+_joined_channels: set[int] = set()
+
+
 def _is_voice_channel(channel) -> bool:
-    """A dedicated channel set aside for talking to the bot by voice note."""
-    if getattr(channel, "id", None) in config.VOICE_CHANNEL_IDS:
+    """A channel where Darth Bot listens for voice notes — pre-configured, or
+    switched on at runtime with /join (works for text and voice channels)."""
+    cid = getattr(channel, "id", None)
+    if cid in _joined_channels or cid in config.VOICE_CHANNEL_IDS:
         return True
     return getattr(channel, "name", None) in config.VOICE_CHANNEL_NAMES
 
@@ -940,14 +947,22 @@ async def _speak_in_voice(channel, audio: bytes):
             pass
 
 
-@bot.tree.command(name="leave", description="Dismiss Darth Bot from the voice channel")
+@bot.tree.command(name="leave", description="Stop Darth Bot listening in this channel + leave voice")
 async def cmd_leave(interaction: discord.Interaction):
+    ch = interaction.channel
+    ch_name = getattr(ch, "name", "this channel")
+    bits = []
+    if getattr(ch, "id", None) in _joined_channels:
+        _joined_channels.discard(ch.id)
+        bits.append(f"stopped listening in #{ch_name}")
     vc = interaction.guild.voice_client if interaction.guild else None
     if vc and vc.is_connected():
         await vc.disconnect(force=True)
-        await interaction.response.send_message("🔇 Leaving the voice channel.", ephemeral=True)
+        bits.append("left the voice channel")
+    if bits:
+        await interaction.response.send_message("🔇 " + " and ".join(bits) + ".", ephemeral=True)
     else:
-        await interaction.response.send_message("I'm not in a voice channel.", ephemeral=True)
+        await interaction.response.send_message("I'm not active here or in a voice channel.", ephemeral=True)
 
 
 @bot.tree.command(name="forget", description="Clear Darth Bot's conversation memory for this channel")
@@ -990,23 +1005,32 @@ async def cmd_clear(interaction: discord.Interaction, amount: int = 50, all: boo
         await interaction.followup.send(f"⚠️ Couldn't delete: {e}", ephemeral=True)
 
 
-@bot.tree.command(name="join", description="Have Darth Bot join your voice channel and stay (until /leave)")
+@bot.tree.command(name="join", description="Activate Darth Bot in this channel (text or voice) — listens for voice notes")
 async def cmd_join(interaction: discord.Interaction):
-    member_vc = getattr(getattr(interaction.user, "voice", None), "channel", None)
-    if member_vc is None:
-        await interaction.response.send_message(
-            "Join a voice channel first, then run /join.", ephemeral=True)
+    if interaction.guild is None:
+        await interaction.response.send_message("Use /join in a server channel.", ephemeral=True)
         return
-    try:
-        vc = interaction.guild.voice_client if interaction.guild else None
-        if vc and vc.is_connected():
-            await vc.move_to(member_vc)
-        else:
-            await member_vc.connect()
-        await interaction.response.send_message(
-            f"🟣 Joined **{member_vc.name}** — I'll stay put until /leave.", ephemeral=True)
-    except Exception as e:  # noqa: BLE001
-        await interaction.response.send_message(f"⚠️ Couldn't join: {e}", ephemeral=True)
+    ch = interaction.channel
+    ch_name = getattr(ch, "name", "this channel")
+    # Activate this channel (text OR voice) for voice-note listening.
+    if getattr(ch, "id", None):
+        _joined_channels.add(ch.id)
+    # If you're connected to a voice channel, also join it for spoken replies.
+    member_vc = getattr(getattr(interaction.user, "voice", None), "channel", None)
+    audio_note = " (text + audio-file replies — a text channel has no live audio)"
+    if member_vc is not None:
+        try:
+            vc = interaction.guild.voice_client
+            if vc and vc.is_connected():
+                await vc.move_to(member_vc)
+            else:
+                await member_vc.connect()
+            audio_note = f" and joined voice **{member_vc.name}** to speak aloud (staying put)"
+        except Exception as e:  # noqa: BLE001
+            audio_note = f" (couldn't join voice: {e})"
+    await interaction.response.send_message(
+        f"🟣 Listening for voice notes in **#{ch_name}**{audio_note}. Use /leave to stop.",
+        ephemeral=True)
 
 
 async def _handle_voice_message(message: discord.Message, attachment: discord.Attachment):
