@@ -1,0 +1,77 @@
+# raids/pantheon/4-consecrated-mind.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Garden of Salvation. _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 4
+  slug: consecrated-mind
+  name: Consecrated Mind
+  ingame_name: Consecrated Mind, Sol Inherent
+  abstract: The Consecrated Mind is a mobile Vex Cyclops-style boss that patrols a circular arena, projecting
+    a damaging "Augmented" debuff and devouring Motes of Light to fuel its shield. The fireteam must bank
+    Motes into relay terminals to strip the boss's immunity, then deal damage during a tightly windowed
+    Eye-vulnerability phase while managing the spreading sickness debuff. It is a coordination-and-add-control
+    fight rather than a pure burn check.
+  plain_language_steps:
+  - Split into teams that cover the arena's tether/node relays around the central ring while the Consecrated
+    Mind floats and patrols.
+  - Kill the Vex adds (Harpies, Wyverns, Goblins) that drop Motes of Light, and have a runner pick up
+    the Motes.
+  - Bank the collected Motes into the lit relay terminals to charge them and feed the central mechanic,
+    opening the boss's vulnerable Eye.
+  - When the boss's Eye opens and it stops to feed, commit to damage on the exposed Eye/face for the duration
+    of the damage window.
+  - Manage the spreading 'sickness'/Augmented debuff by passing it or moving so it does not stack to a
+    lethal count on any single player.
+  - Repeat the Mote-banking and damage cycle, keeping adds suppressed, until the Consecrated Mind is defeated.
+  mechanics:
+  - Boss is immune until Motes of Light are collected from slain Vex and banked into relays, which exposes
+    its vulnerable Eye.
+  - Tethered relay/node network must be activated in sequence to drive the encounter and open the damage
+    window.
+  - Spreading sickness / Augmented debuff that stacks over time and becomes lethal if not managed and
+    cleansed by moving or banking.
+  - The boss devours/absorbs Motes to restore its shield, so failure to bank lets it re-immunize.
+  - Constant Vex add pressure (Harpies, Goblins, Wyverns) that both threatens the team and supplies the
+    Motes needed to progress.
+  - Damage is dealt to a specific exposed Eye/weak point rather than a generic crit spot, requiring precise
+    aim.
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Void
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resistance — vs Consecrated Mind damage
+      concussive:
+      - Concussive Dampener — heavy AoE/slam/explosive damage
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - High-damage Heavy machine guns for the precise Eye weak point
+    - Linear Fusion Rifles for ranged precision burst on the exposed Eye
+    - Rocket Launchers for sustained mid-range damage during the window
+    - Aggressive-frame snipers for precision into the Eye if the window is short
+  common_mistakes:
+  - Letting the sickness/Augmented debuff stack to lethal by standing still or hoarding it instead of
+    passing or cleansing it.
+  - Ignoring Mote collection so the boss re-shields and the immunity phase resets.
+  - Tunnel-visioning the boss body instead of hitting the specific exposed Eye weak point, wasting the
+    damage window.
+  - Letting Vex adds (especially Wyverns and Harpies) overwhelm the team and cut off Mote supply.
+  - Players spreading too far from the relays so banking is slow and the vulnerability window is missed.
+  - Burning Heavy ammo before the Eye actually opens, leaving the team dry during the real damage phase.
+  _confidence: low
+  sources:
+  - tier: 3
+    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Garden
+      of Salvation encounter.
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

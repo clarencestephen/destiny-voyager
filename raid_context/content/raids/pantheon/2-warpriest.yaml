@@ -1,0 +1,88 @@
+# raids/pantheon/2-warpriest.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original King's Fall. _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 2
+  slug: warpriest
+  name: The Warpriest
+  ingame_name: The Warpriest
+  abstract: The Warpriest is a Hive Wizard-attended boss fought in King's Fall who can only be damaged
+    after a fireteam completes the "Brand of the Initiate" plate-sequence ritual to drop his shield and
+    open a finite damage window. The order in which the three glyph plates must be stood on is dictated
+    each cycle by the Hive runes that light up, and failure to read it correctly triggers a deadly room-wide
+    wipe mechanic. Players juggle plate-standing, Aura-of-Immortality holding, and an adds-cleared room
+    while burst-damaging the boss during each brief window.
+  plain_language_steps:
+  - 'Clear the initial wave of Hive adds (Thrall, Acolytes, Knights) that spawn around the room and locate
+    the three glyph plates: left, middle, and right.'
+  - At the start of each cycle, watch which of the three Hive glyphs on the back wall lights up first,
+    second, and third — this dictates the plate order for this cycle.
+  - Send a player to stand on each of the three plates. Each plate-holder steps onto their plate in the
+    lit sequence (1st, 2nd, 3rd); standing on a plate at the right time builds the team toward dropping
+    the Warpriest's shield.
+  - Once the final plate in the sequence is activated, the Warpriest's shield drops and a player receives
+    the 'Brand of the Initiate' buff (the Aura of Immortality / Brand of Weakness). Whoever holds the
+    Brand keeps the team's damage open and survives the impending wipe pulse.
+  - The whole team pours damage into the Warpriest during this damage window. The Brand-holder must pass
+    or maintain the Brand so the team stays protected as the wipe mechanic ('Hand of Weakness' / room-wide
+    damage pulse) goes off.
+  - When the damage window closes, the Warpriest re-shields and the cycle resets. Clear the new wave of
+    adds, re-read the glyph order, and repeat the plate sequence.
+  - Repeat the read-order, stand-plates, drop-shield, deal-damage loop across multiple cycles until the
+    Warpriest is killed. Manage the Brand hand-offs and add pressure between every window.
+  mechanics:
+  - 'Glyph-order reading: three Hive runes light up in a sequence each cycle, dictating the order the
+    three plates must be activated.'
+  - Three plates (left/middle/right) must be stood on in the correct lit order to drop the Warpriest's
+    shield and open the damage window.
+  - 'Brand of the Initiate / Aura of Immortality: a buff passed between players that protects the holder
+    (and nearby team) from the wipe mechanic and keeps the damage phase active.'
+  - 'Wipe mechanic: a room-wide damage pulse (''Hand/Touch of Weakness'') that kills anyone not protected
+    by the Brand/Aura if the sequence is botched or the Brand is dropped.'
+  - 'Finite damage window: the boss is only damageable while the shield is down; it re-shields when the
+    window closes, forcing another plate cycle.'
+  - Constant Hive add pressure (Thrall, Acolytes, Knights, attending Wizards) between and during cycles.
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Arc
+      - Solar
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Arc Resistance — vs The Warpriest damage
+      - Solar Resistance — vs The Warpriest damage
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - 'High-damage burst options for a short window: Rocket Launchers (esp. adaptive/aggressive frame
+      rockets)'
+    - Linear Fusion Rifles for precision burst from range
+    - Sword DPS if the room layout allows safe melee uptime
+    - Heavy Grenade Launchers for sustained burst
+    - Whisper/Izanagi-style precision Special snipers as a damage supplement
+  common_mistakes:
+  - Misreading the glyph/plate order, which botches the shield drop and triggers the room-wide wipe pulse.
+  - Letting the Brand of the Initiate / Aura expire or fumbling the hand-off, leaving the team unprotected
+    when the wipe mechanic fires.
+  - Plate-holders stepping on or off their plate at the wrong time and breaking the activation sequence.
+  - Ignoring add pressure (Knights and attending Wizards) so the team gets overwhelmed between damage
+    windows.
+  - Greeding damage too long and getting caught outside the Brand's protection when the wipe pulse goes
+    off.
+  - Failing to fully clear adds before starting a cycle, causing chaos during the plate sequence.
+  _confidence: low
+  sources:
+  - tier: 3
+    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original King's
+      Fall encounter.
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

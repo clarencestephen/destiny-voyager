@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 interface VendorItemRaw {
   hash: number;
   cost?: Array<{ currency_hash: number; quantity: number }>;
+  bright_dust?: boolean;
 }
 interface VendorWeekRaw {
   vendor: string;
@@ -64,6 +65,7 @@ type Tab = "vendors" | "activities" | "news";
 
 interface DecoratedVendorItem extends Item {
   cost?: Array<{ currency_hash: number; quantity: number; currency_name: string }>;
+  bright_dust?: boolean;
 }
 
 interface DecoratedVendor {
@@ -104,6 +106,9 @@ export default function ThisWeek() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("vendors");
+  // Eververse returns hundreds of Silver-only items; default to the
+  // weekly Bright-Dust featured stock and let the user opt into Silver.
+  const [showSilver, setShowSilver] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -143,7 +148,7 @@ export default function ThisWeek() {
               manifest[String(c.currency_hash)]?.n ??
               "?",
           }));
-          return { ...dec, cost: costs };
+          return { ...dec, cost: costs, bright_dust: it.bright_dust };
         }),
       }));
   })();
@@ -184,7 +189,19 @@ export default function ThisWeek() {
 
       {tab === "vendors" && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {decorated.map((v) => (
+        {decorated.map((v) => {
+          // Eververse: default to the weekly Bright-Dust featured stock
+          // (hide the hundreds of permanent Silver-only items) unless the
+          // user toggles Silver on. Other vendors show everything.
+          const isEververse = v.vendor === "eververse";
+          const silverCount = isEververse
+            ? v.items.filter((it) => !it.bright_dust).length
+            : 0;
+          const items =
+            isEververse && !showSilver
+              ? v.items.filter((it) => it.bright_dust)
+              : v.items;
+          return (
           <Card key={v.vendor} className="p-6">
             <div className="flex items-baseline justify-between mb-2">
               <h2 className="text-xl font-display text-saber">{v.display_name}</h2>
@@ -207,19 +224,33 @@ export default function ThisWeek() {
 
             {v.notes && <p className="text-xs italic text-muted mb-3">{v.notes}</p>}
 
+            {isEververse && silverCount > 0 && (
+              <button
+                onClick={() => setShowSilver((s) => !s)}
+                className="mb-3 text-[10px] uppercase tracking-[0.18em] text-muted hover:text-saber border border-void rounded px-2 py-1 transition-colors"
+              >
+                {showSilver ? "Showing all" : "Bright Dust only"} ·{" "}
+                {showSilver ? "hide" : `+${silverCount}`} Silver
+              </button>
+            )}
+
             {!v.available && (
               <p className="text-sm text-muted">
                 Returns in {formatRefresh(v.refresh_in_seconds)}.
               </p>
             )}
 
-            {v.available && v.items.length === 0 && (
-              <p className="text-sm text-muted">No items in current rotation.</p>
+            {v.available && items.length === 0 && (
+              <p className="text-sm text-muted">
+                {isEververse && !showSilver
+                  ? "No Bright-Dust items this week. Toggle Silver to see the rest."
+                  : "No items in current rotation."}
+              </p>
             )}
 
-            {v.available && v.items.length > 0 && (
+            {v.available && items.length > 0 && (
               <ul className="space-y-2 mt-3">
-                {v.items.slice(0, 12).map((it) => (
+                {items.slice(0, 12).map((it) => (
                   <li key={it.instance_id} className="flex items-center gap-3 text-sm">
                     {it.iconUrl && (
                       <img
@@ -251,15 +282,14 @@ export default function ThisWeek() {
               </ul>
             )}
 
-            {v.items.length > 12 && (
+            {items.length > 12 && (
               <p className="text-[11px] text-muted mt-2">
-                +{v.items.length - 12} more items (full list in /this-week/{v.vendor})
+                +{items.length - 12} more items (full list in /this-week/{v.vendor})
               </p>
             )}
           </Card>
-        ))}
-      </div>
-
+          );
+        })}
       </div>
       )}
 

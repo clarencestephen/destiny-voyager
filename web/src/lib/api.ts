@@ -295,6 +295,23 @@ export const api = {
       body: JSON.stringify({ character_id, item_instance_ids, mod_plan }),
     }),
 
+  /** Move unequipped items from a character to the vault — used to evict the
+   *  weakest-stat piece(s) and make room before equipping a new set (zero
+   *  downtime). Equipped items can't be transferred and come back in `skipped`. */
+  transferToVault: (
+    character_id: string,
+    item_instance_ids: string[],
+    item_hashes: number[],
+  ) =>
+    jsonFetch<{
+      ok: true;
+      transferred_count: number;
+      skipped: Array<{ instance_id: string; reason: string }>;
+    }>("/api/transfer-to-vault", {
+      method: "POST",
+      body: JSON.stringify({ character_id, item_instance_ids, item_hashes }),
+    }),
+
   /** Look up multiple players by Bungie name (e.g. "Name#1234"). Public
    *  Bungie API; no per-user OAuth required. */
   fireteam: (bungie_names: string[]) =>

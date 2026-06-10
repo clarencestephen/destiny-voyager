@@ -899,5 +899,54 @@
     "category": "epic",
     "variant_of": "desert-perpetual",
     "content_path": "raid_context/content/raids/desert-perpetual/epic/"
+  },
+  "pantheon": {
+    "slug": "pantheon",
+    "name": "Pantheon",
+    "activity_type": "raid",
+    "fireteam_size": 6,
+    "yaml": "raid_context/content/raids/pantheon/",
+    "encounter_count": 6,
+    "encounters": [
+      {
+        "order": 1,
+        "slug": "argos",
+        "name": "Argos, Planetary Core",
+        "ingame_name": "Argos, Planetary Core"
+      },
+      {
+        "order": 2,
+        "slug": "warpriest",
+        "name": "The Warpriest",
+        "ingame_name": "The Warpriest"
+      },
+      {
+        "order": 3,
+        "slug": "morgeth",
+        "name": "Morgeth, the Spirekeeper",
+        "ingame_name": "Morgeth, the Spirekeeper"
+      },
+      {
+        "order": 4,
+        "slug": "consecrated-mind",
+        "name": "Consecrated Mind",
+        "ingame_name": "Consecrated Mind, Sol Inherent"
+      },
+      {
+        "order": 5,
+        "slug": "gahlran",
+        "name": "Gahlran, the Sorrow-Bearer",
+        "ingame_name": "Gahlran, the Sorrow-Bearer"
+      },
+      {
+        "order": 6,
+        "slug": "calus",
+        "name": "Emperor Calus",
+        "ingame_name": "Emperor Calus"
+      }
+    ],
+    "category": "boss-rush",
+    "status": "live-lineup-leak-authored-unverified",
+    "note": "Pantheon 2.0 live 2026-06-09; boss lineup/tiers/modifiers not yet revealed (2026-06-10). See _activity.yaml."
   }
 }

@@ -838,6 +838,47 @@ app.post("/api/equip", async (c) => {
 });
 
 // ============================================================
+// /api/transfer-to-vault — move (unequipped) items from a character to the
+// vault. Used by the optimizer to evict the weakest-stat piece(s) and make
+// room before equipping a new set, so the Guardian has no downtime. Equipped
+// items can't be transferred (Bungie rejects) — reported in `skipped`.
+// ============================================================
+app.post("/api/transfer-to-vault", async (c) => {
+  const u = c.get("user");
+  type VaultReq = {
+    character_id: string;
+    item_instance_ids: string[];
+    item_hashes: number[];   // parallel to item_instance_ids — TransferItem needs the hash
+  };
+  const body = await c.req.json<VaultReq>();
+  if (!body.character_id || !body.item_instance_ids?.length) {
+    return c.json({ error: "missing character_id or item_instance_ids" }, 400);
+  }
+  const hashes = body.item_hashes ?? [];
+  const skipped: Array<{ instance_id: string; reason: string }> = [];
+  let transferred = 0;
+  for (let i = 0; i < body.item_instance_ids.length; i++) {
+    const iid = body.item_instance_ids[i];
+    const hash = hashes[i];
+    if (!hash) { skipped.push({ instance_id: iid, reason: "missing item hash" }); continue; }
+    try {
+      await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
+        itemReferenceHash: hash,
+        stackSize: 1,
+        transferToVault: true,
+        itemId: iid,
+        characterId: body.character_id,
+        membershipType: u.membership_type,
+      });
+      transferred++;
+    } catch (e: any) {
+      skipped.push({ instance_id: iid, reason: `transfer failed: ${e.message ?? e}` });
+    }
+  }
+  return c.json({ ok: true, transferred_count: transferred, skipped });
+});
+
+// ============================================================
 // /api/equip-with-mods — equip + insert armor mods socket-by-socket
 // ============================================================
 // After the standard equip flow, also call Bungie's InsertSocketPlug

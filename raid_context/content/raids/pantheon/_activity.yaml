@@ -1,0 +1,122 @@
+# pantheon — activity header (authored from sourced facts, 2026-06-10).
+# Pantheon 2.0 launched with the 2026-06-09 "Monument of Triumph" update.
+# PROVENANCE / DISCIPLINE NOTE:
+#  - The CONFIRMED facts below (permanence, schedule, Adventure difficulty,
+#    rewards) come from Bungie (tier 1) — see overview.sources.
+#  - The boss LINEUP (overview.lineup + the N-slug.yaml encounter files) was
+#    authored at the user's explicit request from the UNVERIFIED community/leak
+#    set. Bungie had NOT confirmed the roster, tiers, or per-boss modifiers as of
+#    2026-06-10 (only Calus was hinted). Every encounter is tier-3 / _confidence:
+#    low / verified:false. The boss MECHANICS are historical fact; the Pantheon-
+#    2.0 INCLUSION and rescaling (champions/surges) are the unverified part —
+#    which is why champions/surges were left empty rather than guessed.
+#  - Third-party sites showing the 2024 lineup (Atraks/Oryx/Rhulk/Nezarec,
+#    "Godslayer") are stale carryover and were NOT used.
+#  - REPLACE this leak lineup with the official roster the moment Bungie reveals it.
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+  category: boss-rush
+  status: live-lineup-leak-authored-unverified
+overview:
+  abstract: 'Pantheon is a permanent raid-boss-rush activity: a sequence of bosses pulled from Destiny
+    2''s raids, fought back-to-back with escalating difficulty. The 2026 relaunch ("Pantheon 2.0") brings
+    a NEW roster of bosses (a "fresh slate," per Bungie) — NOT the four 2024 bosses — new rewards, and
+    a new Title. The only boss Bungie has named so far is Calus (from the Leviathan raid), referenced
+    as an armor-ornament source. The exact boss list, order, source raids, difficulty tiers, and per-boss
+    modifiers remain officially unconfirmed as of 2026-06-10.'
+  what_is_confirmed:
+    permanence: Permanent activity (unlike the limited 2024 event).
+    roster: A new slate of bosses spanning multiple raids; Bungie's only named example is Calus (Leviathan).
+      Bosses drop armor-set ornaments from their ORIGINAL raid.
+    structure_schedule_2026:
+    - '2026-06-09: two separate activities launch, each with its own unique lineup of boss encounters.'
+    - '2026-06-13 (first Saturday): a third activity unlocks — "the gauntlet" — every boss encounter in
+      a single run.'
+    - '2026-06-16 (Tuesday reset): weekly rotators begin — individual single-boss encounters for rewards.'
+    difficulty:
+    - 'Adventure difficulty: raised Power cap, infinite revives, looser mechanic timers, in exchange for
+      a limited pool of lower-Tier rewards.'
+    - Escalating difficulty across the run; named T1–T5 Pantheon tiers are NOT confirmed. ("T5" in the
+      June-update marketing = gear Tier 5, a separate loot-system change, not a Pantheon difficulty ladder.)
+    rewards:
+    - New armor set per class (Tier-5 capable).
+    - 'Reprised raid weapons with a unique Origin Trait + holofoil variants. New Pantheon weapons named:
+      "Alone as a God", "Bane of Sorrow".'
+    - Armor-set ornaments from each boss's original raid (e.g. Calus → original Leviathan ornaments).
+    - Spoils-of-Conquest re-roll vendor, emblems, exotic cosmetics, and a NEW Title (name TBA — explicitly
+      not "Godslayer").
+  loadout_guidance: 'Until the lineup + modifiers are confirmed, treat Pantheon as a general endgame boss-DPS
+    gauntlet: bring a strong, flexible damage loadout and survivability. Anti-Champion options are artifact-based
+    this era. Do NOT pre-commit element-specific resist/surge mods to a fixed boss order — author per-boss
+    recommendations only once each encounter is confirmed.'
+  lineup:
+  - order: 1
+    slug: argos
+    name: Argos, Planetary Core
+    source_raid: 'Leviathan: Spire of Stars (raid lair)'
+    confidence: low
+    verified: false
+  - order: 2
+    slug: warpriest
+    name: The Warpriest
+    source_raid: King's Fall
+    confidence: low
+    verified: false
+  - order: 3
+    slug: morgeth
+    name: Morgeth, the Spirekeeper
+    source_raid: Last Wish
+    confidence: low
+    verified: false
+  - order: 4
+    slug: consecrated-mind
+    name: Consecrated Mind
+    source_raid: Garden of Salvation
+    confidence: low
+    verified: false
+  - order: 5
+    slug: gahlran
+    name: Gahlran, the Sorrow-Bearer
+    source_raid: 'Leviathan: Crown of Sorrow (raid lair)'
+    confidence: low
+    verified: false
+  - order: 6
+    slug: calus
+    name: Emperor Calus
+    source_raid: Leviathan (base raid final boss)
+    confidence: low
+    verified: false
+  sources:
+  - tier: 1
+    name: 'Bungie.net — "Destiny 2: Every End is a New Beginning"'
+    url: https://www.bungie.net/7/en/News/Article/d2_may_21_2026
+    date_checked: '2026-06-10'
+    used_for:
+    - permanence
+    - fresh-slate roster
+    - June 9/13/16 schedule
+  - tier: 1
+    name: Bungie.net — "This Week in Destiny 05/29/2026"
+    url: https://www.bungie.net/7/en/News/Article/twid_05_29_2026
+    date_checked: '2026-06-10'
+    used_for:
+    - two launch activities + gauntlet + rotators
+    - Calus/Leviathan ornament example
+    - Adventure difficulty
+    - rewards
+    - new Title (TBA)
+  - tier: 2
+    name: blueberries.gg — Pantheon Loot Table & Rewards (updated 2026-06-09)
+    url: https://www.blueberries.gg/weapons/pantheon-loot-table-rotation/
+    date_checked: '2026-06-10'
+    used_for:
+    - '"exact Boss rotation remains unconfirmed"'
+    - new weapon names
+  - tier: 3
+    name: NOT USED — boostmatch.gg / wowvendor Pantheon guides
+    note: These recycle the 2024 lineup/title/modifiers verbatim; contradicts Bungie's "new bosses" statement.
+      Excluded as stale carryover.
+    date_checked: '2026-06-10'

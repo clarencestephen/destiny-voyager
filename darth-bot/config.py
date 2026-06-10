@@ -86,3 +86,34 @@ CHUNK_OVERLAP = 80
 
 # Brand voice
 PERSONA = "DARTH_BANKAI"  # used in prompts
+
+# Voice messages — drop a Discord voice clip; the bot transcribes it
+# (local Whisper), answers with the existing brain, and replies with both
+# text and an ElevenLabs-spoken audio clip. No voice-channel plumbing —
+# Discord voice messages arrive as ordinary audio attachments.
+VOICE_ENABLED = os.environ.get("DARTH_VOICE_ENABLED", "1") not in ("0", "false", "False", "")
+# STT — faster-whisper, runs locally on this box (free/private).
+WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "base.en")
+WHISPER_DEVICE = os.environ.get("WHISPER_DEVICE", "cpu")
+WHISPER_COMPUTE = os.environ.get("WHISPER_COMPUTE", "int8")
+# TTS — ElevenLabs (premium voice). Override the voice via ELEVENLABS_VOICE_ID;
+# default is a deep male voice fitting the DARTH_BANKAI persona.
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
+ELEVENLABS_VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "pNInz6obpgDQGcFmaJgB")  # "Adam" — deep male premade
+ELEVENLABS_MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_turbo_v2_5")
+# Cap spoken length (chars) so replies stay snappy + cheap; full text is
+# always posted regardless.
+VOICE_TTS_MAX_CHARS = int(os.environ.get("VOICE_TTS_MAX_CHARS", "700"))
+# Scope where voice notes are handled — a DEDICATED channel (or any DM), so the
+# bot doesn't transcribe every voice note dropped in shared channels. Create a
+# channel (e.g. #darth-voice, or a voice channel's built-in text chat) and add
+# its name here (or set DARTH_VOICE_CHANNELS / DARTH_VOICE_CHANNEL_IDS in env).
+VOICE_CHANNEL_NAMES = {
+    c.strip() for c in os.environ.get("DARTH_VOICE_CHANNELS", "darth-voice,voice-darth").split(",")
+    if c.strip()
+}
+VOICE_CHANNEL_IDS = {
+    int(x) for x in os.environ.get("DARTH_VOICE_CHANNEL_IDS", "").split(",") if x.strip().isdigit()
+}
+# Allow voice notes in DMs too (1:1 with the bot is unambiguous).
+VOICE_ALLOW_DMS = os.environ.get("DARTH_VOICE_ALLOW_DMS", "1") not in ("0", "false", "False", "")

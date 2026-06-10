@@ -1,0 +1,88 @@
+# raids/pantheon/5-gahlran.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Leviathan: Crown of Sorrow (raid lair). _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 5
+  slug: gahlran
+  name: Gahlran, the Sorrow-Bearer
+  ingame_name: Gahlran, the Sorrow-Bearer
+  abstract: Gahlran is a massive Cabal Psion afflicted by the Crown of Sorrow, fought in a circular arena
+    with a central pillar. The fight revolves around illusory "Gahlran's Deception" copies, a Sorrow buildup
+    debuff that must be managed by killing tracked enemies and standing on plates, and a damage window
+    opened only by deciphering which of multiple Gahlran clones is the "real" one via synced glyphs. Fail
+    the puzzle and the Deception slams the team for a near-guaranteed wipe.
+  plain_language_steps:
+  - Split into two teams of three; each team handles one of the two side rooms/plates flanking the central
+    arena while the rest manage adds.
+  - 'Build and manage the ''Sorrow'' debuff: a counter climbs as you take damage and as time passes. Kill
+    the marked Cursed Thrall / tracking enemies and stand on the lit plates to dump Sorrow stacks before
+    they reach max (max Sorrow = death).'
+  - Each side room spawns enemies tied to a symbol. Read the glyph/symbol that appears above each room
+    and the symbol displayed on the real Gahlran to identify which projection is genuine.
+  - Call out the matching symbols between the two teams so the fireteam knows which of the Gahlran 'Deception'
+    clones is the real target — only the correct one is vulnerable.
+  - When the real Gahlran is revealed and his chest/weak point opens, the whole team converges and burns
+    him during the open damage window.
+  - Survive 'Gahlran's Deception' — when he raises both hands and the screen distorts, the team must have
+    correctly solved the puzzle or be positioned to survive the arena-wide slam; a wrong answer wipes
+    the team.
+  - Repeat the symbol-matching and damage cycle across phases, pushing him to the final stand, then finish
+    the DPS to complete the encounter.
+  mechanics:
+  - 'Sorrow debuff: a stacking countdown/affliction that builds over time and from damage; reaching maximum
+    Sorrow kills you. Cleared by killing marked enemies and standing on activation plates.'
+  - 'Gahlran''s Deception: multiple illusory Gahlran projections appear; only one is real and damageable.
+    A wrong read triggers an arena-wide slam/wipe mechanic.'
+  - 'Symbol/glyph matching: side rooms display symbols that must be matched against the symbol shown on
+    the real Gahlran to identify the true target each phase.'
+  - 'Two-room split: the arena''s left and right rooms each spawn add waves and a glyph that one sub-team
+    must read and communicate.'
+  - 'Add pressure: continuous Cabal and Cursed Thrall spawns that feed Sorrow if ignored and must be cleared
+    to manage the debuff.'
+  - 'Limited damage window: the real Gahlran''s weak point only opens after the puzzle is solved correctly,
+    gating burst DPS to short windows.'
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Solar
+      - Arc
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar Resistance — vs Gahlran, the Sorrow-Bearer damage
+      - Arc Resistance — vs Gahlran, the Sorrow-Bearer damage
+      concussive:
+      - Concussive Dampener — heavy AoE/slam/explosive damage
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - High-burst Heavy options that dump fast in a short window (Rocket Launchers, Linear Fusion Rifles)
+    - Sword for safe close-range burn when his weak point is exposed
+    - Special-ammo precision weapons (Grenade Launchers, high-impact snipers) to chunk the weak point
+      between rocket reloads
+    - Add-clear primaries/Strand or Solar subclass abilities to manage Sorrow and Cursed Thrall waves
+  common_mistakes:
+  - Letting the Sorrow debuff hit max by ignoring marked enemies or not cycling onto plates, causing instant
+    deaths.
+  - Misreading or miscommunicating the symbols between the two rooms and shooting a fake Gahlran 'Deception'
+    clone, wasting the window or triggering the wipe slam.
+  - Dumping DPS into a projection before the real Gahlran's weak point is confirmed open.
+  - Standing too close/in the open when Gahlran's Deception slam goes off instead of being positioned
+    to survive it.
+  - Both sub-teams collapsing to one room and letting the opposite room's add wave snowball Sorrow.
+  - Bursting too slowly across the limited damage window and failing to reach the next phase before the
+    puzzle resets.
+  _confidence: low
+  sources:
+  - tier: 3
+    name: 'UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Leviathan:
+      Crown of Sorrow (raid lair) encounter.'
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

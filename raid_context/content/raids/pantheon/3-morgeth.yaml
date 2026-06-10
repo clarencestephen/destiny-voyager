@@ -1,0 +1,86 @@
+# raids/pantheon/3-morgeth.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Last Wish. _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 3
+  slug: morgeth
+  name: Morgeth, the Spirekeeper
+  ingame_name: Morgeth, the Spirekeeper
+  abstract: Morgeth is an Ogre boss in a circular arena who relentlessly accrues "Taken Strength"; if
+    his bar fills he gnashes and wipes the team. The fireteam suppresses him by picking up small Taken
+    Strength orbs that spawn around the room, but each orb stacks an "Unstable Light" debuff on the carrier
+    that explodes lethally at 10 stacks unless they offload it onto a glowing "Accretion" plate. Balancing
+    orb collection against personal stack count, then transferring accumulated stacks to a single damage-vulnerability
+    window, is the whole fight.
+  plain_language_steps:
+  - Drop in and clear the initial Taken adds (Thrall, Phalanxes, Knights, and Hobgoblin snipers on the
+    upper ledges) so the team isn't overwhelmed while juggling orbs.
+  - Watch Morgeth's 'Taken Strength' progress bar. Small Taken Strength orbs spawn around the arena floor
+    and ledges — players must grab them to keep that bar from filling, because a full bar triggers a team
+    wipe.
+  - 'Each orb you pick up adds a stack of the ''Unstable Light'' (Taken Strength) debuff to YOU. Track
+    your stack count: at 10 stacks you detonate and die, so you cannot hoard infinitely.'
+  - When you near your stack cap, run to a lit 'Accretion' plate on the floor and stand on it to deposit/offload
+    your stacks safely, resetting your personal debuff. Coordinate so plates and orbs are covered without
+    overlapping.
+  - Continue collecting and offloading as a rotation until the team has banked enough Taken Strength —
+    this staggers Morgeth and forces him to surface his critical spot, opening the damage phase.
+  - During the vulnerability window, focus fire Morgeth's crit (head/chest). Burn as much health as possible
+    before he recovers and the orb-juggling cycle resumes.
+  - Repeat the collect / offload / stagger / DPS loop, clearing adds between cycles, until Morgeth is
+    dead.
+  mechanics:
+  - 'Taken Strength bar: Morgeth continuously consumes Taken Strength; if the bar fills completely, the
+    team is wiped. Players prevent this by collecting the orbs before he absorbs them.'
+  - 'Taken Strength orbs: small pickups that spawn around the arena that players must grab to deny Morgeth
+    and to bank progress toward staggering him.'
+  - 'Unstable Light debuff: every orb collected stacks a personal debuff; reaching 10 stacks kills the
+    carrier in an explosion, so collection must be distributed across the team.'
+  - 'Accretion / offload plates: glowing floor plates where a carrier can deposit accumulated stacks to
+    safely reset their personal debuff and contribute banked strength.'
+  - 'Stagger + damage window: banking enough strength staggers Morgeth and exposes his critical point,
+    creating the limited DPS window.'
+  - 'Constant Taken add pressure: Thrall, Phalanxes, Knights, and Hobgoblin snipers on the surrounding
+    ledges harass the team throughout the juggling phase.'
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Void
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resistance — vs Morgeth, the Spirekeeper damage
+      concussive:
+      - Concussive Dampener — heavy AoE/slam/explosive damage
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - 'High-damage Heavy: Rocket launchers or Linear Fusion Rifles for the burst vulnerability window'
+    - Machine guns or sustained Heavy for the open crit spot during stagger
+    - Special-ammo Grenade Launchers (wave-frame or single-shot) to supplement burst and clear adds
+    - Add-clear primaries/Submachine guns to manage Taken Thrall, Phalanxes, and snipers between cycles
+  common_mistakes:
+  - Letting the Taken Strength bar fill because nobody is collecting orbs — this is the primary wipe condition.
+  - Hoarding orbs and reaching 10 stacks of Unstable Light, detonating and dying mid-rotation.
+  - Failing to offload on an Accretion plate before the stack cap, or multiple players crowding the same
+    plate and leaving orbs uncollected elsewhere.
+  - Ignoring the Hobgoblin snipers and Phalanxes on the ledges, getting picked off or shield-bashed while
+    focused on orbs.
+  - Over-extending DPS past the stagger window and getting caught when Morgeth recovers and the orb pressure
+    resumes.
+  - Poor role assignment — not designating who covers which orbs/plates leads to dropped stacks and a
+    runaway Strength bar.
+  _confidence: low
+  sources:
+  - tier: 3
+    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Last
+      Wish encounter.
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

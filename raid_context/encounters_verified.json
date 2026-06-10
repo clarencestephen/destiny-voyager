@@ -1,0 +1,1205 @@
+{
+ "crotas-end/abyss": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Traversal maze, no boss/DPS phase so no surge. Cursed Thrall + Boomer splash justify Concussive; Boomer Void is the main ranged element. No champions."
+ },
+ "crotas-end/bridge": {
+  "incoming_elements": [
+   "Arc",
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Barrier"
+  ],
+  "confidence": "med",
+  "note": "Hive Knight boomers (Arc) + Ogre eye-blasts (Void) are the threats; Cursed Thrall/Ogre area bursts justify Concussive; traversal encounter with no boss DPS phase, so no surge. Unstoppable Ogres, Barri"
+ },
+ "crotas-end/ir-yut": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [
+   "Arc",
+   "Solar"
+  ],
+  "champions": [
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Hive adds (Knights/Wizards) deal mostly Arc; Wizards add some Solar. No real explosive burst. Burn boss fast on her platform - Arc/Solar surge favored. Unstoppable Ogres/Knights appear."
+ },
+ "crotas-end/crota": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Arc-heavy Hive (Boomer Knights, Swordbearer); Boomer splash justifies Concussive. Boss DPS is relic-Sword driven, no forced weapon element so no surge. Unstoppable Ogres + Overload Knights on Master."
+ },
+ "deep-stone-crypt/surviving-blizzard": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Crypt Security: roaming Vandals/Hobgoblins + Servitors deal Arc-leaning Vex/Fallen fire; survival/DPS-less puzzle phase so no damage-phase surge. Barrier Servitors, Unstoppable melee adds."
+ },
+ "deep-stone-crypt/crypt-security": {
+  "incoming_elements": [
+   "Arc",
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Fallen+Vex adds; Arc/Void incoming. Core-destruction damage check, no forced surge element. Master: Barrier/Overload."
+ },
+ "deep-stone-crypt/atraks-1": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Fallen adds/boss deal Arc; no big AoE slam (Replication is a timer death, not mitigatable). Arc weapons drive DPS. Master adds Barrier/Overload."
+ },
+ "deep-stone-crypt/descent": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Descent survival gauntlet vs Arc-heavy Fallen (Shanks/Brigs); Brig slams justify Concussive. No boss DPS phase, so no surges."
+ },
+ "deep-stone-crypt/taniks-abomination": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Taniks' Arc cannon/Shank barrage favors Arc resist; seeking missile splash justifies Concussive Dampener. Boss is element-agnostic, so DPS-phase surge follows top heavy/rocket meta (Solar historically"
+ },
+ "desert-perpetual/nursery": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Opener/boss-select lobby: only Vex trash (Goblins/Harpies), element unspecified; no boss, no champions, no DPS phase. No mods warranted."
+ },
+ "desert-perpetual/epoptes": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "low",
+  "note": "Authored Epoptes files leave defense/surges/champions empty as unverified; Vex eye-beam (Void-leaning) not dominant enough to mandate resist; surge = match chosen heavy, no fixed DPS element; no champ"
+ },
+ "desert-perpetual/agraios": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "All-Vex adds, no dominant element; lethal threat is the Variable Elimination sniper laser (cover-countered, not elemental). DPS-phase element unspecified in source; no champions noted base or Epic."
+ },
+ "desert-perpetual/iatros": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "low",
+  "note": "Vex Hobgoblin boss; Warp Lance (Void-aligned) sniping + Ground Slam area -> Void resist (low conf) + Concussive Dampener. No champions; DPS element open, no surge locked."
+ },
+ "desert-perpetual/koregos": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload",
+   "Unstoppable"
+  ],
+  "confidence": "low",
+  "note": "Vex/Nine-themed boss; Void appears dominant incoming, heavy slams justify Concussive. Cannot verify exact DPS surge or full champ list for this newer encounter; confidence low."
+ },
+ "garden-of-salvation/evade-consecrated": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Vex Void pressure (Cyclops/eye beams) dominates while holding the Embrace zone; evade/tether mechanic, no stand-and-burn DPS window; GoS has no Champions."
+ },
+ "garden-of-salvation/summon-consecrated": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Overload",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Vex Minotaurs/Cyclops drive Void incoming; concussive for Cyclops blasts/slams. Relay-summon encounter has no dedicated boss DPS phase, so no surge."
+ },
+ "garden-of-salvation/consecrated-mind": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Vex Cyclops boss + void-aligned Vex make Void incoming dominant; Barrier (Hobgoblins) + Overload champs; no element-locked burn so surge left open; sustained beam dmg, not explosive."
+ },
+ "garden-of-salvation/sanctified-mind": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Vex boss/adds (Cyclopes, Goblins, Minotaurs) skew Void; heavy AoE blasts warrant Concussive. No element-locked boss, so no forced surge. Master: Barrier + Overload."
+ },
+ "kings-fall/hall-of-souls": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Traversal/orb-deposit opener; no boss DPS phase so no surge. Shrieker/Wizard Void blasts are main ranged threat; Knights are short-range Arc. No champions defining this room."
+ },
+ "kings-fall/portico-jumping": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Jumping puzzle / traversal section: no dominant enemy element, no boss explosives, no DPS phase, no champions. Build for mobility, not combat mods."
+ },
+ "kings-fall/basilica": {
+  "incoming_elements": [
+   "Arc",
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Taken totems encounter: plate defense vs Taken Thrall/Wizards/Knights/Phalanxes. No boss DPS phase, so no surge. Arc Wizard blights + Void Phalanx/Knight pressure justify Arc/Void resist; Unstoppable "
+ },
+ "kings-fall/warpriest": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Warpriest: Hive deal mostly Arc (Knight boomers, eye blast); explosive bursts favor Concussive. Master has Barrier Knights + Unstoppable Ogres. No element-locked DPS phase, so no forced surge."
+ },
+ "kings-fall/golgoroth": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Barrier"
+  ],
+  "confidence": "med",
+  "note": "Golgoroth Ogre's Void eye-beam dominates incoming dmg -> Void resist. Beam is sustained not explosive. DPS via Gaze weak-point exposes back; no element forced, so no dominant surge. Master adds Unstop"
+ },
+ "kings-fall/transept": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Pure traversal/jumping puzzle to the exotic chest: no boss, no DPS phase, no Champions, only sparse trash; main hazard is falling, not enemy damage. No defensive/offensive armor mods warranted."
+ },
+ "kings-fall/daughters-of-oryx": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Twin Hive Wizards deal mainly Void bolts (Void resist, hedged). Wizard splash justifies Concussive. DPS window forces no element. Master: Barrier Knights, Overload Hobgoblins."
+ },
+ "kings-fall/oryx": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Overload",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Taken arena; Ogre eye-beams are Void -> Void resist. Open-element DPS window (no element lock), so no defining Surge. Master adds Overload/Unstoppable champs."
+ },
+ "last-wish/kalli": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Taken adds (Knights/Phalanxes/Wizards/Captains) are Void-dominant -> Void resist. DPS phase exists but no element is mechanically favored, so no surge. Master: Barrier+Overload."
+ },
+ "last-wish/shuro-chi": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Shuro Chi's long-range Arc Blast = Arc resist; Phalanx push is displacement not burst; no element-locked DPS; no champions in LW."
+ },
+ "last-wish/morgeth": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Taken Ogre eye/slam is Void-leaning (adds mostly Solar Knights). No elemental shield/forced surge; bring best DPS. Master adds Barrier/Unstoppable Taken."
+ },
+ "last-wish/vault": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Taken puzzle encounter, no boss/DPS phase. Phalanx Void blasts + Wizard bolts make Void the main resist; Solar (Knights) secondary. No Champions in Last Wish. Concussive marginal."
+ },
+ "last-wish/riven": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Taken adds deal mostly Void (Phalanx/Knight blasts) -> Void resist + Concussive Dampener. Eye-DPS uses raw burst, no element mandated/shield, so no fixed surge. No Champions."
+ },
+ "last-wish/heart-escape": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Heart-carry escape is a mechanics/movement segment: no boss, no DPS phase, no Champions. Light mixed Taken adds; main threat is the curse death-timer, not any dominant element or burst."
+ },
+ "root-of-nightmares/cataclysm": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Nezarec deals dominant Void (slams/Field of Annihilation); heavy slams/area justify Concussive. No element-locked DPS phase, so surge is loadout-driven, not mechanic-forced."
+ },
+ "root-of-nightmares/scission": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Scission is a dual-lane Nodes traversal/DPS-less encounter; Scorn/Cabal adds (Solar Incendiors/Colossi). No boss DPS phase, so no surge. Barrier+Unstoppable Champs."
+ },
+ "root-of-nightmares/macrocosm": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Solar-shielded Centurions + Colossus Lieutenants deal Solar; tight platforms justify Concussive Dampener; DPS is aura/plate-gated, no surge element. Barrier base, Unstoppable on Master."
+ },
+ "root-of-nightmares/nezarec": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Nezarec deals dominant Void (slams/projectiles); heavy AoE slams warrant Concussive. DPS phase is element-neutral; Solar is the common heavy meta. Master adds Barrier/Overload."
+ },
+ "salvations-edge/substratum": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Overload"
+  ],
+  "confidence": "high",
+  "note": "Authored YAML: Sol Divisive Vex deal Void -> resist Void; Tormentor slam -> Concussive Dampener; no DPS phase so no surge; only Overload (Devotee Minotaur), Master adds no new champs."
+ },
+ "salvations-edge/herald-of-finality": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [
+   "Strand",
+   "Arc"
+  ],
+  "champions": [
+   "Unstoppable",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Herald (Tormentor-based boss) deals heavy Arc adds/slam damage; Concussive for slams/suppression. DPS phase favors Strand/Arc burst weapons. Unstoppable+Overload champs present."
+ },
+ "salvations-edge/repository": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "No boss/DPS phase (3 room lockdowns + Unstoppable Incendior). Solar resist for Incendior fire; Concussive for per-side Tormentors + Incendior bursts."
+ },
+ "salvations-edge/verity": {
+  "incoming_elements": [],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable"
+  ],
+  "confidence": "high",
+  "note": "Taken/Dread adds, no dominant element; no boss/DPS phase so no surge. Unstoppable Ogres only. Concussive vs Ogre eye-beam splash + add bursts."
+ },
+ "salvations-edge/the-witness": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [],
+  "confidence": "med",
+  "note": "Scorn deal Arc (resist Arc). Concussive Dampener for beam+ground-wave. Boss element unspecified; Solar surge from Still Hunt/Nighthawk/Golden Gun meta DPS. No champions (champions: [])."
+ },
+ "vault-of-glass/opening-spire": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Vex add-clear/spire-build: Void-dominant incoming (Hobgoblin/Goblin fire). No boss DPS phase, no Champions in this opening encounter."
+ },
+ "vault-of-glass/confluxes": {
+  "incoming_elements": [
+   "Void",
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Overload",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Conflux defense, all-Vex, no DPS phase (surges empty). Void dominant (Goblins/Minotaurs/Fanatic detonations), Solar from Hobgoblin snipers. Supplicant/Fanatic blasts justify Concussive."
+ },
+ "vault-of-glass/oracles": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Overload",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Vex add-clear/Oracle mechanic encounter; Void-heavy adds (Harpies/Fanatics) justify Void chest resist. No boss DPS phase, so no surge. Master adds Overload+Unstoppable."
+ },
+ "vault-of-glass/templar": {
+  "incoming_elements": [
+   "Solar",
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [],
+  "confidence": "high",
+  "note": "Vex Solar (Hobgobline snipers/Templar) + Void (Minotaur torch hammers) dominate adds; Arc surge for Templar burst-DPS via well/aggressive Arc weapons. No Champions in normal/legacy VoG."
+ },
+ "vault-of-glass/gorgon-labyrinth": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Stealth/avoidance maze; Gorgon gaze causes instant detection wipe (not resistible damage). No DPS phase, no champions, no elemental damage to mitigate."
+ },
+ "vault-of-glass/jumping-puzzle": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Pure traversal: decaying platforms over a bottomless chamber. No enemies, no boss, no DPS phase, no champions; only hazard is falling, which armor resist mods cannot mitigate."
+ },
+ "vault-of-glass/gatekeeper": {
+  "incoming_elements": [
+   "Void",
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Barrier"
+  ],
+  "confidence": "med",
+  "note": "Vex adds: Minotaur Void torch/melee + Hobgoblin Void line rifle dominant; Harpy Arc bolts secondary. No boss/DPS phase\u2014objective is hold relics and clear portals, so no Surge. Champs from Master modif"
+ },
+ "vault-of-glass/atheon": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Supplicant kamikaze explosions justify Concussive; Solar from Hobgoblins is main elemental threat; Atheon has no shield so no defining surge element; Master adds Barrier/Overload."
+ },
+ "vow-of-the-disciple/bog-payload": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Escort/traversal opener: Scorn Knowledge Bearer adds, no boss/DPS phase. Only threat is Pervading Darkness (no mod helps). No Champions even on Master."
+ },
+ "vow-of-the-disciple/acquisition": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Taken-heavy opening; Void dominant incoming. Mechanics/align encounter, no boss DPS phase so no surge. Barrier/Overload on Master."
+ },
+ "vow-of-the-disciple/caretaker": {
+  "incoming_elements": [
+   "Void",
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Overload",
+   "Barrier"
+  ],
+  "confidence": "med",
+  "note": "Taken encounter: Void dominant (Phalanx/Hobgoblin/Knight), Arc secondary (Psions). Boss slam + blast adds justify Concussive. DPS phase exists but element is player-choice, so no forced surge."
+ },
+ "vow-of-the-disciple/exhibition": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Timed relic race, no boss/DPS phase (no surge). Mixed Taken/Scorn adds + Darkness cleansed by Aegis, no dominant resist element. Champions blank in base; Master types unconfirmed for this room."
+ },
+ "vow-of-the-disciple/rhulk": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Rhulk: heavy physical slams/beam favor Concussive Dampener; adds skew Arc; no element-locked DPS phase so surge is weapon-agnostic; Unstoppable+Overload champs."
+ },
+ "duality/opening-descent": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Cabal-heavy opener: Solar from Incendior/Colossus fire is the main incoming threat. No real boss DPS phase here (it's a traverse/bell-ringing intro to reach Gahlran), so no defining surge."
+ },
+ "duality/gahlran": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Cabal/Nightmare boss: Solar-heavy adds (Incendiors) justify Solar resist + heavy area/slam dmg = Concussive. Master Champs: Barrier+Unstoppable. DPS phase open; Solar surge defensible but player-choic"
+ },
+ "duality/statue-puzzle": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Non-combat jumping-puzzle: rotate 4 statues via Nightmare switches, no boss/adds/champions/DPS phase. No defensive or offensive armor mods needed."
+ },
+ "duality/unlock-the-vault": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Cabal-heavy: Incendior/fire = Solar incoming; explosive slugs/slams warrant Concussive. Three Nightmares are mechanic-gated bursts, no single forced DPS phase, so no surge. Barrier+Unstoppable Cabal c"
+ },
+ "duality/vault-descent": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Cabal-heavy bell-ringing traverse vs Caiatl; Solar Incendiors/Colossus burn + slam dmg favor Solar resist + Concussive Dampener. No boss DPS phase, so no surge. Barrier Psions/Unstoppable Incendiors."
+ },
+ "duality/caiatl": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Caiatl + fire Cabal adds deal Solar; defined DPS phase favors Solar (burst). Slam telegraphed, no Concussive need. Duality: Barrier + Overload."
+ },
+ "equilibrium/temple-grounds-harvester": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "low",
+  "note": "Cannot verify \"Equilibrium\" dungeon / \"Temple Grounds -> Harvester\" encounter as a real activity; declining to fabricate elements, champions, or DPS-phase specifics."
+ },
+ "equilibrium/harrow": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [
+   "Arc",
+   "Solar"
+  ],
+  "champions": [],
+  "confidence": "low",
+  "note": "Renegade Cabal mid-boss: Centurion/turret Void gunfire is the main resistable incoming; Arc holes/center are insta-kill (unmitigatable). Harrow charge-explosion + drop pods = Concussive. Real DPS wind"
+ },
+ "equilibrium/dredgen-sere": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [],
+  "confidence": "med",
+  "note": "Boss dmg is Arc (lightning hands + post-DPS Arc fill) -> chest Arc resist. DPS phase exists but surge element unconfirmed; Arc default. No champions (Master TBD). No dominant explosive source."
+ },
+ "ghosts-of-the-deep/hive-ritual": {
+  "incoming_elements": [
+   "Arc",
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Lucent Hive add-clear/essence-deposit encounter; no boss DPS phase so no surge. Arc Knights + Solar Wizards dominate incoming. Barrier/Overload champs."
+ },
+ "ghosts-of-the-deep/ecthar": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [
+   "Unstoppable",
+   "Overload"
+  ],
+  "confidence": "high",
+  "note": "Ecthar's Arc shields + Lucent Knight/Wizard adds favor Arc resist; break shield with Arc, then burst with Arc-surged weapons (e.g. Arc swords/heavy)."
+ },
+ "ghosts-of-the-deep/simmumah": {
+  "incoming_elements": [
+   "Arc",
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Unstoppable",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Hive Lightbearer adds + boss eye beams (Arc) and Solar thrall/ogre pressure; long burn windows favor Solar surge (Lumina/legendary HC, rockets). Unstoppable Ogres + Overload knights."
+ },
+ "grasp-of-avarice/skywatch": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Fallen intro clear; Arc adds dominant (shock weapons/Captains). No boss/DPS phase, no champions in this intro, no heavy AoE slam."
+ },
+ "grasp-of-avarice/phryzhia": {
+  "incoming_elements": [
+   "Arc",
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Phry'zhia is a melee swarm boss (Hive); Knights/Wizards push Arc/Solar splash. No fixed crit DPS window, so no surge. Barrier/Unstoppable in adds."
+ },
+ "grasp-of-avarice/rusted-gangplank": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Spike-trap jumping puzzle: environmental hazard only, no boss/DPS phase, no champions, no dominant enemy element. Mods irrelevant."
+ },
+ "grasp-of-avarice/sparrow-mine-race": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Sparrow race vs instant-kill Shroud wall; environmental/fall threat, no boss, no DPS phase, no champions, optional Fallen adds only."
+ },
+ "grasp-of-avarice/shield-shutdown": {
+  "incoming_elements": [
+   "Arc",
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Dense Fallen platforms deal Arc; white Servitor bolts add Void. No boss/DPS phase\u2014progress is launching Servitor bodies into 4 cores. Overload Captains spawn."
+ },
+ "grasp-of-avarice/avarokk": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Fallen boss Avarokk: Arc slam/shock adds dominate incoming -> Arc resist + Concussive for the area slam. No element-locked burn, so Surge = free; Master adds Barrier/Overload champs."
+ },
+ "pit-of-heresy/necropolis": {
+  "incoming_elements": [
+   "Arc",
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Hive: Boomer Knights/Wizards = Arc (dominant), Ogres+Shrieker = Void. Boomer cannons are explosive (concussive). No DPS phase (sword kills) so no surge; PoH has no Champions."
+ },
+ "pit-of-heresy/tunnels-of-despair": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Ogre Void eye-blast is the dominant threat (Void Resist priority); Arc Knight melee minor. No champions, no boss/DPS phase. Eye-blast is a beam, not splash, so no Concussive."
+ },
+ "pit-of-heresy/chamber-of-suffering": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Boomer Knights = Arc splash; cursed thrall explode (Concussive). Boss damage via dunking orbs, no weapon DPS phase. Pit of Heresy has no Champions."
+ },
+ "pit-of-heresy/harrow": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "low",
+  "note": "Traversal/rune-reading section with light add combat; Wizards (Void) the only marginal resist flag. No boss DPS phase, no slams, no Champions anchored here."
+ },
+ "pit-of-heresy/cradle-of-damnation": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Unstoppable",
+   "Barrier"
+  ],
+  "confidence": "med",
+  "note": "Solar-dominant incoming (Boomer Knights, Wizards, Zulmak slam). Slams/cannons justify Concussive. DPS phase has no forced element. Unstoppable Knights core; Barrier on higher diff."
+ },
+ "prophecy/phalanx-echo": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Cabal Phalanxes on Vex platform fire Void slam/knockback bursts; survival add-clear DPS check, no real boss damage phase, no Champions in Prophecy."
+ },
+ "prophecy/wasteland": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Sparrow traversal through wasteland dodging Taken Blights; no boss, no DPS phase, no champions, no dominant elemental fire. Mod profile is empty."
+ },
+ "prophecy/hexahedron": {
+  "incoming_elements": [
+   "Solar",
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Taken adds: Hobgoblin/Knight Solar + Goblin/Phalanx Void, no single dominant element. Phalanx slams justify Concussive. No forced-element DPS phase; Prophecy has no Champions."
+ },
+ "prophecy/singularity": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Sparrow race outrunning the collapsing wall of Darkness; no enemies, no DPS phase, no champions. Survival = pure movement/no off-pit. No combat armor mods help."
+ },
+ "prophecy/kell-echo": {
+  "incoming_elements": [],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [],
+  "confidence": "med",
+  "note": "Taken adds, no dominant resistable element (Dark Entropy debuff is the real killer). Shrapnel Launcher burst -> Concussive. Phase 2 DPS chase, no element gated; Solar favored (Well/GG). No Master = no"
+ },
+ "shattered-throne/erebus": {
+  "incoming_elements": [
+   "Void",
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Taken maze-clear: Ogre Void eye-beams + Knight/Wizard Solar dominate incoming. No DPS phase, so no surge. Barrier/Unstoppable Taken."
+ },
+ "shattered-throne/descent": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Jumping-puzzle/catwalk traversal: sparse Taken adds, no boss/DPS phase, no champions; main threat is falling, not elemental damage."
+ },
+ "shattered-throne/vorgeth": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Taken Ogre: Void eye-blast + Axion Darts + Wizard bolts = Void Resist. No Master = no Champions. Ogre has no shield, so no defined DPS surge; concussive not needed (enclosed arena)."
+ },
+ "shattered-throne/dul-incaru": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Hive Knight Arc boomer/projectile pressure dominates; explosive splash justifies Dampener. Real DPS window on Dul Incaru but no mechanic-enforced surge element. No Champions in this dungeon encounter."
+ },
+ "spire-of-the-watcher/reestablish-power": {
+  "incoming_elements": [
+   "Solar"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Vex outpost; Hobgoblin Solar fire is the dominant ranged threat. Add-clear/circuit mechanic, no DPS phase so no surge. Spire champs: Barrier + Unstoppable."
+ },
+ "spire-of-the-watcher/ascend-the-spire": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Vex-heavy ascent/circuit encounter, no boss DPS phase; Arc is dominant incoming from Vex adds. Barrier+Overload champs. No slam/AoE so no Concussive."
+ },
+ "spire-of-the-watcher/silence-the-siren": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Vex Akelous deals dominant Arc (boss bolts + electrified rails); Barrier/Overload champs; no forced-element DPS phase, no big concussive burst."
+ },
+ "spire-of-the-watcher/descend": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "high",
+  "note": "Arc adds/Hydra sweep/Arc gates -> Arc resist. No boss/DPS phase = no surge. Master: Barrier Hydra, Unstoppable Minotaurs. Biggest threat is environmental."
+ },
+ "spire-of-the-watcher/prompt-critical": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "All-Vex fight; Persys beams + electrified floor + Harpies make Arc the dominant incoming element (Void secondary). Sustained beams, not slams, so no Concussive. No element-locked DPS phase, so no mand"
+ },
+ "sundered-doctrine/solve-the-riddle": {
+  "incoming_elements": [
+   "Arc",
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Puzzle encounter, no boss DPS so no surge. Hive adds deal Arc/Solar; Tormentor slam + Subjugator burst justify Concussive. No champions."
+ },
+ "sundered-doctrine/open-the-locks": {
+  "incoming_elements": [
+   "Void",
+   "Solar"
+  ],
+  "concussive": true,
+  "surges": [
+   "Solar"
+  ],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Hive encounter: Ogre Void eye-beams + Wizard/Resonant-Sun Solar projectiles. Tormentor on errors -> Concussive. No boss shield; Kill-phase DPS favors Solar (Finality's Auger/Whisper). Champs on Master"
+ },
+ "sundered-doctrine/kerrev-the-erased": {
+  "incoming_elements": [
+   "Strand"
+  ],
+  "concussive": true,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [],
+  "confidence": "med",
+  "note": "Strand resist for Subjugator suspend + tether Threadlings (guide says \"1 strand Resistance\"). Burning AoE+stomp=concussive. DPS phase Arc (Queenbreaker/Arc surges). No champs confirmed."
+ },
+ "vespers-host/activation": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Opening encounter: kill Servitors to disable shock traps, then DPS the door console. Arc shock-room damage + explosive hazards; no real boss DPS phase so no surge."
+ },
+ "vespers-host/infiltration": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Fallen Captains fire Void; Raneiks Integration is a Void tether (LoS-break, not resist). Traversal puzzle: no DPS phase, no champions."
+ },
+ "vespers-host/raneiks-unified": {
+  "incoming_elements": [
+   "Void"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [],
+  "confidence": "med",
+  "note": "Servitor Void attacks + Void Integration tether -> Void resist. Heavy explosive shells/nuke -> Concussive. Short ~10-15s AoE phase is element-agnostic (no surge). No champions in this encounter."
+ },
+ "vespers-host/corrupted-puppeteer": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [
+   "Arc",
+   "Strand"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Raneiks Unified is Arc-heavy (Arc Servitors/Shanks, electrified augment hazards) so Arc resist + Concussive vs blasts/splits help; no surge-locked DPS, Arc/Strand burst (Wish-Keeper/Slug/rockets) opti"
+ },
+ "warlords-ruin/rathil": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": false,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Scorn encounter; Arc Chieftain totems/auras dominate incoming. Barrier + Unstoppable champs. Boss has no elemental shield, so no forced surge element; no real area-burst."
+ },
+ "warlords-ruin/imprisoned-and-climb": {
+  "incoming_elements": [],
+  "concussive": false,
+  "surges": [],
+  "champions": [],
+  "confidence": "high",
+  "note": "Puzzle/traversal section, no boss or DPS phase. Spike traps are instant-kill physical hazards (not resistable); no dominant element, no champions, no concussive case."
+ },
+ "warlords-ruin/wailing-tempest": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [],
+  "champions": [
+   "Barrier",
+   "Unstoppable"
+  ],
+  "confidence": "med",
+  "note": "Hefnd's dragon breath + floor shock fields are Arc-heavy (Arc resist). Big AoE breath/Chieftain bursts justify Concussive. Boss takes neutral dmg in DPS window, no forced surge. Master: Barrier/Unstop"
+ },
+ "warlords-ruin/quell-the-corruption": {
+  "incoming_elements": [
+   "Arc"
+  ],
+  "concussive": true,
+  "surges": [
+   "Arc"
+  ],
+  "champions": [
+   "Barrier",
+   "Overload"
+  ],
+  "confidence": "med",
+  "note": "Arc-charged Chimaera boss + Arc-shielded Hive adds; boss slam/AoE warrants Concussive Dampener; no surge-aligned phase so Arc weapons fit boss DPS."
+ }
+}

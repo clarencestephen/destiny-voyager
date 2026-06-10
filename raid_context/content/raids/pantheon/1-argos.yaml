@@ -1,0 +1,81 @@
+# raids/pantheon/1-argos.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Leviathan: Spire of Stars (raid lair). _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 1
+  slug: argos
+  name: Argos, Planetary Core
+  ingame_name: Argos, Planetary Core
+  abstract: Argos, Planetary Core is the colossal Vex mind that anchors the Leviathan's Spire, fought
+    in a tall multi-tiered arena split into a central platform and side rooms. The fireteam must survive
+    its room-wide psionic discharge by standing on the correct safe plates, charge and bank Charges of
+    Light to collapse its central-eye shield, then burst the exposed core during its open-eye damage window
+    before it seals and resets. Success demands strict role assignment across the side rooms, fast add
+    clears, and disciplined positioning during the wipe pulse.
+  plain_language_steps:
+  - 'Split the six players into roles: a group covering the central platform and runners assigned to the
+    left and right side rooms where the relays and floor panels live.'
+  - Clear the incoming Vex and Cabal/Psion adds quickly to generate and pick up Charges of Light from
+    the enemies that drop them.
+  - Carry Charges of Light to the relays and bank them to build the charge meter that will drop Argos's
+    central-eye shield.
+  - 'Watch for Argos''s room-wide psionic discharge: when the core winds up its wipe pulse, get every
+    player onto the correct lit safe plates/panels (matching the called pattern) so nobody is caught in
+    the open and instantly killed.'
+  - Once the shield collapses and the central eye opens, push to the platform and burn the exposed core
+    during the open-eye damage window.
+  - When the eye closes and Argos re-shields, disengage, reset positioning, rebuild charges, and repeat
+    the cycle until the core is destroyed.
+  mechanics:
+  - Central-eye shield that must be brought down by banking Charges of Light gathered from adds before
+    any damage can be dealt to the core
+  - Room-wide psionic discharge / wipe pulse — players must stand on the correct lit safe plates or panels
+    to survive; being caught in the open is an instant kill
+  - Relay and floor-panel puzzle split across the central platform and the left/right side rooms requiring
+    coordinated role assignment
+  - Open-eye DPS window — the core is only vulnerable while its central eye is exposed, then it seals
+    and resets the cycle
+  - Continuous add pressure (Vex plus Cabal Loyalist support and Psions) that both threatens the team
+    and supplies the Charges of Light needed to progress
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Void
+      - Solar
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Void Resistance — vs Argos, Planetary Core damage
+      - Solar Resistance — vs Argos, Planetary Core damage
+      concussive: []
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - High-damage Heavy weapons (Rocket Launchers / Linear Fusion Rifles) for the burst open-eye window
+    - Precision-friendly options that can hit the exposed core reliably during the short vulnerability
+      phase
+    - Add-clear primaries/specials to keep Charge of Light generation flowing between damage cycles
+  common_mistakes:
+  - Standing on the wrong plate/panel or staying in the open during the psionic discharge and getting
+    one-shot, which usually cascades into a wipe
+  - Failing to assign and hold side-room roles, so relays and panels aren't covered and the shield never
+    drops in time
+  - Letting adds overwhelm the team, which both kills players and starves the team of the Charges of Light
+    needed to break the shield
+  - Wasting the short open-eye window by being out of position or out of Heavy ammo when the core becomes
+    vulnerable
+  - Tunneling on the core during DPS and ignoring the next incoming wipe pulse
+  _confidence: low
+  sources:
+  - tier: 3
+    name: 'UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Leviathan:
+      Spire of Stars (raid lair) encounter.'
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

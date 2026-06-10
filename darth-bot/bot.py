@@ -22,12 +22,16 @@ The bot also responds to @mentions in any allowed channel.
 from __future__ import annotations
 
 import asyncio
+import io
 import logging
+import os
 from pathlib import Path
 
 import discord
 from discord import app_commands
 
+import config
+import voice
 from config import (ALLOWED_CHANNEL_NAMES, DISCORD_BOT_TOKEN, DISCORD_GUILD_ID,
                      MODEL)
 from llm import check_ollama
@@ -888,10 +892,57 @@ async def cmd_equip(interaction: discord.Interaction, build_id: str, character: 
 # ============================================================
 
 
+def _is_voice_channel(channel) -> bool:
+    """A dedicated channel set aside for talking to the bot by voice note."""
+    if getattr(channel, "id", None) in config.VOICE_CHANNEL_IDS:
+        return True
+    return getattr(channel, "name", None) in config.VOICE_CHANNEL_NAMES
+
+
+async def _handle_voice_message(message: discord.Message, attachment: discord.Attachment):
+    """Voice-message path: transcribe → brain → reply with text + spoken audio."""
+    async with message.channel.typing():
+        try:
+            data = await attachment.read()
+            suffix = os.path.splitext(attachment.filename or "")[1] or ".ogg"
+            transcript = await voice.transcribe(data, suffix=suffix)
+        except Exception as e:  # noqa: BLE001
+            await message.reply(f"⚠️  couldn't transcribe that clip: {e}", mention_author=False)
+            return
+        if not transcript:
+            await message.reply("🎙️ I couldn't make out any words in that one — try again?",
+                                mention_author=False)
+            return
+        try:
+            text = await answer(transcript)
+        except Exception as e:  # noqa: BLE001
+            text = f"⚠️  {e}"
+        audio = await voice.synthesize(text)
+
+    body = f"🎙️ **heard:** {transcript}\n\n{text}"
+    first, body = body[:1900], body[1900:].lstrip()
+    audio_file = discord.File(io.BytesIO(audio), filename="darth_reply.mp3") if audio else None
+    await message.reply(first, file=audio_file, mention_author=False)
+    while body:
+        chunk, body = body[:1900], body[1900:].lstrip()
+        await message.reply(chunk, mention_author=False)
+
+
 @bot.event
 async def on_message(message: discord.Message):
     if message.author.bot:
         return
+
+    # Voice-message path — an audio attachment in the DEDICATED voice channel
+    # (or a DM). Scoped to that channel so the bot doesn't react to every voice
+    # note in shared channels. Runs before the @mention gate (clips can't mention).
+    if config.VOICE_ENABLED and message.attachments:
+        clip = next((a for a in message.attachments if voice.is_voice_attachment(a)), None)
+        in_voice_scope = _is_voice_channel(message.channel) or (config.VOICE_ALLOW_DMS and message.guild is None)
+        if clip and in_voice_scope:
+            await _handle_voice_message(message, clip)
+            return
+
     if bot.user not in message.mentions:
         return
     if not _is_allowed_channel(message.channel):
@@ -1263,6 +1314,18 @@ def _build_vendor_embed(vendor_key: str, v: dict | None, manifest: dict) -> disc
     else:
         emb.description = v.get("notes", "")
         items_raw = v.get("items", []) or []
+        # Eververse: default to the weekly Bright-Dust featured stock so
+        # the embed isn't drowned by hundreds of permanent Silver-only
+        # items. Mirrors the web UI's default (single source of truth).
+        if vendor_key == "eververse":
+            bright = [it for it in items_raw if it.get("bright_dust")]
+            silver_hidden = len(items_raw) - len(bright)
+            if bright:
+                items_raw = bright
+                if silver_hidden:
+                    emb.description = (
+                        (emb.description + "\n") if emb.description else ""
+                    ) + f"_Showing Bright-Dust items; {silver_hidden} Silver-only hidden._"
 
         def name_of(h):
             return (manifest.get(str(h)) or {}).get("n") or f"#{h}"

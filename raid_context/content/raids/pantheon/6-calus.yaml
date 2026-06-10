@@ -1,0 +1,89 @@
+# raids/pantheon/6-calus.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Leviathan (base raid final boss). _confidence: low.
+
+activity:
+  slug: pantheon
+  name: Pantheon
+  activity_type: raid
+  fireteam_size: 6
+encounter:
+  order: 6
+  slug: calus
+  name: Emperor Calus
+  ingame_name: Emperor Calus
+  abstract: 'Emperor Calus is fought in his throne room, where the fireteam splits into two groups each
+    phase: an "outside" team that damages the real Calus on his throne, and an "inside" team that is teleported
+    into a shadow-realm projection of Calus''s body to identify which of four glowing skulls to destroy.
+    Correct skull calls expose the boss''s chest weak point, opening the damage window, while the throne-room
+    team simultaneously manages adds and the encroaching ceiling fire. The boss is defeated by completing
+    several cycles of skull-calling and coordinated damage before the room''s hazards overwhelm the team.'
+  plain_language_steps:
+  - 'Split into two teams of three: an ''outside'' team that stays in the throne room and an ''inside''
+    team that will be teleported into Calus''s projection (commonly the same three players each phase,
+    or you swap by standing on the teleport plate).'
+  - Start the encounter. The inside team is pulled into a shadow version of the room and sees four floating
+    skulls; the outside team faces the real Calus and his arena.
+  - 'Inside team: watch which skulls glow/light up versus which stay dark, and call out the correct skulls
+    to shoot. Destroying the right skulls (and avoiding the wrong ones) charges the mechanic; shooting
+    wrong skulls or missing the window penalizes the team.'
+  - When the skulls are resolved correctly, Calus opens his chest plate, revealing a glowing orange weak
+    point in the center of his torso.
+  - 'Outside team: pour damage into the exposed chest weak point during this window. Hit the crit spot,
+    not the body, for full damage.'
+  - 'Throughout, clear the Cabal/Loyalist adds and Psions that spawn, and watch the ceiling: a wall of
+    fire descends from the top of the room and you must stay below it (drop to lower ground) or take heavy
+    burning damage.'
+  - Repeat the skull-call and chest-damage cycle each phase, rotating teams onto the teleport plate if
+    your group swaps roles, until Calus's health is depleted.
+  - Manage the rising fire and add pressure between every damage window; a wipe is usually caused by the
+    fire reaching the floor or a botched skull call rather than the boss's direct attacks.
+  mechanics:
+  - 'Team split: half the fireteam is teleported into a shadow-realm projection of Calus while the other
+    half fights the real boss on his throne.'
+  - 'Skull-calling: the inside team identifies which of four glowing skulls to shoot and relays the call
+    so the mechanic resolves correctly.'
+  - 'Chest weak point: completing the skull mechanic forces Calus to open his chest plate, exposing an
+    orange crit point that is the only reliable damage spot.'
+  - 'Descending ceiling fire: a wall of flame creeps down from the top of the room; players must stay
+    beneath it or take stacking burn damage, functioning as a soft enrage/positioning check.'
+  - 'Add waves: Cabal Loyalists and Psions spawn continuously and must be cleared to keep the room manageable
+    during mechanics and damage.'
+  - 'Phased damage windows: the boss is only vulnerable during the chest-open window, so DPS must be timed
+    to the mechanic rather than applied freely.'
+  defense:
+    incoming_damage:
+      adds: []
+      boss:
+      - Solar
+    champions: []
+    recommended_defensive_mods:
+      elemental:
+      - Solar Resistance — vs Emperor Calus damage
+      concussive:
+      - Concussive Dampener — heavy AoE/slam/explosive damage
+  damage:
+    surges: []
+    burst_windows: ''
+    recommended_dps:
+    - High-damage precision-friendly heavy (Linear Fusion Rifle or Sniper) to hit the chest crit at range
+    - Rocket launchers for burst into the open chest window
+    - Machine guns or Auto/Pulse for sustained add clear between windows
+    - Swords or close-range heavy if the team brings the boss into melee range during the open-chest window
+  common_mistakes:
+  - Letting the descending ceiling fire reach the floor by not dropping to lower ground in time, causing
+    a burn-down wipe.
+  - Calling or shooting the wrong skulls inside the projection, which fails the mechanic and skips the
+    damage window.
+  - Damaging Calus's body instead of the exposed orange chest crit point, wasting the DPS window.
+  - Ignoring add and Psion pressure so the throne-room team gets overwhelmed during the skull/damage phase.
+  - Poor comms between inside and outside teams, so the chest never opens in sync with the damage team's
+    readiness.
+  - Not assigning clear roles for who goes inside versus who stays out, causing confusion on the teleport
+    plate each phase.
+  _confidence: low
+  sources:
+  - tier: 3
+    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Leviathan
+      (base raid final boss) encounter.
+    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
+      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
+    date_checked: '2026-06-10'

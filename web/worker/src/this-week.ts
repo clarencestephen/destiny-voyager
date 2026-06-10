@@ -57,7 +57,12 @@ export interface VendorItem {
   icon_url: string;
   description?: string;
   cost?: Array<{ currency_hash: number; quantity: number }>;
+  bright_dust?: boolean;  // Eververse: true if purchasable with Bright Dust (vs Silver-only)
 }
+
+// Bright Dust currency hash — stable since D2 launch. Used to split
+// Eververse's weekly Bright-Dust featured stock from Silver-only items.
+export const BRIGHT_DUST_HASH = 2817410917;
 
 export interface VendorWeek {
   vendor: VendorKey;
@@ -280,7 +285,7 @@ function deriveMilestoneDescription(key: ActivityKey, _api: any): string {
     case "vex-incursion":
       return "Vex Incursion — 30-minute pulse activity in Neomuna. Strand-themed loot + Conqueror Synth currency.";
     case "lost-sector":
-      return "Daily Lost Sector — Legend + Master difficulty drop exotic armor on solo flawless completion.";
+      return "World Lost Sectors — one per destination, rotating daily. Solo Expert/Master drops Exotic Engrams. (Exotic armor is no longer slot-specific from Lost Sectors — focus it at Rahool / Ada-1.)";
   }
 }
 
@@ -292,7 +297,7 @@ function deriveMilestoneRewards(key: ActivityKey, _api: any): string[] {
     case "iron-banner":      return ["IB armor + weapons", "Pinnacle on weekly challenge"];
     case "trials":           return ["Adept Trials weapon (flawless)", "Trials engrams + Glimmering Trove"];
     case "vex-incursion":    return ["Strand-themed weapons", "Conqueror Synth currency"];
-    case "lost-sector":      return ["Daily exotic armor slot (Helm/Arms/Chest/Legs/Class — rotates)"];
+    case "lost-sector":      return ["Exotic Engram (solo Expert/Master)", "Focus exotic armor at Rahool / Ada-1"];
   }
 }
 
@@ -300,9 +305,12 @@ function deriveMilestoneNotes(key: ActivityKey, _api: any, available: boolean): 
   if (key === "trials" && !available) return "Trials runs Friday-Tuesday weekly reset.";
   if (key === "iron-banner" && !available) return "Iron Banner runs ~3 weeks per Episode.";
   if (key === "lost-sector") {
-    // Bungie's milestone for Lost Sector is sparse; the rotation table
-    // is most reliably surfaced by community sites (today.destiny.tools).
-    return "Daily exotic armor slot rotates by day. Check today.destiny.tools or in-game Director for today's slot.";
+    // Since The Final Shape (2024) Lost Sectors no longer drop slot-specific
+    // exotic armor — that system is gone in the Edge of Fate sandbox. They
+    // drop Exotic Engrams (solo Expert/Master); exotic armor is focused at
+    // Rahool / Ada-1. We surface the active World Lost Sectors from Bungie's
+    // milestone data rather than a (now-defunct) daily-slot table.
+    return "No daily exotic-armor slot anymore — Lost Sectors drop Exotic Engrams; focus exotic armor at Rahool / Ada-1.";
   }
   if (key === "vex-incursion") {
     return "Always-available in Neomuna once unlocked. ~30-min pulse cycle between sessions.";
@@ -503,7 +511,7 @@ export async function getEververse(env: Env, user: StoredUser): Promise<VendorWe
     available: true,
     refresh_in_seconds: refreshIn(raw.vendor?.nextRefreshDate),
     items,
-    notes: "Weekly Bright Dust featured + Silver-exclusive items. UI should filter to bright-dust-only by default.",
+    notes: "Weekly Bright Dust featured + Silver-exclusive items. Showing Bright-Dust items by default; toggle to include Silver.",
   };
 }
 
@@ -527,6 +535,7 @@ function saleToItem(sale: any): VendorItem {
     tier: "",
     icon_url: "",
     cost: costs,
+    bright_dust: costs.some((c: { currency_hash: number }) => c.currency_hash === BRIGHT_DUST_HASH),
   };
 }
 

@@ -1,10 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
-  api, sumStats, STAT_KEYS, STAT_LABEL, ARMOR_SLOTS, ARMOR_ARCHETYPES,
+  api, sumStats, loadManifest, STAT_KEYS, STAT_LABEL, ARMOR_SLOTS, ARMOR_ARCHETYPES,
   type ArmorStats, type ArmorSlot, type CharacterSummary, type Item, type UserProfile,
+  type SlimManifest,
 } from "@/lib/api";
-import { loadBuilds, type BuildTemplate } from "@/lib/builds";
+import { loadBuilds, buildsForClass, type BuildTemplate } from "@/lib/builds";
+import {
+  selectMods, type ModCatalog, type ModLoadout,
+  type Element as ModElement, type StatModRequest,
+} from "@/lib/mods";
+import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem } from "@/lib/equipPlan";
+
+// Map a build's subclass to the mod-engine element (Prismatic → Harmonic).
+const SUBCLASS_TO_ELEMENT: Record<string, ModElement> = {
+  Arc: "Arc", Solar: "Solar", Void: "Void", Stasis: "Stasis", Strand: "Strand",
+};
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -13,6 +24,32 @@ const CLASS_COLOR: Record<string, string> = {
   titan:  "text-titan",
   warlock:"text-warlock",
 };
+
+// Subclass elements drive Loader/Siphon + the Harmonic fallback; weapon
+// elements (incl. Kinetic) drive the Surge. Colours echo the in-game damage types.
+const SUBCLASS_ELEMENTS: ModElement[] = ["Arc", "Solar", "Void", "Stasis", "Strand"];
+const WEAPON_ELEMENTS:   ModElement[] = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand"];
+const EL_COLOR: Record<string, string> = {
+  Kinetic: "text-zinc-200", Arc: "text-cyan-300", Solar: "text-orange-400",
+  Void: "text-violet-400", Stasis: "text-sky-300", Strand: "text-green-400",
+  Harmonic: "text-saber", "": "text-muted",
+};
+// Optimizer uses "Gauntlets"; the mod engine uses "Arms".
+const SLOT_TO_MOD: Record<string, keyof ModLoadout["slots"]> = {
+  Helmet: "Helmet", Gauntlets: "Arms", Chest: "Chest", Legs: "Legs", Class: "Class",
+};
+
+// Per-encounter mod hints baked from the raid KB (web/public/encounters.json,
+// via raid_context/bake_encounters.py). Selecting an encounter pre-sets the
+// chest resist / Concussive context — Phase 3 encounter-aware mods.
+interface EncounterHint {
+  slug: string; name: string; order: number;
+  incoming_elements: ModElement[]; concussive: boolean;
+  surges: ModElement[]; champions: string[];
+}
+interface ActivityHint {
+  slug: string; name: string; type: string; encounters: EncounterHint[];
+}
 
 // Stretch target by selection count. Hard floor is always 100.
 const STRETCH_BY_COUNT: Record<number, number> = { 1: 200, 2: 200, 3: 125, 4: 100 };
@@ -320,6 +357,21 @@ export default function Optimizer() {
   const [optimizing, setOptimizing] = useState(false);
   const [activeCharId, setActiveCharId] = useState<string | null>(null);
 
+  // Mod selection context (Phase 2 — non-destructive preview).
+  const [modCatalog, setModCatalog] = useState<ModCatalog | null>(null);
+  const [manifest, setManifest] = useState<SlimManifest | null>(null);  // for socket mapping (Phase 4)
+  const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
+  const [dpsEl, setDpsEl] = useState<ModElement>("");             // "" → follow subclass
+  const [incomingEl, setIncomingEl] = useState<ModElement>("");   // chest resist target
+  const [concussive, setConcussive] = useState(false);
+  // Encounter-aware context (Phase 3) — drives the chest resist from the raid KB.
+  const [encData, setEncData] = useState<ActivityHint[]>([]);
+  const [activitySlug, setActivitySlug] = useState<string>("");
+  const [encounterSlug, setEncounterSlug] = useState<string>("");
+  // Builds-around-an-exotic (Phase 5).
+  const [builds, setBuilds] = useState<BuildTemplate[]>([]);
+  const [selectedBuildId, setSelectedBuildId] = useState<string>("");
+
   // Initial load
   useEffect(() => {
     (async () => {
@@ -330,6 +382,13 @@ export default function Optimizer() {
         ]);
         setMe(profile);
         setItems(decorated);
+        // Mod catalog is static + small (~46KB) — load once, ignore failure
+        // (the optimizer still works without the mod preview).
+        fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
+        fetch("/encounters.json").then((r) => r.json())
+          .then((d) => setEncData(d.activities ?? [])).catch(() => {});
+        loadManifest().then(setManifest).catch(() => {});
+        loadBuilds().then((m) => setBuilds(m.builds)).catch(() => {});
         const pc = profile.primary_class;
         if (pc) setCls(pc.charAt(0).toUpperCase() + pc.slice(1) as any);
         // Default active character = top-of-the-list (highest equipped power)
@@ -344,24 +403,32 @@ export default function Optimizer() {
     })();
   }, []);
 
-  // Pre-fill selected stats from ?build=<id>
+  // Build-around-an-exotic (Phase 5): lock the exotic, set the subclass element
+  // + target stats from a curated build. Applied from the dropdown or ?build=.
+  function applyBuild(b: BuildTemplate) {
+    setSelectedBuildId(b.id);
+    if (b.class !== "Any") setCls(b.class as any);
+    if (b.subclass && SUBCLASS_TO_ELEMENT[b.subclass]) setSubclassEl(SUBCLASS_TO_ELEMENT[b.subclass]);
+    if (b.target_stats) {
+      const picks = (Object.keys(b.target_stats) as StatKey[])
+        .filter((k) => (b.target_stats?.[k] ?? 0) > 0)
+        .slice(0, 4);
+      if (picks.length) setSelected(picks);
+    }
+    // Lock whichever of the build's exotic options the user actually owns.
+    const owned = items.find(
+      (i) => i.tier === "Exotic" && i.slot === b.exotic_armor.slot &&
+        b.exotic_armor.options.some((o) => o.toLowerCase() === i.name.toLowerCase()),
+    );
+    setLockedExoticId(owned ? owned.instance_id : null);
+  }
+
+  // Apply ?build=<id> once builds + inventory have loaded (once only).
   useEffect(() => {
-    if (!buildId) return;
-    (async () => {
-      try {
-        const manifest = await loadBuilds();
-        const b: BuildTemplate | undefined = manifest.builds.find((x) => x.id === buildId);
-        if (!b) return;
-        if (b.class !== "Any") setCls(b.class as any);
-        if (b.target_stats) {
-          const picks: StatKey[] = (Object.keys(b.target_stats) as StatKey[])
-            .filter((k) => (b.target_stats?.[k] ?? 0) > 0)
-            .slice(0, 4);
-          setSelected(picks);
-        }
-      } catch { /* swallow */ }
-    })();
-  }, [buildId]);
+    if (!buildId || !builds.length || !items.length || selectedBuildId === buildId) return;
+    const b = builds.find((x) => x.id === buildId);
+    if (b) applyBuild(b);
+  }, [buildId, builds, items, selectedBuildId]);
 
   // Available exotics for the class
   const exoticOptions = useMemo(() => {
@@ -416,6 +483,21 @@ export default function Optimizer() {
       if (cur.length >= 4) return cur;  // hard cap
       return [...cur, s];
     });
+  }
+
+  const activity = encData.find((a) => a.slug === activitySlug) ?? null;
+  const encounter = activity?.encounters.find((e) => e.slug === encounterSlug) ?? null;
+
+  // Selecting an encounter pre-sets the chest resist context from the raid KB.
+  // Prefer a specific incoming element; fall back to Concussive. The user can
+  // still override any of it below. Legs surge stays weapon-driven.
+  function pickEncounter(slug: string) {
+    setEncounterSlug(slug);
+    const enc = activity?.encounters.find((e) => e.slug === slug);
+    if (!enc) return;
+    if (enc.incoming_elements[0]) { setIncomingEl(enc.incoming_elements[0]); setConcussive(false); }
+    else if (enc.concussive) { setConcussive(true); setIncomingEl(""); }
+    if (enc.surges[0]) setDpsEl(enc.surges[0]);
   }
 
   function runOptimize() {
@@ -501,6 +583,38 @@ export default function Optimizer() {
           ))}
         </div>
 
+        {/* Build — center the optimizer on a curated exotic build (Phase 5).
+            Sets the locked exotic, subclass element, and target stats in one pick. */}
+        {builds.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+            <span className="text-muted w-20">Build:</span>
+            <select
+              value={selectedBuildId}
+              onChange={(e) => {
+                const b = builds.find((x) => x.id === e.target.value);
+                if (b) applyBuild(b);
+                else { setSelectedBuildId(""); setLockedExoticId(null); }
+              }}
+              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[320px]"
+            >
+              <option value="">— none (manual) —</option>
+              {buildsForClass(builds, cls).map((b) => (
+                <option key={b.id} value={b.id}>{b.name} · {b.subclass}</option>
+              ))}
+            </select>
+            {selectedBuildId && (() => {
+              const b = builds.find((x) => x.id === selectedBuildId);
+              if (!b) return null;
+              return (
+                <span className="text-muted normal-case tracking-normal text-[11px]">
+                  {b.exotic_armor.options[0]} ({b.exotic_armor.slot})
+                  {lockedExoticId ? <span className="text-saber"> · locked ✓</span> : <span className="text-amber-400"> · not owned</span>}
+                </span>
+              );
+            })()}
+          </div>
+        )}
+
         {/* Stats */}
         <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
           <span className="text-muted w-20">Stats:</span>
@@ -530,6 +644,116 @@ export default function Optimizer() {
               floor 100 · stretch {STRETCH_BY_COUNT[selected.length]}
             </span>
           )}
+        </div>
+
+        {/* Encounter — pre-sets the chest resist context from the raid KB
+            (Phase 3). Optional; pick an activity + encounter and the defensive
+            mods snap to that fight, then tweak below. */}
+        {encData.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase border-t border-border/60 pt-4">
+            <span className="text-muted w-20">Encounter:</span>
+            <select
+              value={activitySlug}
+              onChange={(e) => { setActivitySlug(e.target.value); setEncounterSlug(""); }}
+              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[200px]"
+            >
+              <option value="">— any activity —</option>
+              {["raid", "dungeon"].map((t) => (
+                <optgroup key={t} label={t === "raid" ? "Raids" : "Dungeons"}>
+                  {encData.filter((a) => a.type === t).map((a) => (
+                    <option key={a.slug} value={a.slug}>{a.name}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <select
+              value={encounterSlug}
+              onChange={(e) => pickEncounter(e.target.value)}
+              disabled={!activity}
+              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[220px] disabled:opacity-40"
+            >
+              <option value="">— pick encounter —</option>
+              {activity?.encounters.map((enc) => (
+                <option key={enc.slug} value={enc.slug}>{enc.order}. {enc.name}</option>
+              ))}
+            </select>
+            {encounter && (
+              <span className="text-muted normal-case tracking-normal text-[11px]">
+                {encounter.incoming_elements.length ? `incoming ${encounter.incoming_elements.join("/")}` : "no incoming data"}
+                {encounter.concussive ? " · explosive" : ""}
+                {encounter.champions.length ? ` · ${encounter.champions.map((c) => `anti-${c}`).join("/")}` : ""}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Mods — element context for the mod-loadout preview. Subclass
+            element drives Loader/Siphon (build-matched, or Harmonic when
+            unset); the DPS-weapon element drives the offensive Surge; the
+            incoming-damage element (+ Concussive) drives the chest resist.
+            Anti-cross-pollination is enforced by the selectMods() engine. */}
+        <div className="space-y-2 border-t border-border/60 pt-4">
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+            <span className="text-muted w-20">Subclass:</span>
+            {SUBCLASS_ELEMENTS.map((e) => (
+              <button
+                key={e}
+                onClick={() => setSubclassEl((cur) => (cur === e ? "" : e))}
+                className={`px-3 py-1 rounded border transition-colors ${
+                  subclassEl === e ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
+                }`}
+              >
+                {e}
+              </button>
+            ))}
+            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
+              {subclassEl ? `${subclassEl} Loader · ${subclassEl} Siphon` : "Harmonic (auto-matches subclass)"}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+            <span className="text-muted w-20">DPS weapon:</span>
+            {WEAPON_ELEMENTS.map((e) => (
+              <button
+                key={e}
+                onClick={() => setDpsEl((cur) => (cur === e ? "" : e))}
+                className={`px-3 py-1 rounded border transition-colors ${
+                  dpsEl === e ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
+                }`}
+              >
+                {e}
+              </button>
+            ))}
+            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
+              {(dpsEl || subclassEl) ? `${dpsEl || subclassEl} Weapon Surge (legs)` : "Surge follows subclass"}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+            <span className="text-muted w-20">Incoming:</span>
+            {WEAPON_ELEMENTS.map((e) => (
+              <button
+                key={e}
+                onClick={() => { setIncomingEl((cur) => (cur === e ? "" : e)); if (e) setConcussive(false); }}
+                className={`px-3 py-1 rounded border transition-colors ${
+                  incomingEl === e && !concussive ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
+                }`}
+              >
+                {e}
+              </button>
+            ))}
+            <button
+              onClick={() => { setConcussive((c) => !c); if (!concussive) setIncomingEl(""); }}
+              className={`px-3 py-1 rounded border transition-colors ${
+                concussive ? "text-amber-300 border-amber-300" : "border-border text-muted hover:text-foreground"
+              }`}
+            >
+              Concussive
+            </button>
+            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
+              {concussive ? "Concussive Dampener (chest)"
+                : incomingEl ? `${incomingEl} Resistance (chest)`
+                : "chest = subclass-matched resist"}
+            </span>
+          </div>
         </div>
 
         {/* Archetype filter — restrict non-exotic pieces to one or more
@@ -689,6 +913,14 @@ export default function Optimizer() {
             stretch={stretchTarget}
             activeCharId={activeCharId}
             characters={me?.characters ?? []}
+            modCatalog={modCatalog}
+            manifest={manifest}
+            allItems={items}
+            cls={cls}
+            subclassEl={subclassEl}
+            dpsEl={dpsEl}
+            incomingEl={incomingEl}
+            concussive={concussive}
           />
         ))}
       </div>
@@ -711,10 +943,32 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, stretch, activeCharId, characters,
+  modCatalog, manifest, allItems, cls, subclassEl, dpsEl, incomingEl, concussive,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; stretch: number;
   activeCharId: string | null; characters: CharacterSummary[];
+  modCatalog: ModCatalog | null; manifest: SlimManifest | null;
+  allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
+  subclassEl: ModElement; dpsEl: ModElement; incomingEl: ModElement; concussive: boolean;
 }) {
+  // Resolve the concrete, anti-cross-pollination mod loadout for this combo.
+  // Stat mods come from the combo's own stat plan (one per piece, biggest first).
+  const loadout = useMemo<ModLoadout | null>(() => {
+    if (!modCatalog) return null;
+    const statMods: StatModRequest[] = [];
+    for (const s of STAT_KEYS) {
+      for (let k = 0; k < (combo.modPlan.plus10[s] ?? 0); k++) statMods.push({ stat: s, mag: 10 });
+      for (let k = 0; k < (combo.modPlan.plus5[s] ?? 0); k++)  statMods.push({ stat: s, mag: 5 });
+    }
+    return selectMods({
+      subclassElement: subclassEl || "Harmonic",
+      dpsWeaponElement: dpsEl || undefined,
+      incomingElements: incomingEl ? [incomingEl] : [],
+      concussive,
+      statMods,
+      energyBudget: 10,
+    }, modCatalog);
+  }, [modCatalog, subclassEl, dpsEl, incomingEl, concussive, combo]);
   const [equipState, setEquipState] = useState<
     | { kind: "idle" }
     | { kind: "working" }
@@ -738,6 +992,51 @@ function ComboCard({
     }
   }
 
+  // One-click Optimize & Equip (Phase 4) — equips the set AND inserts the
+  // element-matched mods. Two-step: build a plan, confirm, then apply. Every
+  // operation is a reversible Destiny inventory action; per-socket failures
+  // are reported, never fatal.
+  const [armState, setArmState] = useState<
+    | { kind: "idle" }
+    | { kind: "confirm"; plan: EquipPlan; eviction: EvictionItem[] }
+    | { kind: "working" }
+    | { kind: "done"; msg: string; failed: number; unplaceable: number }
+    | { kind: "error"; msg: string }
+  >({ kind: "idle" });
+
+  function prepareEquipMods() {
+    if (!loadout || !modCatalog || !manifest) {
+      setArmState({ kind: "error", msg: "mod data still loading — try again in a moment" });
+      return;
+    }
+    const plan = buildEquipPlan(combo.pieces, loadout, modCatalog, manifest, SLOT_TO_MOD);
+    const eviction = cls ? buildEvictionPlan(combo.pieces, allItems, cls) : [];
+    setArmState({ kind: "confirm", plan, eviction });
+  }
+
+  async function confirmEquipMods(plan: EquipPlan, eviction: EvictionItem[]) {
+    if (!activeCharId) { setArmState({ kind: "error", msg: "no active guardian selected" }); return; }
+    setArmState({ kind: "working" });
+    try {
+      // Zero-downtime: evict the weakest-stat pieces to the vault first so the
+      // incoming set has room, then equip + insert mods.
+      if (eviction.length) {
+        await api.transferToVault(activeCharId, eviction.map((e) => e.instance_id), eviction.map((e) => e.hash));
+      }
+      const ids = combo.pieces.map((p) => p.instance_id).filter(Boolean);
+      const res = await api.equipWithMods(activeCharId, ids, plan.modPlan);
+      setArmState({
+        kind: "done",
+        msg: `equipped ${res.equipped_count}/${ids.length} · mods ${res.mods_inserted}/${res.mods_inserted + res.mods_failed}`
+          + (eviction.length ? ` · vaulted ${eviction.length}` : ""),
+        failed: res.mods_failed,
+        unplaceable: plan.unplaceable.length,
+      });
+    } catch (e: any) {
+      setArmState({ kind: "error", msg: e?.message ?? "equip failed" });
+    }
+  }
+
   return (
     <Card className="p-4 border-saber/30">
       <div className="flex items-center justify-between mb-3 gap-3">
@@ -756,17 +1055,75 @@ function ComboCard({
           <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted">
             power {combo.totalPower}
           </span>
+          {activeCharId && loadout && (
+            <Button
+              onClick={prepareEquipMods}
+              disabled={armState.kind === "working"}
+              variant="primary"
+            >
+              {armState.kind === "working" ? "Equipping…" : "Optimize & Equip"}
+            </Button>
+          )}
           {activeCharId && (
             <Button
               onClick={equipNow}
               disabled={equipState.kind === "working"}
-              variant="primary"
+              variant={loadout ? "outline" : "primary"}
             >
-              {equipState.kind === "working" ? "Equipping…" : "Equip"}
+              {equipState.kind === "working" ? "Equipping…" : "Pieces only"}
             </Button>
           )}
         </div>
       </div>
+
+      {/* One-click Optimize & Equip — confirm + result (Phase 4) */}
+      {armState.kind === "confirm" && (
+        <div className="mb-3 px-3 py-2 rounded border border-saber/40 bg-saber/5 font-ui text-xs">
+          <div className="text-saber mb-1">
+            Equip these 5 pieces and insert {armState.plan.placed.length} mod
+            {armState.plan.placed.length === 1 ? "" : "s"}?
+          </div>
+          {armState.plan.unplaceable.length > 0 && (
+            <div className="text-amber-300 mb-1">
+              {armState.plan.unplaceable.length} mod(s) had no detectable socket — set by hand:{" "}
+              {armState.plan.unplaceable.map((u) => `${u.mod} (${u.slot})`).join(", ")}
+            </div>
+          )}
+          {armState.eviction.length > 0 && (
+            <div className="text-muted mb-1">
+              Will vault {armState.eviction.length} weak piece(s) to make room:{" "}
+              {armState.eviction.map((e) => `${e.name} (${e.slot}, ${e.total})`).join(", ")}
+            </div>
+          )}
+          <div className="text-muted mb-2">
+            Changes your equipped loadout. Reversible, but it touches your account.
+          </div>
+          <div className="flex items-center gap-3">
+            <Button onClick={() => confirmEquipMods(armState.plan, armState.eviction)} variant="primary">Confirm</Button>
+            <button
+              onClick={() => setArmState({ kind: "idle" })}
+              className="text-muted hover:text-saber text-[10px] uppercase tracking-[0.25em]"
+            >
+              cancel
+            </button>
+          </div>
+        </div>
+      )}
+      {armState.kind === "done" && (
+        <div className="mb-3 px-3 py-2 rounded border border-emerald-400/40 bg-emerald-400/5 font-ui text-xs text-emerald-300">
+          ✓ {armState.msg}
+          {(armState.failed > 0 || armState.unplaceable > 0) && (
+            <div className="mt-1 text-amber-300">
+              {armState.failed + armState.unplaceable} mod(s) need manual placement (socket mismatch or undetected).
+            </div>
+          )}
+        </div>
+      )}
+      {armState.kind === "error" && (
+        <div className="mb-3 px-3 py-2 rounded border border-red-400/40 bg-red-400/5 font-ui text-xs text-red-300">
+          ⚠ {armState.msg}
+        </div>
+      )}
       {equipState.kind === "done" && (
         <div className="mb-3 px-3 py-2 rounded border border-emerald-400/40 bg-emerald-400/5 font-ui text-xs text-emerald-300">
           ✓ {equipState.msg}
@@ -824,32 +1181,61 @@ function ComboCard({
         })}
       </div>
 
-      {/* Mod plan — how to mod the 5 pieces to hit those numbers */}
-      {(combo.modsUsed > 0) && (
-        <div className="mb-4 px-3 py-2 rounded border border-saber/30 bg-saber/5">
-          <div className="flex items-baseline justify-between mb-1">
+      {/* Mod loadout — the actual element-matched mods to socket per piece.
+          Legs=Surge (DPS-weapon element) · Chest=Resist/Concussive (encounter)
+          · Arms=Loader · Helmet=Siphon (build element) · +stat mod per piece.
+          Anti-cross-pollination guaranteed by selectMods(). */}
+      {loadout ? (
+        <div className="mb-4 rounded border border-saber/30 bg-saber/5 p-3">
+          <div className="flex items-baseline justify-between mb-2">
             <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-saber">
-              Mod plan
+              Mod loadout
             </span>
-            <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted">
-              {combo.modsUsed}/5 mod slots used
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">
+              legs surge · chest resist · arms loader · helmet siphon
             </span>
           </div>
-          <div className="flex flex-wrap gap-2 font-ui text-xs">
-            {STAT_KEYS.map((s) => {
-              const n10 = combo.modPlan.plus10[s] ?? 0;
-              const n5 = combo.modPlan.plus5[s] ?? 0;
-              if (!n10 && !n5) return null;
-              const parts: string[] = [];
-              if (n10) parts.push(`${n10}× +10`);
-              if (n5)  parts.push(`${n5}× +5`);
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+            {(["Helmet", "Gauntlets", "Chest", "Legs", "Class"] as const).map((pslot) => {
+              const plan = loadout.slots[SLOT_TO_MOD[pslot]];
+              if (!plan) return null;
               return (
-                <span key={s} className="px-2 py-0.5 rounded border border-saber/40 text-saber">
-                  {STAT_LABEL[s]}: {parts.join(" · ")}
-                </span>
+                <div key={pslot} className="rounded border border-border p-2">
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">{pslot}</span>
+                    <span className="font-mono text-[9px] text-muted">{plan.energyUsed}/{plan.energyBudget}e</span>
+                  </div>
+                  <ul className="mt-1 space-y-0.5">
+                    {plan.mods.length === 0 && <li className="text-[11px] text-muted/50">—</li>}
+                    {plan.mods.map((m) => (
+                      <li
+                        key={m.hash}
+                        className={`text-[11px] leading-tight ${
+                          m.fam === "stat" ? "text-saber"
+                          : m.fam === "concussive" ? "text-amber-300"
+                          : EL_COLOR[m.el] ?? "text-foreground"
+                        }`}
+                      >
+                        {m.n} <span className="text-muted">· {m.cost}e</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               );
             })}
           </div>
+          {loadout.warnings.length > 0 && (
+            <div className="mt-2 font-ui text-[10px] text-amber-300/90">
+              {loadout.warnings.join(" · ")}
+            </div>
+          )}
+          <div className="mt-2 font-ui text-[10px] text-muted">
+            Preview — auto-insert on equip ships with the one-click pipeline.
+          </div>
+        </div>
+      ) : (combo.modsUsed > 0) && (
+        <div className="mb-4 px-3 py-2 rounded border border-saber/30 bg-saber/5 font-mono text-[10px] tracking-[0.25em] uppercase text-muted">
+          mod catalog loading… ({combo.modsUsed}/5 stat slots)
         </div>
       )}
 
