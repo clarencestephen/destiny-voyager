@@ -933,8 +933,7 @@ async def _speak_in_voice(channel, audio: bytes):
             pass
     finally:
         # Persist in the channel (music-bot style) — do NOT disconnect here.
-        # Darth Bot stays until /leave or until the channel empties
-        # (see on_voice_state_update). Follow-up clips reuse this connection.
+        # Darth Bot stays until /leave (24/7-style). Follow-up clips reuse it.
         try:
             os.unlink(tmp.name)
         except OSError:
@@ -958,17 +957,56 @@ async def cmd_forget(interaction: discord.Interaction):
     await interaction.response.send_message("🧠 Conversation memory cleared.", ephemeral=True)
 
 
-@bot.event
-async def on_voice_state_update(member: discord.Member, before, after):
-    """Auto-leave once the last human leaves the channel — so Darth Bot doesn't
-    sit alone in an empty VC forever (same courtesy as a music bot)."""
-    if member.bot:
+@bot.tree.command(name="clear", description="Delete messages in this channel (requires Manage Messages)")
+@app_commands.describe(
+    amount="How many recent messages to delete (1-1000).",
+    all="Delete as many as possible in this channel (up to 1000 per run).",
+)
+async def cmd_clear(interaction: discord.Interaction, amount: int = 50, all: bool = False):
+    # Mod-gate: only users who can Manage Messages may purge.
+    perms = getattr(interaction.user, "guild_permissions", None)
+    if interaction.guild is None or perms is None or not (perms.manage_messages or perms.administrator):
+        await interaction.response.send_message(
+            "🚫 You need the **Manage Messages** permission to use this.", ephemeral=True)
         return
-    vc = member.guild.voice_client if member.guild else None
-    if vc and vc.is_connected():
-        humans = [m for m in vc.channel.members if not m.bot]
-        if not humans:
-            await vc.disconnect(force=True)
+    channel = interaction.channel
+    if not hasattr(channel, "purge"):
+        await interaction.response.send_message(
+            "I can only clear messages in a server channel.", ephemeral=True)
+        return
+    limit = 1000 if all else max(1, min(amount, 1000))
+    await interaction.response.defer(ephemeral=True)
+    try:
+        deleted = await channel.purge(limit=limit)  # bulk-deletes <14d; older go one-by-one
+        more = " Run it again to clear more." if all and len(deleted) >= 1000 else ""
+        note = " (messages older than 14 days delete slowly and may be skipped by Discord)" \
+            if len(deleted) < limit else ""
+        await interaction.followup.send(f"🧹 Deleted {len(deleted)} message(s).{more}{note}", ephemeral=True)
+    except discord.Forbidden:
+        await interaction.followup.send(
+            "🚫 I don't have permission to delete messages here — give my role **Manage Messages**.",
+            ephemeral=True)
+    except discord.HTTPException as e:
+        await interaction.followup.send(f"⚠️ Couldn't delete: {e}", ephemeral=True)
+
+
+@bot.tree.command(name="join", description="Have Darth Bot join your voice channel and stay (until /leave)")
+async def cmd_join(interaction: discord.Interaction):
+    member_vc = getattr(getattr(interaction.user, "voice", None), "channel", None)
+    if member_vc is None:
+        await interaction.response.send_message(
+            "Join a voice channel first, then run /join.", ephemeral=True)
+        return
+    try:
+        vc = interaction.guild.voice_client if interaction.guild else None
+        if vc and vc.is_connected():
+            await vc.move_to(member_vc)
+        else:
+            await member_vc.connect()
+        await interaction.response.send_message(
+            f"🟣 Joined **{member_vc.name}** — I'll stay put until /leave.", ephemeral=True)
+    except Exception as e:  # noqa: BLE001
+        await interaction.response.send_message(f"⚠️ Couldn't join: {e}", ephemeral=True)
 
 
 async def _handle_voice_message(message: discord.Message, attachment: discord.Attachment):
