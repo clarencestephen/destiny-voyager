@@ -14,7 +14,8 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const web = path.resolve(__dirname, "..");
-execSync(`npx tsc ${web}/src/lib/recommend.ts --outDir /tmp/rec-test --module esnext --target es2020 --moduleResolution bundler --skipLibCheck`, { stdio: "inherit" });
+// run from the web dir with a relative path so tsc emits a flat /tmp/rec-test/recommend.js
+execSync(`npx tsc src/lib/recommend.ts --outDir /tmp/rec-test --module esnext --target es2020 --moduleResolution bundler --skipLibCheck`, { stdio: "inherit", cwd: web });
 const { recommendBuild } = await import("/tmp/rec-test/recommend.js");
 
 const syn = JSON.parse(fs.readFileSync(`${web}/public/synergy.json`, "utf8"));
