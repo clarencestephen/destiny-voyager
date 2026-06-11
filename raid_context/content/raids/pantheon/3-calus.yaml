@@ -64,10 +64,9 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - High-damage precision-friendly heavy (Linear Fusion Rifle or Sniper) to hit the chest crit at range
-    - Rocket launchers for burst into the open chest window
-    - Machine guns or Auto/Pulse for sustained add clear between windows
-    - Swords or close-range heavy if the team brings the boss into melee range during the open-chest window
+    - Truth (Exotic Rocket) early; it falls off once Calus exposes the central chest crit mid-phase —
+      swap to a precision heavy then.
+    - Banner Shield / Well for the shared-room DPS.
   common_mistakes:
   - Letting the descending ceiling fire reach the floor by not dropping to lower ground in time, causing
     a burn-down wipe.
@@ -100,3 +99,15 @@ encounter:
   order_in_activity: 3
   source_raid: Leviathan (base raid final boss)
   verified: true
+  pantheon_2_0:
+    tactics:
+    - 'Shadow Realm / Normal Room split: shadow players destroy skulls for Force of Will; normal-room
+      players destroy Calus''s overshield to pull the shadow players back.'
+    - Destroy the overshield but back off around 70-80 Force of Will so the shadow team banks more skulls
+      before the big explosion.
+    - 'Final stand: Calus builds a charge + shield — keep damaging to rip through it.'
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.

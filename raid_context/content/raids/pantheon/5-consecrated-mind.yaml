@@ -54,10 +54,9 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - High-damage Heavy machine guns for the precise Eye weak point
-    - Linear Fusion Rifles for ranged precision burst on the exposed Eye
-    - Rocket Launchers for sustained mid-range damage during the window
-    - Aggressive-frame snipers for precision into the Eye if the window is short
+    - Long-range weapons shine — Sniper Rifles are fantastic as the boss backs away; Truth (Exotic Rocket)
+      for burst.
+    - Well / Banner for the deposit-and-DPS window.
   common_mistakes:
   - Letting the sickness/Augmented debuff stack to lethal by standing still or hoarding it instead of
     passing or cleansing it.
@@ -88,3 +87,14 @@ encounter:
   order_in_activity: 2
   source_raid: Garden of Salvation
   verified: true
+  pantheon_2_0:
+    tactics:
+    - The boss is drawn to the 'overloaded relay' (moves to the arena center).
+    - Vex spawn with immunity shields — destroy them with the Enlightened buff.
+    - Stand in a relay's physical shadow to survive the wipe mechanic; deposit Death Singer's Power to
+      trigger the DPS phase.
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.

@@ -57,10 +57,10 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - High-damage Heavy weapons (Rocket Launchers / Linear Fusion Rifles) for the burst open-eye window
-    - Precision-friendly options that can hit the exposed core reliably during the short vulnerability
-      phase
-    - Add-clear primaries/specials to keep Charge of Light generation flowing between damage cycles
+    - Truth (Exotic Rocket Launcher) — massively buffed in Monument of Triumph (returns a rocket on hit
+      + cluster bombs); the standout Pantheon 2.0 heavy DPS.
+    - Banner Shield (Titan) / Well of Radiance (Warlock) for the stationary open-eye window.
+    - Avoid Hand Cannons — Arc Souls auto-fire at the elemental orbs and can mis-trigger the orb mechanic.
   common_mistakes:
   - Standing on the wrong plate/panel or staying in the open during the psionic discharge and getting
     one-shot, which usually cascades into a wipe
@@ -92,3 +92,14 @@ encounter:
   order_in_activity: 1
   source_raid: 'Leviathan: Spire of Stars (raid lair)'
   verified: true
+  pantheon_2_0:
+    tactics:
+    - Lower the shield by shooting the three elemental orbs (two Arc on the sides, one Void at the top)
+      — only the central vantage sees all three.
+    - 'First damage: jump up and shoot the boss''s lower arms.'
+    - Standing in the open during the psionic discharge is an instant kill — hold the lit safe plates.
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.

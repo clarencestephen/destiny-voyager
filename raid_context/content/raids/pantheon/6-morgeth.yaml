@@ -61,10 +61,8 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - 'High-damage Heavy: Rocket launchers or Linear Fusion Rifles for the burst vulnerability window'
-    - Machine guns or sustained Heavy for the open crit spot during stagger
-    - Special-ammo Grenade Launchers (wave-frame or single-shot) to supplement burst and clear adds
-    - Add-clear primaries/Submachine guns to manage Taken Thrall, Phalanxes, and snipers between cycles
+    - Truth (Exotic Rocket); SAVE Heavy for the final-stand mechanic — running dry there resets the encounter.
+    - Well / Banner in the Queenswalk DPS area.
   common_mistakes:
   - Letting the Taken Strength bar fill because nobody is collecting orbs — this is the primary wipe condition.
   - Hoarding orbs and reaching 10 stacks of Unstable Light, detonating and dying mid-rotation.
@@ -97,3 +95,14 @@ encounter:
   order_in_activity: 3
   source_raid: Last Wish
   verified: true
+  pantheon_2_0:
+    tactics:
+    - Pick up Taken Strength (x2) + the brand; DPS in the Queenswalk area.
+    - A Taken relic spawns — use its SUPER on Morgeth to END the damage phase BEFORE he hits 100% Taken
+      Strength (100% = team wipe).
+    - 'TIP: run Calus Resplendent BEFORE Morgeth Surpassing (Drifter synergy).'
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.

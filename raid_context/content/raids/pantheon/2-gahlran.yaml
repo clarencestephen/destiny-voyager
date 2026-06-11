@@ -62,11 +62,8 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - High-burst Heavy options that dump fast in a short window (Rocket Launchers, Linear Fusion Rifles)
-    - Sword for safe close-range burn when his weak point is exposed
-    - Special-ammo precision weapons (Grenade Launchers, high-impact snipers) to chunk the weak point
-      between rocket reloads
-    - Add-clear primaries/Strand or Solar subclass abilities to manage Sorrow and Cursed Thrall waves
+    - Truth (Exotic Rocket) for the main window; Snipers to destroy the hands quickly.
+    - Set up Well / Banner Shield once the real Gahlran is found.
   common_mistakes:
   - Letting the Sorrow debuff hit max by ignoring marked enemies or not cycling onto plates, causing instant
     deaths.
@@ -99,3 +96,15 @@ encounter:
   order_in_activity: 2
   source_raid: 'Leviathan: Crown of Sorrow (raid lair)'
   verified: true
+  pantheon_2_0:
+    tactics:
+    - Lower Gahlran's Deception's shield by meleeing it — one player WITH the Witch's Blessing buff, one
+      without.
+    - During damage, Gahlran raises his hands — shoot BOTH hands to EXTEND the damage phase (skipping
+      this ends DPS early).
+    - Gahlran fakes his identity (psychic faces) — find and shoot the real one.
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.

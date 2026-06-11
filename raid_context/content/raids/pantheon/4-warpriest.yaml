@@ -62,12 +62,8 @@ encounter:
     surges: []
     burst_windows: ''
     recommended_dps:
-    - 'High-damage burst options for a short window: Rocket Launchers (esp. adaptive/aggressive frame
-      rockets)'
-    - Linear Fusion Rifles for precision burst from range
-    - Sword DPS if the room layout allows safe melee uptime
-    - Heavy Grenade Launchers for sustained burst
-    - Whisper/Izanagi-style precision Special snipers as a damage supplement
+    - Truth (Exotic Rocket) — immense Monument-of-Triumph buff, slays the Warpriest.
+    - Well / Banner Shield during the damage window.
   common_mistakes:
   - Misreading the glyph/plate order, which botches the shield drop and triggers the room-wide wipe pulse.
   - Letting the Brand of the Initiate / Aura expire or fumbling the hand-off, leaving the team unprotected
@@ -99,3 +95,12 @@ encounter:
   order_in_activity: 1
   source_raid: King's Fall
   verified: true
+  pantheon_2_0:
+    tactics:
+    - 'King''s Fall flow: brand claimer hot-potato, kill Wizards to spawn Knights for brands, hit the
+      totems in the called order to open damage.'
+    modifiers_observed: None observed at launch — no Champions, surges/burns, or elemental shields appeared
+      in the KackisHD launch walkthroughs; the only 'shields' are mechanic-based immunity shields. Per-boss
+      weekly modifiers remain TBD (expected 2026-06-16+).
+    dps_meta_note: Truth (Exotic Rocket Launcher) is the post-Monument-of-Triumph DPS standout across
+      all bosses.
