@@ -1,59 +1,48 @@
 /**
  * web/src/lib/equipPlan.ts — turn a selectMods() loadout into a concrete,
- * socket-indexed mod plan the Worker can apply via /api/equip-with-mods.
+ * socket-indexed mod plan the Worker applies via /api/equip-with-mods.
  *
- * The Worker inserts mods by (instance_id, socketIndex, plugItemHash), where
- * socketIndex is the position in the piece's plug_hashes array (Bungie socket
- * order). To place a chosen mod we must find the socket on that piece whose
- * category matches the mod (a Leg Weapon Surge → the piece's Leg-armor-mod
- * socket; a stat mod → the General socket). We read the category of each
- * currently-socketed plug from the baked mod catalog first, then the slim
- * manifest's itemTypeDisplayName. Sockets we can't classify are reported as
- * unplaceable rather than guessed — a wrong insert just fails harmlessly, but
- * we'd rather tell the user to set those by hand.
+ * Sockets are resolved DETERMINISTICALLY from the baked armor socket layout
+ * (armor_sockets.json): per armor item, the General mod socket (stat / general
+ * mods) and the slot-specific mod sockets (surge / loader / resist / siphon).
+ * The energy + tuning sockets are excluded (inserting a mod there → Bungie
+ * DestinyItemActionForbidden). We CLEAR every mod socket to its empty plug
+ * first (frees armor energy), then apply the chosen mods — so a vault piece
+ * that already holds mods swaps cleanly instead of failing
+ * DestinyFailedPlugInsertionRules.
  */
-import type { ModLoadout, ModCatalog } from "./mods";
-import type { Item, SlimManifest } from "./api";
+import type { ModLoadout } from "./mods";
+import type { Item } from "./api";
 
-export interface ModSocket { socketIndex: number; plugItemHash: number; }
+export interface ModSocket { socketIndex: number; plugItemHash: number; clear?: boolean; }
 export interface ModPlanEntry { instance_id: string; sockets: ModSocket[]; }
 
 export interface EquipPlan {
-  /** Ready to POST to /api/equip-with-mods. */
+  /** Ready to POST to /api/equip-with-mods. sockets are ordered: clears, then applies. */
   modPlan: ModPlanEntry[];
   placed: Array<{ slot: string; mod: string }>;
   unplaceable: Array<{ slot: string; mod: string; reason: string }>;
 }
 
-const TYPE_TO_SLOT: Record<string, string> = {
-  "helmet armor mod": "Helmet",
-  "arms armor mod": "Arms",
-  "chest armor mod": "Chest",
-  "leg armor mod": "Legs",
-  "class item armor mod": "Class",
-  "general armor mod": "General",
-};
-
-/** Which socket category a currently-socketed plug belongs to (or null). */
-function socketCategory(plugHash: number, catalog: ModCatalog, manifest: SlimManifest): string | null {
-  const cat = catalog[String(plugHash)];
-  if (cat) return cat.slot;
-  const t = (manifest[String(plugHash)]?.t || "").toLowerCase();
-  return TYPE_TO_SLOT[t] ?? null;
-}
+/** Baked armor socket layout: itemHash → mod-socket indices + empty plugs. */
+export type ArmorSockets = Record<string, {
+  general: number | null;
+  slots: number[];
+  empties: Record<string, number>;
+}>;
 
 /**
- * Build the socket-indexed mod plan for a 5-piece combo.
+ * Build the clear-then-apply mod plan for a 5-piece combo. Stat/general mods go
+ * to the piece's General socket; slot-specific mods to its slot mod sockets (in
+ * order). Every mod socket is cleared to empty first so the apply always fits.
  * @param slotToMod maps the optimizer's piece slot ("Gauntlets") to the engine
- *        slot ("Arms"). Combat mods target that engine slot's socket; stat mods
- *        target the General socket.
+ *        slot ("Arms").
  */
 export function buildEquipPlan(
   pieces: Item[],
   loadout: ModLoadout,
-  catalog: ModCatalog,
-  manifest: SlimManifest,
   slotToMod: Record<string, keyof ModLoadout["slots"]>,
+  armorSockets: ArmorSockets,
 ): EquipPlan {
   const modPlan: ModPlanEntry[] = [];
   const placed: EquipPlan["placed"] = [];
@@ -65,24 +54,36 @@ export function buildEquipPlan(
     const plan = loadout.slots[engineSlot];
     if (!plan || plan.mods.length === 0) continue;
 
-    const plugs = piece.plug_hashes ?? [];
-    const socketCats = plugs.map((h) => socketCategory(h, catalog, manifest));
-    const used = new Set<number>();
-    const sockets: ModSocket[] = [];
+    const layout = armorSockets[String(piece.hash)];
+    if (!layout || (layout.general == null && layout.slots.length === 0)) {
+      for (const mod of plan.mods) {
+        unplaceable.push({ slot: piece.slot, mod: mod.n, reason: `no mod sockets found on ${piece.name || piece.slot}` });
+      }
+      continue;
+    }
 
+    // 1. Clear every mod socket to its empty plug (frees energy → clean swap).
+    const clears: ModSocket[] = [];
+    for (const i of [layout.general, ...layout.slots]) {
+      if (i == null) continue;
+      const e = layout.empties[String(i)];
+      if (e) clears.push({ socketIndex: i, plugItemHash: e, clear: true });
+    }
+
+    // 2. Assign mods: stat → General socket; everything else → slot sockets.
+    const applies: ModSocket[] = [];
+    let slotCursor = 0;
     for (const mod of plan.mods) {
-      const targetCat = mod.fam === "stat" ? "General" : engineSlot;
-      // Best-effort HINT only: a socket whose CURRENT plug is the same category.
-      // -1 means "couldn't classify" (e.g. an empty socket) — the Worker then
-      // resolves the real socket from the live item's reusable plugs and inserts
-      // there. We pass EVERY mod so nothing is silently dropped to "manual
-      // placement"; the Worker reports any that genuinely can't be placed.
-      const idx = socketCats.findIndex((c, i) => c === targetCat && !used.has(i));
-      if (idx >= 0) used.add(idx);
-      sockets.push({ socketIndex: idx, plugItemHash: mod.hash });
+      const idx = mod.fam === "stat" ? layout.general : layout.slots[slotCursor++];
+      if (idx == null) {
+        unplaceable.push({ slot: piece.slot, mod: mod.n, reason: `no free ${mod.fam === "stat" ? "General" : engineSlot} socket` });
+        continue;
+      }
+      applies.push({ socketIndex: idx, plugItemHash: mod.hash });
       placed.push({ slot: piece.slot, mod: mod.n });
     }
-    if (sockets.length) modPlan.push({ instance_id: piece.instance_id, sockets });
+
+    if (applies.length) modPlan.push({ instance_id: piece.instance_id, sockets: [...clears, ...applies] });
   }
 
   return { modPlan, placed, unplaceable };

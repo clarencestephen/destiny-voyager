@@ -958,7 +958,7 @@ app.post("/api/equip-with-mods", async (c) => {
     item_instance_ids: string[];
     mod_plan: Array<{
       instance_id: string;
-      sockets: Array<{ socketIndex: number; plugItemHash: number }>;
+      sockets: Array<{ socketIndex: number; plugItemHash: number; clear?: boolean }>;
     }>;
   };
   const body = await c.req.json<Body>();
@@ -1044,57 +1044,39 @@ app.post("/api/equip-with-mods", async (c) => {
     }
   }
 
-  // 2. Apply the mod plan. Read each piece's LIVE sockets (305) + reusable
-  //    plugs (310) AFTER equipping, RESOLVE the socket that can actually hold
-  //    each mod (so empty / occupied / wrong-hint sockets all work), SKIP mods
-  //    already in place, and insert with InsertSocketPlugFree — which overwrites
-  //    the current plug and needs no action token (the endpoint 3rd-party apps
-  //    use for mods). The client's socketIndex is only a HINT now.
+  // 2. Apply the mod plan IN ORDER. The client builds it as clears-then-applies
+  //    with EXACT socket indices from the baked armor socket layout, so we insert
+  //    at the given socketIndex directly (no resolution — the empty plug is shared
+  //    across mod sockets, so searching by plug hash would mis-target). We SKIP
+  //    sockets already holding the desired plug and use InsertSocketPlugFree
+  //    (overwrites; no action token). Clearing each mod socket first frees armor
+  //    energy so applies can't fail DestinyFailedPlugInsertionRules.
   type SocketResult = {
     instance_id: string; socketIndex: number; plugItemHash: number;
-    ok: boolean; skipped?: boolean; error?: string;
+    ok: boolean; skipped?: boolean; clear?: boolean; error?: string;
   };
   const modResults: SocketResult[] = [];
 
   let socketsData: Record<string, any> = {};
-  let reusableData: Record<string, any> = {};
   if ((body.mod_plan ?? []).length) {
     try {
       const sp = await bungieGet(
         c.env,
-        `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=305,310`,
+        `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=305`,
         u.access_token,
       );
       socketsData = sp?.itemComponents?.sockets?.data ?? {};
-      reusableData = sp?.itemComponents?.reusablePlugs?.data ?? {};
-    } catch { /* fall back to client-provided socket indices */ }
+    } catch { /* skip-if-correct just won't trigger */ }
   }
-
-  // The socket that can hold `plugHash` on this instance: prefer the hint if it
-  // accepts the plug, else search the item's reusable plug sets, else the hint.
-  const resolveSocket = (iid: string, hint: number, plugHash: number): number => {
-    const plugs = reusableData[iid]?.plugs;
-    if (plugs && Object.keys(plugs).length) {
-      const accepts = (i: number) => Array.isArray(plugs[i]) && plugs[i].some((p: any) => p.plugItemHash === plugHash);
-      if (hint >= 0 && accepts(hint)) return hint;
-      for (const k of Object.keys(plugs)) { const i = Number(k); if (accepts(i)) return i; }
-    }
-    return hint;   // no 310 match → trust the client hint (may be -1 → reported, not silently dropped)
-  };
 
   for (const piece of body.mod_plan ?? []) {
     const iid = piece.instance_id;
     const cur: number[] = (socketsData[iid]?.sockets ?? []).map((s: any) => s.plugHash);
     for (const slot of piece.sockets) {
-      const idx = resolveSocket(iid, slot.socketIndex, slot.plugItemHash);
-      if (idx < 0) {
-        modResults.push({ instance_id: iid, socketIndex: slot.socketIndex, plugItemHash: slot.plugItemHash, ok: false, error: "no compatible socket found on item" });
-        continue;
-      }
-      if (cur[idx] === slot.plugItemHash) {                       // already the desired mod → skip
-        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: true, skipped: true });
-        continue;
-      }
+      const idx = slot.socketIndex;
+      const base = { instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, clear: slot.clear };
+      if (idx < 0) { modResults.push({ ...base, ok: false, error: "no socket index" }); continue; }
+      if (cur[idx] === slot.plugItemHash) { modResults.push({ ...base, ok: true, skipped: true }); continue; }
       try {
         await bungiePost(c.env, "/Destiny2/Actions/Items/InsertSocketPlugFree/", u.access_token, {
           plug: { socketIndex: idx, socketArrayType: 0, plugItemHash: slot.plugItemHash },
@@ -1103,9 +1085,9 @@ app.post("/api/equip-with-mods", async (c) => {
           membershipType: u.membership_type,
         });
         cur[idx] = slot.plugItemHash;
-        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: true });
+        modResults.push({ ...base, ok: true });
       } catch (e: any) {
-        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: false, error: e?.message ?? String(e) });
+        modResults.push({ ...base, ok: false, error: e?.message ?? String(e) });
       }
     }
   }
@@ -1116,8 +1098,9 @@ app.post("/api/equip-with-mods", async (c) => {
     transferred_count: readyToEquip.length,
     skipped,
     mod_results: modResults,
-    mods_inserted: modResults.filter((m) => m.ok && !m.skipped).length,
-    mods_skipped: modResults.filter((m) => m.ok && m.skipped).length,
+    // Counts cover the real mod APPLIES, not the socket clears (plumbing).
+    mods_inserted: modResults.filter((m) => m.ok && !m.skipped && !m.clear).length,
+    mods_skipped: modResults.filter((m) => m.ok && m.skipped && !m.clear).length,
     mods_failed: modResults.filter((m) => !m.ok).length,
   });
 });

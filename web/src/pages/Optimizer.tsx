@@ -10,7 +10,7 @@ import {
   selectMods, type ModCatalog, type ModLoadout,
   type Element as ModElement, type StatModRequest,
 } from "@/lib/mods";
-import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem } from "@/lib/equipPlan";
+import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem, type ArmorSockets } from "@/lib/equipPlan";
 
 // Map a build's subclass to the mod-engine element (Prismatic → Harmonic).
 const SUBCLASS_TO_ELEMENT: Record<string, ModElement> = {
@@ -360,6 +360,7 @@ export default function Optimizer() {
   // Mod selection context (Phase 2 — non-destructive preview).
   const [modCatalog, setModCatalog] = useState<ModCatalog | null>(null);
   const [manifest, setManifest] = useState<SlimManifest | null>(null);  // for socket mapping (Phase 4)
+  const [armorSockets, setArmorSockets] = useState<ArmorSockets>({});   // baked mod-socket layout for equip
   const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
   const [dpsEl, setDpsEl] = useState<ModElement>("");             // "" → follow subclass
   const [incomingEl, setIncomingEl] = useState<ModElement>("");   // chest resist target
@@ -385,6 +386,7 @@ export default function Optimizer() {
         // Mod catalog is static + small (~46KB) — load once, ignore failure
         // (the optimizer still works without the mod preview).
         fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
+        fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
         fetch("/encounters.json").then((r) => r.json())
           .then((d) => setEncData(d.activities ?? [])).catch(() => {});
         loadManifest().then(setManifest).catch(() => {});
@@ -976,6 +978,7 @@ export default function Optimizer() {
             dpsEl={dpsEl}
             incomingEl={incomingEl}
             concussive={concussive}
+            armorSockets={armorSockets}
           />
         ))}
       </div>
@@ -998,13 +1001,14 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, stretch, activeCharId, characters,
-  modCatalog, manifest, allItems, cls, subclassEl, dpsEl, incomingEl, concussive,
+  modCatalog, manifest, allItems, cls, subclassEl, dpsEl, incomingEl, concussive, armorSockets,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; stretch: number;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
   allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
   subclassEl: ModElement; dpsEl: ModElement; incomingEl: ModElement; concussive: boolean;
+  armorSockets: ArmorSockets;
 }) {
   // Resolve the concrete, anti-cross-pollination mod loadout for this combo.
   // Stat mods come from the combo's own stat plan (one per piece, biggest first).
@@ -1064,7 +1068,7 @@ function ComboCard({
       setArmState({ kind: "error", msg: "mod data still loading — try again in a moment" });
       return;
     }
-    const plan = buildEquipPlan(combo.pieces, loadout, modCatalog, manifest, SLOT_TO_MOD);
+    const plan = buildEquipPlan(combo.pieces, loadout, SLOT_TO_MOD, armorSockets);
     const eviction = cls ? buildEvictionPlan(combo.pieces, allItems, cls) : [];
     setArmState({ kind: "confirm", plan, eviction });
   }
