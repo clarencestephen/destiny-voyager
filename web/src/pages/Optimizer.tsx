@@ -807,6 +807,61 @@ export default function Optimizer() {
           </select>
         </div>
 
+        {/* Duplicate-exotic roll comparison — when you own the locked exotic in
+            multiple copies, compare each instance's stat spread + archetype +
+            mods side-by-side and lock the best roll (not just the first owned). */}
+        {(() => {
+          const sel = lockedExoticId ? items.find((i) => i.instance_id === lockedExoticId) : null;
+          if (!sel) return null;
+          const copies = exoticOptions.filter((i) => i.name === sel.name && i.slot === sel.slot);
+          if (copies.length < 2) return null;
+          const modsOf = (it: Item) =>
+            (it.plug_hashes ?? [])
+              .map((h) => modCatalog?.[String(h)]?.n || manifest?.[String(h)]?.n || "")
+              .filter((n) => n && !/^empty|^default|shader|ornament|^tier \d|upgrade armor|kill tracker/i.test(n));
+          return (
+            <div className="flex flex-wrap items-start gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+              <span className="text-muted w-20 pt-1">Compare:</span>
+              <div className="flex-1 normal-case tracking-normal">
+                <div className="text-muted text-[11px] mb-1.5">You own {copies.length} × {sel.name} — pick the best roll:</div>
+                <div className="flex flex-wrap gap-2">
+                  {copies.map((it) => {
+                    const total = it.stats ? Object.values(it.stats).reduce((a, b) => a + b, 0) : 0;
+                    const locked = it.instance_id === lockedExoticId;
+                    const mods = modsOf(it);
+                    return (
+                      <button key={it.instance_id} onClick={() => setLockedExoticId(it.instance_id)}
+                        className={`px-2.5 py-2 rounded border text-left transition-colors ${locked ? "border-saber bg-saber/10" : "border-border hover:border-saber/50"}`}>
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-mono text-xs text-saber">{total}</span>
+                          <span className="font-ui text-[11px] text-foreground">{it.archetype || "—"}</span>
+                          <span className="font-mono text-[9px] text-muted">pw {it.power}</span>
+                          {locked && <span className="text-[9px] text-saber">✓ locked</span>}
+                        </div>
+                        {it.stats && (
+                          <div className="grid grid-cols-6 gap-x-2 mt-1 font-mono text-[10px] text-center">
+                            {STAT_KEYS.map((k) => (
+                              <div key={k} title={STAT_LABEL[k]}>
+                                <div className="text-muted/60 text-[8px] uppercase">{STAT_LABEL[k].slice(0, 3)}</div>
+                                <div className="text-foreground">{it.stats![k]}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {mods.length > 0 && (
+                          <div className="font-ui text-[9px] text-muted mt-1 max-w-[200px] truncate" title={mods.join(" · ")}>
+                            {mods.join(" · ")}
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Theme / set lock — lock N pieces of one or more armor sets.
             Total count across rows is capped at 5; remaining slots are
             unconstrained. Each row's "Set" dropdown lists sets where the
