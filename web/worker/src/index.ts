@@ -450,6 +450,33 @@ app.use("/api/inventory", requireSession);
 app.use("/api/tags", requireSession);
 app.use("/api/equip", requireSession);
 app.use("/api/this-week", requireSession);
+app.use("/api/library", requireSession);
+
+// ============================================================
+// /library — per-user wishlists + saved builds (KV: library:<bungie_id>)
+// ============================================================
+app.get("/api/library", async (c) => {
+  const u = c.get("user");
+  const raw = await c.env.DV_KV.get(`library:${u.bungie_id}`);
+  return c.json(raw ? JSON.parse(raw) : { builds: [], weaponWishlist: [], armorWishlist: [] });
+});
+
+app.put("/api/library", async (c) => {
+  const u = c.get("user");
+  let body: any;
+  try { body = await c.req.json(); } catch { return c.json({ error: "bad_json" }, 400); }
+  if (!body || typeof body !== "object") return c.json({ error: "bad_body" }, 400);
+  const lib = {
+    builds: Array.isArray(body.builds) ? body.builds.slice(0, 200) : [],
+    weaponWishlist: Array.isArray(body.weaponWishlist) ? body.weaponWishlist.slice(0, 2000) : [],
+    armorWishlist: Array.isArray(body.armorWishlist) ? body.armorWishlist.slice(0, 2000) : [],
+    updatedAt: Date.now(),
+  };
+  const json = JSON.stringify(lib);
+  if (json.length > 256_000) return c.json({ error: "too_large" }, 413);
+  await c.env.DV_KV.put(`library:${u.bungie_id}`, json);
+  return c.json({ ok: true, updatedAt: lib.updatedAt });
+});
 
 async function requireSession(c: any, next: any) {
   const sid = getCookie(c, "dv_sid");

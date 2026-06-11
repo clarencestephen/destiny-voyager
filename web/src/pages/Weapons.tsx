@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { search } from "@/lib/search";
 import { api } from "@/lib/api";
+import { loadLibrary, saveLibrary, readLocalLibrary, type Library } from "@/lib/library";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -19,7 +20,6 @@ const EL_COLOR: Record<string, string> = {
   Arc: "text-cyan-300", Solar: "text-orange-400", Void: "text-violet-400",
   Stasis: "text-sky-300", Strand: "text-green-400", Kinetic: "text-zinc-300",
 };
-const WISHLIST_KEY = "dv_weapon_wishlist";
 
 interface Perk { h: number; n: string; c: boolean }
 interface Weapon {
@@ -49,9 +49,8 @@ export default function Weapons() {
   const [mode, setMode] = useState<"potential" | "inventory" | "both">("potential");
   const [owned, setOwned] = useState<Set<number> | null>(null);
   const [invNote, setInvNote] = useState<string | null>(null);
-  const [wishlist, setWishlist] = useState<Set<string>>(
-    () => new Set(JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]")),
-  );
+  const [lib, setLib] = useState<Library>(readLocalLibrary);
+  const wishlist = useMemo(() => new Set(lib.weaponWishlist), [lib.weaponWishlist]);
   const [selected, setSelected] = useState<Weapon | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -67,6 +66,8 @@ export default function Weapons() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => { loadLibrary().then(setLib); }, []);
+
   // Fetch inventory the first time the user switches to a compare mode.
   useEffect(() => {
     if (mode === "potential" || owned !== null) return;
@@ -76,10 +77,11 @@ export default function Weapons() {
   }, [mode, owned]);
 
   function toggleWish(hash: string) {
-    setWishlist((prev) => {
-      const next = new Set(prev);
-      next.has(hash) ? next.delete(hash) : next.add(hash);
-      localStorage.setItem(WISHLIST_KEY, JSON.stringify([...next]));
+    setLib((prev) => {
+      const set = new Set(prev.weaponWishlist);
+      set.has(hash) ? set.delete(hash) : set.add(hash);
+      const next = { ...prev, weaponWishlist: [...set] };
+      saveLibrary(next);
       return next;
     });
   }

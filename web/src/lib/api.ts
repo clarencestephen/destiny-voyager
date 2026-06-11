@@ -214,6 +214,14 @@ export interface MetaState {
   }>;
 }
 
+/** Per-user library synced to KV: wishlists (item hashes) + saved builds. */
+export interface Library {
+  builds: any[];
+  weaponWishlist: string[];
+  armorWishlist: string[];
+  updatedAt?: number;
+}
+
 async function jsonFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     credentials: "include",
@@ -228,6 +236,15 @@ export const api = {
   health: () => jsonFetch<{ status: string; version: string }>("/api/health"),
 
   me: () => jsonFetch<UserProfile>("/api/me"),
+
+  /** Per-user library (wishlists + saved builds), synced to KV. Throws 401 if
+   *  not signed in — callers fall back to localStorage. */
+  getLibrary: () => jsonFetch<Library>("/api/library"),
+  saveLibrary: (lib: Library) =>
+    jsonFetch<{ ok: true; updatedAt: number }>("/api/library", {
+      method: "PUT",
+      body: JSON.stringify(lib),
+    }),
 
   /** Raw lean items from the Worker — decorate via loadManifest() + decorate() */
   inventory: () => jsonFetch<{ items: LeanItem[]; count: number }>("/api/inventory"),

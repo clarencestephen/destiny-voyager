@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { search } from "@/lib/search";
 import { api } from "@/lib/api";
+import { loadLibrary, saveLibrary, readLocalLibrary, type Library } from "@/lib/library";
 import { Card } from "@/components/ui/card";
 
 /**
@@ -18,7 +19,6 @@ const EL_COLOR: Record<string, string> = {
   Arc: "text-cyan-300", Solar: "text-orange-400", Void: "text-violet-400",
   Stasis: "text-sky-300", Strand: "text-green-400", Kinetic: "text-zinc-300",
 };
-const WISHLIST_KEY = "dv_armor_wishlist";
 const CLASSES = ["All", "Titan", "Hunter", "Warlock"] as const;
 type ClassSel = (typeof CLASSES)[number];
 
@@ -48,9 +48,8 @@ export default function Armor() {
   const [mode, setMode] = useState<"potential" | "inventory" | "both">("potential");
   const [owned, setOwned] = useState<Set<number> | null>(null);
   const [invNote, setInvNote] = useState<string | null>(null);
-  const [wishlist, setWishlist] = useState<Set<string>>(
-    () => new Set(JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]")),
-  );
+  const [lib, setLib] = useState<Library>(readLocalLibrary);
+  const wishlist = useMemo(() => new Set(lib.armorWishlist), [lib.armorWishlist]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,6 +59,8 @@ export default function Armor() {
     }).finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => { loadLibrary().then(setLib); }, []);
+
   useEffect(() => {
     if (mode === "potential" || owned !== null) return;
     api.inventoryDecorated()
@@ -68,10 +69,11 @@ export default function Armor() {
   }, [mode, owned]);
 
   function toggleWish(hash: string) {
-    setWishlist((prev) => {
-      const next = new Set(prev);
-      next.has(hash) ? next.delete(hash) : next.add(hash);
-      localStorage.setItem(WISHLIST_KEY, JSON.stringify([...next]));
+    setLib((prev) => {
+      const set = new Set(prev.armorWishlist);
+      set.has(hash) ? set.delete(hash) : set.add(hash);
+      const next = { ...prev, armorWishlist: [...set] };
+      saveLibrary(next);
       return next;
     });
   }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { search } from "@/lib/search";
 import { api } from "@/lib/api";
+import { loadLibrary, saveLibrary, readLocalLibrary, type Library } from "@/lib/library";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -15,7 +16,6 @@ import { Button } from "@/components/ui/button";
  */
 
 const CDN = "https://www.bungie.net";
-const SAVED_KEY = "dv_saved_builds";
 const CLASSES = ["Titan", "Hunter", "Warlock"] as const;
 const ELEMENTS = ["Prismatic", "Arc", "Solar", "Void", "Stasis", "Strand", "Kinetic"] as const;
 const WEAPON_SLOTS = ["Kinetic", "Energy", "Power"] as const;
@@ -54,7 +54,8 @@ export default function Build() {
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
 
-  const [saved, setSaved] = useState<SavedBuild[]>(() => JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"));
+  const [lib, setLib] = useState<Library>(readLocalLibrary);
+  const saved = lib.builds as SavedBuild[];
   const [picker, setPicker] = useState<PickerState>(null);
   const [equipMsg, setEquipMsg] = useState<string | null>(null);
 
@@ -69,9 +70,10 @@ export default function Build() {
     }).finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => { loadLibrary().then(setLib); }, []);
+
   function persist(list: SavedBuild[]) {
-    setSaved(list);
-    localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+    setLib((prev) => { const next = { ...prev, builds: list }; saveLibrary(next); return next; });
   }
   function saveBuild() {
     const id = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-") || `build-${saved.length + 1}`;
