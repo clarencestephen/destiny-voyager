@@ -1,4 +1,4 @@
-# raids/pantheon/3-morgeth.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Last Wish. _confidence: low.
+# raids/pantheon/6-morgeth.yaml — schema v3. Pantheon 2.0 CONFIRMED (Update 9.7.0, 2026-06-09). Activity: Morgeth Surpassing (3/3). Boss identity + source raid verified:true/_confidence:high; per-boss MODIFIERS TBD.
 
 activity:
   slug: pantheon
@@ -6,7 +6,7 @@ activity:
   activity_type: raid
   fireteam_size: 6
 encounter:
-  order: 3
+  order: 6
   slug: morgeth
   name: Morgeth, the Spirekeeper
   ingame_name: Morgeth, the Spirekeeper
@@ -76,11 +76,24 @@ encounter:
     resumes.
   - Poor role assignment — not designating who covers which orbs/plates leads to dropped stacks and a
     runaway Strength bar.
-  _confidence: low
+  _confidence: high
   sources:
+  - tier: 1
+    name: Bungie — Update 9.7.0 patch notes (Monument of Triumph, 2026-06-09); officially names the activity
+      "Morgeth Surpassing".
+    url: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0
+    date_checked: '2026-06-11'
+  - tier: 2
+    name: 'KackisHD — "PANTHEON: MORGETH SURPASSING FOR DUMMIES! | Complete Raid Guide & Walkthrough!"
+      — confirms in-game boss identity + walkthrough.'
+    url: https://www.youtube.com/watch?v=7gYoYn9k3kY
+    date_checked: '2026-06-11'
   - tier: 3
-    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Last
-      Wish encounter.
-    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
-      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
-    date_checked: '2026-06-10'
+    name: Per-boss MODIFIERS (champion types, surges, shields) for Pantheon 2.0 are NOT yet documented
+      (not in patch notes). champions/surges left EMPTY rather than guessed; revisit after the weekly-rotation
+      TWID (expected 2026-06-16+).
+    date_checked: '2026-06-11'
+  activity_name: Morgeth Surpassing
+  order_in_activity: 3
+  source_raid: Last Wish
+  verified: true

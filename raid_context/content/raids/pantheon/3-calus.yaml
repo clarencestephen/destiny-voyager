@@ -1,4 +1,4 @@
-# raids/pantheon/6-calus.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Leviathan (base raid final boss). _confidence: low.
+# raids/pantheon/3-calus.yaml — schema v3. Pantheon 2.0 CONFIRMED (Update 9.7.0, 2026-06-09). Activity: Calus Resplendent (3/3). Boss identity + source raid verified:true/_confidence:high; per-boss MODIFIERS TBD.
 
 activity:
   slug: pantheon
@@ -6,7 +6,7 @@ activity:
   activity_type: raid
   fireteam_size: 6
 encounter:
-  order: 6
+  order: 3
   slug: calus
   name: Emperor Calus
   ingame_name: Emperor Calus
@@ -79,11 +79,24 @@ encounter:
     readiness.
   - Not assigning clear roles for who goes inside versus who stays out, causing confusion on the teleport
     plate each phase.
-  _confidence: low
+  _confidence: high
   sources:
+  - tier: 1
+    name: Bungie — Update 9.7.0 patch notes (Monument of Triumph, 2026-06-09); officially names the activity
+      "Calus Resplendent".
+    url: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0
+    date_checked: '2026-06-11'
+  - tier: 2
+    name: 'KackisHD — "PANTHEON: CALUS RESPLENDENT FOR DUMMIES! | Complete Raid Guide & Walkthrough!"
+      — confirms in-game boss identity + walkthrough.'
+    url: https://www.youtube.com/watch?v=kftwS8zi0iU
+    date_checked: '2026-06-11'
   - tier: 3
-    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Leviathan
-      (base raid final boss) encounter.
-    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
-      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
-    date_checked: '2026-06-10'
+    name: Per-boss MODIFIERS (champion types, surges, shields) for Pantheon 2.0 are NOT yet documented
+      (not in patch notes). champions/surges left EMPTY rather than guessed; revisit after the weekly-rotation
+      TWID (expected 2026-06-16+).
+    date_checked: '2026-06-11'
+  activity_name: Calus Resplendent
+  order_in_activity: 3
+  source_raid: Leviathan (base raid final boss)
+  verified: true

@@ -51,7 +51,7 @@ def _encounter(doc):
     mods = dfn.get("recommended_defensive_mods") or {}
     dmg = enc.get("damage") or {}
     concussive_list = mods.get("concussive") or []
-    return {
+    out = {
         "slug": enc.get("slug", ""),
         "name": enc.get("name", ""),
         "order": enc.get("order", 0),
@@ -60,6 +60,9 @@ def _encounter(doc):
         "surges": _elements(dmg.get("surges")),
         "champions": _champions(dfn.get("champions")),
     }
+    if enc.get("activity_name"):                     # Pantheon's two named sub-activities
+        out["activity_name"] = enc["activity_name"]
+    return out
 
 
 activities = []

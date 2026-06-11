@@ -1,4 +1,4 @@
-# raids/pantheon/4-consecrated-mind.yaml — schema v3. UNVERIFIED Pantheon 2.0 lineup (leak); mechanics from original Garden of Salvation. _confidence: low.
+# raids/pantheon/5-consecrated-mind.yaml — schema v3. Pantheon 2.0 CONFIRMED (Update 9.7.0, 2026-06-09). Activity: Morgeth Surpassing (2/3). Boss identity + source raid verified:true/_confidence:high; per-boss MODIFIERS TBD.
 
 activity:
   slug: pantheon
@@ -6,7 +6,7 @@ activity:
   activity_type: raid
   fireteam_size: 6
 encounter:
-  order: 4
+  order: 5
   slug: consecrated-mind
   name: Consecrated Mind
   ingame_name: Consecrated Mind, Sol Inherent
@@ -67,11 +67,24 @@ encounter:
   - Letting Vex adds (especially Wyverns and Harpies) overwhelm the team and cut off Mote supply.
   - Players spreading too far from the relays so banking is slow and the vulnerability window is missed.
   - Burning Heavy ammo before the Eye actually opens, leaving the team dry during the real damage phase.
-  _confidence: low
+  _confidence: high
   sources:
+  - tier: 1
+    name: Bungie — Update 9.7.0 patch notes (Monument of Triumph, 2026-06-09); officially names the activity
+      "Morgeth Surpassing".
+    url: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0
+    date_checked: '2026-06-11'
+  - tier: 2
+    name: 'KackisHD — "PANTHEON: MORGETH SURPASSING FOR DUMMIES! | Complete Raid Guide & Walkthrough!"
+      — confirms in-game boss identity + walkthrough.'
+    url: https://www.youtube.com/watch?v=7gYoYn9k3kY
+    date_checked: '2026-06-11'
   - tier: 3
-    name: UNVERIFIED community/leak lineup — Pantheon 2.0 (June 2026). Mechanics from the original Garden
-      of Salvation encounter.
-    note: Boss inclusion in Pantheon 2.0 NOT Bungie-confirmed as of 2026-06-10; only Calus was hinted.
-      Mechanics are historical fact; Pantheon rescaling (champions/modifiers) unconfirmed.
-    date_checked: '2026-06-10'
+    name: Per-boss MODIFIERS (champion types, surges, shields) for Pantheon 2.0 are NOT yet documented
+      (not in patch notes). champions/surges left EMPTY rather than guessed; revisit after the weekly-rotation
+      TWID (expected 2026-06-16+).
+    date_checked: '2026-06-11'
+  activity_name: Morgeth Surpassing
+  order_in_activity: 2
+  source_raid: Garden of Salvation
+  verified: true

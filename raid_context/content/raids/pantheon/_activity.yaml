@@ -1,122 +1,119 @@
-# pantheon — activity header (authored from sourced facts, 2026-06-10).
-# Pantheon 2.0 launched with the 2026-06-09 "Monument of Triumph" update.
-# PROVENANCE / DISCIPLINE NOTE:
-#  - The CONFIRMED facts below (permanence, schedule, Adventure difficulty,
-#    rewards) come from Bungie (tier 1) — see overview.sources.
-#  - The boss LINEUP (overview.lineup + the N-slug.yaml encounter files) was
-#    authored at the user's explicit request from the UNVERIFIED community/leak
-#    set. Bungie had NOT confirmed the roster, tiers, or per-boss modifiers as of
-#    2026-06-10 (only Calus was hinted). Every encounter is tier-3 / _confidence:
-#    low / verified:false. The boss MECHANICS are historical fact; the Pantheon-
-#    2.0 INCLUSION and rescaling (champions/surges) are the unverified part —
-#    which is why champions/surges were left empty rather than guessed.
-#  - Third-party sites showing the 2024 lineup (Atraks/Oryx/Rhulk/Nezarec,
-#    "Godslayer") are stale carryover and were NOT used.
-#  - REPLACE this leak lineup with the official roster the moment Bungie reveals it.
+# pantheon — activity header. Pantheon 2.0 OFFICIALLY CONFIRMED via Bungie Update 9.7.0
+# (Monument of Triumph, 2026-06-09). The earlier leak roster + source raids were EXACT;
+# Bungie groups the 6 bosses into two named 3-boss activities + a full Gauntlet (06-13).
+# Boss identity + source raid: verified. Per-boss MODIFIERS (champions/surges/shields): TBD.
+
 activity:
   slug: pantheon
   name: Pantheon
   activity_type: raid
   fireteam_size: 6
   category: boss-rush
-  status: live-lineup-leak-authored-unverified
+  status: live-confirmed-official
 overview:
-  abstract: 'Pantheon is a permanent raid-boss-rush activity: a sequence of bosses pulled from Destiny
-    2''s raids, fought back-to-back with escalating difficulty. The 2026 relaunch ("Pantheon 2.0") brings
-    a NEW roster of bosses (a "fresh slate," per Bungie) — NOT the four 2024 bosses — new rewards, and
-    a new Title. The only boss Bungie has named so far is Calus (from the Leviathan raid), referenced
-    as an armor-ornament source. The exact boss list, order, source raids, difficulty tiers, and per-boss
-    modifiers remain officially unconfirmed as of 2026-06-10.'
-  what_is_confirmed:
-    permanence: Permanent activity (unlike the limited 2024 event).
-    roster: A new slate of bosses spanning multiple raids; Bungie's only named example is Calus (Leviathan).
-      Bosses drop armor-set ornaments from their ORIGINAL raid.
-    structure_schedule_2026:
-    - '2026-06-09: two separate activities launch, each with its own unique lineup of boss encounters.'
-    - '2026-06-13 (first Saturday): a third activity unlocks — "the gauntlet" — every boss encounter in
-      a single run.'
-    - '2026-06-16 (Tuesday reset): weekly rotators begin — individual single-boss encounters for rewards.'
-    difficulty:
-    - 'Adventure difficulty: raised Power cap, infinite revives, looser mechanic timers, in exchange for
-      a limited pool of lower-Tier rewards.'
-    - Escalating difficulty across the run; named T1–T5 Pantheon tiers are NOT confirmed. ("T5" in the
-      June-update marketing = gear Tier 5, a separate loot-system change, not a Pantheon difficulty ladder.)
-    rewards:
-    - New armor set per class (Tier-5 capable).
-    - 'Reprised raid weapons with a unique Origin Trait + holofoil variants. New Pantheon weapons named:
-      "Alone as a God", "Bane of Sorrow".'
-    - Armor-set ornaments from each boss's original raid (e.g. Calus → original Leviathan ornaments).
-    - Spoils-of-Conquest re-roll vendor, emblems, exotic cosmetics, and a NEW Title (name TBA — explicitly
-      not "Godslayer").
-  loadout_guidance: 'Until the lineup + modifiers are confirmed, treat Pantheon as a general endgame boss-DPS
-    gauntlet: bring a strong, flexible damage loadout and survivability. Anti-Champion options are artifact-based
-    this era. Do NOT pre-commit element-specific resist/surge mods to a fixed boss order — author per-boss
-    recommendations only once each encounter is confirmed.'
+  abstract: Pantheon ("Pantheon 2.0") is a PERMANENT raid-boss-rush activity that launched with the 2026-06-09
+    Monument of Triumph update (Update 9.7.0). The six confirmed bosses are reprised raid bosses fought
+    back-to-back under escalating Power handicaps + modifiers. Bungie ships them as TWO named 3-boss activities
+    (Calus Resplendent, Morgeth Surpassing) plus a full 6-boss Gauntlet that unlocks 2026-06-13. The roster
+    + source raids are CONFIRMED; per-boss modifiers (champions/surges/shields) are not yet documented
+    as of 2026-06-11.
+  structure:
+    Calus Resplendent:
+    - Argos, Planetary Core
+    - Gahlran, the Sorrow-Bearer
+    - Emperor Calus
+    Morgeth Surpassing:
+    - The Warpriest
+    - Consecrated Mind, Sol Inherent
+    - Morgeth, the Spirekeeper
+    The Gauntlet: All 6 bosses back-to-back; unlocks Saturday 2026-06-13 10 AM PT.
+  schedule_2026:
+  - '2026-06-09: Calus Resplendent + Morgeth Surpassing launch (Update 9.7.0).'
+  - '2026-06-13 (Sat, 10 AM PT): The Gauntlet (all 6) unlocks.'
+  - '2026-06-16 (Tue reset): weekly featured single-boss rotators begin (two bosses/week).'
+  difficulty:
+  - Escalating Power handicap per boss as you progress the gauntlet (boss is +N Power over the player).
+  - Adventure-style accessibility (raised Power cap, revives) in exchange for lower-Tier rewards on the
+    easier tier.
+  - Per-boss champion/surge/shield modifiers NOT yet documented — gather from in-game / a future TWID.
+  rewards:
+  - 'Per boss: one Adept weapon (weekly, via the Bonus/Platinum timer) + Spoils of Conquest + Trophy of
+    Bravery.'
+  - 'Monument-of-Triumph loot overhaul: raid/dungeon weapons gain Tier parity, set bonuses, new perks;
+    crafted raid weapons gain a Tier 1-5 path.'
+  - Divine Weaponry quest (Arcite 99-40, Hall of Champions, after the Gauntlet) → a raid Exotic of choice.
+  - 'Emblems: Atraks Dethroned / Exalted Beyond Oryx / Rhulk Subdued / Elevated Above Nezarec — NOTE:
+    these are the ORIGINAL-Pantheon emblem names some guides still list; treat as unverified for 2.0.'
+  - 'Godslayer title (10 triumphs: completion + Platinum-timer per boss).'
+  loadout_guidance: 'Endgame boss-DPS gauntlet: bring strong, flexible burst DPS + survivability. Anti-Champion
+    is artifact-based this era. Per-boss element-specific resist/surge recommendations are deferred until
+    Bungie/TWID publishes the Pantheon-2.0 modifiers (expected 2026-06-16+).'
   lineup:
   - order: 1
     slug: argos
     name: Argos, Planetary Core
     source_raid: 'Leviathan: Spire of Stars (raid lair)'
-    confidence: low
-    verified: false
+    activity: Calus Resplendent
+    order_in_activity: 1
+    confidence: high
+    verified: true
   - order: 2
-    slug: warpriest
-    name: The Warpriest
-    source_raid: King's Fall
-    confidence: low
-    verified: false
-  - order: 3
-    slug: morgeth
-    name: Morgeth, the Spirekeeper
-    source_raid: Last Wish
-    confidence: low
-    verified: false
-  - order: 4
-    slug: consecrated-mind
-    name: Consecrated Mind
-    source_raid: Garden of Salvation
-    confidence: low
-    verified: false
-  - order: 5
     slug: gahlran
     name: Gahlran, the Sorrow-Bearer
     source_raid: 'Leviathan: Crown of Sorrow (raid lair)'
-    confidence: low
-    verified: false
-  - order: 6
+    activity: Calus Resplendent
+    order_in_activity: 2
+    confidence: high
+    verified: true
+  - order: 3
     slug: calus
     name: Emperor Calus
     source_raid: Leviathan (base raid final boss)
-    confidence: low
-    verified: false
+    activity: Calus Resplendent
+    order_in_activity: 3
+    confidence: high
+    verified: true
+  - order: 4
+    slug: warpriest
+    name: The Warpriest
+    source_raid: King's Fall
+    activity: Morgeth Surpassing
+    order_in_activity: 1
+    confidence: high
+    verified: true
+  - order: 5
+    slug: consecrated-mind
+    name: Consecrated Mind
+    source_raid: Garden of Salvation
+    activity: Morgeth Surpassing
+    order_in_activity: 2
+    confidence: high
+    verified: true
+  - order: 6
+    slug: morgeth
+    name: Morgeth, the Spirekeeper
+    source_raid: Last Wish
+    activity: Morgeth Surpassing
+    order_in_activity: 3
+    confidence: high
+    verified: true
   sources:
   - tier: 1
-    name: 'Bungie.net — "Destiny 2: Every End is a New Beginning"'
-    url: https://www.bungie.net/7/en/News/Article/d2_may_21_2026
-    date_checked: '2026-06-10'
-    used_for:
-    - permanence
-    - fresh-slate roster
-    - June 9/13/16 schedule
+    name: Bungie — Update 9.7.0 patch notes (Monument of Triumph, 2026-06-09); names "Calus Resplendent"
+      + "Morgeth Surpassing".
+    url: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0
+    date_checked: '2026-06-11'
   - tier: 1
-    name: Bungie.net — "This Week in Destiny 05/29/2026"
+    name: 'Bungie — This Week in Destiny 05/29/2026 (structure: two activities, Gauntlet 06-13, rotations
+      06-16).'
     url: https://www.bungie.net/7/en/News/Article/twid_05_29_2026
-    date_checked: '2026-06-10'
-    used_for:
-    - two launch activities + gauntlet + rotators
-    - Calus/Leviathan ornament example
-    - Adventure difficulty
-    - rewards
-    - new Title (TBA)
+    date_checked: '2026-06-11'
   - tier: 2
-    name: blueberries.gg — Pantheon Loot Table & Rewards (updated 2026-06-09)
-    url: https://www.blueberries.gg/weapons/pantheon-loot-table-rotation/
-    date_checked: '2026-06-10'
-    used_for:
-    - '"exact Boss rotation remains unconfirmed"'
-    - new weapon names
-  - tier: 3
-    name: NOT USED — boostmatch.gg / wowvendor Pantheon guides
-    note: These recycle the 2024 lineup/title/modifiers verbatim; contradicts Bungie's "new bosses" statement.
-      Excluded as stale carryover.
-    date_checked: '2026-06-10'
+    name: KackisHD — Calus Resplendent + Morgeth Surpassing complete walkthroughs (gameplay confirms boss
+      identities).
+    url: https://www.youtube.com/watch?v=kftwS8zi0iU
+    date_checked: '2026-06-11'
+  - tier: 2
+    name: Pantheon 2.0 release watcher report (Gmail, 2026-06-11) — patch-note verification + leak/confirmed
+      comparison.
+    date_checked: '2026-06-11'

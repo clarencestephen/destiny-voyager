@@ -22,7 +22,7 @@
       {
         "order": 3,
         "slug": "ir-yut",
-        "name": "Ir Y\u00fbt, the Deathsinger",
+        "name": "Ir Yût, the Deathsinger",
         "ingame_name": ""
       },
       {
@@ -136,7 +136,7 @@
       {
         "order": 2,
         "slug": "summon-consecrated",
-        "name": "Summon The Consecrated Mind (Undergrowth \u2014 5 relays)",
+        "name": "Summon The Consecrated Mind (Undergrowth — 5 relays)",
         "ingame_name": ""
       },
       {
@@ -202,7 +202,7 @@
       {
         "order": 7,
         "slug": "daughters-of-oryx",
-        "name": "Daughters of Oryx (Ir An\u00fbk + Ir Halak)",
+        "name": "Daughters of Oryx (Ir Anûk + Ir Halak)",
         "ingame_name": ""
       },
       {
@@ -352,19 +352,19 @@
       {
         "order": 1,
         "slug": "opening-spire",
-        "name": "Opening \u2014 Waking Ruins (Spire)",
+        "name": "Opening — Waking Ruins (Spire)",
         "ingame_name": ""
       },
       {
         "order": 2,
         "slug": "confluxes",
-        "name": "Templar's Well \u2014 Confluxes (1st loot)",
+        "name": "Templar's Well — Confluxes (1st loot)",
         "ingame_name": ""
       },
       {
         "order": 3,
         "slug": "oracles",
-        "name": "Templar's Well \u2014 Oracles (kill in order)",
+        "name": "Templar's Well — Oracles (kill in order)",
         "ingame_name": ""
       },
       {
@@ -502,7 +502,7 @@
       {
         "order": 1,
         "slug": "temple-grounds-harvester",
-        "name": "Temple Grounds \u2192 Harvester",
+        "name": "Temple Grounds → Harvester",
         "ingame_name": ""
       },
       {
@@ -538,13 +538,13 @@
       {
         "order": 2,
         "slug": "ecthar",
-        "name": "Ecthar, the Shield of Savath\u00fbn",
+        "name": "Ecthar, the Shield of Savathûn",
         "ingame_name": ""
       },
       {
         "order": 3,
         "slug": "simmumah",
-        "name": "\u0160immumah ur-Nokru, Lucent Necromancer",
+        "name": "Šimmumah ur-Nokru, Lucent Necromancer",
         "ingame_name": ""
       }
     ],
@@ -658,7 +658,7 @@
       {
         "order": 2,
         "slug": "wasteland",
-        "name": "Wasteland (transition \u2014 sparrow + blights)",
+        "name": "Wasteland (transition — sparrow + blights)",
         "ingame_name": ""
       },
       {
@@ -712,7 +712,7 @@
       {
         "order": 4,
         "slug": "dul-incaru",
-        "name": "D\u00fbl Incaru, the Eternal Return",
+        "name": "Dûl Incaru, the Eternal Return",
         "ingame_name": ""
       }
     ],
@@ -730,7 +730,7 @@
       {
         "order": 1,
         "slug": "reestablish-power",
-        "name": "Reestablish Power (intro outpost \u2014 4 circuits)",
+        "name": "Reestablish Power (intro outpost — 4 circuits)",
         "ingame_name": ""
       },
       {
@@ -748,7 +748,7 @@
       {
         "order": 4,
         "slug": "descend",
-        "name": "Descend (Pillory cell stacks \u2014 red circuits + reactor descent)",
+        "name": "Descend (Pillory cell stacks — red circuits + reactor descent)",
         "ingame_name": ""
       },
       {
@@ -808,7 +808,7 @@
       {
         "order": 2,
         "slug": "imprisoned-and-climb",
-        "name": "Imprisoned! \u2192 Venture Deeper (jumping puzzle)",
+        "name": "Imprisoned! → Venture Deeper (jumping puzzle)",
         "ingame_name": ""
       },
       {
@@ -912,41 +912,47 @@
         "order": 1,
         "slug": "argos",
         "name": "Argos, Planetary Core",
-        "ingame_name": "Argos, Planetary Core"
+        "activity": "Calus Resplendent",
+        "verified": true
       },
       {
         "order": 2,
-        "slug": "warpriest",
-        "name": "The Warpriest",
-        "ingame_name": "The Warpriest"
+        "slug": "gahlran",
+        "name": "Gahlran, the Sorrow-Bearer",
+        "activity": "Calus Resplendent",
+        "verified": true
       },
       {
         "order": 3,
-        "slug": "morgeth",
-        "name": "Morgeth, the Spirekeeper",
-        "ingame_name": "Morgeth, the Spirekeeper"
+        "slug": "calus",
+        "name": "Emperor Calus",
+        "activity": "Calus Resplendent",
+        "verified": true
       },
       {
         "order": 4,
-        "slug": "consecrated-mind",
-        "name": "Consecrated Mind",
-        "ingame_name": "Consecrated Mind, Sol Inherent"
+        "slug": "warpriest",
+        "name": "The Warpriest",
+        "activity": "Morgeth Surpassing",
+        "verified": true
       },
       {
         "order": 5,
-        "slug": "gahlran",
-        "name": "Gahlran, the Sorrow-Bearer",
-        "ingame_name": "Gahlran, the Sorrow-Bearer"
+        "slug": "consecrated-mind",
+        "name": "Consecrated Mind",
+        "activity": "Morgeth Surpassing",
+        "verified": true
       },
       {
         "order": 6,
-        "slug": "calus",
-        "name": "Emperor Calus",
-        "ingame_name": "Emperor Calus"
+        "slug": "morgeth",
+        "name": "Morgeth, the Spirekeeper",
+        "activity": "Morgeth Surpassing",
+        "verified": true
       }
     ],
     "category": "boss-rush",
-    "status": "live-lineup-leak-authored-unverified",
+    "status": "confirmed",
     "note": "Pantheon 2.0 live 2026-06-09; boss lineup/tiers/modifiers not yet revealed (2026-06-10). See _activity.yaml."
   }
 }
