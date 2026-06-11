@@ -72,15 +72,13 @@ export function buildEquipPlan(
 
     for (const mod of plan.mods) {
       const targetCat = mod.fam === "stat" ? "General" : engineSlot;
+      // Best-effort HINT only: a socket whose CURRENT plug is the same category.
+      // -1 means "couldn't classify" (e.g. an empty socket) — the Worker then
+      // resolves the real socket from the live item's reusable plugs and inserts
+      // there. We pass EVERY mod so nothing is silently dropped to "manual
+      // placement"; the Worker reports any that genuinely can't be placed.
       const idx = socketCats.findIndex((c, i) => c === targetCat && !used.has(i));
-      if (idx < 0) {
-        unplaceable.push({
-          slot: piece.slot, mod: mod.n,
-          reason: `no free ${targetCat} mod socket detected on ${piece.name || piece.slot}`,
-        });
-        continue;
-      }
-      used.add(idx);
+      if (idx >= 0) used.add(idx);
       sockets.push({ socketIndex: idx, plugItemHash: mod.hash });
       placed.push({ slot: piece.slot, mod: mod.n });
     }

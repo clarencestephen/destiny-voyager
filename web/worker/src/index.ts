@@ -1044,44 +1044,68 @@ app.post("/api/equip-with-mods", async (c) => {
     }
   }
 
-  // 2. Apply the mod plan socket-by-socket. Each InsertSocketPlug call
-  //    is independent; we collect per-socket results so the user sees
-  //    which slots took and which Bungie rejected.
+  // 2. Apply the mod plan. Read each piece's LIVE sockets (305) + reusable
+  //    plugs (310) AFTER equipping, RESOLVE the socket that can actually hold
+  //    each mod (so empty / occupied / wrong-hint sockets all work), SKIP mods
+  //    already in place, and insert with InsertSocketPlugFree — which overwrites
+  //    the current plug and needs no action token (the endpoint 3rd-party apps
+  //    use for mods). The client's socketIndex is only a HINT now.
   type SocketResult = {
-    instance_id: string;
-    socketIndex: number;
-    plugItemHash: number;
-    ok: boolean;
-    error?: string;
+    instance_id: string; socketIndex: number; plugItemHash: number;
+    ok: boolean; skipped?: boolean; error?: string;
   };
   const modResults: SocketResult[] = [];
+
+  let socketsData: Record<string, any> = {};
+  let reusableData: Record<string, any> = {};
+  if ((body.mod_plan ?? []).length) {
+    try {
+      const sp = await bungieGet(
+        c.env,
+        `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=305,310`,
+        u.access_token,
+      );
+      socketsData = sp?.itemComponents?.sockets?.data ?? {};
+      reusableData = sp?.itemComponents?.reusablePlugs?.data ?? {};
+    } catch { /* fall back to client-provided socket indices */ }
+  }
+
+  // The socket that can hold `plugHash` on this instance: prefer the hint if it
+  // accepts the plug, else search the item's reusable plug sets, else the hint.
+  const resolveSocket = (iid: string, hint: number, plugHash: number): number => {
+    const plugs = reusableData[iid]?.plugs;
+    if (plugs && Object.keys(plugs).length) {
+      const accepts = (i: number) => Array.isArray(plugs[i]) && plugs[i].some((p: any) => p.plugItemHash === plugHash);
+      if (hint >= 0 && accepts(hint)) return hint;
+      for (const k of Object.keys(plugs)) { const i = Number(k); if (accepts(i)) return i; }
+    }
+    return hint;   // no 310 match → trust the client hint (may be -1 → reported, not silently dropped)
+  };
+
   for (const piece of body.mod_plan ?? []) {
+    const iid = piece.instance_id;
+    const cur: number[] = (socketsData[iid]?.sockets ?? []).map((s: any) => s.plugHash);
     for (const slot of piece.sockets) {
+      const idx = resolveSocket(iid, slot.socketIndex, slot.plugItemHash);
+      if (idx < 0) {
+        modResults.push({ instance_id: iid, socketIndex: slot.socketIndex, plugItemHash: slot.plugItemHash, ok: false, error: "no compatible socket found on item" });
+        continue;
+      }
+      if (cur[idx] === slot.plugItemHash) {                       // already the desired mod → skip
+        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: true, skipped: true });
+        continue;
+      }
       try {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/InsertSocketPlug/", u.access_token, {
-          itemInstanceId: piece.instance_id,
-          plug: {
-            socketIndex: slot.socketIndex,
-            socketArrayType: 0,
-            plugItemHash: slot.plugItemHash,
-          },
+        await bungiePost(c.env, "/Destiny2/Actions/Items/InsertSocketPlugFree/", u.access_token, {
+          plug: { socketIndex: idx, socketArrayType: 0, plugItemHash: slot.plugItemHash },
+          itemId: iid,
           characterId: target,
           membershipType: u.membership_type,
         });
-        modResults.push({
-          instance_id: piece.instance_id,
-          socketIndex: slot.socketIndex,
-          plugItemHash: slot.plugItemHash,
-          ok: true,
-        });
+        cur[idx] = slot.plugItemHash;
+        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: true });
       } catch (e: any) {
-        modResults.push({
-          instance_id: piece.instance_id,
-          socketIndex: slot.socketIndex,
-          plugItemHash: slot.plugItemHash,
-          ok: false,
-          error: e?.message ?? String(e),
-        });
+        modResults.push({ instance_id: iid, socketIndex: idx, plugItemHash: slot.plugItemHash, ok: false, error: e?.message ?? String(e) });
       }
     }
   }
@@ -1092,7 +1116,8 @@ app.post("/api/equip-with-mods", async (c) => {
     transferred_count: readyToEquip.length,
     skipped,
     mod_results: modResults,
-    mods_inserted: modResults.filter((m) => m.ok).length,
+    mods_inserted: modResults.filter((m) => m.ok && !m.skipped).length,
+    mods_skipped: modResults.filter((m) => m.ok && m.skipped).length,
     mods_failed: modResults.filter((m) => !m.ok).length,
   });
 });

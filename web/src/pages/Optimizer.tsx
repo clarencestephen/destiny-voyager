@@ -1000,7 +1000,7 @@ function ComboCard({
     | { kind: "idle" }
     | { kind: "confirm"; plan: EquipPlan; eviction: EvictionItem[] }
     | { kind: "working" }
-    | { kind: "done"; msg: string; failed: number; unplaceable: number }
+    | { kind: "done"; msg: string; inserted: number; skipped: number; failed: number }
     | { kind: "error"; msg: string }
   >({ kind: "idle" });
 
@@ -1027,10 +1027,10 @@ function ComboCard({
       const res = await api.equipWithMods(activeCharId, ids, plan.modPlan);
       setArmState({
         kind: "done",
-        msg: `equipped ${res.equipped_count}/${ids.length} · mods ${res.mods_inserted}/${res.mods_inserted + res.mods_failed}`
-          + (eviction.length ? ` · vaulted ${eviction.length}` : ""),
+        msg: `equipped ${res.equipped_count}/${ids.length}` + (eviction.length ? ` · vaulted ${eviction.length}` : ""),
+        inserted: res.mods_inserted,
+        skipped: res.mods_skipped,
         failed: res.mods_failed,
-        unplaceable: plan.unplaceable.length,
       });
     } catch (e: any) {
       setArmState({ kind: "error", msg: e?.message ?? "equip failed" });
@@ -1112,9 +1112,14 @@ function ComboCard({
       {armState.kind === "done" && (
         <div className="mb-3 px-3 py-2 rounded border border-emerald-400/40 bg-emerald-400/5 font-ui text-xs text-emerald-300">
           ✓ {armState.msg}
-          {(armState.failed > 0 || armState.unplaceable > 0) && (
+          <div className="mt-1 text-muted">
+            Mods: {armState.inserted} inserted
+            {armState.skipped > 0 ? `, ${armState.skipped} already set` : ""}
+            {armState.failed > 0 ? `, ${armState.failed} failed` : ""}.
+          </div>
+          {armState.failed > 0 && (
             <div className="mt-1 text-amber-300">
-              {armState.failed + armState.unplaceable} mod(s) need manual placement (socket mismatch or undetected).
+              {armState.failed} mod(s) couldn't be inserted — usually means you don't own/haven't unlocked that mod, or the piece lacks the armor energy.
             </div>
           )}
         </div>

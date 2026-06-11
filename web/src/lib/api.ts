@@ -303,9 +303,11 @@ export const api = {
         socketIndex: number;
         plugItemHash: number;
         ok: boolean;
+        skipped?: boolean;
         error?: string;
       }>;
       mods_inserted: number;
+      mods_skipped: number;
       mods_failed: number;
     }>("/api/equip-with-mods", {
       method: "POST",
