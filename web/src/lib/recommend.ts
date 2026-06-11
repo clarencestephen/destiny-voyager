@@ -39,6 +39,44 @@ export interface BuildRec {
   fragments: Pick<SynergyData["fragments"][number]>[];
   weapons: Pick<WeaponLite>[];
   sets: Pick<{ hash: string; n: string; perks: any[] }>[];
+  exotics: Pick<{ n: string }>[];   // exotic armor that co-occurs in real builds
+}
+
+// ── Build-basket collaborative filtering ──────────────────────────────────
+// Mines builds.json: each build is a basket of items run together for a given
+// class+subclass. The co-occurrence index lets us boost weapons/exotics that
+// actually appear together — item-to-item CF, keyed by class|element.
+export interface BuildTemplate {
+  class: string; subclass: string;
+  exotic_armor?: { options?: string[] };
+  weapons?: { kinetic?: string[]; energy?: string[]; heavy?: string[] };
+  tags?: string[];
+}
+export type CFIndex = Record<string, { weapons: Record<string, number>; exotics: Record<string, number> }>;
+
+const SUBCLASS_ELEMENT: Record<string, string> = {
+  voidwalker: "void", sentinel: "void", nightstalker: "void",
+  dawnblade: "solar", sunbreaker: "solar", gunslinger: "solar",
+  stormcaller: "arc", striker: "arc", arcstrider: "arc",
+  shadebinder: "stasis", behemoth: "stasis", revenant: "stasis",
+  broodweaver: "strand", berserker: "strand", threadrunner: "strand",
+  prismatic: "prismatic",
+};
+const ELEMENTS = ["solar", "void", "arc", "stasis", "strand", "prismatic"];
+
+export function buildCFIndex(builds: BuildTemplate[]): CFIndex {
+  const idx: CFIndex = {};
+  for (const b of builds) {
+    const cls = (b.class || "").toLowerCase();
+    let el = SUBCLASS_ELEMENT[(b.subclass || "").toLowerCase()] || "";
+    if (!el) el = (b.tags || []).map((t) => t.toLowerCase()).find((t) => ELEMENTS.includes(t)) || "";
+    if (!cls || !el) continue;
+    const e = (idx[`${cls}|${el}`] ??= { weapons: {}, exotics: {} });
+    for (const slot of ["kinetic", "energy", "heavy"] as const)
+      for (const w of b.weapons?.[slot] || []) e.weapons[w] = (e.weapons[w] || 0) + 1;
+    for (const x of b.exotic_armor?.options || []) e.exotics[x] = (e.exotics[x] || 0) + 1;
+  }
+  return idx;
 }
 
 // Each element's signature keywords — the default theme when none is given.
@@ -94,12 +132,13 @@ function weaponSynergy(w: WeaponLite, syn: SynergyData, theme: string[]): { scor
 
 const fmt = (kws: string[]) => kws.map((k) => k.replace(/-/g, " ")).join(", ");
 
-export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: WeaponLite[], armor: ArmorData): BuildRec {
+export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: WeaponLite[], armor: ArmorData, cf?: CFIndex): BuildRec {
   const theme = deriveTheme(ctx);
   const goalKw = parseGoal(ctx.goal);
   const cls = ctx.cls.toLowerCase();
   const el = ctx.element.toLowerCase();
   const wantType = ctx.weaponType?.toLowerCase();
+  const cfBucket = cf?.[`${cls}|${el}`];
 
   // Fragments (this element) ranked by theme overlap.
   const fragments = syn.fragments
@@ -122,8 +161,11 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
       const syn2 = weaponSynergy(w, syn, theme);
       const elMatch = w.el.toLowerCase() === el ? 3 : 0;
       const typeMatch = wantType && w.t.toLowerCase().includes(wantType) ? 4 : 0;
-      const score = elMatch + typeMatch + syn2.score;
-      return { item: w, score, why: syn2.perks.length ? `rolls ${syn2.perks.join(", ")}` : `${w.el} ${w.t}` };
+      const cfCount = cfBucket?.weapons[w.n] || 0;       // co-occurs in real builds
+      const score = elMatch + typeMatch + syn2.score + cfCount * 2;
+      const why = [syn2.perks.length ? `rolls ${syn2.perks.join(", ")}` : `${w.el} ${w.t}`]
+        .concat(cfCount ? [`in ${cfCount} build${cfCount > 1 ? "s" : ""}`] : []).join(" · ");
+      return { item: w, score, why };
     })
     .filter((p) => p.score >= 3)
     .sort((a, b) => b.score - a.score)
@@ -140,5 +182,11 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
 
-  return { theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, sets };
+  // Exotic armor that co-occurs in real builds for this class+subclass.
+  const exotics = Object.entries(cfBucket?.exotics || {})
+    .map(([n, count]) => ({ item: { n }, score: count, why: `in ${count} build${count > 1 ? "s" : ""}` }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4);
+
+  return { theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, sets, exotics };
 }

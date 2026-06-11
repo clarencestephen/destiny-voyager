@@ -16,25 +16,30 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const web = path.resolve(__dirname, "..");
 // run from the web dir with a relative path so tsc emits a flat /tmp/rec-test/recommend.js
 execSync(`npx tsc src/lib/recommend.ts --outDir /tmp/rec-test --module esnext --target es2020 --moduleResolution bundler --skipLibCheck`, { stdio: "inherit", cwd: web });
-const { recommendBuild } = await import("/tmp/rec-test/recommend.js");
+const { recommendBuild, buildCFIndex } = await import("/tmp/rec-test/recommend.js");
 
 const syn = JSON.parse(fs.readFileSync(`${web}/public/synergy.json`, "utf8"));
 const weapons = Object.entries(JSON.parse(fs.readFileSync(`${web}/public/weapons.json`, "utf8"))).map(([hash, v]) => ({ hash, ...v }));
 const armor = JSON.parse(fs.readFileSync(`${web}/public/armor.json`, "utf8"));
+const cf = buildCFIndex(JSON.parse(fs.readFileSync(`${web}/public/builds.json`, "utf8")).builds);
 
 let pass = 0, fail = 0;
 const ok = (c, m) => (c ? (pass++, console.log("  ✓ " + m)) : (fail++, console.log("  ✗ " + m)));
 
-const boss = recommendBuild({ cls: "Warlock", element: "solar", theme: ["scorch", "ignition"], goal: "additional damage to the boss", weaponType: "grenade launcher" }, syn, weapons, armor);
+const boss = recommendBuild({ cls: "Warlock", element: "solar", theme: ["scorch", "ignition"], goal: "additional damage to the boss", weaponType: "grenade launcher" }, syn, weapons, armor, cf);
 console.log("Scorch Warlock · GL · boss damage:");
 ok(boss.fragments.some((p) => /Ember of (Char|Singeing|Ashes|Wonder|Combustion|Blistering)/.test(p.item.n)), "recommends scorch fragments");
 ok(boss.weapons.some((p) => p.item.t.toLowerCase().includes("grenade launcher")), "weapons honor grenade-launcher focus");
 ok(boss.weapons.some((p) => /Incandescent/.test(p.why)), "weapons roll Incandescent (scorch)");
 ok(boss.sets.some((p) => (syn.setKeywords[p.item.hash] || []).includes("surge")), "set bonus matches boss-damage (surge)");
 
-const reload = recommendBuild({ cls: "Warlock", element: "solar", theme: ["scorch", "ignition"], goal: "faster reloading", weaponType: "grenade launcher" }, syn, weapons, armor);
+const reload = recommendBuild({ cls: "Warlock", element: "solar", theme: ["scorch", "ignition"], goal: "faster reloading", weaponType: "grenade launcher" }, syn, weapons, armor, cf);
 console.log("Scorch Warlock · GL · reload:");
 ok(reload.sets.some((p) => (syn.setKeywords[p.item.hash] || []).includes("reload")), "set bonus adapts to reload goal");
+
+const voidlock = recommendBuild({ cls: "Warlock", element: "void", goal: "grenade spam" }, syn, weapons, armor, cf);
+console.log("Void Warlock (build-CF):");
+ok(voidlock.exotics.some((p) => /Contraverse/.test(p.item.n)), "CF recommends Contraverse Hold for void warlock");
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { recommendBuild, type SynergyData, type WeaponLite, type ArmorData } from "@/lib/recommend";
+import { recommendBuild, buildCFIndex, type SynergyData, type WeaponLite, type ArmorData, type CFIndex } from "@/lib/recommend";
 import { Card } from "@/components/ui/card";
 
 /**
@@ -26,6 +26,7 @@ export default function Recommend() {
   const [syn, setSyn] = useState<SynergyData | null>(null);
   const [weapons, setWeapons] = useState<WeaponLite[]>([]);
   const [armor, setArmor] = useState<ArmorData>({ sets: {} });
+  const [cf, setCf] = useState<CFIndex>({});
   const [loading, setLoading] = useState(true);
 
   const [cls, setCls] = useState<(typeof CLASSES)[number]>("Warlock");
@@ -38,17 +39,19 @@ export default function Recommend() {
       fetch("/synergy.json").then((r) => r.json()),
       fetch("/weapons.json").then((r) => r.json()),
       fetch("/armor.json").then((r) => r.json()),
-    ]).then(([s, w, a]) => {
+      fetch("/builds.json").then((r) => r.json()).catch(() => ({ builds: [] })),
+    ]).then(([s, w, a, bl]) => {
       setSyn(s);
       setWeapons(Object.entries(w).map(([hash, v]) => ({ hash, ...(v as object) }) as WeaponLite));
       setArmor(a);
+      setCf(buildCFIndex(bl.builds || []));
     }).finally(() => setLoading(false));
   }, []);
 
   const rec = useMemo(() => {
     if (!syn) return null;
-    return recommendBuild({ cls, element, goal, weaponType: weaponType || undefined }, syn, weapons, armor);
-  }, [syn, weapons, armor, cls, element, goal, weaponType]);
+    return recommendBuild({ cls, element, goal, weaponType: weaponType || undefined }, syn, weapons, armor, cf);
+  }, [syn, weapons, armor, cf, cls, element, goal, weaponType]);
 
   if (loading) return <div className="container py-20 font-ui text-muted">Loading the synergy graph…</div>;
 
@@ -128,6 +131,18 @@ export default function Recommend() {
               {rec.weapons.length === 0 && <Empty />}
             </div>
           </Section>
+
+          {rec.exotics.length > 0 && (
+            <Section title="Exotic armor (popular in builds)">
+              <div className="flex flex-wrap gap-2">
+                {rec.exotics.map((p) => (
+                  <div key={p.item.n} className="px-3 py-1.5 rounded border border-amber-500/40 font-ui text-sm text-amber-300">
+                    {p.item.n} <span className="font-mono text-[10px] text-muted">· {p.why}</span>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
 
           <Section title="Armor set (matched to your goal)">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
