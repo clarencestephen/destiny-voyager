@@ -1,11 +1,11 @@
 {
   "version": "1.0",
   "generated": "2026-05-26",
-  "_notes": "Starter build templates. Match is name-based (case-insensitive) against the user's decorated inventory. Each weapon slot lists options in priority order; the fitter takes the first one the user owns. Missing items show as 'NEED \u2014 drops from X' hints rather than blocking the rest of the build. Edit this file freely; the frontend hot-reloads on refresh.",
+  "_notes": "Starter build templates. Match is name-based (case-insensitive) against the user's decorated inventory. Each weapon slot lists options in priority order; the fitter takes the first one the user owns. Missing items show as 'NEED — drops from X' hints rather than blocking the rest of the build. Edit this file freely; the frontend hot-reloads on refresh.",
   "builds": [
     {
       "id": "warlock-solar-well",
-      "name": "Well of Radiance \u2014 Solar Warlock support",
+      "name": "Well of Radiance — Solar Warlock support",
       "class": "Warlock",
       "subclass": "Solar",
       "super": "Well of Radiance",
@@ -55,13 +55,13 @@
         "class": 100,
         "grenade": 100
       },
-      "playstyle": "Plant Well of Radiance during DPS phases \u2014 your team stands in it for healing + Radiant. Phoenix Protocol kills inside Well refund Super energy. Heat Rises + Icarus Dash for air mobility on add-clear.",
+      "playstyle": "Plant Well of Radiance during DPS phases — your team stands in it for healing + Radiant. Phoenix Protocol kills inside Well refund Super energy. Heat Rises + Icarus Dash for air mobility on add-clear.",
       "source": "Evergreen Solar Warlock support archetype.",
       "_confidence": "high"
     },
     {
       "id": "hunter-solar-nighthawk",
-      "name": "Golden Gun \u2014 Celestial Nighthawk one-shot",
+      "name": "Golden Gun — Celestial Nighthawk one-shot",
       "class": "Hunter",
       "subclass": "Solar",
       "super": "Golden Gun (Marksman)",
@@ -109,13 +109,13 @@
         "grenade": 100,
         "super": 100
       },
-      "playstyle": "Pop Golden Gun, line up a Celestial Nighthawk headshot for ~600k+ crit. Still Hunt synergizes \u2014 its Golden Gun rounds also benefit from Nighthawk. Save Super for damage phases, use grenades + Knock 'Em Down sustain in between.",
+      "playstyle": "Pop Golden Gun, line up a Celestial Nighthawk headshot for ~600k+ crit. Still Hunt synergizes — its Golden Gun rounds also benefit from Nighthawk. Save Super for damage phases, use grenades + Knock 'Em Down sustain in between.",
       "source": "Hunter boss-DPS archetype since D1.",
       "_confidence": "high"
     },
     {
       "id": "titan-solar-loreley",
-      "name": "Loreley Healing Wall \u2014 Solar Titan survivability",
+      "name": "Loreley Healing Wall — Solar Titan survivability",
       "class": "Titan",
       "subclass": "Solar",
       "super": "Burning Maul",
@@ -164,13 +164,13 @@
         "class": 100,
         "grenade": 100
       },
-      "playstyle": "Drop the Throwing Hammer for Sunspots and Roaring Flames stacks. Loreley triggers when low-HP \u2014 your barricade becomes a healing Sunspot. Stack Restoration via Ember of Empyrean to chain Sunspot kills indefinitely.",
+      "playstyle": "Drop the Throwing Hammer for Sunspots and Roaring Flames stacks. Loreley triggers when low-HP — your barricade becomes a healing Sunspot. Stack Restoration via Ember of Empyrean to chain Sunspot kills indefinitely.",
       "source": "Classic Solar 3.0 Titan tankiness build.",
       "_confidence": "high"
     },
     {
       "id": "warlock-stasis-osmio",
-      "name": "Osmiomancy Tracking Grenades \u2014 Stasis Warlock control",
+      "name": "Osmiomancy Tracking Grenades — Stasis Warlock control",
       "class": "Warlock",
       "subclass": "Stasis",
       "super": "Winter's Wrath",
@@ -224,7 +224,7 @@
     },
     {
       "id": "hunter-arc-liars",
-      "name": "Liar's Handshake \u2014 Arc Hunter Brawler",
+      "name": "Liar's Handshake — Arc Hunter Brawler",
       "class": "Hunter",
       "subclass": "Arc",
       "super": "Gathering Storm",
@@ -270,12 +270,12 @@
         "melee": 100
       },
       "playstyle": "Tap-melee to bait an enemy's melee, then Liar's Handshake counter-punch hits for massive damage + heals you. Flow State on melee final blow grants Amplified for chained dodging. Best on melee-heavy maps; less effective against ranged-only encounters.",
-      "source": "Arc 3.0 \u2014 Brawler archetype (melee primary + health secondary).",
+      "source": "Arc 3.0 — Brawler archetype (melee primary + health secondary).",
       "_confidence": "high"
     },
     {
       "id": "titan-strand-synthoceps",
-      "name": "Banner of War \u2014 Strand Titan sustain",
+      "name": "Banner of War — Strand Titan sustain",
       "class": "Titan",
       "subclass": "Strand",
       "super": "Bladefury",
@@ -325,7 +325,7 @@
         "class": 100,
         "melee": 100
       },
-      "playstyle": "Frenzied Blade \u2192 Banner of War active \u2192 melee + sword kills extend the Banner timer and pulse-heal nearby teammates. Synthoceps multiplies melee damage when surrounded. Lament is the cleanest sword for Banner refresh under boss damage phases.",
+      "playstyle": "Frenzied Blade → Banner of War active → melee + sword kills extend the Banner timer and pulse-heal nearby teammates. Synthoceps multiplies melee damage when surrounded. Lament is the cleanest sword for Banner refresh under boss damage phases.",
       "source": "Banner of War PvE archetype, post-Lightfall meta.",
       "_confidence": "high"
     },
@@ -672,7 +672,7 @@
       "exotic_armor": {
         "slot": "Chest",
         "options": [
-          "Mataiodox\u00eda"
+          "Mataiodoxía"
         ]
       },
       "weapons": {
@@ -756,7 +756,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Star Eater + Apotheosis class item. Transcendence \u2192 1 heavy + 2 light, throw transcendence grenade.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Melee / -Health, Weapons Mod, Bolstering Detonation, Grenade Font, Firepower, Balanced Tuning, Weapons Mod, Lucent Blades, Lucent Blades, Lucent Blades, Balanced Tuning, Minor Super Mod, Solar Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, +Class / -Health, Super Mod, Time Dilation, Bomber, Powerful Attraction\nHelmet mods: Envoy's Togs, Taken Knife Robes\nGauntlet mods: Envoy's Togs, Taken Knife Boots\nChest mods: Envoy's Togs, Default Ornament\nLeg mods: Envoy's Togs, Taken Knife Hood\nClass item mods: Envoy's Togs, Taken Knife Gloves",
+      "playstyle": "Star Eater + Apotheosis class item. Transcendence → 1 heavy + 2 light, throw transcendence grenade.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Melee / -Health, Weapons Mod, Bolstering Detonation, Grenade Font, Firepower, Balanced Tuning, Weapons Mod, Lucent Blades, Lucent Blades, Lucent Blades, Balanced Tuning, Minor Super Mod, Solar Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, +Class / -Health, Super Mod, Time Dilation, Bomber, Powerful Attraction\nHelmet mods: Envoy's Togs, Taken Knife Robes\nGauntlet mods: Envoy's Togs, Taken Knife Boots\nChest mods: Envoy's Togs, Default Ornament\nLeg mods: Envoy's Togs, Taken Knife Hood\nClass item mods: Envoy's Togs, Taken Knife Gloves",
       "source": "Community DIM loadout: https://dim.gg/mugv6si/Ergo-Sum-Ignitions",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/mugv6si/Ergo-Sum-Ignitions"
@@ -892,7 +892,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Weapon stat is the only important stat. Energy \u2194 heavy swap speed.\n\nGeneral mods: Weapons Mod, Super Font, Super Font, Special Ammo Scout, Balanced Tuning, Weapons Mod, Harmonic Dexterity, Harmonic Dexterity, Harmonic Dexterity, +Class / -Health, Weapons Mod, Concussive Dampener, Solar Resistance, Void Resistance, +Super / -Melee, Minor Weapons Mod, Void Weapon Surge, Void Weapon Surge, Void Weapon Surge, Weapons Mod, Powerful Attraction, Time Dilation, Time Dilation, +Weapons / -Health\nHelmet mods: Envoy's Togs, Resonant Fury Vest\nGauntlet mods: Envoy's Togs, Default Ornament\nChest mods: Envoy's Togs, Multicell Cloak\nLeg mods: Envoy's Togs, Default Ornament\nClass item mods: Envoy's Togs, Default Ornament",
+      "playstyle": "Weapon stat is the only important stat. Energy ↔ heavy swap speed.\n\nGeneral mods: Weapons Mod, Super Font, Super Font, Special Ammo Scout, Balanced Tuning, Weapons Mod, Harmonic Dexterity, Harmonic Dexterity, Harmonic Dexterity, +Class / -Health, Weapons Mod, Concussive Dampener, Solar Resistance, Void Resistance, +Super / -Melee, Minor Weapons Mod, Void Weapon Surge, Void Weapon Surge, Void Weapon Surge, Weapons Mod, Powerful Attraction, Time Dilation, Time Dilation, +Weapons / -Health\nHelmet mods: Envoy's Togs, Resonant Fury Vest\nGauntlet mods: Envoy's Togs, Default Ornament\nChest mods: Envoy's Togs, Multicell Cloak\nLeg mods: Envoy's Togs, Default Ornament\nClass item mods: Envoy's Togs, Default Ornament",
       "source": "Community DIM loadout: https://dim.gg/h3wj3ji/Hunter-Crossbow",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/h3wj3ji/Hunter-Crossbow"
@@ -960,7 +960,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Shoot Crimson twice \u2192 switch to Uncivil Discourse. Spam A499 while Out of Luck.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Arc Dexterity, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Arc Weapon Surge, Arc Weapon Surge, Arc Weapon Surge, Weapons Forged, Weapons Mod, Class Font, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
+      "playstyle": "Shoot Crimson twice → switch to Uncivil Discourse. Spam A499 while Out of Luck.\n\nGeneral mods: Weapons Mod, Kinetic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Arc Dexterity, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Arc Weapon Surge, Arc Weapon Surge, Arc Weapon Surge, Weapons Forged, Weapons Mod, Class Font, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
       "source": "Community DIM loadout: https://dim.gg/s5bjdaq/Crit-heavy-Lucky-Pants",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/s5bjdaq/Crit-heavy-Lucky-Pants"
@@ -1028,7 +1028,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Alt Lucky Pants build \u2014 more damage during Out of Luck.\n\nGeneral mods: Weapons Mod, Harmonic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Melee Font, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Strand Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, Weapons Forged, Weapons Mod, Time Dilation, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
+      "playstyle": "Alt Lucky Pants build — more damage during Out of Luck.\n\nGeneral mods: Weapons Mod, Harmonic Siphon, Super Font, Super Font, +Class / -Health, Weapons Mod, Melee Font, Grenade Font, Bolstering Detonation, +Grenade / -Health, Weapons Mod, Concussive Dampener, Stasis Resistance, Solar Resistance, +Super / -Health, Minor Weapons Mod, Strand Weapon Surge, Solar Weapon Surge, Solar Weapon Surge, Weapons Forged, Weapons Mod, Time Dilation, Powerful Attraction, Time Dilation, +Weapons / -Melee\nHelmet mods: Ablaze, Vest of the Taken King\nGauntlet mods: Ablaze, Digital Variance\nChest mods: Ablaze, Cloak of the Taken King\nLeg mods: Ablaze, Mask of the Taken King\nClass item mods: Ablaze, Grasps of the Taken King",
       "source": "Community DIM loadout: https://dim.gg/2g4xcsq/Finality-+-Mint-Lucky-Pants",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/2g4xcsq/Finality-+-Mint-Lucky-Pants"
@@ -1102,7 +1102,7 @@
     },
     {
       "id": "community-hunter-indra-god-of-the-tempest",
-      "name": "Indra \u2014 God of the Tempest (community)",
+      "name": "Indra — God of the Tempest (community)",
       "class": "Hunter",
       "subclass": "Arcstrider",
       "focus": "PvE",
@@ -1181,7 +1181,7 @@
       "id": "community-hunter-puppetmaster",
       "name": "PuppetMaster (community)",
       "class": "Hunter",
-      "subclass": "The X\u00fbrfboard",
+      "subclass": "The Xûrfboard",
       "focus": "PvE",
       "tags": [
         "pve",
@@ -1515,7 +1515,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Fashion-only loadout \u2014 Loki themed.\n\nHelmet mods: Wrath Trail Robes, Atmospheric Glow\nGauntlet mods: Yuga Sundown Boots, Golden Trace\nChest mods: Northlight Bond, Calus's Shadow\nLeg mods: Northlight Crown, Goldleaf\nClass item mods: Iron Will Gloves, Goldleaf",
+      "playstyle": "Fashion-only loadout — Loki themed.\n\nHelmet mods: Wrath Trail Robes, Atmospheric Glow\nGauntlet mods: Yuga Sundown Boots, Golden Trace\nChest mods: Northlight Bond, Calus's Shadow\nLeg mods: Northlight Crown, Goldleaf\nClass item mods: Iron Will Gloves, Goldleaf",
       "source": "Community DIM loadout: https://dim.gg/uly7vfa/Loki-Fashion-Only",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/uly7vfa/Loki-Fashion-Only"
@@ -1549,7 +1549,7 @@
       },
       "aspects": [],
       "fragments": [],
-      "playstyle": "Prismatic build (note: '#Prasmatic' tag from author \u2014 typo for Prismatic). Shared by MardY1786 31 Oct 2025.\n\nGeneral mods: Melee Mod, Solar/Strand Dual Siphon, Special Ammo Finder, Harmonic Siphon, +Super / -Health, Super Mod, Heavy Handed, Grenade Font, Fastball, Super Mod, Solar Resistance, Solar Resistance, Concussive Dampener, Balanced Tuning, Super Mod, Solar Weapon Surge, Strand Weapon Surge, Better Already, Balanced Tuning, Super Mod, Time Dilation, Class Font, Proximity Ward, Balanced Tuning\nHelmet mods: Chatterwhite, Vigilant Seraph Vest\nGauntlet mods: Chatterwhite, Vigilant Seraph Strides\nChest mods: Chatterwhite, Vigilant Seraph Cloak\nLeg mods: Chatterwhite, Spacewalk Cowl\nClass item mods: Chatterwhite, Default Ornament",
+      "playstyle": "Prismatic build (note: '#Prasmatic' tag from author — typo for Prismatic). Shared by MardY1786 31 Oct 2025.\n\nGeneral mods: Melee Mod, Solar/Strand Dual Siphon, Special Ammo Finder, Harmonic Siphon, +Super / -Health, Super Mod, Heavy Handed, Grenade Font, Fastball, Super Mod, Solar Resistance, Solar Resistance, Concussive Dampener, Balanced Tuning, Super Mod, Solar Weapon Surge, Strand Weapon Surge, Better Already, Balanced Tuning, Super Mod, Time Dilation, Class Font, Proximity Ward, Balanced Tuning\nHelmet mods: Chatterwhite, Vigilant Seraph Vest\nGauntlet mods: Chatterwhite, Vigilant Seraph Strides\nChest mods: Chatterwhite, Vigilant Seraph Cloak\nLeg mods: Chatterwhite, Spacewalk Cowl\nClass item mods: Chatterwhite, Default Ornament",
       "source": "Community DIM loadout: https://dim.gg/w7gknva/Equipped-31102025-19:57:01",
       "_confidence": "medium",
       "dim_url": "https://dim.gg/w7gknva/Equipped-31102025-19:57:01"
@@ -1645,7 +1645,7 @@
           "count": 2
         }
       ],
-      "playstyle": "Role: Blink brawler, glaive + caster sword\n\nUse for: Trials CQC, Comp small maps, IB rush\n\nSet bonuses: Swordmaster 2pc \u2014 Balestra: glaive/sword/melee hits exhaust targets (reduce their outgoing dmg) \u00b7 Sage Protector 2pc \u2014 Combat Meditation: sword hits return grenade + class ability energy\n\nArmor:\n  Helmet: Astrocyte Verse [Specialist] \u2014 W23 H3 G30 S11 C3 M3\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Blink brawler, glaive + caster sword\n\nUse for: Trials CQC, Comp small maps, IB rush\n\nSet bonuses: Swordmaster 2pc — Balestra: glaive/sword/melee hits exhaust targets (reduce their outgoing dmg) · Sage Protector 2pc — Combat Meditation: sword hits return grenade + class ability energy\n\nArmor:\n  Helmet: Astrocyte Verse [Specialist] — W23 H3 G30 S11 C3 M3\n  Gauntlets: Swordmaster's Gloves [Swordmaster · Grenadier] — W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector · Paragon] — W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster · Grenadier] — W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
@@ -1697,7 +1697,7 @@
           "count": 2
         }
       ],
-      "playstyle": "Role: Mirror of Phantom Blink, weapon-swap only\n\nUse for: Trials medium, Comp flex, PVE strand activities\n\nSet bonuses: Swordmaster 2pc \u2014 Balestra \u00b7 Sage Protector 2pc \u2014 Combat Meditation\n\nArmor:\n  Helmet: Ophidian Aspect [Gunner] \u2014 W39 H12 G19 S5 C5 M5\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Mirror of Phantom Blink, weapon-swap only\n\nUse for: Trials medium, Comp flex, PVE strand activities\n\nSet bonuses: Swordmaster 2pc — Balestra · Sage Protector 2pc — Combat Meditation\n\nArmor:\n  Helmet: Ophidian Aspect [Gunner] — W39 H12 G19 S5 C5 M5\n  Gauntlets: Swordmaster's Gloves [Swordmaster · Grenadier] — W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector · Paragon] — W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster · Grenadier] — W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
@@ -1745,7 +1745,7 @@
           "count": 3
         }
       ],
-      "playstyle": "Role: Freeze / control / area denial\n\nUse for: Trials long-sight, Comp range, IB zone hold\n\nSet bonuses: Sage Protector 2pc \u2014 Combat Meditation \u00b7 Swordmaster 2pc \u2014 Balestra\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector \u00b7 Specialist] \u2014 W25 H12 G2 S16 C30 M2\n  Gauntlets: Osmiomancy Gloves [Specialist] \u2014 W11 H0 G0 S29 C0 M19\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Freeze / control / area denial\n\nUse for: Trials long-sight, Comp range, IB zone hold\n\nSet bonuses: Sage Protector 2pc — Combat Meditation · Swordmaster 2pc — Balestra\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector · Specialist] — W25 H12 G2 S16 C30 M2\n  Gauntlets: Osmiomancy Gloves [Specialist] — W11 H0 G0 S29 C0 M19\n  Chest: Sage Protector Robes [Sage Protector · Paragon] — W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster · Grenadier] — W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
@@ -1793,7 +1793,7 @@
           "count": 3
         }
       ],
-      "playstyle": "Role: Aerial boss, snipers + rockets, rift auto-reload\n\nUse for: Raid bosses (aerial/range), GMs\n\nSet bonuses: Sage Protector 2pc \u00b7 Swordmaster 2pc (or Wild Anthem 2pc flex)\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector \u00b7 Specialist] \u2014 W25 H12 G2 S16 C30 M2\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Aerial boss, snipers + rockets, rift auto-reload\n\nUse for: Raid bosses (aerial/range), GMs\n\nSet bonuses: Sage Protector 2pc · Swordmaster 2pc (or Wild Anthem 2pc flex)\n\nArmor:\n  Helmet: Sage Protector Cover [Sage Protector · Specialist] — W25 H12 G2 S16 C30 M2\n  Gauntlets: Swordmaster's Gloves [Swordmaster · Grenadier] — W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector · Paragon] — W0 H0 G15 S30 C20 M20\n  Class: Sage Protector Bond [Sage Protector · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
@@ -1845,7 +1845,7 @@
           "count": 2
         }
       ],
-      "playstyle": "Role: Heavy ammo battery via trace rifle marks\n\nUse for: Raid support \u2014 Koregos, Witness, any team-heavy boss\n\nSet bonuses: Sage Protector 2pc \u00b7 Swordmaster 2pc\n\nArmor:\n  Helmet: Cenotaph Mask [Paragon] \u2014 W13 H0 G0 S30 C0 M20\n  Gauntlets: Swordmaster's Gloves [Swordmaster \u00b7 Grenadier] \u2014 W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector \u00b7 Paragon] \u2014 W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster \u00b7 Grenadier] \u2014 W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Heavy ammo battery via trace rifle marks\n\nUse for: Raid support — Koregos, Witness, any team-heavy boss\n\nSet bonuses: Sage Protector 2pc · Swordmaster 2pc\n\nArmor:\n  Helmet: Cenotaph Mask [Paragon] — W13 H0 G0 S30 C0 M20\n  Gauntlets: Swordmaster's Gloves [Swordmaster · Grenadier] — W4 H30 G30 S25 C9 M-1\n  Chest: Sage Protector Robes [Sage Protector · Paragon] — W0 H0 G15 S30 C20 M20\n  Legs: Swordmaster's Boots [Swordmaster · Grenadier] — W4 H20 G40 S25 C9 M-1\n  Class: Sage Protector Bond [Sage Protector · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
@@ -1893,13 +1893,13 @@
           "count": 4
         }
       ],
-      "playstyle": "Role: Kinetic shield break + AOE stagger (PVE ONLY)\n\nUse for: GM Nightfall, Pantheon shield wall, NOT PVP\n\nSet bonuses: Techsec 2pc \u2014 Wrecker: +Kinetic dmg vs shields/overshields/constructs \u00b7 Techsec 4pc \u2014 Concussive Rounds: shield break / powerful kill = disorienting AOE\n\nArmor:\n  Helmet: Techsec Hood [Techsec \u00b7 Gunner] \u2014 W28 H8 G16 S0 C0 M0\n  Gauntlets: Techsec Gloves [Techsec \u00b7 Bulwark] \u2014 W0 H28 G0 S8 C16 M0\n  Chest: Techsec Vestment [Techsec \u00b7 Paragon] \u2014 W0 H0 G8 S28 C0 M16\n  Legs: Techsec Boots [Techsec \u00b7 Grenadier] \u2014 W0 H0 G28 S16 C8 M0\n  Class: Sage Protector Bond [Sage Protector (no 2pc) \u00b7 Specialist] \u2014 W34 H20 G4 S4 C30 M4",
+      "playstyle": "Role: Kinetic shield break + AOE stagger (PVE ONLY)\n\nUse for: GM Nightfall, Pantheon shield wall, NOT PVP\n\nSet bonuses: Techsec 2pc — Wrecker: +Kinetic dmg vs shields/overshields/constructs · Techsec 4pc — Concussive Rounds: shield break / powerful kill = disorienting AOE\n\nArmor:\n  Helmet: Techsec Hood [Techsec · Gunner] — W28 H8 G16 S0 C0 M0\n  Gauntlets: Techsec Gloves [Techsec · Bulwark] — W0 H28 G0 S8 C16 M0\n  Chest: Techsec Vestment [Techsec · Paragon] — W0 H0 G8 S28 C0 M16\n  Legs: Techsec Boots [Techsec · Grenadier] — W0 H0 G28 S16 C8 M0\n  Class: Sage Protector Bond [Sage Protector (no 2pc) · Specialist] — W34 H20 G4 S4 C30 M4",
       "source": "DARTH_BANKAI master workbook (darth_bankai.xlsx)",
       "_confidence": "high"
     },
     {
       "id": "titan-prismatic-techsec-winterbite",
-      "name": "TechSec + Synthoceps + Winterbite \u2014 Prismatic Titan glaive/melee (EoF)",
+      "name": "TechSec + Synthoceps + Winterbite — Prismatic Titan glaive/melee (EoF)",
       "class": "Titan",
       "subclass": "Prismatic",
       "super": "Twilight Arsenal",
@@ -1926,13 +1926,13 @@
         "options": [
           "Synthoceps"
         ],
-        "perk": "Mighty Symphysisps \u2014 bonus melee + super damage when surrounded by 3+ enemies.",
+        "perk": "Mighty Symphysisps — bonus melee + super damage when surrounded by 3+ enemies.",
         "drops_from": "World pool / Lost Sector rotator (Arms day) / Xur on Friday-Tuesday."
       },
       "weapons": {
         "kinetic": [],
         "energy": [
-          "Winterbite (exotic glaive, Stasis) \u2014 Weighted Edge + Frigid Glaive + Tilting at Windmills perks. Use guard-and-poke playstyle; don't deploy the turret."
+          "Winterbite (exotic glaive, Stasis) — Weighted Edge + Frigid Glaive + Tilting at Windmills perks. Use guard-and-poke playstyle; don't deploy the turret."
         ],
         "heavy": []
       },
@@ -1941,11 +1941,11 @@
         "Diamond Lance"
       ],
       "fragments": [
-        "Facet of Protection \u2014 reduced damage when surrounded.",
-        "Facet of Ruin \u2014 improved Shatter from frozen targets.",
-        "Facet of Purpose \u2014 orb pickup grants Woven Mail (procs Shield Crush).",
-        "Facet of Defiance \u2014 finishers create Sever (swap if not on Strand-leaning prismatic).",
-        "Facet of Blessing \u2014 melee final blows trigger health regen (the must-have)."
+        "Facet of Protection — reduced damage when surrounded.",
+        "Facet of Ruin — improved Shatter from frozen targets.",
+        "Facet of Purpose — orb pickup grants Woven Mail (procs Shield Crush).",
+        "Facet of Defiance — finishers create Sever (swap if not on Strand-leaning prismatic).",
+        "Facet of Blessing — melee final blows trigger health regen (the must-have)."
       ],
       "target_stats": {
         "melee": 149,
@@ -1955,8 +1955,52 @@
         "grenade": 60,
         "weapons": 60
       },
-      "playstyle": "Get surrounded. Symphysisps + Knockout + TechSec 4pc + Facet of Blessing all stack. Block-and-poke with Winterbite for sustain (Facet of Blessing \u2192 health regen on melee/glaive kills). Glacier grenades for area control + extra Shatter. Drop Diamond Lances from any ability/Winterbite kill \u2014 infinite slows for crowd control. TechSec 4pc turns every shielded-enemy kinetic kill into a disorienting blast (effectively blinding). Strong in Mythic ad-clear and shielded-heavy content; weak vs. single bosses (no DPS option). Diamond Lance pro on, ideally Strand-leaning prismatic so Facet of Defiance procs Sever on finishers.",
-      "source": "https://youtu.be/vcoiCg2sn3w \u2014 Duddits II (featured Bungie creator), 2025-09-08. DIM link: https://dim.gg/26dxsli/TECHSEC-SYNTHO-GLAIVE",
+      "playstyle": "Get surrounded. Symphysisps + Knockout + TechSec 4pc + Facet of Blessing all stack. Block-and-poke with Winterbite for sustain (Facet of Blessing → health regen on melee/glaive kills). Glacier grenades for area control + extra Shatter. Drop Diamond Lances from any ability/Winterbite kill — infinite slows for crowd control. TechSec 4pc turns every shielded-enemy kinetic kill into a disorienting blast (effectively blinding). Strong in Mythic ad-clear and shielded-heavy content; weak vs. single bosses (no DPS option). Diamond Lance pro on, ideally Strand-leaning prismatic so Facet of Defiance procs Sever on finishers.",
+      "source": "https://youtu.be/vcoiCg2sn3w — Duddits II (featured Bungie creator), 2025-09-08. DIM link: https://dim.gg/26dxsli/TECHSEC-SYNTHO-GLAIVE",
+      "_confidence": "high"
+    },
+    {
+      "id": "community-warlock-mactics-newreturning-void",
+      "name": "New/Returning Player Void Warlock (Mactics)",
+      "class": "Warlock",
+      "subclass": "Voidwalker",
+      "super": "Nova Bomb: Cataclysm",
+      "focus": "PvE",
+      "tags": [
+        "new-player",
+        "void",
+        "devour",
+        "raid",
+        "dungeon",
+        "grenade",
+        "beginner"
+      ],
+      "exotic_armor": {
+        "slot": "Gauntlets",
+        "options": [
+          "Contraverse Hold"
+        ],
+        "drops_from": "Exotic engrams / Rahool focusing"
+      },
+      "weapons": {
+        "kinetic": [],
+        "energy": [
+          "Graviton Lance"
+        ],
+        "heavy": []
+      },
+      "aspects": [
+        "Chaos Accelerant",
+        "Feed the Void"
+      ],
+      "fragments": [
+        "Echo of Instability",
+        "Echo of Persistence",
+        "Echo of Reprisal",
+        "Echo of Harvest"
+      ],
+      "playstyle": "Beginner-friendly Void survivability loop for raids & dungeons. Contraverse Hold supercharges your Magnetic Grenade (Chaos Accelerant) and refunds grenade energy on hits; Feed the Void grants Devour on ability kills for constant self-healing. Graviton Lance + grenades keep Devour, Volatile, and Weaken rolling. Class ability Empowering Rift; melee Pocket Singularity. Forgiving and accessible — weapon slots beyond Graviton Lance are flexible.",
+      "source": "Mactics — https://www.youtube.com/watch?v=8q-Z6uMyCdA (DIM: https://dim.gg/x7puoay)",
       "_confidence": "high"
     }
   ]
