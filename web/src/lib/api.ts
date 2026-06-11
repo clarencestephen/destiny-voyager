@@ -33,12 +33,20 @@ export interface UserProfile {
  *  which two of the six stats roll as primary (+30 max) and secondary
  *  (+25 max), plus a random tertiary (+20 max) from the remaining four. */
 export type ArmorArchetype =
-  | "Paragon"      // Super primary + Melee secondary
-  | "Grenadier"    // Grenade primary + Super secondary
-  | "Specialist"   // Class primary + Weapons secondary
-  | "Brawler"      // Melee primary + Health secondary
-  | "Bulwark"      // Health primary + Class secondary
-  | "Gunner";      // Weapons primary + Grenade secondary
+  // Original six (Edge of Fate launch)
+  | "Paragon"        // Super primary + Melee secondary
+  | "Grenadier"      // Grenade primary + Super secondary
+  | "Specialist"     // Class primary + Weapons secondary
+  | "Brawler"        // Melee primary + Health secondary
+  | "Bulwark"        // Health primary + Class secondary
+  | "Gunner"         // Weapons primary + Grenade secondary
+  // Six added by the Armor 3.0 overhaul (broader stat distribution)
+  | "Siegebreaker"   // Health primary + Grenade secondary
+  | "Skirmisher"     // Melee primary + Weapons secondary
+  | "Demolitionist"  // Grenade primary + Class secondary
+  | "Colossus"       // Super primary + Health secondary
+  | "Reaver"         // Class primary + Melee secondary
+  | "Powerhouse";    // Weapons primary + Super secondary
 
 /** The six armor stats — Armor 3.0 names (Edge of Fate, 2025).
  *  Pre-EoF: Mobility/Resilience/Recovery/Discipline/Intellect/Strength.
@@ -92,7 +100,8 @@ export interface Item extends LeanItem {
   iconUrl: string;
   /** Armor set / theme name (e.g. "Wild Anthem"). Empty for non-set pieces. */
   set: string;
-  /** Post-EoF armor archetype derived from plug_hashes (Brawler / Bulwark / Grenadier / Gunner / Paragon / Specialist). Empty if none. */
+  /** Post-EoF armor archetype derived from plug_hashes — one of the 12 (original
+   *  6 + Armor 3.0's Siegebreaker/Skirmisher/Demolitionist/Colossus/Reaver/Powerhouse). Empty if none. */
   archetype: string;
 }
 
@@ -100,6 +109,7 @@ export interface Item extends LeanItem {
  *  Mirrors the {@link ArmorArchetype} union above. */
 export const ARMOR_ARCHETYPES: ArmorArchetype[] = [
   "Brawler", "Bulwark", "Grenadier", "Gunner", "Paragon", "Specialist",
+  "Siegebreaker", "Skirmisher", "Demolitionist", "Colossus", "Reaver", "Powerhouse",
 ];
 
 /** Detect a post-EoF armor archetype from a piece's active plug names.

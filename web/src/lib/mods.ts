@@ -65,15 +65,18 @@ export interface StatModRequest {
 export interface ModSelectionInput {
   /** Equipped subclass element — drives Loader / Siphon and the Harmonic fallback. */
   subclassElement: Element;
-  /** Element of the weapon you do damage with — drives the offense Surge.
-   *  Defaults to subclassElement when omitted. */
-  dpsWeaponElement?: Element;
+  /** Element(s) of the weapon(s) you do damage with — drive the offense Surge(s)
+   *  on Legs. Multiple → one surge per element (split-damage builds), up to the
+   *  3 leg sockets + energy budget. Defaults to subclassElement when empty. */
+  dpsWeaponElements?: Element[];
   /** Encounter / activity incoming damage to resist (from the raid KB's
-   *  recommended_defensive_mods.elemental). First entry wins the chest slot
-   *  unless `concussive` is set. */
+   *  recommended_defensive_mods.elemental). Each → an elemental Resistance on
+   *  Chest (multiple allowed), alongside Concussive / Melee. */
   incomingElements?: Element[];
-  /** Encounter is explosive / area-burst heavy → prefer Concussive Dampener. */
+  /** Encounter is explosive / area-burst heavy → add Concussive Dampener (chest). */
   concussive?: boolean;
+  /** Heavy incoming MELEE damage → add Melee Damage Resistance (chest). */
+  meleeResist?: boolean;
   /** Stat mods the armor couldn't reach on its own (from the optimizer's
    *  stat planner). Distributed one-per-piece across the general sockets. */
   statMods?: StatModRequest[];
@@ -135,6 +138,13 @@ export function pickMod(
   return [...family].sort((a, b) => a.cost - b.cost)[0] ?? null;
 }
 
+/** Pick a specific mod by exact name within a slot (e.g. "Melee Damage
+ *  Resistance"), cheapest copy first. Used for element-agnostic resists. */
+function pickModByName(mods: Mod[], slot: ModSlot, name: string): Mod | null {
+  const hits = mods.filter((m) => m.slot === slot && m.n === name);
+  return hits.sort((a, b) => a.cost - b.cost)[0] ?? null;
+}
+
 function pickStatMod(mods: Mod[], req: StatModRequest): Mod | null {
   const hits = mods.filter(
     (m) => m.slot === "General" && m.fam === "stat" && m.stat === req.stat && m.mag === req.mag,
@@ -154,44 +164,52 @@ export function selectMods(input: ModSelectionInput, catalog: ModCatalog): ModLo
   const mods = indexCatalog(catalog);
   const budget = input.energyBudget ?? 10;
   const subEl = input.subclassElement || "Harmonic";
-  const dpsEl = input.dpsWeaponElement || subEl;
+  const dpsEls = (input.dpsWeaponElements ?? []).filter(Boolean) as Element[];
   const warnings: string[] = [];
 
-  // 1) Decide the primary combat mod per slot (the anti-cross-pollination core).
+  // 1) Combat-mod intents per slot. Legs (Surge) and Chest (Resistance) can each
+  //    hold MULTIPLE — one per selected DPS element / incoming damage source —
+  //    up to the piece's 3 slot sockets + energy budget. The rest are single.
+  type Intent = { fam: ModFamily; el?: Element; name?: string; why: string };
   const incoming = (input.incomingElements ?? []).filter(Boolean) as Element[];
-  const chestIntent: { fam: ModFamily; el?: Element; why: string } = input.concussive
-    ? { fam: "concussive", why: "explosive/area-burst encounter → Concussive Dampener" }
-    : incoming.length
-      ? { fam: "resist", el: incoming[0], why: `incoming ${incoming[0]} damage → ${incoming[0]} Resistance` }
-      : { fam: "resist", el: subEl, why: `no encounter data → subclass-matched ${subEl} Resistance` };
 
-  const intents: Record<Exclude<ModSlot, "General">, { fam: ModFamily; el?: Element; why: string }> = {
-    Legs:   { fam: "surge",         el: dpsEl, why: `offense → ${dpsEl} Weapon Surge (matches your DPS weapon)` },
-    Chest:  chestIntent,
-    Arms:   { fam: "loader",        el: subEl, why: `reload → ${subEl} Loader (build element)` },
-    Helmet: { fam: "siphon",        el: subEl, why: `orbs → ${subEl} Siphon (subclass-matched)` },
-    Class:  { fam: "survivability", why: "class-item utility (Bomber / Distribution)" },
+  const legIntents: Intent[] = dpsEls.length
+    ? dpsEls.map((el) => ({ fam: "surge", el, why: `${el} Weapon Surge (your DPS weapon)` }))
+    : [{ fam: "surge", el: subEl, why: `${subEl} Weapon Surge (follows subclass)` }];
+
+  const chestIntents: Intent[] = [];
+  if (input.concussive) chestIntents.push({ fam: "concussive", why: "Concussive Dampener (explosive/area-burst)" });
+  for (const el of incoming) chestIntents.push({ fam: "resist", el, why: `${el} Resistance (incoming ${el})` });
+  if (input.meleeResist) chestIntents.push({ fam: "resist", name: "Melee Damage Resistance", why: "Melee Damage Resistance (incoming melee)" });
+  if (!chestIntents.length) chestIntents.push({ fam: "resist", el: subEl, why: `subclass-matched ${subEl} Resistance` });
+
+  const intents: Record<Exclude<ModSlot, "General">, Intent[]> = {
+    Legs:   legIntents,
+    Chest:  chestIntents,
+    Arms:   [{ fam: "loader",        el: subEl, why: `${subEl} Loader (build element)` }],
+    Helmet: [{ fam: "siphon",        el: subEl, why: `${subEl} Siphon (subclass-matched)` }],
+    Class:  [{ fam: "survivability", why: "class-item utility (Bomber / Distribution)" }],
   };
 
   // 2) Order stat mods biggest-first so the most valuable ones get a socket.
   const statQueue = [...(input.statMods ?? [])].sort((a, b) => b.mag - a.mag);
+  const MAX_COMBAT = 3;   // slot-specific sockets per piece (general socket holds the stat mod)
 
   const slots = {} as Record<Exclude<ModSlot, "General">, SlotPlan>;
   for (const slot of ARMOR_SLOTS) {
-    const intent = intents[slot];
     const chosen: Mod[] = [];
     let energyUsed = 0;
     const reasons: string[] = [];
 
-    const primary = pickMod(mods, slot, intent.fam, intent.el);
-    if (primary && energyUsed + primary.cost <= budget) {
-      chosen.push(primary);
-      energyUsed += primary.cost;
+    for (const intent of intents[slot].slice(0, MAX_COMBAT)) {
+      const mod = intent.name
+        ? pickModByName(mods, slot, intent.name)
+        : pickMod(mods, slot, intent.fam, intent.el);
+      if (!mod) { warnings.push(`No ${intent.name ?? intent.fam} mod found for ${slot}.`); continue; }
+      if (energyUsed + mod.cost > budget) { warnings.push(`${mod.n} (${mod.cost}e) over budget on ${slot}.`); continue; }
+      chosen.push(mod);
+      energyUsed += mod.cost;
       reasons.push(intent.why);
-    } else if (!primary) {
-      warnings.push(`No ${intent.fam} mod found for ${slot}.`);
-    } else {
-      warnings.push(`${primary.n} (${primary.cost}e) over budget on ${slot}.`);
     }
 
     // Drop the next-most-wanted stat mod into this piece's general socket.

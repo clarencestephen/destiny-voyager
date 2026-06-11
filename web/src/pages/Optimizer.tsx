@@ -362,8 +362,9 @@ export default function Optimizer() {
   const [manifest, setManifest] = useState<SlimManifest | null>(null);  // for socket mapping (Phase 4)
   const [armorSockets, setArmorSockets] = useState<ArmorSockets>({});   // baked mod-socket layout for equip
   const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
-  const [dpsEl, setDpsEl] = useState<ModElement>("");             // "" → follow subclass
-  const [incomingEl, setIncomingEl] = useState<ModElement>("");   // chest resist target
+  const [dpsEls, setDpsEls] = useState<ModElement[]>([]);         // [] → follow subclass; multi = split surges
+  const [incomingEls, setIncomingEls] = useState<ModElement[]>([]); // chest elemental resist targets (multi)
+  const [meleeResist, setMeleeResist] = useState(false);          // Melee Damage Resistance (chest)
   const [concussive, setConcussive] = useState(false);
   // Encounter-aware context (Phase 3) — drives the chest resist from the raid KB.
   const [encData, setEncData] = useState<ActivityHint[]>([]);
@@ -497,9 +498,9 @@ export default function Optimizer() {
     setEncounterSlug(slug);
     const enc = activity?.encounters.find((e) => e.slug === slug);
     if (!enc) return;
-    if (enc.incoming_elements[0]) { setIncomingEl(enc.incoming_elements[0]); setConcussive(false); }
-    else if (enc.concussive) { setConcussive(true); setIncomingEl(""); }
-    if (enc.surges[0]) setDpsEl(enc.surges[0]);
+    if (enc.incoming_elements.length) { setIncomingEls(enc.incoming_elements); setConcussive(false); }
+    else if (enc.concussive) { setConcussive(true); setIncomingEls([]); }
+    if (enc.surges.length) setDpsEls(enc.surges);
   }
 
   function runOptimize() {
@@ -717,33 +718,42 @@ export default function Optimizer() {
             {WEAPON_ELEMENTS.map((e) => (
               <button
                 key={e}
-                onClick={() => setDpsEl((cur) => (cur === e ? "" : e))}
+                onClick={() => setDpsEls((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]))}
                 className={`px-3 py-1 rounded border transition-colors ${
-                  dpsEl === e ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
+                  dpsEls.includes(e) ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
                 }`}
               >
                 {e}
               </button>
             ))}
             <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
-              {(dpsEl || subclassEl) ? `${dpsEl || subclassEl} Weapon Surge (legs)` : "Surge follows subclass"}
+              {dpsEls.length ? `${dpsEls.join(" + ")} Weapon Surge (legs)`
+                : subclassEl ? `${subclassEl} Weapon Surge (legs)` : "Surge follows subclass — pick 1+ for split surges"}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
             <span className="text-muted w-20">Incoming:</span>
-            {WEAPON_ELEMENTS.map((e) => (
+            {SUBCLASS_ELEMENTS.map((e) => (
               <button
                 key={e}
-                onClick={() => { setIncomingEl((cur) => (cur === e ? "" : e)); if (e) setConcussive(false); }}
+                onClick={() => setIncomingEls((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]))}
                 className={`px-3 py-1 rounded border transition-colors ${
-                  incomingEl === e && !concussive ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
+                  incomingEls.includes(e) ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
                 }`}
               >
                 {e}
               </button>
             ))}
             <button
-              onClick={() => { setConcussive((c) => !c); if (!concussive) setIncomingEl(""); }}
+              onClick={() => setMeleeResist((m) => !m)}
+              className={`px-3 py-1 rounded border transition-colors ${
+                meleeResist ? "text-rose-300 border-rose-300" : "border-border text-muted hover:text-foreground"
+              }`}
+            >
+              Melee
+            </button>
+            <button
+              onClick={() => setConcussive((c) => !c)}
               className={`px-3 py-1 rounded border transition-colors ${
                 concussive ? "text-amber-300 border-amber-300" : "border-border text-muted hover:text-foreground"
               }`}
@@ -751,9 +761,8 @@ export default function Optimizer() {
               Concussive
             </button>
             <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
-              {concussive ? "Concussive Dampener (chest)"
-                : incomingEl ? `${incomingEl} Resistance (chest)`
-                : "chest = subclass-matched resist"}
+              {[concussive && "Concussive Dampener", ...incomingEls.map((e) => `${e} Resist`), meleeResist && "Melee Resist"]
+                .filter(Boolean).join(" · ") || "chest = subclass-matched resist"}
             </span>
           </div>
         </div>
@@ -975,8 +984,9 @@ export default function Optimizer() {
             allItems={items}
             cls={cls}
             subclassEl={subclassEl}
-            dpsEl={dpsEl}
-            incomingEl={incomingEl}
+            dpsEls={dpsEls}
+            incomingEls={incomingEls}
+            meleeResist={meleeResist}
             concussive={concussive}
             armorSockets={armorSockets}
           />
@@ -1001,13 +1011,13 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, stretch, activeCharId, characters,
-  modCatalog, manifest, allItems, cls, subclassEl, dpsEl, incomingEl, concussive, armorSockets,
+  modCatalog, manifest, allItems, cls, subclassEl, dpsEls, incomingEls, meleeResist, concussive, armorSockets,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; stretch: number;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
   allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
-  subclassEl: ModElement; dpsEl: ModElement; incomingEl: ModElement; concussive: boolean;
+  subclassEl: ModElement; dpsEls: ModElement[]; incomingEls: ModElement[]; meleeResist: boolean; concussive: boolean;
   armorSockets: ArmorSockets;
 }) {
   // Resolve the concrete, anti-cross-pollination mod loadout for this combo.
@@ -1021,13 +1031,14 @@ function ComboCard({
     }
     return selectMods({
       subclassElement: subclassEl || "Harmonic",
-      dpsWeaponElement: dpsEl || undefined,
-      incomingElements: incomingEl ? [incomingEl] : [],
+      dpsWeaponElements: dpsEls,
+      incomingElements: incomingEls,
+      meleeResist,
       concussive,
       statMods,
       energyBudget: 10,
     }, modCatalog);
-  }, [modCatalog, subclassEl, dpsEl, incomingEl, concussive, combo]);
+  }, [modCatalog, subclassEl, dpsEls, incomingEls, meleeResist, concussive, combo]);
   const [equipState, setEquipState] = useState<
     | { kind: "idle" }
     | { kind: "working" }
