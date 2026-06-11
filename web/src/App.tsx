@@ -24,6 +24,7 @@ export default function App() {
             <Link to="/play" className="hover:text-saber transition-colors">Play</Link>
             <Link to="/this-week" className="hover:text-saber transition-colors">This Week</Link>
             <Link to="/fireteam" className="hover:text-saber transition-colors">Fireteam</Link>
+            <Link to="/weapons" className="hover:text-saber transition-colors">Weapons</Link>
             <Link to="/builds" className="hover:text-star transition-colors">Builds</Link>
             <Link to="/optimizer" className="hover:text-saber transition-colors">Optimizer</Link>
             <Link to="/chat" className="hover:text-saber transition-colors">Darth Bot</Link>
@@ -42,8 +43,9 @@ export default function App() {
       <footer className="border-t border-border bg-deepspace/40 mt-12">
         <div className="container py-6 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] uppercase text-muted">
           <span>Destiny Voyager · v0.1 · ダースバンカイ</span>
-          <span>
-            Not affiliated with Bungie · Destiny 2 ™ Bungie, Inc.
+          <span className="flex items-center gap-4">
+            <Link to="/credits" className="hover:text-saber transition-colors">Credits</Link>
+            <span>Not affiliated with Bungie · Destiny 2 ™ Bungie, Inc.</span>
           </span>
         </div>
       </footer>

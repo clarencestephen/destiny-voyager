@@ -8,6 +8,8 @@ import Chat from "./pages/Chat";
 import Link from "./pages/Link";
 import Builds from "./pages/Builds";
 import Optimizer from "./pages/Optimizer";
+import Weapons from "./pages/Weapons";
+import Credits from "./pages/Credits";
 import Play from "./pages/Play";
 import Fireteam from "./pages/Fireteam";
 import Diagnostic from "./pages/Diagnostic";
@@ -25,10 +27,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="link" element={<Link />} />
           <Route path="builds" element={<Builds />} />
           <Route path="optimizer" element={<Optimizer />} />
+          <Route path="weapons" element={<Weapons />} />
           <Route path="play" element={<Play />} />
           <Route path="fireteam" element={<Fireteam />} />
           <Route path="diagnostic" element={<Diagnostic />} />
           <Route path="this-week" element={<ThisWeek />} />
+          <Route path="credits" element={<Credits />} />
         </Route>
       </Routes>
     </BrowserRouter>

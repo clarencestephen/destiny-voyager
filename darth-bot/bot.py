@@ -34,6 +34,7 @@ from discord import app_commands
 import config
 import memory
 import voice
+import weapons as weapons_db
 from config import (ALLOWED_CHANNEL_NAMES, DISCORD_BOT_TOKEN, DISCORD_GUILD_ID,
                      MODEL)
 from llm import check_ollama
@@ -994,7 +995,7 @@ async def cmd_credits(interaction: discord.Interaction):
     )
     emb.add_field(
         name="Tools & inspiration",
-        value=("• [Crayon, by Mijago](https://crayon.mijago.net/) — the weapon-info bot these commands mirror\n"
+        value=("• [Crayon, by Mijago](https://crayon.mijago.net/) — community Destiny weapon-info bot\n"
                "• [d2foundry](https://d2foundry.gg/) · [D2Gunsmith](https://d2gunsmith.com/) — weapon tools\n"
                "• [destiny.report](https://destiny.report/) — credits page mirrored here\n"
                "• [Josh Hunt](https://github.com/joshhunt) & the wider Destiny community"),
@@ -1007,6 +1008,55 @@ async def cmd_credits(interaction: discord.Interaction):
         inline=False,
     )
     emb.set_footer(text="Not affiliated with Bungie · Destiny 2 ™ Bungie, Inc.")
+    await interaction.response.send_message(embed=emb)
+
+
+@bot.tree.command(name="weapon", description="Look up a Destiny 2 weapon — perks, element, source")
+@app_commands.describe(name="Weapon name (partial is fine)")
+async def cmd_weapon(interaction: discord.Interaction, name: str):
+    matches = weapons_db.find_weapons(name)
+    if not matches:
+        await interaction.response.send_message(f"No weapon found for “{name}”.", ephemeral=True)
+        return
+    w = matches[0]
+    head = f"{w['el']} {w['t']} · {w['ammo']}".strip(" ·")
+    if w.get("frame"):
+        head += f" · {w['frame']}"
+    emb = discord.Embed(title=w["n"], description=head, color=0xB38F4F if w.get("exotic") else 0x6A3AA6)
+    if w.get("icon"):
+        emb.set_thumbnail(url="https://www.bungie.net" + w["icon"])
+    cols = w.get("columns", [])[:5]
+    for i, col in enumerate(cols):
+        names = [p["n"] for p in col if p.get("c")] or [p["n"] for p in col]
+        if not names:
+            continue
+        shown = names[:8]
+        val = "\n".join(shown) + (f"\n+{len(names) - 8} more" if len(names) > 8 else "")
+        emb.add_field(name=weapons_db.column_label(len(cols), i), value=val or "—", inline=True)
+    meta = []
+    if w.get("craftable"):
+        meta.append("🔨 craftable")
+    if w.get("season") is not None:
+        meta.append(f"Season {w['season']}")
+    if w.get("source"):
+        meta.append(w["source"][:120])
+    if meta:
+        emb.add_field(name="Source", value=" · ".join(meta), inline=False)
+    emb.set_footer(text="Data: Bungie manifest + DIM · perks via Clarity · /credits")
+    extra = "" if len(matches) == 1 else f"_Also matched: {', '.join(m['n'] for m in matches[1:4])}_"
+    await interaction.response.send_message(content=extra or None, embed=emb)
+
+
+@bot.tree.command(name="perk", description="Look up a Destiny 2 weapon perk — community description")
+@app_commands.describe(name="Perk name (e.g. Rampage)")
+async def cmd_perk(interaction: discord.Interaction, name: str):
+    p = weapons_db.find_perk(name)
+    if not p:
+        await interaction.response.send_message(f"No perk found for “{name}”.", ephemeral=True)
+        return
+    emb = discord.Embed(title=p.get("n", name), description=(p.get("d") or "")[:1800], color=0x6A3AA6)
+    tag = f"{p['t']} · " if p.get("t") else ""
+    emb.set_footer(text=f"{tag}description via Clarity (d2clarity.com) · /credits")
     await interaction.response.send_message(embed=emb)
 
 
