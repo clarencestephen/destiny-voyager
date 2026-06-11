@@ -1060,6 +1060,38 @@ async def cmd_perk(interaction: discord.Interaction, name: str):
     await interaction.response.send_message(embed=emb)
 
 
+@bot.tree.command(name="godroll", description="Community god rolls for a Destiny 2 weapon (PvE + PvP)")
+@app_commands.describe(name="Weapon name (partial is fine)")
+async def cmd_godroll(interaction: discord.Interaction, name: str):
+    matches = weapons_db.find_weapons(name)
+    if not matches:
+        await interaction.response.send_message(f"No weapon found for “{name}”.", ephemeral=True)
+        return
+    w = matches[0]
+    gr = weapons_db.god_roll(w)
+    if not gr:
+        await interaction.response.send_message(
+            f"No community god roll on file for **{w['n']}** yet.", ephemeral=True)
+        return
+    emb = discord.Embed(title=f"{w['n']} — God Rolls",
+                        description=f"{w['el']} {w['t']} · {w['ammo']}".strip(" ·"),
+                        color=0xB38F4F if w.get("exotic") else 0x6A3AA6)
+    if w.get("icon"):
+        emb.set_thumbnail(url="https://www.bungie.net" + w["icon"])
+
+    def fmt(cols):
+        n = len(cols)
+        lines = [f"**{weapons_db.column_label(n, i)}:** " + ", ".join(c[:5]) for i, c in enumerate(cols) if c]
+        return "\n".join(lines)[:1000] or "—"
+
+    if any(gr["pve"]):
+        emb.add_field(name="🟢 PvE", value=fmt(gr["pve"]), inline=False)
+    if any(gr["pvp"]):
+        emb.add_field(name="🔵 PvP", value=fmt(gr["pvp"]), inline=False)
+    emb.set_footer(text="God rolls: DIM community wishlist (voltron) · /credits")
+    await interaction.response.send_message(embed=emb)
+
+
 @bot.tree.command(name="clear", description="Delete messages in this channel (requires Manage Messages)")
 @app_commands.describe(
     amount="How many recent messages to delete (1-1000).",

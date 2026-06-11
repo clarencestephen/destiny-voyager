@@ -37,6 +37,33 @@ def _perks() -> dict:
         return {}
 
 
+@functools.lru_cache(maxsize=1)
+def _wishrolls() -> dict:
+    """DIM community god-roll wishlist (voltron), baked → wishrolls.json."""
+    try:
+        return json.loads((_DATA / "wishrolls.json").read_text())
+    except Exception:
+        return {"rolls": {}, "perkPop": {}}
+
+
+def god_roll(weapon: dict) -> dict | None:
+    """Per-column god-roll perks for a weapon, by mode — intersect the community
+    wishlist's recommended perks with the weapon's actual perk columns."""
+    wr = _wishrolls().get("rolls", {}).get(str(weapon["hash"]))
+    if not wr:
+        return None
+    cols = weapon.get("columns", [])
+
+    def resolve(perk_hashes):
+        ps = {int(p) for p in perk_hashes}
+        return [[p["n"] for p in col if p["h"] in ps] for col in cols]  # per-column (may be empty)
+
+    pve, pvp = resolve(wr.get("pve", [])), resolve(wr.get("pvp", []))
+    if not any(pve) and not any(pvp):
+        return None
+    return {"pve": pve, "pvp": pvp}
+
+
 def _live(w: dict) -> bool:
     """A weapon with current rolls or a craftable recipe (vs a sunset copy)."""
     return bool(w.get("craftable")) or any(
