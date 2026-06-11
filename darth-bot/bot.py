@@ -972,6 +972,44 @@ async def cmd_forget(interaction: discord.Interaction):
     await interaction.response.send_message("🧠 Conversation memory cleared.", ephemeral=True)
 
 
+@bot.tree.command(name="credits", description="Credits & licenses — the data sources behind Darth Bot + Destiny Voyager")
+async def cmd_credits(interaction: discord.Interaction):
+    """Mirrors the web credits page — every data source, cited + linked."""
+    emb = discord.Embed(
+        title="Credits & Licenses",
+        description=("Destiny Voyager + Darth Bot build on Bungie's API and the work of many "
+                     "Destiny tool-makers and open-source maintainers. Thank you. 🙏\n"
+                     "All data is sourced and cited — nothing is fabricated."),
+        color=0x6a3aa6,
+    )
+    emb.add_field(
+        name="Data & API",
+        value=("• [Bungie](https://www.bungie.net) — Destiny 2 & the Bungie.net API (all game data)\n"
+               "• [Bungie.net API](https://github.com/Bungie-net/api) — the OpenAPI spec\n"
+               "• [Destiny Item Manager (DIM)](https://github.com/DestinyItemManager/DIM) — search language "
+               "+ season/source/event data (MIT)\n"
+               "• [Clarity](https://www.d2clarity.com/) — community perk & weapon descriptions (MIT)\n"
+               "• [light.gg](https://www.light.gg/) — community weapon database & god rolls"),
+        inline=False,
+    )
+    emb.add_field(
+        name="Tools & inspiration",
+        value=("• [Crayon, by Mijago](https://crayon.mijago.net/) — the weapon-info bot these commands mirror\n"
+               "• [d2foundry](https://d2foundry.gg/) · [D2Gunsmith](https://d2gunsmith.com/) — weapon tools\n"
+               "• [destiny.report](https://destiny.report/) — credits page mirrored here\n"
+               "• [Josh Hunt](https://github.com/joshhunt) & the wider Destiny community"),
+        inline=False,
+    )
+    emb.add_field(
+        name="Licenses",
+        value=("DIM & Clarity data used under the MIT License. God-roll data comes from DIM community "
+               "wishlists + Clarity. Self-hosted fonts and bundled OSS are credited on the web /credits page."),
+        inline=False,
+    )
+    emb.set_footer(text="Not affiliated with Bungie · Destiny 2 ™ Bungie, Inc.")
+    await interaction.response.send_message(embed=emb)
+
+
 @bot.tree.command(name="clear", description="Delete messages in this channel (requires Manage Messages)")
 @app_commands.describe(
     amount="How many recent messages to delete (1-1000).",
