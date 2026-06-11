@@ -41,5 +41,9 @@ const voidlock = recommendBuild({ cls: "Warlock", element: "void", goal: "grenad
 console.log("Void Warlock (build-CF):");
 ok(voidlock.exotics.some((p) => /Contraverse/.test(p.item.n)), "CF recommends Contraverse Hold for void warlock");
 
+const sniper = recommendBuild({ cls: "Hunter", element: "void", goal: "boss damage", weaponType: "sniper rifle" }, syn, weapons, armor, cf);
+console.log("Sniper focus (artifact):");
+ok(sniper.artifact.picks.some((p) => /Sniper/.test(p.item.n)), "artifact recommends a Sniper-Rifle mod for sniper focus");
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -16,6 +16,7 @@ export interface SynergyData {
   fragments: Array<{ hash: number; n: string; el: string; desc: string; keywords: string[] }>;
   perkKeywords: Record<string, string[]>;
   setKeywords: Record<string, string[]>;
+  artifact?: { name: string; perks: Array<{ hash: number; n: string; tier: number; keywords: string[] }> };
 }
 export interface WeaponLite {
   hash: string; n: string; t: string; el: string; ammo: string; slot: string;
@@ -40,6 +41,7 @@ export interface BuildRec {
   weapons: Pick<WeaponLite>[];
   sets: Pick<{ hash: string; n: string; perks: any[] }>[];
   exotics: Pick<{ n: string }>[];   // exotic armor that co-occurs in real builds
+  artifact: { name: string; picks: Pick<{ n: string; tier: number }>[] };  // seasonal artifact mods for the build
 }
 
 // ── Build-basket collaborative filtering ──────────────────────────────────
@@ -188,5 +190,24 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
     .sort((a, b) => b.score - a.score)
     .slice(0, 4);
 
-  return { theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, sets, exotics };
+  // Seasonal artifact mods matching the build's weapon types + element/goal —
+  // e.g. the champion mod for the weapon you're running, or a surge mod.
+  const wTypes = new Set(
+    [wantType, ...weaponPicks.slice(0, 6).map((p) => p.item.t)]
+      .filter(Boolean).map((t) => t!.toLowerCase().replace(/\s+/g, "-")),
+  );
+  const artifactPicks = (syn.artifact?.perks || [])
+    .map((p) => {
+      const typeHit = overlap(p.keywords, [...wTypes]) * 3;
+      const themeHit = overlap(p.keywords, [...theme, ...goalKw]);
+      return { item: p, score: typeHit + themeHit, why: fmt(p.keywords) };
+    })
+    .filter((p) => p.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6);
+
+  return {
+    theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, sets, exotics,
+    artifact: { name: syn.artifact?.name || "", picks: artifactPicks },
+  };
 }

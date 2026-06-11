@@ -47,8 +47,13 @@ const KW = {
   reload: [/reload/], surge: [/\bsurge|weapon damage|\bdamage to\b/], orbs: [/orb of power|orbs of power/],
   finisher: [/finisher/], "ability-energy": [/ability energy|ability regen|grenade energy|melee energy/],
   heal: [/\bheal|cure|restorat/], "damage-resist": [/damage resist|reduce.*damage/],
+  // champions (artifact mods)
+  barrier: [/anti-barrier|barrier champion/], overload: [/overload/], unstoppable: [/unstoppable/],
   // weapon types (for artifact/mod favoring)
   "grenade-launcher": [/grenade launcher/], rocket: [/rocket launcher/], sword: [/\bsword/], bow: [/\bbow\b/], glaive: [/glaive/],
+  "hand-cannon": [/hand cannon/], "pulse-rifle": [/pulse rifle/], "scout-rifle": [/scout rifle/],
+  "auto-rifle": [/auto rifle/], smg: [/submachine gun/], sidearm: [/sidearm/], shotgun: [/shotgun/],
+  "sniper-rifle": [/sniper rifle/], "machine-gun": [/\bmachine gun/], "trace-rifle": [/trace rifle/], "linear-fusion": [/linear fusion/],
 };
 
 // All effect text for keyword extraction: Clarity + manifest desc + the linked
@@ -111,9 +116,29 @@ for (const [sh, s] of Object.entries(armor.sets || {})) {
   if (t.length) setKeywords[sh] = t;
 }
 
-const payload = { aspects, fragments, perkKeywords, setKeywords };
+// Current seasonal artifact perks (highest-index artifact). Effect text is in the
+// name (e.g. "Anti-Barrier Hand Cannon"), so tag from name + any sandbox text.
+const arts = (() => { try { return JSON.parse(fs.readFileSync(`${MC}/DestinyArtifactDefinition.json`, "utf8")); } catch { return {}; } })();
+let artifact = { name: "", perks: [] };
+const artVals = Object.values(arts);
+if (artVals.length) {
+  const cur = artVals.reduce((a, b) => ((b.index || 0) > (a.index || 0) ? b : a));
+  artifact.name = (cur.displayProperties?.name || "").trim();
+  (cur.tiers || []).forEach((t, ti) => {
+    for (const it of t.items || []) {
+      const pi = items[it.itemHash];
+      const nm = (pi?.displayProperties?.name || "").trim();
+      if (!nm) continue;
+      const kws = tagsFor((nm + " " + fullText(it.itemHash, pi)).toLowerCase());
+      artifact.perks.push({ hash: it.itemHash, n: nm, tier: ti + 1, keywords: kws });
+    }
+  });
+}
+
+const payload = { aspects, fragments, perkKeywords, setKeywords, artifact };
 fs.writeFileSync(OUT, JSON.stringify(payload));
 const kb = (fs.statSync(OUT).size / 1024).toFixed(0);
 console.log(`✓ wrote ${OUT}`);
 console.log(`  ${aspects.length} aspects · ${fragments.length} fragments · ${kb} KB`);
 console.log(`  perk tags: ${Object.keys(perkKeywords).length} · set tags: ${Object.keys(setKeywords).length}`);
+console.log(`  artifact "${artifact.name}": ${artifact.perks.length} perks`);

@@ -144,6 +144,18 @@ export default function Recommend() {
             </Section>
           )}
 
+          {rec.artifact.picks.length > 0 && (
+            <Section title={`Artifact mods${rec.artifact.name ? ` · ${rec.artifact.name}` : ""}`}>
+              <div className="flex flex-wrap gap-2">
+                {rec.artifact.picks.map((p) => (
+                  <div key={p.item.n} className="px-3 py-1.5 rounded border border-border font-ui text-sm">
+                    <span className="text-star">{p.item.n}</span> <span className="font-mono text-[10px] text-muted">· {p.why}</span>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
+
           <Section title="Armor set (matched to your goal)">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
               {rec.sets.map((p) => (
