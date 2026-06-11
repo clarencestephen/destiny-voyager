@@ -1,0 +1,180 @@
+import { useEffect, useMemo, useState } from "react";
+import { recommendBuild, type SynergyData, type WeaponLite, type ArmorData } from "@/lib/recommend";
+import { Card } from "@/components/ui/card";
+
+/**
+ * /recommend — drive the build-coherence engine. Pick class · subclass · goal ·
+ * (optional) weapon focus, and it assembles a coherent build: aspects, fragments,
+ * weapons that roll synergistic perks, and the armor set whose bonus matches your
+ * goal — each with a cited "why". Works anonymously (no Bungie calls).
+ *
+ * Engine: lib/recommend.ts over synergy.json + weapons.json + armor.json.
+ */
+
+const CDN = "https://www.bungie.net";
+const CLASSES = ["Warlock", "Titan", "Hunter"] as const;
+const ELEMENTS = ["solar", "void", "arc", "stasis", "strand", "prismatic"] as const;
+const GOALS = ["boss damage", "faster reload", "grenade spam", "survivability", "ability uptime", "add clear"];
+const WEAPON_FOCUS = ["", "grenade launcher", "rocket launcher", "sword", "bow", "glaive", "fusion rifle", "sniper rifle"];
+const EL_COLOR: Record<string, string> = {
+  solar: "text-orange-400", void: "text-violet-400", arc: "text-cyan-300",
+  stasis: "text-sky-300", strand: "text-green-400", prismatic: "text-fuchsia-300",
+};
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+export default function Recommend() {
+  const [syn, setSyn] = useState<SynergyData | null>(null);
+  const [weapons, setWeapons] = useState<WeaponLite[]>([]);
+  const [armor, setArmor] = useState<ArmorData>({ sets: {} });
+  const [loading, setLoading] = useState(true);
+
+  const [cls, setCls] = useState<(typeof CLASSES)[number]>("Warlock");
+  const [element, setElement] = useState<(typeof ELEMENTS)[number]>("solar");
+  const [goal, setGoal] = useState("boss damage");
+  const [weaponType, setWeaponType] = useState("");
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/synergy.json").then((r) => r.json()),
+      fetch("/weapons.json").then((r) => r.json()),
+      fetch("/armor.json").then((r) => r.json()),
+    ]).then(([s, w, a]) => {
+      setSyn(s);
+      setWeapons(Object.entries(w).map(([hash, v]) => ({ hash, ...(v as object) }) as WeaponLite));
+      setArmor(a);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const rec = useMemo(() => {
+    if (!syn) return null;
+    return recommendBuild({ cls, element, goal, weaponType: weaponType || undefined }, syn, weapons, armor);
+  }, [syn, weapons, armor, cls, element, goal, weaponType]);
+
+  if (loading) return <div className="container py-20 font-ui text-muted">Loading the synergy graph…</div>;
+
+  return (
+    <section className="container py-8 flex flex-col gap-5 max-w-6xl">
+      <header className="flex flex-col gap-1">
+        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted">▲ Build Recommender</span>
+        <h1 className="font-display text-3xl tracking-[0.16em] font-black text-signature">RECOMMEND</h1>
+        <p className="font-ui text-sm text-muted-foreground max-w-3xl">
+          A coherent build, assembled so every piece reinforces one theme. Pick a class, subclass, and goal —
+          weapons, fragments, aspects, and the armor set all chosen to chain together. Every pick is explained.
+        </p>
+      </header>
+
+      <Card className="p-4 flex flex-wrap items-end gap-4">
+        <Field label="Class">
+          <select value={cls} onChange={(e) => setCls(e.target.value as any)} className="dv-sel">
+            {CLASSES.map((c) => <option key={c}>{c}</option>)}
+          </select>
+        </Field>
+        <Field label="Subclass">
+          <select value={element} onChange={(e) => setElement(e.target.value as any)} className="dv-sel">
+            {ELEMENTS.map((c) => <option key={c} value={c}>{cap(c)}</option>)}
+          </select>
+        </Field>
+        <Field label="Weapon focus">
+          <select value={weaponType} onChange={(e) => setWeaponType(e.target.value)} className="dv-sel">
+            {WEAPON_FOCUS.map((c) => <option key={c} value={c}>{c ? cap(c) : "Any"}</option>)}
+          </select>
+        </Field>
+        <div className="flex flex-col gap-1 flex-1 min-w-[220px]">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">Goal</span>
+          <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="e.g. boss damage"
+            className="bg-void/40 border border-border rounded px-3 py-2 font-ui text-sm focus:border-saber outline-none" />
+          <div className="flex flex-wrap gap-1 mt-1">
+            {GOALS.map((g) => (
+              <button key={g} onClick={() => setGoal(g)}
+                className={`px-2 py-0.5 rounded-full border text-[10px] font-ui transition-colors ${goal === g ? "text-saber border-saber bg-saber/5" : "border-border text-muted hover:text-foreground"}`}>
+                {g}
+              </button>
+            ))}
+          </div>
+        </div>
+      </Card>
+
+      {rec && (
+        <>
+          <div className="font-mono text-[11px] tracking-wide text-muted">
+            theme: <span className={EL_COLOR[element]}>{rec.theme.join(" · ") || "—"}</span>
+            {rec.goalKeywords.length > 0 && <> · goal: <span className="text-saber">{rec.goalKeywords.join(", ")}</span></>}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Section title="Aspects">
+              {rec.aspects.map((p) => <Row key={p.item.hash} name={p.item.n} why={p.why} />)}
+              {rec.aspects.length === 0 && <Empty />}
+            </Section>
+            <Section title="Fragments">
+              {rec.fragments.map((p) => <Row key={p.item.hash} name={p.item.n} why={p.why} />)}
+              {rec.fragments.length === 0 && <Empty />}
+            </Section>
+          </div>
+
+          <Section title={`Weapons${weaponType ? ` · ${cap(weaponType)} focus` : ""}`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              {rec.weapons.map((p) => (
+                <div key={p.item.hash} className="flex items-center gap-2 px-2 py-1.5 rounded border border-border">
+                  {(p.item as any).icon && <img src={CDN + (p.item as any).icon} alt="" className="w-8 h-8 rounded border border-void shrink-0" />}
+                  <div className="min-w-0">
+                    <div className={`truncate font-ui text-sm ${p.item.exotic ? "text-amber-300" : "text-star"}`}>{p.item.n}</div>
+                    <div className="font-mono text-[10px] text-muted truncate">
+                      <span className={EL_COLOR[p.item.el.toLowerCase()] || ""}>{p.item.el}</span> {p.item.t} · {p.why}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {rec.weapons.length === 0 && <Empty />}
+            </div>
+          </Section>
+
+          <Section title="Armor set (matched to your goal)">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {rec.sets.map((p) => (
+                <Card key={p.item.hash} className="p-3">
+                  <div className="font-display text-star">{p.item.n}</div>
+                  <div className="font-mono text-[10px] text-saber mt-0.5">{p.why}</div>
+                  <div className="mt-1 space-y-0.5">
+                    {p.item.perks.filter((x: any) => x.n).map((x: any) => (
+                      <div key={x.count} className="text-[11px] text-muted"><span className="text-foreground">{x.count}pc</span> {x.n}</div>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+              {rec.sets.length === 0 && <Empty />}
+            </div>
+          </Section>
+
+          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/60">
+            Synergy graph from Bungie manifest + Clarity · statistical blend (usage / wishlists) layering in · /credits
+          </p>
+        </>
+      )}
+      <style>{`.dv-sel{background:rgba(10,10,18,.5);border:1px solid hsl(var(--border));border-radius:.375rem;padding:.45rem .6rem;font-size:.85rem}`}</style>
+    </section>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return <label className="flex flex-col gap-1"><span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">{label}</span>{children}</label>;
+}
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <h2 className="font-mono text-[11px] uppercase tracking-[0.25em] text-saber">{title}</h2>
+      {children}
+    </div>
+  );
+}
+function Row({ name, why }: { name: string; why: string }) {
+  return (
+    <Card className="p-2.5 flex items-baseline justify-between gap-3">
+      <span className="font-ui text-sm text-foreground">{name}</span>
+      <span className="font-mono text-[10px] text-muted text-right">{why}</span>
+    </Card>
+  );
+}
+function Empty() {
+  return <p className="font-ui text-xs text-muted py-2">No strong match for this combo — try a different goal or subclass.</p>;
+}

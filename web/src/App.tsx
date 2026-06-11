@@ -27,6 +27,7 @@ export default function App() {
             <Link to="/weapons" className="hover:text-saber transition-colors">Weapons</Link>
             <Link to="/armor" className="hover:text-saber transition-colors">Armor</Link>
             <Link to="/build" className="hover:text-saber transition-colors">Forge</Link>
+            <Link to="/recommend" className="hover:text-saber transition-colors">Recommend</Link>
             <Link to="/builds" className="hover:text-star transition-colors">Builds</Link>
             <Link to="/optimizer" className="hover:text-saber transition-colors">Optimizer</Link>
             <Link to="/chat" className="hover:text-saber transition-colors">Darth Bot</Link>
