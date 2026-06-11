@@ -119,6 +119,14 @@ for (const [hash, defn] of Object.entries(items)) {
   const name = (defn.displayProperties?.name || "").trim();
   if (!name || NAME_SKIP.test(name)) continue;
 
+  // Skip ARTIFACT-gated copies ("Must Be Selected in the Seasonal Artifact").
+  // The manifest carries a permanent armor mod AND a same-named seasonal-artifact
+  // version (cheaper energy, no collectible). The artifact one is only insertable
+  // while chosen in the artifact — recommending it blind fails Bungie's
+  // DestinyFailedPlugInsertionRules. The equip flow must only ever recommend mods
+  // it can actually insert, so keep the permanent versions only.
+  if ((plug.enabledRules || []).some((r) => /Artifact/i.test(r.failureMessage || ""))) continue;
+
   const cost = defn.plug?.energyCost?.energyCost ?? 0;
   const icon = (defn.displayProperties?.icon || "").trim();
 
