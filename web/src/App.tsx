@@ -25,6 +25,7 @@ export default function App() {
             <Link to="/this-week" className="hover:text-saber transition-colors">This Week</Link>
             <Link to="/fireteam" className="hover:text-saber transition-colors">Fireteam</Link>
             <Link to="/weapons" className="hover:text-saber transition-colors">Weapons</Link>
+            <Link to="/armor" className="hover:text-saber transition-colors">Armor</Link>
             <Link to="/builds" className="hover:text-star transition-colors">Builds</Link>
             <Link to="/optimizer" className="hover:text-saber transition-colors">Optimizer</Link>
             <Link to="/chat" className="hover:text-saber transition-colors">Darth Bot</Link>
