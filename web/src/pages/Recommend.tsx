@@ -14,8 +14,10 @@ import { Card } from "@/components/ui/card";
 const CDN = "https://www.bungie.net";
 const CLASSES = ["Warlock", "Titan", "Hunter"] as const;
 const ELEMENTS = ["solar", "void", "arc", "stasis", "strand", "prismatic"] as const;
-const GOALS = ["boss damage", "faster reload", "grenade spam", "survivability", "ability uptime", "add clear"];
-const WEAPON_FOCUS = ["", "grenade launcher", "rocket launcher", "sword", "bow", "glaive", "fusion rifle", "sniper rifle"];
+const GOALS = ["boss damage", "melee", "grenade spam", "ability uptime", "survivability", "add clear", "faster reload"];
+const WEAPON_FOCUS = ["", "auto rifle", "hand cannon", "pulse rifle", "scout rifle", "sidearm", "submachine gun",
+  "bow", "fusion rifle", "shotgun", "sniper rifle", "trace rifle", "glaive", "grenade launcher",
+  "linear fusion rifle", "machine gun", "rocket launcher", "sword"];
 const EL_COLOR: Record<string, string> = {
   solar: "text-orange-400", void: "text-violet-400", arc: "text-cyan-300",
   stasis: "text-sky-300", strand: "text-green-400", prismatic: "text-fuchsia-300",

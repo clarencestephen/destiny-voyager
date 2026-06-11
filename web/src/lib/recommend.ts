@@ -161,11 +161,17 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
   const weaponPicks = weapons
     .map((w) => {
       const syn2 = weaponSynergy(w, syn, theme);
-      const elMatch = w.el.toLowerCase() === el ? 3 : 0;
+      // DPS element should align with the subclass — subclass-matched surge/
+      // scavenger mods are cheaper than damage-type-specific ones. Strong default:
+      // match = big boost, Kinetic = neutral, off-element = penalty (override only
+      // for very synergistic specific builds).
+      const wEl = w.el.toLowerCase();
+      const elMatch = wEl === el ? 6 : wEl === "kinetic" ? 1 : -2;
       const typeMatch = wantType && w.t.toLowerCase().includes(wantType) ? 4 : 0;
       const cfCount = cfBucket?.weapons[w.n] || 0;       // co-occurs in real builds
       const score = elMatch + typeMatch + syn2.score + cfCount * 2;
       const why = [syn2.perks.length ? `rolls ${syn2.perks.join(", ")}` : `${w.el} ${w.t}`]
+        .concat(wEl === el ? ["matches subclass — cheaper mods"] : [])
         .concat(cfCount ? [`in ${cfCount} build${cfCount > 1 ? "s" : ""}`] : []).join(" · ");
       return { item: w, score, why };
     })
