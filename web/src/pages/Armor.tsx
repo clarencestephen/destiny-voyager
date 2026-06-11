@@ -147,7 +147,7 @@ export default function Armor() {
           </div>
           <input
             value={query} onChange={(e) => setQuery(e.target.value)}
-            placeholder={view === "sets" ? "Search sets…" : "Search armor… (is:exotic slot:chest void)"}
+            placeholder={view === "sets" ? "Search sets…" : "Search armor — “exotic chest”, “titan legs”…"}
             className="flex-1 min-w-[200px] bg-void/40 border border-border rounded px-3 py-2 font-ui text-sm focus:border-saber outline-none"
           />
           {view === "pieces" && (

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { search } from "@/lib/search";
+import { search, interpret } from "@/lib/search";
 import { api } from "@/lib/api";
 import { loadLibrary, saveLibrary, readLocalLibrary, type Library } from "@/lib/library";
 import { Card } from "@/components/ui/card";
@@ -112,9 +112,8 @@ export default function Weapons() {
         <h1 className="font-display text-3xl tracking-[0.16em] font-black text-signature">WEAPONS</h1>
         <p className="font-ui text-sm text-muted-foreground max-w-3xl">
           {weapons.length.toLocaleString()} weapons · real perk pools + <span className="text-saber">Clarity</span> insights.
-          Search like DIM (<code className="text-saber/80">is:exotic hand cannon</code>,{" "}
-          <code className="text-saber/80">perk:rampage is:craftable</code>,{" "}
-          <code className="text-saber/80">source:trials</code>).
+          Just type what you want — <span className="text-saber/80">“exo hc w/ rampage craftable trials”</span>,{" "}
+          <span className="text-saber/80">“solar GL spike grenades”</span>, or <span className="text-saber/80">“martley”</span>. Typos are fine.
         </p>
       </header>
 
@@ -124,7 +123,7 @@ export default function Weapons() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search weapons + perks…"
+            placeholder="Search anything — weapon, perk, element, archetype…"
             className="flex-1 min-w-[260px] bg-void/40 border border-border rounded px-3 py-2 font-ui text-sm focus:border-saber outline-none"
           />
           <div className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.2em]">
@@ -158,6 +157,14 @@ export default function Weapons() {
             );
           })}
         </div>
+        {query.trim() && (
+          <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] text-muted">
+            <span className="uppercase tracking-[0.2em]">understood:</span>
+            {interpret(query).labels.map((l, i) => (
+              <span key={i} className="px-2 py-0.5 rounded-full border border-saber/40 text-saber/90">{l}</span>
+            ))}
+          </div>
+        )}
         <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-muted">
           <span>{results.length.toLocaleString()} match{results.length === 1 ? "" : "es"}{results.length > RESULT_CAP ? ` · showing ${RESULT_CAP}` : ""}</span>
           <span>{wishlist.size} wishlisted</span>
