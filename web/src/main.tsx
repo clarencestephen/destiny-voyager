@@ -10,6 +10,7 @@ import Builds from "./pages/Builds";
 import Optimizer from "./pages/Optimizer";
 import Weapons from "./pages/Weapons";
 import Armor from "./pages/Armor";
+import Build from "./pages/Build";
 import Credits from "./pages/Credits";
 import Play from "./pages/Play";
 import Fireteam from "./pages/Fireteam";
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="optimizer" element={<Optimizer />} />
           <Route path="weapons" element={<Weapons />} />
           <Route path="armor" element={<Armor />} />
+          <Route path="build" element={<Build />} />
           <Route path="play" element={<Play />} />
           <Route path="fireteam" element={<Fireteam />} />
           <Route path="diagnostic" element={<Diagnostic />} />
