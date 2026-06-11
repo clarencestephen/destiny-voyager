@@ -1055,7 +1055,7 @@ function ComboCard({
     | { kind: "idle" }
     | { kind: "confirm"; plan: EquipPlan; eviction: EvictionItem[] }
     | { kind: "working" }
-    | { kind: "done"; msg: string; inserted: number; skipped: number; failed: number }
+    | { kind: "done"; msg: string; inserted: number; skipped: number; failed: number; detail?: string }
     | { kind: "error"; msg: string }
   >({ kind: "idle" });
 
@@ -1086,6 +1086,7 @@ function ComboCard({
         inserted: res.mods_inserted,
         skipped: res.mods_skipped,
         failed: res.mods_failed,
+        detail: res.mod_results.find((m) => !m.ok)?.error,
       });
     } catch (e: any) {
       setArmState({ kind: "error", msg: e?.message ?? "equip failed" });
@@ -1176,6 +1177,9 @@ function ComboCard({
             <div className="mt-1 text-amber-300">
               {armState.failed} mod(s) couldn't be inserted — usually means you don't own/haven't unlocked that mod, or the piece lacks the armor energy.
             </div>
+          )}
+          {armState.detail && (
+            <div className="mt-1 font-mono text-[10px] text-red-300/90 break-all">Bungie says: {armState.detail}</div>
           )}
         </div>
       )}
