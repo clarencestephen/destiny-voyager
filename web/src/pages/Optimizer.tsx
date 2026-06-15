@@ -51,8 +51,9 @@ interface ActivityHint {
   slug: string; name: string; type: string; encounters: EncounterHint[];
 }
 
-// Stretch target by selection count. Hard floor is always 100.
-const STRETCH_BY_COUNT: Record<number, number> = { 1: 200, 2: 200, 3: 125, 4: 100 };
+/** User-entered per-stat targets — the value to optimize each stat toward.
+ *  A stat absent from this map (blank input) is ignored entirely. */
+type StatTargets = Partial<Record<StatKey, number>>;
 
 // Per-slot top-K prune before the cartesian product. K=12 → 12^5 = ~248k
 // combos worst-case; the exotic filter knocks it down further. Fast on
@@ -137,47 +138,20 @@ function baseStats(item: Item, catalog: ModCatalog | null): ArmorStats | undefin
   return s;
 }
 
-// Stat breakpoint model (EoF Armor 3.0):
-//  • CAP_100_200 — Weapons, Super, Melee: ONLY 100 and 200 matter, flat between.
-//    Target 100; climb to 200 only if a full 200 is reachable. Never aim for an
-//    in-between value (slight overshoot from +5/+10 granularity is fine).
-//  • SCALE — Health, Class, Grenade: every point past 100 is a real gain. Health →
-//    faster shield recharge; Class → overshield; Grenade → grenade DAMAGE scales
-//    per-point (e.g. Arc turrets). Grenade ALSO has cooldown breakpoints at
-//    100/150/200, so it earns a small extra bonus on each 50-step.
-const CAP_100_200: StatKey[] = ["weapons", "super", "melee"];
-const scalesPer1 = (s: StatKey) => !CAP_100_200.includes(s);   // Health, Class, Grenade
-/** Realized benefit above 100 under each stat's rule (used for scoring). */
-function benefitAbove100(s: StatKey, v: number): number {
-  if (v < 100) return 0;
-  if (CAP_100_200.includes(s)) return v >= 200 ? 100 : 0;        // only 200 pays again
-  let b = v - 100;                                               // SCALE: every point helps
-  if (s === "grenade") b += Math.floor((v - 100) / 50) * 25;     // + cooldown 50-step bonus
-  return b;
-}
-// EoF meta: abilities were nerfed (less damage, cast less often) → Super, Weapons
-// and especially Health (shield-recharge timing is life/death) matter more. Bias
-// scarce slots toward these when not every selected stat can reach 100.
+// When the 5-slot budget can't satisfy every target, fill the highest-priority
+// stats first. EoF meta: abilities were nerfed → Super, Weapons and especially
+// Health (shield-recharge timing) matter most; bias scarce slots toward them.
 const STAT_PRIORITY: Record<StatKey, number> = {
   health: 5, super: 4, weapons: 4, grenade: 3, class: 3, melee: 3,
 };
 
 /**
- * Plan armor stat mods to hit the score targets for selected stats.
- *
- * Strategy (5 slot budget, one stat mod per armor piece):
- *  1. For each selected stat under 100: allocate +10 mods to reach 100,
- *     using +5 only when a single +5 closes the last gap (avoids
- *     "wasting" a slot on +10 when +5 suffices).
- *  2. Remaining slots: if stretch target > 100, push each selected
- *     stat toward stretch — +10 first, fall back to +5 if needed.
- *  3. Hard cap at 5 mod slots; we stop allocating once full.
- *
- * Returns a plan that may be UNDER-satisfying (some stats below 100)
- * if 5 slots can't cover all selected. The scoreCombo then evaluates
- * post-mod totals — combos that get more activations win.
+ * Plan armor stat mods to reach each USER-SPECIFIED target. No breakpoint logic —
+ * we just hit the numbers the user typed (stats with no target are ignored).
+ * Allocates cheapest-first (+5 only to close a ≤5 gap), highest-priority stats
+ * first so a tight 5-slot budget favors the stats that matter most.
  */
-function planMods(totals: ArmorStats, selected: StatKey[], stretch: number): ModPlan {
+function planMods(totals: ArmorStats, targets: StatTargets): ModPlan {
   const plan: ModPlan = { plus10: {}, plus5: {}, used: 0 };
   const proj: Record<string, number> = { ...totals };
 
@@ -196,35 +170,13 @@ function planMods(totals: ArmorStats, selected: StatKey[], stretch: number): Mod
     return true;
   }
 
-  // Phase 1: floor 100 on each selected stat — most-important first so scarce
-  // slots favor Health/Super/Weapons. +5 only to close a ≤5 gap.
-  const byPrio = [...selected].sort((a, b) => STAT_PRIORITY[b] - STAT_PRIORITY[a]);
-  for (const s of byPrio) {
-    while (proj[s] < 100 && plan.used < MOD_BUDGET) {
-      const gap = 100 - proj[s];
+  const entries = (Object.entries(targets) as [StatKey, number][])
+    .filter(([, t]) => t > 0)
+    .sort((a, b) => STAT_PRIORITY[b[0]] - STAT_PRIORITY[a[0]]);
+  for (const [s, t] of entries) {
+    while (proj[s] < t && plan.used < MOD_BUDGET) {
+      const gap = t - proj[s];
       gap <= PLUS5 && gap > 0 ? addPlus5(s) : addPlus10(s);
-    }
-  }
-
-  // Phase 2: SCALE stats (Health/Class/Grenade) gain from every point past 100 —
-  // spend leftover slots on them round-robin toward the stretch target.
-  if (stretch > 100) {
-    const scaling = byPrio.filter(scalesPer1);
-    let progressed = true;
-    while (progressed && plan.used < MOD_BUDGET) {
-      progressed = false;
-      for (const s of scaling) {
-        if (proj[s] < stretch && plan.used < MOD_BUDGET) { addPlus10(s); progressed = true; }
-      }
-    }
-  }
-
-  // Phase 3: CAP stats (Weapons/Super/Melee) — flat 101-199, only 200 pays again.
-  // Climb to 200 only if reachable; otherwise leave at 100 (don't strand at 150).
-  for (const s of byPrio.filter((x) => CAP_100_200.includes(x))) {
-    const need = 200 - proj[s];
-    if (need > 0 && need <= (MOD_BUDGET - plan.used) * PLUS10) {
-      while (proj[s] < 200 && plan.used < MOD_BUDGET) addPlus10(s);
     }
   }
   return plan;
@@ -241,36 +193,28 @@ function applyModPlan(totals: ArmorStats, plan: ModPlan): ArmorStats {
   return out;
 }
 
-function scoreCombo(totals: ArmorStats, pieces: Item[], selected: StatKey[], stretch: number) {
-  // Plan mods first, then score using POST-MOD totals.
-  const modPlan = planMods(totals, selected, stretch);
+function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
+  // Plan mods first, then score using POST-MOD totals against the user's targets.
+  const modPlan = planMods(totals, targets);
   const withMods = applyModPlan(totals, modPlan);
 
-  let activations = 0;
-  let stretchHits = 0;
-  let surplus = 0;
+  let hits = 0;        // targets reached
+  let deficit = 0;     // total points short across unreached targets
+  let overshoot = 0;   // points spent above a target (mild waste)
   let rawSum = 0;
-  for (const s of selected) {
+  for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
+    if (!(t > 0)) continue;
     const v = withMods[s] ?? 0;
-    if (v >= 100) activations++;
-    // Realized benefit above 100 under the stat's breakpoint rule — so combos are
-    // never rewarded for stranding Weapons/Super/Melee at 150 or Grenade at 130.
-    const b = benefitAbove100(s, v);
-    surplus += b;
-    if (b > 0) stretchHits++;
+    if (v >= t) hits++; else deficit += t - v;
+    overshoot += Math.max(0, v - t);
     rawSum += v;
   }
   const totalPower = pieces.reduce((p, x) => p + (x.power ?? 0), 0);
-  // Score tuple (descending):
-  //  1. activations after mods
-  //  2. stretch hits after mods
-  //  3. NEGATIVE mods-used  (fewer mods = better — more flexibility for utility mods)
-  //  4. surplus above 100 across selected stats
-  //  5. raw sum of selected stats
-  //  6. total armor power
+  // Score tuple (descending): hit the most targets, then get closest on the rest,
+  // then fewest mods, then least overshoot, then raw sum, then armor power.
   return {
-    score: [activations, stretchHits, -modPlan.used, surplus, rawSum, totalPower],
-    activations, stretchHits, surplus, rawSum, totalPower,
+    score: [hits, -deficit, -modPlan.used, -overshoot, rawSum, totalPower],
+    activations: hits, stretchHits: 0, surplus: overshoot, rawSum, totalPower,
     modPlan, withMods, modsUsed: modPlan.used,
   };
 }
@@ -301,13 +245,13 @@ const ZERO_STATS: ArmorStats = { weapons: 0, health: 0, class: 0, grenade: 0, su
 function optimize(
   items: Item[],
   cls: "Warlock" | "Hunter" | "Titan",
-  selected: StatKey[],
+  targets: StatTargets,
   lockedExoticId: string | null,
   themeLocks: ThemeLock[] = [],
   archetypeFilter: string[] = [],
   fragmentDelta: ArmorStats = ZERO_STATS,
-): { combos: Combo[]; stretch: number; pruned: Record<ArmorSlot, number> } {
-  const stretch = STRETCH_BY_COUNT[selected.length] ?? 100;
+): { combos: Combo[]; pruned: Record<ArmorSlot, number> } {
+  const selected = STAT_KEYS.filter((s) => (targets[s] ?? 0) > 0);  // stats with a target
   const themeReq = themeLocks.filter((t) => t.setName && t.count > 0);
 
   // Build per-slot pools. Only armor for this class (or class-neutral
@@ -359,7 +303,7 @@ function optimize(
   // Bail if any slot is empty
   for (const slot of ARMOR_SLOTS) {
     if (pool[slot].length === 0) {
-      return { combos: [], stretch, pruned };
+      return { combos: [], pruned };
     }
   }
 
@@ -388,12 +332,12 @@ function optimize(
             // Baseline = armor base + equipped subclass FRAGMENT delta, so the
             // pre-mod totals (and mod planning) match the in-game character sheet.
             const totals = sumStats(sumArmorStats(pieces), fragmentDelta);
-            const s = scoreCombo(totals, pieces, selected, stretch);
+            const s = scoreCombo(totals, pieces, targets);
             combos.push({ pieces, totals, ...s });
           }
 
   combos.sort((a, b) => compareScore(a.score, b.score));
-  return { combos: combos.slice(0, 5), stretch, pruned };
+  return { combos: combos.slice(0, 5), pruned };
 }
 
 // ============================================================
@@ -407,12 +351,12 @@ export default function Optimizer() {
   const [items, setItems] = useState<Item[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [cls, setCls] = useState<"Hunter" | "Titan" | "Warlock" | null>(null);
-  const [selected, setSelected] = useState<StatKey[]>([]);
+  const [targets, setTargets] = useState<StatTargets>({});   // per-stat goal; blank = ignore
+  const selected = useMemo(() => STAT_KEYS.filter((s) => (targets[s] ?? 0) > 0), [targets]);
   const [lockedExoticId, setLockedExoticId] = useState<string | null>(null);
   const [themeLocks, setThemeLocks] = useState<ThemeLock[]>([]);
   const [archetypeFilter, setArchetypeFilter] = useState<string[]>([]);
   const [results, setResults] = useState<Combo[]>([]);
-  const [stretchTarget, setStretchTarget] = useState<number>(100);
   const [optimizing, setOptimizing] = useState(false);
   const [activeCharId, setActiveCharId] = useState<string | null>(null);
 
@@ -474,10 +418,12 @@ export default function Optimizer() {
     if (b.class !== "Any") setCls(b.class as any);
     if (b.subclass && SUBCLASS_TO_ELEMENT[b.subclass]) setSubclassEl(SUBCLASS_TO_ELEMENT[b.subclass]);
     if (b.target_stats) {
-      const picks = (Object.keys(b.target_stats) as StatKey[])
-        .filter((k) => (b.target_stats?.[k] ?? 0) > 0)
-        .slice(0, 4);
-      if (picks.length) setSelected(picks);
+      const t: StatTargets = {};
+      for (const k of Object.keys(b.target_stats) as StatKey[]) {
+        const v = b.target_stats?.[k] ?? 0;
+        if (v > 0) t[k] = Math.min(200, v);
+      }
+      if (Object.keys(t).length) setTargets(t);
     }
     // Lock whichever of the build's exotic options the user actually owns.
     const owned = items.find(
@@ -548,11 +494,13 @@ export default function Optimizer() {
     if (ch) setCls(ch.class.charAt(0).toUpperCase() + ch.class.slice(1) as any);
   }
 
-  function toggleStat(s: StatKey) {
-    setSelected((cur) => {
-      if (cur.includes(s)) return cur.filter((x) => x !== s);
-      if (cur.length >= 4) return cur;  // hard cap
-      return [...cur, s];
+  function setTarget(s: StatKey, raw: string) {
+    const n = parseInt(raw, 10);
+    setTargets((cur) => {
+      const next = { ...cur };
+      if (raw.trim() === "" || !Number.isFinite(n) || n <= 0) delete next[s];
+      else next[s] = Math.min(200, n);   // clamp to the 200 cap
+      return next;
     });
   }
 
@@ -579,11 +527,10 @@ export default function Optimizer() {
       try {
         const activeLocks = themeLocks.filter((t) => t.setName && t.count > 0);
         const delta = (activeCharId && fragmentDeltas[activeCharId]) || ZERO_STATS;
-        const { combos, stretch } = optimize(
-          baseItems, cls, selected, lockedExoticId, activeLocks, archetypeFilter, delta,
+        const { combos } = optimize(
+          baseItems, cls, targets, lockedExoticId, activeLocks, archetypeFilter, delta,
         );
         setResults(combos);
-        setStretchTarget(stretch);
       } finally {
         setOptimizing(false);
       }
@@ -613,9 +560,9 @@ export default function Optimizer() {
           OPTIMIZER
         </h1>
         <p className="font-ui text-sm text-muted-foreground max-w-2xl">
-          Pick 1-4 stats. The optimizer prioritizes hitting the hard <strong className="text-saber">100 activation floor</strong> on each
-          selected stat (99 does not activate), then maximizes the stretch target (200 for 1-2 stats, 125 for 3, 100 for 4).
-          Higher armor power level breaks ties.
+          Type a <strong className="text-saber">target</strong> for each stat you care about; leave the rest blank.
+          The optimizer finds the 5-piece set + plans the +5/+10 stat mods to hit your targets — favoring the most
+          important stats when the 5 mod slots can't cover everything. Higher armor power breaks ties.
         </p>
       </header>
 
@@ -687,35 +634,27 @@ export default function Optimizer() {
           </div>
         )}
 
-        {/* Stats */}
-        <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-          <span className="text-muted w-20">Stats:</span>
+        {/* Target stats — type a goal per stat, leave the rest blank to ignore. */}
+        <div className="flex flex-wrap items-start gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+          <span className="text-muted w-20 pt-1">Target:</span>
           {STAT_KEYS.map((s) => {
-            const on = selected.includes(s);
-            const disabled = !on && selected.length >= 4;
+            const on = (targets[s] ?? 0) > 0;
             return (
-              <button
-                key={s}
-                disabled={disabled}
-                onClick={() => toggleStat(s)}
-                className={`px-3 py-1 rounded border transition-colors ${
-                  on
-                    ? "text-saber border-saber"
-                    : disabled
-                      ? "border-border text-muted/40 cursor-not-allowed"
-                      : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {STAT_LABEL[s]}
-              </button>
+              <div key={s} className="flex flex-col items-center gap-1">
+                <span className={on ? "text-saber" : "text-muted"}>{STAT_LABEL[s]}</span>
+                <input
+                  type="number" inputMode="numeric" min={0} max={200} step={10}
+                  value={targets[s] ?? ""}
+                  onChange={(e) => setTarget(s, e.target.value)}
+                  placeholder="—"
+                  className={`w-14 bg-void/40 border rounded px-1.5 py-1 text-center font-ui text-sm normal-case tracking-normal outline-none focus:border-saber ${on ? "border-saber/60 text-saber" : "border-border text-muted"}`}
+                />
+              </div>
             );
           })}
-          <span className="text-muted ml-2">{selected.length}/4</span>
-          {selected.length > 0 && (
-            <span className="text-saber ml-2 normal-case tracking-normal text-[11px]">
-              floor 100 · Wpn/Super/Melee: 100 or 200 · Health/Class/Grenade: scale → {STRETCH_BY_COUNT[selected.length]}
-            </span>
-          )}
+          <span className="text-muted ml-1 normal-case tracking-normal text-[11px] pt-1.5 max-w-[260px]">
+            {selected.length ? `Optimizing ${selected.length} stat${selected.length === 1 ? "" : "s"} to your targets` : "Type a goal (e.g. 100) for the stats you want; leave the rest blank."}
+          </span>
         </div>
 
         {/* Encounter — pre-sets the chest resist context from the raid KB
@@ -1035,7 +974,7 @@ export default function Optimizer() {
       {/* Results */}
       {results.length === 0 && !optimizing && (
         <div className="text-muted text-sm font-ui text-center py-8">
-          {selected.length === 0 ? "Pick 1-4 stats to begin." : "Hit Optimize."}
+          {selected.length === 0 ? "Set a stat target to begin." : "Hit Optimize."}
         </div>
       )}
       <div className="grid grid-cols-1 gap-4">
@@ -1045,7 +984,7 @@ export default function Optimizer() {
             combo={combo}
             rank={i + 1}
             selected={selected}
-            stretch={stretchTarget}
+            targets={targets}
             activeCharId={activeCharId}
             characters={me?.characters ?? []}
             modCatalog={modCatalog}
@@ -1079,10 +1018,10 @@ export default function Optimizer() {
 // ============================================================
 
 function ComboCard({
-  combo, rank, selected, stretch, activeCharId, characters,
+  combo, rank, selected, targets, activeCharId, characters,
   modCatalog, manifest, allItems, cls, subclassEl, dpsEls, incomingEls, meleeResist, concussive, armorSockets,
 }: {
-  combo: Combo; rank: number; selected: StatKey[]; stretch: number;
+  combo: Combo; rank: number; selected: StatKey[]; targets: StatTargets;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
   allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
@@ -1183,13 +1122,8 @@ function ComboCard({
         <div className="flex items-baseline gap-2">
           <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted">#{rank}</span>
           <span className="font-display text-lg tracking-wide">
-            {combo.activations}/{selected.length} activated
+            {combo.activations}/{selected.length} targets hit
           </span>
-          {combo.stretchHits > 0 && stretch > 100 && (
-            <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-emerald-400 ml-2">
-              +{combo.stretchHits} at {stretch}+
-            </span>
-          )}
         </div>
         <div className="flex items-center gap-3">
           <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted">
@@ -1294,17 +1228,16 @@ function ComboCard({
       <div className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-3">
         {STAT_KEYS.map((s) => {
           const v = combo.withMods[s];            // post-mod
-          const base = combo.totals[s];           // pre-mod
+          const base = combo.totals[s];           // pre-mod (incl. fragment delta)
           const delta = v - base;
-          const sel = selected.includes(s);
-          const activated = sel && v >= 100;
-          const stretchHit = sel && v >= stretch && stretch > 100;
+          const target = targets[s] ?? 0;
+          const sel = target > 0;
+          const hit = sel && v >= target;
           return (
             <div
               key={s}
               className={`rounded border p-2 ${
-                stretchHit ? "border-emerald-400 text-emerald-400"
-                : activated ? "border-saber text-saber"
+                hit ? "border-saber text-saber"
                 : sel ? "border-amber-400/60 text-amber-400"
                 : "border-border text-muted"
               }`}
@@ -1320,9 +1253,9 @@ function ComboCard({
                   </span>
                 )}
               </div>
-              <div className="font-mono text-[9px] text-muted mt-0.5">base {base}</div>
-              {sel && !activated && (
-                <div className="font-mono text-[9px] mt-1">+{100 - v} to activate</div>
+              <div className="font-mono text-[9px] text-muted mt-0.5">base {base}{sel ? ` · goal ${target}` : ""}</div>
+              {sel && !hit && (
+                <div className="font-mono text-[9px] mt-1">+{target - v} to goal</div>
               )}
             </div>
           );
