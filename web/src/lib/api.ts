@@ -341,6 +341,46 @@ export const api = {
       body: JSON.stringify({ character_id, item_instance_ids, item_hashes }),
     }),
 
+  /** The in-game Loadout slots (component 206) per character — for the loadout
+   *  manager. Each slot has predefined name/color/icon hashes (resolve via
+   *  loadout-meta.json) and an itemCount (0 = empty). Active character first. */
+  getLoadouts: () =>
+    jsonFetch<{
+      characters: Array<{
+        character_id: string; class: string; light: number; emblemPath: string; dateLastPlayed: string;
+        slots: Array<{ index: number; nameHash: number; colorHash: number; iconHash: number; itemCount: number }>;
+      }>;
+    }>("/api/loadouts"),
+
+  /** Snapshot the character's CURRENTLY equipped gear into an in-game slot
+   *  (overwrites it). Requires the name/color/icon identifier hashes. */
+  snapshotLoadout: (character_id: string, loadoutIndex: number, nameHash: number, colorHash: number, iconHash: number) =>
+    jsonFetch<{ ok: true }>("/api/loadouts/snapshot", {
+      method: "POST",
+      body: JSON.stringify({ character_id, loadoutIndex, nameHash, colorHash, iconHash }),
+    }),
+
+  /** Equip a saved in-game loadout slot (atomic — weapons + armor + mods + subclass). */
+  equipLoadout: (character_id: string, loadoutIndex: number) =>
+    jsonFetch<{ ok: true }>("/api/loadouts/equip", {
+      method: "POST",
+      body: JSON.stringify({ character_id, loadoutIndex }),
+    }),
+
+  /** Clear an in-game loadout slot (back to empty). */
+  clearLoadout: (character_id: string, loadoutIndex: number) =>
+    jsonFetch<{ ok: true }>("/api/loadouts/clear", {
+      method: "POST",
+      body: JSON.stringify({ character_id, loadoutIndex }),
+    }),
+
+  /** Rename / re-icon / re-color a slot without re-snapshotting its gear. */
+  updateLoadoutIdentifiers: (character_id: string, loadoutIndex: number, nameHash: number, colorHash: number, iconHash: number) =>
+    jsonFetch<{ ok: true }>("/api/loadouts/identifiers", {
+      method: "POST",
+      body: JSON.stringify({ character_id, loadoutIndex, nameHash, colorHash, iconHash }),
+    }),
+
   /** Look up multiple players by Bungie name (e.g. "Name#1234"). Public
    *  Bungie API; no per-user OAuth required. */
   fireteam: (bungie_names: string[]) =>

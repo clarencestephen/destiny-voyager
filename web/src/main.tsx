@@ -17,6 +17,7 @@ import Play from "./pages/Play";
 import Fireteam from "./pages/Fireteam";
 import Diagnostic from "./pages/Diagnostic";
 import ThisWeek from "./pages/ThisWeek";
+import Loadouts from "./pages/Loadouts";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="link" element={<Link />} />
           <Route path="builds" element={<Builds />} />
           <Route path="optimizer" element={<Optimizer />} />
+          <Route path="loadouts" element={<Loadouts />} />
           <Route path="weapons" element={<Weapons />} />
           <Route path="armor" element={<Armor />} />
           <Route path="build" element={<Build />} />

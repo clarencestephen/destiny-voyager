@@ -451,6 +451,8 @@ app.use("/api/tags", requireSession);
 app.use("/api/equip", requireSession);
 app.use("/api/this-week", requireSession);
 app.use("/api/library", requireSession);
+app.use("/api/loadouts", requireSession);
+app.use("/api/loadouts/*", requireSession);
 
 // ============================================================
 // /library — per-user wishlists + saved builds (KV: library:<bungie_id>)
@@ -477,6 +479,60 @@ app.put("/api/library", async (c) => {
   await c.env.DV_KV.put(`library:${u.bungie_id}`, json);
   return c.json({ ok: true, updatedAt: lib.updatedAt });
 });
+
+// ============================================================
+// /loadouts — the in-game Loadout slots (component 206) + Bungie loadout
+// actions (Snapshot / Equip / Clear / Update identifiers). 20 slots/character.
+// SnapshotLoadout REQUIRES the name/color/icon identifier hashes in the body.
+// ============================================================
+app.get("/api/loadouts", async (c) => {
+  const u = c.get("user");
+  const profile = await bungieGet(
+    c.env,
+    `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=200,206`,
+    u.access_token,
+  );
+  const chars = profile?.characters?.data ?? {};
+  const loadouts = profile?.characterLoadouts?.data ?? {};
+  const out = Object.entries(chars).map(([cid, ch]: [string, any]) => ({
+    character_id: cid,
+    class: ["Titan", "Hunter", "Warlock"][ch.classType] ?? "Guardian",
+    light: ch.light,
+    emblemPath: ch.emblemPath,
+    dateLastPlayed: ch.dateLastPlayed,
+    slots: (loadouts[cid]?.loadouts ?? []).map((s: any, i: number) => ({
+      index: i,
+      nameHash: s.nameHash,
+      colorHash: s.colorHash,
+      iconHash: s.iconHash,
+      itemCount: (s.items ?? []).filter((it: any) => String(it.itemInstanceId ?? "0") !== "0").length,
+    })),
+  }));
+  out.sort((a, b) => (a.dateLastPlayed > b.dateLastPlayed ? -1 : 1)); // active (last-played) first
+  return c.json({ characters: out });
+});
+
+type LoadoutActionBody = {
+  character_id: string; loadoutIndex: number;
+  nameHash?: number; colorHash?: number; iconHash?: number;
+};
+async function loadoutAction(c: any, endpoint: string, withIds: boolean) {
+  const u = c.get("user");
+  const b = await c.req.json<LoadoutActionBody>();
+  if (!b.character_id || b.loadoutIndex == null) return c.json({ error: "missing character_id or loadoutIndex" }, 400);
+  const base: any = { loadoutIndex: b.loadoutIndex, characterId: b.character_id, membershipType: u.membership_type };
+  if (withIds) { base.colorHash = b.colorHash; base.iconHash = b.iconHash; base.nameHash = b.nameHash; }
+  try {
+    await bungiePost(c.env, `/Destiny2/Actions/Loadouts/${endpoint}/`, u.access_token, base);
+    return c.json({ ok: true });
+  } catch (e: any) {
+    return c.json({ error: `${endpoint}_failed`, detail: e?.message ?? String(e) }, 502);
+  }
+}
+app.post("/api/loadouts/snapshot",    (c) => loadoutAction(c, "SnapshotLoadout", true));
+app.post("/api/loadouts/identifiers", (c) => loadoutAction(c, "UpdateLoadoutIdentifiers", true));
+app.post("/api/loadouts/equip",       (c) => loadoutAction(c, "EquipLoadout", false));
+app.post("/api/loadouts/clear",       (c) => loadoutAction(c, "ClearLoadout", false));
 
 async function requireSession(c: any, next: any) {
   const sid = getCookie(c, "dv_sid");

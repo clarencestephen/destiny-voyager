@@ -30,6 +30,7 @@ export default function App() {
             <Link to="/recommend" className="hover:text-saber transition-colors">Recommend</Link>
             <Link to="/builds" className="hover:text-star transition-colors">Builds</Link>
             <Link to="/optimizer" className="hover:text-saber transition-colors">Optimizer</Link>
+            <Link to="/loadouts" className="hover:text-saber transition-colors">Loadouts</Link>
             <Link to="/chat" className="hover:text-saber transition-colors">Darth Bot</Link>
             <a href="https://github.com/clarencestephen/destiny-voyager" target="_blank"
                rel="noopener noreferrer" className="hover:text-sith transition-colors">
