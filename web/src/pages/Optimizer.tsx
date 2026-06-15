@@ -137,6 +137,21 @@ function baseStats(item: Item, catalog: ModCatalog | null): ArmorStats | undefin
   return s;
 }
 
+// Stat breakpoint model (EoF Armor 3.0):
+//  • Weapons + Super pay off at 100 and again at 200, but are FLAT 101-199 — so
+//    target exactly 100, and only climb higher if a full 200 is actually
+//    reachable (never strand them at 150 — those mods are wasted).
+//  • Health, Class, Grenade, Melee scale continuously past 100 (cooldown / regen
+//    timers keep improving), so every point above 100 is worth something.
+const CAP_AT_100: StatKey[] = ["weapons", "super"];
+const scalesPast100 = (s: StatKey) => !CAP_AT_100.includes(s);
+// EoF meta: abilities were nerfed (less damage, cast less often) → Super, Weapons
+// and especially Health (shield-recharge timing is life/death) matter more. Bias
+// scarce slots toward these when not every selected stat can reach 100.
+const STAT_PRIORITY: Record<StatKey, number> = {
+  health: 5, super: 4, weapons: 4, grenade: 3, class: 3, melee: 3,
+};
+
 /**
  * Plan armor stat mods to hit the score targets for selected stats.
  *
@@ -171,30 +186,36 @@ function planMods(totals: ArmorStats, selected: StatKey[], stretch: number): Mod
     return true;
   }
 
-  // Phase 1: hit floor 100 on each selected stat, cheaper-first.
-  for (const s of selected) {
+  // Phase 1: floor 100 on each selected stat — most-important first so scarce
+  // slots favor Health/Super/Weapons. +5 only to close a ≤5 gap.
+  const byPrio = [...selected].sort((a, b) => STAT_PRIORITY[b] - STAT_PRIORITY[a]);
+  for (const s of byPrio) {
     while (proj[s] < 100 && plan.used < MOD_BUDGET) {
       const gap = 100 - proj[s];
-      if (gap <= PLUS5 && gap > 0) {
-        addPlus5(s);
-      } else {
-        addPlus10(s);
+      gap <= PLUS5 && gap > 0 ? addPlus5(s) : addPlus10(s);
+    }
+  }
+
+  // Phase 2: SCALING stats (Health/Class/Grenade/Melee) gain from every point
+  // past 100 — spend leftover slots on them round-robin toward the stretch target.
+  if (stretch > 100) {
+    const scaling = byPrio.filter(scalesPast100);
+    let progressed = true;
+    while (progressed && plan.used < MOD_BUDGET) {
+      progressed = false;
+      for (const s of scaling) {
+        if (proj[s] < stretch && plan.used < MOD_BUDGET) { addPlus10(s); progressed = true; }
       }
     }
   }
 
-  // Phase 2: if stretch target > 100 and slots left, push toward stretch.
-  // Prefer +10 first (more efficient), fall back to +5 for tight gaps.
-  if (stretch > 100 && plan.used < MOD_BUDGET) {
-    for (const s of selected) {
-      while (proj[s] < stretch && plan.used < MOD_BUDGET) {
-        const gap = stretch - proj[s];
-        if (gap <= PLUS5 && gap > 0) {
-          addPlus5(s);
-        } else {
-          addPlus10(s);
-        }
-      }
+  // Phase 3: CAP stats (Weapons/Super) are flat 101-199 — only climb past 100 if
+  // a FULL 200 is reachable with the slots that remain; otherwise leave at 100
+  // (don't waste mods stranding them between the two breakpoints).
+  for (const s of byPrio.filter((x) => CAP_AT_100.includes(x))) {
+    const need = 200 - proj[s];
+    if (need > 0 && need <= (MOD_BUDGET - plan.used) * PLUS10) {
+      while (proj[s] < 200 && plan.used < MOD_BUDGET) addPlus10(s);
     }
   }
   return plan;
@@ -223,8 +244,13 @@ function scoreCombo(totals: ArmorStats, pieces: Item[], selected: StatKey[], str
   for (const s of selected) {
     const v = withMods[s] ?? 0;
     if (v >= 100) activations++;
-    if (v >= stretch) stretchHits++;
-    surplus += Math.max(0, v - 100);
+    if (scalesPast100(s)) {
+      surplus += Math.max(0, v - 100);      // every point past 100 is a real gain
+      if (v >= stretch) stretchHits++;
+    } else if (v >= 200) {
+      surplus += 100; stretchHits++;         // Weapons/Super only pay off again at 200
+    }
+    // Weapons/Super at 101-199 add nothing — not rewarded, so combos won't strand them there.
     rawSum += v;
   }
   const totalPower = pieces.reduce((p, x) => p + (x.power ?? 0), 0);
@@ -680,7 +706,7 @@ export default function Optimizer() {
           <span className="text-muted ml-2">{selected.length}/4</span>
           {selected.length > 0 && (
             <span className="text-saber ml-2 normal-case tracking-normal text-[11px]">
-              floor 100 · stretch {STRETCH_BY_COUNT[selected.length]}
+              floor 100 · Weapons/Super → 100 (200 only if reachable) · Health/Class/Grenade/Melee → {STRETCH_BY_COUNT[selected.length]}
             </span>
           )}
         </div>
