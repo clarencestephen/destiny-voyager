@@ -275,6 +275,16 @@ function SlotRow({
       </div>
     );
   }
+  if (status.status === "flexible") {
+    return (
+      <div className="flex items-baseline gap-3">
+        <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted w-28 shrink-0">
+          {label}
+        </span>
+        <span className="text-muted text-xs italic">any — flexible</span>
+      </div>
+    );
+  }
   return (
     <div className="flex items-baseline gap-3">
       <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted w-28 shrink-0">

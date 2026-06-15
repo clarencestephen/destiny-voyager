@@ -51,7 +51,8 @@ export interface BuildsManifest {
 /** Where a single slot landed in the fit. */
 export type FitSlotStatus =
   | { status: "owned"; item: Item; matchedOption: string }
-  | { status: "missing"; wantedOptions: string[]; hint?: string };
+  | { status: "missing"; wantedOptions: string[]; hint?: string }
+  | { status: "flexible" };   // build doesn't mandate a weapon here — run anything
 
 /** Full per-build fit result. */
 export interface BuildFit {
@@ -139,29 +140,46 @@ export function fitBuild(build: BuildTemplate, items: Item[]): BuildFit {
         hint: build.exotic_armor.drops_from,
       };
 
-  // Weapons — match by name only (slot/element implicit)
-  const k = findFirstOwned(build.weapons.kinetic, items);
-  const e = findFirstOwned(build.weapons.energy, items);
-  const h = findFirstOwned(build.weapons.heavy, items);
+  // Weapons — resolve each slot, but enforce the game's ONE-Exotic-weapon rule:
+  // if the user owns Exotics that would fill 2+ slots, keep the Exotic in a single
+  // slot (preferring one with no Legendary alternative) and demote the others to
+  // their best owned Legendary — or flag them to run any Legendary. A slot the
+  // build doesn't specify (empty options) is "flexible", not a miss.
+  const W = ["kinetic", "energy", "heavy"] as const;
+  const isExotic = (it: Item) => it.isExotic || it.tier === "Exotic";
+  const owned = W.map((sl) => findFirstOwned(build.weapons[sl], items));
+  const legendary = W.map((sl) => findFirstOwned(build.weapons[sl], items, (i) => !isExotic(i)));
+  const exoticIdx = owned.map((m, i) => (m && isExotic(m.item) ? i : -1)).filter((i) => i >= 0);
+  let keptExotic = -1;
+  if (exoticIdx.length > 1) {
+    keptExotic = exoticIdx.find((i) => !legendary[i]) ?? exoticIdx[0];   // keep where there's no choice
+    for (const i of exoticIdx) if (i !== keptExotic) owned[i] = legendary[i];  // demote others
+  }
 
-  const kinetic: FitSlotStatus = k
-    ? { status: "owned", item: k.item, matchedOption: k.matchedOption }
-    : { status: "missing", wantedOptions: build.weapons.kinetic };
-  const energy: FitSlotStatus = e
-    ? { status: "owned", item: e.item, matchedOption: e.matchedOption }
-    : { status: "missing", wantedOptions: build.weapons.energy };
-  const heavy: FitSlotStatus = h
-    ? { status: "owned", item: h.item, matchedOption: h.matchedOption }
-    : { status: "missing", wantedOptions: build.weapons.heavy };
+  const mkSlot = (i: number): FitSlotStatus => {
+    const m = owned[i];
+    if (m) return { status: "owned", item: m.item, matchedOption: m.matchedOption };
+    if (!build.weapons[W[i]]?.length) return { status: "flexible" };
+    const demoted = exoticIdx.includes(i) && i !== keptExotic;  // suppressed a 2nd exotic
+    return {
+      status: "missing",
+      wantedOptions: build.weapons[W[i]],
+      hint: demoted ? `Run any Legendary — only one Exotic weapon can be equipped (this build's Exotic is in ${W[keptExotic]}).` : undefined,
+    };
+  };
+  const kinetic = mkSlot(0);
+  const energy = mkSlot(1);
+  const heavy = mkSlot(2);
 
-  const slots = [exoticArmor, kinetic, energy, heavy];
-  const owned = slots.filter((s) => s.status === "owned").length;
+  // Count only the slots the build actually specifies (flexible slots don't count).
+  const counted = [exoticArmor, kinetic, energy, heavy].filter((s) => s.status !== "flexible");
+  const ownedCount = counted.filter((s) => s.status === "owned").length;
 
   return {
     build,
-    ownedSlots: owned,
-    totalSlots: slots.length,
-    fitPct: owned / slots.length,
+    ownedSlots: ownedCount,
+    totalSlots: counted.length,
+    fitPct: counted.length ? ownedCount / counted.length : 1,
     exoticArmor,
     kinetic,
     energy,
