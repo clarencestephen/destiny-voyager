@@ -92,6 +92,53 @@ async def chat(
         return data["message"]["content"].strip()
 
 
+# Shown verbatim when the anti-fabrication gate trips. Better to admit ignorance
+# than to ship a confident lie.
+REFUSAL = (
+    "I don't have grounded data on that, so I won't guess. "
+    "Try **light.gg/db**, the in-game subclass/triumphs screen, or rephrase so I "
+    "can ground it — and run `/sanity` to confirm my knowledge base is loaded."
+)
+
+
+async def verify_grounded(question: str, answer: str, context: str) -> bool:
+    """Strict anti-fabrication SECOND PASS. Returns False when the ANSWER invents
+    specifics — a named exotic/weapon/armor/mod/emote, a vendor interaction, a
+    quest/catalyst step, a drop source, or a number — that aren't in the provided
+    SOURCES and aren't universal Destiny 2 basics. On any error returns True (a
+    verifier hiccup must never silence a good answer). The 8B model won't reliably
+    refuse on its own, so we re-ask it a narrow yes/no question, which it answers
+    far more reliably than open generation."""
+    sys = (
+        "You are a strict Destiny 2 fact-checker. You receive SOURCES (the only "
+        "authoritative data) and an ANSWER. Decide whether the ANSWER invents "
+        "specifics NOT supported by SOURCES.\n"
+        "Answer FABRICATED if the ANSWER states a specific exotic / weapon / armor "
+        "/ mod / emote name, a vendor interaction, a quest or catalyst step, a drop "
+        "source, or a number that does NOT appear in SOURCES. Universal, always-"
+        "true facts (class jump types; that Aspects grant Fragment slots; that "
+        "Fragments are equipped from the subclass screen) are NOT fabrication.\n"
+        "If unsure, answer FABRICATED. Reply with ONE word only: GROUNDED or FABRICATED."
+    )
+    user = f"SOURCES:\n{(context or '(none provided)')[:6000]}\n\nANSWER:\n{answer[:3000]}"
+    payload = {
+        "model": MODEL,
+        "messages": [{"role": "system", "content": sys}, {"role": "user", "content": user}],
+        "stream": False,
+        "think": False,   # Qwen3: skip <think> tokens — they'd eat num_predict and leave content empty
+        "options": {"temperature": 0, "num_ctx": 8192, "num_predict": 16},
+    }
+    try:
+        async with httpx.AsyncClient(timeout=90, headers=_AUTH_HEADERS) as client:
+            r = await client.post(f"{OLLAMA_HOST}/api/chat", json=payload)
+            r.raise_for_status()
+            out = r.json()["message"]["content"].strip().upper()
+        return "FABRICAT" not in out   # grounded unless it explicitly said FABRICATED
+    except Exception as e:
+        print(f"[llm] verify_grounded error: {e}")
+        return True
+
+
 async def chat_walkthrough(
     user_message: str,
     *,

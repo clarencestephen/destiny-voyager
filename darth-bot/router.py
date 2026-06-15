@@ -536,7 +536,7 @@ async def answer(question: str, history: list | None = None) -> str:
         from llm import chat_walkthrough
         response = await chat_walkthrough(question, knowledge=knowledge_ctx)
     else:
-        from llm import chat
+        from llm import chat, verify_grounded, REFUSAL
         response = await chat(
             question,
             inventory=inventory_ctx,
@@ -545,6 +545,14 @@ async def answer(question: str, history: list | None = None) -> str:
             manifest=manifest_ctx_str,
             history=history,
         )
+        # Anti-fabrication gate. The 8B model will confidently invent specifics
+        # (fake emotes / vendors / quest steps) when it lacks grounding, ignoring
+        # the system prompt's "refuse rather than guess" rule. Re-ask it a strict
+        # yes/no groundedness check and REFUSE rather than ship a plausible lie.
+        ctx_blob = "\n\n".join(p for p in (manifest_ctx_str, knowledge_ctx, search_ctx, inventory_ctx) if p)
+        if not await verify_grounded(question, response, ctx_blob):
+            print(f"[router] fabrication gate tripped — refusing. Q={question[:80]!r}")
+            return REFUSAL
 
     # NOTE: the old manifest-based "possibly invented names" post-check was
     # REMOVED. The Bungie manifest is an ITEM database — it has no entries for
