@@ -117,6 +117,27 @@ function sumArmorStats(pieces: Item[]): ArmorStats {
 }
 
 /**
+ * TRUE base armor stats = the live (component-304) sheet MINUS the stats
+ * contributed by the piece's CURRENTLY-equipped stat mods. The live sheet is
+ * post-mod, so optimizing on it double-counts: the optimizer adds its OWN stat
+ * mods on top of mods already there, and the projected totals don't match what
+ * you actually get in-game (which clears mods first). We strip the equipped
+ * stat mods (the +5/+10 "[stat] Mod"s in the catalog) to recover the base roll.
+ */
+function baseStats(item: Item, catalog: ModCatalog | null): ArmorStats | undefined {
+  if (!item.stats || !catalog) return item.stats;
+  const s: ArmorStats = { ...item.stats };
+  for (const h of item.plug_hashes ?? []) {
+    const m = catalog[String(h)];
+    if (m?.fam === "stat" && m.stat && m.mag) {
+      const k = m.stat as keyof ArmorStats;
+      s[k] = Math.max(0, (s[k] ?? 0) - m.mag);
+    }
+  }
+  return s;
+}
+
+/**
  * Plan armor stat mods to hit the score targets for selected stats.
  *
  * Strategy (5 slot budget, one stat mod per armor piece):
@@ -433,13 +454,20 @@ export default function Optimizer() {
     if (b) applyBuild(b);
   }, [buildId, builds, items, selectedBuildId]);
 
+  // Inventory with TRUE base stats (equipped stat mods stripped) — everything the
+  // optimizer reasons about uses this so pre-equipped mods aren't double-counted.
+  const baseItems = useMemo(
+    () => items.map((it) => (isArmor(it) ? { ...it, stats: baseStats(it, modCatalog) } : it)),
+    [items, modCatalog],
+  );
+
   // Available exotics for the class
   const exoticOptions = useMemo(() => {
     if (!cls) return [];
-    return items
+    return baseItems
       .filter((i) => isArmor(i) && i.tier === "Exotic" && (i.class === cls || i.class === "Any"))
       .sort((a, b) => a.slot.localeCompare(b.slot) || a.name.localeCompare(b.name));
-  }, [items, cls]);
+  }, [baseItems, cls]);
 
   // Sets the user actually owns pieces of, with the piece count.
   // Show only sets where the user has ≥2 pieces (anything less can't
@@ -511,7 +539,7 @@ export default function Optimizer() {
       try {
         const activeLocks = themeLocks.filter((t) => t.setName && t.count > 0);
         const { combos, stretch } = optimize(
-          items, cls, selected, lockedExoticId, activeLocks, archetypeFilter,
+          baseItems, cls, selected, lockedExoticId, activeLocks, archetypeFilter,
         );
         setResults(combos);
         setStretchTarget(stretch);
@@ -822,7 +850,7 @@ export default function Optimizer() {
             multiple copies, compare each instance's stat spread + archetype +
             mods side-by-side and lock the best roll (not just the first owned). */}
         {(() => {
-          const sel = lockedExoticId ? items.find((i) => i.instance_id === lockedExoticId) : null;
+          const sel = lockedExoticId ? baseItems.find((i) => i.instance_id === lockedExoticId) : null;
           if (!sel) return null;
           const copies = exoticOptions.filter((i) => i.name === sel.name && i.slot === sel.slot);
           if (copies.length < 2) return null;

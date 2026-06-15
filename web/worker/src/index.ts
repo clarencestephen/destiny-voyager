@@ -1143,7 +1143,10 @@ app.post("/api/equip-with-mods", async (c) => {
         cur[idx] = slot.plugItemHash;
         modResults.push({ ...base, ok: true });
       } catch (e: any) {
-        modResults.push({ ...base, ok: false, error: e?.message ?? String(e) });
+        const emsg = e?.message ?? String(e);
+        // The socket already holds this exact plug → desired state met, not a failure.
+        if (/DestinySocketAlreadyHasPlug/.test(emsg)) modResults.push({ ...base, ok: true, skipped: true });
+        else modResults.push({ ...base, ok: false, error: emsg });
       }
     }
   }
