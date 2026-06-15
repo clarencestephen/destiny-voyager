@@ -263,6 +263,8 @@ export interface ThemeLock {
   count: number;
 }
 
+const ZERO_STATS: ArmorStats = { weapons: 0, health: 0, class: 0, grenade: 0, super: 0, melee: 0 };
+
 function optimize(
   items: Item[],
   cls: "Warlock" | "Hunter" | "Titan",
@@ -270,6 +272,7 @@ function optimize(
   lockedExoticId: string | null,
   themeLocks: ThemeLock[] = [],
   archetypeFilter: string[] = [],
+  fragmentDelta: ArmorStats = ZERO_STATS,
 ): { combos: Combo[]; stretch: number; pruned: Record<ArmorSlot, number> } {
   const stretch = STRETCH_BY_COUNT[selected.length] ?? 100;
   const themeReq = themeLocks.filter((t) => t.setName && t.count > 0);
@@ -349,7 +352,9 @@ function optimize(
               }
               if (!ok) continue;
             }
-            const totals = sumArmorStats(pieces);
+            // Baseline = armor base + equipped subclass FRAGMENT delta, so the
+            // pre-mod totals (and mod planning) match the in-game character sheet.
+            const totals = sumStats(sumArmorStats(pieces), fragmentDelta);
             const s = scoreCombo(totals, pieces, selected, stretch);
             combos.push({ pieces, totals, ...s });
           }
@@ -379,6 +384,7 @@ export default function Optimizer() {
   const [activeCharId, setActiveCharId] = useState<string | null>(null);
 
   // Mod selection context (Phase 2 — non-destructive preview).
+  const [fragmentDeltas, setFragmentDeltas] = useState<Record<string, ArmorStats>>({});
   const [modCatalog, setModCatalog] = useState<ModCatalog | null>(null);
   const [manifest, setManifest] = useState<SlimManifest | null>(null);  // for socket mapping (Phase 4)
   const [armorSockets, setArmorSockets] = useState<ArmorSockets>({});   // baked mod-socket layout for equip
@@ -408,6 +414,7 @@ export default function Optimizer() {
         // Mod catalog is static + small (~46KB) — load once, ignore failure
         // (the optimizer still works without the mod preview).
         fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
+        api.getFragmentStats().then((d) => setFragmentDeltas(d.deltas as Record<string, ArmorStats>)).catch(() => {});
         fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
         fetch("/encounters.json").then((r) => r.json())
           .then((d) => setEncData(d.activities ?? [])).catch(() => {});
@@ -538,8 +545,9 @@ export default function Optimizer() {
     setTimeout(() => {
       try {
         const activeLocks = themeLocks.filter((t) => t.setName && t.count > 0);
+        const delta = (activeCharId && fragmentDeltas[activeCharId]) || ZERO_STATS;
         const { combos, stretch } = optimize(
-          baseItems, cls, selected, lockedExoticId, activeLocks, archetypeFilter,
+          baseItems, cls, selected, lockedExoticId, activeLocks, archetypeFilter, delta,
         );
         setResults(combos);
         setStretchTarget(stretch);

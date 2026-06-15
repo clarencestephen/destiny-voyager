@@ -453,6 +453,7 @@ app.use("/api/this-week", requireSession);
 app.use("/api/library", requireSession);
 app.use("/api/loadouts", requireSession);
 app.use("/api/loadouts/*", requireSession);
+app.use("/api/fragment-stats", requireSession);
 
 // ============================================================
 // /library — per-user wishlists + saved builds (KV: library:<bungie_id>)
@@ -472,10 +473,11 @@ app.put("/api/library", async (c) => {
     builds: Array.isArray(body.builds) ? body.builds.slice(0, 200) : [],
     weaponWishlist: Array.isArray(body.weaponWishlist) ? body.weaponWishlist.slice(0, 2000) : [],
     armorWishlist: Array.isArray(body.armorWishlist) ? body.armorWishlist.slice(0, 2000) : [],
+    loadouts: Array.isArray(body.loadouts) ? body.loadouts.slice(0, 200) : [],
     updatedAt: Date.now(),
   };
   const json = JSON.stringify(lib);
-  if (json.length > 256_000) return c.json({ error: "too_large" }, 413);
+  if (json.length > 512_000) return c.json({ error: "too_large" }, 413);
   await c.env.DV_KV.put(`library:${u.bungie_id}`, json);
   return c.json({ ok: true, updatedAt: lib.updatedAt });
 });
@@ -533,6 +535,38 @@ app.post("/api/loadouts/snapshot",    (c) => loadoutAction(c, "SnapshotLoadout",
 app.post("/api/loadouts/identifiers", (c) => loadoutAction(c, "UpdateLoadoutIdentifiers", true));
 app.post("/api/loadouts/equip",       (c) => loadoutAction(c, "EquipLoadout", false));
 app.post("/api/loadouts/clear",       (c) => loadoutAction(c, "ClearLoadout", false));
+
+// Per-character NON-ARMOR stat delta = character total (component 200) minus the
+// sum of equipped-armor stat sheets (304). This captures subclass FRAGMENT stat
+// bonuses/penalties (e.g. Void fragments giving -10 class / -10 grenade) that the
+// optimizer's armor-only math otherwise misses. The optimizer folds this into the
+// combo baseline so projected totals match the in-game character screen.
+app.get("/api/fragment-stats", async (c) => {
+  const u = c.get("user");
+  const profile = await bungieGet(
+    c.env,
+    `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=200,205,304`,
+    u.access_token,
+  );
+  const chars = profile?.characters?.data ?? {};
+  const equipped = profile?.characterEquipment?.data ?? {};
+  const stats = profile?.itemComponents?.stats?.data ?? {};
+  const SH: Record<string, number> = { weapons: 2996146975, health: 392767087, class: 1943323491, grenade: 1735777505, super: 144602215, melee: 4244567218 };
+  const ARMOR = new Set([3448274439, 3551918588, 14239492, 20886954, 1585787867]);
+  const deltas: Record<string, any> = {};
+  for (const [cid, ch] of Object.entries(chars) as Array<[string, any]>) {
+    const armor: Record<string, number> = { weapons: 0, health: 0, class: 0, grenade: 0, super: 0, melee: 0 };
+    for (const it of equipped[cid]?.items ?? []) {
+      if (!ARMOR.has(it.bucketHash)) continue;
+      const s = stats[String(it.itemInstanceId)]?.stats ?? {};
+      for (const k of Object.keys(SH)) armor[k] += s[String(SH[k])]?.value ?? 0;
+    }
+    const d: Record<string, number> = {};
+    for (const k of Object.keys(SH)) d[k] = (ch.stats?.[String(SH[k])] ?? 0) - armor[k];
+    deltas[cid] = d;
+  }
+  return c.json({ deltas });
+});
 
 async function requireSession(c: any, next: any) {
   const sid = getCookie(c, "dv_sid");

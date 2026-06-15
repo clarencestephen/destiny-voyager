@@ -224,11 +224,24 @@ export interface MetaState {
   }>;
 }
 
-/** Per-user library synced to KV: wishlists (item hashes) + saved builds. */
+/** A saved DV loadout — a named set of equipped item instances (weapons +
+ *  armor). Mods live on the instances, so re-equipping them restores the build;
+ *  we don't snapshot mods separately. Unlimited (the point: more than 20 slots). */
+export interface DVLoadout {
+  id: string;
+  name: string;
+  class: string;                 // "Titan" | "Hunter" | "Warlock"
+  items: Array<{ instance_id: string; hash: number; slot: string; name: string; iconUrl: string; exotic?: boolean }>;
+  nameHash?: number; colorHash?: number; iconHash?: number;  // preferred in-game identifiers when pushed to a slot
+  createdAt: number;
+}
+
+/** Per-user library synced to KV: wishlists (item hashes) + saved builds + loadouts. */
 export interface Library {
   builds: any[];
   weaponWishlist: string[];
   armorWishlist: string[];
+  loadouts?: DVLoadout[];
   updatedAt?: number;
 }
 
@@ -340,6 +353,12 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ character_id, item_instance_ids, item_hashes }),
     }),
+
+  /** Per-character non-armor stat delta (character total − equipped-armor sum) =
+   *  the subclass FRAGMENT stat bonuses/penalties the optimizer must add to its
+   *  armor-only baseline so projections match the in-game character screen. */
+  getFragmentStats: () =>
+    jsonFetch<{ deltas: Record<string, { weapons: number; health: number; class: number; grenade: number; super: number; melee: number }> }>("/api/fragment-stats"),
 
   /** The in-game Loadout slots (component 206) per character — for the loadout
    *  manager. Each slot has predefined name/color/icon hashes (resolve via
