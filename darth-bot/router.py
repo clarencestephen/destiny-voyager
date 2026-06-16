@@ -532,11 +532,16 @@ async def answer(question: str, history: list | None = None) -> str:
     # the model the KB IS the source of truth — the general chat() uses
     # a prompt that frames KB as "reference, not truth" which kills
     # mechanic extraction even when the chunks are great.
+    from llm import verify_grounded, REFUSAL
     if "raid_walkthrough" in plan.notes and knowledge_ctx:
         from llm import chat_walkthrough
         response = await chat_walkthrough(question, knowledge=knowledge_ctx)
+        # Walkthroughs are the MAIN cross-event leak: if retrieval pulls the wrong
+        # encounter/dungeon, the answer is "grounded" in those wrong chunks yet
+        # answers a different question. The gate's OFF-TOPIC check catches that.
+        ctx_blob = knowledge_ctx
     else:
-        from llm import chat, verify_grounded, REFUSAL
+        from llm import chat
         response = await chat(
             question,
             inventory=inventory_ctx,
@@ -545,14 +550,15 @@ async def answer(question: str, history: list | None = None) -> str:
             manifest=manifest_ctx_str,
             history=history,
         )
-        # Anti-fabrication gate. The 8B model will confidently invent specifics
-        # (fake emotes / vendors / quest steps) when it lacks grounding, ignoring
-        # the system prompt's "refuse rather than guess" rule. Re-ask it a strict
-        # yes/no groundedness check and REFUSE rather than ship a plausible lie.
         ctx_blob = "\n\n".join(p for p in (manifest_ctx_str, knowledge_ctx, search_ctx, inventory_ctx) if p)
-        if not await verify_grounded(question, response, ctx_blob):
-            print(f"[router] fabrication gate tripped — refusing. Q={question[:80]!r}")
-            return REFUSAL
+
+    # Grounding + relevance gate on BOTH paths. The 8B model will confidently invent
+    # specifics (fake emotes / vendors / quest steps) when it lacks grounding AND will
+    # answer off-topic when retrieval pulls the wrong event. Re-ask it a strict yes/no
+    # check and REFUSE rather than ship a plausible lie or a wrong-topic answer.
+    if not await verify_grounded(question, response, ctx_blob):
+        print(f"[router] grounding/relevance gate tripped — refusing. Q={question[:80]!r}")
+        return REFUSAL
 
     # NOTE: the old manifest-based "possibly invented names" post-check was
     # REMOVED. The Bungie manifest is an ITEM database — it has no entries for

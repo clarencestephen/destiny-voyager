@@ -102,25 +102,29 @@ REFUSAL = (
 
 
 async def verify_grounded(question: str, answer: str, context: str) -> bool:
-    """Strict anti-fabrication SECOND PASS. Returns False when the ANSWER invents
-    specifics — a named exotic/weapon/armor/mod/emote, a vendor interaction, a
-    quest/catalyst step, a drop source, or a number — that aren't in the provided
-    SOURCES and aren't universal Destiny 2 basics. On any error returns True (a
-    verifier hiccup must never silence a good answer). The 8B model won't reliably
-    refuse on its own, so we re-ask it a narrow yes/no question, which it answers
-    far more reliably than open generation."""
+    """Strict SECOND PASS. Returns False when the ANSWER (a) invents specifics not in
+    SOURCES, OR (b) is OFF-TOPIC — answers about a different item/activity than the
+    QUESTION asked, or mixes in another activity's content. (b) catches the common
+    failure where the bot retrieves the wrong dungeon/raid/weapon and answers from it
+    — technically "grounded" in those wrong sources but about the wrong thing. On any
+    error returns True (a verifier hiccup must never silence a good answer). The 8B
+    won't reliably self-refuse, so we re-ask it a narrow yes/no it answers reliably."""
     sys = (
-        "You are a strict Destiny 2 fact-checker. You receive SOURCES (the only "
-        "authoritative data) and an ANSWER. Decide whether the ANSWER invents "
-        "specifics NOT supported by SOURCES.\n"
-        "Answer FABRICATED if the ANSWER states a specific exotic / weapon / armor "
-        "/ mod / emote name, a vendor interaction, a quest or catalyst step, a drop "
-        "source, or a number that does NOT appear in SOURCES. Universal, always-"
-        "true facts (class jump types; that Aspects grant Fragment slots; that "
-        "Fragments are equipped from the subclass screen) are NOT fabrication.\n"
-        "If unsure, answer FABRICATED. Reply with ONE word only: GROUNDED or FABRICATED."
+        "You are a strict Destiny 2 fact-checker. You receive a QUESTION, its SOURCES "
+        "(the only authoritative data), and an ANSWER. Reply BAD if EITHER holds:\n"
+        "1) FABRICATION — the ANSWER states a specific exotic / weapon / armor / mod / "
+        "emote name, vendor interaction, quest or catalyst step, drop source, or number "
+        "that does NOT appear in SOURCES. (Universal always-true facts — class jump "
+        "types, that Aspects grant Fragment slots — are fine.)\n"
+        "2) OFF-TOPIC — the QUESTION names specific things (a weapon, dungeon, raid, "
+        "exotic, encounter, etc.) and the ANSWER is about DIFFERENT things, mixes in "
+        "another activity's content, or does not actually address what was asked.\n"
+        "When unsure, reply BAD. Reply with ONE word only: GOOD or BAD."
     )
-    user = f"SOURCES:\n{(context or '(none provided)')[:6000]}\n\nANSWER:\n{answer[:3000]}"
+    user = (
+        f"QUESTION:\n{question[:600]}\n\nSOURCES:\n{(context or '(none provided)')[:6000]}"
+        f"\n\nANSWER:\n{answer[:3000]}"
+    )
     payload = {
         "model": MODEL,
         "messages": [{"role": "system", "content": sys}, {"role": "user", "content": user}],
@@ -133,7 +137,7 @@ async def verify_grounded(question: str, answer: str, context: str) -> bool:
             r = await client.post(f"{OLLAMA_HOST}/api/chat", json=payload)
             r.raise_for_status()
             out = r.json()["message"]["content"].strip().upper()
-        return "FABRICAT" not in out   # grounded unless it explicitly said FABRICATED
+        return "BAD" not in out   # GOOD unless flagged BAD (fabricated OR off-topic)
     except Exception as e:
         print(f"[llm] verify_grounded error: {e}")
         return True
