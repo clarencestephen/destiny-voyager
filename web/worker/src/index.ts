@@ -454,6 +454,7 @@ app.use("/api/library", requireSession);
 app.use("/api/loadouts", requireSession);
 app.use("/api/loadouts/*", requireSession);
 app.use("/api/fragment-stats", requireSession);
+app.use("/api/usage", requireSession);
 
 // ============================================================
 // /library — per-user wishlists + saved builds (KV: library:<bungie_id>)
@@ -566,6 +567,57 @@ app.get("/api/fragment-stats", async (c) => {
     deltas[cid] = d;
   }
   return c.json({ deltas });
+});
+
+// Per-weapon LIFETIME usage (kills) from GetUniqueWeaponHistory, summed across the
+// user's characters — the honest "Charlemagne-like" usage signal (Bungie has no
+// global usage endpoint, but this gives real per-weapon usage per account). Cached
+// in KV per user and refreshed at most weekly. Also folds the snapshot into the
+// shared `usage:community` aggregate so the recommender can weight by what the
+// linked players actually run. Returns usage by weapon HASH (client maps → names).
+app.get("/api/usage", async (c) => {
+  const u = c.get("user");
+  const key = `usage:${u.bungie_id}`;
+  const WEEK = 7 * 24 * 3600 * 1000;
+  const cachedRaw = await c.env.DV_KV.get(key);
+  if (cachedRaw) {
+    const j = JSON.parse(cachedRaw);
+    if (j.updatedAt && Date.now() - j.updatedAt < WEEK) {
+      const comm = await c.env.DV_KV.get("usage:community");
+      return c.json({ ...j, community: comm ? JSON.parse(comm).weapons : {} });
+    }
+  }
+  const prof = await bungieGet(c.env, `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=200`, u.access_token);
+  const chars = Object.keys(prof?.characters?.data ?? {});
+  const weapons: Record<string, number> = {};
+  for (const cid of chars) {
+    try {
+      const uw = await bungieGet(c.env, `/Destiny2/${u.membership_type}/Account/${u.membership_id}/Character/${cid}/Stats/UniqueWeapons/`, u.access_token);
+      for (const w of uw?.weapons ?? []) {
+        const ref = w?.referenceId;
+        const kills = w?.values?.uniqueWeaponKills?.basic?.value ?? 0;
+        if (ref && kills) weapons[String(ref)] = (weapons[String(ref)] ?? 0) + kills;
+      }
+    } catch { /* skip a character that errors */ }
+  }
+  const out = { weapons, updatedAt: Date.now() };
+  await c.env.DV_KV.put(key, JSON.stringify(out));
+
+  // Fold into the community aggregate (lazy, weekly): replace this user's prior
+  // contribution. Keyed snapshot per user keeps the sum correct on refresh.
+  try {
+    const commRaw = await c.env.DV_KV.get("usage:community");
+    const comm = commRaw ? JSON.parse(commRaw) : { weapons: {}, contributors: {}, updatedAt: 0 };
+    const prev = comm.contributors[u.bungie_id] || {};
+    for (const [h, k] of Object.entries(prev)) comm.weapons[h] = Math.max(0, (comm.weapons[h] || 0) - (k as number));
+    for (const [h, k] of Object.entries(weapons)) comm.weapons[h] = (comm.weapons[h] || 0) + k;
+    comm.contributors[u.bungie_id] = weapons;
+    comm.updatedAt = Date.now();
+    await c.env.DV_KV.put("usage:community", JSON.stringify(comm));
+    return c.json({ ...out, community: comm.weapons });
+  } catch {
+    return c.json({ ...out, community: {} });
+  }
 });
 
 async function requireSession(c: any, next: any) {

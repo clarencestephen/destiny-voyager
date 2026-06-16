@@ -12,7 +12,7 @@ const THANKS: { heading: string; items: Link[] }[] = [
   {
     heading: "Data & API",
     items: [
-      { label: "Bungie", url: "https://www.bungie.net", note: "Destiny 2 & the Bungie.net API — all game data comes from here." },
+      { label: "Bungie", url: "https://www.bungie.net", note: "Destiny 2 & the Bungie.net API — all game data, plus per-account weapon-usage stats (GetUniqueWeaponHistory) that weight recommendations toward what you actually run." },
       { label: "Bungie.net API", url: "https://github.com/Bungie-net/api", note: "The official OpenAPI spec." },
       { label: "Destiny Item Manager (DIM)", url: "https://github.com/DestinyItemManager/DIM", note: "Search query language + season/source/event data. MIT licensed, © Destiny Item Manager." },
       { label: "Clarity", url: "https://www.d2clarity.com/", note: "Community-written perk & weapon descriptions. MIT." },

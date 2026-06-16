@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { recommendBuild, buildCFIndex, type SynergyData, type WeaponLite, type ArmorData, type CFIndex } from "@/lib/recommend";
+import { recommendBuild, buildCFIndex, type SynergyData, type WeaponLite, type ArmorData, type CFIndex, type UsageData } from "@/lib/recommend";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 
@@ -7,7 +7,9 @@ import { Card } from "@/components/ui/card";
  * /recommend — drive the build-coherence engine. Pick class · subclass · goal ·
  * (optional) weapon focus, and it assembles a coherent build: aspects, fragments,
  * weapons that roll synergistic perks, and the armor set whose bonus matches your
- * goal — each with a cited "why". Works anonymously (no Bungie calls).
+ * goal — each with a cited "why". Works anonymously; when signed in it also weights
+ * by your own + linked-players' real weapon usage (Bungie UniqueWeaponHistory) and
+ * flags what you own + where the rest drop.
  *
  * Engine: lib/recommend.ts over synergy.json + weapons.json + armor.json.
  */
@@ -31,6 +33,7 @@ export default function Recommend() {
   const [armor, setArmor] = useState<ArmorData>({ sets: {} });
   const [cf, setCf] = useState<CFIndex>({});
   const [owned, setOwned] = useState<Set<string> | null>(null);  // null = anonymous (no ownership info)
+  const [usage, setUsage] = useState<UsageData>({ weapons: {}, community: {} });
   const [loading, setLoading] = useState(true);
 
   const [cls, setCls] = useState<(typeof CLASSES)[number]>("Warlock");
@@ -49,6 +52,20 @@ export default function Recommend() {
       setWeapons(Object.entries(w).map(([hash, v]) => ({ hash, ...(v as object) }) as WeaponLite));
       setArmor(a);
       setCf(buildCFIndex(bl.builds || []));
+      // Usage layer — map the API's by-hash kills onto lowercase weapon names so
+      // it survives Adept/Timelost variants. Optional (signed-in only).
+      const nameOf = (h: string) => (w as Record<string, { n?: string }>)[h]?.n;
+      const byName = (m: Record<string, number>) => {
+        const out: Record<string, number> = {};
+        for (const [h, k] of Object.entries(m || {})) {
+          const n = nameOf(h)?.toLowerCase();
+          if (n) out[n] = (out[n] || 0) + k;
+        }
+        return out;
+      };
+      api.getUsage()
+        .then((raw) => setUsage({ weapons: byName(raw.weapons), community: byName(raw.community) }))
+        .catch(() => { /* anonymous — recommender still runs without usage */ });
     }).finally(() => setLoading(false));
     // Ownership is optional — only when signed in. Anonymous users still get recs.
     api.inventoryDecorated()
@@ -58,8 +75,8 @@ export default function Recommend() {
 
   const rec = useMemo(() => {
     if (!syn) return null;
-    return recommendBuild({ cls, element, goal, weaponType: weaponType || undefined }, syn, weapons, armor, cf);
-  }, [syn, weapons, armor, cf, cls, element, goal, weaponType]);
+    return recommendBuild({ cls, element, goal, weaponType: weaponType || undefined }, syn, weapons, armor, cf, usage);
+  }, [syn, weapons, armor, cf, usage, cls, element, goal, weaponType]);
 
   if (loading) return <div className="container py-20 font-ui text-muted">Loading the synergy graph…</div>;
 
@@ -164,7 +181,8 @@ export default function Recommend() {
             })}
             <p className="font-ui text-[11px] text-muted mt-1">
               The highlighted lead pick in each slot is the recommendation; only one Exotic can be equipped, so at most one slot leads with an Exotic.
-              {owned !== null ? " ✓ = in your vault; “need” shows where it drops." : " Sign in to see which you own + where the rest drop."}
+              {Object.keys(usage.weapons).length > 0 && " Weighted by your real lifetime weapon usage (Bungie) — what you actually run is boosted."}
+              {owned !== null ? " ✓ = in your vault; “need” shows where it drops." : " Sign in to see which you own, weight by your usage, + where the rest drop."}
             </p>
           </Section>
 

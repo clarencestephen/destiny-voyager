@@ -354,6 +354,12 @@ export const api = {
       body: JSON.stringify({ character_id, item_instance_ids, item_hashes }),
     }),
 
+  /** Per-weapon LIFETIME usage (kills) for the signed-in account + the linked-player
+   *  community aggregate — both keyed by weapon hash. Folds into the recommender as
+   *  the "what you / the community actually run" signal. Cached weekly server-side. */
+  getUsage: () =>
+    jsonFetch<{ weapons: Record<string, number>; community: Record<string, number>; updatedAt: number }>("/api/usage"),
+
   /** Per-character non-armor stat delta (character total − equipped-armor sum) =
    *  the subclass FRAGMENT stat bonuses/penalties the optimizer must add to its
    *  armor-only baseline so projections match the in-game character screen. */

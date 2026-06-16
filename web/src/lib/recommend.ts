@@ -32,6 +32,11 @@ export interface RecContext {
   weaponType?: string;  // favor an archetype, e.g. "grenade launcher"
 }
 
+/** Per-weapon usage (kills) keyed by LOWERCASE weapon name. From the Bungie API
+ *  UniqueWeaponHistory — `weapons` = the signed-in account, `community` = the sum
+ *  across linked players (the Charlemagne-like "what's actually run" signal). */
+export interface UsageData { weapons: Record<string, number>; community: Record<string, number>; }
+
 export interface Pick<T> { item: T; score: number; why: string }
 export interface BuildRec {
   theme: string[];
@@ -137,13 +142,18 @@ function weaponSynergy(w: WeaponLite, syn: SynergyData, theme: string[]): { scor
 
 const fmt = (kws: string[]) => kws.map((k) => k.replace(/-/g, " ")).join(", ");
 
-export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: WeaponLite[], armor: ArmorData, cf?: CFIndex): BuildRec {
+export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: WeaponLite[], armor: ArmorData, cf?: CFIndex, usage?: UsageData): BuildRec {
   const theme = deriveTheme(ctx);
   const goalKw = parseGoal(ctx.goal);
   const cls = ctx.cls.toLowerCase();
   const el = ctx.element.toLowerCase();
   const wantType = ctx.weaponType?.toLowerCase();
   const cfBucket = cf?.[`${cls}|${el}`];
+  // Usage layer: normalize kills 0..1 against the busiest weapon so a heavily-used
+  // weapon gets a bounded boost (personal up to +3, community up to +2) — a strong
+  // signal that never overrides element/synergy fit.
+  const maxPersonal = Math.max(1, ...Object.values(usage?.weapons || { _: 0 }));
+  const maxCommunity = Math.max(1, ...Object.values(usage?.community || { _: 0 }));
 
   // Fragments (this element) ranked by theme overlap.
   const fragments = syn.fragments
@@ -172,10 +182,15 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
       const elMatch = wEl === el ? 6 : wEl === "kinetic" ? 1 : -2;
       const typeMatch = wantType && w.t.toLowerCase().includes(wantType) ? 4 : 0;
       const cfCount = cfBucket?.weapons[w.n] || 0;       // co-occurs in real builds
-      const score = elMatch + typeMatch + syn2.score + cfCount * 2;
+      const personalKills = usage?.weapons[w.n.toLowerCase()] || 0;
+      const commKills = usage?.community[w.n.toLowerCase()] || 0;
+      const usageBoost = (personalKills / maxPersonal) * 3 + (commKills / maxCommunity) * 2;
+      const score = elMatch + typeMatch + syn2.score + cfCount * 2 + usageBoost;
       const why = [syn2.perks.length ? `rolls ${syn2.perks.join(", ")}` : `${w.el} ${w.t}`]
         .concat(wEl === el ? ["matches subclass — cheaper mods"] : [])
-        .concat(cfCount ? [`in ${cfCount} build${cfCount > 1 ? "s" : ""}`] : []).join(" · ");
+        .concat(cfCount ? [`in ${cfCount} build${cfCount > 1 ? "s" : ""}`] : [])
+        .concat(personalKills ? [`you've used it (${personalKills.toLocaleString()} kills)`]
+          : commKills ? ["run by linked players"] : []).join(" · ");
       return { item: w, score, why };
     })
     .filter((p) => p.score >= 3)
