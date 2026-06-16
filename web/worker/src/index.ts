@@ -573,8 +573,9 @@ app.get("/api/fragment-stats", async (c) => {
 // user's characters — the honest "Charlemagne-like" usage signal (Bungie has no
 // global usage endpoint, but this gives real per-weapon usage per account). Cached
 // in KV per user and refreshed at most weekly. Also folds the snapshot into the
-// shared `usage:community` aggregate so the recommender can weight by what the
-// linked players actually run. Returns usage by weapon HASH (client maps → names).
+// shared `usage:community` WEEKLY BATCH (each 7-day window is a fresh batch — no
+// time-series, no carry-over) so the recommender can weight by what the linked
+// players run that week. Returns usage by weapon HASH (client maps → names).
 app.get("/api/usage", async (c) => {
   const u = c.get("user");
   const key = `usage:${u.bungie_id}`;
@@ -603,16 +604,18 @@ app.get("/api/usage", async (c) => {
   const out = { weapons, updatedAt: Date.now() };
   await c.env.DV_KV.put(key, JSON.stringify(out));
 
-  // Fold into the community aggregate (lazy, weekly): replace this user's prior
-  // contribution. Keyed snapshot per user keeps the sum correct on refresh.
+  // Community popularity as a WEEKLY BATCH — each 7-day window is a fresh batch; a
+  // user contributes their snapshot at most once per window. No time-series diffing
+  // and no carry-over: every week is just a new batch.
   try {
+    const week = Math.floor(Date.now() / WEEK);
     const commRaw = await c.env.DV_KV.get("usage:community");
-    const comm = commRaw ? JSON.parse(commRaw) : { weapons: {}, contributors: {}, updatedAt: 0 };
-    const prev = comm.contributors[u.bungie_id] || {};
-    for (const [h, k] of Object.entries(prev)) comm.weapons[h] = Math.max(0, (comm.weapons[h] || 0) - (k as number));
-    for (const [h, k] of Object.entries(weapons)) comm.weapons[h] = (comm.weapons[h] || 0) + k;
-    comm.contributors[u.bungie_id] = weapons;
-    comm.updatedAt = Date.now();
+    let comm = commRaw ? JSON.parse(commRaw) : null;
+    if (!comm || comm.week !== week) comm = { week, weapons: {}, contributed: {} };  // new week → new batch
+    if (!comm.contributed[u.bungie_id]) {
+      for (const [h, k] of Object.entries(weapons)) comm.weapons[h] = (comm.weapons[h] || 0) + (k as number);
+      comm.contributed[u.bungie_id] = true;
+    }
     await c.env.DV_KV.put("usage:community", JSON.stringify(comm));
     return c.json({ ...out, community: comm.weapons });
   } catch {
