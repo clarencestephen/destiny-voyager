@@ -17,6 +17,7 @@ const CLASS_COLOR: Record<string, string> = {
 export default function Builds() {
   const [me, setMe] = useState<UserProfile | null>(null);
   const [items, setItems] = useState<Item[]>([]);
+  const [usage, setUsage] = useState<Record<string, number>>({});  // weapon hash → your lifetime kills
   const [builds, setBuilds] = useState<BuildTemplate[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [classFilter, setClassFilter] = useState<string | null>(null);
@@ -41,6 +42,7 @@ export default function Builds() {
         if (!classFilter && profile.primary_class) {
           setClassFilter(profile.primary_class);
         }
+        api.getUsage().then((u) => setUsage(u.weapons)).catch(() => { /* usage optional */ });
       } catch {
         // Not signed in — builds still browseable, just no fit %
       }
@@ -66,6 +68,26 @@ export default function Builds() {
     for (const b of filtered) map[b.id] = fitBuild(b, items);
     return map;
   }, [filtered, items]);
+
+  // Rank: prefer builds you can equip (fit %) AND whose weapons you actually run
+  // (your lifetime usage of the build's owned weapons). Score = fit + usage, 0..1 each.
+  const usageOf = (b: BuildTemplate) => {
+    const f = fits[b.id];
+    if (!f) return 0;
+    let s = 0;
+    for (const slot of [f.kinetic, f.energy, f.heavy]) {
+      if (slot.status === "owned") s += usage[String(slot.item.hash)] || 0;
+    }
+    return s;
+  };
+  const ranked = useMemo(() => {
+    if (!items.length) return filtered;   // anonymous → original order
+    const maxU = Math.max(1, ...filtered.map(usageOf));
+    return [...filtered].sort((a, b) =>
+      ((fits[b.id]?.fitPct ?? 0) + usageOf(b) / maxU) - ((fits[a.id]?.fitPct ?? 0) + usageOf(a) / maxU),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtered, fits, usage, items]);
 
   // ============================================================
   // Render
@@ -127,9 +149,14 @@ export default function Builds() {
 
       {/* List */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filtered.map((b) => {
+        {ranked.map((b) => {
           const fit = fits[b.id];
           const open = openId === b.id;
+          // your most-used weapon that this build calls for (drives the ranking)
+          let topW = ""; let topK = 0;
+          if (fit) for (const s of [fit.kinetic, fit.energy, fit.heavy]) {
+            if (s.status === "owned") { const k = usage[String(s.item.hash)] || 0; if (k > topK) { topK = k; topW = s.item.name; } }
+          }
           return (
             <Card
               key={b.id}
@@ -152,7 +179,14 @@ export default function Builds() {
                     <p className="font-ui text-xs text-muted mt-2 line-clamp-2">{b.playstyle}</p>
                   )}
                 </div>
-                <FitBadge fit={fit} loaded={!!me} />
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                  <FitBadge fit={fit} loaded={!!me} />
+                  {topK > 0 && (
+                    <span className="font-mono text-[9px] tracking-wide text-amber-300/80" title={`${topK.toLocaleString()} lifetime kills — ranks this build up`}>
+                      ★ {topW}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {open && (
