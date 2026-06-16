@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { recommendBuild, buildCFIndex, type SynergyData, type WeaponLite, type ArmorData, type CFIndex } from "@/lib/recommend";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 
 /**
@@ -29,6 +30,7 @@ export default function Recommend() {
   const [weapons, setWeapons] = useState<WeaponLite[]>([]);
   const [armor, setArmor] = useState<ArmorData>({ sets: {} });
   const [cf, setCf] = useState<CFIndex>({});
+  const [owned, setOwned] = useState<Set<string> | null>(null);  // null = anonymous (no ownership info)
   const [loading, setLoading] = useState(true);
 
   const [cls, setCls] = useState<(typeof CLASSES)[number]>("Warlock");
@@ -48,6 +50,10 @@ export default function Recommend() {
       setArmor(a);
       setCf(buildCFIndex(bl.builds || []));
     }).finally(() => setLoading(false));
+    // Ownership is optional — only when signed in. Anonymous users still get recs.
+    api.inventoryDecorated()
+      .then((items) => setOwned(new Set(items.filter((i) => i.name).map((i) => i.name.toLowerCase()))))
+      .catch(() => setOwned(null));
   }, []);
 
   const rec = useMemo(() => {
@@ -117,21 +123,49 @@ export default function Recommend() {
             </Section>
           </div>
 
-          <Section title={`Weapons${weaponType ? ` · ${cap(weaponType)} focus` : ""}`}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              {rec.weapons.map((p) => (
-                <div key={p.item.hash} className="flex items-center gap-2 px-2 py-1.5 rounded border border-border">
-                  {(p.item as any).icon && <img src={CDN + (p.item as any).icon} alt="" className="w-8 h-8 rounded border border-void shrink-0" />}
-                  <div className="min-w-0">
-                    <div className={`truncate font-ui text-sm ${p.item.exotic ? "text-amber-300" : "text-star"}`}>{p.item.n}</div>
-                    <div className="font-mono text-[10px] text-muted truncate">
-                      <span className={EL_COLOR[p.item.el.toLowerCase()] || ""}>{p.item.el}</span> {p.item.t} · {p.why}
-                    </div>
+          <Section title={`Weapons — one per slot, ≤1 Exotic${weaponType ? ` · ${cap(weaponType)} focus` : ""}`}>
+            {(["kinetic", "energy", "heavy"] as const).map((slot) => {
+              const picks = rec.weaponLoadout[slot];
+              return (
+                <div key={slot} className="mb-2.5">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-1">
+                    {slot === "heavy" ? "Power" : cap(slot)}
                   </div>
+                  {picks.length === 0 ? (
+                    <span className="text-muted text-xs italic px-1">no strong match — run anything</span>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {picks.map((p, idx) => {
+                        const own = owned?.has(p.item.n.toLowerCase());
+                        const src = ((p.item as any).source || "").replace(/^Source:\s*/i, "").trim();
+                        return (
+                          <div key={p.item.hash} className={`flex items-center gap-2 px-2 py-1.5 rounded border ${idx === 0 ? "border-saber/50 bg-saber/[0.03]" : "border-border"}`}>
+                            {(p.item as any).icon && <img src={CDN + (p.item as any).icon} alt="" className="w-8 h-8 rounded border border-void shrink-0" />}
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-1.5">
+                                <span className={`truncate font-ui text-sm ${p.item.exotic ? "text-amber-300" : "text-star"}`}>{p.item.n}</span>
+                                {p.item.exotic && <span className="text-[8px] font-mono uppercase text-amber-400 border border-amber-400/40 rounded px-1 shrink-0">exo</span>}
+                                {owned !== null && (own
+                                  ? <span className="text-emerald-400 text-xs shrink-0" title="in your vault">✓</span>
+                                  : <span className="text-amber-400/70 text-[9px] font-mono uppercase shrink-0">need</span>)}
+                              </div>
+                              <div className="font-mono text-[10px] text-muted truncate">
+                                <span className={EL_COLOR[p.item.el.toLowerCase()] || ""}>{p.item.el}</span> {p.item.t} · {p.why}
+                                {owned !== null && !own && src && <span className="text-muted/70"> · {src}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              ))}
-              {rec.weapons.length === 0 && <Empty />}
-            </div>
+              );
+            })}
+            <p className="font-ui text-[11px] text-muted mt-1">
+              The highlighted lead pick in each slot is the recommendation; only one Exotic can be equipped, so at most one slot leads with an Exotic.
+              {owned !== null ? " ✓ = in your vault; “need” shows where it drops." : " Sign in to see which you own + where the rest drop."}
+            </p>
           </Section>
 
           {rec.exotics.length > 0 && (

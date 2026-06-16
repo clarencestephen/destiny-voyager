@@ -38,7 +38,10 @@ export interface BuildRec {
   goalKeywords: string[];
   aspects: Pick<SynergyData["aspects"][number]>[];
   fragments: Pick<SynergyData["fragments"][number]>[];
-  weapons: Pick<WeaponLite>[];
+  weapons: Pick<WeaponLite>[];   // flat ranked list (kept for compat)
+  /** Per-slot weapon picks (ranked), with the ≤1-Exotic rule enforced on the top
+   *  pick of each slot — so the leading "loadout" is always legally equippable. */
+  weaponLoadout: { kinetic: Pick<WeaponLite>[]; energy: Pick<WeaponLite>[]; heavy: Pick<WeaponLite>[] };
   sets: Pick<{ hash: string; n: string; perks: any[] }>[];
   exotics: Pick<{ n: string }>[];   // exotic armor that co-occurs in real builds
   artifact: { name: string; picks: Pick<{ n: string; tier: number }>[] };  // seasonal artifact mods for the build
@@ -158,7 +161,7 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
     .slice(0, 2);
 
   // Weapons: element/type fit + perk-pool synergy with the theme.
-  const weaponPicks = weapons
+  const scored = weapons
     .map((w) => {
       const syn2 = weaponSynergy(w, syn, theme);
       // DPS element should align with the subclass — subclass-matched surge/
@@ -176,8 +179,34 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
       return { item: w, score, why };
     })
     .filter((p) => p.score >= 3)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 8);
+    .sort((a, b) => b.score - a.score);
+  // Collapse Adept / Timelost / base variants of the same weapon to the best-scored one.
+  const dseen = new Set<string>();
+  const dedup = scored.filter((p) => {
+    const k = p.item.n.toLowerCase();
+    if (dseen.has(k)) return false;
+    dseen.add(k); return true;
+  });
+  const weaponPicks = dedup.slice(0, 5);   // flat top-5 (cap)
+
+  // Per-slot picks (top 3 each), then enforce the ≤1-Exotic rule on the LEAD pick
+  // of each slot so the headline loadout is always legally equippable.
+  const weaponLoadout = {
+    kinetic: dedup.filter((p) => p.item.slot === "Kinetic").slice(0, 3),
+    energy:  dedup.filter((p) => p.item.slot === "Energy").slice(0, 3),
+    heavy:   dedup.filter((p) => p.item.slot === "Power").slice(0, 3),
+  };
+  const exoticLed = (["kinetic", "energy", "heavy"] as const).filter((k) => weaponLoadout[k][0]?.item.exotic);
+  if (exoticLed.length > 1) {
+    // keep the highest-scored Exotic lead; the others lead with their best Legendary.
+    const keep = [...exoticLed].sort((a, b) => weaponLoadout[b][0].score - weaponLoadout[a][0].score)[0];
+    for (const k of exoticLed) {
+      if (k === keep) continue;
+      const arr = weaponLoadout[k];
+      const li = arr.findIndex((p) => !p.item.exotic);
+      if (li > 0) { const [leg] = arr.splice(li, 1); arr.unshift(leg); }
+    }
+  }
 
   // Armor sets ranked by how well their bonus matches the goal (then theme).
   const sets = Object.entries(armor.sets)
@@ -210,10 +239,10 @@ export function recommendBuild(ctx: RecContext, syn: SynergyData, weapons: Weapo
     })
     .filter((p) => p.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, 6);
+    .slice(0, 5);
 
   return {
-    theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, sets, exotics,
+    theme, goalKeywords: goalKw, aspects, fragments, weapons: weaponPicks, weaponLoadout, sets, exotics,
     artifact: { name: syn.artifact?.name || "", picks: artifactPicks },
   };
 }
