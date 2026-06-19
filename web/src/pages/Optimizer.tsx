@@ -365,6 +365,9 @@ export default function Optimizer() {
   const [modCatalog, setModCatalog] = useState<ModCatalog | null>(null);
   const [manifest, setManifest] = useState<SlimManifest | null>(null);  // for socket mapping (Phase 4)
   const [armorSockets, setArmorSockets] = useState<ArmorSockets>({});   // baked mod-socket layout for equip
+  // Full armor-set catalog (all 56 named sets + 2pc/4pc perks) so the theme
+  // picker lists EVERY set, not just ones the user owns. ~5KB.
+  const [setsCatalog, setSetsCatalog] = useState<{ n: string; perks: { count: number; n: string }[] }[]>([]);
   const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
   const [dpsEls, setDpsEls] = useState<ModElement[]>([]);         // [] → follow subclass; multi = split surges
   const [incomingEls, setIncomingEls] = useState<ModElement[]>([]); // chest elemental resist targets (multi)
@@ -393,6 +396,7 @@ export default function Optimizer() {
         fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
         api.getFragmentStats().then((d) => setFragmentDeltas(d.deltas as Record<string, ArmorStats>)).catch(() => {});
         fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
+        fetch("/armor_sets.json").then((r) => r.json()).then(setSetsCatalog).catch(() => {});
         fetch("/encounters.json").then((r) => r.json())
           .then((d) => setEncData(d.activities ?? [])).catch(() => {});
         loadManifest().then(setManifest).catch(() => {});
@@ -455,23 +459,21 @@ export default function Optimizer() {
       .sort((a, b) => a.slot.localeCompare(b.slot) || a.name.localeCompare(b.name));
   }, [baseItems, cls]);
 
-  // Sets the user actually owns pieces of, with the piece count.
-  // Show only sets where the user has ≥2 pieces (anything less can't
-  // hit a meaningful theme-bonus threshold).
-  const setsOwned = useMemo(() => {
-    if (!cls) return [];
-    const counts: Record<string, number> = {};
+  // EVERY named set (complete catalog), each annotated with how many pieces the
+  // user owns (0 = not owned yet). Owned sets float to the top; the rest stay
+  // selectable so you can plan a build around a set you don't own all of yet.
+  const allSets = useMemo(() => {
+    const ownedBy: Record<string, number> = {};
     for (const it of items) {
-      if (!isArmor(it)) continue;
-      if (it.class !== cls && it.class !== "Any") continue;
-      if (!it.set) continue;
-      counts[it.set] = (counts[it.set] ?? 0) + 1;
+      if (!isArmor(it) || (it.class !== cls && it.class !== "Any") || !it.set) continue;
+      ownedBy[it.set] = (ownedBy[it.set] ?? 0) + 1;
     }
-    return Object.entries(counts)
-      .filter(([, n]) => n >= 2)
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-      .map(([setName, count]) => ({ setName, ownedCount: count }));
-  }, [items, cls]);
+    const names = new Set<string>(setsCatalog.map((s) => s.n));
+    for (const n of Object.keys(ownedBy)) names.add(n);
+    return [...names]
+      .map((setName) => ({ setName, ownedCount: ownedBy[setName] ?? 0 }))
+      .sort((a, b) => b.ownedCount - a.ownedCount || a.setName.localeCompare(b.setName));
+  }, [setsCatalog, items, cls]);
 
   const themeTotal = themeLocks.reduce((s, t) => s + (t.count || 0), 0);
 
@@ -883,8 +885,9 @@ export default function Optimizer() {
 
         {/* Theme / set lock — lock N pieces of one or more armor sets.
             Total count across rows is capped at 5; remaining slots are
-            unconstrained. Each row's "Set" dropdown lists sets where the
-            user owns ≥2 pieces (anything less can't reach a theme bonus). */}
+            unconstrained. The dropdown lists the COMPLETE set catalog (owned
+            sets first, with piece counts); unowned sets stay selectable so you
+            can plan a build toward a set you don't own all of yet. */}
         <div className="space-y-2">
           <div className="flex flex-wrap items-baseline gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
             <span className="text-muted w-20">Themes:</span>
@@ -896,8 +899,10 @@ export default function Optimizer() {
             </span>
           </div>
           {themeLocks.map((t, i) => {
-            const ownedPicked = setsOwned.find((s) => s.setName === t.setName);
-            const maxForThis = Math.min(5, (ownedPicked?.ownedCount ?? 5));
+            const picked = allSets.find((s) => s.setName === t.setName);
+            // Cap the count by owned pieces when the set is owned; leave the full
+            // 1–5 range available for sets you don't own yet (plan-ahead).
+            const maxForThis = Math.min(5, picked && picked.ownedCount > 0 ? picked.ownedCount : 5);
             const otherTotal = themeLocks
               .filter((_, idx) => idx !== i)
               .reduce((s, x) => s + (x.count || 0), 0);
@@ -910,9 +915,9 @@ export default function Optimizer() {
                   className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs min-w-[200px]"
                 >
                   <option value="">— pick a set —</option>
-                  {setsOwned.map((s) => (
+                  {allSets.map((s) => (
                     <option key={s.setName} value={s.setName}>
-                      {s.setName} ({s.ownedCount} owned)
+                      {s.setName}{s.ownedCount ? ` (${s.ownedCount} owned)` : " (not owned)"}
                     </option>
                   ))}
                 </select>
@@ -941,7 +946,7 @@ export default function Optimizer() {
               </div>
             );
           })}
-          {themeTotal < 5 && setsOwned.length > 0 && (
+          {themeTotal < 5 && allSets.length > 0 && (
             <button
               onClick={addTheme}
               className="ml-[5rem] font-mono text-[10px] uppercase tracking-[0.2em] text-saber hover:underline"
@@ -949,9 +954,9 @@ export default function Optimizer() {
               + add theme
             </button>
           )}
-          {setsOwned.length === 0 && cls && (
+          {allSets.length === 0 && cls && (
             <div className="ml-[5rem] font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60">
-              (no owned sets with ≥2 pieces yet)
+              (set catalog still loading…)
             </div>
           )}
         </div>

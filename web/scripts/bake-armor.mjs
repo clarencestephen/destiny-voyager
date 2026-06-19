@@ -109,6 +109,18 @@ for (const [hash, it] of Object.entries(items)) {
 const payload = { sets, items: out };
 fs.writeFileSync(OUT, JSON.stringify(payload));
 const mb = (fs.statSync(OUT).size / 1e6).toFixed(2);
+
+// Compact set-catalog index → web/public/armor_sets.json. Just the named sets
+// + their 2pc/4pc bonus perks, keyed by set NAME (matches the slim manifest's
+// item.st / inventory item.set). Tiny (~7KB) so pages like the Optimizer can
+// list ALL sets in a theme picker without loading the full 1.8MB armor.json.
+const SETS_OUT = path.resolve(__dirname, "../public/armor_sets.json");
+const setIndex = Object.values(sets)
+  .map((s) => ({ n: s.n, perks: s.perks.filter((p) => p.n).map((p) => ({ count: p.count, n: p.n })) }))
+  .sort((a, b) => a.n.localeCompare(b.n));
+fs.writeFileSync(SETS_OUT, JSON.stringify(setIndex));
+console.log(`✓ wrote ${SETS_OUT} (${setIndex.length} sets, ${(fs.statSync(SETS_OUT).size / 1024).toFixed(0)} KB)`);
+
 console.log(`\n✓ wrote ${OUT}`);
 const eofCount = Object.values(out).filter((d) => d.eof).length;
 console.log(`  armor pieces: ${kept} (${inSets} in named sets, ${eofCount} EoF archetype-capable) · ${Object.keys(sets).length} sets w/ bonuses`);
