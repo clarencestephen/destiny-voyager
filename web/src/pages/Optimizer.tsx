@@ -84,20 +84,33 @@ type Combo = {
   modsUsed: number;
 };
 
-/** Armor stat mod plan — assignment of stat mods to the 5 piece slots.
- *  Each piece has 1 mod socket; +10 (major) and +5 (minor) both fit. */
+/** One tuning mod (the Mod-2 socket on a piece). `minus` present → flexible
+ *  +5/−5 redistribution; `minus` absent → balanced +3 (net positive). */
+type TuningMod = { plus: StatKey; minus?: StatKey };
+
+/** Armor stat mod plan across the two stat-affecting sockets every EoF piece has:
+ *  Mod 1 (general) = a +10/+5 stat mod, Mod 2 = a tuning mod. Mods 3/4/5 are the
+ *  fixed utility template and don't touch stats, so they're not planned here. */
 type ModPlan = {
-  /** Number of +10 mods per stat. */
+  /** Mod-1 sockets: number of +10 mods per stat. */
   plus10: Partial<Record<StatKey, number>>;
-  /** Number of +5 mods per stat. */
+  /** Mod-1 sockets: number of +5 mods per stat. */
   plus5:  Partial<Record<StatKey, number>>;
-  /** Total mod slots consumed (sum across plus10 + plus5). */
+  /** Mod-2 sockets: one tuning mod per entry (≤5). */
+  tuning: TuningMod[];
+  /** Which tuning style won this combo: "flex" (+5/−5), "balanced" (+3), or null (no tuning helped). */
+  tuningStyle: "flex" | "balanced" | null;
+  /** Mod-1 sockets consumed (sum of plus10 + plus5). */
   used: number;
+  /** Mod-2 sockets consumed (tuning.length). */
+  tuningUsed: number;
 };
 
-const MOD_BUDGET = 5;  // 5 armor pieces, 1 stat mod socket each
+const MOD_BUDGET = 5;  // 5 armor pieces, 1 of each socket type (general + tuning) per piece
 const PLUS10 = 10;
 const PLUS5  = 5;
+const TUNE_FLEX = 5;   // flexible tuning mod: +5 to one stat, −5 from another
+const TUNE_BAL  = 3;   // balanced tuning mod: +3 toward a short stat (no subtraction)
 
 function isArmor(item: Item): boolean {
   return !!item.stats && ARMOR_SLOTS.includes(item.slot as ArmorSlot);
@@ -166,30 +179,30 @@ const GOAL_PRESETS: { label: string; hint: string; targets: StatTargets }[] = [
   { label: "All 100",  hint: "every stat to 100",                 targets: { health: 100, super: 100, weapons: 100, grenade: 100, class: 100, melee: 100 } },
 ];
 
+// Highest-priority targeted stat still short of its target (tie → biggest gap).
+// Returns null when every target is met.
+function neediestStat(proj: ArmorStats, targets: StatTargets): StatKey | null {
+  let best: StatKey | null = null, bestKey = -Infinity;
+  for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
+    if (!(t > 0) || proj[s] >= t) continue;
+    const key = STAT_PRIORITY[s] * 1000 + (t - proj[s]);   // priority first, gap as tiebreak
+    if (key > bestKey) { bestKey = key; best = s; }
+  }
+  return best;
+}
+
 /**
- * Plan armor stat mods to reach each USER-SPECIFIED target. No breakpoint logic —
- * we just hit the numbers the user typed (stats with no target are ignored).
- * Allocates cheapest-first (+5 only to close a ≤5 gap), highest-priority stats
+ * Plan the Mod-1 (general) sockets to reach each USER-SPECIFIED target. No
+ * breakpoint logic — we just hit the numbers the user set (untargeted stats are
+ * ignored). Cheapest-first (+5 only to close a ≤5 gap), highest-priority stats
  * first so a tight 5-slot budget favors the stats that matter most.
  */
 function planMods(totals: ArmorStats, targets: StatTargets): ModPlan {
-  const plan: ModPlan = { plus10: {}, plus5: {}, used: 0 };
+  const plan: ModPlan = { plus10: {}, plus5: {}, tuning: [], tuningStyle: null, used: 0, tuningUsed: 0 };
   const proj: Record<string, number> = { ...totals };
 
-  function addPlus10(s: StatKey): boolean {
-    if (plan.used >= MOD_BUDGET) return false;
-    plan.plus10[s] = (plan.plus10[s] ?? 0) + 1;
-    plan.used += 1;
-    proj[s] += PLUS10;
-    return true;
-  }
-  function addPlus5(s: StatKey): boolean {
-    if (plan.used >= MOD_BUDGET) return false;
-    plan.plus5[s] = (plan.plus5[s] ?? 0) + 1;
-    plan.used += 1;
-    proj[s] += PLUS5;
-    return true;
-  }
+  function addPlus10(s: StatKey) { plan.plus10[s] = (plan.plus10[s] ?? 0) + 1; plan.used += 1; proj[s] += PLUS10; }
+  function addPlus5(s: StatKey)  { plan.plus5[s]  = (plan.plus5[s] ?? 0)  + 1; plan.used += 1; proj[s] += PLUS5; }
 
   const entries = (Object.entries(targets) as [StatKey, number][])
     .filter(([, t]) => t > 0)
@@ -203,40 +216,107 @@ function planMods(totals: ArmorStats, targets: StatTargets): ModPlan {
   return plan;
 }
 
-function applyModPlan(totals: ArmorStats, plan: ModPlan): ArmorStats {
-  const out = { ...totals };
-  for (const [s, n] of Object.entries(plan.plus10)) {
-    out[s as StatKey] += (n ?? 0) * PLUS10;
+/** Flexible tuning: each mod moves +5 to the neediest stat and −5 from a donor
+ *  that can spare it (untargeted, or surplus ≥5 above its own target). Net-zero
+ *  per mod — only helps when there's a stat to rob. */
+function planTuningFlex(proj: ArmorStats, targets: StatTargets): TuningMod[] {
+  const tuning: TuningMod[] = [];
+  while (tuning.length < MOD_BUDGET) {
+    const recipient = neediestStat(proj, targets);
+    if (!recipient) break;
+    // Pick the donor with the most spare headroom: untargeted stats can give down
+    // to 0; targeted stats only down to their target. Most-spare first.
+    let donor: StatKey | null = null, bestSpare = -Infinity;
+    for (const s of STAT_KEYS) {
+      if (s === recipient) continue;
+      const floor = (targets[s] ?? 0) > 0 ? targets[s]! : 0;
+      const spare = (proj[s] ?? 0) - floor;
+      if (spare >= TUNE_FLEX && spare > bestSpare) { bestSpare = spare; donor = s; }
+    }
+    if (!donor) break;   // no legal donor → flex can't help further
+    proj[recipient] += TUNE_FLEX;
+    proj[donor]     -= TUNE_FLEX;
+    tuning.push({ plus: recipient, minus: donor });
   }
-  for (const [s, n] of Object.entries(plan.plus5)) {
-    out[s as StatKey] += (n ?? 0) * PLUS5;
+  return tuning;
+}
+
+/** Balanced tuning: each mod adds +3 to the neediest stat (no subtraction).
+ *  In-game this mod buffs your lowest stats; for targeting we steer the +3 to
+ *  whichever targeted stat is shortest. */
+function planTuningBalanced(proj: ArmorStats, targets: StatTargets): TuningMod[] {
+  const tuning: TuningMod[] = [];
+  while (tuning.length < MOD_BUDGET) {
+    const recipient = neediestStat(proj, targets);
+    if (!recipient) break;
+    proj[recipient] += TUNE_BAL;
+    tuning.push({ plus: recipient });
+  }
+  return tuning;
+}
+
+function applyTuning(totals: ArmorStats, tuning: TuningMod[]): ArmorStats {
+  const out: ArmorStats = { ...totals };
+  for (const t of tuning) {
+    out[t.plus] += t.minus ? TUNE_FLEX : TUNE_BAL;
+    if (t.minus) out[t.minus] -= TUNE_FLEX;
   }
   return out;
 }
 
-function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
-  // Plan mods first, then score using POST-MOD totals against the user's targets.
-  const modPlan = planMods(totals, targets);
-  const withMods = applyModPlan(totals, modPlan);
+function applyModPlan(totals: ArmorStats, plan: ModPlan): ArmorStats {
+  const out: ArmorStats = { ...totals };
+  for (const [s, n] of Object.entries(plan.plus10)) out[s as StatKey] += (n ?? 0) * PLUS10;
+  for (const [s, n] of Object.entries(plan.plus5))  out[s as StatKey] += (n ?? 0) * PLUS5;
+  return applyTuning(out, plan.tuning);
+}
 
-  let hits = 0;        // targets reached
-  let deficit = 0;     // total points short across unreached targets
-  let overshoot = 0;   // points spent above a target (mild waste)
-  let rawSum = 0;
+/** {hits, deficit} of a projected stat sheet against the targets. */
+function evalTargets(proj: ArmorStats, targets: StatTargets) {
+  let hits = 0, deficit = 0, overshoot = 0;
   for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
     if (!(t > 0)) continue;
-    const v = withMods[s] ?? 0;
+    const v = proj[s] ?? 0;
     if (v >= t) hits++; else deficit += t - v;
     overshoot += Math.max(0, v - t);
-    rawSum += v;
+  }
+  return { hits, deficit, overshoot };
+}
+
+function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
+  // 1) Plan the +10/+5 general mods. 2) On top of that, try BOTH tuning styles
+  //    and keep whichever scores better (more hits, then smaller deficit, then
+  //    fewer tuning mods). 3) Score the final post-mod sheet.
+  const modPlan = planMods(totals, targets);
+  const after10 = applyModPlan(totals, { ...modPlan, tuning: [] });  // +10 layer only
+
+  const flex = planTuningFlex({ ...after10 }, targets);
+  const bal  = planTuningBalanced({ ...after10 }, targets);
+  const eFlex = evalTargets(applyTuning(after10, flex), targets);
+  const eBal  = evalTargets(applyTuning(after10, bal), targets);
+  // Prefer more hits, then less deficit, then fewer tuning mods used.
+  const flexWins =
+    eFlex.hits !== eBal.hits ? eFlex.hits > eBal.hits
+    : eFlex.deficit !== eBal.deficit ? eFlex.deficit < eBal.deficit
+    : flex.length <= bal.length;
+  const winner = flexWins ? flex : bal;
+  modPlan.tuning = winner;
+  modPlan.tuningUsed = winner.length;
+  modPlan.tuningStyle = winner.length === 0 ? null : (flexWins ? "flex" : "balanced");
+
+  const withMods = applyModPlan(totals, modPlan);
+  const { hits, deficit, overshoot } = evalTargets(withMods, targets);
+  let rawSum = 0;
+  for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
+    if (t > 0) rawSum += withMods[s] ?? 0;
   }
   const totalPower = pieces.reduce((p, x) => p + (x.power ?? 0), 0);
-  // Score tuple (descending): hit the most targets, then get closest on the rest,
-  // then fewest mods, then least overshoot, then raw sum, then armor power.
+  // Score tuple (descending): most targets hit, then closest on the rest, then
+  // fewest mods (general + tuning), then least overshoot, raw sum, armor power.
   return {
-    score: [hits, -deficit, -modPlan.used, -overshoot, rawSum, totalPower],
+    score: [hits, -deficit, -(modPlan.used + modPlan.tuningUsed), -overshoot, rawSum, totalPower],
     activations: hits, stretchHits: 0, surplus: overshoot, rawSum, totalPower,
-    modPlan, withMods, modsUsed: modPlan.used,
+    modPlan, withMods, modsUsed: modPlan.used + modPlan.tuningUsed,
   };
 }
 
@@ -1337,6 +1417,31 @@ function ComboCard({
           );
         })}
       </div>
+
+      {/* Tuning plan (Mod-2 sockets) — best-of-both result: the optimizer scored
+          flexible +5/−5 and balanced +3 tuning and kept the better. Each chip is
+          one tuning mod to slot on a piece. The big stat numbers above already
+          include these. */}
+      {combo.modPlan.tuning.length > 0 && (
+        <div className="mb-3 rounded border border-cyan-400/30 bg-cyan-400/5 p-2.5">
+          <div className="flex items-baseline justify-between mb-1.5">
+            <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-cyan-300">
+              Tuning · {combo.modPlan.tuningStyle === "flex" ? "flexible +5 / −5" : "balanced +3"}
+            </span>
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">
+              {combo.modPlan.tuningUsed} of 5 tuning slots
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {combo.modPlan.tuning.map((t, i) => (
+              <span key={i} className="font-mono text-[10px] rounded border border-cyan-400/30 px-1.5 py-0.5 text-cyan-200">
+                +{t.minus ? TUNE_FLEX : TUNE_BAL} {STAT_LABEL[t.plus]}
+                {t.minus && <span className="text-rose-300"> · −{TUNE_FLEX} {STAT_LABEL[t.minus]}</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Mod loadout — the actual element-matched mods to socket per piece.
           Legs=Surge (DPS-weapon element) · Chest=Resist/Concussive (encounter)
