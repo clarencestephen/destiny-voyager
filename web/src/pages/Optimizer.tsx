@@ -145,6 +145,27 @@ const STAT_PRIORITY: Record<StatKey, number> = {
   health: 5, super: 4, weapons: 4, grenade: 3, class: 3, melee: 3,
 };
 
+// Per-stat target chips — tap a number instead of typing one. EoF stat model:
+// only 100 and 200 are meaningful breakpoints (reach 200 when achievable, else
+// 100+); Health consistently aims ~125; 150 is offered because Grenade scales
+// with the stat on turret builds (Helion) and users asked for the option.
+const STAT_CHIPS: Record<StatKey, number[]> = {
+  health:  [100, 125, 150, 200],
+  super:   [100, 150, 200],
+  weapons: [100, 150, 200],
+  grenade: [100, 150, 200],
+  class:   [100, 150, 200],
+  melee:   [100, 150, 200],
+};
+
+// One-tap goal profiles so a whole build target is a single click, not six
+// inputs. "Balanced" is the everyday default (Health 125, the rest 100); the
+// chips above fine-tune individual stats (e.g. push Super to 200, Grenade 150).
+const GOAL_PRESETS: { label: string; hint: string; targets: StatTargets }[] = [
+  { label: "Balanced", hint: "Health 125 · everything else 100", targets: { health: 125, super: 100, weapons: 100, grenade: 100, class: 100, melee: 100 } },
+  { label: "All 100",  hint: "every stat to 100",                 targets: { health: 100, super: 100, weapons: 100, grenade: 100, class: 100, melee: 100 } },
+];
+
 /**
  * Plan armor stat mods to reach each USER-SPECIFIED target. No breakpoint logic —
  * we just hit the numbers the user typed (stats with no target are ignored).
@@ -496,15 +517,18 @@ export default function Optimizer() {
     if (ch) setCls(ch.class.charAt(0).toUpperCase() + ch.class.slice(1) as any);
   }
 
-  function setTarget(s: StatKey, raw: string) {
-    const n = parseInt(raw, 10);
+  // Tap a chip to set one stat's target; pass null (the "—" chip) to ignore it.
+  function setStatTarget(s: StatKey, val: number | null) {
     setTargets((cur) => {
       const next = { ...cur };
-      if (raw.trim() === "" || !Number.isFinite(n) || n <= 0) delete next[s];
-      else next[s] = Math.min(200, n);   // clamp to the 200 cap
+      if (val == null || val <= 0) delete next[s];
+      else next[s] = Math.min(200, val);   // clamp to the 200 cap
       return next;
     });
   }
+  // Goal preset = fill the whole target profile in one tap (replace, don't merge).
+  const applyGoalPreset = (t: StatTargets) => setTargets({ ...t });
+  const clearTargets = () => setTargets({});
 
   const activity = encData.find((a) => a.slug === activitySlug) ?? null;
   const encounter = activity?.encounters.find((e) => e.slug === encounterSlug) ?? null;
@@ -636,27 +660,74 @@ export default function Optimizer() {
           </div>
         )}
 
-        {/* Target stats — type a goal per stat, leave the rest blank to ignore. */}
-        <div className="flex flex-wrap items-start gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+        {/* Goal presets — one tap fills the entire target profile so you don't
+            input six numbers. Tweak any individual stat with the chips below. */}
+        <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase">
+          <span className="text-muted w-20">Goal:</span>
+          {GOAL_PRESETS.map((p) => {
+            const active = STAT_KEYS.every((k) => (targets[k] ?? 0) === (p.targets[k] ?? 0));
+            return (
+              <button
+                key={p.label}
+                onClick={() => applyGoalPreset(p.targets)}
+                title={p.hint}
+                className={`px-3 py-1 rounded border transition-colors normal-case tracking-normal ${
+                  active ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
+                }`}
+              >
+                {p.label}
+              </button>
+            );
+          })}
+          <button
+            onClick={clearTargets}
+            className="px-3 py-1 rounded border border-border text-muted hover:text-saber transition-colors normal-case tracking-normal"
+          >
+            Clear
+          </button>
+          <span className="text-muted ml-1 normal-case tracking-normal text-[11px]">
+            Pick a goal, then fine-tune below. Mods are auto-planned to hit your targets.
+          </span>
+        </div>
+
+        {/* Per-stat target chips — tap a number instead of typing. "—" ignores the
+            stat. EoF model: 100 / 200 are the breakpoints (Health also 125). */}
+        <div className="flex flex-wrap items-start gap-x-5 gap-y-3 font-mono text-[10px] tracking-[0.25em] uppercase">
           <span className="text-muted w-20 pt-1">Target:</span>
           {STAT_KEYS.map((s) => {
-            const on = (targets[s] ?? 0) > 0;
+            const cur = targets[s] ?? 0;
             return (
               <div key={s} className="flex flex-col items-center gap-1">
-                <span className={on ? "text-saber" : "text-muted"}>{STAT_LABEL[s]}</span>
-                <input
-                  type="number" inputMode="numeric" min={0} max={200} step={10}
-                  value={targets[s] ?? ""}
-                  onChange={(e) => setTarget(s, e.target.value)}
-                  placeholder="—"
-                  className={`w-14 bg-void/40 border rounded px-1.5 py-1 text-center font-ui text-sm normal-case tracking-normal outline-none focus:border-saber ${on ? "border-saber/60 text-saber" : "border-border text-muted"}`}
-                />
+                <span className={cur > 0 ? "text-saber" : "text-muted"}>{STAT_LABEL[s]}</span>
+                <div className="flex items-center gap-0.5">
+                  <button
+                    onClick={() => setStatTarget(s, null)}
+                    className={`w-6 py-1 rounded border text-center transition-colors ${
+                      cur === 0 ? "border-saber/60 text-saber" : "border-border text-muted hover:text-foreground"
+                    }`}
+                  >
+                    —
+                  </button>
+                  {STAT_CHIPS[s].map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setStatTarget(s, cur === v ? null : v)}
+                      className={`w-8 py-1 rounded border text-center transition-colors ${
+                        cur === v ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
+                      }`}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
               </div>
             );
           })}
-          <span className="text-muted ml-1 normal-case tracking-normal text-[11px] pt-1.5 max-w-[260px]">
-            {selected.length ? `Optimizing ${selected.length} stat${selected.length === 1 ? "" : "s"} to your targets` : "Type a goal (e.g. 100) for the stats you want; leave the rest blank."}
-          </span>
+        </div>
+        <div className="ml-[5rem] -mt-2 font-mono text-[11px] normal-case tracking-normal text-muted">
+          {selected.length
+            ? `Optimizing ${selected.length} stat${selected.length === 1 ? "" : "s"} to your targets — mods auto-planned last to hit them.`
+            : "Pick a goal preset or tap a target per stat to begin."}
         </div>
 
         {/* Encounter — pre-sets the chest resist context from the raid KB
