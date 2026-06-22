@@ -25,10 +25,9 @@ const CLASS_COLOR: Record<string, string> = {
   warlock:"text-warlock",
 };
 
-// Subclass elements drive Loader/Siphon + the Harmonic fallback; weapon
-// elements (incl. Kinetic) drive the Surge. Colours echo the in-game damage types.
+// The five subclass elements — drive the adaptive Subclass Weapon Surge (Legs)
+// and Subclass Resistance (Chest) in the mod template. Colours echo damage types.
 const SUBCLASS_ELEMENTS: ModElement[] = ["Arc", "Solar", "Void", "Stasis", "Strand"];
-const WEAPON_ELEMENTS:   ModElement[] = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand"];
 const EL_COLOR: Record<string, string> = {
   Kinetic: "text-zinc-200", Arc: "text-cyan-300", Solar: "text-orange-400",
   Void: "text-violet-400", Stasis: "text-sky-300", Strand: "text-green-400",
@@ -47,14 +46,34 @@ const SLOT_TO_MOD: Record<string, keyof ModLoadout["slots"]> = {
 type TemplateSlot = keyof ModLoadout["slots"];   // "Helmet" | "Arms" | "Chest" | "Legs" | "Class"
 type ModTemplate = Record<TemplateSlot, number[]>;
 const TEMPLATE_SLOTS: TemplateSlot[] = ["Helmet", "Arms", "Chest", "Legs", "Class"];
+
+// Adaptive sentinels — a template entry of ADAPT_SURGE/ADAPT_RESIST resolves to
+// the surge/resistance matching the chosen subclass element at build time, so
+// "Subclass Weapon Surge" / "Subclass Resistance" follow your subclass (Void by
+// default) instead of being pinned to one element.
+const ADAPT_SURGE = -1;
+const ADAPT_RESIST = -2;
+const SURGE_BY_EL: Record<string, number> = {
+  Arc: 1834163303, Solar: 2319885414, Void: 3467460423, Stasis: 2921714558, Strand: 3112965625,
+};
+const RESIST_BY_EL: Record<string, number> = {
+  Arc: 953234331, Solar: 3194530172, Void: 3410844187, Stasis: 638704972, Strand: 2959732323,
+};
+function resolveTemplateHash(h: number, subclassEl: ModElement): number {
+  const el = subclassEl || "Void";
+  if (h === ADAPT_SURGE)  return SURGE_BY_EL[el]  ?? SURGE_BY_EL.Void;
+  if (h === ADAPT_RESIST) return RESIST_BY_EL[el] ?? RESIST_BY_EL.Void;
+  return h;
+}
+
 const DEFAULT_MOD_TEMPLATE: ModTemplate = {
   Helmet: [2595839237, 554409585, 3832366019],   // Special Ammo Finder · Heavy Ammo Finder · Harmonic Siphon
   Arms:   [2657604783, 1677180919, 1781551382],  // Harmonic Loader · Harmonic Dexterity · Grenade Font
-  Chest:  [3410844187, 3719981603, 686455429],   // Void Resistance · Concussive Dampener · Health Font
-  Legs:   [3467460423, 3994043492, 1133590731],  // Void Weapon Surge · Stacks on Stacks · Enhanced Athletics
+  Chest:  [ADAPT_RESIST, 3719981603, 686455429], // Subclass Resistance · Concussive Dampener · Health Font
+  Legs:   [ADAPT_SURGE, 3994043492, 1133590731], // Subclass Weapon Surge · Stacks on Stacks · Enhanced Athletics
   Class:  [4081595582, 1755737153, 1193713026],  // Proximity Ward · Time Dilation · Class Font
 };
-const MOD_TEMPLATE_KEY = "dv_mod_template_v1";
+const MOD_TEMPLATE_KEY = "dv_mod_template_v2";   // v2: adaptive surge/resist sentinels
 
 function loadModTemplate(): ModTemplate {
   try {
@@ -66,18 +85,6 @@ function loadModTemplate(): ModTemplate {
     for (const s of TEMPLATE_SLOTS) out[s] = Array.isArray(t[s]) ? t[s].slice(0, 3) : DEFAULT_MOD_TEMPLATE[s];
     return out;
   } catch { return DEFAULT_MOD_TEMPLATE; }
-}
-
-// Per-encounter mod hints baked from the raid KB (web/public/encounters.json,
-// via raid_context/bake_encounters.py). Selecting an encounter pre-sets the
-// chest resist / Concussive context — Phase 3 encounter-aware mods.
-interface EncounterHint {
-  slug: string; name: string; order: number;
-  incoming_elements: ModElement[]; concussive: boolean;
-  surges: ModElement[]; champions: string[];
-}
-interface ActivityHint {
-  slug: string; name: string; type: string; encounters: EncounterHint[];
 }
 
 /** User-entered per-stat targets — the value to optimize each stat toward.
@@ -365,7 +372,7 @@ function findStatMod(catalog: ModCatalog, stat: StatKey, mag: number): Mod | nul
  * API-insertable, so it stays a recommendation slotted in-game. Feeds straight
  * into buildEquipPlan (stat → General, the rest → slot sockets in order).
  */
-function buildTemplateLoadout(modPlan: ModPlan, template: ModTemplate, catalog: ModCatalog): ModLoadout {
+function buildTemplateLoadout(modPlan: ModPlan, template: ModTemplate, catalog: ModCatalog, subclassEl: ModElement): ModLoadout {
   // Flatten planned stat mods (≤5; +10s before +5s, highest-priority stat first).
   const statMods: Mod[] = [];
   const ordered = STAT_KEYS.slice().sort((a, b) => STAT_PRIORITY[b] - STAT_PRIORITY[a]);
@@ -377,7 +384,8 @@ function buildTemplateLoadout(modPlan: ModPlan, template: ModTemplate, catalog: 
     const mods: Mod[] = [];
     const stat = statMods[i];                       // one stat mod per piece (General socket)
     if (stat) mods.push(stat);
-    for (const h of template[slot] ?? []) {         // Mods 3/4/5 (slot sockets)
+    for (const raw of template[slot] ?? []) {       // Mods 3/4/5 (slot sockets)
+      const h = resolveTemplateHash(raw, subclassEl);   // adaptive surge/resist → subclass element
       const e = catalog[String(h)];
       if (e) mods.push({ hash: h, ...e });
     }
@@ -565,15 +573,11 @@ export default function Optimizer() {
     }
     return out;
   }, [modCatalog]);
-  const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
-  const [dpsEls, setDpsEls] = useState<ModElement[]>([]);         // [] → follow subclass; multi = split surges
-  const [incomingEls, setIncomingEls] = useState<ModElement[]>([]); // chest elemental resist targets (multi)
-  const [meleeResist, setMeleeResist] = useState(false);          // Melee Damage Resistance (chest)
-  const [concussive, setConcussive] = useState(false);
-  // Encounter-aware context (Phase 3) — drives the chest resist from the raid KB.
-  const [encData, setEncData] = useState<ActivityHint[]>([]);
-  const [activitySlug, setActivitySlug] = useState<string>("");
-  const [encounterSlug, setEncounterSlug] = useState<string>("");
+  // The one element control that remains: the subclass drives the adaptive
+  // Subclass Weapon Surge (Legs) + Subclass Resistance (Chest) in the template.
+  // Defaults to Void (the user's Eutechnology build). Harmonic siphon/loader/dex
+  // already auto-match the subclass in-game, so they need no element here.
+  const [subclassEl, setSubclassEl] = useState<ModElement>("Void");
   // Builds-around-an-exotic (Phase 5).
   const [builds, setBuilds] = useState<BuildTemplate[]>([]);
   const [selectedBuildId, setSelectedBuildId] = useState<string>("");
@@ -594,8 +598,6 @@ export default function Optimizer() {
         api.getFragmentStats().then((d) => setFragmentDeltas(d.deltas as Record<string, ArmorStats>)).catch(() => {});
         fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
         fetch("/armor_sets.json").then((r) => r.json()).then(setSetsCatalog).catch(() => {});
-        fetch("/encounters.json").then((r) => r.json())
-          .then((d) => setEncData(d.activities ?? [])).catch(() => {});
         loadManifest().then(setManifest).catch(() => {});
         loadBuilds().then((m) => setBuilds(m.builds)).catch(() => {});
         const pc = profile.primary_class;
@@ -705,21 +707,6 @@ export default function Optimizer() {
   // Goal preset = fill the whole target profile in one tap (replace, don't merge).
   const applyGoalPreset = (t: StatTargets) => setTargets({ ...t });
   const clearTargets = () => setTargets({});
-
-  const activity = encData.find((a) => a.slug === activitySlug) ?? null;
-  const encounter = activity?.encounters.find((e) => e.slug === encounterSlug) ?? null;
-
-  // Selecting an encounter pre-sets the chest resist context from the raid KB.
-  // Prefer a specific incoming element; fall back to Concussive. The user can
-  // still override any of it below. Legs surge stays weapon-driven.
-  function pickEncounter(slug: string) {
-    setEncounterSlug(slug);
-    const enc = activity?.encounters.find((e) => e.slug === slug);
-    if (!enc) return;
-    if (enc.incoming_elements.length) { setIncomingEls(enc.incoming_elements); setConcussive(false); }
-    else if (enc.concussive) { setConcussive(true); setIncomingEls([]); }
-    if (enc.surges.length) setDpsEls(enc.surges);
-  }
 
   function runOptimize() {
     if (!cls || selected.length === 0) return;
@@ -906,122 +893,25 @@ export default function Optimizer() {
             : "Pick a goal preset or tap a target per stat to begin."}
         </div>
 
-        {/* Encounter — pre-sets the chest resist context from the raid KB
-            (Phase 3). Optional; pick an activity + encounter and the defensive
-            mods snap to that fight, then tweak below. */}
-        {encData.length > 0 && (
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase border-t border-border/60 pt-4">
-            <span className="text-muted w-20">Encounter:</span>
-            <select
-              value={activitySlug}
-              onChange={(e) => { setActivitySlug(e.target.value); setEncounterSlug(""); }}
-              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[200px]"
-            >
-              <option value="">— any activity —</option>
-              {["raid", "dungeon"].map((t) => (
-                <optgroup key={t} label={t === "raid" ? "Raids" : "Dungeons"}>
-                  {encData.filter((a) => a.type === t).map((a) => (
-                    <option key={a.slug} value={a.slug}>{a.name}</option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-            <select
-              value={encounterSlug}
-              onChange={(e) => pickEncounter(e.target.value)}
-              disabled={!activity}
-              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[220px] disabled:opacity-40"
-            >
-              <option value="">— pick encounter —</option>
-              {activity?.encounters.map((enc) => (
-                <option key={enc.slug} value={enc.slug}>{enc.order}. {enc.name}</option>
-              ))}
-            </select>
-            {encounter && (
-              <span className="text-muted normal-case tracking-normal text-[11px]">
-                {encounter.incoming_elements.length ? `incoming ${encounter.incoming_elements.join("/")}` : "no incoming data"}
-                {encounter.concussive ? " · explosive" : ""}
-                {encounter.champions.length ? ` · ${encounter.champions.map((c) => `anti-${c}`).join("/")}` : ""}
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Mods — element context for the mod-loadout preview. Subclass
-            element drives Loader/Siphon (build-matched, or Harmonic when
-            unset); the DPS-weapon element drives the offensive Surge; the
-            incoming-damage element (+ Concussive) drives the chest resist.
-            Anti-cross-pollination is enforced by the selectMods() engine. */}
-        <div className="space-y-2 border-t border-border/60 pt-4">
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-            <span className="text-muted w-20">Subclass:</span>
-            {SUBCLASS_ELEMENTS.map((e) => (
-              <button
-                key={e}
-                onClick={() => setSubclassEl((cur) => (cur === e ? "" : e))}
-                className={`px-3 py-1 rounded border transition-colors ${
-                  subclassEl === e ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {e}
-              </button>
-            ))}
-            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
-              {subclassEl ? `${subclassEl} Loader · ${subclassEl} Siphon` : "Harmonic (auto-matches subclass)"}
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-            <span className="text-muted w-20">DPS weapon:</span>
-            {WEAPON_ELEMENTS.map((e) => (
-              <button
-                key={e}
-                onClick={() => setDpsEls((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]))}
-                className={`px-3 py-1 rounded border transition-colors ${
-                  dpsEls.includes(e) ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {e}
-              </button>
-            ))}
-            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
-              {dpsEls.length ? `${dpsEls.join(" + ")} Weapon Surge (legs)`
-                : subclassEl ? `${subclassEl} Weapon Surge (legs)` : "Surge follows subclass — pick 1+ for split surges"}
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-            <span className="text-muted w-20">Incoming:</span>
-            {SUBCLASS_ELEMENTS.map((e) => (
-              <button
-                key={e}
-                onClick={() => setIncomingEls((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]))}
-                className={`px-3 py-1 rounded border transition-colors ${
-                  incomingEls.includes(e) ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {e}
-              </button>
-            ))}
+        {/* Subclass — the one element control. Drives the adaptive Subclass
+            Weapon Surge (Legs) + Subclass Resistance (Chest) in the template;
+            the Harmonic siphon/loader/dexterity auto-match your subclass in-game. */}
+        <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase border-t border-border/60 pt-4">
+          <span className="text-muted w-20">Subclass:</span>
+          {SUBCLASS_ELEMENTS.map((e) => (
             <button
-              onClick={() => setMeleeResist((m) => !m)}
+              key={e}
+              onClick={() => setSubclassEl(e)}
               className={`px-3 py-1 rounded border transition-colors ${
-                meleeResist ? "text-rose-300 border-rose-300" : "border-border text-muted hover:text-foreground"
+                subclassEl === e ? `${EL_COLOR[e]} border-current` : "border-border text-muted hover:text-foreground"
               }`}
             >
-              Melee
+              {e}
             </button>
-            <button
-              onClick={() => setConcussive((c) => !c)}
-              className={`px-3 py-1 rounded border transition-colors ${
-                concussive ? "text-amber-300 border-amber-300" : "border-border text-muted hover:text-foreground"
-              }`}
-            >
-              Concussive
-            </button>
-            <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
-              {[concussive && "Concussive Dampener", ...incomingEls.map((e) => `${e} Resist`), meleeResist && "Melee Resist"]
-                .filter(Boolean).join(" · ") || "chest = subclass-matched resist"}
-            </span>
-          </div>
+          ))}
+          <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
+            {(subclassEl || "Void")} Weapon Surge (legs) · {(subclassEl || "Void")} Resistance (chest)
+          </span>
         </div>
 
         {/* Archetype filter — restrict non-exotic pieces to one or more
@@ -1235,7 +1125,14 @@ export default function Optimizer() {
               </div>
               {!modCatalog && <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60">mod catalog loading…</div>}
               {modCatalog && TEMPLATE_SLOTS.map((slot) => {
-                const energy = (modTemplate[slot] ?? []).reduce((a, h) => a + (modCatalog[String(h)]?.cost ?? 0), 0);
+                const el = subclassEl || "Void";
+                // Prepend the subclass-adaptive option on the slots that carry it.
+                const adaptive: { hash: number; n: string; cost: number }[] =
+                  slot === "Legs"  ? [{ hash: ADAPT_SURGE,  n: `Subclass Weapon Surge (→ ${el})`, cost: modCatalog[String(SURGE_BY_EL[el])]?.cost ?? 3 }]
+                  : slot === "Chest" ? [{ hash: ADAPT_RESIST, n: `Subclass Resistance (→ ${el})`,    cost: modCatalog[String(RESIST_BY_EL[el])]?.cost ?? 2 }]
+                  : [];
+                const opts = [...adaptive, ...modsBySlot[slot]];
+                const energy = (modTemplate[slot] ?? []).reduce((a, h) => a + (modCatalog[String(resolveTemplateHash(h, subclassEl))]?.cost ?? 0), 0);
                 return (
                   <div key={slot} className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted w-20">{slot}</span>
@@ -1246,7 +1143,7 @@ export default function Optimizer() {
                         onChange={(e) => setTemplateMod(slot, idx, Number(e.target.value))}
                         className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs min-w-[180px]"
                       >
-                        {modsBySlot[slot].map((m) => (
+                        {opts.map((m) => (
                           <option key={m.hash} value={m.hash}>{m.n} ({m.cost}e)</option>
                         ))}
                       </select>
@@ -1295,6 +1192,7 @@ export default function Optimizer() {
             allItems={items}
             cls={cls}
             modTemplate={modTemplate}
+            subclassEl={subclassEl}
             armorSockets={armorSockets}
           />
         ))}
@@ -1318,21 +1216,21 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, targets, activeCharId, characters,
-  modCatalog, manifest, allItems, cls, modTemplate, armorSockets,
+  modCatalog, manifest, allItems, cls, modTemplate, subclassEl, armorSockets,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; targets: StatTargets;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
   allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
-  modTemplate: ModTemplate; armorSockets: ArmorSockets;
+  modTemplate: ModTemplate; subclassEl: ModElement; armorSockets: ArmorSockets;
 }) {
   // The mod loadout = the optimizer's planned +10/+5 stat mods (Mod 1, General
   // socket) + the user's fixed utility template (Mods 3/4/5, slot sockets). This
   // is both the preview and what gets equipped — edit defaults in the panel above.
   const loadout = useMemo<ModLoadout | null>(() => {
     if (!modCatalog) return null;
-    return buildTemplateLoadout(combo.modPlan, modTemplate, modCatalog);
-  }, [modCatalog, modTemplate, combo]);
+    return buildTemplateLoadout(combo.modPlan, modTemplate, modCatalog, subclassEl);
+  }, [modCatalog, modTemplate, subclassEl, combo]);
   const [equipState, setEquipState] = useState<
     | { kind: "idle" }
     | { kind: "working" }
