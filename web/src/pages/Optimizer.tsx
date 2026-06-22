@@ -7,8 +7,8 @@ import {
 } from "@/lib/api";
 import { loadBuilds, buildsForClass, type BuildTemplate } from "@/lib/builds";
 import {
-  selectMods, type ModCatalog, type ModLoadout,
-  type Element as ModElement, type StatModRequest,
+  type ModCatalog, type ModLoadout, type Mod,
+  type Element as ModElement,
 } from "@/lib/mods";
 import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem, type ArmorSockets } from "@/lib/equipPlan";
 
@@ -38,6 +38,35 @@ const EL_COLOR: Record<string, string> = {
 const SLOT_TO_MOD: Record<string, keyof ModLoadout["slots"]> = {
   Helmet: "Helmet", Gauntlets: "Arms", Chest: "Chest", Legs: "Legs", Class: "Class",
 };
+
+// Default mod template — the FIXED utility mods (Mods 3/4/5) per slot, from the
+// user's standard loadout screenshot. Mod 1 (+10 stat) is planned by the
+// optimizer; Mod 2 (tuning) is planned + shown but slotted in the in-game tuning
+// UI (the tuning socket isn't API-insertable). Editable in the Defaults panel
+// and persisted per-device. Hashes resolved from the live manifest (mods.json).
+type TemplateSlot = keyof ModLoadout["slots"];   // "Helmet" | "Arms" | "Chest" | "Legs" | "Class"
+type ModTemplate = Record<TemplateSlot, number[]>;
+const TEMPLATE_SLOTS: TemplateSlot[] = ["Helmet", "Arms", "Chest", "Legs", "Class"];
+const DEFAULT_MOD_TEMPLATE: ModTemplate = {
+  Helmet: [2595839237, 554409585, 3832366019],   // Special Ammo Finder · Heavy Ammo Finder · Harmonic Siphon
+  Arms:   [2657604783, 1677180919, 1781551382],  // Harmonic Loader · Harmonic Dexterity · Grenade Font
+  Chest:  [3410844187, 3719981603, 686455429],   // Void Resistance · Concussive Dampener · Health Font
+  Legs:   [3467460423, 3994043492, 1133590731],  // Void Weapon Surge · Stacks on Stacks · Enhanced Athletics
+  Class:  [4081595582, 1755737153, 1193713026],  // Proximity Ward · Time Dilation · Class Font
+};
+const MOD_TEMPLATE_KEY = "dv_mod_template_v1";
+
+function loadModTemplate(): ModTemplate {
+  try {
+    const raw = localStorage.getItem(MOD_TEMPLATE_KEY);
+    if (!raw) return DEFAULT_MOD_TEMPLATE;
+    const t = JSON.parse(raw);
+    // Validate shape; fall back to defaults for any missing slot.
+    const out = {} as ModTemplate;
+    for (const s of TEMPLATE_SLOTS) out[s] = Array.isArray(t[s]) ? t[s].slice(0, 3) : DEFAULT_MOD_TEMPLATE[s];
+    return out;
+  } catch { return DEFAULT_MOD_TEMPLATE; }
+}
 
 // Per-encounter mod hints baked from the raid KB (web/public/encounters.json,
 // via raid_context/bake_encounters.py). Selecting an encounter pre-sets the
@@ -320,6 +349,44 @@ function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
   };
 }
 
+// Resolve a planned stat mod ({stat,mag}) to its concrete catalog mod.
+function findStatMod(catalog: ModCatalog, stat: StatKey, mag: number): Mod | null {
+  for (const [h, e] of Object.entries(catalog)) {
+    if (e.fam === "stat" && e.stat === stat && e.mag === mag) return { hash: Number(h), ...e };
+  }
+  return null;
+}
+
+/**
+ * Build the equip mod loadout from the user's fixed template + the optimizer's
+ * planned +10/+5 stat mods. Each piece's General socket gets one stat mod (Mod 1,
+ * distributed one-per-piece, biggest first); its slot sockets get the template's
+ * Mods 3/4/5. Mod 2 (tuning) is NOT placed here — the tuning socket isn't
+ * API-insertable, so it stays a recommendation slotted in-game. Feeds straight
+ * into buildEquipPlan (stat → General, the rest → slot sockets in order).
+ */
+function buildTemplateLoadout(modPlan: ModPlan, template: ModTemplate, catalog: ModCatalog): ModLoadout {
+  // Flatten planned stat mods (≤5; +10s before +5s, highest-priority stat first).
+  const statMods: Mod[] = [];
+  const ordered = STAT_KEYS.slice().sort((a, b) => STAT_PRIORITY[b] - STAT_PRIORITY[a]);
+  for (const s of ordered) for (let k = 0; k < (modPlan.plus10[s] ?? 0); k++) { const m = findStatMod(catalog, s, 10); if (m) statMods.push(m); }
+  for (const s of ordered) for (let k = 0; k < (modPlan.plus5[s] ?? 0); k++)  { const m = findStatMod(catalog, s, 5);  if (m) statMods.push(m); }
+
+  const slots = {} as ModLoadout["slots"];
+  TEMPLATE_SLOTS.forEach((slot, i) => {
+    const mods: Mod[] = [];
+    const stat = statMods[i];                       // one stat mod per piece (General socket)
+    if (stat) mods.push(stat);
+    for (const h of template[slot] ?? []) {         // Mods 3/4/5 (slot sockets)
+      const e = catalog[String(h)];
+      if (e) mods.push({ hash: h, ...e });
+    }
+    const energyUsed = mods.reduce((a, m) => a + (m.cost ?? 0), 0);
+    slots[slot] = { slot, mods, energyUsed, energyBudget: 10, rationale: "your default template" };
+  });
+  return { slots, warnings: [] };
+}
+
 function compareScore(a: number[], b: number[]): number {
   for (let i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) return b[i] - a[i];  // desc
@@ -469,6 +536,35 @@ export default function Optimizer() {
   // Full armor-set catalog (all 56 named sets + 2pc/4pc perks) so the theme
   // picker lists EVERY set, not just ones the user owns. ~5KB.
   const [setsCatalog, setSetsCatalog] = useState<{ n: string; perks: { count: number; n: string }[] }[]>([]);
+  // Fixed Mods 3/4/5 template (per slot), defaulting to the user's screenshot.
+  const [modTemplate, setModTemplate] = useState<ModTemplate>(() => loadModTemplate());
+  const [showDefaults, setShowDefaults] = useState(false);
+  function setTemplateMod(slot: TemplateSlot, idx: number, hash: number) {
+    setModTemplate((cur) => {
+      const next = { ...cur, [slot]: [...(cur[slot] ?? [])] };
+      next[slot][idx] = hash;
+      try { localStorage.setItem(MOD_TEMPLATE_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
+  }
+  function resetTemplate() {
+    setModTemplate(DEFAULT_MOD_TEMPLATE);
+    try { localStorage.removeItem(MOD_TEMPLATE_KEY); } catch { /* ignore */ }
+  }
+  // Candidate utility mods per slot for the Defaults dropdowns (everything that
+  // fits that slot's mod sockets — excludes the General/stat-socket mods).
+  const modsBySlot = useMemo(() => {
+    const out = { Helmet: [], Arms: [], Chest: [], Legs: [], Class: [] } as Record<TemplateSlot, { hash: number; n: string; cost: number; fam: string }[]>;
+    if (modCatalog) {
+      for (const [h, e] of Object.entries(modCatalog)) {
+        if ((TEMPLATE_SLOTS as string[]).includes(e.slot) && e.fam !== "stat") {
+          out[e.slot as TemplateSlot].push({ hash: Number(h), n: e.n, cost: e.cost, fam: e.fam });
+        }
+      }
+      for (const s of TEMPLATE_SLOTS) out[s].sort((a, b) => a.fam.localeCompare(b.fam) || a.n.localeCompare(b.n));
+    }
+    return out;
+  }, [modCatalog]);
   const [subclassEl, setSubclassEl] = useState<ModElement>("");   // "" → Harmonic
   const [dpsEls, setDpsEls] = useState<ModElement[]>([]);         // [] → follow subclass; multi = split surges
   const [incomingEls, setIncomingEls] = useState<ModElement[]>([]); // chest elemental resist targets (multi)
@@ -1112,6 +1208,57 @@ export default function Optimizer() {
           )}
         </div>
 
+        {/* Default mods — the fixed Mods 3/4/5 per slot (your standard utility
+            loadout). Mod 1 (+10 stat) is planned by the optimizer; Mod 2 (tuning)
+            is shown per result and slotted in-game. Defaults to your screenshot;
+            edits persist on this device and auto-apply on Optimize & Equip. */}
+        <div className="border-t border-border/60 pt-4">
+          <button
+            onClick={() => setShowDefaults((v) => !v)}
+            className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-saber hover:underline"
+          >
+            <span className="w-3">{showDefaults ? "▾" : "▸"}</span> Default mods · Mods 3–5
+            <span className="text-muted normal-case tracking-normal text-[11px]">— set once, auto-applied on equip</span>
+          </button>
+          {showDefaults && (
+            <div className="mt-3 space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-ui text-[11px] text-muted">
+                  Mod 1 = +10 stat (optimizer) · Mod 2 = tuning (slot in-game) · Mods 3–5 below auto-equip.
+                </span>
+                <button
+                  onClick={resetTemplate}
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted hover:text-saber"
+                >
+                  reset to screenshot defaults
+                </button>
+              </div>
+              {!modCatalog && <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60">mod catalog loading…</div>}
+              {modCatalog && TEMPLATE_SLOTS.map((slot) => {
+                const energy = (modTemplate[slot] ?? []).reduce((a, h) => a + (modCatalog[String(h)]?.cost ?? 0), 0);
+                return (
+                  <div key={slot} className="flex flex-wrap items-center gap-2">
+                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted w-20">{slot}</span>
+                    {[0, 1, 2].map((idx) => (
+                      <select
+                        key={idx}
+                        value={modTemplate[slot]?.[idx] ?? 0}
+                        onChange={(e) => setTemplateMod(slot, idx, Number(e.target.value))}
+                        className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs min-w-[180px]"
+                      >
+                        {modsBySlot[slot].map((m) => (
+                          <option key={m.hash} value={m.hash}>{m.n} ({m.cost}e)</option>
+                        ))}
+                      </select>
+                    ))}
+                    <span className="font-mono text-[10px] text-muted">+ Mod 1 stat · {energy}e utility</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
         <div className="pt-2 flex items-center gap-3">
           <Button
             onClick={runOptimize}
@@ -1147,11 +1294,7 @@ export default function Optimizer() {
             manifest={manifest}
             allItems={items}
             cls={cls}
-            subclassEl={subclassEl}
-            dpsEls={dpsEls}
-            incomingEls={incomingEls}
-            meleeResist={meleeResist}
-            concussive={concussive}
+            modTemplate={modTemplate}
             armorSockets={armorSockets}
           />
         ))}
@@ -1175,34 +1318,21 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, targets, activeCharId, characters,
-  modCatalog, manifest, allItems, cls, subclassEl, dpsEls, incomingEls, meleeResist, concussive, armorSockets,
+  modCatalog, manifest, allItems, cls, modTemplate, armorSockets,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; targets: StatTargets;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
   allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
-  subclassEl: ModElement; dpsEls: ModElement[]; incomingEls: ModElement[]; meleeResist: boolean; concussive: boolean;
-  armorSockets: ArmorSockets;
+  modTemplate: ModTemplate; armorSockets: ArmorSockets;
 }) {
-  // Resolve the concrete, anti-cross-pollination mod loadout for this combo.
-  // Stat mods come from the combo's own stat plan (one per piece, biggest first).
+  // The mod loadout = the optimizer's planned +10/+5 stat mods (Mod 1, General
+  // socket) + the user's fixed utility template (Mods 3/4/5, slot sockets). This
+  // is both the preview and what gets equipped — edit defaults in the panel above.
   const loadout = useMemo<ModLoadout | null>(() => {
     if (!modCatalog) return null;
-    const statMods: StatModRequest[] = [];
-    for (const s of STAT_KEYS) {
-      for (let k = 0; k < (combo.modPlan.plus10[s] ?? 0); k++) statMods.push({ stat: s, mag: 10 });
-      for (let k = 0; k < (combo.modPlan.plus5[s] ?? 0); k++)  statMods.push({ stat: s, mag: 5 });
-    }
-    return selectMods({
-      subclassElement: subclassEl || "Harmonic",
-      dpsWeaponElements: dpsEls,
-      incomingElements: incomingEls,
-      meleeResist,
-      concussive,
-      statMods,
-      energyBudget: 10,
-    }, modCatalog);
-  }, [modCatalog, subclassEl, dpsEls, incomingEls, meleeResist, concussive, combo]);
+    return buildTemplateLoadout(combo.modPlan, modTemplate, modCatalog);
+  }, [modCatalog, modTemplate, combo]);
   const [equipState, setEquipState] = useState<
     | { kind: "idle" }
     | { kind: "working" }
@@ -1443,10 +1573,10 @@ function ComboCard({
         </div>
       )}
 
-      {/* Mod loadout — the actual element-matched mods to socket per piece.
-          Legs=Surge (DPS-weapon element) · Chest=Resist/Concussive (encounter)
-          · Arms=Loader · Helmet=Siphon (build element) · +stat mod per piece.
-          Anti-cross-pollination guaranteed by selectMods(). */}
+      {/* Mod loadout — Mod 1 (+10 stat, from the optimizer) into each General
+          socket, + your fixed Mods 3/4/5 utility template into the slot sockets.
+          This is exactly what Optimize & Equip applies. Edit the template in the
+          Defaults panel above. */}
       {loadout ? (
         <div className="mb-4 rounded border border-saber/30 bg-saber/5 p-3">
           <div className="flex items-baseline justify-between mb-2">
@@ -1454,7 +1584,7 @@ function ComboCard({
               Mod loadout
             </span>
             <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">
-              legs surge · chest resist · arms loader · helmet siphon
+              Mod 1 stat + your default Mods 3–5
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
@@ -1492,7 +1622,7 @@ function ComboCard({
             </div>
           )}
           <div className="mt-2 font-ui text-[10px] text-muted">
-            Preview — auto-insert on equip ships with the one-click pipeline.
+            Auto-inserted on Optimize &amp; Equip (Mod 1 + Mods 3–5). Mod 2 tuning is slotted in-game.
           </div>
         </div>
       ) : (combo.modsUsed > 0) && (
