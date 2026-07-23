@@ -724,18 +724,10 @@ function ResultCard({
           <div className="flex justify-end gap-3">
             <Link
               to={`/builds`}
-              className="text-xs font-mono uppercase tracking-[0.25em] text-muted hover:underline"
+              className="text-xs font-mono uppercase tracking-[0.25em] text-saber hover:underline"
             >
               view in /builds
             </Link>
-            {fit.build.target_stats && (
-              <Link
-                to={`/optimizer?build=${encodeURIComponent(fit.build.id)}`}
-                className="text-xs font-mono uppercase tracking-[0.25em] text-saber hover:underline"
-              >
-                → optimize stats
-              </Link>
-            )}
           </div>
         </div>
       )}

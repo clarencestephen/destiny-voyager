@@ -111,6 +111,48 @@ export interface ActivityWeek {
   end_time?: string;                  // ISO datetime when rotation ends
   available: boolean;                 // is the activity currently running?
   notes?: string;
+  /** Raw activity hashes from the public milestone — the frontend resolves
+   *  these to names (e.g. WHICH dungeon is featured) via /activities.json. */
+  activity_hashes?: number[];
+  /** Pre-resolved featured-activity names for rotations the public Bungie
+   *  API no longer exposes (the dungeon rotator vanished from
+   *  /Destiny2/Milestones/ in the current sandbox — verified 2026-07-11).
+   *  Sourced from Kyber's Corner, KV-cached 1h. */
+  resolved_names?: string[];
+}
+
+// Community fallback for the featured raid/dungeon rotation. The page's
+// activity cards are labelled "Weekly Featured Dungeon <Name> <Month …>" —
+// we anchor on that literal label. Cached globally for 1h.
+async function kyberFeatured(env: Env): Promise<{ dungeons: string[]; raids: string[] }> {
+  const cacheKey = "twk:kyber-rotation";
+  const cached = await env.DV_KV.get(cacheKey, "json");
+  if (cached) return cached as { dungeons: string[]; raids: string[] };
+  let dungeons: string[] = [];
+  let raids: string[] = [];
+  try {
+    const r = await fetch("https://kyberscorner.com/destiny2/weekly-featured-raids-and-dungeons/", {
+      headers: { "User-Agent": "Mozilla/5.0 (DestinyVoyager rotation check)" },
+    });
+    const raw = (await r.text())
+      .replace(/&#8217;|’/g, "'")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ");
+    const MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December";
+    for (const m of raw.matchAll(new RegExp(`Weekly Featured Dungeon\\s+(.{3,40}?)\\s+(?:${MONTHS})`, "gi"))) {
+      dungeons.push(m[1].trim());
+    }
+    for (const m of raw.matchAll(new RegExp(`Weekly Featured Raid\\s+(.{3,40}?)\\s+(?:${MONTHS})`, "gi"))) {
+      raids.push(m[1].trim());
+    }
+    dungeons = [...new Set(dungeons)];
+    raids = [...new Set(raids)];
+  } catch { /* best-effort — leave empty */ }
+  const out = { dungeons, raids };
+  if (dungeons.length || raids.length) {
+    await env.DV_KV.put(cacheKey, JSON.stringify(out), { expirationTtl: 3600 });
+  }
+  return out;
 }
 
 // ============================================================
@@ -245,20 +287,56 @@ export async function getMilestones(env: Env, user: StoredUser): Promise<Activit
   const present: Set<number> = new Set(
     Object.keys(raw ?? {}).map((h) => Number(h)).filter((n) => Number.isFinite(n)),
   );
+  const kyber = await kyberFeatured(env);
+
   const out: ActivityWeek[] = [];
   for (const m of Object.values(MILESTONES)) {
     const apiData = raw?.[String(m.hash)];
-    const available = present.has(m.hash) || isAlwaysAvailable(m.key as ActivityKey);
-    out.push({
+    const entry: ActivityWeek = {
       activity: m.key as ActivityKey,
       display_name: m.name,
       category: m.category,
       description: deriveMilestoneDescription(m.key as ActivityKey, apiData),
       rewards: deriveMilestoneRewards(m.key as ActivityKey, apiData),
       end_time: apiData?.endDate,
-      available,
-      notes: deriveMilestoneNotes(m.key as ActivityKey, apiData, available),
-    });
+      available: present.has(m.hash) || isAlwaysAvailable(m.key as ActivityKey),
+      activity_hashes: (apiData?.activities ?? [])
+        .map((a: any) => a?.activityHash)
+        .filter((h: any) => Number.isFinite(h))
+        .slice(0, 24),
+    };
+
+    // The rotator milestones vanished from the public endpoint (2026 sandbox);
+    // derive them instead. Featured RAIDS still appear as per-raid milestones
+    // whose activities carry challengeObjectiveHashes; featured DUNGEONS come
+    // from the Kyber community page.
+    if (m.key === "raid-challenge") {
+      const hs: number[] = [];
+      let end: string | undefined;
+      for (const mm of Object.values(raw ?? {}) as any[]) {
+        for (const a of mm?.activities ?? []) {
+          if ((a?.challengeObjectiveHashes?.length ?? 0) > 0 && Number.isFinite(a?.activityHash)) {
+            hs.push(a.activityHash);
+            end = end ?? mm?.endDate;
+          }
+        }
+      }
+      if (hs.length) {
+        entry.activity_hashes = [...new Set(hs)].slice(0, 24);
+        entry.end_time = entry.end_time ?? end;
+        entry.available = true;
+      } else if (kyber.raids.length) {
+        entry.resolved_names = kyber.raids;
+        entry.available = true;
+      }
+    }
+    if (m.key === "dungeon-rotator" && kyber.dungeons.length) {
+      entry.resolved_names = kyber.dungeons;
+      entry.available = true;
+    }
+
+    entry.notes = deriveMilestoneNotes(m.key as ActivityKey, apiData, entry.available);
+    out.push(entry);
   }
   return out;
 }
@@ -313,7 +391,7 @@ function deriveMilestoneNotes(key: ActivityKey, _api: any, available: boolean): 
     return "No daily exotic-armor slot anymore — Lost Sectors drop Exotic Engrams; focus exotic armor at Rahool / Ada-1.";
   }
   if (key === "vex-incursion") {
-    return "Always-available in Neomuna once unlocked. ~30-min pulse cycle between sessions.";
+    return "Zone location rotates DAILY (17:00 UTC). Always available in Neomuna once unlocked; ~30-min pulse cycle between sessions.";
   }
   return undefined;
 }
@@ -511,7 +589,7 @@ export async function getEververse(env: Env, user: StoredUser): Promise<VendorWe
     available: true,
     refresh_in_seconds: refreshIn(raw.vendor?.nextRefreshDate),
     items,
-    notes: "Weekly Bright Dust featured + Silver-exclusive items. Showing Bright-Dust items by default; toggle to include Silver.",
+    notes: "Weekly Bright-Dust featured stock PLUS daily rotators — parts of this storefront change every day at 17:00 UTC, not just Tuesdays. Showing Bright-Dust items by default; toggle to include Silver.",
   };
 }
 

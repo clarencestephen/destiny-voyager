@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   api, loadManifest, decorate,
   type LeanItem, type Item, type SlimManifest,
 } from "@/lib/api";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 /**
- * /this-week — Kyber-Community-parity weekly rotation surface.
+ * /this-week/:section? — Kyber-Community-parity weekly rotation surface.
  *
- * Calls GET /api/this-week which aggregates:
- *   • Vendors (Xur / Ada-1 / Banshee / Rahool / Eververse) — Phase 1+2
- *   • Milestones (raid challenge / Trials / IB / Lost Sector / etc.) — Phase 3
- *   • News (latest 5 Bungie RSS items — TWIDs / patches / season launches) — Phase 4
- *
- * Three-tab layout. Vendor items are decorated client-side using the
- * slim manifest already loaded by the rest of the app.
+ * Routed sections (each a nav-dropdown destination, all auto-flip at the
+ * Tuesday 17:00 UTC reset because the data is live Bungie API, KV-cached):
+ *   rotation  — featured raid + dungeon BY NAME (public milestones →
+ *               activity hashes → /activities.json bake) + all milestones
+ *   xur       — Xûr's inventory (Fri–Tue)
+ *   eververse — weekly Bright-Dust stock (Silver toggle)
+ *   vendors   — Ada-1 · Banshee-44 · Rahool
+ *   news      — latest Bungie RSS (TWIDs / patches)
  */
 
-// Shape returned by /api/this-week — mirrors VendorWeek + ThisWeekResponse
-// in worker/src/this-week.ts. Items carry only `hash` from the server;
-// name/type/tier/icon are decorated client-side via the slim manifest.
 interface VendorItemRaw {
   hash: number;
   cost?: Array<{ currency_hash: number; quantity: number }>;
@@ -44,6 +42,8 @@ interface ActivityWeekRaw {
   end_time?: string;
   available: boolean;
   notes?: string;
+  activity_hashes?: number[];
+  resolved_names?: string[];
 }
 
 interface TWIDPostRaw {
@@ -61,7 +61,24 @@ interface ThisWeekResponseRaw {
   generated_at: string;
 }
 
-type Tab = "vendors" | "activities" | "news";
+/** Baked activity-name lookup (scripts/bake-activities.mjs). */
+type ActivityNames = Record<string, { n: string; t: string }>;
+
+const SECTIONS = [
+  { key: "rotation",  label: "Rotation" },
+  { key: "xur",       label: "Xûr" },
+  { key: "eververse", label: "Eververse" },
+  { key: "vendors",   label: "Vendors" },
+  { key: "news",      label: "News" },
+] as const;
+type SectionKey = (typeof SECTIONS)[number]["key"];
+
+// Which vendor cards each section shows.
+const VENDOR_SLICE: Record<string, string[]> = {
+  xur: ["xur"],
+  eververse: ["eververse"],
+  vendors: ["ada1", "banshee", "rahool"],
+};
 
 interface DecoratedVendorItem extends Item {
   cost?: Array<{ currency_hash: number; quantity: number; currency_name: string }>;
@@ -78,15 +95,12 @@ interface DecoratedVendor {
   notes?: string;
 }
 
-// Common currency hashes — Bungie's manifest entries for them. Hard-
-// coded fallback when manifest lookup misses (these are stable since
-// D2 launch).
 const CURRENCY_NAMES: Record<number, string> = {
   3159615086: "Glimmer",
   800069450:  "Legendary Shard",
   2817410917: "Bright Dust",
   3147280338: "Silver",
-  1022552290: "Legendary Shards",  // alt hash
+  1022552290: "Legendary Shards",
   44811435:   "Spoils of Conquest",
 };
 
@@ -100,21 +114,60 @@ function formatRefresh(seconds: number): string {
   return `${m}m`;
 }
 
+/** Next weekly reset — Tuesday 17:00 UTC. */
+function nextReset(): Date {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0));
+  while (d.getUTCDay() !== 2 || d.getTime() <= now.getTime()) d.setUTCDate(d.getUTCDate() + 1);
+  return d;
+}
+
+/** Next daily reset — every day 17:00 UTC (Eververse daily stock, Lost
+ *  Sector, Vex Incursion zone, etc. flip on this cadence). */
+function nextDailyReset(): Date {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0));
+  if (d.getTime() <= now.getTime()) d.setUTCDate(d.getUTCDate() + 1);
+  return d;
+}
+
+/** Milestones that rotate DAILY, not weekly. */
+const DAILY_KEYS = new Set(["lost-sector", "vex-incursion"]);
+
+/** Milestone → deduped base activity names: server-resolved names first
+ *  (rotations the public API dropped), then hash resolution via
+ *  /activities.json ("Duality: Master" + "Duality: Standard" → "Duality"). */
+function featuredNames(m: ActivityWeekRaw | undefined, acts: ActivityNames | null): string[] {
+  const base = new Set<string>(m?.resolved_names ?? []);
+  for (const h of m?.activity_hashes ?? []) {
+    const e = acts?.[String(h)];
+    if (e?.n) base.add(e.n.split(":")[0].trim());
+  }
+  return [...base];
+}
+
 export default function ThisWeek() {
+  const params = useParams();
+  const section: SectionKey = (SECTIONS.some((s) => s.key === params.section)
+    ? params.section
+    : "rotation") as SectionKey;
+
   const [data, setData] = useState<ThisWeekResponseRaw | null>(null);
   const [manifest, setManifest] = useState<SlimManifest | null>(null);
+  const [acts, setActs] = useState<ActivityNames | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<Tab>("vendors");
-  // Eververse returns hundreds of Silver-only items; default to the
-  // weekly Bright-Dust featured stock and let the user opt into Silver.
   const [showSilver, setShowSilver] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+    fetch("/activities.json").then((r) => r.json()).then((a) => !cancelled && setActs(a)).catch(() => {});
     Promise.all([
-      fetch("/api/this-week", { credentials: "include" }).then((r) => r.json()),
+      fetch("/api/this-week", { credentials: "include" }).then((r) => {
+        if (!r.ok) throw new Error(r.status === 401 ? "Sign in with Bungie to see this week's stock." : `/api/this-week: HTTP ${r.status}`);
+        return r.json();
+      }),
       loadManifest(),
     ])
       .then(([raw, m]) => {
@@ -128,7 +181,8 @@ export default function ThisWeek() {
   }, []);
 
   const decorated: DecoratedVendor[] = (() => {
-    if (!data || !manifest) return [];
+    // Guard the shape — an unexpected API body must degrade, not white-screen.
+    if (!data?.vendors || !manifest) return [];
     return Object.values(data.vendors)
       .filter((v): v is VendorWeekRaw => v !== null)
       .map((v) => ({
@@ -157,42 +211,133 @@ export default function ThisWeek() {
   if (error)   return <div className="p-8 font-ui text-rebel">Error: {error}</div>;
   if (!data)   return <div className="p-8 font-ui text-muted">No data.</div>;
 
+  const resetIn = formatRefresh(Math.floor((nextReset().getTime() - Date.now()) / 1000));
+  const dailyIn = formatRefresh(Math.floor((nextDailyReset().getTime() - Date.now()) / 1000));
+
+  const milestones = data.milestones || [];
+  const raidWeek = milestones.find((m) => m.activity === "raid-challenge");
+  const dungeonWeek = milestones.find((m) => m.activity === "dungeon-rotator");
+  const raidNames = featuredNames(raidWeek, acts);
+  const dungeonNames = featuredNames(dungeonWeek, acts);
+
+  const vendorKeys = VENDOR_SLICE[section];
+  const vendorsToShow = vendorKeys
+    ? decorated.filter((v) => vendorKeys.includes(v.vendor))
+    : [];
+
   return (
     <div className="p-8 font-ui">
-      <header className="mb-8">
+      <header className="mb-6">
         <h1 className="text-3xl font-display tracking-wider text-star">This Week</h1>
         <p className="text-xs uppercase tracking-[0.22em] text-muted">
-          Weekly vendor rotations · cached 60min ·{" "}
-          generated {new Date(data.generated_at).toLocaleTimeString()}
+          Live Bungie data ·{" "}
+          <span className="text-saber">weekly resets in {resetIn}</span> ·{" "}
+          <span className="text-star">daily resets in {dailyIn}</span>{" "}
+          <span className="normal-case tracking-normal">(Eververse dailies · Lost Sector · Vex Incursion)</span>
         </p>
       </header>
 
-      <nav className="flex items-center gap-2 mb-6 border-b border-void">
-        {(["vendors", "activities", "news"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
+      <nav className="flex items-center gap-2 mb-6 border-b border-void overflow-x-auto">
+        {SECTIONS.map((s) => (
+          <Link
+            key={s.key}
+            to={`/this-week/${s.key}`}
             className={
-              "px-4 py-2 text-xs uppercase tracking-[0.22em] transition-colors " +
-              (tab === t
+              "px-4 py-2 text-xs uppercase tracking-[0.22em] whitespace-nowrap transition-colors " +
+              (section === s.key
                 ? "text-saber border-b-2 border-saber -mb-px"
                 : "text-muted hover:text-star")
             }
           >
-            {t}
-            {t === "vendors" && ` (${decorated.length})`}
-            {t === "activities" && ` (${(data.milestones || []).length})`}
-            {t === "news" && ` (${(data.news || []).length})`}
-          </button>
+            {s.label}
+          </Link>
         ))}
       </nav>
 
-      {tab === "vendors" && (
+      {section === "rotation" && (
+      <section className="space-y-6">
+        {/* Featured raid + dungeon — the headline answer, BY NAME */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { title: "Featured Raids", names: raidNames, m: raidWeek },
+            { title: "Featured Dungeons", names: dungeonNames, m: dungeonWeek },
+          ].map(({ title, names, m }) => (
+            <Card key={title} className="p-6 relative overflow-hidden">
+              <span aria-hidden className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-sith via-saber to-darksith opacity-70" />
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted mb-2">▲ {title} · lockout removed</p>
+              {names.length > 0 ? (
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {names.map((n) => (
+                    <span key={n} className="px-3 py-1.5 rounded border border-saber/60 bg-saber/10 font-display text-lg tracking-wider text-star">
+                      {n}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted mb-3">
+                  {m?.available === false ? "Off-rotation this week." : "Names unavailable — rotation data missing."}
+                </p>
+              )}
+              {m?.end_time && (
+                <p className="text-[11px] text-muted">
+                  farmable until {new Date(m.end_time).toLocaleString()}
+                </p>
+              )}
+            </Card>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {milestones.map((a) => (
+            <Card key={a.activity} className="p-4">
+              <div className="flex items-baseline justify-between mb-1">
+                <h3 className="text-base font-display text-saber">{a.display_name}</h3>
+                <span
+                  className={`text-[10px] uppercase tracking-wider ${
+                    a.available ? "text-star" : "text-muted"
+                  }`}
+                >
+                  {a.available ? "active" : "off-rotation"}
+                </span>
+              </div>
+              <p className="text-[11px] uppercase tracking-widest text-muted mb-2">
+                {a.category} ·{" "}
+                <span className={DAILY_KEYS.has(a.activity) ? "text-star" : ""}>
+                  {DAILY_KEYS.has(a.activity) ? "rotates daily" : "weekly"}
+                </span>
+              </p>
+              {(() => {
+                const names = featuredNames(a, acts);
+                return names.length > 0 && (
+                  <p className="text-sm text-star mb-1">{names.slice(0, 6).join(" · ")}</p>
+                );
+              })()}
+              <p className="text-sm text-fg mb-2">{a.description}</p>
+              {a.rewards.length > 0 && (
+                <ul className="text-xs text-muted mb-2 space-y-0.5">
+                  {a.rewards.map((r, i) => (
+                    <li key={i}>· {r}</li>
+                  ))}
+                </ul>
+              )}
+              {a.notes && <p className="text-[11px] italic text-muted">{a.notes}</p>}
+              {a.end_time && (
+                <p className="text-[10px] text-muted mt-1">
+                  ends {new Date(a.end_time).toLocaleString()}
+                </p>
+              )}
+            </Card>
+          ))}
+        </div>
+      </section>
+      )}
+
+      {vendorKeys && (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {decorated.map((v) => {
-          // Eververse: default to the weekly Bright-Dust featured stock
-          // (hide the hundreds of permanent Silver-only items) unless the
-          // user toggles Silver on. Other vendors show everything.
+        {vendorsToShow.length === 0 && (
+          <p className="text-sm text-muted">Vendor data unavailable right now.</p>
+        )}
+        {vendorsToShow.map((v) => {
           const isEververse = v.vendor === "eververse";
           const silverCount = isEververse
             ? v.items.filter((it) => !it.bright_dust).length
@@ -250,7 +395,7 @@ export default function ThisWeek() {
 
             {v.available && items.length > 0 && (
               <ul className="space-y-2 mt-3">
-                {items.slice(0, 12).map((it) => (
+                {items.slice(0, section === "xur" || section === "eververse" ? 40 : 12).map((it) => (
                   <li key={it.instance_id} className="flex items-center gap-3 text-sm">
                     {it.iconUrl && (
                       <img
@@ -281,57 +426,13 @@ export default function ThisWeek() {
                 ))}
               </ul>
             )}
-
-            {items.length > 12 && (
-              <p className="text-[11px] text-muted mt-2">
-                +{items.length - 12} more items (full list in /this-week/{v.vendor})
-              </p>
-            )}
           </Card>
           );
         })}
       </div>
       )}
 
-      {tab === "activities" && (
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(data.milestones || []).map((a) => (
-            <Card key={a.activity} className="p-4">
-              <div className="flex items-baseline justify-between mb-1">
-                <h3 className="text-base font-display text-saber">{a.display_name}</h3>
-                <span
-                  className={`text-[10px] uppercase tracking-wider ${
-                    a.available ? "text-star" : "text-muted"
-                  }`}
-                >
-                  {a.available ? "active" : "off-rotation"}
-                </span>
-              </div>
-              <p className="text-[11px] uppercase tracking-widest text-muted mb-2">
-                {a.category}
-              </p>
-              <p className="text-sm text-fg mb-2">{a.description}</p>
-              {a.rewards.length > 0 && (
-                <ul className="text-xs text-muted mb-2 space-y-0.5">
-                  {a.rewards.map((r, i) => (
-                    <li key={i}>· {r}</li>
-                  ))}
-                </ul>
-              )}
-              {a.notes && <p className="text-[11px] italic text-muted">{a.notes}</p>}
-              {a.end_time && (
-                <p className="text-[10px] text-muted mt-1">
-                  ends {new Date(a.end_time).toLocaleString()}
-                </p>
-              )}
-            </Card>
-          ))}
-        </div>
-      </section>
-      )}
-
-      {tab === "news" && (
+      {section === "news" && (
       <section className="space-y-4">
         {(data.news || []).length === 0 && (
           <p className="text-sm text-muted">No news items loaded. Check back later.</p>
@@ -363,8 +464,9 @@ export default function ThisWeek() {
       )}
 
       <footer className="mt-8 text-[11px] text-muted">
-        Phase 1+2+3+4 surface: vendors (60min cache) · activities (15min) ·
-        news (6h). See THIS_WEEK_PLAN.md for the channel map.
+        Live from the Bungie API — vendors cached 60min · activities 15min · news 6h.
+        Weekly rotation flips Tuesday 17:00 UTC; Eververse daily stock, Lost Sector, and
+        Vex Incursion flip every day at 17:00 UTC (worst-case one cache cycle behind).
       </footer>
     </div>
   );

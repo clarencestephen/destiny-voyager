@@ -62,6 +62,16 @@ TARGETED_DEFINITIONS = [
     "DestinyEquipableItemSetDefinition",
     "DestinyStatDefinition",
     "DestinyStatGroupDefinition",
+    # bake-armor.mjs inputs — keep the whole cache in lockstep so a
+    # post-refresh armor bake never mixes manifest versions:
+    "DestinyPlugSetDefinition",
+    "DestinySandboxPerkDefinition",
+    "DestinyDamageTypeDefinition",
+    "DestinyCollectibleDefinition",
+    # bake-activities.mjs inputs — featured raid/dungeon name resolution
+    # for the web "This Week" pages:
+    "DestinyActivityDefinition",
+    "DestinyActivityTypeDefinition",
 ]
 
 

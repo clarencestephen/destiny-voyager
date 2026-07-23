@@ -9,7 +9,7 @@
 import { api, type Library } from "./api";
 
 export type { Library };
-export const emptyLibrary = (): Library => ({ builds: [], weaponWishlist: [], armorWishlist: [], loadouts: [] });
+export const emptyLibrary = (): Library => ({ builds: [], weaponWishlist: [], armorWishlist: [], loadouts: [], wishSpace: null });
 
 const LS = "dv_library";
 
@@ -39,7 +39,8 @@ function isLibrary(x: any): x is Library {
   return !!x && Array.isArray(x.builds) && Array.isArray(x.weaponWishlist) && Array.isArray(x.armorWishlist);
 }
 function hasData(l: Library) {
-  return !!(l.builds.length || l.weaponWishlist.length || l.armorWishlist.length || l.loadouts?.length);
+  return !!(l.builds.length || l.weaponWishlist.length || l.armorWishlist.length || l.loadouts?.length
+    || l.wishSpace?.sections?.length);
 }
 
 /** Load the library. Uses KV when signed in (authoritative), else localStorage.

@@ -1,21 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  api, sumStats, loadManifest, STAT_KEYS, STAT_LABEL, ARMOR_SLOTS, ARMOR_ARCHETYPES,
+  api, sumStats, loadManifest, STAT_KEYS, STAT_LABEL, ARMOR_SLOTS,
   type ArmorStats, type ArmorSlot, type CharacterSummary, type Item, type UserProfile,
   type SlimManifest,
 } from "@/lib/api";
-import { loadBuilds, buildsForClass, type BuildTemplate } from "@/lib/builds";
 import {
   type ModCatalog, type ModLoadout, type Mod,
   type Element as ModElement,
 } from "@/lib/mods";
 import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem, type ArmorSockets } from "@/lib/equipPlan";
-
-// Map a build's subclass to the mod-engine element (Prismatic → Harmonic).
-const SUBCLASS_TO_ELEMENT: Record<string, ModElement> = {
-  Arc: "Arc", Solar: "Solar", Void: "Void", Stasis: "Stasis", Strand: "Strand",
-};
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -66,25 +60,45 @@ function resolveTemplateHash(h: number, subclassEl: ModElement): number {
   return h;
 }
 
-const DEFAULT_MOD_TEMPLATE: ModTemplate = {
+// PVE / PVP default templates — the Mods toggle picks one, then the dropdowns
+// below fine-tune it (edits persist per mode, per device).
+type ModMode = "PVE" | "PVP";
+const PVE_MOD_TEMPLATE: ModTemplate = {
   Helmet: [2595839237, 554409585, 3832366019],   // Special Ammo Finder · Heavy Ammo Finder · Harmonic Siphon
   Arms:   [2657604783, 1677180919, 1781551382],  // Harmonic Loader · Harmonic Dexterity · Grenade Font
   Chest:  [ADAPT_RESIST, 3719981603, 686455429], // Subclass Resistance · Concussive Dampener · Health Font
   Legs:   [ADAPT_SURGE, 3994043492, 1133590731], // Subclass Weapon Surge · Stacks on Stacks · Enhanced Athletics
   Class:  [4081595582, 1755737153, 1193713026],  // Proximity Ward · Time Dilation · Class Font
 };
-const MOD_TEMPLATE_KEY = "dv_mod_template_v2";   // v2: adaptive surge/resist sentinels
+const PVP_MOD_TEMPLATE: ModTemplate = {
+  Helmet: [2467203039, 1305536863, 1388734897],  // Kinetic Targeting · Harmonic Targeting · Kinetic Siphon
+  Arms:   [2657604783, 2586562813, 1677180919],  // Harmonic Loader · Kinetic Loader · Harmonic Dexterity
+  Chest:  [1262438062, 3094620656, 2577472338],  // Unflinching Kinetic Aim · Unflinching Harmonic Aim · Charged Up
+  Legs:   [534479613, 3573031954, 1133590731],   // Arc Scavenger · Kinetic Holster · Enhanced Athletics
+  Class:  [4188291233, 1755737153, 40751621],    // Bomber · Time Dilation · Reaper
+};
+const MODE_DEFAULTS: Record<ModMode, ModTemplate> = { PVE: PVE_MOD_TEMPLATE, PVP: PVP_MOD_TEMPLATE };
+const MOD_MODE_KEY = "dv_mod_mode";
+const MOD_TEMPLATE_KEYS: Record<ModMode, string> = {
+  PVE: "dv_mod_template_v2",       // pre-mode key — existing PVE customizations carry over
+  PVP: "dv_mod_template_pvp_v1",
+};
 
-function loadModTemplate(): ModTemplate {
+function initialModMode(): ModMode {
+  try { return localStorage.getItem(MOD_MODE_KEY) === "PVP" ? "PVP" : "PVE"; }
+  catch { return "PVE"; }
+}
+
+function loadModTemplate(mode: ModMode): ModTemplate {
   try {
-    const raw = localStorage.getItem(MOD_TEMPLATE_KEY);
-    if (!raw) return DEFAULT_MOD_TEMPLATE;
+    const raw = localStorage.getItem(MOD_TEMPLATE_KEYS[mode]);
+    if (!raw) return MODE_DEFAULTS[mode];
     const t = JSON.parse(raw);
     // Validate shape; fall back to defaults for any missing slot.
     const out = {} as ModTemplate;
-    for (const s of TEMPLATE_SLOTS) out[s] = Array.isArray(t[s]) ? t[s].slice(0, 3) : DEFAULT_MOD_TEMPLATE[s];
+    for (const s of TEMPLATE_SLOTS) out[s] = Array.isArray(t[s]) ? t[s].slice(0, 3) : MODE_DEFAULTS[mode][s];
     return out;
-  } catch { return DEFAULT_MOD_TEMPLATE; }
+  } catch { return MODE_DEFAULTS[mode]; }
 }
 
 /** User-entered per-stat targets — the value to optimize each stat toward.
@@ -194,26 +208,9 @@ const STAT_PRIORITY: Record<StatKey, number> = {
   health: 5, super: 4, weapons: 4, grenade: 3, class: 3, melee: 3,
 };
 
-// Per-stat target chips — tap a number instead of typing one. EoF stat model:
-// only 100 and 200 are meaningful breakpoints (reach 200 when achievable, else
-// 100+); Health consistently aims ~125; 150 is offered because Grenade scales
-// with the stat on turret builds (Helion) and users asked for the option.
-const STAT_CHIPS: Record<StatKey, number[]> = {
-  health:  [100, 125, 150, 200],
-  super:   [100, 150, 200],
-  weapons: [100, 150, 200],
-  grenade: [100, 150, 200],
-  class:   [100, 150, 200],
-  melee:   [100, 150, 200],
-};
-
-// One-tap goal profiles so a whole build target is a single click, not six
-// inputs. "Balanced" is the everyday default (Health 125, the rest 100); the
-// chips above fine-tune individual stats (e.g. push Super to 200, Grenade 150).
-const GOAL_PRESETS: { label: string; hint: string; targets: StatTargets }[] = [
-  { label: "Balanced", hint: "Health 125 · everything else 100", targets: { health: 125, super: 100, weapons: 100, grenade: 100, class: 100, melee: 100 } },
-  { label: "All 100",  hint: "every stat to 100",                 targets: { health: 100, super: 100, weapons: 100, grenade: 100, class: 100, melee: 100 } },
-];
+// Per-stat target dropdown values — same range for every stat, in 25s. "—"
+// (no selection) ignores the stat entirely.
+const TARGET_OPTIONS = [50, 75, 100, 125, 150, 175, 200];
 
 // Highest-priority targeted stat still short of its target (tie → biggest gap).
 // Returns null when every target is met.
@@ -424,7 +421,6 @@ function optimize(
   targets: StatTargets,
   lockedExoticId: string | null,
   themeLocks: ThemeLock[] = [],
-  archetypeFilter: string[] = [],
   fragmentDelta: ArmorStats = ZERO_STATS,
 ): { combos: Combo[]; pruned: Record<ArmorSlot, number> } {
   const selected = STAT_KEYS.filter((s) => (targets[s] ?? 0) > 0);  // stats with a target
@@ -439,13 +435,6 @@ function optimize(
   for (const it of items) {
     if (!isArmor(it)) continue;
     if (it.class !== cls && it.class !== "Any") continue;
-    // Archetype filter — when the user has picked one or more archetypes,
-    // only allow non-exotic pieces with a matching archetype. Exotics are
-    // always allowed (they're a fixed slot — locking the exotic OR the
-    // archetype, not both).
-    if (archetypeFilter.length > 0 && it.tier !== "Exotic") {
-      if (!it.archetype || !archetypeFilter.includes(it.archetype)) continue;
-    }
     pool[it.slot as ArmorSlot]?.push(it);
   }
 
@@ -521,8 +510,6 @@ function optimize(
 // ============================================================
 
 export default function Optimizer() {
-  const [params] = useSearchParams();
-  const buildId = params.get("build");
   const [me, setMe] = useState<UserProfile | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [err, setErr] = useState<string | null>(null);
@@ -531,7 +518,6 @@ export default function Optimizer() {
   const selected = useMemo(() => STAT_KEYS.filter((s) => (targets[s] ?? 0) > 0), [targets]);
   const [lockedExoticId, setLockedExoticId] = useState<string | null>(null);
   const [themeLocks, setThemeLocks] = useState<ThemeLock[]>([]);
-  const [archetypeFilter, setArchetypeFilter] = useState<string[]>([]);
   const [results, setResults] = useState<Combo[]>([]);
   const [optimizing, setOptimizing] = useState(false);
   const [activeCharId, setActiveCharId] = useState<string | null>(null);
@@ -544,20 +530,27 @@ export default function Optimizer() {
   // Full armor-set catalog (all 56 named sets + 2pc/4pc perks) so the theme
   // picker lists EVERY set, not just ones the user owns. ~5KB.
   const [setsCatalog, setSetsCatalog] = useState<{ n: string; perks: { count: number; n: string }[] }[]>([]);
-  // Fixed Mods 3/4/5 template (per slot), defaulting to the user's screenshot.
-  const [modTemplate, setModTemplate] = useState<ModTemplate>(() => loadModTemplate());
+  // Fixed Mods 3/4/5 template (per slot). The PVE/PVP toggle picks the default
+  // set; per-slot edits persist per mode on this device.
+  const [modMode, setModMode] = useState<ModMode>(() => initialModMode());
+  const [modTemplate, setModTemplate] = useState<ModTemplate>(() => loadModTemplate(initialModMode()));
   const [showDefaults, setShowDefaults] = useState(false);
+  function pickModMode(m: ModMode) {
+    setModMode(m);
+    try { localStorage.setItem(MOD_MODE_KEY, m); } catch { /* ignore */ }
+    setModTemplate(loadModTemplate(m));
+  }
   function setTemplateMod(slot: TemplateSlot, idx: number, hash: number) {
     setModTemplate((cur) => {
       const next = { ...cur, [slot]: [...(cur[slot] ?? [])] };
       next[slot][idx] = hash;
-      try { localStorage.setItem(MOD_TEMPLATE_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+      try { localStorage.setItem(MOD_TEMPLATE_KEYS[modMode], JSON.stringify(next)); } catch { /* ignore */ }
       return next;
     });
   }
   function resetTemplate() {
-    setModTemplate(DEFAULT_MOD_TEMPLATE);
-    try { localStorage.removeItem(MOD_TEMPLATE_KEY); } catch { /* ignore */ }
+    setModTemplate(MODE_DEFAULTS[modMode]);
+    try { localStorage.removeItem(MOD_TEMPLATE_KEYS[modMode]); } catch { /* ignore */ }
   }
   // Candidate utility mods per slot for the Defaults dropdowns (everything that
   // fits that slot's mod sockets — excludes the General/stat-socket mods).
@@ -578,20 +571,39 @@ export default function Optimizer() {
   // Defaults to Void (the user's Eutechnology build). Harmonic siphon/loader/dex
   // already auto-match the subclass in-game, so they need no element here.
   const [subclassEl, setSubclassEl] = useState<ModElement>("Void");
-  // Builds-around-an-exotic (Phase 5).
-  const [builds, setBuilds] = useState<BuildTemplate[]>([]);
-  const [selectedBuildId, setSelectedBuildId] = useState<string>("");
+
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastSync, setLastSync] = useState<Date | null>(null);
+
+  // Pull the live profile + inventory from Bungie (via the Worker). Inventory
+  // changes constantly while playing, so this runs on mount AND from the
+  // ↻ Refresh button — no full page reload needed to re-sync.
+  async function refreshInventory(): Promise<UserProfile> {
+    setRefreshing(true);
+    try {
+      const [profile, decorated] = await Promise.all([
+        api.me(),
+        api.inventoryDecorated(),
+      ]);
+      setMe(profile);
+      setItems(decorated);
+      // A locked exotic may have been dismantled/transferred since last sync.
+      setLockedExoticId((cur) =>
+        cur && !decorated.some((i) => i.instance_id === cur) ? null : cur,
+      );
+      setLastSync(new Date());
+      setErr(null);
+      return profile;
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   // Initial load
   useEffect(() => {
     (async () => {
       try {
-        const [profile, decorated] = await Promise.all([
-          api.me(),
-          api.inventoryDecorated(),
-        ]);
-        setMe(profile);
-        setItems(decorated);
+        const profile = await refreshInventory();
         // Mod catalog is static + small (~46KB) — load once, ignore failure
         // (the optimizer still works without the mod preview).
         fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
@@ -599,7 +611,6 @@ export default function Optimizer() {
         fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
         fetch("/armor_sets.json").then((r) => r.json()).then(setSetsCatalog).catch(() => {});
         loadManifest().then(setManifest).catch(() => {});
-        loadBuilds().then((m) => setBuilds(m.builds)).catch(() => {});
         const pc = profile.primary_class;
         if (pc) setCls(pc.charAt(0).toUpperCase() + pc.slice(1) as any);
         // Default active character = top-of-the-list (highest equipped power)
@@ -613,35 +624,6 @@ export default function Optimizer() {
       }
     })();
   }, []);
-
-  // Build-around-an-exotic (Phase 5): lock the exotic, set the subclass element
-  // + target stats from a curated build. Applied from the dropdown or ?build=.
-  function applyBuild(b: BuildTemplate) {
-    setSelectedBuildId(b.id);
-    if (b.class !== "Any") setCls(b.class as any);
-    if (b.subclass && SUBCLASS_TO_ELEMENT[b.subclass]) setSubclassEl(SUBCLASS_TO_ELEMENT[b.subclass]);
-    if (b.target_stats) {
-      const t: StatTargets = {};
-      for (const k of Object.keys(b.target_stats) as StatKey[]) {
-        const v = b.target_stats?.[k] ?? 0;
-        if (v > 0) t[k] = Math.min(200, v);
-      }
-      if (Object.keys(t).length) setTargets(t);
-    }
-    // Lock whichever of the build's exotic options the user actually owns.
-    const owned = items.find(
-      (i) => i.tier === "Exotic" && i.slot === b.exotic_armor.slot &&
-        b.exotic_armor.options.some((o) => o.toLowerCase() === i.name.toLowerCase()),
-    );
-    setLockedExoticId(owned ? owned.instance_id : null);
-  }
-
-  // Apply ?build=<id> once builds + inventory have loaded (once only).
-  useEffect(() => {
-    if (!buildId || !builds.length || !items.length || selectedBuildId === buildId) return;
-    const b = builds.find((x) => x.id === buildId);
-    if (b) applyBuild(b);
-  }, [buildId, builds, items, selectedBuildId]);
 
   // Inventory with TRUE base stats (equipped stat mods stripped) — everything the
   // optimizer reasons about uses this so pre-equipped mods aren't double-counted.
@@ -692,10 +674,14 @@ export default function Optimizer() {
     localStorage.setItem("dv_active_char", id);
     // Snap class to the picked character's class (drives the armor pool).
     const ch = me?.characters?.find((c) => c.id === id);
-    if (ch) setCls(ch.class.charAt(0).toUpperCase() + ch.class.slice(1) as any);
+    if (ch) {
+      const next = (ch.class.charAt(0).toUpperCase() + ch.class.slice(1)) as "Hunter" | "Titan" | "Warlock";
+      if (next !== cls) setLockedExoticId(null);   // exotic lock is class-specific
+      setCls(next);
+    }
   }
 
-  // Tap a chip to set one stat's target; pass null (the "—" chip) to ignore it.
+  // Set one stat's target from its dropdown; null ("—") ignores the stat.
   function setStatTarget(s: StatKey, val: number | null) {
     setTargets((cur) => {
       const next = { ...cur };
@@ -704,9 +690,6 @@ export default function Optimizer() {
       return next;
     });
   }
-  // Goal preset = fill the whole target profile in one tap (replace, don't merge).
-  const applyGoalPreset = (t: StatTargets) => setTargets({ ...t });
-  const clearTargets = () => setTargets({});
 
   function runOptimize() {
     if (!cls || selected.length === 0) return;
@@ -717,7 +700,7 @@ export default function Optimizer() {
         const activeLocks = themeLocks.filter((t) => t.setName && t.count > 0);
         const delta = (activeCharId && fragmentDeltas[activeCharId]) || ZERO_STATS;
         const { combos } = optimize(
-          baseItems, cls, targets, lockedExoticId, activeLocks, archetypeFilter, delta,
+          baseItems, cls, targets, lockedExoticId, activeLocks, delta,
         );
         setResults(combos);
       } finally {
@@ -745,11 +728,34 @@ export default function Optimizer() {
         <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted">
           ▲ Armor Combination Search
         </span>
-        <h1 className="font-display text-3xl tracking-[0.18em] font-black text-signature">
-          OPTIMIZER
-        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="font-display text-3xl tracking-[0.18em] font-black text-signature">
+            OPTIMIZER
+          </h1>
+          {me && (
+            <div className="flex items-center gap-3">
+              {lastSync && !refreshing && (
+                <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted">
+                  synced {lastSync.toLocaleTimeString()} · {items.length} items
+                </span>
+              )}
+              <button
+                onClick={() =>
+                  refreshInventory().catch((e) =>
+                    setErr(`Refresh failed — sign in again? ${e?.message ?? e}`),
+                  )
+                }
+                disabled={refreshing}
+                title="Pull your live inventory from Bungie right now"
+                className="px-3 py-1.5 rounded border border-border font-mono text-[10px] tracking-[0.25em] uppercase text-saber hover:border-saber transition-colors disabled:opacity-50"
+              >
+                {refreshing ? "syncing…" : "↻ refresh inventory"}
+              </button>
+            </div>
+          )}
+        </div>
         <p className="font-ui text-sm text-muted-foreground max-w-2xl">
-          Type a <strong className="text-saber">target</strong> for each stat you care about; leave the rest blank.
+          Pick a <strong className="text-saber">target</strong> for each stat you care about; leave the rest on “—”.
           The optimizer finds the 5-piece set + plans the +5/+10 stat mods to hit your targets — favoring the most
           important stats when the 5 mod slots can't cover everything. Higher armor power breaks ties.
         </p>
@@ -775,86 +781,7 @@ export default function Optimizer() {
           </div>
         )}
 
-        {/* Class */}
-        <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-          <span className="text-muted w-20">Class:</span>
-          {(["Hunter", "Titan", "Warlock"] as const).map((c) => (
-            <button
-              key={c}
-              onClick={() => { setCls(c); setLockedExoticId(null); }}
-              className={`px-3 py-1 rounded border transition-colors ${
-                cls === c ? `${CLASS_COLOR[c.toLowerCase()]} border-current` : "border-border text-muted hover:text-foreground"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-        {/* Build — center the optimizer on a curated exotic build (Phase 5).
-            Sets the locked exotic, subclass element, and target stats in one pick. */}
-        {builds.length > 0 && (
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-            <span className="text-muted w-20">Build:</span>
-            <select
-              value={selectedBuildId}
-              onChange={(e) => {
-                const b = builds.find((x) => x.id === e.target.value);
-                if (b) applyBuild(b);
-                else { setSelectedBuildId(""); setLockedExoticId(null); }
-              }}
-              className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs normal-case tracking-normal min-w-[320px]"
-            >
-              <option value="">— none (manual) —</option>
-              {buildsForClass(builds, cls).map((b) => (
-                <option key={b.id} value={b.id}>{b.name} · {b.subclass}</option>
-              ))}
-            </select>
-            {selectedBuildId && (() => {
-              const b = builds.find((x) => x.id === selectedBuildId);
-              if (!b) return null;
-              return (
-                <span className="text-muted normal-case tracking-normal text-[11px]">
-                  {b.exotic_armor.options[0]} ({b.exotic_armor.slot})
-                  {lockedExoticId ? <span className="text-saber"> · locked ✓</span> : <span className="text-amber-400"> · not owned</span>}
-                </span>
-              );
-            })()}
-          </div>
-        )}
-
-        {/* Goal presets — one tap fills the entire target profile so you don't
-            input six numbers. Tweak any individual stat with the chips below. */}
-        <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase">
-          <span className="text-muted w-20">Goal:</span>
-          {GOAL_PRESETS.map((p) => {
-            const active = STAT_KEYS.every((k) => (targets[k] ?? 0) === (p.targets[k] ?? 0));
-            return (
-              <button
-                key={p.label}
-                onClick={() => applyGoalPreset(p.targets)}
-                title={p.hint}
-                className={`px-3 py-1 rounded border transition-colors normal-case tracking-normal ${
-                  active ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {p.label}
-              </button>
-            );
-          })}
-          <button
-            onClick={clearTargets}
-            className="px-3 py-1 rounded border border-border text-muted hover:text-saber transition-colors normal-case tracking-normal"
-          >
-            Clear
-          </button>
-          <span className="text-muted ml-1 normal-case tracking-normal text-[11px]">
-            Pick a goal, then fine-tune below. Mods are auto-planned to hit your targets.
-          </span>
-        </div>
-
-        {/* Per-stat target chips — tap a number instead of typing. "—" ignores the
-            stat. EoF model: 100 / 200 are the breakpoints (Health also 125). */}
+        {/* Per-stat target dropdowns — pick a value per stat; "—" ignores it. */}
         <div className="flex flex-wrap items-start gap-x-5 gap-y-3 font-mono text-[10px] tracking-[0.25em] uppercase">
           <span className="text-muted w-20 pt-1">Target:</span>
           {STAT_KEYS.map((s) => {
@@ -862,27 +789,18 @@ export default function Optimizer() {
             return (
               <div key={s} className="flex flex-col items-center gap-1">
                 <span className={cur > 0 ? "text-saber" : "text-muted"}>{STAT_LABEL[s]}</span>
-                <div className="flex items-center gap-0.5">
-                  <button
-                    onClick={() => setStatTarget(s, null)}
-                    className={`w-6 py-1 rounded border text-center transition-colors ${
-                      cur === 0 ? "border-saber/60 text-saber" : "border-border text-muted hover:text-foreground"
-                    }`}
-                  >
-                    —
-                  </button>
-                  {STAT_CHIPS[s].map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setStatTarget(s, cur === v ? null : v)}
-                      className={`w-8 py-1 rounded border text-center transition-colors ${
-                        cur === v ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {v}
-                    </button>
+                <select
+                  value={cur || ""}
+                  onChange={(e) => setStatTarget(s, e.target.value ? parseInt(e.target.value, 10) : null)}
+                  className={`bg-void/40 border rounded px-2 py-1 font-mono text-xs text-center transition-colors ${
+                    cur > 0 ? "border-saber/60 text-saber" : "border-border text-muted"
+                  }`}
+                >
+                  <option value="">—</option>
+                  {TARGET_OPTIONS.map((v) => (
+                    <option key={v} value={v}>{v}</option>
                   ))}
-                </div>
+                </select>
               </div>
             );
           })}
@@ -890,7 +808,7 @@ export default function Optimizer() {
         <div className="ml-[5rem] -mt-2 font-mono text-[11px] normal-case tracking-normal text-muted">
           {selected.length
             ? `Optimizing ${selected.length} stat${selected.length === 1 ? "" : "s"} to your targets — mods auto-planned last to hit them.`
-            : "Pick a goal preset or tap a target per stat to begin."}
+            : "Mods are auto-planned — pick your targets."}
         </div>
 
         {/* Subclass — the one element control. Drives the adaptive Subclass
@@ -912,40 +830,6 @@ export default function Optimizer() {
           <span className="text-muted normal-case tracking-normal text-[11px] ml-1">
             {(subclassEl || "Void")} Weapon Surge (legs) · {(subclassEl || "Void")} Resistance (chest)
           </span>
-        </div>
-
-        {/* Archetype filter — restrict non-exotic pieces to one or more
-            archetypes. Exotics ignore this filter (they're locked by the
-            row below). When the user owns mostly pre-EoF gear with no
-            archetype label, picking a filter will starve the pool. */}
-        <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
-          <span className="text-muted w-20">Archetype:</span>
-          {ARMOR_ARCHETYPES.map((a) => {
-            const on = archetypeFilter.includes(a);
-            return (
-              <button
-                key={a}
-                onClick={() => setArchetypeFilter((cur) =>
-                  cur.includes(a) ? cur.filter((x) => x !== a) : [...cur, a]
-                )}
-                className={`px-3 py-1 rounded border transition-colors ${
-                  on
-                    ? "text-saber border-saber"
-                    : "border-border text-muted hover:text-foreground"
-                }`}
-              >
-                {a}
-              </button>
-            );
-          })}
-          {archetypeFilter.length > 0 && (
-            <button
-              onClick={() => setArchetypeFilter([])}
-              className="ml-2 normal-case tracking-normal text-[11px] text-muted hover:text-saber"
-            >
-              clear
-            </button>
-          )}
         </div>
 
         {/* Locked exotic */}
@@ -1029,7 +913,7 @@ export default function Optimizer() {
           <div className="flex flex-wrap items-baseline gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
             <span className="text-muted w-20">Themes:</span>
             <span className="text-muted normal-case tracking-normal text-[11px]">
-              Lock N pieces of an armor set. Total ≤ 5 (any extra slots are free).
+              Lock 2 or 4 pieces of a set — the set-bonus breakpoints. Total ≤ 5 (extra slots are free).
             </span>
             <span className="ml-auto text-saber">
               {themeTotal}/5 locked
@@ -1064,13 +948,14 @@ export default function Optimizer() {
                   disabled={!t.setName}
                   className="bg-void/40 border border-border rounded px-2 py-1 font-ui text-xs"
                 >
-                  {[1, 2, 3, 4, 5].map((n) => (
+                  {/* 2pc / 4pc are the set-bonus breakpoints — 1 and 3 do nothing. */}
+                  {[2, 4].map((n) => (
                     <option
                       key={n}
                       value={n}
                       disabled={n > Math.min(maxForThis, maxAllowedByBudget)}
                     >
-                      {n} {n === 1 ? "piece" : "pieces"}
+                      {n} pieces
                     </option>
                   ))}
                 </select>
@@ -1102,7 +987,25 @@ export default function Optimizer() {
             loadout). Mod 1 (+10 stat) is planned by the optimizer; Mod 2 (tuning)
             is shown per result and slotted in-game. Defaults to your screenshot;
             edits persist on this device and auto-apply on Optimize & Equip. */}
-        <div className="border-t border-border/60 pt-4">
+        <div className="border-t border-border/60 pt-4 space-y-3">
+          {/* PVE / PVP — picks the default utility-mod template below. */}
+          <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+            <span className="text-muted w-20">Mods:</span>
+            {(["PVE", "PVP"] as ModMode[]).map((m) => (
+              <button
+                key={m}
+                onClick={() => pickModMode(m)}
+                className={`px-3 py-1 rounded border transition-colors ${
+                  modMode === m ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+            <span className="text-muted normal-case tracking-normal text-[11px]">
+              sets the default utility mods (Mods 3–5) — fine-tune below, edits persist per mode
+            </span>
+          </div>
           <button
             onClick={() => setShowDefaults((v) => !v)}
             className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-saber hover:underline"
@@ -1120,7 +1023,7 @@ export default function Optimizer() {
                   onClick={resetTemplate}
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted hover:text-saber"
                 >
-                  reset to screenshot defaults
+                  reset to {modMode} defaults
                 </button>
               </div>
               {!modCatalog && <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60">mod catalog loading…</div>}

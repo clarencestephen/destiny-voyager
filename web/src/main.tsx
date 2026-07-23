@@ -18,6 +18,7 @@ import Fireteam from "./pages/Fireteam";
 import Diagnostic from "./pages/Diagnostic";
 import ThisWeek from "./pages/ThisWeek";
 import Loadouts from "./pages/Loadouts";
+import Wishlist from "./pages/Wishlist";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="builds" element={<Builds />} />
           <Route path="optimizer" element={<Optimizer />} />
           <Route path="loadouts" element={<Loadouts />} />
+          <Route path="wishlist" element={<Wishlist />} />
           <Route path="weapons" element={<Weapons />} />
           <Route path="armor" element={<Armor />} />
           <Route path="build" element={<Build />} />
@@ -39,7 +41,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="play" element={<Play />} />
           <Route path="fireteam" element={<Fireteam />} />
           <Route path="diagnostic" element={<Diagnostic />} />
-          <Route path="this-week" element={<ThisWeek />} />
+          <Route path="this-week/:section?" element={<ThisWeek />} />
           <Route path="credits" element={<Credits />} />
         </Route>
       </Routes>

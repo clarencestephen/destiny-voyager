@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "bake": "node scripts/bake-slim-manifest.mjs && node scripts/bake-armor.mjs && node scripts/bake-activities.mjs",
+    "prebuild": "npm run bake || echo '[prebuild] manifest cache not found - keeping existing baked files'",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "tsc -b --noEmit",

@@ -21,7 +21,6 @@ export function DiscordWidget({
       src={`https://discord.com/widget?id=${guildId}&theme=dark`}
       width={width}
       height={height}
-      allowTransparency
       frameBorder="0"
       sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
       className="block w-full max-w-[350px] mx-auto"

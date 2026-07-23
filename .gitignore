@@ -37,3 +37,7 @@ darth-bot/*.log
 
 darth-bot/data/twab_watcher.log
 darth-bot/data/twab_watcher_state.json
+
+# Symlink to the workspace-level manifest cache + rotated bot logs
+manifest_cache
+*.log.prev

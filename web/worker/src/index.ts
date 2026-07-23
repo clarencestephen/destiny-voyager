@@ -462,8 +462,34 @@ app.use("/api/usage", requireSession);
 app.get("/api/library", async (c) => {
   const u = c.get("user");
   const raw = await c.env.DV_KV.get(`library:${u.bungie_id}`);
-  return c.json(raw ? JSON.parse(raw) : { builds: [], weaponWishlist: [], armorWishlist: [] });
+  return c.json(raw ? JSON.parse(raw) : { builds: [], weaponWishlist: [], armorWishlist: [], wishSpace: null });
 });
+
+// The free-form Wishlist page (sections + scratchpad). Tied to the Bungie
+// login via the per-user library key. Structural sanitize only — the content
+// itself is the user's own free text.
+function sanitizeWishSpace(w: any) {
+  if (!w || typeof w !== "object" || !Array.isArray(w.sections)) return null;
+  const S = (v: any, n: number) => String(v ?? "").slice(0, n);
+  return {
+    sections: w.sections.slice(0, 50).map((s: any) => ({
+      id: S(s?.id, 40),
+      title: S(s?.title, 120),
+      items: Array.isArray(s?.items)
+        ? s.items.slice(0, 300).map((it: any) => ({
+            id: S(it?.id, 40),
+            name: S(it?.name, 200),
+            source: S(it?.source, 300),
+            link: S(it?.link, 500),
+            note: S(it?.note, 500),
+            done: !!it?.done,
+          }))
+        : [],
+    })),
+    notes: S(w.notes, 20000),
+    updatedAt: Date.now(),
+  };
+}
 
 app.put("/api/library", async (c) => {
   const u = c.get("user");
@@ -475,6 +501,7 @@ app.put("/api/library", async (c) => {
     weaponWishlist: Array.isArray(body.weaponWishlist) ? body.weaponWishlist.slice(0, 2000) : [],
     armorWishlist: Array.isArray(body.armorWishlist) ? body.armorWishlist.slice(0, 2000) : [],
     loadouts: Array.isArray(body.loadouts) ? body.loadouts.slice(0, 200) : [],
+    wishSpace: sanitizeWishSpace(body.wishSpace),
     updatedAt: Date.now(),
   };
   const json = JSON.stringify(lib);

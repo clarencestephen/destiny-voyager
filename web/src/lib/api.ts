@@ -236,12 +236,36 @@ export interface DVLoadout {
   createdAt: number;
 }
 
+/** One entry in the free-form wishlist space. Everything optional but the
+ *  name — the space is personalizable, not a fixed schema. */
+export interface WishItem {
+  id: string;
+  name: string;
+  source?: string;   // where it drops / how to get it
+  link?: string;     // guide video, lightgg, etc.
+  note?: string;     // anything — roll to chase, priority, reminders
+  done?: boolean;    // acquired
+}
+export interface WishSection {
+  id: string;
+  title: string;
+  items: WishItem[];
+}
+/** The personalizable wishlist page: user-defined sections + a scratchpad.
+ *  Tied to the Bungie login — persisted in the per-user KV library. */
+export interface WishSpace {
+  sections: WishSection[];
+  notes?: string;
+  updatedAt?: number;
+}
+
 /** Per-user library synced to KV: wishlists (item hashes) + saved builds + loadouts. */
 export interface Library {
   builds: any[];
   weaponWishlist: string[];
   armorWishlist: string[];
   loadouts?: DVLoadout[];
+  wishSpace?: WishSpace | null;
   updatedAt?: number;
 }
 

@@ -23,6 +23,8 @@ export default function Builds() {
   const [classFilter, setClassFilter] = useState<string | null>(null);
   const [focusFilter, setFocusFilter] = useState<"All" | "PvE" | "PvP">("All");
   const [openId, setOpenId] = useState<string | null>(null);
+  const [equipMsg, setEquipMsg] = useState<string | null>(null);
+  const [equipping, setEquipping] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -42,7 +44,7 @@ export default function Builds() {
         if (!classFilter && profile.primary_class) {
           setClassFilter(profile.primary_class);
         }
-        api.getUsage().then((u) => setUsage(u.weapons)).catch(() => { /* usage optional */ });
+        api.getUsage().then((u) => setUsage(u?.weapons ?? {})).catch(() => { /* usage optional */ });
       } catch {
         // Not signed in — builds still browseable, just no fit %
       }
@@ -88,6 +90,40 @@ export default function Builds() {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered, fits, usage, items]);
+
+  // Equip everything the user owns from this build (exotic armor + weapons)
+  // onto the matching guardian. Missing pieces are reported, not blocking.
+  async function equipBuildPieces(b: BuildTemplate) {
+    const fit = fits[b.id];
+    if (!fit || !me || equipping) return;
+    setEquipping(true);
+    setEquipMsg("Equipping owned pieces…");
+    try {
+      const char = b.class === "Any"
+        ? (me.characters || [])[0]
+        : (me.characters || []).find((c) => c.class === b.class.toLowerCase());
+      if (!char) { setEquipMsg(`No ${b.class} guardian found on your account.`); return; }
+      const slots: [string, FitSlotStatus][] = [
+        ["Exotic", fit.exoticArmor], ["Kinetic", fit.kinetic], ["Energy", fit.energy], ["Heavy", fit.heavy],
+      ];
+      const ids: string[] = [];
+      const missing: string[] = [];
+      for (const [label, s] of slots) {
+        if (s.status === "owned") ids.push(s.item.instance_id);
+        else if (s.status === "missing") missing.push(`${label}: ${s.wantedOptions[0]}`);
+      }
+      if (!ids.length) { setEquipMsg("You don't own any of this build's pieces yet."); return; }
+      const res = await api.equip(char.id, ids);
+      setEquipMsg(
+        `✓ Equipped ${res.equipped_count ?? ids.length} to your ${char.class}` +
+        (missing.length ? ` · missing: ${missing.join(", ")}` : "."),
+      );
+    } catch {
+      setEquipMsg("Equip failed — items equipped on another guardian must be unequipped first.");
+    } finally {
+      setEquipping(false);
+    }
+  }
 
   // ============================================================
   // Render
@@ -161,7 +197,7 @@ export default function Builds() {
             <Card
               key={b.id}
               className={`p-4 cursor-pointer transition-colors ${open ? "border-saber/60" : ""}`}
-              onClick={() => setOpenId(open ? null : b.id)}
+              onClick={() => { setOpenId(open ? null : b.id); setEquipMsg(null); }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
@@ -207,14 +243,17 @@ export default function Builds() {
                   {b.target_stats && (
                     <TargetStats stats={b.target_stats} />
                   )}
-                  {b.target_stats && (
-                    <Link
-                      to={`/optimizer?build=${encodeURIComponent(b.id)}`}
-                      className="inline-block text-xs font-mono uppercase tracking-[0.25em] text-saber hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      → optimize stats for this build
-                    </Link>
+                  {me && fit && (
+                    <div className="space-y-2">
+                      <Button
+                        variant="outline"
+                        disabled={equipping}
+                        onClick={(e) => { e.stopPropagation(); equipBuildPieces(b); }}
+                      >
+                        {equipping ? "Equipping…" : "Equip build (owned pieces)"}
+                      </Button>
+                      {equipMsg && <div className="font-ui text-xs text-muted">{equipMsg}</div>}
+                    </div>
                   )}
                   {b.source && (
                     <div className="font-mono text-[9px] tracking-[0.25em] uppercase text-muted">

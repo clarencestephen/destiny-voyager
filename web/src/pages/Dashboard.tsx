@@ -262,7 +262,7 @@ export default function Dashboard() {
       <section className="flex flex-wrap items-end justify-between gap-6 pt-8 pb-8 border-b border-border">
         <div>
           <p className="font-mono text-xs tracking-[0.4em] text-sith uppercase">▸ Guardian</p>
-          <h1 className={`font-display text-4xl font-black tracking-wide ${me ? CLASS_COLOR[me.primary_class] : "text-muted"}`}>
+          <h1 className={`font-display text-3xl sm:text-4xl font-black tracking-wide break-all ${me ? CLASS_COLOR[me.primary_class] : "text-muted"}`}>
             {me?.bungie_name || "Loading…"}
           </h1>
         </div>

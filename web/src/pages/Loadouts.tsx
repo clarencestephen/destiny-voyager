@@ -49,7 +49,12 @@ export default function Loadouts() {
 
   function refresh() {
     return api.getLoadouts()
-      .then((d) => { setChars(d.characters); if (!active && d.characters[0]) setActive(d.characters[0].character_id); })
+      .then((d) => {
+        // Guard the shape — a malformed response must degrade, not white-screen.
+        const cs = Array.isArray(d?.characters) ? d.characters : [];
+        setChars(cs);
+        if (!active && cs[0]) setActive(cs[0].character_id);
+      })
       .catch(() => setSignedOut(true));
   }
   useEffect(() => {

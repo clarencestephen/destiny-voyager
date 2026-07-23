@@ -61,3 +61,26 @@
     box-shadow: 0 0 24px rgba(180, 50, 255, 0.45);
   }
 }
+
+/* ============================================================
+   Wishlist — Sith personal-ledger styling
+   ============================================================ */
+@layer utilities {
+  /* Cyberpunk corner-cut panel */
+  .panel-cut {
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
+  /* Saber line drawing itself across on load */
+  .saber-draw {
+    transform-origin: left;
+    animation: saber-draw 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  /* CRT scanline overlay for the personal-log terminal */
+  .scanlines {
+    background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(180, 50, 255, 0.035) 3px 4px);
+  }
+}
+@keyframes saber-draw {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
