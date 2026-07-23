@@ -12,19 +12,24 @@
  * are dropped — the engine only ever equips the general slot-mods that
  * any Legendary armor piece can socket.
  *
- * Output schema  { "<hash>": { n, slot, fam, el, cost, i?, stat?, mag? } }
+ * Output schema  { "<hash>": { n, slot, fam, el, cost, i?, stat?, mag?, deltas? } }
  *   n    = display name                       ("Void Weapon Surge")
- *   slot = Helmet|Arms|Chest|Legs|Class|General
+ *   slot = Helmet|Arms|Chest|Legs|Class|General|Tuning
  *   fam  = family the engine selects on:
  *            surge      (offense  — legs)   resist     (defense  — chest)
  *            loader     (reload   — arms)   concussive (defense  — chest)
  *            siphon     (orbs     — head)   holster|dexterity|targeting
  *            stat       (general socket)    survivability|ammo|unflinch|other
+ *            tuning     (Tier-5 tuning socket: "+X / -Y" +5/−5 mods + Balanced)
  *   el   = Kinetic|Arc|Solar|Void|Stasis|Strand|Harmonic|""  (Harmonic = matches subclass)
  *   cost = energy cost (integer)
  *   i    = icon path (optional)
  *   stat = for fam=stat: which stat (health|weapons|class|grenade|super|melee)
  *   mag  = for fam=stat: +magnitude (10 full / 5 minor)
+ *   deltas = for fam=tuning: full stat delta map from investmentStats, e.g.
+ *            {"grenade":5,"health":-5} — Balanced Tuning is +1 to all six.
+ *            Verified 2026-07-22 against live component-304 sheets: the names
+ *            match the investment effects (no manifest drift).
  *
  * Run after a Bungie patch:  node web/scripts/bake-mods.mjs
  */
@@ -64,6 +69,14 @@ const ELEMENTS = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand", "Harmon
 const STAT_WORDS = {
   Health: "health", Weapons: "weapons", Class: "class",
   Grenade: "grenade", Super: "super", Melee: "melee",
+};
+
+// Tier-5 tuning socket plugs. Canonical stat hashes (unchanged since D2 launch;
+// EoF renamed the labels only — Recovery→Class, Discipline→Grenade, Intellect→Super).
+const TUNING_CAT = "core.gear_systems.armor_tiering.plugs.tuning.mods";
+const STAT_BY_HASH = {
+  2996146975: "weapons", 392767087: "health", 1943323491: "class",
+  1735777505: "grenade", 144602215: "super", 4244567218: "melee",
 };
 
 // Names we never want the engine to consider, even inside a v2 socket.
@@ -114,6 +127,48 @@ let kept = 0;
 for (const [hash, defn] of Object.entries(items)) {
   if (defn.redacted === true) continue;
   const plug = defn.plug || {};
+
+  // Armor masterwork / "Upgrade Armor" plugs — each grants +N to ALL six stats
+  // (EoF v460: +1 per upgrade level up to +5; legacy armor 2.0: +2 at
+  // masterwork). Baked so the client can (a) strip the CURRENT level out of the
+  // live sheet and (b) project "assume masterworked" stats. Zero-bonus level
+  // plugs are skipped — absence of a baked plug simply means +0.
+  const pid = plug.plugCategoryIdentifier || "";
+  if (/plugs\.(armor\.)?masterworks/.test(pid) && /armor/.test(pid)) {
+    const deltas = {};
+    for (const s of defn.investmentStats || []) {
+      const k = STAT_BY_HASH[s.statTypeHash];
+      if (k && s.value) deltas[k] = (deltas[k] ?? 0) + s.value;
+    }
+    if (!Object.keys(deltas).length) continue;
+    const name = (defn.displayProperties?.name || "Upgrade Armor").trim();
+    out[hash] = { n: name, slot: "Tuning", fam: "masterwork", el: "", cost: 0, deltas };
+    byFamily.masterwork = (byFamily.masterwork || 0) + 1;
+    kept++;
+    continue;
+  }
+
+  // Tuning socket plugs (Tier-5 armor). Keep every "+X / -Y" mod + Balanced;
+  // skip the Empty socket plug. Effects come from investmentStats (verified to
+  // match the display names).
+  if (plug.plugCategoryIdentifier === TUNING_CAT) {
+    const name = (defn.displayProperties?.name || "").trim();
+    if (!name || /^Empty /.test(name)) continue;
+    const deltas = {};
+    for (const s of defn.investmentStats || []) {
+      const k = STAT_BY_HASH[s.statTypeHash];
+      if (k && s.value) deltas[k] = (deltas[k] ?? 0) + s.value;
+    }
+    if (!Object.keys(deltas).length) continue;
+    out[hash] = {
+      n: name, slot: "Tuning", fam: "tuning", el: "",
+      cost: defn.plug?.energyCost?.energyCost ?? 0, deltas,
+    };
+    byFamily.tuning = (byFamily.tuning || 0) + 1;
+    kept++;
+    continue;
+  }
+
   const slot = PLUG_SLOT[plug.plugCategoryIdentifier];
   if (!slot) continue;                                   // not a slottable v2 armor mod
   const name = (defn.displayProperties?.name || "").trim();

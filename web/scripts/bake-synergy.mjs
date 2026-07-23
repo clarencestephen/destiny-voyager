@@ -81,6 +81,13 @@ function tagsFor(text) {
   return tags;
 }
 
+// Fragment armor-stat deltas + aspect fragment-slot counts (investmentStats).
+const STAT_BY_HASH = {
+  2996146975: "weapons", 392767087: "health", 1943323491: "class",
+  1735777505: "grenade", 144602215: "super", 4244567218: "melee",
+};
+const FRAGMENT_SLOTS_STAT = 2223994109;   // on aspects: how many fragment slots it grants
+
 const aspects = [];
 const fragments = [];
 for (const [hash, d] of Object.entries(items)) {
@@ -88,18 +95,32 @@ for (const [hash, d] of Object.entries(items)) {
   const pid = d.plug?.plugCategoryIdentifier || "";
   const nm = (d.displayProperties?.name || "").trim();
   if (!nm || nm.startsWith("Empty ")) continue;
-  const isAspect = pid.endsWith(".aspects");
-  const isFragment = pid.endsWith(".fragments");
+  // Stasis predates Subclass 3.0 naming: aspects = <class>.stasis.totems,
+  // fragments = shared.stasis.trinkets. Everything else uses .aspects/.fragments.
+  const isAspect = pid.endsWith(".aspects") || /^\w+\.stasis\.totems$/.test(pid);
+  const isFragment = pid.endsWith(".fragments") || pid === "shared.stasis.trinkets";
   if (!isAspect && !isFragment) continue;
 
   const parts = pid.split(".");                              // warlock.solar.aspects / shared.solar.fragments
-  let el = isAspect ? parts[1] : parts[1];                   // solar / void / prism / arc / strand
+  let el = parts[1];                                         // solar / void / prism / arc / strand / stasis
   if (el === "prism") el = "prismatic";
   const desc = bestDesc(d);
   const tags = tagsFor(fullText(hash, d));
   const rec = { hash: Number(hash), n: nm, el, desc, keywords: tags };
-  if (isAspect) { rec.cls = parts[0]; aspects.push(rec); }
-  else fragments.push(rec);
+  if (isAspect) {
+    rec.cls = parts[0];
+    const slots = (d.investmentStats || []).find((s) => s.statTypeHash === FRAGMENT_SLOTS_STAT);
+    rec.slots = slots?.value ?? 2;
+    aspects.push(rec);
+  } else {
+    const deltas = {};
+    for (const s of d.investmentStats || []) {
+      const k = STAT_BY_HASH[s.statTypeHash];
+      if (k && s.value) deltas[k] = (deltas[k] ?? 0) + s.value;
+    }
+    if (Object.keys(deltas).length) rec.deltas = deltas;
+    fragments.push(rec);
+  }
 }
 
 // Weapon-perk keyword tags (Clarity descriptions) — e.g. Incandescence → scorch.

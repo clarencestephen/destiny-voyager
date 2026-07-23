@@ -105,6 +105,23 @@ function loadModTemplate(mode: ModMode): ModTemplate {
  *  A stat absent from this map (blank input) is ignored entirely. */
 type StatTargets = Partial<Record<StatKey, number>>;
 
+// Subclass aspects + fragments (synergy.json, baked from the manifest +
+// Clarity). Aspects grant fragment slots; fragments may carry armor-stat
+// deltas. `keywords` drive the one-tap recommendation.
+type AspectDef = { hash: number; n: string; el: string; cls: string; desc: string; keywords: string[]; slots?: number };
+type FragmentDef = { hash: number; n: string; el: string; desc: string; keywords: string[]; deltas?: Partial<Record<StatKey, number>> };
+type SynergyData = {
+  aspects: AspectDef[];
+  fragments: FragmentDef[];
+  perkKeywords: Record<string, string[]>;
+};
+const ASPECT_ELEMENTS = ["Arc", "Solar", "Void", "Stasis", "Strand", "Prismatic"];
+// Map a targeted stat to the keyword vocabulary used in synergy.json.
+const STAT_TO_KEYWORD: Record<string, string> = {
+  melee: "melee", super: "super", grenade: "grenade",
+  class: "class-ability", health: "heal", weapons: "surge",
+};
+
 // Per-slot top-K prune before the cartesian product. K=12 → 12^5 = ~248k
 // combos worst-case; the exotic filter knocks it down further. Fast on
 // modern hardware; tune up if results feel sparse.
@@ -134,33 +151,40 @@ type Combo = {
   modsUsed: number;
 };
 
-/** One tuning mod (the Mod-2 socket on a piece). `minus` present → flexible
- *  +5/−5 redistribution; `minus` absent → balanced +3 (net positive). */
-type TuningMod = { plus: StatKey; minus?: StatKey };
+/** Phase-3 tuning assignment — one CONCRETE tuning plug on one specific piece.
+ *  Archetype-aware: a legendary's tuning socket only accepts mods whose +5 is
+ *  the piece's rolled Tuned stat (you pick the −5); exotics accept any pair.
+ *  Balanced Tuning (+1 all six) is always available. */
+type TuningAssign = {
+  instance_id: string;
+  pieceSlot: string;                          // "Helmet" | "Gauntlets" | ...
+  pieceName: string;
+  hash: number;                               // plug hash to insert
+  name: string;                               // "+Grenade / -Health" | "Balanced Tuning"
+  deltas: Partial<Record<StatKey, number>>;
+  free: boolean;                              // exotic — +5 stat was freely chosen
+};
 
 /** Armor stat mod plan across the two stat-affecting sockets every EoF piece has:
  *  Mod 1 (general) = a +10/+5 stat mod, Mod 2 = a tuning mod. Mods 3/4/5 are the
  *  fixed utility template and don't touch stats, so they're not planned here. */
 type ModPlan = {
-  /** Mod-1 sockets: number of +10 mods per stat. */
+  /** Phase 2 — Mod-1 sockets: number of +10 mods per stat. */
   plus10: Partial<Record<StatKey, number>>;
-  /** Mod-1 sockets: number of +5 mods per stat. */
+  /** Phase 2 — Mod-1 sockets: number of +5 mods per stat. */
   plus5:  Partial<Record<StatKey, number>>;
-  /** Mod-2 sockets: one tuning mod per entry (≤5). */
-  tuning: TuningMod[];
-  /** Which tuning style won this combo: "flex" (+5/−5), "balanced" (+3), or null (no tuning helped). */
-  tuningStyle: "flex" | "balanced" | null;
+  /** Phase 3 — per-piece tuning assignments (≤1 per tuning-capable piece). */
+  tuning: TuningAssign[];
   /** Mod-1 sockets consumed (sum of plus10 + plus5). */
   used: number;
-  /** Mod-2 sockets consumed (tuning.length). */
+  /** Tuning sockets consumed (tuning.length). */
   tuningUsed: number;
 };
 
 const MOD_BUDGET = 5;  // 5 armor pieces, 1 of each socket type (general + tuning) per piece
 const PLUS10 = 10;
 const PLUS5  = 5;
-const TUNE_FLEX = 5;   // flexible tuning mod: +5 to one stat, −5 from another
-const TUNE_BAL  = 3;   // balanced tuning mod: +3 toward a short stat (no subtraction)
+const TUNE_FLEX = 5;   // +5/−5 tuning mod magnitude
 
 function isArmor(item: Item): boolean {
   return !!item.stats && ARMOR_SLOTS.includes(item.slot as ArmorSlot);
@@ -182,22 +206,40 @@ function sumArmorStats(pieces: Item[]): ArmorStats {
 
 /**
  * TRUE base armor stats = the live (component-304) sheet MINUS the stats
- * contributed by the piece's CURRENTLY-equipped stat mods. The live sheet is
- * post-mod, so optimizing on it double-counts: the optimizer adds its OWN stat
- * mods on top of mods already there, and the projected totals don't match what
- * you actually get in-game (which clears mods first). We strip the equipped
- * stat mods (the +5/+10 "[stat] Mod"s in the catalog) to recover the base roll.
+ * contributed by the piece's CURRENTLY-equipped stat mods AND tuning mods.
+ * The live sheet is post-mod, so optimizing on it double-counts: the optimizer
+ * adds its OWN mods on top of mods already there, and the projected totals
+ * don't match what you actually get in-game (which clears mods first). We
+ * strip the +5/+10 "[stat] Mod"s and the "+5 / −5" / Balanced tuning plugs
+ * (phase 1 evaluates pieces on the naked roll).
  */
-function baseStats(item: Item, catalog: ModCatalog | null): ArmorStats | undefined {
+function baseStats(item: Item, catalog: ModCatalog | null, assumeMW = true): ArmorStats | undefined {
   if (!item.stats || !catalog) return item.stats;
   const s: ArmorStats = { ...item.stats };
+  let mwCurrent = 0;   // the piece's CURRENT all-stat upgrade bonus (+0..+5)
   for (const h of item.plug_hashes ?? []) {
     const m = catalog[String(h)];
     if (m?.fam === "stat" && m.stat && m.mag) {
       const k = m.stat as keyof ArmorStats;
       s[k] = Math.max(0, (s[k] ?? 0) - m.mag);
+    } else if (m?.fam === "tuning" && m.deltas) {
+      // Undo the equipped tuning mod (e.g. +5 grenade / −5 health, or +1 all).
+      for (const [k, v] of Object.entries(m.deltas) as [StatKey, number][]) {
+        s[k] = (s[k] ?? 0) - v;
+      }
+    } else if (m?.fam === "masterwork" && m.deltas) {
+      // "Upgrade Armor" plug — +N all six. Strip it; re-added below at either
+      // the current level (as-is) or the piece's cap (assume masterworked).
+      mwCurrent = Math.max(mwCurrent, m.deltas.weapons ?? 0);
+      for (const [k, v] of Object.entries(m.deltas) as [StatKey, number][]) {
+        s[k] = (s[k] ?? 0) - v;
+      }
     }
   }
+  // Masterwork cap: EoF armor = +gear_tier to all six; legacy armor 2.0 = +2.
+  const cap = (item.gear_tier ?? 0) > 0 ? item.gear_tier! : 2;
+  const mw = assumeMW ? Math.max(cap, mwCurrent) : mwCurrent;
+  if (mw > 0) for (const k of STAT_KEYS) s[k] = (s[k] ?? 0) + mw;
   return s;
 }
 
@@ -231,7 +273,7 @@ function neediestStat(proj: ArmorStats, targets: StatTargets): StatKey | null {
  * first so a tight 5-slot budget favors the stats that matter most.
  */
 function planMods(totals: ArmorStats, targets: StatTargets): ModPlan {
-  const plan: ModPlan = { plus10: {}, plus5: {}, tuning: [], tuningStyle: null, used: 0, tuningUsed: 0 };
+  const plan: ModPlan = { plus10: {}, plus5: {}, tuning: [], used: 0, tuningUsed: 0 };
   const proj: Record<string, number> = { ...totals };
 
   function addPlus10(s: StatKey) { plan.plus10[s] = (plan.plus10[s] ?? 0) + 1; plan.used += 1; proj[s] += PLUS10; }
@@ -249,50 +291,88 @@ function planMods(totals: ArmorStats, targets: StatTargets): ModPlan {
   return plan;
 }
 
-/** Flexible tuning: each mod moves +5 to the neediest stat and −5 from a donor
- *  that can spare it (untargeted, or surplus ≥5 above its own target). Net-zero
- *  per mod — only helps when there's a stat to rob. */
-function planTuningFlex(proj: ArmorStats, targets: StatTargets): TuningMod[] {
-  const tuning: TuningMod[] = [];
-  while (tuning.length < MOD_BUDGET) {
-    const recipient = neediestStat(proj, targets);
-    if (!recipient) break;
-    // Pick the donor with the most spare headroom: untargeted stats can give down
-    // to 0; targeted stats only down to their target. Most-spare first.
+/** Can this piece take a tuning mod at all, and which +5 stats may it pick?
+ *  Exotics (tune_free, or tier=Exotic when the worker only saw the plugged mod)
+ *  choose freely; legendaries are locked to their rolled Tuned stat. */
+function tuningPlusOptions(p: Item): StatKey[] {
+  if (p.tuning_idx == null && !p.tuned && !p.tune_free) return [];
+  if (p.tune_free || p.tier === "Exotic") return STAT_KEYS.slice();
+  return p.tuned ? [p.tuned] : [];
+}
+
+/**
+ * PHASE 3 — plan the tuning socket per piece, honoring per-piece constraints:
+ *   • legendary: +5 is FIXED to the piece's rolled Tuned stat; we pick the −5
+ *   • exotic:    any +5 / −5 pair
+ *   • Balanced Tuning (+1 all six) as the gap-closer when +5s can't help
+ * Each tuning-capable piece is used at most once. Donors (−5) come from stats
+ * with spare headroom: untargeted stats down to 0, targeted only above target.
+ */
+function planTuning(
+  pieces: Item[],
+  start: ArmorStats,
+  targets: StatTargets,
+  catalog: ModCatalog | null,
+): TuningAssign[] {
+  if (!catalog) return [];
+  // Index the tuning catalog: plus → minus → mod, plus the Balanced mod.
+  const pair: Partial<Record<StatKey, Partial<Record<StatKey, Mod>>>> = {};
+  let balanced: Mod | null = null;
+  for (const [h, e] of Object.entries(catalog)) {
+    if (e.fam !== "tuning" || !e.deltas) continue;
+    const entries = Object.entries(e.deltas) as [StatKey, number][];
+    const plus = entries.find(([, v]) => v >= TUNE_FLEX);
+    const minus = entries.find(([, v]) => v < 0);
+    if (plus && minus) (pair[plus[0]] ??= {})[minus[0]] = { hash: Number(h), ...e };
+    else if (!minus && entries.length === 6) balanced = { hash: Number(h), ...e };
+  }
+
+  const proj: ArmorStats = { ...start };
+  const out: TuningAssign[] = [];
+  const used = new Set<string>();
+  const capable = pieces.filter((p) => p.tuning_idx != null && tuningPlusOptions(p).length > 0);
+
+  const push = (p: Item, mod: Mod, free: boolean) => {
+    used.add(p.instance_id);
+    for (const [k, v] of Object.entries(mod.deltas!) as [StatKey, number][]) proj[k] += v;
+    out.push({
+      instance_id: p.instance_id, pieceSlot: p.slot, pieceName: p.name,
+      hash: mod.hash, name: mod.n, deltas: mod.deltas!, free,
+    });
+  };
+
+  // +5/−5 pass: repeatedly boost the neediest targeted stat with a piece that
+  // is ALLOWED to +5 it. Legendaries locked to another stat simply don't match.
+  for (;;) {
+    const s = neediestStat(proj, targets);
+    if (!s) break;
+    const p = capable.find((x) => !used.has(x.instance_id) && tuningPlusOptions(x).includes(s));
+    if (!p) break;
     let donor: StatKey | null = null, bestSpare = -Infinity;
-    for (const s of STAT_KEYS) {
-      if (s === recipient) continue;
-      const floor = (targets[s] ?? 0) > 0 ? targets[s]! : 0;
-      const spare = (proj[s] ?? 0) - floor;
-      if (spare >= TUNE_FLEX && spare > bestSpare) { bestSpare = spare; donor = s; }
+    for (const d of STAT_KEYS) {
+      if (d === s) continue;
+      const floor = (targets[d] ?? 0) > 0 ? targets[d]! : 0;
+      const spare = (proj[d] ?? 0) - floor;
+      if (spare >= TUNE_FLEX && spare > bestSpare) { bestSpare = spare; donor = d; }
     }
-    if (!donor) break;   // no legal donor → flex can't help further
-    proj[recipient] += TUNE_FLEX;
-    proj[donor]     -= TUNE_FLEX;
-    tuning.push({ plus: recipient, minus: donor });
+    if (!donor) break;
+    const mod = pair[s]?.[donor];
+    if (!mod) break;
+    push(p, mod, !!(p.tune_free || p.tier === "Exotic"));
   }
-  return tuning;
-}
 
-/** Balanced tuning: each mod adds +3 to the neediest stat (no subtraction).
- *  In-game this mod buffs your lowest stats; for targeting we steer the +3 to
- *  whichever targeted stat is shortest. */
-function planTuningBalanced(proj: ArmorStats, targets: StatTargets): TuningMod[] {
-  const tuning: TuningMod[] = [];
-  while (tuning.length < MOD_BUDGET) {
-    const recipient = neediestStat(proj, targets);
-    if (!recipient) break;
-    proj[recipient] += TUNE_BAL;
-    tuning.push({ plus: recipient });
-  }
-  return tuning;
-}
-
-function applyTuning(totals: ArmorStats, tuning: TuningMod[]): ArmorStats {
-  const out: ArmorStats = { ...totals };
-  for (const t of tuning) {
-    out[t.plus] += t.minus ? TUNE_FLEX : TUNE_BAL;
-    if (t.minus) out[t.minus] -= TUNE_FLEX;
+  // Balanced pass: if a remaining gap is small enough that +1-per-mod from the
+  // unused tuning sockets can close it, spend them on Balanced Tuning.
+  if (balanced) {
+    for (;;) {
+      const remaining = capable.filter((x) => !used.has(x.instance_id));
+      if (!remaining.length) break;
+      const gaps = (Object.entries(targets) as [StatKey, number][])
+        .filter(([k, t]) => t > 0 && proj[k] < t)
+        .map(([k, t]) => t - proj[k]);
+      if (!gaps.length || Math.min(...gaps) > remaining.length) break;
+      push(remaining[0], balanced, !!(remaining[0].tune_free || remaining[0].tier === "Exotic"));
+    }
   }
   return out;
 }
@@ -301,7 +381,10 @@ function applyModPlan(totals: ArmorStats, plan: ModPlan): ArmorStats {
   const out: ArmorStats = { ...totals };
   for (const [s, n] of Object.entries(plan.plus10)) out[s as StatKey] += (n ?? 0) * PLUS10;
   for (const [s, n] of Object.entries(plan.plus5))  out[s as StatKey] += (n ?? 0) * PLUS5;
-  return applyTuning(out, plan.tuning);
+  for (const t of plan.tuning) {
+    for (const [k, v] of Object.entries(t.deltas) as [StatKey, number][]) out[k] += v;
+  }
+  return out;
 }
 
 /** {hits, deficit} of a projected stat sheet against the targets. */
@@ -316,26 +399,32 @@ function evalTargets(proj: ArmorStats, targets: StatTargets) {
   return { hits, deficit, overshoot };
 }
 
-function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
-  // 1) Plan the +10/+5 general mods. 2) On top of that, try BOTH tuning styles
-  //    and keep whichever scores better (more hits, then smaller deficit, then
-  //    fewer tuning mods). 3) Score the final post-mod sheet.
-  const modPlan = planMods(totals, targets);
-  const after10 = applyModPlan(totals, { ...modPlan, tuning: [] });  // +10 layer only
+/** PHASE 1 score — pure base stats, no mods of any kind. Descending tuple:
+ *  most targets already hit on the naked roll, then smallest priority-weighted
+ *  deficit, then least overshoot, then raw targeted sum, then armor power. */
+function scoreBase(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
+  const { hits, deficit, overshoot } = evalTargets(totals, targets);
+  let rawSum = 0;
+  for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
+    if (t > 0) rawSum += totals[s] ?? 0;
+  }
+  const totalPower = pieces.reduce((p, x) => p + (x.power ?? 0), 0);
+  return { score: [hits, -deficit, -overshoot, rawSum, totalPower], baseHits: hits, rawSum, totalPower };
+}
 
-  const flex = planTuningFlex({ ...after10 }, targets);
-  const bal  = planTuningBalanced({ ...after10 }, targets);
-  const eFlex = evalTargets(applyTuning(after10, flex), targets);
-  const eBal  = evalTargets(applyTuning(after10, bal), targets);
-  // Prefer more hits, then less deficit, then fewer tuning mods used.
-  const flexWins =
-    eFlex.hits !== eBal.hits ? eFlex.hits > eBal.hits
-    : eFlex.deficit !== eBal.deficit ? eFlex.deficit < eBal.deficit
-    : flex.length <= bal.length;
-  const winner = flexWins ? flex : bal;
-  modPlan.tuning = winner;
-  modPlan.tuningUsed = winner.length;
-  modPlan.tuningStyle = winner.length === 0 ? null : (flexWins ? "flex" : "balanced");
+/** PHASES 2+3 — layer mods onto an already-chosen combo: first the Mod-1
+ *  general socket (+10/+5, any stat), then the tuning socket (per-piece
+ *  archetype constraints). Returns everything ComboCard renders. */
+function planPhases(
+  totals: ArmorStats,
+  pieces: Item[],
+  targets: StatTargets,
+  catalog: ModCatalog | null,
+) {
+  const modPlan = planMods(totals, targets);                         // phase 2
+  const after10 = applyModPlan(totals, { ...modPlan, tuning: [] });
+  modPlan.tuning = planTuning(pieces, after10, targets, catalog);    // phase 3
+  modPlan.tuningUsed = modPlan.tuning.length;
 
   const withMods = applyModPlan(totals, modPlan);
   const { hits, deficit, overshoot } = evalTargets(withMods, targets);
@@ -343,13 +432,11 @@ function scoreCombo(totals: ArmorStats, pieces: Item[], targets: StatTargets) {
   for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
     if (t > 0) rawSum += withMods[s] ?? 0;
   }
-  const totalPower = pieces.reduce((p, x) => p + (x.power ?? 0), 0);
-  // Score tuple (descending): most targets hit, then closest on the rest, then
-  // fewest mods (general + tuning), then least overshoot, raw sum, armor power.
   return {
-    score: [hits, -deficit, -(modPlan.used + modPlan.tuningUsed), -overshoot, rawSum, totalPower],
-    activations: hits, stretchHits: 0, surplus: overshoot, rawSum, totalPower,
-    modPlan, withMods, modsUsed: modPlan.used + modPlan.tuningUsed,
+    modPlan, withMods,
+    activations: hits, stretchHits: 0, surplus: overshoot, rawSum,
+    modsUsed: modPlan.used + modPlan.tuningUsed,
+    deficit,
   };
 }
 
@@ -365,9 +452,9 @@ function findStatMod(catalog: ModCatalog, stat: StatKey, mag: number): Mod | nul
  * Build the equip mod loadout from the user's fixed template + the optimizer's
  * planned +10/+5 stat mods. Each piece's General socket gets one stat mod (Mod 1,
  * distributed one-per-piece, biggest first); its slot sockets get the template's
- * Mods 3/4/5. Mod 2 (tuning) is NOT placed here — the tuning socket isn't
- * API-insertable, so it stays a recommendation slotted in-game. Feeds straight
- * into buildEquipPlan (stat → General, the rest → slot sockets in order).
+ * Mods 3/4/5. Mod 2 (tuning) is planned separately per piece (phase 3) and rides
+ * into buildEquipPlan via the tuningPlan argument — the tuning socket IS
+ * API-insertable (verified live 2026-07-22).
  */
 function buildTemplateLoadout(modPlan: ModPlan, template: ModTemplate, catalog: ModCatalog, subclassEl: ModElement): ModLoadout {
   // Flatten planned stat mods (≤5; +10s before +5s, highest-priority stat first).
@@ -422,6 +509,7 @@ function optimize(
   lockedExoticId: string | null,
   themeLocks: ThemeLock[] = [],
   fragmentDelta: ArmorStats = ZERO_STATS,
+  modCatalog: ModCatalog | null = null,
 ): { combos: Combo[]; pruned: Record<ArmorSlot, number> } {
   const selected = STAT_KEYS.filter((s) => (targets[s] ?? 0) > 0);  // stats with a target
   const themeReq = themeLocks.filter((t) => t.setName && t.count > 0);
@@ -472,8 +560,11 @@ function optimize(
     }
   }
 
-  // Cartesian product with at-most-one-exotic constraint
-  const combos: Combo[] = [];
+  // PHASE 1 — enumerate the cartesian product and rank on PURE BASE STATS
+  // (equipped stat + tuning mods already stripped by baseStats upstream).
+  // Mods are planned only for the winners, in phase order, afterward.
+  type BaseCombo = { pieces: Item[]; totals: ArmorStats; score: number[]; totalPower: number };
+  const baseCombos: BaseCombo[] = [];
   for (const h of pool.Helmet)
     for (const g of pool.Gauntlets)
       for (const c of pool.Chest)
@@ -497,12 +588,24 @@ function optimize(
             // Baseline = armor base + equipped subclass FRAGMENT delta, so the
             // pre-mod totals (and mod planning) match the in-game character sheet.
             const totals = sumStats(sumArmorStats(pieces), fragmentDelta);
-            const s = scoreCombo(totals, pieces, targets);
-            combos.push({ pieces, totals, ...s });
+            const s = scoreBase(totals, pieces, targets);
+            baseCombos.push({ pieces, totals, score: s.score, totalPower: s.totalPower });
           }
 
-  combos.sort((a, b) => compareScore(a.score, b.score));
-  return { combos: combos.slice(0, 5), pruned };
+  baseCombos.sort((a, b) => compareScore(a.score, b.score));
+
+  // PHASES 2 + 3 — plan mods for the top base combos only. Displayed order
+  // stays the PHASE-1 (base) ranking: #1 is the best naked-stat set, with the
+  // mod layers shown on top of it.
+  const combos: Combo[] = baseCombos.slice(0, 5).map((bc) => {
+    const p = planPhases(bc.totals, bc.pieces, targets, modCatalog);
+    return {
+      pieces: bc.pieces, totals: bc.totals, score: bc.score, totalPower: bc.totalPower,
+      modPlan: p.modPlan, withMods: p.withMods, activations: p.activations,
+      stretchHits: p.stretchHits, surplus: p.surplus, rawSum: p.rawSum, modsUsed: p.modsUsed,
+    };
+  });
+  return { combos, pruned };
 }
 
 // ============================================================
@@ -572,6 +675,26 @@ export default function Optimizer() {
   // already auto-match the subclass in-game, so they need no element here.
   const [subclassEl, setSubclassEl] = useState<ModElement>("Void");
 
+  // Aspects & fragments (synergy.json) — manual pick with descriptions + a
+  // one-tap recommendation seeded by the locked exotic's perk keywords and the
+  // stat targets. Display-only: slotted on the subclass screen in-game.
+  const [synergy, setSynergy] = useState<SynergyData | null>(null);
+  const [showAspects, setShowAspects] = useState(false);
+  const [aspectEl, setAspectEl] = useState<string | null>(null);   // null → follow subclassEl
+  const [pickedAspects, setPickedAspects] = useState<number[]>([]);
+  const [pickedFragments, setPickedFragments] = useState<number[]>([]);
+
+  // Masterwork assumption (default ON): project every piece at its upgrade cap
+  // (EoF: +gear-tier all stats · legacy: +2). OFF = stats as the gear sits
+  // today (current upgrade level; equipped mods still stripped for planning).
+  const [assumeMW, setAssumeMW] = useState<boolean>(() => {
+    try { return localStorage.getItem("dv_assume_mw") !== "0"; } catch { return true; }
+  });
+  function pickAssumeMW(v: boolean) {
+    setAssumeMW(v);
+    try { localStorage.setItem("dv_assume_mw", v ? "1" : "0"); } catch { /* ignore */ }
+  }
+
   const [refreshing, setRefreshing] = useState(false);
   const [lastSync, setLastSync] = useState<Date | null>(null);
 
@@ -604,12 +727,13 @@ export default function Optimizer() {
     (async () => {
       try {
         const profile = await refreshInventory();
-        // Mod catalog is static + small (~46KB) — load once, ignore failure
-        // (the optimizer still works without the mod preview).
+        // Mod catalog is static + small — the optimizer needs it for base-stat
+        // stripping and phase 2/3 planning; without it results show base-only.
         fetch("/mods.json").then((r) => r.json()).then(setModCatalog).catch(() => {});
-        api.getFragmentStats().then((d) => setFragmentDeltas(d.deltas as Record<string, ArmorStats>)).catch(() => {});
+        api.getFragmentStats().then((d) => setFragmentDeltas((d?.deltas ?? {}) as Record<string, ArmorStats>)).catch(() => {});
         fetch("/armor_sockets.json").then((r) => r.json()).then(setArmorSockets).catch(() => {});
         fetch("/armor_sets.json").then((r) => r.json()).then(setSetsCatalog).catch(() => {});
+        fetch("/synergy.json").then((r) => r.json()).then(setSynergy).catch(() => {});
         loadManifest().then(setManifest).catch(() => {});
         const pc = profile.primary_class;
         if (pc) setCls(pc.charAt(0).toUpperCase() + pc.slice(1) as any);
@@ -628,8 +752,8 @@ export default function Optimizer() {
   // Inventory with TRUE base stats (equipped stat mods stripped) — everything the
   // optimizer reasons about uses this so pre-equipped mods aren't double-counted.
   const baseItems = useMemo(
-    () => items.map((it) => (isArmor(it) ? { ...it, stats: baseStats(it, modCatalog) } : it)),
-    [items, modCatalog],
+    () => items.map((it) => (isArmor(it) ? { ...it, stats: baseStats(it, modCatalog, assumeMW) } : it)),
+    [items, modCatalog, assumeMW],
   );
 
   // Available exotics for the class
@@ -681,6 +805,70 @@ export default function Optimizer() {
     }
   }
 
+  // ---------- Aspects & fragments ----------
+  const activeAspectEl = (aspectEl ?? (subclassEl || "Void")).toLowerCase();
+  const aspectOptions = useMemo(
+    () => (synergy?.aspects ?? []).filter((a) => a.el === activeAspectEl && a.cls === (cls ?? "").toLowerCase()),
+    [synergy, activeAspectEl, cls],
+  );
+  const fragmentOptions = useMemo(
+    () => (synergy?.fragments ?? []).filter((f) => f.el === activeAspectEl),
+    [synergy, activeAspectEl],
+  );
+  const fragmentCap = useMemo(
+    () => pickedAspects.reduce((s, h) => s + (aspectOptions.find((a) => a.hash === h)?.slots ?? 0), 0),
+    [pickedAspects, aspectOptions],
+  );
+
+  function toggleAspect(h: number) {
+    setPickedAspects((cur) => {
+      const next = cur.includes(h) ? cur.filter((x) => x !== h)
+        : cur.length >= 2 ? [...cur.slice(1), h]     // 2 max — oldest pick rotates out
+        : [...cur, h];
+      // Trim fragments to the new slot budget.
+      const cap = next.reduce((s, x) => s + (aspectOptions.find((a) => a.hash === x)?.slots ?? 0), 0);
+      setPickedFragments((fr) => fr.slice(0, cap));
+      return next;
+    });
+  }
+  function toggleFragment(h: number) {
+    setPickedFragments((cur) =>
+      cur.includes(h) ? cur.filter((x) => x !== h)
+      : cur.length >= fragmentCap ? cur
+      : [...cur, h]);
+  }
+
+  /** One-tap recommendation. Theme bag = the locked exotic's perk keywords
+   *  (Clarity/manifest text — e.g. Dawn Chorus → scorch/ignition) + the
+   *  keyword for every targeted stat. Aspects score on keyword overlap;
+   *  fragments also score their stat deltas against the targets. Blind by
+   *  design — a starting point the user tweaks, not a verdict. */
+  function recommendAspects() {
+    if (!synergy) return;
+    const theme = new Set<string>();
+    const locked = lockedExoticId ? baseItems.find((i) => i.instance_id === lockedExoticId) : null;
+    for (const h of locked?.plug_hashes ?? []) {
+      for (const k of synergy.perkKeywords[String(h)] ?? []) theme.add(k);
+    }
+    for (const [s, t] of Object.entries(targets) as [StatKey, number][]) {
+      if ((t ?? 0) > 0 && STAT_TO_KEYWORD[s]) theme.add(STAT_TO_KEYWORD[s]);
+    }
+    const score = (keywords: string[], deltas?: Partial<Record<StatKey, number>>) => {
+      let sc = keywords.reduce((a, k) => a + (theme.has(k) ? 1 : 0), 0);
+      for (const [k, v] of Object.entries(deltas ?? {}) as [StatKey, number][]) {
+        if ((targets[k] ?? 0) > 0) sc += v > 0 ? v / 10 : v / 5;   // +10 on-target ≈ +1 · −10 on-target ≈ −2
+      }
+      return sc;
+    };
+    const asp = [...aspectOptions].sort((a, b) => score(b.keywords) - score(a.keywords)).slice(0, 2);
+    setPickedAspects(asp.map((a) => a.hash));
+    const cap = asp.reduce((s, a) => s + (a.slots ?? 0), 0);
+    const frags = [...fragmentOptions]
+      .sort((a, b) => score(b.keywords, b.deltas) - score(a.keywords, a.deltas))
+      .slice(0, cap);
+    setPickedFragments(frags.map((f) => f.hash));
+  }
+
   // Set one stat's target from its dropdown; null ("—") ignores the stat.
   function setStatTarget(s: StatKey, val: number | null) {
     setTargets((cur) => {
@@ -698,9 +886,22 @@ export default function Optimizer() {
     setTimeout(() => {
       try {
         const activeLocks = themeLocks.filter((t) => t.setName && t.count > 0);
-        const delta = (activeCharId && fragmentDeltas[activeCharId]) || ZERO_STATS;
+        // PHASE 3.5 — subclass stat layer. If the user planned aspects/
+        // fragments in the panel, their stat deltas replace the live equipped-
+        // fragment delta; otherwise the equipped subclass is the baseline.
+        // (Manifest note: aspects carry no armor-stat deltas today — fragments
+        // do — but both are summed here in case that ever changes.)
+        let delta = (activeCharId && fragmentDeltas[activeCharId]) || ZERO_STATS;
+        if (pickedAspects.length || pickedFragments.length) {
+          const planned: ArmorStats = { ...ZERO_STATS };
+          for (const h of pickedFragments) {
+            const f = fragmentOptions.find((x) => x.hash === h);
+            for (const [k, v] of Object.entries(f?.deltas ?? {}) as [StatKey, number][]) planned[k] += v;
+          }
+          delta = planned;
+        }
         const { combos } = optimize(
-          baseItems, cls, targets, lockedExoticId, activeLocks, delta,
+          baseItems, cls, targets, lockedExoticId, activeLocks, delta, modCatalog,
         );
         setResults(combos);
       } finally {
@@ -809,6 +1010,32 @@ export default function Optimizer() {
           {selected.length
             ? `Optimizing ${selected.length} stat${selected.length === 1 ? "" : "s"} to your targets — mods auto-planned last to hit them.`
             : "Mods are auto-planned — pick your targets."}
+        </div>
+
+        {/* Masterwork assumption — projection basis for every stat number. */}
+        <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+          <span className="text-muted w-20">Stats:</span>
+          <button
+            onClick={() => pickAssumeMW(true)}
+            className={`px-3 py-1 rounded border transition-colors ${
+              assumeMW ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
+            }`}
+          >
+            Masterworked
+          </button>
+          <button
+            onClick={() => pickAssumeMW(false)}
+            className={`px-3 py-1 rounded border transition-colors ${
+              !assumeMW ? "border-saber text-saber bg-saber/10" : "border-border text-muted hover:text-foreground"
+            }`}
+          >
+            As-is
+          </button>
+          <span className="text-muted normal-case tracking-normal text-[11px]">
+            {assumeMW
+              ? "every piece projected at its upgrade cap (EoF: +tier all stats · legacy: +2)"
+              : "pieces at their current upgrade level — no assumed masterwork"}
+          </span>
         </div>
 
         {/* Subclass — the one element control. Drives the adaptive Subclass
@@ -987,6 +1214,138 @@ export default function Optimizer() {
             loadout). Mod 1 (+10 stat) is planned by the optimizer; Mod 2 (tuning)
             is shown per result and slotted in-game. Defaults to your screenshot;
             edits persist on this device and auto-apply on Optimize & Equip. */}
+        {/* Aspects & Fragments — manual pick with descriptions, plus a one-tap
+            recommendation seeded by the locked exotic + stat targets. Slotted
+            on the subclass screen in-game (not part of the armor equip). */}
+        <div className="border-t border-border/60 pt-4">
+          <button
+            onClick={() => setShowAspects((v) => !v)}
+            className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-saber hover:underline"
+          >
+            <span className="w-3">{showAspects ? "▾" : "▸"}</span> Aspects &amp; Fragments
+            <span className="text-muted normal-case tracking-normal text-[11px]">— pick manually or take the recommendation, then set them on your subclass screen</span>
+          </button>
+          {showAspects && (!synergy || !cls) && (
+            <div className="mt-3 font-mono text-[10px] tracking-[0.2em] uppercase text-muted/60">
+              {cls ? "aspect catalog loading…" : "pick a guardian first"}
+            </div>
+          )}
+          {showAspects && synergy && cls && (
+            <div className="mt-3 space-y-3">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase">
+                <span className="text-muted w-20">Element:</span>
+                {ASPECT_ELEMENTS.map((e) => (
+                  <button
+                    key={e}
+                    onClick={() => { setAspectEl(e); setPickedAspects([]); setPickedFragments([]); }}
+                    className={`px-3 py-1 rounded border transition-colors ${
+                      activeAspectEl === e.toLowerCase()
+                        ? `${EL_COLOR[e] ?? "text-saber"} border-current`
+                        : "border-border text-muted hover:text-foreground"
+                    }`}
+                  >
+                    {e}
+                  </button>
+                ))}
+                <button
+                  onClick={recommendAspects}
+                  className="ml-auto px-3 py-1 rounded border border-saber text-saber bg-saber/10 hover:bg-saber/20 transition-colors"
+                >
+                  ⚡ Recommend for this build
+                </button>
+              </div>
+              <div className="font-ui text-[11px] text-muted -mt-1">
+                Recommendation is keyword-based (locked exotic's perks + your stat targets) — a starting point, tweak freely.
+              </div>
+
+              {/* Aspects — pick 2. Slots granted shown per aspect. */}
+              <div>
+                <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted mb-1.5">
+                  Aspects · {pickedAspects.length}/2 · grants {fragmentCap} fragment slot{fragmentCap === 1 ? "" : "s"}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {aspectOptions.map((a) => {
+                    const on = pickedAspects.includes(a.hash);
+                    return (
+                      <button
+                        key={a.hash}
+                        onClick={() => toggleAspect(a.hash)}
+                        className={`text-left rounded border p-2 transition-colors ${
+                          on ? "border-saber bg-saber/10" : "border-border hover:border-saber/50"
+                        }`}
+                      >
+                        <div className="flex items-baseline gap-2">
+                          <span className={`font-ui text-xs font-semibold ${on ? "text-saber" : "text-foreground"}`}>{a.n}</span>
+                          <span className="font-mono text-[9px] text-muted">{a.slots ?? 0} slot{(a.slots ?? 0) === 1 ? "" : "s"}</span>
+                          {on && <span className="ml-auto text-saber text-[10px]">✓</span>}
+                        </div>
+                        <div className="font-ui text-[10px] text-muted mt-1 line-clamp-3" title={a.desc}>{a.desc}</div>
+                      </button>
+                    );
+                  })}
+                  {aspectOptions.length === 0 && (
+                    <div className="font-ui text-[11px] text-muted col-span-full">No aspects for this class/element in the catalog.</div>
+                  )}
+                </div>
+              </div>
+
+              {/* Fragments — capped by the picked aspects' slots. Stat deltas shown. */}
+              <div>
+                <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted mb-1.5">
+                  Fragments · {pickedFragments.length}/{fragmentCap}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {fragmentOptions.map((f) => {
+                    const on = pickedFragments.includes(f.hash);
+                    const full = !on && pickedFragments.length >= fragmentCap;
+                    return (
+                      <button
+                        key={f.hash}
+                        onClick={() => toggleFragment(f.hash)}
+                        disabled={full}
+                        className={`text-left rounded border p-2 transition-colors ${
+                          on ? "border-cyan-400 bg-cyan-400/10"
+                          : full ? "border-border opacity-40"
+                          : "border-border hover:border-cyan-400/50"
+                        }`}
+                      >
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className={`font-ui text-xs font-semibold ${on ? "text-cyan-300" : "text-foreground"}`}>{f.n}</span>
+                          {Object.entries(f.deltas ?? {}).map(([k, v]) => (
+                            <span key={k} className={`font-mono text-[9px] ${v! > 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                              {v! > 0 ? "+" : ""}{v} {STAT_LABEL[k as StatKey]}
+                            </span>
+                          ))}
+                          {on && <span className="ml-auto text-cyan-300 text-[10px]">✓</span>}
+                        </div>
+                        <div className="font-ui text-[10px] text-muted mt-1 line-clamp-2" title={f.desc}>{f.desc}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+                {(() => {
+                  const total: Partial<Record<StatKey, number>> = {};
+                  for (const h of pickedFragments) {
+                    const f = fragmentOptions.find((x) => x.hash === h);
+                    for (const [k, v] of Object.entries(f?.deltas ?? {}) as [StatKey, number][]) {
+                      total[k] = (total[k] ?? 0) + v;
+                    }
+                  }
+                  const parts = Object.entries(total).filter(([, v]) => v !== 0);
+                  if (!parts.length) return null;
+                  return (
+                    <div className="mt-2 font-ui text-[11px] text-muted">
+                      Fragment stat total:{" "}
+                      {parts.map(([k, v]) => `${v! > 0 ? "+" : ""}${v} ${STAT_LABEL[k as StatKey]}`).join(" · ")}
+                      {" "}— equip them in-game, then ↻ refresh so phase 1 sees the new baseline.
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="border-t border-border/60 pt-4 space-y-3">
           {/* PVE / PVP — picks the default utility-mod template below. */}
           <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.25em] uppercase">
@@ -1017,7 +1376,7 @@ export default function Optimizer() {
             <div className="mt-3 space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-ui text-[11px] text-muted">
-                  Mod 1 = +10 stat (optimizer) · Mod 2 = tuning (slot in-game) · Mods 3–5 below auto-equip.
+                  Mod 1 = +10 stat (optimizer) · Mod 2 = tuning (auto-inserted, phase 3) · Mods 3–5 below auto-equip.
                 </span>
                 <button
                   onClick={resetTemplate}
@@ -1174,7 +1533,13 @@ function ComboCard({
       setArmState({ kind: "error", msg: "mod data still loading — try again in a moment" });
       return;
     }
-    const plan = buildEquipPlan(combo.pieces, loadout, SLOT_TO_MOD, armorSockets);
+    // Phase-3 tuning assignments ride along — inserted into each piece's live
+    // tuning socket (verified insertable via InsertSocketPlugFree).
+    const tuningPlan: Record<string, { plugHash: number; name: string }> = {};
+    for (const t of combo.modPlan.tuning) {
+      tuningPlan[t.instance_id] = { plugHash: t.hash, name: t.name };
+    }
+    const plan = buildEquipPlan(combo.pieces, loadout, SLOT_TO_MOD, armorSockets, tuningPlan);
     const eviction = cls ? buildEvictionPlan(combo.pieces, allItems, cls) : [];
     setArmState({ kind: "confirm", plan, eviction });
   }
@@ -1349,30 +1714,40 @@ function ComboCard({
         })}
       </div>
 
-      {/* Tuning plan (Mod-2 sockets) — best-of-both result: the optimizer scored
-          flexible +5/−5 and balanced +3 tuning and kept the better. Each chip is
-          one tuning mod to slot on a piece. The big stat numbers above already
-          include these. */}
+      {/* Tuning plan (phase 3) — one concrete tuning plug per piece, honoring
+          archetype constraints: legendaries can only +5 their rolled Tuned
+          stat (we picked the −5); exotics were free picks. Auto-inserted on
+          Optimize & Equip. The big stat numbers above already include these. */}
       {combo.modPlan.tuning.length > 0 && (
         <div className="mb-3 rounded border border-cyan-400/30 bg-cyan-400/5 p-2.5">
           <div className="flex items-baseline justify-between mb-1.5">
             <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-cyan-300">
-              Tuning · {combo.modPlan.tuningStyle === "flex" ? "flexible +5 / −5" : "balanced +3"}
+              Tuning · phase 3
             </span>
             <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-muted">
-              {combo.modPlan.tuningUsed} of 5 tuning slots
+              {combo.modPlan.tuningUsed} of {combo.pieces.filter((p) => p.tuning_idx != null).length} tuning sockets
             </span>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {combo.modPlan.tuning.map((t, i) => (
               <span key={i} className="font-mono text-[10px] rounded border border-cyan-400/30 px-1.5 py-0.5 text-cyan-200">
-                +{t.minus ? TUNE_FLEX : TUNE_BAL} {STAT_LABEL[t.plus]}
-                {t.minus && <span className="text-rose-300"> · −{TUNE_FLEX} {STAT_LABEL[t.minus]}</span>}
+                <span className="text-muted">{t.pieceSlot}:</span> {t.name}
+                <span className="text-muted"> · {t.free ? "exotic free pick" : "tuned stat"}</span>
               </span>
             ))}
           </div>
         </div>
       )}
+      {/* Untunable-pieces note — pre-Tier-5 armor has no tuning socket. */}
+      {(() => {
+        const no = combo.pieces.filter((p) => p.tuning_idx == null);
+        if (!no.length || combo.modPlan.tuning.length === 0) return null;
+        return (
+          <div className="mb-3 font-ui text-[10px] text-muted">
+            No tuning socket (pre-Tier-5): {no.map((p) => p.slot).join(", ")}
+          </div>
+        );
+      })()}
 
       {/* Mod loadout — Mod 1 (+10 stat, from the optimizer) into each General
           socket, + your fixed Mods 3/4/5 utility template into the slot sockets.
@@ -1423,7 +1798,7 @@ function ComboCard({
             </div>
           )}
           <div className="mt-2 font-ui text-[10px] text-muted">
-            Auto-inserted on Optimize &amp; Equip (Mod 1 + Mods 3–5). Mod 2 tuning is slotted in-game.
+            Auto-inserted on Optimize &amp; Equip (Mod 1 + Mod 2 tuning + Mods 3–5).
           </div>
         </div>
       ) : (combo.modsUsed > 0) && (

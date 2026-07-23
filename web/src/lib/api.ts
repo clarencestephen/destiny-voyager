@@ -84,6 +84,16 @@ export interface LeanItem {
   stats?: ArmorStats;
   /** Active plug hashes (component 305). For armor, plug[0] is the archetype perk. */
   plug_hashes?: number[];
+  /** Tier-5 tuning socket (component 310). `tuned` = the piece's rolled Tuned
+   *  stat: its "+5 / −5" tuning mods can ONLY +5 this stat (you pick the −5).
+   *  `tune_free` = exotic — any +5/−5 pair allowed. `tuning_idx` = live socket
+   *  index for the equip flow. Absent = no tuning socket (pre-Tier-5 armor). */
+  tuned?: keyof ArmorStats;
+  tune_free?: boolean;
+  tuning_idx?: number;
+  /** EoF gear tier 1–5; absent = legacy (pre-EoF) armor. Masterwork cap:
+   *  EoF = +tier to all six stats, legacy = +2. */
+  gear_tier?: number;
 }
 
 /** Decorated shape — Worker hash → manifest lookup → fully populated client-side */

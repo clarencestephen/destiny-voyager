@@ -28,12 +28,12 @@
 export type Element =
   | "Kinetic" | "Arc" | "Solar" | "Void" | "Stasis" | "Strand" | "Harmonic" | "";
 
-export type ModSlot = "Helmet" | "Arms" | "Chest" | "Legs" | "Class" | "General";
+export type ModSlot = "Helmet" | "Arms" | "Chest" | "Legs" | "Class" | "General" | "Tuning";
 
 export type ModFamily =
   | "surge" | "loader" | "siphon" | "resist" | "concussive"
   | "holster" | "dexterity" | "targeting" | "unflinch" | "ammo"
-  | "survivability" | "stat" | "other";
+  | "survivability" | "stat" | "tuning" | "masterwork" | "other";
 
 export type StatKey =
   | "weapons" | "health" | "class" | "grenade" | "super" | "melee";
@@ -48,6 +48,8 @@ export interface ModEntry {
   i?: string;
   stat?: StatKey;
   mag?: number;
+  /** fam=tuning: full stat delta map (e.g. {"grenade":5,"health":-5}; Balanced = +1 all). */
+  deltas?: Partial<Record<StatKey, number>>;
 }
 
 export type ModCatalog = Record<string, ModEntry>;
@@ -97,11 +99,11 @@ export interface SlotPlan {
 
 export interface ModLoadout {
   /** One plan per equippable armor slot. */
-  slots: Record<Exclude<ModSlot, "General">, SlotPlan>;
+  slots: Record<Exclude<ModSlot, "General" | "Tuning">, SlotPlan>;
   warnings: string[];
 }
 
-const ARMOR_SLOTS: Exclude<ModSlot, "General">[] = ["Helmet", "Arms", "Chest", "Legs", "Class"];
+const ARMOR_SLOTS: Exclude<ModSlot, "General" | "Tuning">[] = ["Helmet", "Arms", "Chest", "Legs", "Class"];
 
 /** Index the catalog once for fast family/element/slot lookups. */
 export function indexCatalog(catalog: ModCatalog): Mod[] {
@@ -183,7 +185,7 @@ export function selectMods(input: ModSelectionInput, catalog: ModCatalog): ModLo
   if (input.meleeResist) chestIntents.push({ fam: "resist", name: "Melee Damage Resistance", why: "Melee Damage Resistance (incoming melee)" });
   if (!chestIntents.length) chestIntents.push({ fam: "resist", el: subEl, why: `subclass-matched ${subEl} Resistance` });
 
-  const intents: Record<Exclude<ModSlot, "General">, Intent[]> = {
+  const intents: Record<Exclude<ModSlot, "General" | "Tuning">, Intent[]> = {
     Legs:   legIntents,
     Chest:  chestIntents,
     Arms:   [{ fam: "loader",        el: subEl, why: `${subEl} Loader (build element)` }],
@@ -195,7 +197,7 @@ export function selectMods(input: ModSelectionInput, catalog: ModCatalog): ModLo
   const statQueue = [...(input.statMods ?? [])].sort((a, b) => b.mag - a.mag);
   const MAX_COMBAT = 3;   // slot-specific sockets per piece (general socket holds the stat mod)
 
-  const slots = {} as Record<Exclude<ModSlot, "General">, SlotPlan>;
+  const slots = {} as Record<Exclude<ModSlot, "General" | "Tuning">, SlotPlan>;
   for (const slot of ARMOR_SLOTS) {
     const chosen: Mod[] = [];
     let energyUsed = 0;

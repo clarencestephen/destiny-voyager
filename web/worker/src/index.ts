@@ -739,15 +739,19 @@ app.get("/api/inventory", async (c) => {
     // 300 = ItemInstances (power, primaryStat)
     // 304 = ItemStats (per-armor stat values — mob/res/rec/dis/int/str)
     // 305 = ItemSockets (intrinsic perk = archetype, mods, etc.)
+    // 310 = ItemReusablePlugs (per-socket AVAILABLE plugs — how we learn each
+    //       Tier-5 piece's rolled Tuned stat: legendaries only offer the five
+    //       "+TunedStat / -X" tuning mods; exotics offer all 30)
     const profile = await bungieGet(
       c.env,
-      `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,200,201,205,300,304,305`,
+      `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,200,201,205,300,304,305,310`,
       u.access_token,
     );
 
     const instances = profile?.itemComponents?.instances?.data ?? {};
     const itemStats = profile?.itemComponents?.stats?.data ?? {};
     const itemSockets = profile?.itemComponents?.sockets?.data ?? {};
+    const itemReusable = profile?.itemComponents?.reusablePlugs?.data ?? {};
     const chars = profile?.characters?.data ?? {};
     const charInv = profile?.characterInventories?.data ?? {};
     const equipped = profile?.characterEquipment?.data ?? {};
@@ -787,9 +791,74 @@ app.get("/api/inventory", async (c) => {
        *  "Grenadier" / "Gunner" / "Paragon" / "Specialist" via the slim
        *  manifest. */
       plug_hashes?: number[];
+      /** Tier-5 tuning socket (from component 310). `tuned` = the piece's
+       *  rolled Tuned stat (legendary: the only +5 its tuning mods offer);
+       *  `tune_free` = exotic, any +5/−5 combination allowed. `tuning_idx` =
+       *  live socket index for InsertSocketPlugFree (index varies per item and
+       *  isn't always present in the static item definition). */
+      tuned?: keyof ArmorStats;
+      tune_free?: boolean;
+      tuning_idx?: number;
+      /** EoF gear tier 1–5 (component 300). 0/absent = legacy (pre-EoF) armor.
+       *  Drives the "assume masterworked" projection: EoF cap = +tier to all
+       *  six stats; legacy cap = +2. */
+      gear_tier?: number;
     };
     const out: LeanItem[] = [];
     const tags = u.item_tags || {};
+
+    // Tuning plug hash → the stat its +5 goes to. Names verified against
+    // investmentStats 2026-07-22 (they agree). Balanced Tuning (+1 all) and
+    // the Empty plug are intentionally absent — only "+X / -Y" mods reveal
+    // the piece's Tuned stat.
+    const TUNING_PLUS: Record<number, keyof ArmorStats> = {
+      309000506: "grenade", 311164277: "melee", 323635379: "class", 388618952: "health",
+      455024236: "grenade", 534630542: "melee", 673231129: "super", 691392383: "weapons",
+      891771298: "weapons", 957763733: "class", 1510949672: "class", 1672416975: "grenade",
+      1879022254: "class", 1918710127: "weapons", 1922571986: "grenade", 2125798995: "health",
+      2244422610: "super", 3121760799: "weapons", 3284443097: "weapons", 3310526732: "health",
+      3554800389: "super", 3681082702: "health", 3946669007: "super", 4020349587: "melee",
+      4026414261: "super", 4030660414: "class", 4088823605: "health", 4116389173: "grenade",
+      4164883102: "melee", 4210715468: "melee",
+    };
+    const TUNING_EMPTY = 2121121504;   // "Empty Tuning Mod Socket"
+    const TUNING_BALANCED = 3122197216;
+
+    /** Derive {tuned | tune_free, tuning_idx} for one instance. Primary source:
+     *  component 310 (available plugs per socket). Fallback when 310 is absent:
+     *  a "+X / -Y" mod (or the empty tuning plug) currently socketed via 305 —
+     *  for legendaries the plugged mod's +5 stat IS the Tuned stat, since only
+     *  aligned mods are insertable. */
+    const extractTuning = (instId: string): Pick<LeanItem, "tuned" | "tune_free" | "tuning_idx"> | undefined => {
+      const bySocket = itemReusable[instId]?.plugs;
+      if (bySocket) {
+        for (const [idxStr, plugs] of Object.entries(bySocket) as Array<[string, any[]]>) {
+          const plusStats = new Set<string>();
+          let sawTuning = false;
+          for (const p of plugs ?? []) {
+            const h = p?.plugItemHash;
+            if (h === TUNING_BALANCED) { sawTuning = true; continue; }
+            const st = TUNING_PLUS[h];
+            if (st) { sawTuning = true; plusStats.add(st); }
+          }
+          if (!sawTuning) continue;
+          const tuning_idx = Number(idxStr);
+          if (plusStats.size >= 6) return { tune_free: true, tuning_idx };
+          if (plusStats.size >= 1) return { tuned: [...plusStats][0] as keyof ArmorStats, tuning_idx };
+          return { tuning_idx };
+        }
+      }
+      const socks = itemSockets[instId]?.sockets;
+      if (socks) {
+        for (let i = 0; i < socks.length; i++) {
+          const h = socks[i]?.plugHash;
+          if (h === TUNING_EMPTY || h === TUNING_BALANCED) return { tuning_idx: i };
+          const st = TUNING_PLUS[h];
+          if (st) return { tuned: st, tuning_idx: i };
+        }
+      }
+      return undefined;
+    };
 
     const extractStats = (instId: string): ArmorStats | undefined => {
       const raw = itemStats[instId]?.stats;
@@ -838,6 +907,10 @@ app.get("/api/inventory", async (c) => {
       if (stats && instId) {
         const plugs = extractPlugs(String(instId));
         if (plugs) item.plug_hashes = plugs;
+        const tuning = extractTuning(String(instId));
+        if (tuning) Object.assign(item, tuning);
+        const gt = inst?.gearTier;
+        if (typeof gt === "number" && gt > 0) item.gear_tier = gt;
       }
       out.push(item);
     };

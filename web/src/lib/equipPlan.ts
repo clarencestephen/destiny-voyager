@@ -5,11 +5,13 @@
  * Sockets are resolved DETERMINISTICALLY from the baked armor socket layout
  * (armor_sockets.json): per armor item, the General mod socket (stat / general
  * mods) and the slot-specific mod sockets (surge / loader / resist / siphon).
- * The energy + tuning sockets are excluded (inserting a mod there → Bungie
- * DestinyItemActionForbidden). We CLEAR every mod socket to its empty plug
- * first (frees armor energy), then apply the chosen mods — so a vault piece
- * that already holds mods swaps cleanly instead of failing
- * DestinyFailedPlugInsertionRules.
+ * The energy socket is excluded. The TUNING socket (Tier-5) IS insertable —
+ * verified live 2026-07-22 via InsertSocketPlugFree — and is targeted through
+ * the per-instance `tuning_idx` the Worker derives from component 310 (the
+ * socket index isn't always present in the static item definition, e.g. older
+ * exotics). We CLEAR every mod socket to its empty plug first (frees armor
+ * energy), then apply the chosen mods — so a vault piece that already holds
+ * mods swaps cleanly instead of failing DestinyFailedPlugInsertionRules.
  */
 import type { ModLoadout } from "./mods";
 import type { Item } from "./api";
@@ -43,6 +45,9 @@ export function buildEquipPlan(
   loadout: ModLoadout,
   slotToMod: Record<string, keyof ModLoadout["slots"]>,
   armorSockets: ArmorSockets,
+  /** Phase-3 tuning assignment: instance_id → tuning plug to insert into the
+   *  piece's live tuning socket (piece.tuning_idx). */
+  tuningPlan?: Record<string, { plugHash: number; name: string }>,
 ): EquipPlan {
   const modPlan: ModPlanEntry[] = [];
   const placed: EquipPlan["placed"] = [];
@@ -52,35 +57,49 @@ export function buildEquipPlan(
     const engineSlot = slotToMod[piece.slot];
     if (!engineSlot) continue;
     const plan = loadout.slots[engineSlot];
-    if (!plan || plan.mods.length === 0) continue;
+    const tuning = tuningPlan?.[piece.instance_id];
+    if ((!plan || plan.mods.length === 0) && !tuning) continue;
 
     const layout = armorSockets[String(piece.hash)];
     if (!layout || (layout.general == null && layout.slots.length === 0)) {
-      for (const mod of plan.mods) {
+      for (const mod of plan?.mods ?? []) {
         unplaceable.push({ slot: piece.slot, mod: mod.n, reason: `no mod sockets found on ${piece.name || piece.slot}` });
       }
-      continue;
     }
 
     // 1. Clear every mod socket to its empty plug (frees energy → clean swap).
     const clears: ModSocket[] = [];
-    for (const i of [layout.general, ...layout.slots]) {
-      if (i == null) continue;
-      const e = layout.empties[String(i)];
-      if (e) clears.push({ socketIndex: i, plugItemHash: e, clear: true });
+    if (layout) {
+      for (const i of [layout.general, ...layout.slots]) {
+        if (i == null) continue;
+        const e = layout.empties[String(i)];
+        if (e) clears.push({ socketIndex: i, plugItemHash: e, clear: true });
+      }
     }
 
     // 2. Assign mods: stat → General socket; everything else → slot sockets.
     const applies: ModSocket[] = [];
-    let slotCursor = 0;
-    for (const mod of plan.mods) {
-      const idx = mod.fam === "stat" ? layout.general : layout.slots[slotCursor++];
-      if (idx == null) {
-        unplaceable.push({ slot: piece.slot, mod: mod.n, reason: `no free ${mod.fam === "stat" ? "General" : engineSlot} socket` });
-        continue;
+    if (layout) {
+      let slotCursor = 0;
+      for (const mod of plan?.mods ?? []) {
+        const idx = mod.fam === "stat" ? layout.general : layout.slots[slotCursor++];
+        if (idx == null) {
+          unplaceable.push({ slot: piece.slot, mod: mod.n, reason: `no free ${mod.fam === "stat" ? "General" : engineSlot} socket` });
+          continue;
+        }
+        applies.push({ socketIndex: idx, plugItemHash: mod.hash });
+        placed.push({ slot: piece.slot, mod: mod.n });
       }
-      applies.push({ socketIndex: idx, plugItemHash: mod.hash });
-      placed.push({ slot: piece.slot, mod: mod.n });
+    }
+
+    // 3. Tuning socket (no clear needed — InsertSocketPlugFree overwrites, 0e).
+    if (tuning) {
+      if (piece.tuning_idx != null) {
+        applies.push({ socketIndex: piece.tuning_idx, plugItemHash: tuning.plugHash });
+        placed.push({ slot: piece.slot, mod: tuning.name });
+      } else {
+        unplaceable.push({ slot: piece.slot, mod: tuning.name, reason: "tuning socket index unknown — slot in-game" });
+      }
     }
 
     if (applies.length) modPlan.push({ instance_id: piece.instance_id, sockets: [...clears, ...applies] });
