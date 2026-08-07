@@ -28,6 +28,7 @@ import {
   type StoredUser,
 } from "./auth";
 import { bungieGet, bungiePost } from "./bungie";
+import { transferAndEquip } from "./equipFlow";
 import { getThisWeek } from "./this-week";
 
 export interface Env {
@@ -974,139 +975,31 @@ app.get("/api/this-week", async (c) => {
 });
 
 //
-// Bungie endpoints used:
+// Bungie endpoints used (via equipFlow.transferAndEquip):
 //   POST /Destiny2/Actions/Items/TransferItem/   (move between vault ↔ char)
 //   POST /Destiny2/Actions/Items/EquipItems/     (batch equip on one char)
+// The pipeline auto-vaults the weakest unfavorited piece when a target
+// bucket is at the 9-item cap, and frees pieces equipped on OTHER
+// characters by equipping a spare there first — so equip works from any
+// starting location instead of dying on DestinyNoRoomInDestination.
 app.post("/api/equip", async (c) => {
   const u = c.get("user");
   type EquipReq = {
     character_id: string;
     item_instance_ids: string[];
-    item_hashes?: number[];  // parallel array — needed for transfers
+    item_hashes?: number[];  // legacy parallel array — no longer needed
   };
   const body = await c.req.json<EquipReq>();
   if (!body.character_id || !body.item_instance_ids?.length) {
     return c.json({ error: "missing character_id or item_instance_ids" }, 400);
   }
 
-  // Fetch fresh inventory snapshot so we know where each item lives RIGHT NOW.
-  const profile = await bungieGet(
-    c.env,
-    `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,201,205`,
-    u.access_token,
-  );
-  const vaultItems = profile?.profileInventory?.data?.items ?? [];
-  const charInv = profile?.characterInventories?.data ?? {};
-  const equipped = profile?.characterEquipment?.data ?? {};
-
-  // Build instance_id → { hash, location: "vault"|"char:<charId>"|"equipped:<charId>" }
-  const where: Record<string, { hash: number; loc: string }> = {};
-  for (const it of vaultItems) {
-    if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: "vault" };
+  try {
+    const out = await transferAndEquip(c.env, u, body.character_id, body.item_instance_ids);
+    return c.json({ ok: true, ...out });
+  } catch (e: any) {
+    return c.json({ error: "equip failed", detail: e.message ?? String(e) }, 502);
   }
-  for (const [cid, inv] of Object.entries(charInv) as Array<[string, any]>) {
-    for (const it of inv.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `char:${cid}` };
-    }
-  }
-  for (const [cid, eq] of Object.entries(equipped) as Array<[string, any]>) {
-    for (const it of eq.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `equipped:${cid}` };
-    }
-  }
-
-  const target = body.character_id;
-  const skipped: Array<{ instance_id: string; reason: string }> = [];
-  const readyToEquip: string[] = [];
-
-  // Move each item to the target character if needed.
-  for (const iid of body.item_instance_ids) {
-    const info = where[iid];
-    if (!info) {
-      skipped.push({ instance_id: iid, reason: "not found in inventory" });
-      continue;
-    }
-    try {
-      if (info.loc === `char:${target}` || info.loc === `equipped:${target}`) {
-        // Already on target character — equip step will handle it.
-        readyToEquip.push(iid);
-        continue;
-      }
-      if (info.loc.startsWith("equipped:")) {
-        // Equipped on a different character — can't transfer directly. Bungie
-        // requires the item to be unequipped first; the cleanest way is to
-        // equip another item on the source character in this slot. v1 skips
-        // this case to keep the flow simple.
-        skipped.push({ instance_id: iid, reason: "equipped on another character — unequip first" });
-        continue;
-      }
-      if (info.loc.startsWith("char:") && info.loc !== `char:${target}`) {
-        // On another character but unequipped → vault → target.
-        const sourceChar = info.loc.split(":")[1];
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash,
-          stackSize: 1,
-          transferToVault: true,
-          itemId: iid,
-          characterId: sourceChar,
-          membershipType: u.membership_type,
-        });
-        info.loc = "vault";
-      }
-      if (info.loc === "vault") {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash,
-          stackSize: 1,
-          transferToVault: false,
-          itemId: iid,
-          characterId: target,
-          membershipType: u.membership_type,
-        });
-        info.loc = `char:${target}`;
-      }
-      readyToEquip.push(iid);
-    } catch (e: any) {
-      skipped.push({ instance_id: iid, reason: `transfer failed: ${e.message ?? e}` });
-    }
-  }
-
-  // Batch-equip everything that made it onto the target character.
-  let equippedCount = 0;
-  if (readyToEquip.length) {
-    try {
-      const resp = await bungiePost(c.env, "/Destiny2/Actions/Items/EquipItems/", u.access_token, {
-        itemIds: readyToEquip,
-        characterId: target,
-        membershipType: u.membership_type,
-      });
-      // EquipItems response has { equipResults: [{itemInstanceId, equipStatus}] }
-      const results = resp?.equipResults ?? [];
-      for (const r of results) {
-        if (r.equipStatus === 1) {
-          equippedCount++;
-        } else {
-          skipped.push({
-            instance_id: String(r.itemInstanceId),
-            reason: `equip status ${r.equipStatus}`,
-          });
-        }
-      }
-      // If no equipResults but the call succeeded, assume all worked.
-      if (!results.length) equippedCount = readyToEquip.length;
-    } catch (e: any) {
-      return c.json(
-        { error: "equip failed", detail: e.message ?? String(e), skipped },
-        502,
-      );
-    }
-  }
-
-  return c.json({
-    ok: true,
-    equipped_count: equippedCount,
-    transferred_count: readyToEquip.length,
-    skipped,
-  });
 });
 
 // ============================================================
@@ -1211,83 +1104,17 @@ app.post("/api/equip-with-mods", async (c) => {
     return c.json({ error: "missing character_id or item_instance_ids" }, 400);
   }
 
-  // 1. Run the standard equip flow (transfer + EquipItems). Reusing the
-  //    logic from /api/equip would be cleaner via a shared helper, but
-  //    inlining keeps this self-contained for now.
-  const profile = await bungieGet(
-    c.env,
-    `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,201,205`,
-    u.access_token,
-  );
-  const vaultItems = profile?.profileInventory?.data?.items ?? [];
-  const charInv = profile?.characterInventories?.data ?? {};
-  const equipped = profile?.characterEquipment?.data ?? {};
-  const where: Record<string, { hash: number; loc: string }> = {};
-  for (const it of vaultItems) {
-    if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: "vault" };
+  // 1. Run the shared equip pipeline (bucket-full eviction, cross-character
+  //    frees, exotics-last ordering — see equipFlow.ts).
+  let equipOut: Awaited<ReturnType<typeof transferAndEquip>>;
+  try {
+    equipOut = await transferAndEquip(c.env, u, body.character_id, body.item_instance_ids);
+  } catch (e: any) {
+    return c.json({ error: "equip failed", detail: e.message ?? String(e) }, 502);
   }
-  for (const [cid, inv] of Object.entries(charInv) as Array<[string, any]>) {
-    for (const it of inv.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `char:${cid}` };
-    }
-  }
-  for (const [cid, eq] of Object.entries(equipped) as Array<[string, any]>) {
-    for (const it of eq.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `equipped:${cid}` };
-    }
-  }
-
   const target = body.character_id;
-  const skipped: Array<{ instance_id: string; reason: string }> = [];
-  const readyToEquip: string[] = [];
-
-  for (const iid of body.item_instance_ids) {
-    const info = where[iid];
-    if (!info) { skipped.push({ instance_id: iid, reason: "not found" }); continue; }
-    try {
-      if (info.loc === `char:${target}` || info.loc === `equipped:${target}`) {
-        readyToEquip.push(iid); continue;
-      }
-      if (info.loc.startsWith("equipped:")) {
-        skipped.push({ instance_id: iid, reason: "equipped on another character — unequip first" });
-        continue;
-      }
-      if (info.loc.startsWith("char:") && info.loc !== `char:${target}`) {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash, stackSize: 1, transferToVault: true,
-          itemId: iid, characterId: info.loc.split(":")[1], membershipType: u.membership_type,
-        });
-        info.loc = "vault";
-      }
-      if (info.loc === "vault") {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash, stackSize: 1, transferToVault: false,
-          itemId: iid, characterId: target, membershipType: u.membership_type,
-        });
-        info.loc = `char:${target}`;
-      }
-      readyToEquip.push(iid);
-    } catch (e: any) {
-      skipped.push({ instance_id: iid, reason: `transfer failed: ${e.message ?? e}` });
-    }
-  }
-
-  let equippedCount = 0;
-  if (readyToEquip.length) {
-    try {
-      const resp = await bungiePost(c.env, "/Destiny2/Actions/Items/EquipItems/", u.access_token, {
-        itemIds: readyToEquip, characterId: target, membershipType: u.membership_type,
-      });
-      const results = resp?.equipResults ?? [];
-      for (const r of results) {
-        if (r.equipStatus === 1) equippedCount++;
-        else skipped.push({ instance_id: String(r.itemInstanceId), reason: `equip status ${r.equipStatus}` });
-      }
-      if (!results.length) equippedCount = readyToEquip.length;
-    } catch (e: any) {
-      return c.json({ error: "equip failed", detail: e.message ?? String(e), skipped }, 502);
-    }
-  }
+  const equippedCount = equipOut.equipped_count;
+  const skipped = equipOut.skipped;
 
   // 2. Apply the mod plan IN ORDER. The client builds it as clears-then-applies
   //    with EXACT socket indices from the baked armor socket layout, so we insert
@@ -1343,7 +1170,9 @@ app.post("/api/equip-with-mods", async (c) => {
   return c.json({
     ok: true,
     equipped_count: equippedCount,
-    transferred_count: readyToEquip.length,
+    transferred_count: equipOut.transferred_count,
+    vaulted: equipOut.vaulted,
+    swapped: equipOut.swapped,
     skipped,
     mod_results: modResults,
     // Counts cover the real mod APPLIES, not the socket clears (plumbing).
@@ -1489,87 +1318,12 @@ app.post("/api/internal/equip", async (c) => {
   const u = await loadUserByBungieId(c, body.bungie_id);
   if (!u) return c.json({ error: "user not in KV" }, 404);
 
-  // Re-use the same logic as /api/equip by reading current state + transferring.
-  const profile = await bungieGet(
-    c.env,
-    `/Destiny2/${u.membership_type}/Profile/${u.membership_id}/?components=102,201,205`,
-    u.access_token,
-  );
-  const vaultItems = profile?.profileInventory?.data?.items ?? [];
-  const charInv = profile?.characterInventories?.data ?? {};
-  const equipped = profile?.characterEquipment?.data ?? {};
-
-  const where: Record<string, { hash: number; loc: string }> = {};
-  for (const it of vaultItems) {
-    if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: "vault" };
+  try {
+    const out = await transferAndEquip(c.env, u, body.character_id, body.item_instance_ids);
+    return c.json({ ok: true, ...out });
+  } catch (e: any) {
+    return c.json({ error: "equip failed", detail: e.message ?? String(e) }, 502);
   }
-  for (const [cid, inv] of Object.entries(charInv) as Array<[string, any]>) {
-    for (const it of inv.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `char:${cid}` };
-    }
-  }
-  for (const [cid, eq] of Object.entries(equipped) as Array<[string, any]>) {
-    for (const it of eq.items ?? []) {
-      if (it.itemInstanceId) where[String(it.itemInstanceId)] = { hash: it.itemHash, loc: `equipped:${cid}` };
-    }
-  }
-
-  const target = body.character_id;
-  const skipped: Array<{ instance_id: string; reason: string }> = [];
-  const readyToEquip: string[] = [];
-  for (const iid of body.item_instance_ids) {
-    const info = where[iid];
-    if (!info) { skipped.push({ instance_id: iid, reason: "not found" }); continue; }
-    try {
-      if (info.loc === `char:${target}` || info.loc === `equipped:${target}`) {
-        readyToEquip.push(iid); continue;
-      }
-      if (info.loc.startsWith("equipped:")) {
-        skipped.push({ instance_id: iid, reason: "equipped on another character — unequip first" });
-        continue;
-      }
-      if (info.loc.startsWith("char:") && info.loc !== `char:${target}`) {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash, stackSize: 1, transferToVault: true,
-          itemId: iid, characterId: info.loc.split(":")[1], membershipType: u.membership_type,
-        });
-        info.loc = "vault";
-      }
-      if (info.loc === "vault") {
-        await bungiePost(c.env, "/Destiny2/Actions/Items/TransferItem/", u.access_token, {
-          itemReferenceHash: info.hash, stackSize: 1, transferToVault: false,
-          itemId: iid, characterId: target, membershipType: u.membership_type,
-        });
-        info.loc = `char:${target}`;
-      }
-      readyToEquip.push(iid);
-    } catch (e: any) {
-      skipped.push({ instance_id: iid, reason: `transfer failed: ${e.message ?? e}` });
-    }
-  }
-
-  let equippedCount = 0;
-  if (readyToEquip.length) {
-    try {
-      const resp = await bungiePost(c.env, "/Destiny2/Actions/Items/EquipItems/", u.access_token, {
-        itemIds: readyToEquip, characterId: target, membershipType: u.membership_type,
-      });
-      const results = resp?.equipResults ?? [];
-      for (const r of results) {
-        if (r.equipStatus === 1) equippedCount++;
-        else skipped.push({ instance_id: String(r.itemInstanceId), reason: `equip status ${r.equipStatus}` });
-      }
-      if (!results.length) equippedCount = readyToEquip.length;
-    } catch (e: any) {
-      return c.json({ error: "equip failed", detail: e.message ?? String(e), skipped }, 502);
-    }
-  }
-  return c.json({
-    ok: true,
-    equipped_count: equippedCount,
-    transferred_count: readyToEquip.length,
-    skipped,
-  });
 });
 
 // ============================================================

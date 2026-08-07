@@ -9,7 +9,7 @@ import {
   type ModCatalog, type ModLoadout, type Mod,
   type Element as ModElement,
 } from "@/lib/mods";
-import { buildEquipPlan, buildEvictionPlan, type EquipPlan, type EvictionItem, type ArmorSockets } from "@/lib/equipPlan";
+import { buildEquipPlan, type EquipPlan, type ArmorSockets } from "@/lib/equipPlan";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -149,6 +149,10 @@ type Combo = {
   totalPower: number;
   /** Mod slots consumed by the plan (out of 5). */
   modsUsed: number;
+  /** Theme-lock pieces MISSING from this combo (0 = every lock satisfied).
+   *  Non-zero only when no owned combo can fully satisfy the locks — the
+   *  optimizer degrades to the closest match instead of returning nothing. */
+  themeShortfall: number;
 };
 
 /** Phase-3 tuning assignment — one CONCRETE tuning plug on one specific piece.
@@ -533,6 +537,7 @@ function optimize(
     : null;
   const lockedSlot = locked ? (locked.slot as ArmorSlot) : null;
 
+  const themeNames = new Set(themeReq.map((t) => t.setName));
   for (const slot of ARMOR_SLOTS) {
     if (locked && lockedSlot === slot) {
       pool[slot] = [locked];
@@ -542,9 +547,20 @@ function optimize(
       // Other slots: exclude exotics (only one allowed)
       pool[slot] = pool[slot].filter((p) => p.tier !== "Exotic");
     }
-    // Prune to top-K by selected-stat sum
+    // Prune to top-K by selected-stat sum — but ALWAYS keep every piece of a
+    // theme-locked set. Without this, set pieces that aren't top-K in the
+    // targeted stats get pruned before the theme check ever runs, and a
+    // locked theme silently returns zero combos.
     pool[slot].sort((a, b) => selStatSum(b, selected) - selStatSum(a, selected));
-    pool[slot] = pool[slot].slice(0, TOP_K_PER_SLOT);
+    const top = pool[slot].slice(0, TOP_K_PER_SLOT);
+    const keep = new Set(top.map((p) => p.instance_id));
+    for (const p of pool[slot]) {
+      if (p.set && themeNames.has(p.set) && !keep.has(p.instance_id)) {
+        top.push(p);
+        keep.add(p.instance_id);
+      }
+    }
+    pool[slot] = top;
   }
 
   // Pruned counts for diagnostics
@@ -563,34 +579,49 @@ function optimize(
   // PHASE 1 — enumerate the cartesian product and rank on PURE BASE STATS
   // (equipped stat + tuning mods already stripped by baseStats upstream).
   // Mods are planned only for the winners, in phase order, afterward.
-  type BaseCombo = { pieces: Item[]; totals: ArmorStats; score: number[]; totalPower: number };
-  const baseCombos: BaseCombo[] = [];
-  for (const h of pool.Helmet)
-    for (const g of pool.Gauntlets)
-      for (const c of pool.Chest)
-        for (const l of pool.Legs)
-          for (const cl of pool.Class) {
-            const pieces = [h, g, c, l, cl];
-            // At most one exotic (unless locked exotic already in there)
-            const exoticCount = pieces.filter((p) => p.tier === "Exotic").length;
-            if (exoticCount > 1) continue;
-            // If an exotic is locked, ensure it's actually present
-            if (locked && !pieces.includes(locked)) continue;
-            // Theme lock — combo must include ≥N pieces of each named set
-            if (themeReq.length) {
-              let ok = true;
+  //
+  // Targets are CEILINGS to aim at, never gates: a combo that can't reach
+  // them still ranks (hits first, then smallest deficit). Theme locks run
+  // the same way in two passes — pass 1 requires every lock satisfied;
+  // if NOTHING can satisfy them (not enough owned pieces, exotic eating a
+  // slot), pass 2 relaxes the filter and ranks by smallest theme shortfall
+  // so the closest-possible set still comes back.
+  type BaseCombo = { pieces: Item[]; totals: ArmorStats; score: number[]; totalPower: number; themeShortfall: number };
+
+  const enumerate = (hardTheme: boolean): BaseCombo[] => {
+    const out: BaseCombo[] = [];
+    for (const h of pool.Helmet)
+      for (const g of pool.Gauntlets)
+        for (const c of pool.Chest)
+          for (const l of pool.Legs)
+            for (const cl of pool.Class) {
+              const pieces = [h, g, c, l, cl];
+              // At most one exotic (unless locked exotic already in there)
+              const exoticCount = pieces.filter((p) => p.tier === "Exotic").length;
+              if (exoticCount > 1) continue;
+              // If an exotic is locked, ensure it's actually present
+              if (locked && !pieces.includes(locked)) continue;
+              // Theme lock — pieces MISSING vs. each named set's count
+              let shortfall = 0;
               for (const t of themeReq) {
                 const have = pieces.filter((p) => p.set === t.setName).length;
-                if (have < t.count) { ok = false; break; }
+                shortfall += Math.max(0, t.count - have);
               }
-              if (!ok) continue;
+              if (hardTheme && shortfall > 0) continue;
+              // Baseline = armor base + equipped subclass FRAGMENT delta, so the
+              // pre-mod totals (and mod planning) match the in-game character sheet.
+              const totals = sumStats(sumArmorStats(pieces), fragmentDelta);
+              const s = scoreBase(totals, pieces, targets);
+              out.push({
+                pieces, totals, totalPower: s.totalPower, themeShortfall: shortfall,
+                score: [-shortfall, ...s.score],   // closest-to-theme first, then stat score
+              });
             }
-            // Baseline = armor base + equipped subclass FRAGMENT delta, so the
-            // pre-mod totals (and mod planning) match the in-game character sheet.
-            const totals = sumStats(sumArmorStats(pieces), fragmentDelta);
-            const s = scoreBase(totals, pieces, targets);
-            baseCombos.push({ pieces, totals, score: s.score, totalPower: s.totalPower });
-          }
+    return out;
+  };
+
+  let baseCombos = enumerate(true);
+  if (!baseCombos.length && themeReq.length) baseCombos = enumerate(false);
 
   baseCombos.sort((a, b) => compareScore(a.score, b.score));
 
@@ -603,6 +634,7 @@ function optimize(
       pieces: bc.pieces, totals: bc.totals, score: bc.score, totalPower: bc.totalPower,
       modPlan: p.modPlan, withMods: p.withMods, activations: p.activations,
       stretchHits: p.stretchHits, surplus: p.surplus, rawSum: p.rawSum, modsUsed: p.modsUsed,
+      themeShortfall: bc.themeShortfall,
     };
   });
   return { combos, pruned };
@@ -623,6 +655,7 @@ export default function Optimizer() {
   const [themeLocks, setThemeLocks] = useState<ThemeLock[]>([]);
   const [results, setResults] = useState<Combo[]>([]);
   const [optimizing, setOptimizing] = useState(false);
+  const [searched, setSearched] = useState(false);   // an Optimize run finished
   const [activeCharId, setActiveCharId] = useState<string | null>(null);
 
   // Mod selection context (Phase 2 — non-destructive preview).
@@ -904,6 +937,7 @@ export default function Optimizer() {
           baseItems, cls, targets, lockedExoticId, activeLocks, delta, modCatalog,
         );
         setResults(combos);
+        setSearched(true);
       } finally {
         setOptimizing(false);
       }
@@ -1436,7 +1470,11 @@ export default function Optimizer() {
       {/* Results */}
       {results.length === 0 && !optimizing && (
         <div className="text-muted text-sm font-ui text-center py-8">
-          {selected.length === 0 ? "Set a stat target to begin." : "Hit Optimize."}
+          {selected.length === 0
+            ? "Set a stat target to begin."
+            : searched
+            ? "No 5-piece combo could be assembled — a slot has no armor for this class. Check your inventory sync."
+            : "Hit Optimize."}
         </div>
       )}
       <div className="grid grid-cols-1 gap-4">
@@ -1451,8 +1489,6 @@ export default function Optimizer() {
             characters={me?.characters ?? []}
             modCatalog={modCatalog}
             manifest={manifest}
-            allItems={items}
-            cls={cls}
             modTemplate={modTemplate}
             subclassEl={subclassEl}
             armorSockets={armorSockets}
@@ -1478,12 +1514,11 @@ export default function Optimizer() {
 
 function ComboCard({
   combo, rank, selected, targets, activeCharId, characters,
-  modCatalog, manifest, allItems, cls, modTemplate, subclassEl, armorSockets,
+  modCatalog, manifest, modTemplate, subclassEl, armorSockets,
 }: {
   combo: Combo; rank: number; selected: StatKey[]; targets: StatTargets;
   activeCharId: string | null; characters: CharacterSummary[];
   modCatalog: ModCatalog | null; manifest: SlimManifest | null;
-  allItems: Item[]; cls: "Hunter" | "Titan" | "Warlock" | null;
   modTemplate: ModTemplate; subclassEl: ModElement; armorSockets: ArmorSockets;
 }) {
   // The mod loadout = the optimizer's planned +10/+5 stat mods (Mod 1, General
@@ -1500,6 +1535,13 @@ function ComboCard({
     | { kind: "error"; msg: string }
   >({ kind: "idle" });
 
+  // "vaulted 2 to make room · freed 1 from another guardian"
+  const moveNote = (res: { vaulted?: unknown[]; swapped?: unknown[] }) =>
+    [
+      res.vaulted?.length ? ` · vaulted ${res.vaulted.length} to make room` : "",
+      res.swapped?.length ? ` · freed ${res.swapped.length} from another guardian` : "",
+    ].join("");
+
   async function equipNow() {
     if (!activeCharId) {
       setEquipState({ kind: "error", msg: "no active guardian selected" });
@@ -1509,7 +1551,7 @@ function ComboCard({
     try {
       const ids = combo.pieces.map((p) => p.instance_id).filter(Boolean);
       const res = await api.equip(activeCharId, ids);
-      const msg = `equipped ${res.equipped_count}/${ids.length}`;
+      const msg = `equipped ${res.equipped_count}/${ids.length}${moveNote(res)}`;
       setEquipState({ kind: "done", msg, skipped: res.skipped });
     } catch (e: any) {
       setEquipState({ kind: "error", msg: e?.message ?? "equip failed" });
@@ -1522,7 +1564,7 @@ function ComboCard({
   // are reported, never fatal.
   const [armState, setArmState] = useState<
     | { kind: "idle" }
-    | { kind: "confirm"; plan: EquipPlan; eviction: EvictionItem[] }
+    | { kind: "confirm"; plan: EquipPlan }
     | { kind: "working" }
     | { kind: "done"; msg: string; inserted: number; skipped: number; failed: number; detail?: string }
     | { kind: "error"; msg: string }
@@ -1540,24 +1582,20 @@ function ComboCard({
       tuningPlan[t.instance_id] = { plugHash: t.hash, name: t.name };
     }
     const plan = buildEquipPlan(combo.pieces, loadout, SLOT_TO_MOD, armorSockets, tuningPlan);
-    const eviction = cls ? buildEvictionPlan(combo.pieces, allItems, cls) : [];
-    setArmState({ kind: "confirm", plan, eviction });
+    setArmState({ kind: "confirm", plan });
   }
 
-  async function confirmEquipMods(plan: EquipPlan, eviction: EvictionItem[]) {
+  async function confirmEquipMods(plan: EquipPlan) {
     if (!activeCharId) { setArmState({ kind: "error", msg: "no active guardian selected" }); return; }
     setArmState({ kind: "working" });
     try {
-      // Zero-downtime: evict the weakest-stat pieces to the vault first so the
-      // incoming set has room, then equip + insert mods.
-      if (eviction.length) {
-        await api.transferToVault(activeCharId, eviction.map((e) => e.instance_id), eviction.map((e) => e.hash));
-      }
+      // The Worker handles the logistics: full buckets auto-vault the weakest
+      // unfavorited piece, pieces equipped on other guardians get freed first.
       const ids = combo.pieces.map((p) => p.instance_id).filter(Boolean);
       const res = await api.equipWithMods(activeCharId, ids, plan.modPlan);
       setArmState({
         kind: "done",
-        msg: `equipped ${res.equipped_count}/${ids.length}` + (eviction.length ? ` · vaulted ${eviction.length}` : ""),
+        msg: `equipped ${res.equipped_count}/${ids.length}${moveNote(res)}`,
         inserted: res.mods_inserted,
         skipped: res.mods_skipped,
         failed: res.mods_failed,
@@ -1602,6 +1640,16 @@ function ComboCard({
         </div>
       </div>
 
+      {/* Theme shortfall — shown only when no owned combo can fully satisfy
+          the locks (e.g. exotic occupies a set slot, or not enough pieces). */}
+      {combo.themeShortfall > 0 && (
+        <div className="mb-3 px-3 py-2 rounded border border-amber-400/40 bg-amber-400/5 font-ui text-xs text-amber-300">
+          Theme lock short by {combo.themeShortfall} piece{combo.themeShortfall === 1 ? "" : "s"} — no owned
+          combo satisfies it fully (the locked exotic takes a slot, or you don't own enough set pieces).
+          Showing the closest match.
+        </div>
+      )}
+
       {/* One-click Optimize & Equip — confirm + result (Phase 4) */}
       {armState.kind === "confirm" && (
         <div className="mb-3 px-3 py-2 rounded border border-saber/40 bg-saber/5 font-ui text-xs">
@@ -1615,17 +1663,12 @@ function ComboCard({
               {armState.plan.unplaceable.map((u) => `${u.mod} (${u.slot})`).join(", ")}
             </div>
           )}
-          {armState.eviction.length > 0 && (
-            <div className="text-muted mb-1">
-              Will vault {armState.eviction.length} weak piece(s) to make room:{" "}
-              {armState.eviction.map((e) => `${e.name} (${e.slot}, ${e.total})`).join(", ")}
-            </div>
-          )}
           <div className="text-muted mb-2">
-            Changes your equipped loadout. Reversible, but it touches your account.
+            Changes your equipped loadout. If a bucket is full, your weakest unfavorited
+            piece is vaulted to make room. Reversible, but it touches your account.
           </div>
           <div className="flex items-center gap-3">
-            <Button onClick={() => confirmEquipMods(armState.plan, armState.eviction)} variant="primary">Confirm</Button>
+            <Button onClick={() => confirmEquipMods(armState.plan)} variant="primary">Confirm</Button>
             <button
               onClick={() => setArmState({ kind: "idle" })}
               className="text-muted hover:text-saber text-[10px] uppercase tracking-[0.25em]"

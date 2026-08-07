@@ -321,15 +321,18 @@ export const api = {
       body: JSON.stringify({ instance_id, tag }),
     }),
 
-  /** Equip a set of items onto a character. Worker handles vault → char
-   *  transfers automatically. Returns counts + per-item skip reasons.
-   *  Items currently equipped on a different character are skipped — the
-   *  user has to unequip those manually first (v1 limitation). */
+  /** Equip a set of items onto a character. The Worker handles ALL the
+   *  logistics: vault → char transfers, auto-vaulting the weakest
+   *  unfavorited piece when a bucket is at the 9-item cap (`vaulted`), and
+   *  freeing pieces equipped on another character by equipping a spare
+   *  there first (`swapped`). Returns counts + per-item skip reasons. */
   equip: (character_id: string, item_instance_ids: string[]) =>
     jsonFetch<{
       ok: true;
       equipped_count: number;
       transferred_count: number;
+      vaulted: Array<{ instance_id: string; hash: number }>;
+      swapped: Array<{ instance_id: string; hash: number; character_id: string }>;
       skipped: Array<{ instance_id: string; reason: string }>;
     }>("/api/equip", {
       method: "POST",
@@ -354,6 +357,8 @@ export const api = {
       ok: true;
       equipped_count: number;
       transferred_count: number;
+      vaulted: Array<{ instance_id: string; hash: number }>;
+      swapped: Array<{ instance_id: string; hash: number; character_id: string }>;
       skipped: Array<{ instance_id: string; reason: string }>;
       mod_results: Array<{
         instance_id: string;

@@ -108,49 +108,7 @@ export function buildEquipPlan(
   return { modPlan, placed, unplaceable };
 }
 
-export interface EvictionItem {
-  instance_id: string; hash: number; slot: string; name: string; total: number;
-}
-
-/**
- * Plan vault evictions so a new set can be equipped with zero downtime.
- * For each target slot whose incoming piece is coming from the VAULT, if the
- * active character's unequipped stock in that slot is at the bucket cap, the
- * weakest-total-stat non-exotic, non-favorited piece is evicted to make room.
- * `location` is class-scoped ("VAULT" | "<CLASS> <light>" | "<CLASS> EQUIPPED").
- */
-export function buildEvictionPlan(
-  pieces: Item[],
-  allItems: Item[],
-  activeClass: string,
-  slotCap = 9,
-): EvictionItem[] {
-  const cls = (activeClass || "").toUpperCase();
-  const total = (i: Item) =>
-    i.stats ? Object.values(i.stats).reduce((a, b) => a + b, 0) : 0;
-  const unequippedOnChar = (i: Item) => {
-    const loc = (i.location || "").toUpperCase();
-    return !!i.stats && loc !== "VAULT" && !loc.endsWith("EQUIPPED") && loc.startsWith(cls);
-  };
-
-  const out: EvictionItem[] = [];
-  for (const slot of ["Helmet", "Gauntlets", "Chest", "Legs", "Class"]) {
-    const incoming = pieces.find((p) => p.slot === slot);
-    if (!incoming) continue;
-    if ((incoming.location || "").toUpperCase() !== "VAULT") continue;  // already on-character → no room needed
-    const stock = allItems.filter(
-      (i) => i.slot === slot && i.instance_id !== incoming.instance_id && unequippedOnChar(i),
-    );
-    if (stock.length < slotCap) continue;
-    const weakest = stock
-      .filter((i) => i.tier !== "Exotic" && i.tag !== "favorite" && i.tag !== "keep")
-      .sort((a, b) => total(a) - total(b))[0];
-    if (weakest) {
-      out.push({
-        instance_id: weakest.instance_id, hash: weakest.hash,
-        slot, name: weakest.name, total: total(weakest),
-      });
-    }
-  }
-  return out;
-}
+// (Client-side eviction planning was removed — the Worker's equip pipeline
+// now auto-vaults the weakest unfavorited piece server-side when a target
+// bucket is at the 9-item cap, and frees pieces equipped on other
+// characters. See worker/src/equipFlow.ts.)
